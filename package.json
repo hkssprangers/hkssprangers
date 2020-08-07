@@ -1,0 +1,23 @@
+{
+  "name": "hkssprangers",
+  "version": "0.0.0",
+  "description": "A food delivery service in Sham Shui Po, Hong Kong.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -L index.js"
+  },
+  "devDependencies": {
+    "httpolyglot": "^0.1.2",
+    "https-localhost": "^4.6.2",
+    "nodemon": "^2.0.4",
+    "serverless": "^1.78.1",
+    "serverless-prune-plugin": "^1.4.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "serverless-http": "^2.5.0"
+  },
+  "private": true
+}

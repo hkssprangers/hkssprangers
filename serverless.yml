@@ -1,0 +1,43 @@
+service: hkssprangers
+app: web
+org: hkssprangers
+
+provider:
+  name: aws
+  region: ap-east-1
+  runtime: nodejs12.x
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
+
+package:
+  exclude:
+    - .devcontainer/**
+    - .github/**
+    - .haxelib/**
+    - .vscode/**
+    - lib/**
+    - src/**
+    - test/**
+    - '*.hxml'
+
+functions:
+  web:
+    handler: index.handler
+    events:
+      - http:
+          method: ANY
+          path: '/'
+          cors: true
+      - http:
+          method: ANY
+          path: '{proxy+}'
+          cors: true
+
+plugins:
+  - serverless-prune-plugin
+
+custom:
+  prune:
+    automatic: true
+    number: 5

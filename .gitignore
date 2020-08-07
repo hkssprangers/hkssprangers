@@ -1,0 +1,7 @@
+.haxelib
+*.js
+*.js.map
+dump
+
+node_modules
+.serverless

@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: hkssprangers/hkssprangers_devcontainer_workspace:20200808
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install libraries
+        run: |
+          set -ex
+          yarn
+          haxelib newrepo
+          haxelib install all --always -notimeout
+      - name: Compile index.js
+        run: haxe build.hxml
+      - name: Deploy
+        run: npx serverless deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}

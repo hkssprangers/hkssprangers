@@ -1,0 +1,11 @@
+{
+	"name": "hkssprangers",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "workspace",
+	"workspaceFolder": "/workspace",
+	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+	"extensions": [
+		"nadako.vshaxe"
+	],
+	"appPort": [ 3000 ]
+}
