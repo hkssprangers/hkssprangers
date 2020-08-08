@@ -2,6 +2,8 @@
 *.js
 !static/trackExceptions.js
 *.js.map
+/lib/dts2hx/
+
 dump
 
 node_modules

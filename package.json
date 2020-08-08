@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "browserify": "^16.5.2",
+    "dts2hx": "^0.13.3",
     "envify": "^4.1.0",
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.2",
@@ -21,7 +22,8 @@
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "serverless-http": "^2.5.0"
+    "serverless-http": "^2.5.0",
+    "telegraf": "^3.38.0"
   },
   "private": true
 }

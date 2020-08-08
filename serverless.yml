@@ -9,6 +9,8 @@ provider:
   apiGateway:
     binaryMediaTypes:
       - '*/*'
+  environment:
+    TGBOT_TOKEN: ${env:TGBOT_TOKEN}
 
 package:
   exclude:

@@ -1,5 +1,11 @@
 package hkssprangers.server;
 
+import react.*;
+import react.Fragment;
+import react.ReactMacro.jsx;
+import haxe.io.Path;
+import telegraf.Telegraf;
+import telegraf.Context;
 import js.npm.express.*;
 import js.Node.*;
 using hkssprangers.server.ExpressTools;
@@ -11,7 +17,9 @@ class ServerMain {
     static final mysqlEndpoint = Sys.getEnv("MYSQL_ENDPOINT");
     static final mysqlUser = Sys.getEnv("MYSQL_USER");
     static final mysqlPassword = Sys.getEnv("MYSQL_PASSWORD");
+    static final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
+    static public var tgBot:Telegraf<Dynamic>;
 
     static function allowCors(req:Request, res:Response, next):Void {
         res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +32,19 @@ class ServerMain {
     }
 
     static function main() {
+        var tgBotWebHook = 'tgBot/${tgBotToken}';
+        tgBot = new Telegraf(tgBotToken);
+        tgBot.on("text", (ctx:Context) -> {
+            var fromLink = 'tg://user?id=${ctx.from.id}';
+            var e = jsx('
+                <Fragment>
+                    Hello, <a href=${fromLink}>${ctx.from.first_name} ${ctx.from.last_name}</a>!
+                    Your msg: ${ctx.message}
+                </Fragment>
+            ');
+            ctx.replyWithHTML(ReactDOMServer.renderToString(e));
+        });
+
         app = new Application();
         app.set('json spaces', 2);
         app.use(function(req:Request, res:Response, next):Void {
@@ -58,15 +79,23 @@ class ServerMain {
         app.use(allowCors);
 
         app.get("/", index);
+        app.use(tgBot.webhookCallback(tgBotWebHook));
 
         if (isMain) {
-            var port = 3000;
-            require("https-localhost")().getCerts().then(certs ->
-                js.Node.require("httpolyglot").createServer(certs, app)
-                    .listen(port, function(){
-                        Sys.println('https://127.0.0.1:$port');
-                    })
-            );
+            switch (Sys.args()) {
+                case []:
+                    var port = 3000;
+                    require("https-localhost")().getCerts().then(certs ->
+                        js.Node.require("httpolyglot").createServer(certs, app)
+                            .listen(port, function(){
+                                Sys.println('https://127.0.0.1:$port');
+                            })
+                    );
+                case ["setTgWebhook"]:
+                    tgBot.telegram.setWebhook(Path.join([domain, tgBotWebHook]));
+                case args:
+                    throw "Unknown args: " + args;
+            }
         } else {
             var serverless = require('serverless-http');
             js.Node.exports.handler = serverless(app, {

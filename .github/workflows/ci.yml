@@ -13,12 +13,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Install libraries
-        run: |
-          set -ex
-          yarn
-          haxelib newrepo
-          haxelib install all --always -notimeout
+      - name: Run postCreateCommand
+        run: ./.devcontainer/postCreateCommand.sh
       - name: Compile index.js
         run: haxe build.hxml
       - name: Minify browser.js
@@ -29,3 +25,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN }}
