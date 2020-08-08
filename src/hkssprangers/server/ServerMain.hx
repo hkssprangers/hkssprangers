@@ -32,17 +32,18 @@ class ServerMain {
     }
 
     static function main() {
-        var tgBotWebHook = 'tgBot/${tgBotToken}';
+        var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
         tgBot.on("text", (ctx:Context) -> {
-            var fromLink = 'tg://user?id=${ctx.from.id}';
-            var e = jsx('
-                <Fragment>
-                    Hello, <a href=${fromLink}>${ctx.from.first_name} ${ctx.from.last_name}</a>!
-                    Your msg: ${ctx.message}
-                </Fragment>
-            ');
-            ctx.replyWithHTML(ReactDOMServer.renderToString(e));
+            // var fromLink = 'tg://user?id=${ctx.from.id}';
+            // var e = jsx('
+            //     <Fragment>
+            //         Hello, <a href=${fromLink}>${ctx.from.first_name} ${ctx.from.last_name}</a>!
+            //         Your msg: ${ctx.message}
+            //     </Fragment>
+            // ');
+            // ctx.replyWithHTML(ReactDOMServer.renderToString(e));
+            ctx.reply('Hello, ${ctx.from.first_name} ${ctx.from.last_name}!');
         });
 
         app = new Application();
@@ -92,7 +93,8 @@ class ServerMain {
                             })
                     );
                 case ["setTgWebhook"]:
-                    tgBot.telegram.setWebhook(Path.join([domain, tgBotWebHook]));
+                    var hook = Path.join([domain, tgBotWebHook]);
+                    tgBot.telegram.setWebhook(hook);
                 case args:
                     throw "Unknown args: " + args;
             }
