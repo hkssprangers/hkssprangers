@@ -4,7 +4,7 @@ org: hkssprangers
 
 provider:
   name: aws
-  region: ap-northeast-2
+  region: ap-southeast-1
   runtime: nodejs12.x
   apiGateway:
     binaryMediaTypes:
