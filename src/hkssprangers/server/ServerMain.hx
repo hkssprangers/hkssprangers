@@ -2,11 +2,11 @@ package hkssprangers.server;
 
 import js.npm.express.*;
 import js.Node.*;
+using hkssprangers.server.ExpressTools;
 using StringTools;
 using Lambda;
 
 class ServerMain {
-    static public final port = 3000;
     static final isMain = js.Syntax.code("require.main") == module;
     static public var app:Application;
 
@@ -17,12 +17,18 @@ class ServerMain {
     }
 
     static function index(req:Request, res:Response) {
-        res.end("ok");
+        res.sendView(Index);
     }
 
     static function main() {
         app = new Application();
         app.set('json spaces', 2);
+        app.use(function(req:Request, res:Response, next):Void {
+            res.locals = {
+                req: req,
+            };
+            next();
+        });
         app.use(Express.Static(StaticResource.resourcesDir, {
             setHeaders: function(res:Response, path:String, stat:js.node.fs.Stats) {
                 var req:Request = res.locals.req;
@@ -51,6 +57,7 @@ class ServerMain {
         app.get("/", index);
 
         if (isMain) {
+            var port = 3000;
             require("https-localhost")().getCerts().then(certs ->
                 js.Node.require("httpolyglot").createServer(certs, app)
                     .listen(port, function(){

@@ -1,5 +1,6 @@
 .haxelib
 *.js
+!static/trackExceptions.js
 *.js.map
 dump
 

@@ -21,6 +21,8 @@ jobs:
           haxelib install all --always -notimeout
       - name: Compile index.js
         run: haxe build.hxml
+      - name: Minify browser.js
+        run: npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
       - name: Deploy
         run: npx serverless deploy
         env:

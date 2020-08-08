@@ -1,0 +1,11 @@
+--js index.js
+--main hkssprangers.server.ServerMain
+--class-path src
+--class-path lib/hxnodelibs
+--library hxnodejs
+--library react
+--library compiletime
+--library tink_core
+-D react_ver=16.12
+-D react_fragments
+--dce full

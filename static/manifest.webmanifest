@@ -1,0 +1,21 @@
+{
+    "name": "埗兵",
+    "short_name": "埗兵",
+    "description": "深水埗區外賣團隊",
+    "lang": "zh-HK",
+    "categories": [
+        "utilities"
+    ],
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "images/ssprangers22.jpg",
+            "sizes": "720x720",
+            "type": "image/png"
+        }
+    ]
+}

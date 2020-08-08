@@ -39,7 +39,7 @@ class StaticResource {
             return macro @:privateAccess $v{path};
         } else {
             var h = hash(staticPath);
-            return macro @:privateAccess charleywong.StaticResource._R($v{path}, $v{h});
+            return macro @:privateAccess hkssprangers.StaticResource._R($v{path}, $v{h});
         }
     };
 
