@@ -35,15 +35,24 @@ class ServerMain {
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
         tgBot.on("text", (ctx:Context) -> {
-            // var fromLink = 'tg://user?id=${ctx.from.id}';
-            // var e = jsx('
-            //     <Fragment>
-            //         Hello, <a href=${fromLink}>${ctx.from.first_name} ${ctx.from.last_name}</a>!
-            //         Your msg: ${ctx.message}
-            //     </Fragment>
-            // ');
-            // ctx.replyWithHTML(ReactDOMServer.renderToString(e));
-            ctx.reply('Hello, ${ctx.from.first_name} ${ctx.from.last_name}!');
+            var fromLink = 'tg://user?id=${ctx.from.id}';
+            var name = switch (ctx.from) {
+                case {first_name: null, last_name: null}:
+                    'anonymous';
+                case {first_name: null, last_name: last_name}:
+                    '${last_name}';
+                case {first_name: first_name, last_name: null}:
+                    '${first_name}';
+                case {first_name: first_name, last_name: last_name}:
+                    '${first_name} ${last_name}';
+            }
+            var e = jsx('
+                <Fragment>
+                    Hello, <a href=${fromLink}>${name}</a>!
+                    Your msg: ${ctx.message}
+                </Fragment>
+            ');
+            ctx.replyWithHTML(ReactDOMServer.renderToString(e));
         });
 
         app = new Application();
