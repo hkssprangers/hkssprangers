@@ -7,6 +7,7 @@
 --library react
 --library compiletime
 --library tink_core
+--library CommentString
 -D react_ver=16.12
 -D react_fragments
 --dce full

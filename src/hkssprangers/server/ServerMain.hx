@@ -8,6 +8,7 @@ import telegraf.Telegraf;
 import telegraf.Context;
 import js.npm.express.*;
 import js.Node.*;
+import comments.CommentString.*;
 using hkssprangers.server.ExpressTools;
 using StringTools;
 using Lambda;
@@ -46,13 +47,10 @@ class ServerMain {
                 case {first_name: first_name, last_name: last_name}:
                     '${first_name} ${last_name}';
             }
-            var e = jsx('
-                <Fragment>
-                    Hello, <a href=${fromLink}>${name}</a>!
-                    Your msg: ${ctx.message}
-                </Fragment>
-            ');
-            ctx.replyWithHTML(ReactDOMServer.renderToString(e));
+            ctx.replyWithMarkdown(comment(unindent, format)/**
+                Hello, [${name}](${fromLink})!
+                Your msg: ${ctx.message}
+            **/);
         });
 
         app = new Application();
