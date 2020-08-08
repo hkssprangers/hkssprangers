@@ -10,7 +10,15 @@ import charleywong.browser.*;
 
 class BrowserMain {
     static function onReady():Void {
-        
+        switch (document.getElementById("CustomerView")) {
+            case null:
+                //pass
+            case elm:
+                var div:DivElement = cast elm;
+                ReactDOM.render(jsx('
+                    <CustomerView />
+                '), div);
+        }
     }
 
     static function main():Void {

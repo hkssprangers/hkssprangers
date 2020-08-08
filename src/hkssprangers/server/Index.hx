@@ -23,8 +23,7 @@ class Index extends View {
 
     override function bodyContent() {
         return jsx('
-            <Fragment>
-            </Fragment>
+            <div id="CustomerView" />
         ');
     }
 }

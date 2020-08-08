@@ -7,9 +7,21 @@ services:
       - ..:/workspace:cached
       - node_modules:/workspace/node_modules
     environment:
-      - HUB_HOST=selenium
+      - MYSQL_ENDPOINT=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=devroot
     user: user
     command: sleep infinity
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=devroot
+      - MYSQL_DATABASE=hkssprangers
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../dev/initdb:/docker-entrypoint-initdb.d
+    restart: unless-stopped
 
 volumes:
   node_modules:

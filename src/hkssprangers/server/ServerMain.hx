@@ -8,6 +8,9 @@ using Lambda;
 
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == module;
+    static final mysqlEndpoint = Sys.getEnv("MYSQL_ENDPOINT");
+    static final mysqlUser = Sys.getEnv("MYSQL_USER");
+    static final mysqlPassword = Sys.getEnv("MYSQL_PASSWORD");
     static public var app:Application;
 
     static function allowCors(req:Request, res:Response, next):Void {
