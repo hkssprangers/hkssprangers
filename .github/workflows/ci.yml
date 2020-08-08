@@ -14,7 +14,7 @@ jobs:
         with:
           submodules: true
       - name: Run postCreateCommand
-        run: ./.devcontainer/postCreateCommand.sh
+        run: bash ./.devcontainer/postCreateCommand.sh
       - name: Compile index.js
         run: haxe build.hxml
       - name: Minify browser.js
