@@ -47,8 +47,8 @@ class ServerMain {
                 case {first_name: first_name, last_name: last_name}:
                     '${first_name} ${last_name}';
             }
-            ctx.replyWithMarkdown(comment(unindent, format)/**
-                Hello, [${name}](${fromLink})!
+            ctx.reply(comment(unindent, format)/**
+                Hello, ${name}!
                 Your msg: ${ctx.message}
             **/);
         });
