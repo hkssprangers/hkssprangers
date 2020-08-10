@@ -96,13 +96,13 @@ class ServerMain {
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
 
-        tgSession = new MySQLSession({
-            host: mysqlEndpoint,
-            user: mysqlUser,
-            password: mysqlPassword,
-            database: "telegraf_sessions"
-        });
-        tgBot.use(tgSession.middleware());
+        // tgSession = new MySQLSession({
+        //     host: mysqlEndpoint,
+        //     user: mysqlUser,
+        //     password: mysqlPassword,
+        //     database: "telegraf_sessions"
+        // });
+        // tgBot.use(tgSession.middleware());
 
         var kbd = Markup.inlineKeyboard_(cast ([
             Markup.callbackButton_("+1", "plusone"),
@@ -120,10 +120,7 @@ class ServerMain {
                 case {first_name: first_name, last_name: last_name}:
                     '${first_name} ${last_name}';
             }
-            var counter = switch (ctx.session.counter) {
-                case null: 0;
-                case v: v;
-            };
+            var counter = Std.random(100);
             return comment(unindent, format)/**
                 Hello, <a href="${fromLink.htmlEscape()}">${name.htmlEscape()}</a>!
                 Counter: ${counter}
@@ -134,11 +131,12 @@ class ServerMain {
             ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd));
         });
         tgBot.action('plusone', (ctx:SessionedContext) -> {
-            var counter = switch (ctx.session.counter) {
-                case null: 0;
-                case v: v;
-            };
-            ctx.session.counter = counter + 1;
+            var counter = if (ctx.session != null && ctx.session.counter != null)
+                ctx.session.counter;
+            else
+                0;
+            if (ctx.session != null)
+                ctx.session.counter = counter + 1;
             ctx.editMessageText(counterMsg(ctx), new Extra({}).HTML(true).markup(kbd));
         });
 
