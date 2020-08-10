@@ -176,6 +176,24 @@ class ServerMain {
         app.use(allowCors);
 
         app.get("/", index);
+        app.get("/test", function(req:Request, res:Response) {
+            var connection = Mysql.createConnection({
+                host: mysqlEndpoint,
+                user: mysqlUser,
+                password: mysqlPassword,
+                database: "telegraf_sessions"
+            });
+
+            connection.connect();
+
+            connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+                if (error) throw error;
+                console.log('The solution is: ', results[0].solution);
+                res.end('The solution is: ' + results[0].solution);
+            });
+
+            connection.end();
+        });
         app.use(tgBot.webhookCallback(tgBotWebHook));
 
         if (isMain) {
