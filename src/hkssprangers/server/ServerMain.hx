@@ -91,6 +91,8 @@ class ServerMain {
     }
 
     static function main() {
+        trace(mysqlEndpoint);
+
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
 
