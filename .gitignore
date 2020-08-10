@@ -1,3 +1,5 @@
+.env
+
 .haxelib
 *.js
 !static/trackExceptions.js

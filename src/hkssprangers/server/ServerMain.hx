@@ -1,19 +1,76 @@
 package hkssprangers.server;
 
+import js.npm.telegraf_session_mysql.MySQLSession;
+import telegraf.typings.markup.InlineKeyboardButton;
+import haxe.Json;
 import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
 import telegraf.Telegraf;
 import telegraf.Context;
+import telegraf.Extra;
+import telegraf.Markup;
 import js.npm.express.*;
 import js.Node.*;
 import comments.CommentString.*;
-using hkssprangers.server.ExpressTools;
+import hkssprangers.info.Info;
 using StringTools;
 using Lambda;
+using hkssprangers.info.Info.DeliveryTools;
+using hkssprangers.server.ExpressTools;
+
+extern class SessionedContext extends Context {
+    public var session:Dynamic;
+}
 
 class ServerMain {
+    static function __init__() {
+        require('dotenv').config();
+    }
+
+    static final delivery:Delivery = {
+        courier: {
+            tg: {
+                username: "fghgjghjghmf"
+            }
+        },
+        orders: [
+            {
+                shop: EightyNine,
+                code: "01",
+                timestamp: 1596965006,
+                items: [
+                    {
+                        id: EightyNineSet,
+                        data: {
+                            main: EightyNineSetMain5,
+                            sub: EightyNineSetSub1,
+                            given: EightyNineSetGiven1,
+                        }
+                    },
+                ],
+                wantTableware: false,
+                customerNote: null,
+            }
+        ],
+        customer: {
+            tg: {
+                username: "asdfsdfasdfasdfsgdsggd",
+            },
+            tel: "12345648",
+        },
+        paymentMethods: [
+            PayMe,
+            FPS,
+        ],
+        pickupLocation: "長沙灣地鐵站C1地面",
+        pickupDate: "2020-08-10",
+        pickupTime: "19:00 - 20:00",
+        pickupMethod: Street,
+        deliveryFeeCents: 2500,
+        customerNote: "如可以七點三至七半",
+    }
     static final isMain = js.Syntax.code("require.main") == module;
     static final mysqlEndpoint = Sys.getEnv("MYSQL_ENDPOINT");
     static final mysqlUser = Sys.getEnv("MYSQL_USER");
@@ -21,6 +78,7 @@ class ServerMain {
     static final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
+    static public var tgSession:MySQLSession;
 
     static function allowCors(req:Request, res:Response, next):Void {
         res.header("Access-Control-Allow-Origin", "*");
@@ -35,7 +93,20 @@ class ServerMain {
     static function main() {
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
-        tgBot.on("text", (ctx:Context) -> {
+
+        tgSession = new MySQLSession({
+            host: mysqlEndpoint,
+            user: mysqlUser,
+            password: mysqlPassword,
+            database: "telegraf_sessions"
+        });
+        tgBot.use(tgSession.middleware());
+
+        var kbd = Markup.inlineKeyboard_(cast ([
+            Markup.callbackButton_("+1", "plusone"),
+        ]:Array<Dynamic>));
+
+        function counterMsg(ctx:SessionedContext) {
             var fromLink = 'tg://user?id=${ctx.from.id}';
             var name = switch (ctx.from) {
                 case {first_name: null, last_name: null}:
@@ -47,10 +118,26 @@ class ServerMain {
                 case {first_name: first_name, last_name: last_name}:
                     '${first_name} ${last_name}';
             }
-            ctx.reply(comment(unindent, format)/**
-                Hello, ${name}!
-                Your msg: ${ctx.message}
-            **/);
+            var counter = switch (ctx.session.counter) {
+                case null: 0;
+                case v: v;
+            };
+            return comment(unindent, format)/**
+                Hello, <a href="${fromLink.htmlEscape()}">${name.htmlEscape()}</a>!
+                Counter: ${counter}
+            **/;
+        }
+
+        tgBot.start((ctx:SessionedContext) -> {
+            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd));
+        });
+        tgBot.action('plusone', (ctx:SessionedContext) -> {
+            var counter = switch (ctx.session.counter) {
+                case null: 0;
+                case v: v;
+            };
+            ctx.session.counter = counter + 1;
+            ctx.editMessageText(counterMsg(ctx), new Extra({}).HTML(true).markup(kbd));
         });
 
         app = new Application();
@@ -93,6 +180,11 @@ class ServerMain {
             switch (Sys.args()) {
                 case []:
                     var port = 3000;
+                    tgBot.launch()
+                        .then(_ -> tgBot.telegram.getMe())
+                        .then(me -> {
+                            Sys.println('https://t.me/${me.username}');
+                        });
                     require("https-localhost")().getCerts().then(certs ->
                         js.Node.require("httpolyglot").createServer(certs, app)
                             .listen(port, function(){
