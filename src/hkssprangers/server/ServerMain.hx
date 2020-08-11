@@ -95,6 +95,9 @@ class ServerMain {
 
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
+        tgBot.catch_((err, ctx:Context) -> {
+            console.error(err);
+        });
 
         // tgSession = new MySQLSession({
         //     host: mysqlEndpoint,
