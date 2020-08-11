@@ -131,7 +131,9 @@ class ServerMain {
         }
 
         tgBot.start((ctx:SessionedContext) -> {
-            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd));
+            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd))
+                .then(_ -> console.log("replied /start"))
+                .catchError(err -> console.error(err));
         });
         tgBot.action('plusone', (ctx:SessionedContext) -> {
             var counter = if (ctx.session != null && ctx.session.counter != null)
