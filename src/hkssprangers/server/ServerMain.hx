@@ -99,13 +99,13 @@ class ServerMain {
             console.error(err);
         });
 
-        // tgSession = new MySQLSession({
-        //     host: mysqlEndpoint,
-        //     user: mysqlUser,
-        //     password: mysqlPassword,
-        //     database: "telegraf_sessions"
-        // });
-        // tgBot.use(tgSession.middleware());
+        tgSession = new MySQLSession({
+            host: mysqlEndpoint,
+            user: mysqlUser,
+            password: mysqlPassword,
+            database: "telegraf_sessions"
+        });
+        tgBot.use(tgSession.middleware());
 
         var kbd = Markup.inlineKeyboard_(cast ([
             Markup.callbackButton_("+1", "plusone"),
