@@ -1,6 +1,6 @@
 package hkssprangers.server;
 
-import js.npm.telegraf_session_mysql.MySQLSession;
+import js.lib.Promise;
 import telegraf.typings.markup.InlineKeyboardButton;
 import haxe.Json;
 import react.*;
@@ -19,10 +19,6 @@ using StringTools;
 using Lambda;
 using hkssprangers.info.Info.DeliveryTools;
 using hkssprangers.server.ExpressTools;
-
-extern class SessionedContext extends Context {
-    public var session:Dynamic;
-}
 
 class ServerMain {
     static function __init__() {
@@ -78,7 +74,6 @@ class ServerMain {
     static final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
-    static public var tgSession:MySQLSession;
 
     static function allowCors(req:Request, res:Response, next):Void {
         res.header("Access-Control-Allow-Origin", "*");
@@ -91,27 +86,17 @@ class ServerMain {
     }
 
     static function main() {
-        trace(mysqlEndpoint);
-
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
 
-        tgSession = new MySQLSession({
-            host: mysqlEndpoint,
-            user: mysqlUser,
-            password: mysqlPassword,
-            database: "telegraf_sessions"
-        });
-        tgBot.use(tgSession.middleware());
-
         var kbd = Markup.inlineKeyboard_(cast ([
-            Markup.callbackButton_("+1", "plusone"),
+            Markup.callbackButton_("delete", "delete"),
         ]:Array<Dynamic>));
 
-        function counterMsg(ctx:SessionedContext) {
+        function counterMsg(ctx:Context) {
             var fromLink = 'tg://user?id=${ctx.from.id}';
             var name = switch (ctx.from) {
                 case {first_name: null, last_name: null}:
@@ -130,20 +115,10 @@ class ServerMain {
             **/;
         }
 
-        tgBot.start((ctx:SessionedContext) -> {
-            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd))
-                .then(_ -> console.log("replied /start"))
-                .catchError(err -> console.error(err));
+        tgBot.start((ctx:Context) -> {
+            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd));
         });
-        tgBot.action('plusone', (ctx:SessionedContext) -> {
-            var counter = if (ctx.session != null && ctx.session.counter != null)
-                ctx.session.counter;
-            else
-                0;
-            if (ctx.session != null)
-                ctx.session.counter = counter + 1;
-            ctx.editMessageText(counterMsg(ctx), new Extra({}).HTML(true).markup(kbd));
-        });
+        tgBot.action("delete", (ctx:Context) -> ctx.deleteMessage());
 
         app = new Application();
         app.set('json spaces', 2);
@@ -179,40 +154,29 @@ class ServerMain {
         app.use(allowCors);
 
         app.get("/", index);
-        app.get("/test", function(req:Request, res:Response) {
-            var connection = Mysql.createConnection({
-                host: mysqlEndpoint,
-                user: mysqlUser,
-                password: mysqlPassword,
-                database: "telegraf_sessions"
-            });
-
-            connection.connect();
-
-            connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-                if (error) throw error;
-                console.log('The solution is: ', results[0].solution);
-                res.end('The solution is: ' + results[0].solution);
-            });
-
-            connection.end();
-        });
         app.use(tgBot.webhookCallback(tgBotWebHook));
 
         if (isMain) {
             switch (Sys.args()) {
                 case []:
                     var port = 3000;
-                    tgBot.launch()
-                        .then(_ -> tgBot.telegram.getMe())
-                        .then(me -> {
-                            Sys.println('https://t.me/${me.username}');
-                        });
-                    require("https-localhost")().getCerts().then(certs ->
-                        js.Node.require("httpolyglot").createServer(certs, app)
-                            .listen(port, function(){
-                                Sys.println('https://127.0.0.1:$port');
-                            })
+                    var ngrokUrl:Promise<String> = require("ngrok").connect(port);
+                    var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
+
+                    ngrokUrl.then((url:String) ->
+                        certs.then(certs ->
+                            js.Node.require("httpolyglot").createServer(certs, app)
+                                .listen(port, function(){
+                                    Sys.println('https://127.0.0.1:$port');
+                                    Sys.println(url);
+                                    var hook = Path.join([url, tgBotWebHook]);
+                                    tgBot.telegram.setWebhook(hook)
+                                        .then(_ -> tgBot.telegram.getMe())
+                                        .then(me -> {
+                                            Sys.println('https://t.me/${me.username}');
+                                        });
+                                })
+                        )
                     );
                 case ["setTgWebhook"]:
                     var hook = Path.join([domain, tgBotWebHook]);

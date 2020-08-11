@@ -12,6 +12,7 @@
     "envify": "^4.1.0",
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.2",
+    "ngrok": "^3.2.7",
     "nodemon": "^2.0.4",
     "serverless": "^1.78.1",
     "serverless-prune-plugin": "^1.4.3",
@@ -24,8 +25,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "serverless-http": "^2.5.0",
-    "telegraf": "^3.38.0",
-    "telegraf-session-mysql": "^5.1.0"
+    "telegraf": "^3.38.0"
   },
   "private": true
 }
