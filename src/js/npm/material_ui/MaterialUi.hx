@@ -68,3 +68,15 @@ extern class Snackbar extends ReactComponent {}
 
 @:jsRequire("@material-ui/core/Tooltip", "default")
 extern class Tooltip extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/CssBaseline", "default")
+extern class CssBaseline extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/Container", "default")
+extern class Container extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/Paper", "default")
+extern class Paper extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/Grid", "default")
+extern class Grid extends ReactComponent {}

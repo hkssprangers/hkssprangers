@@ -7,6 +7,7 @@
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
+    "@material-ui/core": "^4.11.0",
     "browserify": "^16.5.2",
     "dts2hx": "^0.13.3",
     "envify": "^4.1.0",

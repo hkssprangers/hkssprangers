@@ -23,7 +23,10 @@ class Index extends View {
 
     override function bodyContent() {
         return jsx('
-            <div id="CustomerView" />
+            <div>
+                <a href="/"><img id="logo" src=${R("/images/ssprangers22.jpg")} className="rounded-circle" alt="埗兵" /></a>
+                <div id="CustomerView" />
+            </div>
         ');
     }
 }

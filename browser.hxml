@@ -8,4 +8,5 @@
 --class-path lib/hxnodelibs
 -D react_ver=16.12
 -D react_fragments
+--dce full
 --cmd npx browserify browser.js > static/browser.bundled.js

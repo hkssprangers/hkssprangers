@@ -1,0 +1,32 @@
+button:focus {
+    outline: none;
+}
+
+html, body {
+    height:100%;
+    margin:0;
+    background-color: #EEE;
+}
+
+body {
+    display: flex;
+    flex-direction:column;
+}
+
+footer {
+    margin-top:auto;
+    text-align: center;
+}
+
+#CustomerView .MuiContainer-root {
+    background-color: white;
+}
+
+#content {
+    text-align: center;
+}
+
+#logo {
+    width: 10em;
+    margin: 1em;
+}

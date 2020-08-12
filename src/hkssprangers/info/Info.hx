@@ -20,6 +20,7 @@ enum abstract Shop<T>(String) {
     var EightyNine:Shop<EightyNineItem>;
     var DragonJapaneseCuisine:Shop<Dynamic>;
     var YearsHK:Shop<Dynamic>;
+    var LaksaStore:Shop<Dynamic>;
 
     public function info() return switch (cast this:Shop<T>) {
         case EightyNine:
@@ -37,8 +38,14 @@ enum abstract Shop<T>(String) {
         case YearsHK:
             {
                 id: YearsHK,
-                name: "YearsHK",
+                name: "Years",
                 address: "深水埗福華街191-199號福隆大廈1號地舖",
+            }
+        case LaksaStore:
+            {
+                id: LaksaStore,
+                name: "喇沙專門店",
+                address: "西九龍中心8樓美食廣場",
             }
     }
 }
@@ -252,6 +259,8 @@ class OrderTools {
 
                 case YearsHK:
 
+                case LaksaStore:
+
             }
         }
 
@@ -274,6 +283,8 @@ class OrderTools {
                 case DragonJapaneseCuisine:
 
                 case YearsHK:
+
+                case LaksaStore:
 
             }
         }

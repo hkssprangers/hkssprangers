@@ -3,6 +3,7 @@ package hkssprangers.server;
 import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
+import js.npm.material_ui.MaterialUi;
 import hkssprangers.StaticResource.R;
 import haxe.*;
 
@@ -62,7 +63,8 @@ class View extends ReactComponent {
 
     function css() return jsx('
         <Fragment>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Nunito&display=swap"/>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossOrigin="anonymous" />
             <link rel="stylesheet" href=${R("/css/style.css")} />
         </Fragment>
@@ -134,10 +136,10 @@ class View extends ReactComponent {
 
     function body() return jsx('
         <body className=${bodyClasses().join(" ")} {...bodyAttributes()}>
-            <div className="content">
+            <div id="content">
                 ${bodyContent()}
             </div>
-            <footer className="color_black_o60 py-3">
+            <footer>
                 <p>
                     Copyright (C) 2020  ${name}
                 </p>
