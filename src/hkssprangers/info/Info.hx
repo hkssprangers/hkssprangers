@@ -4,6 +4,81 @@ using hkssprangers.info.Info.TgTools;
 using hkssprangers.info.Info.OrderTools;
 using Lambda;
 
+enum abstract Weekday(String) {
+    var Monday;
+    var Tuesday;
+    var Wednesday;
+    var Thursday;
+    var Friday;
+    var Saturday;
+    var Sunday;
+
+    public function info() return switch (cast this:Weekday) {
+        case Monday:
+            {
+                id: Monday,
+                name: "星期一",
+                day: 1,
+            }
+        case Tuesday:
+            {
+                id: Tuesday,
+                name: "星期二",
+                day: 2,
+            }
+        case Wednesday:
+            {
+                id: Wednesday,
+                name: "星期三",
+                day: 3,
+            }
+        case Thursday:
+            {
+                id: Thursday,
+                name: "星期四",
+                day: 4,
+            }
+        case Friday:
+            {
+                id: Friday,
+                name: "星期五",
+                day: 5,
+            }
+        case Saturday:
+            {
+                id: Saturday,
+                name: "星期六",
+                day: 6,
+            }
+        case Sunday:
+            {
+                id: Sunday,
+                name: "星期日",
+                day: 0,
+            }
+    }
+}
+
+enum abstract TimeSlotType(String) {
+    var Lunch;
+    var Dinner;
+
+    public function info() return switch (cast this:TimeSlotType) {
+        case Lunch:
+            {
+                id: Lunch,
+                name: "午餐",
+                cutoffTime: "10:00",
+            }
+        case Dinner:
+            {
+                id: Dinner,
+                name: "晚餐",
+                cutoffTime: "17:00",
+            }
+    }
+}
+
 abstract Cents(Int) from Int to Int {
     public function print() {
         return "$" + (this * 0.01);
@@ -14,6 +89,18 @@ abstract Cents(Int) from Int to Int {
 
     @:op(A - B)
     static function minus(a:Cents, b:Cents):Cents return (a:Int) + (b:Int);
+
+    @:op(A > B)
+    static function gt(a:Cents, b:Cents):Bool return (a:Int) > (b:Int);
+
+    @:op(A >= B)
+    static function gte(a:Cents, b:Cents):Bool return (a:Int) >= (b:Int);
+
+    @:op(A < B)
+    static function lt(a:Cents, b:Cents):Bool return (a:Int) < (b:Int);
+
+    @:op(A <= B)
+    static function lte(a:Cents, b:Cents):Bool return (a:Int) <= (b:Int);
 }
 
 enum abstract Shop<T>(String) {
@@ -28,25 +115,184 @@ enum abstract Shop<T>(String) {
                 id: EightyNine,
                 name: "89美食",
                 address: "西九龍中心8樓美食廣場9號舖",
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                timeSlots: [
+                    {
+                        type: Lunch,
+                        start: "12:30",
+                        end: "13:30"
+                    },
+                    {
+                        type: Lunch,
+                        start: "13:30",
+                        end: "14:30"
+                    },
+                    {
+                        type: Dinner,
+                        start: "19:00",
+                        end: "20:00"
+                    },
+                    {
+                        type: Dinner,
+                        start: "20:00",
+                        end: "21:00"
+                    },
+                ]
             }
         case DragonJapaneseCuisine:
             {
                 id: DragonJapaneseCuisine,
                 name: "營業部",
                 address: "西九龍中心8樓美食廣場8F35舖",
+                openDays: [
+                    Monday,
+                    // Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                timeSlots: [
+                    {
+                        type: Lunch,
+                        start: "12:00",
+                        end: "13:00"
+                    },
+                    {
+                        type: Lunch,
+                        start: "13:00",
+                        end: "14:00"
+                    },
+                    {
+                        type: Dinner,
+                        start: "19:00",
+                        end: "20:00"
+                    },
+                    {
+                        type: Dinner,
+                        start: "20:00",
+                        end: "21:00"
+                    },
+                ]
             }
         case YearsHK:
             {
                 id: YearsHK,
                 name: "Years",
                 address: "深水埗福華街191-199號福隆大廈1號地舖",
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                timeSlots: [
+                    {
+                        type: Lunch,
+                        start: "12:30",
+                        end: "13:30"
+                    },
+                    {
+                        type: Lunch,
+                        start: "13:30",
+                        end: "14:30"
+                    },
+                    {
+                        type: Dinner,
+                        start: "19:00",
+                        end: "20:00"
+                    },
+                    {
+                        type: Dinner,
+                        start: "20:00",
+                        end: "21:00"
+                    },
+                ]
             }
         case LaksaStore:
             {
                 id: LaksaStore,
                 name: "喇沙專門店",
                 address: "西九龍中心8樓美食廣場",
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    // Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                timeSlots: [
+                    {
+                        type: Lunch,
+                        start: "12:30",
+                        end: "13:30"
+                    },
+                    {
+                        type: Lunch,
+                        start: "13:30",
+                        end: "14:30"
+                    },
+                    {
+                        type: Dinner,
+                        start: "19:00",
+                        end: "20:00"
+                    },
+                    {
+                        type: Dinner,
+                        start: "20:00",
+                        end: "21:00"
+                    },
+                ]
             }
+    }
+
+    public function nextTimeSlots(currentTime:Date):Array<{
+        type: TimeSlotType,
+        start: Date,
+        end: Date,
+        isOff: Bool,
+    }> {
+        var info = (cast this:Shop<Dynamic>).info();
+        var today = DateTools.format(currentTime, "%Y-%m-%d");
+        var tmr = DateTools.format(Date.fromTime(currentTime.getTime() + DateTools.days(1)), "%Y-%m-%d");
+
+        // prepare slots more than we need and then filter them in the next step
+        var slots =
+            info.timeSlots.map(slot -> {
+                type: slot.type,
+                cutoff: Date.fromString(today + " " + slot.type.info().cutoffTime + ":00"),
+                start: Date.fromString(today + " " + slot.start + ":00"),
+                end: Date.fromString(today + " " + slot.end + ":00"),
+            }).concat(info.timeSlots.map(slot -> {
+                type: slot.type,
+                cutoff: Date.fromString(tmr + " " + slot.type.info().cutoffTime + ":00"),
+                start: Date.fromString(tmr + " " + slot.start + ":00"),
+                end: Date.fromString(tmr + " " + slot.end + ":00"),
+            }));
+
+        return slots
+            .filter(slot -> slot.cutoff.getTime() > currentTime.getTime())
+            .slice(0, 4)
+            .map(slot -> {
+                type: slot.type,
+                start: slot.start,
+                end: slot.end,
+                isOff: !info.openDays.exists(d -> d.info().day == slot.start.getDay())
+            });
     }
 }
 
@@ -68,16 +314,18 @@ enum abstract EightyNineItem(String) {
                     [
                         dataInfo.main != null ? dataInfo.main.name + " " + dataInfo.main.priceCents.print() : "未選取主菜",
                         dataInfo.sub != null ? dataInfo.sub.name : "未選取配菜",
-                        dataInfo.given.name,
+                        dataInfo.given != null ? dataInfo.given.name: "未選取套餐附送食物",
                     ].join("\n"),
                 priceCents: {
                     switch (dataInfo) {
-                        case {main: main, sub: sub, given: given} if (main != null && sub != null && given != null):
+                        case {main: main} if (main != null):
                             main.priceCents;
                         case _:
                             0;
                     }
-                }
+                },
+                isValid:
+                    data.main != null && data.sub != null && data.given != null,
             }
     }
 }
@@ -152,7 +400,7 @@ enum abstract EightyNineSetGiven(String) {
         case EightyNineSetGiven1:
             {
                 id: EightyNineSetGiven1,
-                name: "套餐附送絲苗白飯2個",
+                name: "絲苗白飯2個",
             }
     }
 }
