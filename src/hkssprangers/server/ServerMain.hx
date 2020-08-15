@@ -155,6 +155,9 @@ class ServerMain {
 
         app.get("/", index);
         app.use(tgBot.webhookCallback(tgBotWebHook));
+        app.get("/server-time", function(req:Request, res:Response) {
+            res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
+        });
 
         if (isMain) {
             switch (Sys.args()) {

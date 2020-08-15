@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  TZ: Asia/Hong_Kong
+
 jobs:
   build:
     runs-on: ubuntu-latest

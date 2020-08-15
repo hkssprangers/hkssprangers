@@ -7,6 +7,7 @@ services:
       - ..:/workspace:cached
       - node_modules:/workspace/node_modules
     environment:
+      - TZ=Asia/Hong_Kong
       - MYSQL_ENDPOINT=mysql
       - MYSQL_USER=root
       - MYSQL_PASSWORD=devroot
