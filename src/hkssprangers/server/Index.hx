@@ -17,7 +17,7 @@ class Index extends View {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join([domain, R("/images/ssprangers4.jpg")])} />
+            <meta property="og:image" content=${Path.join([domain, R("/images/ssprangers4-y.png")])} />
         </Fragment>
     ');
 
@@ -25,7 +25,7 @@ class Index extends View {
         return jsx('
             <div>
                 <div className="text-center">
-                    <a href="/"><img id="logo" src=${R("/images/ssprangers4.jpg")} className="rounded-circle" alt="埗兵" /></a>
+                    <a href="/"><img id="logo" src=${R("/images/ssprangers4-y.png")} className="rounded-circle" alt="埗兵" /></a>
                 </div>
                 <div id="CustomerView" />
             </div>

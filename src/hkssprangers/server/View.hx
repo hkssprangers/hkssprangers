@@ -78,10 +78,10 @@ class View extends ReactComponent {
 
     function favicon() return jsx('
         <Fragment>
-            <link rel="apple-touch-icon" sizes="720x720" href=${R("/images/ssprangers4.jpg")}/>
-            <link rel="icon" type="image/png" sizes="720x720"  href=${R("/images/ssprangers4.jpg")}/>
+            <link rel="apple-touch-icon" sizes="720x720" href=${R("/images/ssprangers4-y.png")}/>
+            <link rel="icon" type="image/png" sizes="720x720"  href=${R("/images/ssprangers4-y.png")}/>
             <meta name="msapplication-TileColor" content="#ffffff" />
-            <meta name="msapplication-TileImage" content=${R("/images/ssprangers4.jpg")} />
+            <meta name="msapplication-TileImage" content=${R("/images/ssprangers4-y.png")} />
             <meta name="theme-color" content="#ffffff" />
         </Fragment>
     ');

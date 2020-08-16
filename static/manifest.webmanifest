@@ -13,7 +13,7 @@
     "theme_color": "#ffffff",
     "icons": [
         {
-            "src": "images/ssprangers4.jpg",
+            "src": "images/ssprangers4-y.png",
             "sizes": "720x720",
             "type": "image/png"
         }
