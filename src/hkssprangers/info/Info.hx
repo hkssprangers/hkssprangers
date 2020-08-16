@@ -2,6 +2,7 @@ package hkssprangers.info;
 
 using hkssprangers.info.Info.TgTools;
 using hkssprangers.info.Info.OrderTools;
+using hkssprangers.info.Info.TimeSlotTools;
 using Lambda;
 
 enum abstract Weekday(String) {
@@ -13,49 +14,85 @@ enum abstract Weekday(String) {
     var Saturday;
     var Sunday;
 
+    static public function fromDay(day:Int) return switch (day % 7) {
+        case 1: Monday;
+        case 2: Tuesday;
+        case 3: Wednesday;
+        case 4: Thursday;
+        case 5: Friday;
+        case 6: Saturday;
+        case 0: Sunday;
+        case _: throw "unknown day";
+    }
+
     public function info() return switch (cast this:Weekday) {
         case Monday:
             {
                 id: Monday,
-                name: "星期一",
+                name: "一",
                 day: 1,
             }
         case Tuesday:
             {
                 id: Tuesday,
-                name: "星期二",
+                name: "二",
                 day: 2,
             }
         case Wednesday:
             {
                 id: Wednesday,
-                name: "星期三",
+                name: "三",
                 day: 3,
             }
         case Thursday:
             {
                 id: Thursday,
-                name: "星期四",
+                name: "四",
                 day: 4,
             }
         case Friday:
             {
                 id: Friday,
-                name: "星期五",
+                name: "五",
                 day: 5,
             }
         case Saturday:
             {
                 id: Saturday,
-                name: "星期六",
+                name: "六",
                 day: 6,
             }
         case Sunday:
             {
                 id: Sunday,
-                name: "星期日",
+                name: "日",
                 day: 0,
             }
+    }
+}
+
+abstract LocalDateString(String) to String {
+    @:to
+    static public function toDate(dateString:String) return Date.fromString(dateString);
+
+    @:from
+    static public function fromString(str:String):LocalDateString return fromDate(Date.fromString(str));
+
+    @:from
+    static public function fromDate(d:Date):LocalDateString return cast DateTools.format(d, "%Y-%m-%d %H:%M:%S");
+}
+
+typedef TimeSlot = {
+    type: TimeSlotType,
+    start: LocalDateString,
+    end: LocalDateString,
+}
+
+class TimeSlotTools {
+    static public function print(slot:TimeSlot):String {
+        var startDate = slot.start.toDate();
+        var endDate = slot.end.toDate();
+        return '${startDate.getMonth() + 1}月${startDate.getDate()}日 (${Weekday.fromDay(startDate.getDay()).info().name}) ${slot.type.info().name} ${DateTools.format(startDate, "%H:%M")} - ${DateTools.format(endDate, "%H:%M")}';
     }
 }
 
@@ -260,12 +297,7 @@ enum abstract Shop<T>(String) {
             }
     }
 
-    public function nextTimeSlots(currentTime:Date):Array<{
-        type: TimeSlotType,
-        start: Date,
-        end: Date,
-        isOff: Bool,
-    }> {
+    public function nextTimeSlots(currentTime:Date):Array<TimeSlot & { isOff:Bool }> {
         var info = (cast this:Shop<Dynamic>).info();
         var today = DateTools.format(currentTime, "%Y-%m-%d");
         var tmr = DateTools.format(Date.fromTime(currentTime.getTime() + DateTools.days(1)), "%Y-%m-%d");
@@ -289,9 +321,14 @@ enum abstract Shop<T>(String) {
             .slice(0, 4)
             .map(slot -> {
                 type: slot.type,
-                start: slot.start,
-                end: slot.end,
-                isOff: !info.openDays.exists(d -> d.info().day == slot.start.getDay())
+                start: (slot.start:LocalDateString),
+                end: (slot.end:LocalDateString),
+                isOff: switch [info.id, DateTools.format(slot.start, "%Y-%m-%d"), slot.type] {
+                    case [EightyNine, "2020-08-17", _]:
+                        true;
+                    case _:
+                        !info.openDays.exists(d -> d.info().day == slot.start.getDay());
+                }
             });
     }
 }
@@ -473,8 +510,7 @@ typedef Delivery = {
     },
     paymentMethods: Array<PaymentMethod>,
     pickupLocation: String,
-    pickupDate: String,
-    pickupTime: String,
+    pickupTimeSlot: TimeSlot,
     pickupMethod: PickupMethod,
     deliveryFeeCents: Cents,
     customerNote: String,
@@ -559,7 +595,7 @@ class DeliveryTools {
         buf.add("食物+運費: " + (foodTotal + d.deliveryFeeCents).print() + "\n");
 
         buf.add("\n");
-        buf.add("客人交收時段: " + d.pickupDate + " " + d.pickupTime + "\n");
+        buf.add("客人交收時段: " + d.pickupTimeSlot.print() + "\n");
         buf.add("tg: " + d.customer.tg.print() + "\n");
         buf.add(d.customer.tel + "\n");
         buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");

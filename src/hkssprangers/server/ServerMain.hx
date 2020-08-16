@@ -61,8 +61,11 @@ class ServerMain {
             FPS,
         ],
         pickupLocation: "長沙灣地鐵站C1地面",
-        pickupDate: "2020-08-10",
-        pickupTime: "19:00 - 20:00",
+        pickupTimeSlot: {
+            type: Dinner,
+            start: "2020-08-10 19:00:00",
+            end: "2020-08-10 20:00:00",
+        },
         pickupMethod: Street,
         deliveryFeeCents: 2500,
         customerNote: "如可以七點三至七半",

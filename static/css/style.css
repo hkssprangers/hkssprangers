@@ -10,11 +10,12 @@ html, body {
 
 body {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
 }
 
 footer {
-    margin-top:auto;
+    margin-top: auto;
+    padding-top: 1rem;
     text-align: center;
 }
 
@@ -22,11 +23,41 @@ footer {
     background-color: white;
 }
 
-#content {
-    text-align: center;
-}
-
 #logo {
     width: 10em;
     margin: 1em;
+}
+
+#CustomerView .MuiTypography-h2 {
+    font-size: 1.5rem;
+}
+
+#CustomerView .MuiTypography-h3 {
+    font-size: 1rem;
+}
+
+.order-content > * {
+    padding-bottom: 1rem;
+}
+
+.order-content > *:last-child {
+    padding-bottom: 0;
+}
+
+.order-content .is-not-editing .MuiCardHeader-root {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.order-content .is-not-editing .MuiCardHeader-action {
+    padding-top: 0.25rem;
+}
+
+.order-content .MuiCardContent-root {
+    padding-top: 0.1em;
+}
+
+#CustomerView .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 1rem;
 }

@@ -75,8 +75,26 @@ extern class CssBaseline extends ReactComponent {}
 @:jsRequire("@material-ui/core/Container", "default")
 extern class Container extends ReactComponent {}
 
+@:jsRequire("@material-ui/core/Box", "default")
+extern class Box extends ReactComponent {}
+
 @:jsRequire("@material-ui/core/Paper", "default")
 extern class Paper extends ReactComponent {}
 
+@:jsRequire("@material-ui/core/Card", "default")
+extern class Card extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/CardHeader", "default")
+extern class CardHeader extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/CardContent", "default")
+extern class CardContent extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/CardActions", "default")
+extern class CardActions extends ReactComponent {}
+
 @:jsRequire("@material-ui/core/Grid", "default")
 extern class Grid extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/Modal", "default")
+extern class Modal extends ReactComponent {}
