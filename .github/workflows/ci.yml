@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - production
 
 env:
   TZ: Asia/Hong_Kong
@@ -25,7 +26,7 @@ jobs:
       - name: Test
         run: haxe test.hxml
       - name: Deploy
-        run: npx serverless deploy
+        run: npx serverless deploy --stage "${GITHUB_REF##*/}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
