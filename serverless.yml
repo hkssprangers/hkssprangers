@@ -38,12 +38,9 @@ functions:
           cors: true
 
 plugins:
-  - serverless-dotenv-plugin
   - serverless-prune-plugin
 
 custom:
-  dotenv:
-    include: [] # do not inject dotenv vars into lambda
   prune:
     automatic: true
     number: 5
