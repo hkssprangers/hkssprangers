@@ -484,7 +484,7 @@ class CustomerView extends ReactComponent {
                         <TextField
                             label="交收地址"
                             required=${true}
-                            value=${delivery.pickupLocation}
+                            value=${delivery.pickupLocation != null ? delivery.pickupLocation: ""}
                             onChange=${onAddressChange}
                         />
                     </Grid>
@@ -495,7 +495,7 @@ class CustomerView extends ReactComponent {
                             </InputLabel>
                             <Select
                                 labelId="select-pickup-method"
-                                value=${delivery.pickupMethod}
+                                value=${delivery.pickupMethod != null ? delivery.pickupMethod : ""}
                                 onChange=${onPickupMethodChange}
                             >
                                 ${pickupMethodItems}
