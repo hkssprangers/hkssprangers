@@ -34,7 +34,11 @@ functions:
     events:
       - http:
           method: ANY
-          path: '/{proxy+}'
+          path: '/'
+          cors: true
+      - http:
+          method: ANY
+          path: '{proxy+}'
           cors: true
 
 plugins:
