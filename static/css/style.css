@@ -20,6 +20,8 @@ footer {
 }
 
 #CustomerView .MuiContainer-root {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     background-color: white;
 }
 
@@ -59,5 +61,10 @@ footer {
 
 #CustomerView .MuiFormControl-root {
     width: 100%;
+    margin-bottom: 1rem;
+}
+
+#CustomerView .MuiDivider-root {
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }

@@ -77,7 +77,7 @@ class EightyNineItemForm extends ReactComponent {
                 <CardContent>
                     <Grid container=${true}>
                         <Grid item=${true} xs=${12}>
-                            <FormControl>
+                            <FormControl required=${true}>
                                 <InputLabel id=${"select-main-" + randomId}>主菜選擇</InputLabel>
                                 <Select
                                     labelId=${"select-main-" + randomId}
@@ -92,7 +92,7 @@ class EightyNineItemForm extends ReactComponent {
                             </FormControl>
                         </Grid>
                         <Grid item=${true} xs=${12}>
-                            <FormControl>
+                            <FormControl required=${true}>
                                 <InputLabel id=${"select-sub-" + randomId}>
                                     配菜選擇
                                 </InputLabel>
@@ -122,9 +122,6 @@ class EightyNineItemForm extends ReactComponent {
 
 class EightyNineOrderForm extends ReactComponent {
     static public final maxItems = 3;
-
-    public var onBack(get, never):(evt:ReactEvent)->Void;
-    function get_onBack() return props.onBack;
 
     public var onChange(get, never):(isValid:Bool) -> Void;
     function get_onChange() return props.onChange;
@@ -207,7 +204,7 @@ class EightyNineOrderForm extends ReactComponent {
 
         return jsx('
             <Grid item=${true} xs=${12}>
-                <FormControl>
+                <FormControl required=${true}>
                     <InputLabel id=${"select-timeslot"}>
                         想幾時收到嘢食?
                     </InputLabel>
@@ -250,10 +247,15 @@ class EightyNineOrderForm extends ReactComponent {
             ');
         });
 
+        var addLabel = if (order.items.length > 0) {
+            "叫多份";
+        } else {
+            "揀食咩";
+        }
         var addMore = if (order.items.length < maxItems) {
             jsx('
                 <Button size="small" color="primary" onClick=${evt -> addItem()} disabled=${editing.has(true)}>
-                    叫多份
+                    ${addLabel}
                 </Button>
             ');
         } else {
@@ -261,7 +263,7 @@ class EightyNineOrderForm extends ReactComponent {
                 <Grid container=${true} spacing=${1} alignItems="center">
                     <Grid>
                         <Button size="small" color="primary" onClick=${evt -> addItem()} disabled=${true}>
-                            叫多份
+                            ${addLabel}
                         </Button>
                     </Grid>
                     <Grid>
@@ -275,11 +277,6 @@ class EightyNineOrderForm extends ReactComponent {
 
         return jsx('
             <Grid container=${true} spacing=${1}>
-                <Grid container=${true} item=${true} xs=${12}>
-                    <Grid item=${true}>
-                        <Button onClick=${onBack}>返回</Button>
-                    </Grid>
-                </Grid>
                 <Grid container=${true} item=${true} xs=${12} justify="center">
                     <Grid item=${true}>
                         <Typography variant="h2">${EightyNine.info().name} x 埗兵 外賣預訂</Typography>
@@ -368,7 +365,7 @@ class CustomerView extends ReactComponent {
     }
 
     override function render() {
-        var content = switch (selectedOrderForm) {
+        var orderContent = switch (selectedOrderForm) {
             case null:
                 jsx('
                     <Grid container=${true} spacing=${1}>
@@ -426,7 +423,6 @@ class CustomerView extends ReactComponent {
                         order=${order}
                         pickupTimeSlot=${delivery.pickupTimeSlot}
                         pickupTimeSlotOptions=${pickupTimeSlotOptions}
-                        onBack=${(evt) -> selectedOrderForm = null}
                         onChange=${onChange}
                         onPickupTimeSlotChange=${onPickupTimeSlotChange}
                     />
@@ -438,9 +434,75 @@ class CustomerView extends ReactComponent {
             case LaksaStore:
                 null;
         }
+        var dollar = "$";
+        function onAddressChange(evt) {
+            delivery.pickupLocation = evt.target.value;
+            delivery = delivery;
+        }
+        var pickupMethodItems = [
+            Door,
+            Street,
+        ]
+            .map(v -> v.info())
+            .map(info -> jsx('
+                <MenuItem key=${info.id} value=${info.id}>${info.name}</MenuItem>
+            '));
+        function onPickupMethodChange(evt) {
+            delivery.pickupMethod = evt.target.value;
+            delivery = delivery;
+        }
         return return jsx('
             <Container maxWidth="sm">
-                ${content}
+                <Grid container=${true}>
+                    <Typography>
+                        * 必填項目
+                    </Typography>
+                </Grid>
+                <Grid container=${true}>
+                    <Grid item=${true} xs=${12}>
+                        ${orderContent}
+                    </Grid>
+                </Grid>
+                <Divider variant="middle" />
+                <Grid container=${true}>
+                    <Grid item=${true} xs=${12}>
+                        <Typography variant="h5" gutterBottom=${true}>
+                            有關運費
+                        </Typography>
+                        <Typography paragraph=${true}>
+                            設定運費嘅原則:<br/>
+                            ${dollar}25 - 步行15分鐘或以內<br/>
+                            ${dollar}35 - 步行15至20分鐘<br/>
+                            ${dollar}40 - 距離較遠需要車手負責外賣<br/>
+                            價格會因應實際情況(如長樓梯)調整。
+                        </Typography>
+                        <Typography paragraph=${true}>
+                            落單後，平台會因應地址及價目表計算運費，外賣員送餐前會經tg同你確認一次價錢。
+                        </Typography>
+                    </Grid>
+                    <Grid item=${true} xs=${12}>
+                        <TextField
+                            label="交收地址"
+                            required=${true}
+                            value=${delivery.pickupLocation}
+                            onChange=${onAddressChange}
+                        />
+                    </Grid>
+                    <Grid item=${true} xs=${12}>
+                        <FormControl required=${true}>
+                            <InputLabel id="select-pickup-method">
+                                交收方法
+                            </InputLabel>
+                            <Select
+                                labelId="select-pickup-method"
+                                value=${delivery.pickupMethod}
+                                onChange=${onPickupMethodChange}
+                            >
+                                ${pickupMethodItems}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
             </Container>
         ');
     }
