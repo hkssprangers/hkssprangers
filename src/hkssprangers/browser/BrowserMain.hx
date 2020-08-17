@@ -16,7 +16,10 @@ class BrowserMain {
             case elm:
                 var div:DivElement = cast elm;
                 ReactDOM.render(jsx('
-                    <CustomerView />
+                    <CustomerView
+                        tgBotName=${div.dataset.tgBotName}
+                        tgBotTokenSha256=${div.dataset.tgBotTokenSha256}
+                    />
                 '), div);
         }
     }

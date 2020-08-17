@@ -11,6 +11,9 @@ services:
       - MYSQL_ENDPOINT=mysql
       - MYSQL_USER=root
       - MYSQL_PASSWORD=devroot
+    ports:
+      - "3000:3000"
+      - "443:3000"
     user: user
     command: sleep infinity
   mysql:

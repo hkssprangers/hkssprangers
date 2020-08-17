@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.crypto.Sha256;
 import js.lib.Promise;
 import telegraf.typings.markup.InlineKeyboardButton;
 import haxe.Json;
@@ -85,7 +86,12 @@ class ServerMain {
     }
 
     static function index(req:Request, res:Response) {
-        res.sendView(Index);
+        tgBot.telegram.getMe()
+            .then(me -> res.sendView(Index, {
+                tgBotName: me.username,
+                tgBotTokenSha256: Sha256.encode(tgBotToken),
+            }))
+            .catchError(err -> res.status(500).json(err));
     }
 
     static function main() {
@@ -173,7 +179,7 @@ class ServerMain {
                         certs.then(certs ->
                             js.Node.require("httpolyglot").createServer(certs, app)
                                 .listen(port, function(){
-                                    Sys.println('https://127.0.0.1:$port');
+                                    Sys.println('https://127.0.0.1');
                                     Sys.println(url);
                                     var hook = Path.join([url, tgBotWebHook]);
                                     tgBot.telegram.setWebhook(hook)

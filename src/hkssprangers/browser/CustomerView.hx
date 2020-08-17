@@ -4,6 +4,7 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import js.npm.material_ui.MaterialUi;
+import js.npm.react_telegram_login.TelegramLoginButton;
 import hkssprangers.info.Info;
 using hkssprangers.info.Info.OrderTools;
 using hkssprangers.info.Info.TimeSlotTools;
@@ -300,6 +301,12 @@ class EightyNineOrderForm extends ReactComponent {
 }
 
 class CustomerView extends ReactComponent {
+    public var tgBotName(get, never):String;
+    function get_tgBotName() return props.tgBotName;
+
+    public var tgBotTokenSha256(get, never):String;
+    function get_tgBotTokenSha256() return props.tgBotTokenSha256;
+
     public var selectedOrderForm(get, set):Null<Shop<Dynamic>>;
     function get_selectedOrderForm() return state.selectedOrderForm;
     function set_selectedOrderForm(v) {
@@ -362,6 +369,16 @@ class CustomerView extends ReactComponent {
             }:Delivery),
             isValid: false,
         };
+    }
+
+    function handleTelegramResponse(response) {
+        if (TelegramTools.verifyLoginResponse(tgBotTokenSha256, response)) {
+            delivery.customer.tg = {
+                id: response["id"],
+                username: response["username"],
+            };
+            delivery = delivery;
+        }
     }
 
     override function render() {
@@ -451,6 +468,27 @@ class CustomerView extends ReactComponent {
             delivery.pickupMethod = evt.target.value;
             delivery = delivery;
         }
+        var customerTg = if (delivery.customer.tg != null) {
+            if (delivery.customer.tg.username != null)
+                jsx('
+                    <Typography>
+                        Telegram username: <a href=${"https://t.me/" + delivery.customer.tg.username} target="_blank">@${delivery.customer.tg.username}</a>
+                    </Typography>
+                ');
+            else
+                jsx('
+                    <Typography>
+                        Telegram ID: ${delivery.customer.tg.id}
+                    </Typography>
+                ');
+        } else {
+            jsx('
+                <TelegramLoginButton
+                    botName=${tgBotName}
+                    dataOnauth=${handleTelegramResponse}
+                />
+            ');
+        }
         return return jsx('
             <Container maxWidth="sm">
                 <Grid container=${true}>
@@ -501,6 +539,9 @@ class CustomerView extends ReactComponent {
                                 ${pickupMethodItems}
                             </Select>
                         </FormControl>
+                    </Grid>
+                    <Grid item=${true} xs=${12}>
+                        ${customerTg}
                     </Grid>
                 </Grid>
             </Container>

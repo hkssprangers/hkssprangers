@@ -16,6 +16,7 @@
     "https-localhost": "^4.6.2",
     "ngrok": "^3.2.7",
     "nodemon": "^2.0.4",
+    "react-telegram-login": "^1.1.2",
     "serverless": "^1.78.1",
     "serverless-prune-plugin": "^1.4.3",
     "terser": "^5.0.0",

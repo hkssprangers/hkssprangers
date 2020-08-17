@@ -1,6 +1,7 @@
 --library compiletime
 --library tink_core
 --library utest
+--library hxnodejs
 --class-path src
 --class-path test
 --class-path lib/hxnodelibs
