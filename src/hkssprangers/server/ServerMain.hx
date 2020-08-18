@@ -89,7 +89,6 @@ class ServerMain {
         tgBot.telegram.getMe()
             .then(me -> res.sendView(Index, {
                 tgBotName: me.username,
-                tgBotTokenSha256: Sha256.encode(tgBotToken),
             }))
             .catchError(err -> res.status(500).json(err));
     }
@@ -118,7 +117,6 @@ class ServerMain {
         tgBot.telegram.getMe()
             .then(me -> res.sendView(Admin, {
                 tgBotName: me.username,
-                tgBotTokenSha256: Sha256.encode(tgBotToken),
                 user: user,
             }))
             .catchError(err -> res.status(500).json(err));

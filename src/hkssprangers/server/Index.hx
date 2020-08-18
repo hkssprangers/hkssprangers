@@ -9,9 +9,6 @@ class Index extends View {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var tgBotTokenSha256(get, never):String;
-    function get_tgBotTokenSha256() return props.tgBotTokenSha256;
-
     override public function description() return "深水埗區外賣團隊";
     override function canonical() return domain;
     override public function render() {
@@ -35,7 +32,6 @@ class Index extends View {
                 </div>
                 <div id="CustomerView"
                     data-tg-bot-name=${tgBotName}
-                    data-tg-bot-token-sha256=${tgBotTokenSha256}
                 />
             </div>
         ');

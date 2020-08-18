@@ -304,9 +304,6 @@ class CustomerView extends ReactComponent {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var tgBotTokenSha256(get, never):String;
-    function get_tgBotTokenSha256() return props.tgBotTokenSha256;
-
     public var selectedOrderForm(get, set):Null<Shop<Dynamic>>;
     function get_selectedOrderForm() return state.selectedOrderForm;
     function set_selectedOrderForm(v) {
@@ -372,13 +369,11 @@ class CustomerView extends ReactComponent {
     }
 
     function handleTelegramResponse(response) {
-        if (TelegramTools.verifyLoginResponse(tgBotTokenSha256, response)) {
-            delivery.customer.tg = {
-                id: response["id"],
-                username: response["username"],
-            };
-            delivery = delivery;
-        }
+        delivery.customer.tg = {
+            id: response.id,
+            username: response.username,
+        };
+        delivery = delivery;
     }
 
     override function render() {

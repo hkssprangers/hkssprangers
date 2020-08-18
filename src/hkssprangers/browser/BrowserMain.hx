@@ -18,7 +18,6 @@ class BrowserMain {
                 ReactDOM.render(jsx('
                     <CustomerView
                         tgBotName=${div.dataset.tgBotName}
-                        tgBotTokenSha256=${div.dataset.tgBotTokenSha256}
                     />
                 '), div);
         }
@@ -31,7 +30,6 @@ class BrowserMain {
                 ReactDOM.render(jsx('
                     <AdminView
                         tgBotName=${div.dataset.tgBotName}
-                        tgBotTokenSha256=${div.dataset.tgBotTokenSha256}
                         user=${Json.parse(div.dataset.user)}
                     />
                 '), div);

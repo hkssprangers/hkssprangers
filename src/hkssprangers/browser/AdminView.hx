@@ -17,9 +17,6 @@ class AdminView extends ReactComponent {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var tgBotTokenSha256(get, never):String;
-    function get_tgBotTokenSha256() return props.tgBotTokenSha256;
-
     public var user(get, never):Null<{
         tg: {
             id:Int,
@@ -29,14 +26,12 @@ class AdminView extends ReactComponent {
     function get_user() return props.user;
 
     function handleTelegramResponse(response) {
-        if (TelegramTools.verifyLoginResponse(tgBotTokenSha256, response)) {
-            Cookies.set("tg", response, {
-                secure: true,
-                sameSite: 'strict',
-                expires: 1, // expires 1 day from now
-            });
-            location.reload(true);
-        }
+        Cookies.set("tg", response, {
+            secure: true,
+            sameSite: 'strict',
+            expires: 1, // expires 1 day from now
+        });
+        location.reload(true);
     }
 
     function renderLoggedIn() {

@@ -10,9 +10,6 @@ class Admin extends View {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var tgBotTokenSha256(get, never):String;
-    function get_tgBotTokenSha256() return props.tgBotTokenSha256;
-
     public var user(get, never):Null<{
         tg: {
             id:Int,
@@ -35,7 +32,6 @@ class Admin extends View {
                 </div>
                 <div id="AdminView"
                     data-tg-bot-name=${tgBotName}
-                    data-tg-bot-token-sha256=${tgBotTokenSha256}
                     data-user=${Json.stringify(user)}
                 />
             </div>
