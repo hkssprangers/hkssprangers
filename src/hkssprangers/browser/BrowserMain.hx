@@ -32,6 +32,7 @@ class BrowserMain {
                     <AdminView
                         tgBotName=${div.dataset.tgBotName}
                         tgBotTokenSha256=${div.dataset.tgBotTokenSha256}
+                        user=${Json.parse(div.dataset.user)}
                     />
                 '), div);
         }

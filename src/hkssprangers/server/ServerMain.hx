@@ -96,18 +96,32 @@ class ServerMain {
 
     static function admin(req:Request, res:Response) {
         var tg:Null<{
+            id:Int,
             username:String,
         }> = if (req.cookies != null && req.cookies.tg != null) Json.parse(req.cookies.tg) else null;
-        if (TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)) {
-            res.end("logged in as @" + tg.username);
+
+        var user = if (
+            TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)
+            &&
+            [
+                "andyonthewings",
+                "Arbuuuuuuu",
+            ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username)
+        ) {
+            {
+                tg: tg,
+            }
         } else {
-            tgBot.telegram.getMe()
-                .then(me -> res.sendView(Admin, {
-                    tgBotName: me.username,
-                    tgBotTokenSha256: Sha256.encode(tgBotToken),
-                }))
-                .catchError(err -> res.status(500).json(err));
+            null;
         }
+        
+        tgBot.telegram.getMe()
+            .then(me -> res.sendView(Admin, {
+                tgBotName: me.username,
+                tgBotTokenSha256: Sha256.encode(tgBotToken),
+                user: user,
+            }))
+            .catchError(err -> res.status(500).json(err));
     }
 
     static function main() {

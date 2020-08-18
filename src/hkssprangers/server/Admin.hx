@@ -4,6 +4,7 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
+import haxe.Json;
 
 class Admin extends View {
     public var tgBotName(get, never):String;
@@ -11,6 +12,14 @@ class Admin extends View {
 
     public var tgBotTokenSha256(get, never):String;
     function get_tgBotTokenSha256() return props.tgBotTokenSha256;
+
+    public var user(get, never):Null<{
+        tg: {
+            id:Int,
+            username:String,
+        }
+    }>;
+    function get_user() return props.user;
 
     override public function description() return "平台管理";
     override function canonical() return Path.join([domain, "admin"]);
@@ -27,6 +36,7 @@ class Admin extends View {
                 <div id="AdminView"
                     data-tg-bot-name=${tgBotName}
                     data-tg-bot-token-sha256=${tgBotTokenSha256}
+                    data-user=${Json.stringify(user)}
                 />
             </div>
         ');
