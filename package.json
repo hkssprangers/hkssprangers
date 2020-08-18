@@ -28,6 +28,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "google-spreadsheet": "^3.0.13",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "serverless-http": "^2.5.0",

@@ -75,7 +75,7 @@ class ServerMain {
     static final mysqlEndpoint = Sys.getEnv("MYSQL_ENDPOINT");
     static final mysqlUser = Sys.getEnv("MYSQL_USER");
     static final mysqlPassword = Sys.getEnv("MYSQL_PASSWORD");
-    static final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
+    static public final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
 
@@ -89,35 +89,6 @@ class ServerMain {
         tgBot.telegram.getMe()
             .then(me -> res.sendView(Index, {
                 tgBotName: me.username,
-            }))
-            .catchError(err -> res.status(500).json(err));
-    }
-
-    static function admin(req:Request, res:Response) {
-        var tg:Null<{
-            id:Int,
-            username:String,
-        }> = if (req.cookies != null && req.cookies.tg != null) Json.parse(req.cookies.tg) else null;
-
-        var user = if (
-            TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)
-            &&
-            [
-                "andyonthewings",
-                "Arbuuuuuuu",
-            ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username)
-        ) {
-            {
-                tg: tg,
-            }
-        } else {
-            null;
-        }
-        
-        tgBot.telegram.getMe()
-            .then(me -> res.sendView(Admin, {
-                tgBotName: me.username,
-                user: user,
             }))
             .catchError(err -> res.status(500).json(err));
     }
@@ -192,7 +163,7 @@ class ServerMain {
         app.use(require("cookie-parser")());
 
         app.get("/", index);
-        app.get("/admin", admin);
+        app.get("/admin", Admin.middleware);
         app.use(tgBot.webhookCallback(tgBotWebHook));
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
