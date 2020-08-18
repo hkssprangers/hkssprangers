@@ -22,6 +22,19 @@ class BrowserMain {
                     />
                 '), div);
         }
+
+        switch (document.getElementById("AdminView")) {
+            case null:
+                //pass
+            case elm:
+                var div:DivElement = cast elm;
+                ReactDOM.render(jsx('
+                    <AdminView
+                        tgBotName=${div.dataset.tgBotName}
+                        tgBotTokenSha256=${div.dataset.tgBotTokenSha256}
+                    />
+                '), div);
+        }
     }
 
     static function main():Void {

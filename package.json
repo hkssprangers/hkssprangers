@@ -8,12 +8,14 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.0",
+    "@types/js-cookie": "^2.2.6",
     "browserify": "^16.5.2",
     "dotenv-cli": "^3.2.0",
     "dts2hx": "^0.13.3",
     "envify": "^4.1.0",
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.2",
+    "js-cookie": "^2.2.1",
     "ngrok": "^3.2.7",
     "nodemon": "^2.0.4",
     "react-telegram-login": "^1.1.2",
@@ -23,6 +25,7 @@
     "uglifyify": "^5.0.2"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "react": "^16.13.1",

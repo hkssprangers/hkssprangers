@@ -94,6 +94,22 @@ class ServerMain {
             .catchError(err -> res.status(500).json(err));
     }
 
+    static function admin(req:Request, res:Response) {
+        var tg:Null<{
+            username:String,
+        }> = if (req.cookies != null && req.cookies.tg != null) Json.parse(req.cookies.tg) else null;
+        if (TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)) {
+            res.end("logged in as @" + tg.username);
+        } else {
+            tgBot.telegram.getMe()
+                .then(me -> res.sendView(Admin, {
+                    tgBotName: me.username,
+                    tgBotTokenSha256: Sha256.encode(tgBotToken),
+                }))
+                .catchError(err -> res.status(500).json(err));
+        }
+    }
+
     static function main() {
         var tgBotWebHook = '/tgBot/${tgBotToken}';
         tgBot = new Telegraf(tgBotToken);
@@ -161,8 +177,10 @@ class ServerMain {
             }
         });
         app.use(allowCors);
+        app.use(require("cookie-parser")());
 
         app.get("/", index);
+        app.get("/admin", admin);
         app.use(tgBot.webhookCallback(tgBotWebHook));
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));

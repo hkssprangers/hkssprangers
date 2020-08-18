@@ -5,7 +5,9 @@ import haxe.crypto.Hmac;
 import haxe.DynamicAccess;
 
 class TelegramTools {
-    static public function verifyLoginResponse(tgBotTokenSha256:String, response:DynamicAccess<Dynamic>):Bool {
+    static public function verifyLoginResponse(tgBotTokenSha256:String, response:Null<DynamicAccess<Dynamic>>):Bool {
+        if (response == null) return false;
+
         var dataCheckString = ({
             var kv = [
                 for (k => v in response)
