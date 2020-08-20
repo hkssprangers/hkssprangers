@@ -194,6 +194,9 @@ class ServerMain {
                 case ["setTgWebhook"]:
                     var hook = Path.join([domain, tgBotWebHook]);
                     tgBot.telegram.setWebhook(hook);
+                case ["setTgWebhook", domain]:
+                    var hook = Path.join([domain, tgBotWebHook]);
+                    tgBot.telegram.setWebhook(hook);
                 case args:
                     throw "Unknown args: " + args;
             }

@@ -25,8 +25,12 @@ jobs:
         run: npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
       - name: Test
         run: haxe test.hxml
-      - name: Deploy
-        run: npx serverless deploy --stage "${GITHUB_REF##*/}"
+      - name: Deploy master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          set -ex
+          npx serverless deploy --stage master
+          node index.js setTgWebhook https://master.hkssprangers.com
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
@@ -34,8 +38,18 @@ jobs:
           MYSQL_ENDPOINT: ${{ secrets.MYSQL_ENDPOINT }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN }}
-      - name: Set tg bot webhook
-        run: node index.js setTgWebhook
+          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_MASTER }}
+      - name: Deploy production
+        if: github.ref == 'refs/heads/production'
+        run: |
+          set -ex
+          npx serverless deploy --stage production
+          node index.js setTgWebhook https://hkssprangers.com
         env:
-          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          MYSQL_ENDPOINT: ${{ secrets.MYSQL_ENDPOINT }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
