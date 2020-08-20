@@ -38,6 +38,8 @@ jobs:
           MYSQL_ENDPOINT: ${{ secrets.MYSQL_ENDPOINT }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
+          FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
           TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_MASTER }}
       - name: Deploy production
         if: github.ref == 'refs/heads/production'
@@ -52,4 +54,6 @@ jobs:
           MYSQL_ENDPOINT: ${{ secrets.MYSQL_ENDPOINT }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
+          FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
           TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
