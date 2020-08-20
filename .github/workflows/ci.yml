@@ -30,7 +30,7 @@ jobs:
         run: |
           set -ex
           npx serverless deploy --stage master
-          node index.js setTgWebhook https://master.hkssprangers.com
+          node index.js setTgWebhook https://master.ssprangers.com
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
@@ -46,7 +46,7 @@ jobs:
         run: |
           set -ex
           npx serverless deploy --stage production
-          node index.js setTgWebhook https://hkssprangers.com
+          node index.js setTgWebhook https://ssprangers.com
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
