@@ -92,6 +92,8 @@ class Admin extends View {
                         var orderContent = [];
                         for (col => h in headers)
                         switch [h, (sheet.getCell(row, col).value:String)] {
+                            case ["請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
+                                orderContent.push(h + ": " + v);
                             case ["Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
                                 null;
                             case [_, null | "" | "明白了"]:
