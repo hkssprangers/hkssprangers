@@ -146,6 +146,7 @@ enum abstract Shop<T>(String) {
     var YearsHK:Shop<Dynamic>;
     var LaksaStore:Shop<Dynamic>;
     var DongDong:Shop<Dynamic>;
+    var BiuKeeLokYuen:Shop<Dynamic>;
 
     public function info() return switch (cast this:Shop<T>) {
         case EightyNine:
@@ -309,6 +310,43 @@ enum abstract Shop<T>(String) {
                         Friday,
                         Saturday,
                         // Sunday,
+                    ],
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "12:30",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:00",
+                            end: "20:00"
+                        },
+                        {
+                            type: Dinner,
+                            start: "20:00",
+                            end: "21:00"
+                        },
+                    ]
+                }
+            case BiuKeeLokYuen:
+                {
+                    id: BiuKeeLokYuen,
+                    name: "標記樂園潮州粉麵菜館",
+                    address: "深水埗福華街149號地舖",
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
                     ],
                     timeSlots: [
                         {
@@ -584,6 +622,9 @@ class OrderTools {
                 case LaksaStore:
 
                 case DongDong:
+
+                case BiuKeeLokYuen:
+
             }
         }
 
@@ -610,6 +651,9 @@ class OrderTools {
                 case LaksaStore:
 
                 case DongDong:
+
+                case BiuKeeLokYuen:
+
             }
         }
 

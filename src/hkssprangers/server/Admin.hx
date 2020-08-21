@@ -54,6 +54,7 @@ class Admin extends View {
         DragonJapaneseCuisine => "1xPROSpRRCXbGp-VsLv5p_zUVw0YIu2kLvYiYxVHnx1U",
         LaksaStore => "16Jw8bVcW1N87jndk6VQ99E3mBB_H9hxLckM8eIbGpcY",
         DongDong => "1IpJteF-lZ9wd0tSHPgwsVyUuhuWraAdgKnKisYalFb8",
+        BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
     ];
 
     static function getOrders(sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
