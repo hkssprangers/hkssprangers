@@ -135,16 +135,28 @@ class Admin extends View {
         var tg:Null<{
             id:Int,
             username:String,
-        }> = if (req.cookies != null && req.cookies.tg != null) Json.parse(req.cookies.tg) else null;
+        }> = if (req.cookies != null && req.cookies.tg != null) try {
+            Json.parse(req.cookies.tg);
+        } catch(err) {
+            res.status(403).end('Error parsing Telegram login response.\n\n' + err.details());
+            return;
+        } else null;
 
-        var user = if (
-            TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)
-            &&
-            [
-                "andyonthewings",
-                "Arbuuuuuuu",
-            ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username)
-        ) {
+        var user = if (tg != null) {
+            if (!TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)) {
+                res.status(403).end('Invalid Telegram login response.');
+                return;
+            }
+            if (
+                ![
+                    "andyonthewings",
+                    "Arbuuuuuuu",
+                ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username.toLowerCase())
+            ) {
+                res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
+                return;
+            }
+
             {
                 tg: tg,
             }
@@ -156,6 +168,7 @@ class Admin extends View {
             var now = Date.now();
             // var now = Date.fromString("2020-08-18");
             var hr = "\n--------------------------------------------------------------------------------\n";
+            var errors = [];
             Promise.all([
                 for (t in [Lunch, Dinner])
                 for (shop => id in menuForm)
@@ -184,9 +197,17 @@ class Admin extends View {
                                 o.paymentMethod,
                                 o.address + " (" + o.pickupMethod + ")",
                             ].filter(l -> l != null).join("\n");
-                        }).join(hr));
+                        }).join(hr))
+                        .catchError((err:js.lib.Error) -> {
+                            errors.push('Failed to process ${shop.info().name}\'s spreadsheet.\n\n' + err.message);
+                        });
                 }
             ]).then(strs -> {
+                if (errors.length > 0) {
+                    res.type("text");
+                    res.status(500).end(errors.join("\n\n\n\n"));
+                    return;
+                }
                 res.type("text");
                 res.end(strs.filter((str:String) -> str.trim() != "").join(hr));
             });
