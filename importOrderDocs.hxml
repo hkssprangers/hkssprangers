@@ -1,0 +1,9 @@
+--library compiletime
+--library tink_core
+--library hxnodejs
+--class-path src
+--class-path test
+--class-path lib/hxnodelibs
+--main hkssprangers.ImportOrderDocs
+--js importOrderDocs.js
+--cmd node importOrderDocs.js
