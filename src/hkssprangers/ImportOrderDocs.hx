@@ -1,5 +1,7 @@
 package hkssprangers;
 
+import js.lib.intl.DateTimeFormat;
+import js.npm.xlsx.Xlsx;
 import js.node.ChildProcess;
 import haxe.Json;
 import haxe.io.Path;
@@ -7,6 +9,27 @@ import sys.FileSystem;
 import sys.io.File;
 import hkssprangers.info.Info;
 using StringTools;
+using Lambda;
+
+typedef Order = {
+    creationTime:String,
+    orderCode:String,
+    shopId:Shop<Dynamic>,
+    orderDetails:String,
+    orderPrice:Int,
+    deliveryFee:Int,
+    wantTableware:Bool,
+    orderNote:Null<String>,
+    pickupLocation:String,
+    pickupTimeSlotStart:String,
+    pickupTimeSlotEnd:String,
+    pickupMethod:PickupMethod,
+    deliveryNote:Null<String>,
+    paymentMethods:Array<PaymentMethod>,
+    customerTgUsername:Null<String>,
+    customerTel:String,
+    courierTgUsername:String,
+};
 
 class ImportOrderDocs {
     static function textract(file:String):String {
@@ -15,20 +38,104 @@ class ImportOrderDocs {
         }).stdout;
     }
 
+    static function menuResponses() {
+        var responses = [];
+        function processMenuResponses(path:String) {
+            if (FileSystem.isDirectory(path)) {
+                for (file in FileSystem.readDirectory(path)) {
+                    processMenuResponses(Path.join([path, file]));
+                }
+            } else {
+                var workbook = Xlsx.readFile(path, {
+                    cellDates: true,
+                });
+                var sheet = workbook.Sheets[workbook.SheetNames[0]];
+                var rows:Array<Array<String>> = Xlsx.utils.sheet_to_json(sheet, {
+                    header: 1,
+                    raw: false,
+                });
+                for (r in 1...rows.length) { // skip header row
+                    var row = rows[r];
+                    if (row.length == 0)
+                        continue;
+
+                    var timestampReg = ~/^([0-9]+)\/([0-9]+)\/([0-9]{4}) ([0-9]+):([0-9]+):([0-9]+)$/;
+                    if (!timestampReg.match(row[0])) {
+                        throw "no date in " + row;
+                    }
+                    var creationTime = timestampReg.matched(3) + "-" + timestampReg.matched(1).lpad("0", 2) + "-" + timestampReg.matched(2).lpad("0", 2) + " " + timestampReg.matched(4).lpad("0", 2) + ":" + timestampReg.matched(5).lpad("0", 2) + ":" + timestampReg.matched(6).lpad("0", 2);
+                    var dateReg = ~/([0-9]+)月([0-9]+)日/;
+                    var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
+                    var timeSlotStr = row.find(v -> timeSlotReg.match(v));
+                    if (timeSlotStr == null) {
+                        trace("Cannot find timeslot field in " + path + " " + row);
+                        continue;
+                    }
+                    var timeSlotStart = if (dateReg.match(timeSlotStr) || dateReg.match(path)) {
+                        "2020-" + dateReg.matched(1).lpad("0", 2) + "-" + dateReg.matched(2).lpad("0", 2) + " " + timeSlotReg.matched(1) + ":00";
+                    } else {
+                        var dateReg = ~/^([0-9]+)\/([0-9]+)\/2020/;
+                        if (!dateReg.match(row[0])) {
+                            throw "no date in " + row;
+                        }
+                        "2020-" + dateReg.matched(1).lpad("0", 2) + "-" + (Std.parseInt(dateReg.matched(2)) + 1 + "").lpad("0", 2) + " " + timeSlotReg.matched(1) + ":00";
+                    }
+                    responses.push({
+                        creationTime: creationTime,
+                        timeSlotStart: timeSlotStart,
+                        tel: row.find(v -> ~/^[0-9]{8}$/.match(v)),
+                    });
+                }
+            }
+        }
+        processMenuResponses("menu");
+        return responses;
+    }
+
+    static function setCreationTime(order:Order, responses:Array<{
+        creationTime:String,
+        timeSlotStart:String,
+        tel:String,
+    }>) {
+        for (row in responses) {
+            if (
+                row.tel == order.customerTel
+                &&
+                (
+                    row.timeSlotStart.substr(0, 13) == order.pickupTimeSlotStart.substr(0, 13)
+                    ||
+                    row.timeSlotStart.substr(0, 13) == order.pickupTimeSlotEnd.substr(0, 13)
+                )
+            ) {
+                order.creationTime = row.creationTime;
+                return;
+            }
+        }
+        if (order.creationTime == null) {
+            throw "cannot find creation time of " + order;
+        }
+    }
+
+    static function validateOrder(order:Order) {
+        if (order.creationTime > order.pickupTimeSlotStart)
+            throw "order.creationTime > order.pickupTimeSlotStart: " + order;
+    }
+
     static function main():Void {
         var files = FileSystem.readDirectory("orders");
         files.sort(Reflect.compare);
-        // for (file in files) {
-        for (file in files.slice(0, 1)) {
+        var orders:Array<Order> = [];
+        for (file in files) {
             var dateStr = file.substr(0, 10);
             var file = Path.join(["orders", file]);
             var content = textract(file);
             var lines = content.split("\n");
-            var orders = [];
             var order = null;
+            var orderDetails:Array<String> = null;
             for (line in lines) {
                 if (line.startsWith("單號: ")) {
                     if (order != null) {
+                        order.orderDetails = orderDetails.join("\n").trim();
                         orders.push(order);
                     }
                     order = {
@@ -50,6 +157,7 @@ class ImportOrderDocs {
                         customerTel: null,
                         courierTgUsername: null,
                     };
+                    orderDetails = [];
 
                     order.orderCode = line.substr("單號: ".length).trim();
                     order.shopId = if (line.contains("89"))
@@ -86,9 +194,9 @@ class ImportOrderDocs {
                             case _:
                                 // pass
                         }
-                        if (order.orderDetails == null)
-                            order.orderDetails = [];
-                        order.orderDetails.push(line.trim());
+                        if (orderDetails == null)
+                            orderDetails = [];
+                        orderDetails.push(line.trim());
                         continue;
                     }
 
@@ -100,14 +208,14 @@ class ImportOrderDocs {
 
                     var pricePlusReg = ~/^食物\s*\+\s*運費:\s*\$?\s*([0-9]+)$/;
                     if (pricePlusReg.match(line)) {
-                        order.deliveryFee = order.orderPrice - Std.parseInt(pricePlusReg.matched(1));
+                        order.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - order.orderPrice;
                         continue;
                     }
 
                     var timeSlotReg = ~/^客人交收時段:\s*.*([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
                     if (timeSlotReg.match(line)) {
-                        order.pickupTimeSlotStart = Date.fromString(dateStr + " " + timeSlotReg.matched(1) + ":00");
-                        order.pickupTimeSlotEnd = Date.fromString(dateStr + " " + timeSlotReg.matched(2) + ":00");
+                        order.pickupTimeSlotStart = dateStr + " " + timeSlotReg.matched(1) + ":00";
+                        order.pickupTimeSlotEnd = dateStr + " " + timeSlotReg.matched(2) + ":00";
                         continue;
                     }
 
@@ -122,22 +230,22 @@ class ImportOrderDocs {
                         continue;
                     }
 
-                    var telReg = ~/^[0-9]{8}$/;
+                    var telReg = ~/[0-9]{8}/;
                     if (telReg.match(line)) {
-                        order.customerTel = line.trim();
+                        order.customerTel = telReg.matched(0);
                         continue;
                     }
 
                     if (~/payme/i.match(line) || ~/fps/i.match(line)) {
-                        order.paymentMethods = line.split(",").map(v -> switch (v.trim().toLowerCase()) {
+                        order.paymentMethods = ~/[,\/]/g.split(line).map(v -> switch (v.trim().toLowerCase()) {
                             case "payme": PayMe;
                             case "fps": FPS;
                             case v: throw "unregconized payment method: " + v;
-                        }).join(",");
+                        });
                         continue;
                     }
 
-                    var addressReg = ~/^(.+?)\s*\((.+交收)\).*$/;
+                    var addressReg = ~/^(.+?)\s*\((..交收)/;
                     if (addressReg.match(line)) {
                         order.pickupLocation = addressReg.matched(1);
                         order.pickupMethod = switch (addressReg.matched(2)) {
@@ -159,9 +267,22 @@ class ImportOrderDocs {
                 }
             }
 
-            if (order != null)
+            if (order != null) {
+                order.orderDetails = orderDetails.join("\n").trim();
                 orders.push(order);
-            trace(Json.stringify(orders, null, "  "));
+            }
         }
+
+        File.saveContent("orders.json", Json.stringify(orders, null, "  "));
+
+        var menuResponses = menuResponses();
+        File.saveContent("menuResponses.json", Json.stringify(menuResponses, null, "  "));
+
+        for (order in orders) {
+            setCreationTime(order, menuResponses);
+            validateOrder(order);
+        }
+
+        File.saveContent("orders.json", Json.stringify(orders, null, "  "));
     }
 }
