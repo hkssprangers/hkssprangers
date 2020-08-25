@@ -39,11 +39,12 @@ class ImportOrderDocs {
                         orderPrice: null,
                         deliveryFee: null,
                         wantTableware: null,
-                        customerNote: null,
+                        orderNote: null,
                         pickupLocation: null,
                         pickupTimeSlotStart: null,
                         pickupTimeSlotEnd: null,
                         pickupMethod: null,
+                        deliveryNote: null,
                         paymentMethods: null,
                         customerTgUsername: null,
                         customerTel: null,
@@ -51,6 +52,20 @@ class ImportOrderDocs {
                     };
 
                     order.orderCode = line.substr("單號: ".length).trim();
+                    order.shopId = if (line.contains("89"))
+                        EightyNine;
+                    else if (line.contains("營業部"))
+                        DragonJapaneseCuisine;
+                    else if (line.toLowerCase().contains("years"))
+                        YearsHK;
+                    else if (line.contains("喇沙"))
+                        LaksaStore;
+                    else if (line.contains("噹噹"))
+                        DongDong;
+                    else if (line.contains("標記"))
+                        BiuKeeLokYuen;
+                    else
+                        throw "unknown shop: " + line;
                     continue;
                 }
 
@@ -60,15 +75,26 @@ class ImportOrderDocs {
                         continue;
                     }
 
-                    if (order.courierTgUsername != null && order.orderPrice == null) {
-                        var priceReg = ~/^(?:食物價錢|total):\s*\$?\s*([0-9]+)$/i;
-                        if (priceReg.match(line)) {
-                            order.orderPrice = Std.parseInt(priceReg.matched(1));
-                            continue;
+                    if (order.courierTgUsername != null && order.wantTableware == null) {
+                        switch (line.trim()) {
+                            case "要餐具":
+                                order.wantTableware = true;
+                                continue;
+                            case "唔要餐具":
+                                order.wantTableware = false;
+                                continue;
+                            case _:
+                                // pass
                         }
                         if (order.orderDetails == null)
                             order.orderDetails = [];
                         order.orderDetails.push(line.trim());
+                        continue;
+                    }
+
+                    var priceReg = ~/^(?:食物價錢|total):\s*\$?\s*([0-9]+)$/i;
+                    if (priceReg.match(line)) {
+                        order.orderPrice = Std.parseInt(priceReg.matched(1));
                         continue;
                     }
 
@@ -124,7 +150,10 @@ class ImportOrderDocs {
 
                     var noteReg = ~/^\*?其他備註:\s*(.+)$/;
                     if (noteReg.match(line)) {
-                        order.customerNote = noteReg.matched(1);
+                        if (order.pickupLocation != null)
+                            order.deliveryNote = noteReg.matched(1);
+                        else
+                            order.orderNote = noteReg.matched(1);
                         continue;
                     }
                 }
