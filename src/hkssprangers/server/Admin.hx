@@ -169,7 +169,10 @@ class Admin extends View {
         }
 
         if (user != null) {
-            var now = Date.now();
+            var now = switch (req.query.date:String) {
+                case null: Date.now();
+                case v: Date.fromString(v);
+            }
             // var now = Date.fromString("2020-08-18");
             var hr = "\n--------------------------------------------------------------------------------\n";
             var errors = [];
