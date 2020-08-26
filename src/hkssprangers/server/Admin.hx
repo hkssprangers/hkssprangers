@@ -49,12 +49,19 @@ class Admin extends View {
     }
 
     static final menuForm = [
-        YearsHK => "1Jq1AuOc6pG-EuqsGkRj_DS4TWvFXa-r3pGY9DFMqhGk",
-        EightyNine => "1Y-yqDQsYO4UeJa4Jxl2ZtZ56Su84cU58TVrm7QpXTHg",
-        DragonJapaneseCuisine => "1xPROSpRRCXbGp-VsLv5p_zUVw0YIu2kLvYiYxVHnx1U",
-        LaksaStore => "16Jw8bVcW1N87jndk6VQ99E3mBB_H9hxLckM8eIbGpcY",
-        DongDong => "1IpJteF-lZ9wd0tSHPgwsVyUuhuWraAdgKnKisYalFb8",
-        BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
+        for (shop => sheetId in [
+            YearsHK => "1Jq1AuOc6pG-EuqsGkRj_DS4TWvFXa-r3pGY9DFMqhGk",
+            EightyNine => "1Y-yqDQsYO4UeJa4Jxl2ZtZ56Su84cU58TVrm7QpXTHg",
+            DragonJapaneseCuisine => "1xPROSpRRCXbGp-VsLv5p_zUVw0YIu2kLvYiYxVHnx1U",
+            LaksaStore => "16Jw8bVcW1N87jndk6VQ99E3mBB_H9hxLckM8eIbGpcY",
+            DongDong => "1IpJteF-lZ9wd0tSHPgwsVyUuhuWraAdgKnKisYalFb8",
+            BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
+        ]) {
+            var doc = new GoogleSpreadsheet(sheetId);
+            shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
+                .then(_ -> doc.loadInfo())
+                .then(_ -> doc);
+        }
     ];
 
     static function getOrders(sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
@@ -67,68 +74,65 @@ class Admin extends View {
                     value.indexOf("晚") >= 0;
             }
         }
-        return sheet.loadCells()
-            .then(_ -> {
-                var headers = [
-                    for (col in 0...sheet.columnCount)
-                    (sheet.getCell(0, col).value:Null<String>)
-                ];
-                [
-                    for (row in 1...sheet.rowCount)
-                    if (sheet.getCell(row, 0).value != null)
-                    if (isInTimeSlot(sheet.getCell(row, headers.findIndex(h -> h == "想幾時收到?")).value))
-                    {
-                        var order = {
-                            content: "",
-                            wantTableware: null,
-                            time: null,
-                            tg: null,
-                            tel: null,
-                            paymentMethod: null,
-                            address: null,
-                            pickupMethod: null,
-                            note: null,
-                        };
-                        var orderContent = [];
-                        for (col => h in headers)
-                        switch [h, (sheet.getCell(row, col).value:String)] {
-                            case ["請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
-                                orderContent.push(h + ": " + v);
-                            case ["Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
-                                null;
-                            case [_, null | "" | "明白了"]:
-                                null;
-                            case ["想幾時收到?", v]:
-                                order.time = v;
-                            case ["你的地址", v]:
-                                order.address = v;
-                            case ["你的電話號碼", v]:
-                                order.tel = v;
-                            case ["俾錢方法", v]:
-                                order.paymentMethod = v;
-                            case ["交收方法", v]:
-                                order.pickupMethod = v;
-                            case ["需要餐具嗎?", v]:
-                                order.wantTableware = v + "餐具";
-                            case ["其他備註", v]:
-                                order.note = v;
-                            case [h, v] if (h.startsWith("你的tg username")):
-                                var r = ~/^@?([A-Za-z0-9_]{5,})$/;
-                                order.tg = if (r.match(v.trim()))
-                                    "https://t.me/" + r.matched(1);
-                                else
-                                    v;
-                            case [h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
-                                orderContent.push(h + ": " + v);
-                                orderContent.push("套餐附送絲苗白飯2個");
-                            case [h, v]:
-                                orderContent.push(h + ": " + v);
-                        }
-                        order.content = orderContent.join("\n");
-                        order;
-                    }
-                ];
-            });
+        var headers = [
+            for (col in 0...sheet.columnCount)
+            (sheet.getCell(0, col).value:Null<String>)
+        ];
+        return [
+            for (row in 1...sheet.rowCount)
+            if (sheet.getCell(row, 0).value != null)
+            if (isInTimeSlot(sheet.getCell(row, headers.findIndex(h -> h == "想幾時收到?")).value))
+            {
+                var order = {
+                    content: "",
+                    wantTableware: null,
+                    time: null,
+                    tg: null,
+                    tel: null,
+                    paymentMethod: null,
+                    address: null,
+                    pickupMethod: null,
+                    note: null,
+                };
+                var orderContent = [];
+                for (col => h in headers)
+                switch [h, (sheet.getCell(row, col).value:String)] {
+                    case ["請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
+                        orderContent.push(h + ": " + v);
+                    case ["Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
+                        null;
+                    case [_, null | "" | "明白了"]:
+                        null;
+                    case ["想幾時收到?", v]:
+                        order.time = v;
+                    case ["你的地址", v]:
+                        order.address = v;
+                    case ["你的電話號碼", v]:
+                        order.tel = v;
+                    case ["俾錢方法", v]:
+                        order.paymentMethod = v;
+                    case ["交收方法", v]:
+                        order.pickupMethod = v;
+                    case ["需要餐具嗎?", v]:
+                        order.wantTableware = v + "餐具";
+                    case ["其他備註", v]:
+                        order.note = v;
+                    case [h, v] if (h.startsWith("你的tg username")):
+                        var r = ~/^@?([A-Za-z0-9_]{5,})$/;
+                        order.tg = if (r.match(v.trim()))
+                            "https://t.me/" + r.matched(1);
+                        else
+                            v;
+                    case [h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
+                        orderContent.push(h + ": " + v);
+                        orderContent.push("套餐附送絲苗白飯2個");
+                    case [h, v]:
+                        orderContent.push(h + ": " + v);
+                }
+                order.content = orderContent.join("\n");
+                order;
+            }
+        ];
     }
 
     static public function middleware(req:Request, res:Response) {
@@ -169,14 +173,18 @@ class Admin extends View {
             // var now = Date.fromString("2020-08-18");
             var hr = "\n--------------------------------------------------------------------------------\n";
             var errors = [];
+            var sheets = [
+                for (shop => doc in menuForm)
+                shop => doc
+                    .then(doc -> doc.sheetsByIndex[0])
+                    .then(sheet -> sheet.loadCells().then(_ -> sheet))
+            ];
             Promise.all([
                 for (t in [Lunch, Dinner])
-                for (shop => id in menuForm)
+                for (shop => sheet in sheets)
                 {
-                    var doc = new GoogleSpreadsheet(id);
-                    doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
-                        .then(_ -> doc.loadInfo())
-                        .then(_ -> getOrders(doc.sheetsByIndex[0], now, t))
+                    sheet
+                        .then(sheet -> getOrders(sheet, now, t))
                         .then(orders -> orders.mapi((i, o) -> {
                             [
                                 "單號: " + shop.info().name + " " + (switch (t) {
