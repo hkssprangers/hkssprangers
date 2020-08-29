@@ -17,6 +17,7 @@ typedef Order = {
     shopId:Shop<Dynamic>,
     orderDetails:String,
     orderPrice:Int,
+    iceCreamPrice:Int,
     deliveryFee:Int,
     wantTableware:Bool,
     orderNote:Null<String>,
@@ -45,7 +46,7 @@ class ImportOrderDocs {
                 for (file in FileSystem.readDirectory(path)) {
                     processMenuResponses(Path.join([path, file]));
                 }
-            } else {
+            } else if (path.endsWith(".xlsx")) {
                 var workbook = Xlsx.readFile(path, {
                     cellDates: true,
                 });
@@ -56,7 +57,7 @@ class ImportOrderDocs {
                 });
                 for (r in 1...rows.length) { // skip header row
                     var row = rows[r];
-                    if (row.length == 0)
+                    if (row.length == 0 || row[0] == null)
                         continue;
 
                     var timestampReg = ~/^([0-9]+)\/([0-9]+)\/([0-9]{4}) ([0-9]+):([0-9]+):([0-9]+)$/;
@@ -126,6 +127,11 @@ class ImportOrderDocs {
         files.sort(Reflect.compare);
         var orders:Array<Order> = [];
         for (file in files) {
+            // ignore copies for shops
+            if (!~/^\d{4}-\d{2}-\d{2} 訂單\.docx$/.match(file) && !~/^\d{4}-\d{2}-\d{2} - .市訂單\.docx$/.match(file)) {
+                // trace('skip $file');
+                continue;
+            }
             var dateStr = file.substr(0, 10);
             var file = Path.join(["orders", file]);
             var content = textract(file);
@@ -144,6 +150,7 @@ class ImportOrderDocs {
                         shopId: null,
                         orderDetails: null,
                         orderPrice: null,
+                        iceCreamPrice: null,
                         deliveryFee: null,
                         wantTableware: null,
                         orderNote: null,
@@ -200,15 +207,24 @@ class ImportOrderDocs {
                         continue;
                     }
 
-                    var priceReg = ~/^(?:食物價錢|total):\s*\$?\s*([0-9]+)$/i;
+                    var priceReg = ~/^(?:食物價錢|total):\s*\$?\s*([0-9]+)\s*$/i;
                     if (priceReg.match(line)) {
                         order.orderPrice = Std.parseInt(priceReg.matched(1));
                         continue;
                     }
 
-                    var pricePlusReg = ~/^食物\s*\+\s*運費:\s*\$?\s*([0-9]+)$/;
+                    var priceIceCreamReg = ~/^雪糕價錢:\s*\$?\s*([0-9]+)\s*$/;
+                    if (priceIceCreamReg.match(line)) {
+                        order.iceCreamPrice = Std.parseInt(priceIceCreamReg.matched(1));
+                        continue;
+                    }
+
+                    var pricePlusReg = ~/^食物(?:\s*\+\s*雪糕)?\s*\+\s*運費:\s*\$?\s*([0-9]+)\s*$/;
                     if (pricePlusReg.match(line)) {
-                        order.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - order.orderPrice;
+                        if (order.iceCreamPrice == null)
+                            order.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - order.orderPrice;
+                        else
+                            order.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - order.orderPrice - order.iceCreamPrice;
                         continue;
                     }
 
@@ -227,6 +243,11 @@ class ImportOrderDocs {
                     var tgUrlReg = ~/.*https:\/\/t\.me\/([A-Za-z0-9_]{5,})/;
                     if (tgUrlReg.match(line)) {
                         order.customerTgUsername = tgUrlReg.matched(1);
+                        continue;
+                    }
+                    var tgInvalid = ~/^tg:/;
+                    if (tgInvalid.match(line)) {
+                        // trace('invlid tg ' + line);
                         continue;
                     }
 
@@ -264,6 +285,9 @@ class ImportOrderDocs {
                             order.orderNote = noteReg.matched(1);
                         continue;
                     }
+
+                    if (line.trim() != "")
+                        trace('Not processed: $file $line');
                 }
             }
 
