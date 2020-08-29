@@ -20,4 +20,8 @@ class TelegramTools {
         var expectedHash = new Hmac(SHA256).make(Bytes.ofHex(tgBotTokenSha256), Bytes.ofString(dataCheckString)).toHex();
         return expectedHash == response["hash"];
     }
+
+    static public function isValidUserName(username:String):Bool {
+        return ~/^[A-Za-z0-9_]{5,}$/.match(username);
+    }
 }

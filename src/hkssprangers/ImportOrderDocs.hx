@@ -118,8 +118,59 @@ class ImportOrderDocs {
     }
 
     static function validateOrder(order:Order) {
+        function printOrder() return Json.stringify(order, null, "  ");
+
         if (order.creationTime > order.pickupTimeSlotStart)
-            throw "order.creationTime > order.pickupTimeSlotStart: " + order;
+            throw "order.creationTime > order.pickupTimeSlotStart: \n" + printOrder();
+
+        if (order.orderPrice == null) {
+            throw "orderPrice is null: \n" + printOrder();
+        }
+
+        switch (order.deliveryFee) {
+            case null:
+                throw "deliveryFee is null: \n" + printOrder();
+            case 25 | 35 | 40 | 50:
+                //pass
+            case v:
+                throw "unusual deliveryFee: \n" + printOrder();
+        }
+
+        if (!TelegramTools.isValidUserName(order.courierTgUsername)) {
+            throw "invalid courierTgUsername: \n" + printOrder();
+        }
+
+        if (order.customerTgUsername != null && !TelegramTools.isValidUserName(order.customerTgUsername)) {
+            throw "invalid customerTgUsername: \n" + printOrder();
+        }
+
+        if (!~/^\d{8}$/.match(order.customerTel)) {
+            throw "invalid customerTel: \n" + printOrder();
+        }
+
+        if (order.wantTableware == null) {
+            throw "wantTableware is null: \n" + printOrder();
+        }
+
+        if (order.pickupTimeSlotStart == null) {
+            throw "pickupTimeSlotStart is null: \n" + printOrder();
+        }
+
+        if (order.pickupTimeSlotEnd == null) {
+            throw "pickupTimeSlotEnd is null: \n" + printOrder();
+        }
+
+        if (order.pickupLocation == null || order.pickupLocation == "") {
+            throw "pickupLocation is null: \n" + printOrder();
+        }
+
+        if (order.pickupMethod == null) {
+            throw "pickupMethod is null: \n" + printOrder();
+        }
+
+        if (order.orderDetails == null || order.orderDetails == "") {
+            throw "orderDetails is null: \n" + printOrder();
+        }
     }
 
     static function main():Void {
@@ -138,11 +189,16 @@ class ImportOrderDocs {
             var lines = content.split("\n");
             var order = null;
             var orderDetails:Array<String> = null;
+            function addOrder(order) {
+                order.orderDetails = orderDetails.join("\n").trim();
+                if (order.deliveryFee == null)
+                    order.deliveryFee = 25;
+                orders.push(order);
+            }
             for (line in lines) {
                 if (line.startsWith("單號: ")) {
                     if (order != null) {
-                        order.orderDetails = orderDetails.join("\n").trim();
-                        orders.push(order);
+                        addOrder(order);
                     }
                     order = {
                         creationTime: null,
@@ -245,7 +301,7 @@ class ImportOrderDocs {
                         order.customerTgUsername = tgUrlReg.matched(1);
                         continue;
                     }
-                    var tgInvalid = ~/^tg:/;
+                    var tgInvalid = ~/^tg:/i;
                     if (tgInvalid.match(line)) {
                         // trace('invlid tg ' + line);
                         continue;
@@ -292,8 +348,7 @@ class ImportOrderDocs {
             }
 
             if (order != null) {
-                order.orderDetails = orderDetails.join("\n").trim();
-                orders.push(order);
+                addOrder(order);
             }
         }
 
