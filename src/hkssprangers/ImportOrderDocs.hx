@@ -381,12 +381,112 @@ class ImportOrderDocs {
             }
     }
 
+    static function shopSummary(orders:Array<Order>):WorkSheet {
+        orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
+            case 0: Reflect.compare(a.orderCode, b.orderCode);
+            case v: v;
+        });
+        var ws = Xlsx.utils.json_to_sheet(orders.map(o -> {
+            /* A */ "日期": o.pickupTimeSlotStart.substr(0, 10),
+            /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(o.pickupTimeSlotStart))) {
+                case Lunch: "午市";
+                case Dinner: "晚市";
+            },
+            /* C */ "單號": o.orderCode,
+            /* D */ "訂單內容": o.orderDetails,
+            /* E */ "食物價錢": o.orderPrice,
+            /* F */ "埗兵收費": "",
+        }));
+
+        for (i in 0...orders.length) {
+            var r = i + 2;
+            Reflect.setField(ws, 'F$r', {
+                t: "n",
+                f: 'E$r * 0.15',
+            });
+        }
+
+        Xlsx.utils.sheet_add_aoa(ws, [
+            ["", "", "", "", "", ""],
+            ["", "", "", "", "", ""],
+        ], {
+            origin: { r: orders.length+1, c: 0 }
+        });
+
+        Reflect.setField(ws, 'E${orders.length+3}', {
+            t: "s",
+            v: '總埗兵收費',
+        });
+        Reflect.setField(ws, 'F${orders.length+3}', {
+            t: "n",
+            f: 'ROUND(SUM(F2:F${orders.length+1}), 1)',
+        });
+
+        return ws;
+    }
+
+    static function courierSummary(orders:Array<Order>):WorkSheet {
+        orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
+            case 0: Reflect.compare(a.orderCode, b.orderCode);
+            case v: v;
+        });
+        var ws = Xlsx.utils.json_to_sheet(orders.map(o -> {
+            /* A */ "日期": o.pickupTimeSlotStart.substr(0, 10),
+            /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(o.pickupTimeSlotStart))) {
+                case Lunch: "午市";
+                case Dinner: "晚市";
+            },
+            /* C */ "單號": o.orderCode,
+            /* D */ "店舖": o.shopId.info().name,
+            /* E */ "訂單內容": o.orderDetails,
+            /* F */ "食物價錢": o.orderPrice,
+            /* G */ "外賣員收入": "",
+            /* H */ "運費": o.deliveryFee,
+        }));
+
+        for (i in 0...orders.length) {
+            var r = i + 2;
+            Reflect.setField(ws, 'G$r', {
+                t: "n",
+                f: 'F$r * 0.075',
+            });
+        }
+
+        Xlsx.utils.sheet_add_aoa(ws, [
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+        ], {
+            origin: { r: orders.length+1, c: 0 }
+        });
+
+        Reflect.setField(ws, 'F${orders.length+3}', {
+            t: "s",
+            v: 'Total',
+        });
+        Reflect.setField(ws, 'G${orders.length+3}', {
+            t: "n",
+            f: 'ROUND(SUM(G2:G${orders.length+1}), 1)',
+        });
+        Reflect.setField(ws, 'H${orders.length+3}', {
+            t: "n",
+            f: 'SUM(H2:H${orders.length+1})',
+        });
+
+        return ws;
+    }
+
     static function calculate():Void {
         var summaryDir = "summary";
         FileSystem.createDirectory(summaryDir);
 
         var orders:Array<Order> = Json.parse(File.getContent("orders.json"));
+        orders = orders.filter(filterOrder);
+        orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
+            case 0: Reflect.compare(a.orderCode, b.orderCode);
+            case v: v;
+        });
 
+        FileSystem.createDirectory(Path.join([summaryDir, "shop"]));
         var shops = [
             EightyNine,
             DragonJapaneseCuisine,
@@ -395,57 +495,14 @@ class ImportOrderDocs {
             DongDong,
             BiuKeeLokYuen,
         ];
-
         var charges = new Map<Shop<Dynamic>, Decimal>();
         for (shop in shops) {
-            var orders = orders.filter(o ->
-                o.shopId == shop
-                &&
-                filterOrder(o)
-            );
-            orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
-                case 0: Reflect.compare(a.orderCode, b.orderCode);
-                case v: v;
-            });
+            var orders = orders.filter(o -> o.shopId == shop);
             var wb = Xlsx.utils.book_new();
-            var ws = Xlsx.utils.json_to_sheet(orders.map(o -> {
-                /* A */ "日期": o.pickupTimeSlotStart.substr(0, 10),
-                /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(o.pickupTimeSlotStart))) {
-                    case Lunch: "午市";
-                    case Dinner: "晚市";
-                },
-                /* C */ "單號": o.orderCode,
-                /* D */ "訂單內容": o.orderDetails,
-                /* E */ "食物價錢": o.orderPrice,
-                /* F */ "埗兵收費": "",
-            }));
-
-            for (i in 0...orders.length) {
-                var r = i + 2;
-                Reflect.setField(ws, 'F$r', {
-                    t: "n",
-                    f: 'E$r * 0.15',
-                });
-            }
-
-            Xlsx.utils.sheet_add_aoa(ws, [
-                ["", "", "", "", "", ""],
-                ["", "", "", "", "", ""],
-            ], {
-                origin: { r: orders.length+1, c: 0 }
-            });
-
-            Reflect.setField(ws, 'E${orders.length+3}', {
-                t: "s",
-                v: '總埗兵收費',
-            });
-            Reflect.setField(ws, 'F${orders.length+3}', {
-                t: "n",
-                f: 'ROUND(SUM(F2:F${orders.length+1}), 1)',
-            });
+            var ws = shopSummary(orders);
 
             Xlsx.utils.book_append_sheet(wb, ws, "orders");
-            Xlsx.writeFile(wb, Path.join([summaryDir, dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + shop.info().name + ".xlsx"]));
+            Xlsx.writeFile(wb, Path.join([summaryDir, "shop", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + shop.info().name + ".xlsx"]));
 
             var totalCharge = orders
                 .map(o -> (o.orderPrice:Decimal) * 0.15)
@@ -456,9 +513,45 @@ class ImportOrderDocs {
         };
 
         Sys.println("-----------------------------");
-        var allCharge = [for (shop => c in charges) c]
+
+        var allCharge:Decimal = [for (shop => c in charges) c]
             .fold((item, result) -> result + item, Decimal.zero);
-        Sys.println('All: ${allCharge.toString()}');
+        Sys.println('All charges: ${allCharge.toString()}');
+
+        Sys.println("-----------------------------");
+
+        FileSystem.createDirectory(Path.join([summaryDir, "courier"]));
+        var couriers = [
+            for (o in orders)
+            o.courierTgUsername => o.courierTgUsername
+        ].array();
+        couriers.sort((a,b) -> Reflect.compare(a.toLowerCase(), b.toLowerCase()));
+        var courierPayout = new Map<String, Decimal>();
+        var courierNameMax = Std.int(couriers.fold((item, r) -> Math.max(item.length, r), 0));
+        for (courier in couriers) {
+            var orders = orders.filter(o -> o.courierTgUsername == courier);
+            var wb = Xlsx.utils.book_new();
+            var ws = courierSummary(orders);
+
+            Xlsx.utils.book_append_sheet(wb, ws, "orders");
+            Xlsx.writeFile(wb, Path.join([summaryDir, "courier", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + courier + ".xlsx"]));
+
+            var chargeTotal:Decimal = orders
+                .map(o -> (o.orderPrice:Decimal) * 0.075)
+                .fold((item, result) -> result + item, Decimal.zero)
+                .roundTo(1);
+            courierPayout[courier] = chargeTotal;
+            var feeTotal:Decimal = orders
+                .map(o -> (o.deliveryFee:Decimal))
+                .fold((item, result) -> result + item, Decimal.zero);
+            Sys.println('${courier.lpad(" ", courierNameMax)}: ${chargeTotal.toString().lpad(" ", 5)} + ${feeTotal.toString().lpad(" ", 5)} = ${(chargeTotal + feeTotal).toString().lpad(" ", 6)}');
+        }
+        Sys.println("-----------------------------");
+        var allPayout:Decimal = [for (courier => v in courierPayout) v]
+            .fold((item, result) -> result + item, Decimal.zero);
+        Sys.println('All payouts: ${allPayout.toString()}');
+        Sys.println("-----------------------------");
+        Sys.println('Platform income: ${(allCharge - allPayout).toString()}');
     }
 
     static function main():Void {
