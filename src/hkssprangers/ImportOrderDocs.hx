@@ -8,6 +8,7 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
 import hkssprangers.info.Info;
+import thx.Decimal;
 using StringTools;
 using Lambda;
 
@@ -173,9 +174,8 @@ class ImportOrderDocs {
         }
     }
 
-    static function main():Void {
+    static function importDocs():Void {
         var files = FileSystem.readDirectory("orders");
-        files.sort(Reflect.compare);
         var orders:Array<Order> = [];
         for (file in files) {
             // ignore copies for shops
@@ -363,5 +363,112 @@ class ImportOrderDocs {
         }
 
         File.saveContent("orders.json", Json.stringify(orders, null, "  "));
+    }
+
+    static final dateStart = "2020-08-05 00:00:00";
+    static final dateEnd = "2020-08-31 23:59:59";
+
+    static function filterOrder(o:Order):Bool {
+        return
+            o.pickupTimeSlotStart > dateStart
+            &&
+            o.pickupTimeSlotStart < dateEnd
+            &&
+            switch [o.pickupTimeSlotStart.substr(0, 10), o.orderCode] {
+                case ["2020-08-05", "Years 02"]: false; // Years gave a 85% discount
+                case ["2020-08-05", "Years 03"]: false; // Years gave a 85% discount
+                case _: true;
+            }
+    }
+
+    static function calculate():Void {
+        var summaryDir = "summary";
+        FileSystem.createDirectory(summaryDir);
+
+        var orders:Array<Order> = Json.parse(File.getContent("orders.json"));
+
+        var shops = [
+            EightyNine,
+            DragonJapaneseCuisine,
+            YearsHK,
+            LaksaStore,
+            DongDong,
+            BiuKeeLokYuen,
+        ];
+
+        var charges = new Map<Shop<Dynamic>, Decimal>();
+        for (shop in shops) {
+            var orders = orders.filter(o ->
+                o.shopId == shop
+                &&
+                filterOrder(o)
+            );
+            orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
+                case 0: Reflect.compare(a.orderCode, b.orderCode);
+                case v: v;
+            });
+            var wb = Xlsx.utils.book_new();
+            var ws = Xlsx.utils.json_to_sheet(orders.map(o -> {
+                /* A */ "日期": o.pickupTimeSlotStart.substr(0, 10),
+                /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(o.pickupTimeSlotStart))) {
+                    case Lunch: "午市";
+                    case Dinner: "晚市";
+                },
+                /* C */ "單號": o.orderCode,
+                /* D */ "訂單內容": o.orderDetails,
+                /* E */ "食物價錢": o.orderPrice,
+                /* F */ "埗兵收費": "",
+            }));
+
+            for (i in 0...orders.length) {
+                var r = i + 2;
+                Reflect.setField(ws, 'F$r', {
+                    t: "n",
+                    f: 'E$r * 0.15',
+                });
+            }
+
+            Xlsx.utils.sheet_add_aoa(ws, [
+                ["", "", "", "", "", ""],
+                ["", "", "", "", "", ""],
+            ], {
+                origin: { r: orders.length+1, c: 0 }
+            });
+
+            Reflect.setField(ws, 'E${orders.length+3}', {
+                t: "s",
+                v: '總埗兵收費',
+            });
+            Reflect.setField(ws, 'F${orders.length+3}', {
+                t: "n",
+                f: 'ROUND(SUM(F2:F${orders.length+1}), 1)',
+            });
+
+            Xlsx.utils.book_append_sheet(wb, ws, "orders");
+            Xlsx.writeFile(wb, Path.join([summaryDir, dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + shop.info().name + ".xlsx"]));
+
+            var totalCharge = orders
+                .map(o -> (o.orderPrice:Decimal) * 0.15)
+                .fold((item, result) -> result + item, Decimal.zero)
+                .roundTo(1);
+            charges[shop] = totalCharge;
+            Sys.println('${shop.info().name}: ${totalCharge.toString()}');
+        };
+
+        Sys.println("-----------------------------");
+        var allCharge = [for (shop => c in charges) c]
+            .fold((item, result) -> result + item, Decimal.zero);
+        Sys.println('All: ${allCharge.toString()}');
+    }
+
+    static function main():Void {
+        switch (Sys.args()) {
+            case ["importDocs"]:
+                importDocs();
+            case ["calculate"]:
+                calculate();
+            case args:
+                throw "unknown args: " + args;
+        }
     }
 }

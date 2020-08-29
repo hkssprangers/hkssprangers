@@ -1,9 +1,12 @@
 --library compiletime
 --library tink_core
 --library hxnodejs
+--library thx.core
 --class-path src
 --class-path test
 --class-path lib/hxnodelibs
 --main hkssprangers.ImportOrderDocs
 --js importOrderDocs.js
---cmd node importOrderDocs.js
+-D no-deprecation-warnings
+# --cmd node importOrderDocs.js importDocs
+--cmd node importOrderDocs.js calculate

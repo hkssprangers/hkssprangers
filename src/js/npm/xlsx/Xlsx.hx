@@ -81,7 +81,14 @@ extern class Xlsx {
     static public function read(data:Dynamic, ?opts:Dynamic):WorkBook;
     static public function readFile(filename:Dynamic, ?opts:Dynamic):WorkBook;
 
+    static public function writeFile(wb:WorkBook, file:String, ?opts:Dynamic):Void;
+
     static final utils:{
         function sheet_to_json(ws:WorkSheet, ?opts:Dynamic):Dynamic;
+        function json_to_sheet<T>(data:Array<T>, ?opts:Dynamic):WorkSheet;
+        function book_new():WorkBook;
+        function book_append_sheet(wb:WorkBook, ws:WorkSheet, ws_name:String):Void;
+        function sheet_add_json<T>(ws:WorkSheet, data:Array<T>, ?opts:Dynamic):Void;
+        function sheet_add_aoa<T>(ws:WorkSheet, data:Array<Array<T>>, ?opts:Dynamic):Void;
     }
 }

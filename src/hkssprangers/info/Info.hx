@@ -114,6 +114,14 @@ enum abstract TimeSlotType(String) {
                 cutoffTime: "17:00",
             }
     }
+
+    static public function classify(date:Date):TimeSlotType {
+        var hour = date.getHours();
+        return if (hour < 15)
+            Lunch;
+        else
+            Dinner;
+    }
 }
 
 abstract Cents(Int) from Int to Int {
