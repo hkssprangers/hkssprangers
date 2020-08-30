@@ -1,6 +1,5 @@
 package hkssprangers;
 
-import js.lib.intl.DateTimeFormat;
 import js.npm.xlsx.Xlsx;
 import js.node.ChildProcess;
 import haxe.Json;
@@ -126,6 +125,12 @@ class ImportOrderDocs {
 
         if (order.orderPrice == null) {
             throw "orderPrice is null: \n" + printOrder();
+        }
+
+        if (order.iceCreamPrice != null) {
+            if ((order.iceCreamPrice % 26) != 0) {
+                throw "iceCreamPrice is not multiple of 26: \n" + printOrder();
+            }
         }
 
         switch (order.deliveryFee) {
@@ -509,14 +514,18 @@ class ImportOrderDocs {
                 .fold((item, result) -> result + item, Decimal.zero)
                 .roundTo(1);
             charges[shop] = totalCharge;
-            Sys.println('${shop.info().name}: ${totalCharge.toString()}');
+            var shopName = shop.info().name;
+            var chinese = ~/[\u4e00-\u9fff]/g;
+            var shopNameWidth = chinese.replace(shopName, "XX").length;
+            var shopNamePadding = [for (_ in 0...(20-shopNameWidth)) " "].join("");
+            Sys.println('${shopNamePadding}${shopName}: ${totalCharge.toString().lpad(" ", 6)} (共 ${Std.string(orders.length).lpad(" ", 3)} 單)');
         };
 
         Sys.println("-----------------------------");
 
         var allCharge:Decimal = [for (shop => c in charges) c]
             .fold((item, result) -> result + item, Decimal.zero);
-        Sys.println('All charges: ${allCharge.toString()}');
+        Sys.println('All charges: ${allCharge.toString()} (共 ${orders.length} 單)');
 
         Sys.println("-----------------------------");
 
@@ -544,7 +553,7 @@ class ImportOrderDocs {
             var feeTotal:Decimal = orders
                 .map(o -> (o.deliveryFee:Decimal))
                 .fold((item, result) -> result + item, Decimal.zero);
-            Sys.println('${courier.lpad(" ", courierNameMax)}: ${chargeTotal.toString().lpad(" ", 5)} + ${feeTotal.toString().lpad(" ", 5)} = ${(chargeTotal + feeTotal).toString().lpad(" ", 6)}');
+            Sys.println('${courier.lpad(" ", courierNameMax)}: ${chargeTotal.toString().lpad(" ", 5)} + ${feeTotal.toString().lpad(" ", 5)} = ${(chargeTotal + feeTotal).toString().lpad(" ", 6)} (共 ${Std.string(orders.length).lpad(" ", 2)} 單)');
         }
         Sys.println("-----------------------------");
         var allPayout:Decimal = [for (courier => v in courierPayout) v]
