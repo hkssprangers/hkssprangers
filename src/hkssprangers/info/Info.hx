@@ -155,6 +155,7 @@ enum abstract Shop<T>(String) {
     var LaksaStore:Shop<Dynamic>;
     var DongDong:Shop<Dynamic>;
     var BiuKeeLokYuen:Shop<Dynamic>;
+    var KCZenzero:Shop<Dynamic>;
 
     public function info() return switch (cast this:Shop<T>) {
         case EightyNine:
@@ -347,6 +348,43 @@ enum abstract Shop<T>(String) {
                     id: BiuKeeLokYuen,
                     name: "標記樂園潮州粉麵菜館",
                     address: "深水埗福華街149號地舖",
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
+                    ],
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "12:30",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:00",
+                            end: "20:00"
+                        },
+                        {
+                            type: Dinner,
+                            start: "20:00",
+                            end: "21:00"
+                        },
+                    ]
+                }
+            case KCZenzero:
+                {
+                    id: KCZenzero,
+                    name: "蕃廚",
+                    address: "深水埗欽州街37號西九龍中心8樓57號舖",
                     openDays: [
                         Monday,
                         Tuesday,
@@ -633,6 +671,7 @@ class OrderTools {
 
                 case BiuKeeLokYuen:
 
+                case KCZenzero:
             }
         }
 
@@ -662,6 +701,7 @@ class OrderTools {
 
                 case BiuKeeLokYuen:
 
+                case KCZenzero:
             }
         }
 

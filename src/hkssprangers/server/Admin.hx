@@ -56,6 +56,7 @@ class Admin extends View {
             LaksaStore => "16Jw8bVcW1N87jndk6VQ99E3mBB_H9hxLckM8eIbGpcY",
             DongDong => "1IpJteF-lZ9wd0tSHPgwsVyUuhuWraAdgKnKisYalFb8",
             BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
+            KCZenzero => "1gHslFNSVO8KOoD6IEcV-mglGoGailUaHr4SbQRSzFOo",
         ]) {
             var doc = new GoogleSpreadsheet(sheetId);
             shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
