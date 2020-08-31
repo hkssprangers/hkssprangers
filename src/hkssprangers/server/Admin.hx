@@ -65,7 +65,7 @@ class Admin extends View {
         }
     ];
 
-    static function getOrders(sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
+    static function getOrders(shop:Shop<Dynamic>, sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
         var dateStr = (date.getMonth() + 1) + "月" + date.getDate() + "日";
         function isInTimeSlot(value:String):Bool {
             return value.startsWith(dateStr) && switch (timeSlotType) {
@@ -86,6 +86,7 @@ class Admin extends View {
             {
                 var order = {
                     content: "",
+                    iceCream: [],
                     wantTableware: null,
                     time: null,
                     tg: null,
@@ -97,37 +98,47 @@ class Admin extends View {
                 };
                 var orderContent = [];
                 for (col => h in headers)
-                switch [h, (sheet.getCell(row, col).value:String)] {
-                    case ["請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
+                switch [shop, h, (sheet.getCell(row, col).value:String)] {
+                    case [_, "請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
                         orderContent.push(h + ": " + v);
-                    case ["Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
+                    case [_, "Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
                         null;
-                    case [_, null | "" | "明白了"]:
+                    case [_, _, null | "" | "明白了"]:
                         null;
-                    case ["想幾時收到?", v]:
+                    case [_, "想幾時收到?", v]:
                         order.time = v;
-                    case ["你的地址", v]:
+                    case [_, "你的地址", v]:
                         order.address = v;
-                    case ["你的電話號碼", v]:
+                    case [_, "你的電話號碼", v]:
                         order.tel = v;
-                    case ["俾錢方法", v]:
+                    case [_, "俾錢方法", v]:
                         order.paymentMethod = v;
-                    case ["交收方法", v]:
+                    case [_, "交收方法", v]:
                         order.pickupMethod = v;
-                    case ["需要餐具嗎?", v]:
+                    case [_, "需要餐具嗎?", v]:
                         order.wantTableware = v + "餐具";
-                    case ["其他備註", v]:
+                    case [_, "其他備註", v]:
                         order.note = v;
-                    case [h, v] if (h.startsWith("你的tg username")):
+                    case [_, h, v] if (h.startsWith("你的tg username")):
                         var r = ~/^@?([A-Za-z0-9_]{5,})$/;
                         order.tg = if (r.match(v.trim()))
                             "https://t.me/" + r.matched(1);
                         else
                             v;
-                    case [h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
+                    case [_, h, v] if (h.contains("雪糕")):
+                        order.iceCream.push(v);
+                    case [_, h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
                         orderContent.push(h + ": " + v);
                         orderContent.push("套餐附送絲苗白飯2個");
-                    case [h, v]:
+                    case [LaksaStore, "湯底選擇", v]:
+                        orderContent.push(v);
+                    case [LaksaStore, "配料選擇", v]:
+                        orderContent[orderContent.length - 1] += " " + v;
+                    case [LaksaStore, "麵類選擇", v]:
+                        orderContent[orderContent.length - 1] += " " + v + " $50";
+                    case [LaksaStore, "餐飲選擇", v]:
+                        orderContent.push(v);
+                    case [_, h, v]:
                         orderContent.push(h + ": " + v);
                 }
                 order.content = orderContent.join("\n");
@@ -188,7 +199,7 @@ class Admin extends View {
                 for (shop => sheet in sheets)
                 {
                     sheet
-                        .then(sheet -> getOrders(sheet, now, t))
+                        .then(sheet -> getOrders(shop, sheet, now, t))
                         .then(orders -> orders.mapi((i, o) -> {
                             [
                                 "單號: " + shop.info().name + " " + (switch (t) {
@@ -197,11 +208,13 @@ class Admin extends View {
                                 }),
                                 "",
                                 o.content,
+                                o.iceCream.length > 0 ? "\n" + o.iceCream.join("\n") + "\n" : null,
                                 o.wantTableware,
                                 o.note != null ? "*其他備註: " + o.note : null,
                                 "",
                                 "食物價錢: $",
-                                "食物+運費: $",
+                                o.iceCream.length > 0 ? "雪糕價錢: $" + (o.iceCream.length * 26) : null,
+                                o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
                                 "",
                                 "客人交收時段: " + o.time,
                                 "tg: " + o.tg,
