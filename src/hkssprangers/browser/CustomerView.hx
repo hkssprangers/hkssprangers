@@ -451,6 +451,8 @@ class CustomerView extends ReactComponent {
                 null;
             case KCZenzero:
                 null;
+            case HanaSoftCream:
+                null;
         }
         var dollar = "$";
         function onAddressChange(evt) {

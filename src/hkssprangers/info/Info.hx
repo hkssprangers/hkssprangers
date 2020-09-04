@@ -156,6 +156,7 @@ enum abstract Shop<T>(String) {
     var DongDong:Shop<Dynamic>;
     var BiuKeeLokYuen:Shop<Dynamic>;
     var KCZenzero:Shop<Dynamic>;
+    var HanaSoftCream:Shop<Dynamic>;
 
     public function info() return switch (cast this:Shop<T>) {
         case EightyNine:
@@ -212,13 +213,13 @@ enum abstract Shop<T>(String) {
                 timeSlots: [
                     {
                         type: Lunch,
-                        start: "12:00",
-                        end: "13:00"
+                        start: "12:30",
+                        end: "13:30"
                     },
                     {
                         type: Lunch,
-                        start: "13:00",
-                        end: "14:00"
+                        start: "13:30",
+                        end: "14:30"
                     },
                     {
                         type: Dinner,
@@ -385,6 +386,43 @@ enum abstract Shop<T>(String) {
                     id: KCZenzero,
                     name: "蕃廚",
                     address: "深水埗欽州街37號西九龍中心8樓57號舖",
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
+                    ],
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "12:30",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:00",
+                            end: "20:00"
+                        },
+                        {
+                            type: Dinner,
+                            start: "20:00",
+                            end: "21:00"
+                        },
+                    ]
+                }
+            case HanaSoftCream:
+                {
+                    id: HanaSoftCream,
+                    name: "HANA Soft Cream",
+                    address: "深水埗欽州街37K西九龍中心6樓628A",
                     openDays: [
                         Monday,
                         Tuesday,
@@ -672,6 +710,8 @@ class OrderTools {
                 case BiuKeeLokYuen:
 
                 case KCZenzero:
+
+                case HanaSoftCream:
             }
         }
 
@@ -702,6 +742,8 @@ class OrderTools {
                 case BiuKeeLokYuen:
 
                 case KCZenzero:
+
+                case HanaSoftCream:
             }
         }
 
