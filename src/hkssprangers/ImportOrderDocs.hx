@@ -16,6 +16,7 @@ typedef Order = {
     orderCode:String,
     shopId:Shop<Dynamic>,
     orderDetails:String,
+    iceCreamDetails:String,
     orderPrice:Int,
     iceCreamPrice:Int,
     deliveryFee:Int,
@@ -210,6 +211,7 @@ class ImportOrderDocs {
                         orderCode: null,
                         shopId: null,
                         orderDetails: null,
+                        iceCreamDetails: null,
                         orderPrice: null,
                         iceCreamPrice: null,
                         deliveryFee: null,
@@ -264,7 +266,14 @@ class ImportOrderDocs {
                         }
                         if (orderDetails == null)
                             orderDetails = [];
-                        orderDetails.push(line.trim());
+                        if (line.contains("雪糕")) {
+                            if (order.iceCreamDetails == null)
+                                order.iceCreamDetails = line.trim();
+                            else
+                                order.iceCreamDetails += "\n" + line.trim();
+                        } else {
+                            orderDetails.push(line.trim());
+                        }
                         continue;
                     }
 
@@ -386,7 +395,7 @@ class ImportOrderDocs {
             }
     }
 
-    static function shopSummary(orders:Array<Order>):WorkSheet {
+    static function shopSummary(shop:Shop<Dynamic>, orders:Array<Order>):WorkSheet {
         orders.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlotStart, b.pickupTimeSlotStart)) {
             case 0: Reflect.compare(a.orderCode, b.orderCode);
             case v: v;
@@ -399,32 +408,53 @@ class ImportOrderDocs {
             },
             /* C */ "單號": o.orderCode,
             /* D */ "訂單內容": o.orderDetails,
-            /* E */ "食物價錢": o.orderPrice,
-            /* F */ "埗兵收費": "",
+            /* E */ "加購雪糕": o.iceCreamDetails,
+            /* F */ "食物價錢": o.orderPrice,
+            /* G */ "雪糕價錢": o.iceCreamPrice,
+            /* H */ "埗兵收費": "",
         }));
 
         for (i in 0...orders.length) {
             var r = i + 2;
-            Reflect.setField(ws, 'F$r', {
+            Reflect.setField(ws, 'H$r', {
                 t: "n",
-                f: 'E$r * 0.15',
+                f: switch (shop) {
+                    case HanaSoftCream:
+                        'G$r * 0.15';
+                    case _:
+                        'F$r * 0.15';
+                },
             });
         }
 
         Xlsx.utils.sheet_add_aoa(ws, [
-            ["", "", "", "", "", ""],
-            ["", "", "", "", "", ""],
+            for (_ in 0...3)
+            [for (_ in "A".code..."H".code+1) ""]
         ], {
             origin: { r: orders.length+1, c: 0 }
         });
 
-        Reflect.setField(ws, 'E${orders.length+3}', {
+        Reflect.setField(ws, 'G${orders.length+3}', {
+            t: "s",
+            v: '總訂單價',
+        });
+        Reflect.setField(ws, 'H${orders.length+3}', {
+            t: "n",
+            f: switch (shop) {
+                case HanaSoftCream:
+                    'ROUND(SUM(G2:G${orders.length+1}), 1)';
+                case _:
+                    'ROUND(SUM(F2:F${orders.length+1}), 1)';
+            },
+        });
+
+        Reflect.setField(ws, 'G${orders.length+4}', {
             t: "s",
             v: '總埗兵收費',
         });
-        Reflect.setField(ws, 'F${orders.length+3}', {
+        Reflect.setField(ws, 'H${orders.length+4}', {
             t: "n",
-            f: 'ROUND(SUM(F2:F${orders.length+1}), 1)',
+            f: 'ROUND(SUM(H2:H${orders.length+1}), 1)',
         });
 
         return ws;
@@ -444,37 +474,39 @@ class ImportOrderDocs {
             /* C */ "單號": o.orderCode,
             /* D */ "店舖": o.shopId.info().name,
             /* E */ "訂單內容": o.orderDetails,
-            /* F */ "食物價錢": o.orderPrice,
-            /* G */ "外賣員收入": "",
-            /* H */ "運費": o.deliveryFee,
+            /* F */ "加購雪糕": o.iceCreamDetails,
+            /* G */ "食物價錢": o.orderPrice,
+            /* H */ "雪糕價錢": o.iceCreamPrice,
+            /* I */ "外賣員收入": "",
+            /* J */ "運費": o.deliveryFee,
         }));
 
         for (i in 0...orders.length) {
             var r = i + 2;
-            Reflect.setField(ws, 'G$r', {
+            Reflect.setField(ws, 'I$r', {
                 t: "n",
-                f: 'F$r * 0.075',
+                f: '(G$r + H$r) * 0.075',
             });
         }
 
         Xlsx.utils.sheet_add_aoa(ws, [
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", ""],
+            for (_ in 0...3)
+            [for (_ in "A".code..."J".code+1) ""]
         ], {
             origin: { r: orders.length+1, c: 0 }
         });
 
-        Reflect.setField(ws, 'F${orders.length+3}', {
+        Reflect.setField(ws, 'H${orders.length+3}', {
             t: "s",
             v: 'Total',
         });
-        Reflect.setField(ws, 'G${orders.length+3}', {
+        Reflect.setField(ws, 'I${orders.length+3}', {
             t: "n",
-            f: 'ROUND(SUM(G2:G${orders.length+1}), 1)',
+            f: 'ROUND(SUM(I2:I${orders.length+1}), 1)',
         });
-        Reflect.setField(ws, 'H${orders.length+3}', {
+        Reflect.setField(ws, 'J${orders.length+3}', {
             t: "n",
-            f: 'SUM(H2:H${orders.length+1})',
+            f: 'SUM(J2:J${orders.length+1})',
         });
 
         return ws;
@@ -499,18 +531,33 @@ class ImportOrderDocs {
             LaksaStore,
             DongDong,
             BiuKeeLokYuen,
+            KCZenzero,
+            HanaSoftCream,
         ];
         var charges = new Map<Shop<Dynamic>, Decimal>();
         for (shop in shops) {
-            var orders = orders.filter(o -> o.shopId == shop);
+            var orders = if (shop == HanaSoftCream)
+                orders.filter(o -> o.iceCreamPrice != null);
+            else
+                orders.filter(o -> o.shopId == shop);
+
+            if (orders.length == 0) {
+                continue;
+            }
+
             var wb = Xlsx.utils.book_new();
-            var ws = shopSummary(orders);
+            var ws = shopSummary(shop, orders);
 
             Xlsx.utils.book_append_sheet(wb, ws, "orders");
             Xlsx.writeFile(wb, Path.join([summaryDir, "shop", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + shop.info().name + ".xlsx"]));
 
             var totalCharge = orders
-                .map(o -> (o.orderPrice:Decimal) * 0.15)
+                .map(o -> switch(shop){
+                    case HanaSoftCream:
+                        (o.iceCreamPrice:Decimal) * 0.15;
+                    case _:
+                        (o.orderPrice:Decimal) * 0.15;
+                })
                 .fold((item, result) -> result + item, Decimal.zero)
                 .roundTo(1);
             charges[shop] = totalCharge;
@@ -546,7 +593,7 @@ class ImportOrderDocs {
             Xlsx.writeFile(wb, Path.join([summaryDir, "courier", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + courier + ".xlsx"]));
 
             var chargeTotal:Decimal = orders
-                .map(o -> (o.orderPrice:Decimal) * 0.075)
+                .map(o -> ((o.orderPrice:Decimal) + (o.iceCreamPrice != null ? (o.iceCreamPrice:Decimal) : Decimal.zero)) * 0.075)
                 .fold((item, result) -> result + item, Decimal.zero)
                 .roundTo(1);
             courierPayout[courier] = chargeTotal;
