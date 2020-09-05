@@ -11,7 +11,7 @@ provider:
       - '*/*'
   environment:
     TZ: Asia/Hong_Kong
-    MYSQL_ENDPOINT: ${env:MYSQL_ENDPOINT}
+    MYSQL_HOST: ${env:MYSQL_HOST}
     MYSQL_USER: ${env:MYSQL_USER}
     MYSQL_PASSWORD: ${env:MYSQL_PASSWORD}
     TGBOT_TOKEN: ${env:TGBOT_TOKEN}

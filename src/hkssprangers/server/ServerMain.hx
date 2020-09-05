@@ -72,9 +72,6 @@ class ServerMain {
         customerNote: "如可以七點三至七半",
     }
     static final isMain = js.Syntax.code("require.main") == module;
-    static final mysqlEndpoint = Sys.getEnv("MYSQL_ENDPOINT");
-    static final mysqlUser = Sys.getEnv("MYSQL_USER");
-    static final mysqlPassword = Sys.getEnv("MYSQL_PASSWORD");
     static public final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
