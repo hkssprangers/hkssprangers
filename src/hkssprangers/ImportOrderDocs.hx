@@ -7,6 +7,7 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
 import hkssprangers.info.Info;
+import hkssprangers.server.MySql;
 import thx.Decimal;
 using StringTools;
 using Lambda;

@@ -1,0 +1,3 @@
+# @install: lix --silent download "haxelib:/CommentString#0.1.0" into CommentString/0.1.0/haxelib
+-cp ${HAXE_LIBCACHE}/CommentString/0.1.0/haxelib/
+-D CommentString=0.1.0

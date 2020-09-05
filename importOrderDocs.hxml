@@ -1,5 +1,6 @@
 --library compiletime
 --library tink_core
+--library tink_sql
 --library hxnodejs
 --library thx.core
 --class-path src

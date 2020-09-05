@@ -2,8 +2,7 @@
 
 set -ex
 
-haxelib newrepo
-haxelib install all --always
+lix download
 
 mkdir -p node_modules
 sudo chmod a+rwx node_modules

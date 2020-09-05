@@ -1,7 +1,15 @@
 package hkssprangers.server;
 
+import tink.sql.*;
+
 class MySql {
-    static public final mysqlHost = Sys.getEnv("MYSQL_HOST");
-    static public final mysqlUser = Sys.getEnv("MYSQL_USER");
-    static public final mysqlPassword = Sys.getEnv("MYSQL_PASSWORD");
+    static public final host = Sys.getEnv("MYSQL_HOST");
+    static public final user = Sys.getEnv("MYSQL_USER");
+    static public final password = Sys.getEnv("MYSQL_PASSWORD");
+
+    static public final driver = new tink.sql.drivers.node.MySql({
+        host: host,
+        user: user,
+        password: password,
+    });
 }
