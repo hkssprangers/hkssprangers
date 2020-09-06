@@ -157,6 +157,7 @@ enum abstract Shop<T>(String) to String {
     var BiuKeeLokYuen:Shop<Dynamic>;
     var KCZenzero:Shop<Dynamic>;
     var HanaSoftCream:Shop<Dynamic>;
+    var Neighbor:Shop<Dynamic>;
 
     public function info() return switch (cast this:Shop<T>) {
         case EightyNine:
@@ -455,6 +456,43 @@ enum abstract Shop<T>(String) to String {
                         },
                     ]
                 }
+            case Neighbor:
+                {
+                    id: Neighbor,
+                    name: "Neighbor",
+                    address: "長沙灣元州街162-188號天悅廣場地下A8號舖",
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
+                    ],
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "13:00",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:00",
+                            end: "20:00"
+                        },
+                        {
+                            type: Dinner,
+                            start: "20:00",
+                            end: "21:00"
+                        },
+                    ]
+                }
     }
 
     public function nextTimeSlots(currentTime:Date):Array<TimeSlot & { isOff:Bool }> {
@@ -712,6 +750,9 @@ class OrderTools {
                 case KCZenzero:
 
                 case HanaSoftCream:
+
+                case Neighbor:
+
             }
         }
 
@@ -744,6 +785,9 @@ class OrderTools {
                 case KCZenzero:
 
                 case HanaSoftCream:
+
+                case Neighbor:
+
             }
         }
 

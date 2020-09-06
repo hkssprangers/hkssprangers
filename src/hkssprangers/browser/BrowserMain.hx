@@ -22,13 +22,13 @@ class BrowserMain {
                 '), div);
         }
 
-        switch (document.getElementById("AdminView")) {
+        switch (document.getElementById("LogInView")) {
             case null:
                 //pass
             case elm:
                 var div:DivElement = cast elm;
                 ReactDOM.render(jsx('
-                    <AdminView
+                    <LogInView
                         tgBotName=${div.dataset.tgBotName}
                         user=${Json.parse(div.dataset.user)}
                     />

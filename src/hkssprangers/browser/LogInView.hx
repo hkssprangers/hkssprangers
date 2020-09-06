@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import js.html.URLSearchParams;
 import js_cookie.CookiesStatic;
 import global.JsCookieGlobal.*;
 import react.*;
@@ -13,7 +14,7 @@ using hkssprangers.info.Info.OrderTools;
 using hkssprangers.info.Info.TimeSlotTools;
 using Lambda;
 
-class AdminView extends ReactComponent {
+class LogInView extends ReactComponent {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
@@ -31,7 +32,8 @@ class AdminView extends ReactComponent {
             sameSite: 'strict',
             expires: 1, // expires 1 day from now
         });
-        location.reload(true);
+        var params = new URLSearchParams(location.search);
+        location.assign(params.get("redirectTo"));
     }
 
     function renderLoggedIn() {

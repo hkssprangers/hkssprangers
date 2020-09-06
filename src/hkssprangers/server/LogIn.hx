@@ -16,15 +16,7 @@ using Lambda;
 using StringTools;
 using hkssprangers.server.ExpressTools;
 
-typedef User = {
-    tg: {
-        id:Int,
-        username:String,
-    },
-    isAdmin:Bool,
-};
-
-class Admin extends View {
+class LogIn extends View {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
@@ -36,8 +28,8 @@ class Admin extends View {
     }>;
     function get_user() return props.user;
 
-    override public function description() return "平台管理";
-    override function canonical() return Path.join([domain, "admin"]);
+    override public function description() return "登入";
+    override function canonical() return Path.join([domain, "login"]);
     override public function render() {
         return super.render();
     }
@@ -65,7 +57,6 @@ class Admin extends View {
             DongDong => "1IpJteF-lZ9wd0tSHPgwsVyUuhuWraAdgKnKisYalFb8",
             BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
             KCZenzero => "1gHslFNSVO8KOoD6IEcV-mglGoGailUaHr4SbQRSzFOo",
-            Neighbor => "1XlH6Zovy5MigWvuqI8LumHVWnBBEdg9WQ2jwNejj0SI",
         ]) {
             var doc = new GoogleSpreadsheet(sheetId);
             shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
@@ -156,102 +147,13 @@ class Admin extends View {
         ];
     }
 
-    static public function ensureAdmin(req:Request, res:Response, next) {
-        var tg:Null<{
-            id:Int,
-            username:String,
-        }> = if (req.cookies != null && req.cookies.tg != null) try {
-            Json.parse(req.cookies.tg);
-        } catch(err) {
-            res.status(403).end('Error parsing Telegram login response.\n\n' + err.details());
-            return;
-        } else null;
-
-        if (tg == null) {
-            res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
-            return;
-        }
-
-        if (!TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)) {
-            res.status(403).end('Invalid Telegram login response.');
-            return;
-        }
-
-        if (
-            ![
-                "andyonthewings",
-                "Arbuuuuuuu",
-            ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username.toLowerCase())
-        ) {
-            res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
-            return;
-        }
-
-        var user:User = {
-            tg: tg,
-            isAdmin: true,
-        }
-
-        res.locals.user = user;
-        next();
-    }
-
     static public function middleware(req:Request, res:Response) {
-        var user:User = res.locals.user;
-        var now = switch (req.query.date:String) {
-            case null: Date.now();
-            case v: Date.fromString(v);
-        }
-        // var now = Date.fromString("2020-08-18");
-        var hr = "\n--------------------------------------------------------------------------------\n";
-        var errors = [];
-        var sheets = [
-            for (shop => doc in menuForm)
-            shop => doc
-                .then(doc -> doc.sheetsByIndex[0])
-                .then(sheet -> sheet.loadCells().then(_ -> sheet))
-        ];
-        Promise.all([
-            for (t in [Lunch, Dinner])
-            for (shop => sheet in sheets)
-            {
-                sheet
-                    .then(sheet -> getOrders(shop, sheet, now, t))
-                    .then(orders -> orders.mapi((i, o) -> {
-                        [
-                            "單號: " + shop.info().name + " " + (switch (t) {
-                                case Lunch: "L" + '${i+1}'.lpad("0", 2);
-                                case Dinner: "D" + '${i+1}'.lpad("0", 2);
-                            }),
-                            "",
-                            o.content,
-                            o.iceCream.length > 0 ? "\n" + o.iceCream.join("\n") + "\n" : null,
-                            o.wantTableware,
-                            o.note != null ? "*其他備註: " + o.note : null,
-                            "",
-                            "食物價錢: $",
-                            o.iceCream.length > 0 ? "雪糕價錢: $" + (o.iceCream.length * 26) : null,
-                            o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
-                            "",
-                            "客人交收時段: " + o.time,
-                            "tg: " + o.tg,
-                            o.tel,
-                            o.paymentMethod,
-                            o.address + " (" + o.pickupMethod + ")",
-                        ].filter(l -> l != null).join("\n");
-                    }).join(hr))
-                    .catchError((err:js.lib.Error) -> {
-                        errors.push('Failed to process ${shop.info().name}\'s spreadsheet.\n\n' + err.message);
-                    });
-            }
-        ]).then(strs -> {
-            if (errors.length > 0) {
-                res.type("text");
-                res.status(500).end(errors.join("\n\n\n\n"));
-                return;
-            }
-            res.type("text");
-            res.end(strs.filter((str:String) -> str.trim() != "").join(hr));
-        });
+        var tgBotInfo = tgBot.telegram.getMe();
+        tgBotInfo.then(tgBotInfo ->
+            res.sendView(LogIn, {
+                tgBotName: tgBotInfo.username,
+                user: null,
+            }))
+            .catchError(err -> res.status(500).json(err));
     }
 }

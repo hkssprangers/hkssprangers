@@ -160,11 +160,13 @@ class ServerMain {
         app.use(require("cookie-parser")());
 
         app.get("/", index);
-        app.get("/admin", Admin.middleware);
+        app.get("/login", LogIn.middleware);
+        app.get("/admin", Admin.ensureAdmin, Admin.middleware);
         app.use(tgBot.webhookCallback(tgBotWebHook));
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
         });
+        // app.get("/admin/orders.json", )
 
         if (isMain) {
             switch (Sys.args()) {
