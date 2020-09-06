@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `hkssprangers`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `hkssprangers` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `hkssprangers`;
-
---
 -- Table structure for table `courier`
 --
 
@@ -32,7 +24,7 @@ DROP TABLE IF EXISTS `courier`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `courier` (
   `courierId` int NOT NULL AUTO_INCREMENT,
-  `courierTgUsername` varchar(128) COLLATE utf8mb4_bin NOT NULL,
+  `courierTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `courierTgId` int DEFAULT NULL,
   `paymeAvailable` tinyint(1) NOT NULL,
   `fpsAvailable` tinyint(1) NOT NULL,
@@ -52,16 +44,16 @@ DROP TABLE IF EXISTS `delivery`;
 CREATE TABLE `delivery` (
   `deliveryId` int NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
-  `pickupLocation` varchar(1024) COLLATE utf8mb4_bin NOT NULL,
+  `pickupLocation` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `pickupTimeSlotStart` timestamp NOT NULL,
   `pickupTimeSlotEnd` timestamp NOT NULL,
-  `pickupMethod` varchar(64) COLLATE utf8mb4_bin NOT NULL,
+  `pickupMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `paymeAvailable` tinyint(1) NOT NULL,
   `fpsAvailable` tinyint(1) NOT NULL,
-  `customerTgUsername` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerTgId` int DEFAULT NULL,
-  `customerTel` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
-  `customerNote` varchar(2048) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerTel` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`deliveryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -111,12 +103,12 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `orderId` int NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
-  `orderCode` varchar(50) COLLATE utf8mb4_bin NOT NULL,
-  `shopId` varchar(50) COLLATE utf8mb4_bin NOT NULL,
-  `orderDetails` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `orderCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `shopId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `orderDetails` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderPrice` decimal(5,2) NOT NULL,
   `wantTableware` tinyint(1) NOT NULL,
-  `customerNote` varchar(2048) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`orderId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -130,4 +122,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-24 18:07:50
+-- Dump completed on 2020-09-06  5:05:15
