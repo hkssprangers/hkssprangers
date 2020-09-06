@@ -1,8 +1,9 @@
 package hkssprangers.server;
 
-import js.npm.google_spreadsheet.GoogleSpreadsheetWorksheet;
+import haxe.ds.ReadOnlyArray;
 import js.lib.Promise;
 import js.npm.google_spreadsheet.GoogleSpreadsheet;
+import js.npm.google_spreadsheet.GoogleSpreadsheetWorksheet;
 import haxe.crypto.Sha256;
 import react.*;
 import react.Fragment;
@@ -45,10 +46,7 @@ class Admin extends View {
     override function bodyContent() {
         return jsx('
             <div>
-                <div className="text-center">
-                    <a href="/"><img id="logo" src=${R("/images/ssprangers4-y.png")} className="rounded-circle" alt="埗兵" /></a>
-                </div>
-                <div id="LogInView"
+                <div id="AdminView"
                     data-tg-bot-name=${tgBotName}
                     data-user=${Json.stringify(user)}
                 />
@@ -156,6 +154,11 @@ class Admin extends View {
         ];
     }
 
+    static final admins:ReadOnlyArray<String> = [
+        "andyonthewings",
+        "Arbuuuuuuu",
+    ];
+
     static public function ensureAdmin(req:Request, res:Response, next) {
         var tg:Null<{
             id:Int,
@@ -178,10 +181,7 @@ class Admin extends View {
         }
 
         if (
-            ![
-                "andyonthewings",
-                "Arbuuuuuuu",
-            ].exists(adminUsername -> adminUsername.toLowerCase() == tg.username.toLowerCase())
+            !admins.exists(adminUsername -> adminUsername.toLowerCase() == tg.username.toLowerCase())
         ) {
             res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
             return;
@@ -198,9 +198,34 @@ class Admin extends View {
 
     static public function middleware(req:Request, res:Response) {
         var user:User = res.locals.user;
-        var now = switch (req.query.date:String) {
+        switch (req.query.date:String) {
+            case null:
+                // pass
+            case dateStr:
+                pullOrders(Date.fromString(dateStr))
+                    .then(orderStr -> {
+                        res.type("text");
+                        res.end(orderStr);
+                    })
+                    .catchError(err -> {
+                        res.type("text");
+                        res.status(500).end(Std.string(err));
+                    });
+                return;
+        }
+        var tgBotInfo = tgBot.telegram.getMe();
+        tgBotInfo.then(tgBotInfo ->
+            res.sendView(Admin, {
+                tgBotName: tgBotInfo.username,
+                user: user,
+            }))
+            .catchError(err -> res.status(500).json(err));
+    }
+
+    static public function pullOrders(?date:Date):Promise<String> {
+        var now = switch (date) {
             case null: Date.now();
-            case v: Date.fromString(v);
+            case v: v;
         }
         // var now = Date.fromString("2020-08-18");
         var hr = "\n--------------------------------------------------------------------------------\n";
@@ -211,7 +236,7 @@ class Admin extends View {
                 .then(doc -> doc.sheetsByIndex[0])
                 .then(sheet -> sheet.loadCells().then(_ -> sheet))
         ];
-        Promise.all([
+        return Promise.all([
             for (t in [Lunch, Dinner])
             for (shop => sheet in sheets)
             {
@@ -246,12 +271,10 @@ class Admin extends View {
             }
         ]).then(strs -> {
             if (errors.length > 0) {
-                res.type("text");
-                res.status(500).end(errors.join("\n\n\n\n"));
-                return;
+                Promise.reject(errors.join("\n\n\n\n"));
+            } else {
+                Promise.resolve(strs.filter((str:String) -> str.trim() != "").join(hr));
             }
-            res.type("text");
-            res.end(strs.filter((str:String) -> str.trim() != "").join(hr));
         });
     }
 }

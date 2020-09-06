@@ -30,6 +30,18 @@ class BrowserMain {
                 ReactDOM.render(jsx('
                     <LogInView
                         tgBotName=${div.dataset.tgBotName}
+                    />
+                '), div);
+        }
+
+        switch (document.getElementById("AdminView")) {
+            case null:
+                //pass
+            case elm:
+                var div:DivElement = cast elm;
+                ReactDOM.render(jsx('
+                    <AdminView
+                        tgBotName=${div.dataset.tgBotName}
                         user=${Json.parse(div.dataset.user)}
                     />
                 '), div);

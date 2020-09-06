@@ -7,7 +7,9 @@
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
+    "@date-io/moment": "1.x",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/pickers": "^3.2.10",
     "@types/js-cookie": "^2.2.6",
     "browserify": "^16.5.2",
     "dotenv-cli": "^3.2.0",
@@ -16,6 +18,7 @@
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.2",
     "js-cookie": "^2.2.1",
+    "moment": "^2.27.0",
     "ngrok": "^3.2.7",
     "nodemon": "^2.0.4",
     "react-telegram-login": "^1.1.2",

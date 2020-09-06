@@ -101,3 +101,6 @@ extern class Modal extends ReactComponent {}
 
 @:jsRequire("@material-ui/core/Divider", "default")
 extern class Divider extends ReactComponent {}
+
+@:jsRequire("@material-ui/core/CircularProgress", "default")
+extern class CircularProgress extends ReactComponent {}
