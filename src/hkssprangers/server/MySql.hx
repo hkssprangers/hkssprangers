@@ -12,4 +12,6 @@ class MySql {
         user: user,
         password: password,
     });
+
+    static public final db = new hkssprangers.db.Database("hkssprangers", MySql.driver);
 }

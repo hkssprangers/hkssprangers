@@ -1,5 +1,6 @@
 --library compiletime
 --library tink_core
+--library tink_core_ext
 --library tink_sql
 --library hxnodejs
 --library thx.core
@@ -9,5 +10,7 @@
 --main hkssprangers.ImportOrderDocs
 --js importOrderDocs.js
 -D no-deprecation-warnings
+-D sql_debug
 # --cmd node importOrderDocs.js importDocs
+# --cmd node importOrderDocs.js insertIntoDb
 --cmd node importOrderDocs.js calculate

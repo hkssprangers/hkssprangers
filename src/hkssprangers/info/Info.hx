@@ -148,7 +148,7 @@ abstract Cents(Int) from Int to Int {
     static function lte(a:Cents, b:Cents):Bool return (a:Int) <= (b:Int);
 }
 
-enum abstract Shop<T>(String) {
+enum abstract Shop<T>(String) to String {
     var EightyNine:Shop<EightyNineItem>;
     var DragonJapaneseCuisine:Shop<Dynamic>;
     var YearsHK:Shop<Dynamic>;

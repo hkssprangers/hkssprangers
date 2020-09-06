@@ -1,5 +1,7 @@
 package hkssprangers;
 
+import tink.CoreApi;
+import tink.core.ext.Promises;
 import js.npm.xlsx.Xlsx;
 import js.node.ChildProcess;
 import haxe.Json;
@@ -377,7 +379,83 @@ class ImportOrderDocs {
             validateOrder(order);
         }
 
+        orders.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
+
         File.saveContent("orders.json", Json.stringify(orders, null, "  "));
+    }
+
+    static function insertIntoDb():Promise<Noise> {
+        var orders:Array<Order> = Json.parse(File.getContent("orders.json"));
+        orders.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
+
+        return Promise.inParallel([for (o in orders) {
+            var insertOrders = [MySql.db.order.insertOne({
+                orderId: null,
+                creationTime: Date.fromString(o.creationTime),
+                orderCode: o.orderCode,
+                shopId: o.shopId,
+                orderDetails: o.orderDetails,
+                orderPrice: o.orderPrice,
+                wantTableware: o.wantTableware,
+                customerNote: o.orderNote,
+            })];
+            if (o.iceCreamPrice != null) {
+                insertOrders.push(
+                    insertOrders[0].next(_ -> 
+                        MySql.db.order.insertOne({
+                            orderId: null,
+                            creationTime: Date.fromString(o.creationTime),
+                            orderCode: o.orderCode,
+                            shopId: HanaSoftCream,
+                            orderDetails: o.iceCreamDetails,
+                            orderPrice: o.iceCreamPrice,
+                            wantTableware: o.wantTableware,
+                            customerNote: null,
+                        })
+                    )
+                );
+            }
+            var deliveryId = MySql.db.delivery.insertOne({
+                deliveryId: null,
+                creationTime: Date.fromString(o.creationTime),
+                pickupLocation: o.pickupLocation,
+                pickupTimeSlotStart: Date.fromString(o.pickupTimeSlotStart),
+                pickupTimeSlotEnd: Date.fromString(o.pickupTimeSlotEnd),
+                pickupMethod: o.pickupMethod,
+                paymeAvailable: o.paymentMethods.has(PayMe),
+                fpsAvailable: o.paymentMethods.has(FPS),
+                customerTgUsername: o.customerTgUsername,
+                customerTgId: null,
+                customerTel: o.customerTel,
+                customerNote: o.deliveryNote,
+            });
+            var courierId = MySql.db.courier
+                .select({
+                    courierId: courier.courierId,
+                })
+                .where(courier.courierTgUsername == o.courierTgUsername)
+                .first()
+                .next(r -> r.courierId);
+            Promises.multi({
+                courierId: courierId,
+                deliveryId: deliveryId,
+                orderIds: Promise.inParallel(insertOrders),
+            }).next(r -> {
+                var insertDeliveryOrder = MySql.db.deliveryOrder.insertMany([
+                    for (orderId in r.orderIds)
+                    {
+                        deliveryId: r.deliveryId,
+                        orderId: orderId,
+                    }
+                ]);
+                var insertDeliveryCourier = MySql.db.deliveryCourier.insertOne({
+                    deliveryId: r.deliveryId,
+                    courierId: r.courierId,
+                    deliveryFee: o.deliveryFee,
+                });
+                Promise.inParallel([insertDeliveryOrder.noise(), insertDeliveryCourier.noise()]);
+            });
+        }]).noise();
     }
 
     static final dateStart = "2020-08-05 00:00:00";
@@ -615,6 +693,14 @@ class ImportOrderDocs {
         switch (Sys.args()) {
             case ["importDocs"]:
                 importDocs();
+            case ["insertIntoDb"]:
+                insertIntoDb().handle(o -> switch(o) {
+                    case Success(_):
+                        Sys.exit(0);
+                    case Failure(e):
+                        Sys.println(e);
+                        Sys.exit(1);
+                });
             case ["calculate"]:
                 calculate();
             case args:
