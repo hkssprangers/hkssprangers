@@ -108,8 +108,6 @@ class Admin extends View {
                 var extraOrderContent = [];
                 for (col => h in headers)
                 switch [shop, h, (sheet.getCell(row, col).value:String)] {
-                    case [_, "請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
-                        orderContent.push(h + ": " + v);
                     case [_, "Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
                         null;
                     case [_, _, null | "" | "明白了"]:
@@ -155,6 +153,12 @@ class Admin extends View {
                     case [DongDong, "午餐選擇" | "小菜 - $58" | "以下套餐奉送例湯", v]:
                         orderContent.push(h + ": " + v);
                         extraOrderContent.push("外賣盒 (+$1)");
+                    case [BiuKeeLokYuen, "雙併配料選擇", "唔加"]:
+                        // pass
+                    case [BiuKeeLokYuen, h, v] if (h.endsWith("配料選擇")):
+                        orderContent.push(h.substr(0, h.length - "配料選擇".length) + ": " + v);
+                    case [BiuKeeLokYuen, "請選擇", v]:
+                        orderContent.push(v);
                     case [_, h, v]:
                         orderContent.push(h + ": " + v);
                 }
