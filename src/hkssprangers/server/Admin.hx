@@ -16,6 +16,7 @@ import hkssprangers.server.ServerMain.*;
 using Lambda;
 using StringTools;
 using hkssprangers.server.ExpressTools;
+using hkssprangers.MathTools;
 
 typedef User = {
     tg: {
@@ -132,7 +133,7 @@ class Admin extends View {
                             "https://t.me/" + r.matched(1);
                         else
                             v;
-                    case [_, h, v] if (h.contains("雪糕")):
+                    case [_, _, v] if (v.contains("雪糕")):
                         order.iceCream.push(v);
                     case [_, h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
                         orderContent.push(h + ": " + v);
@@ -222,6 +223,14 @@ class Admin extends View {
             .catchError(err -> res.status(500).json(err));
     }
 
+    static public function parsePrice(str:String):Null<Int> {
+        var r = ~/\$(\d+)/;
+        if (!r.match(str))
+            return null;
+
+        return Std.parseInt(r.matched(1));
+    }
+
     static public function pullOrders(?date:Date):Promise<String> {
         var now = switch (date) {
             case null: Date.now();
@@ -243,6 +252,8 @@ class Admin extends View {
                 sheet
                     .then(sheet -> getOrders(shop, sheet, now, t))
                     .then(orders -> orders.mapi((i, o) -> {
+                        var iceCreamPrices = o.iceCream.map(parsePrice);
+                        var iceCreamPrice = iceCreamPrices.has(null) ? "" : Std.string(iceCreamPrices.sum());
                         [
                             "單號: " + shop.info().name + " " + (switch (t) {
                                 case Lunch: "L" + '${i+1}'.lpad("0", 2);
@@ -255,7 +266,7 @@ class Admin extends View {
                             o.note != null ? "*其他備註: " + o.note : null,
                             "",
                             "食物價錢: $",
-                            o.iceCream.length > 0 ? "雪糕價錢: $" + (o.iceCream.length * 26) : null,
+                            o.iceCream.length > 0 ? "雪糕價錢: $" + iceCreamPrice : null,
                             o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
                             "",
                             "客人交收時段: " + o.time,
