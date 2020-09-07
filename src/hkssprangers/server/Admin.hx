@@ -105,6 +105,7 @@ class Admin extends View {
                     note: null,
                 };
                 var orderContent = [];
+                var extraOrderContent = [];
                 for (col => h in headers)
                 switch [shop, h, (sheet.getCell(row, col).value:String)] {
                     case [_, "請選擇類別", v = "粉麵" | "撈麵" | "淨食牛腩/牛雜/小食"]:
@@ -146,10 +147,18 @@ class Admin extends View {
                         orderContent[orderContent.length - 1] += " " + v + " $50";
                     case [LaksaStore, "餐飲選擇", v]:
                         orderContent.push(v);
+                    case [KCZenzero, "車仔粉主食選擇", v]:
+                        orderContent.push(h + ": " + v + " $" + switch (v.split(", ").length) {
+                            case 0, 1, 2: 48;
+                            case n: 48 + (n - 2) * 5;
+                        });
+                    case [DongDong, "午餐選擇" | "小菜 - $58" | "以下套餐奉送例湯", v]:
+                        orderContent.push(h + ": " + v);
+                        extraOrderContent.push("外賣盒 (+$1)");
                     case [_, h, v]:
                         orderContent.push(h + ": " + v);
                 }
-                order.content = orderContent.join("\n");
+                order.content = orderContent.concat(extraOrderContent).join("\n");
                 order;
             }
         ];
