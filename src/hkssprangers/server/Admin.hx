@@ -244,6 +244,19 @@ class Admin extends View {
         return Std.parseInt(r.matched(1));
     }
 
+    static public function parseTotalPrice(orderStr:String):Int {
+        var multi = ~/^.+\[.+\]: (\d+)份$/;
+        return orderStr.split("\n").map(line -> {
+            if (multi.match(line)) {
+                var n = Std.parseInt(multi.matched(1));
+                var each = parsePrice(line);
+                each * n;
+            } else {
+                line.split(", ").map(parsePrice).sum();
+            }
+        }).sum();
+    }
+
     static public function pullOrders(?date:Date):Promise<String> {
         var now = switch (date) {
             case null: Date.now();
@@ -278,7 +291,7 @@ class Admin extends View {
                             o.wantTableware,
                             o.note != null ? "*其他備註: " + o.note : null,
                             "",
-                            "食物價錢: $",
+                            "食物價錢: $" + parseTotalPrice(o.content),
                             o.iceCream.length > 0 ? "雪糕價錢: $" + iceCreamPrice : null,
                             o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
                             "",
