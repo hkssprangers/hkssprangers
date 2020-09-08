@@ -55,7 +55,8 @@ class Admin extends View {
         ');
     }
 
-    static final menuForm = [
+    static var menuForm(get, null):Map<Shop<Dynamic>, Promise<GoogleSpreadsheet>>;
+    static function get_menuForm() return menuForm != null ? menuForm : menuForm = [
         for (shop => sheetId in [
             YearsHK => "1Jq1AuOc6pG-EuqsGkRj_DS4TWvFXa-r3pGY9DFMqhGk",
             EightyNine => "1Y-yqDQsYO4UeJa4Jxl2ZtZ56Su84cU58TVrm7QpXTHg",
