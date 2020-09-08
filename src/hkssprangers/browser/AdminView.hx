@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import js.html.URL;
 import moment.Moment;
 import js.html.URLSearchParams;
 import js_cookie.CookiesStatic;
@@ -15,6 +16,7 @@ import js.lib.Promise;
 using hkssprangers.info.Info.OrderTools;
 using hkssprangers.info.Info.TimeSlotTools;
 using Lambda;
+using StringTools;
 
 class AdminView extends ReactComponent {
     public var tgBotName(get, never):String;
@@ -71,7 +73,19 @@ class AdminView extends ReactComponent {
             date: DateTools.format(date, "%Y-%m-%d"),
         });
         return window.fetch("/admin?" + qs)
-            .then(r -> r.text())
+            .then(r ->
+                if (r.redirected && new URL(r.url).pathname.startsWith("/login")) {
+                    location.assign("/login?" + new URLSearchParams({
+                        redirectTo: location.pathname + location.search,
+                    }));
+                    null;
+                } else if (!r.ok || !r.headers.get("Content-Type").toLowerCase().contains("text/plain")) {
+                    location.assign(r.url);
+                    null;
+                } else {
+                    r.text();
+                }
+            )
             .then(str -> {
                 isLoading = false;
                 orderString = str;
