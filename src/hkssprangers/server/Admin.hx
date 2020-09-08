@@ -126,7 +126,7 @@ class Admin extends View {
                         order.wantTableware = v + "餐具";
                     case [_, "其他備註", v]:
                         order.note = v;
-                    case [_, h, v] if (h.startsWith("你的tg username")):
+                    case [_, h, v] if (h.startsWith("你的tg username") || h.startsWith("你的Telegram username")):
                         var r = ~/^@?([A-Za-z0-9_]{5,})$/;
                         order.tg = if (r.match(v.trim()))
                             "https://t.me/" + r.matched(1);
