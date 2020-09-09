@@ -163,6 +163,12 @@ class Admin extends View {
                     case [_, h, v]:
                         orderContent.push(h + ": " + v);
                 }
+                switch (shop) {
+                    case KCZenzero:
+                        extraOrderContent.push("外賣盒 (+$2)");
+                    case _:
+                        //pass
+                }
                 order.content = orderContent.concat(extraOrderContent).join("\n");
                 order;
             }
