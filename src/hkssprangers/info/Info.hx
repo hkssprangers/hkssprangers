@@ -658,6 +658,24 @@ enum abstract PaymentMethod(String) to String {
     }
 }
 
+enum abstract ContactMethod(String) to String {
+    var Telegram;
+    var WhatsApp;
+
+    public function info() return switch (cast this:ContactMethod) {
+        case Telegram:
+            {
+                id: Telegram,
+                name: "Telegram",
+            }
+        case WhatsApp:
+            {
+                id: WhatsApp,
+                name: "WhatsApp",
+            }
+    }
+}
+
 enum abstract PickupMethod(String) to String {
     var Door;
     var Street;

@@ -98,6 +98,7 @@ class Admin extends View {
                     iceCream: [],
                     wantTableware: null,
                     time: null,
+                    contactMethod: null,
                     tg: null,
                     tel: null,
                     paymentMethod: null,
@@ -117,8 +118,16 @@ class Admin extends View {
                         order.time = v;
                     case [_, "你的地址", v]:
                         order.address = v;
-                    case [_, "你的電話號碼", v]:
-                        order.tel = v;
+                    case [_, "你的聯絡方式 (外賣員會和你聯絡同收款)", v]:
+                        order.contactMethod = if (v.toLowerCase().startsWith("telegram")) {
+                            Telegram;
+                        } else if (v.toLowerCase().startsWith("whatsapp")) {
+                            WhatsApp;
+                        } else {
+                            throw 'Unknown contact method: ' + v;
+                        }
+                    case [_, "你的電話號碼" | "你的電話號碼/Whatsapp", v]:
+                        order.tel = "https://wa.me/852" + v;
                     case [_, "俾錢方法", v]:
                         order.paymentMethod = v;
                     case [_, "交收方法", v]:
@@ -303,8 +312,8 @@ class Admin extends View {
                             o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
                             "",
                             "客人交收時段: " + o.time,
-                            "tg: " + o.tg,
-                            o.tel,
+                            (o.contactMethod == Telegram ? "tg: (客人首選)" : "tg: ") + o.tg,
+                            (o.contactMethod == WhatsApp ? "wtsapp: (客人首選)" : "wtsapp: ") + o.tel,
                             o.paymentMethod,
                             o.address + " (" + o.pickupMethod + ")",
                         ].filter(l -> l != null).join("\n");
