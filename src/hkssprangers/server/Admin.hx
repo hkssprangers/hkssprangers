@@ -312,8 +312,8 @@ class Admin extends View {
                             o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
                             "",
                             "客人交收時段: " + o.time,
-                            (o.contactMethod == Telegram ? "tg: (客人首選)" : "tg: ") + o.tg,
-                            (o.contactMethod == WhatsApp ? "wtsapp: (客人首選)" : "wtsapp: ") + o.tel,
+                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
+                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
                             o.paymentMethod,
                             o.address + " (" + o.pickupMethod + ")",
                         ].filter(l -> l != null).join("\n");
