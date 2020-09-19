@@ -66,6 +66,7 @@ class Admin extends View {
             BiuKeeLokYuen => "1POh9Yy93iyTbm5An_NhQoVWO2QX7GCDcBrs0nZuehKg",
             KCZenzero => "1gHslFNSVO8KOoD6IEcV-mglGoGailUaHr4SbQRSzFOo",
             Neighbor => "15Mzv3r9wTbxpIiJEPbPPwF8O7oP4hQGQ5bksyMuKXHY",
+            MGY => "1jbZng_nv2nx3WgY7BV6DfpGz_3AuheVH2VYNOxQCQvM",
         ]) {
             var doc = new GoogleSpreadsheet(sheetId);
             shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)

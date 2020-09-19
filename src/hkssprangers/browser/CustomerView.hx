@@ -455,6 +455,8 @@ class CustomerView extends ReactComponent {
                 null;
             case Neighbor:
                 null;
+            case MGY:
+                null;
         }
         var dollar = "$";
         function onAddressChange(evt) {
