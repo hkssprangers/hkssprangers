@@ -1,6 +1,6 @@
 --js browser.js
 --main hkssprangers.browser.BrowserMain
---library react
+--library react-next
 --library compiletime
 --library tink_core
 --library jQueryExtern

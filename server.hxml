@@ -4,7 +4,7 @@
 --class-path lib/hxnodelibs
 --class-path lib/dts2hx
 --library hxnodejs
---library react
+--library react-next
 --library compiletime
 --library tink_core
 --library tink_core_ext
@@ -12,4 +12,5 @@
 --library CommentString
 -D react_ver=16.12
 -D react_fragments
+-D react_skip_extend_component_restriction
 --dce full

@@ -47,7 +47,7 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function depJs() return jsx('
+    function depScript() return jsx('
         <Fragment>
             <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossOrigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" integrity="sha256-9nt4LsWmLI/O24lTW89IzAKuBqEZ47l/4rh1+tH/NY8=" crossOrigin="anonymous"></script>
@@ -71,7 +71,7 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function js() return jsx('
+    function script() return jsx('
         <Fragment>
             <script src=${R("/browser.bundled.js")}></script>
         </Fragment>
@@ -118,9 +118,9 @@ class View extends ReactComponent {
             <link rel="canonical" href=${canonical()} />
             ${ogMeta()}
             ${depCss()}
-            ${depJs()}
+            ${depScript()}
             ${css()}
-            ${js()}
+            ${script()}
             ${prefetch().map(prefetchNode)}
         </head>
     ');
