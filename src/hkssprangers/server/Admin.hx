@@ -170,6 +170,9 @@ class Admin extends View {
                         orderContent.push(h.substr(0, h.length - "配料選擇".length) + ": " + v);
                     case [BiuKeeLokYuen, "請選擇", v]:
                         orderContent.push(v);
+                    case [MGY, "客飯 / 炒粉飯 / 日式冷麵" | "小食選擇" | "粉麵選擇 - $43", v]:
+                        orderContent.push(v);
+                        extraOrderContent.push("外賣盒 (+$1)");
                     case [_, h, v]:
                         orderContent.push(h + ": " + v);
                 }
