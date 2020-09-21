@@ -397,6 +397,12 @@ class ImportOrderDocs {
                 shopId: o.shopId,
                 orderDetails: o.orderDetails,
                 orderPrice: o.orderPrice,
+                platformServiceCharge:
+                    switch [o.pickupTimeSlotStart.substr(0, 10), o.orderCode] {
+                        case ["2020-08-05", "Years 02"]: 0; // Years gave a 85% discount
+                        case ["2020-08-05", "Years 03"]: 0; // Years gave a 85% discount
+                        case _: ((o.orderPrice:Decimal) * 0.15).toFloat();
+                    },
                 wantTableware: o.wantTableware,
                 customerNote: o.orderNote,
             })];
@@ -410,6 +416,7 @@ class ImportOrderDocs {
                             shopId: HanaSoftCream,
                             orderDetails: o.iceCreamDetails,
                             orderPrice: o.iceCreamPrice,
+                            platformServiceCharge: ((o.iceCreamPrice:Decimal) * 0.15).toFloat(),
                             wantTableware: o.wantTableware,
                             customerNote: null,
                         })
@@ -425,6 +432,7 @@ class ImportOrderDocs {
                 pickupMethod: o.pickupMethod,
                 paymeAvailable: o.paymentMethods.has(PayMe),
                 fpsAvailable: o.paymentMethods.has(FPS),
+                customerPreferredContactMethod: null,
                 customerTgUsername: o.customerTgUsername,
                 customerTgId: null,
                 customerTel: o.customerTel,
@@ -453,6 +461,12 @@ class ImportOrderDocs {
                     deliveryId: r.deliveryId,
                     courierId: r.courierId,
                     deliveryFee: o.deliveryFee,
+                    deliverySubsidy:
+                        switch [o.pickupTimeSlotStart.substr(0, 10), o.orderCode] {
+                            case ["2020-08-05", "Years 02"]: 0; // Years gave a 85% discount
+                            case ["2020-08-05", "Years 03"]: 0; // Years gave a 85% discount
+                            case _: (((o.orderPrice:Decimal) + (o.iceCreamPrice:Decimal)) * 0.075).toFloat();
+                        },
                 });
                 Promise.inParallel([insertDeliveryOrder.noise(), insertDeliveryCourier.noise()]);
             });
