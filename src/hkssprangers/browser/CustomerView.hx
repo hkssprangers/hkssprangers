@@ -3,7 +3,7 @@ package hkssprangers.browser;
 import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
-import js.npm.material_ui.MaterialUi;
+import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
 import hkssprangers.info.Info;
 using hkssprangers.info.Info.OrderTools;
@@ -59,9 +59,9 @@ class EightyNineItemForm extends ReactComponent {
             '));
 
         var cardAction = jsx('
-            <Grid container=${true} spacing=${0}>
+            <Grid container=${true} spacing=${Spacing_0}>
                 <Grid item=${true}>
-                    <Button size="small" onClick=${evt -> onRemove()}>
+                    <Button size=${Small} onClick=${evt -> onRemove()}>
                         移除
                     </Button>
                 </Grid>
@@ -69,7 +69,7 @@ class EightyNineItemForm extends ReactComponent {
         ');
 
         return jsx('
-            <Card className="is-editing" variant="outlined">
+            <Card className="is-editing" variant=${Outlined}>
                 <CardHeader
                     title=${eightyNineSetInfo.name}
                     subheader=${eightyNineSetInfo.description}
@@ -83,7 +83,7 @@ class EightyNineItemForm extends ReactComponent {
                                 <Select
                                     labelId=${"select-main-" + randomId}
                                     value=${item.data.main != null ? item.data.main : ""}
-                                    onChange=${(evt:ReactEvent) -> {
+                                    onChange=${(evt:js.html.Event, elm) -> {
                                         item.data.main = (cast evt.target).value;
                                         onChange(isValid());
                                     }}
@@ -100,7 +100,7 @@ class EightyNineItemForm extends ReactComponent {
                                 <Select
                                     labelId=${"select-sub-" + randomId}
                                     value=${item.data.sub != null ? item.data.sub : ""}
-                                    onChange=${(evt:ReactEvent) -> {
+                                    onChange=${(evt, elm) -> {
                                         item.data.sub = (cast evt.target).value;
                                         onChange(isValid());
                                     }}
@@ -212,7 +212,7 @@ class EightyNineOrderForm extends ReactComponent {
                     <Select
                         labelId=${"select-timeslot"}
                         value=${pickupTimeSlotString}
-                        onChange=${(evt:ReactEvent) -> {
+                        onChange=${(evt, elm) -> {
                             var value:String = (cast evt.target).value;
                             onPickupTimeSlotChange(pickupTimeSlotOptions.find(slot -> slot.print() == value));
                         }}
@@ -255,20 +255,20 @@ class EightyNineOrderForm extends ReactComponent {
         }
         var addMore = if (order.items.length < maxItems) {
             jsx('
-                <Button size="small" color="primary" onClick=${evt -> addItem()} disabled=${editing.has(true)}>
+                <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled=${editing.has(true)}>
                     ${addLabel}
                 </Button>
             ');
         } else {
             jsx('
-                <Grid container=${true} spacing=${1} alignItems="center">
+                <Grid container=${true} spacing=${Spacing_1} alignItems=${Center}>
                     <Grid>
-                        <Button size="small" color="primary" onClick=${evt -> addItem()} disabled=${true}>
+                        <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled=${true}>
                             ${addLabel}
                         </Button>
                     </Grid>
                     <Grid>
-                        <Typography variant="body2">
+                        <Typography variant=${Body2}>
                             最多叫 ${maxItems} 份
                         </Typography>
                     </Grid>
@@ -277,10 +277,10 @@ class EightyNineOrderForm extends ReactComponent {
         }
 
         return jsx('
-            <Grid container=${true} spacing=${1}>
-                <Grid container=${true} item=${true} xs=${12} justify="center">
+            <Grid container=${true} spacing=${Spacing_1}>
+                <Grid container=${true} item=${true} xs=${12} justify=${Center}>
                     <Grid item=${true}>
-                        <Typography variant="h2">${EightyNine.info().name} x 埗兵 外賣預訂</Typography>
+                        <Typography variant=${H2}>${EightyNine.info().name} x 埗兵 外賣預訂</Typography>
                     </Grid>
                 </Grid>
                 ${timeSlotInput()}
@@ -380,14 +380,14 @@ class CustomerView extends ReactComponent {
         var orderContent = switch (selectedOrderForm) {
             case null:
                 jsx('
-                    <Grid container=${true} spacing=${1}>
+                    <Grid container=${true} spacing=${Spacing_1}>
                         <Grid item=${true} xs=${12}>
-                            <Typography variant="h2" align="center">落單</Typography>
+                            <Typography variant=${H2} align=${Center}>落單</Typography>
                         </Grid>
-                        <Grid item=${true} container=${true} xs=${12} spacing=${3} justify="center">
+                        <Grid item=${true} container=${true} xs=${12} spacing=${Spacing_3} justify=${Center}>
                             <Grid item=${true}>
                                 <Button
-                                    color="primary"
+                                    color=${Primary}
                                     href="https://docs.google.com/forms/d/e/1FAIpQLSfKw5JY0no7Tgu7q0hT2LP05rJ23DCMRIcCjxfwyapfSMl-Bg/viewform"
                                 >
                                     ${YearsHK.info().name}
@@ -395,7 +395,7 @@ class CustomerView extends ReactComponent {
                             </Grid>
                             <Grid item=${true}>
                                 <Button
-                                    color="primary"
+                                    color=${Primary}
                                     onClick=${(evt) -> selectedOrderForm = EightyNine}
                                 >
                                     ${EightyNine.info().name}
@@ -403,7 +403,7 @@ class CustomerView extends ReactComponent {
                             </Grid>
                             <Grid item=${true}>
                                 <Button
-                                    color="primary"
+                                    color=${Primary}
                                     href="https://docs.google.com/forms/d/e/1FAIpQLSfvb1PDjceErVgyogijVDxkN3pXu0djpBFzc_H59oqrdSH0mQ/viewform"
                                 >
                                     ${DragonJapaneseCuisine.info().name}
@@ -411,7 +411,7 @@ class CustomerView extends ReactComponent {
                             </Grid>
                             <Grid item=${true}>
                                 <Button
-                                    color="primary"
+                                    color=${Primary}
                                     href="https://docs.google.com/forms/u/1/d/e/1FAIpQLSffligA-KWnAQsNPbshjYFJeE8s00XkKoXP0IbUYd0xZReotg/viewform"
                                 >
                                     ${LaksaStore.info().name}
@@ -459,8 +459,8 @@ class CustomerView extends ReactComponent {
                 null;
         }
         var dollar = "$";
-        function onAddressChange(evt) {
-            delivery.pickupLocation = evt.target.value;
+        function onAddressChange(evt:js.html.Event) {
+            delivery.pickupLocation = (cast evt.target).value;
             delivery = delivery;
         }
         var pickupMethodItems = [
@@ -471,8 +471,8 @@ class CustomerView extends ReactComponent {
             .map(info -> jsx('
                 <MenuItem key=${info.id} value=${info.id}>${info.name}</MenuItem>
             '));
-        function onPickupMethodChange(evt) {
-            delivery.pickupMethod = evt.target.value;
+        function onPickupMethodChange(evt, elm) {
+            delivery.pickupMethod = (cast evt.target).value;
             delivery = delivery;
         }
         var customerTg = if (delivery.customer.tg != null) {
@@ -497,7 +497,7 @@ class CustomerView extends ReactComponent {
             ');
         }
         return return jsx('
-            <Container maxWidth="sm">
+            <Container maxWidth=${SM}>
                 <Grid container=${true}>
                     <Typography>
                         * 必填項目
@@ -508,10 +508,10 @@ class CustomerView extends ReactComponent {
                         ${orderContent}
                     </Grid>
                 </Grid>
-                <Divider variant="middle" />
+                <Divider variant=${Middle} />
                 <Grid container=${true}>
                     <Grid item=${true} xs=${12}>
-                        <Typography variant="h5" gutterBottom=${true}>
+                        <Typography variant=${H5} gutterBottom=${true}>
                             有關運費
                         </Typography>
                         <Typography paragraph=${true}>

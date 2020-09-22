@@ -8,7 +8,7 @@ import global.JsCookieGlobal.*;
 import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
-import js.npm.material_ui.MaterialUi;
+import mui.core.*;
 import js.npm.material_ui.Pickers;
 import hkssprangers.info.Info;
 import js.Browser.*;
@@ -108,7 +108,7 @@ class AdminView extends ReactComponent {
         }
 
         return jsx('
-            <Grid container=${true} justify="center">
+            <Grid container=${true} justify=${Center}>
                 <Grid item=${true} xs=${12}>
                     <Typography>Logged in as <a href=${tgMe} target="_blank">@${user.tg.username}</a></Typography>
                 </Grid>

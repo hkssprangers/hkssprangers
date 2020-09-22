@@ -6,7 +6,7 @@ import global.JsCookieGlobal.*;
 import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
-import js.npm.material_ui.MaterialUi;
+import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
 import hkssprangers.info.Info;
 import js.Browser.*;
@@ -35,7 +35,7 @@ class LogInView extends ReactComponent {
 
     override function render() {
         return jsx('
-            <Grid container=${true} justify="center">
+            <Grid container=${true} justify=${Center}>
                 <Grid item=${true}>
                     <TelegramLoginButton
                         botName=${tgBotName}
