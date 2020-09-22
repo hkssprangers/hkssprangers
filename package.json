@@ -27,7 +27,7 @@
     "terser": "^5.3.2",
     "textract": "^2.5.0",
     "uglifyify": "^5.0.2",
-    "xlsx": "^0.16.6"
+    "xlsx": "^0.16.7"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
