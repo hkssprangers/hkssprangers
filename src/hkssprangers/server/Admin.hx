@@ -75,6 +75,106 @@ class Admin extends View {
         }
     ];
 
+    static function getGroupOrders():Promise<String> {
+        var hr = "\n--------------------------------------------------------------------------------\n";
+        var doc = new GoogleSpreadsheet("1xcwF-OucoIneLjaajM6b6MOf_waeAE9oeCyTOpzoAJA");
+        return doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
+            .then(_ -> doc.loadInfo())
+            .then(_ -> doc.sheetsByIndex[0])
+            .then(sheet -> {
+                sheet.loadCells().then(_ -> {
+                    var headers = [
+                        for (col in 0...sheet.columnCount)
+                        (sheet.getCell(0, col).value:Null<String>)
+                    ];
+                    var orders = [];
+                    for (row in 1...sheet.rowCount)
+                    if (sheet.getCell(row, 0).value != null)
+                    {
+                        var order = {
+                            creationTime: null,
+                            content: "",
+                            wantTableware: null,
+                            time: null,
+                            contactMethod: null,
+                            tg: null,
+                            tel: null,
+                            paymentMethod: null,
+                            address: null,
+                            pickupMethod: null,
+                            note: null,
+                        };
+                        var orderContent = [];
+                        for (col => h in headers)
+                            switch [h, (sheet.getCell(row, col).formattedValue:String)] {
+                                case [null, _]:
+                                    continue;
+                                case ["Timestamp" | "時間戳記", v]:
+                                    order.creationTime = v;
+                                case [_, null | ""]:
+                                    continue;
+                                case ["你的地址", v]:
+                                    order.address = v;
+                                case ["你的聯絡方式 (外賣員會和你聯絡同收款)", v]:
+                                    order.contactMethod = if (v.toLowerCase().startsWith("telegram")) {
+                                        Telegram;
+                                    } else if (v.toLowerCase().startsWith("whatsapp")) {
+                                        WhatsApp;
+                                    } else {
+                                        throw 'Unknown contact method: ' + v;
+                                    }
+                                case ["你的電話號碼" | "你的電話號碼/Whatsapp", v]:
+                                    order.tel = "https://wa.me/852" + v;
+                                case ["俾錢方法", v]:
+                                    order.paymentMethod = v;
+                                case ["交收方法", v]:
+                                    order.pickupMethod = v;
+                                case ["需要餐具嗎?", v]:
+                                    order.wantTableware = v + "餐具";
+                                case ["其他備註", v]:
+                                    order.note = v;
+                                case [h, v] if (h.startsWith("你的Telegram username")):
+                                    var r = ~/^@?([A-Za-z0-9_]{5,})$/;
+                                    order.tg = if (r.match(v.trim()))
+                                        "https://t.me/" + r.matched(1);
+                                    else
+                                        v;
+                                case [h, v] if (h.startsWith("想幾時收到?")):
+                                    order.time = v;
+                                case [h, v]:
+                                    orderContent.push(h + ": " + v);
+                            }
+                        order.content = orderContent.join("\n");
+                        orders.push(order);
+                    }
+                    orders;
+                });
+            })
+            .then(orders -> {
+                [
+                    for (i => o in orders)
+                    {
+                        var totalPrice = parseTotalPrice(o.content);
+                        [
+                            "單號: " + '${i+1}'.lpad("0", 2),
+                            "",
+                            o.content,
+                            o.wantTableware,
+                            o.note != null ? "*其他備註: " + o.note : null,
+                            "",
+                            "食物價錢: $" + totalPrice,
+                            "食物+運費: $" + (totalPrice + 15),
+                            "",
+                            "客人交收時段: " + o.time,
+                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
+                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
+                            o.paymentMethod,
+                        ].filter(l -> l != null).join("\n");
+                    }
+                ].join(hr);
+            });
+    }
+
     static function getOrders(shop:Shop<Dynamic>, sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
         var dateStr = (date.getMonth() + 1) + "月" + date.getDate() + "日";
         function isInTimeSlot(value:String):Bool {
@@ -234,6 +334,21 @@ class Admin extends View {
 
     static public function middleware(req:Request, res:Response) {
         var user:User = res.locals.user;
+        switch (req.query.group:String) {
+            case null:
+                // pass
+            case groupStr:
+                getGroupOrders()
+                    .then(orderStr -> {
+                        res.type("text");
+                        res.end(orderStr);
+                    })
+                    .catchError(err -> {
+                        res.type("text");
+                        res.status(500).end(Std.string(err));
+                    });
+                return;
+        }
         switch (req.query.date:String) {
             case null:
                 // pass
