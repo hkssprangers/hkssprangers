@@ -7,7 +7,7 @@
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
-    "@date-io/moment": "1.x",
+    "@date-io/moment": "2.x",
     "@material-ui/core": "^4.11.0",
     "@material-ui/pickers": "^3.2.10",
     "@types/js-cookie": "^2.2.6",
