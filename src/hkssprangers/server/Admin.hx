@@ -13,6 +13,7 @@ import haxe.Json;
 import js.npm.express.*;
 import hkssprangers.info.Info;
 import hkssprangers.server.ServerMain.*;
+import hkssprangers.ObjectTools.*;
 using Lambda;
 using StringTools;
 using hkssprangers.server.ExpressTools;
@@ -75,8 +76,9 @@ class Admin extends View {
         }
     ];
 
-    static function getGroupOrders():Promise<String> {
-        var hr = "\n--------------------------------------------------------------------------------\n";
+    static final hr = "\n--------------------------------------------------------------------------------\n";
+
+    static function getGroupOrders() {
         var doc = new GoogleSpreadsheet("1xcwF-OucoIneLjaajM6b6MOf_waeAE9oeCyTOpzoAJA");
         return doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
             .then(_ -> doc.loadInfo())
@@ -149,29 +151,6 @@ class Admin extends View {
                     }
                     orders;
                 });
-            })
-            .then(orders -> {
-                [
-                    for (i => o in orders)
-                    {
-                        var totalPrice = parseTotalPrice(o.content);
-                        [
-                            "單號: " + '${i+1}'.lpad("0", 2),
-                            "",
-                            o.content,
-                            o.wantTableware,
-                            o.note != null ? "*其他備註: " + o.note : null,
-                            "",
-                            "食物價錢: $" + totalPrice,
-                            "食物+運費: $" + (totalPrice + 15),
-                            "",
-                            "客人交收時段: " + o.time,
-                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
-                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
-                            o.paymentMethod,
-                        ].filter(l -> l != null).join("\n");
-                    }
-                ].join(hr);
             });
     }
 
@@ -338,30 +317,75 @@ class Admin extends View {
             case null:
                 // pass
             case groupStr:
-                getGroupOrders()
-                    .then(orderStr -> {
+                switch (req.accepts(["text", "json"])) {
+                    case "text":
+                        getGroupOrders()
+                            .then(orders -> {
+                                [
+                                    for (i => o in orders)
+                                    {
+                                        var totalPrice = parseTotalPrice(o.content);
+                                        [
+                                            "單號: " + '${i+1}'.lpad("0", 2),
+                                            "",
+                                            o.content,
+                                            o.wantTableware,
+                                            o.note != null ? "*其他備註: " + o.note : null,
+                                            "",
+                                            "食物價錢: $" + totalPrice,
+                                            "食物+運費: $" + (totalPrice + 15),
+                                            "",
+                                            "客人交收時段: " + o.time,
+                                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
+                                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
+                                            o.paymentMethod,
+                                        ].filter(l -> l != null).join("\n");
+                                    }
+                                ].join(hr);
+                            })
+                            .then(orderStr -> {
+                                res.type("text");
+                                res.end(orderStr);
+                            })
+                            .catchError(err -> {
+                                res.type("text");
+                                res.status(500).end(Std.string(err));
+                            });
+                        return;
+                    case "json":
+                        getGroupOrders()
+                            .then(orders -> res.json(orders));
+                        return;
+                    case _:
                         res.type("text");
-                        res.end(orderStr);
-                    })
-                    .catchError(err -> {
-                        res.type("text");
-                        res.status(500).end(Std.string(err));
-                    });
-                return;
+                        res.status(406).send("Can only return text or json");
+                        return;
+                }
         }
         switch (req.query.date:String) {
             case null:
                 // pass
             case dateStr:
-                pullOrders(Date.fromString(dateStr))
-                    .then(orderStr -> {
+                switch (req.accepts(["text", "json"])) {
+                    case "text":
+                        pullOrders(Date.fromString(dateStr))
+                            .then(orderStr -> {
+                                res.type("text");
+                                res.end(orderStr);
+                            })
+                            .catchError(err -> {
+                                res.type("text");
+                                res.status(500).end(Std.string(err));
+                            });
+                    // case "json":
+                    //     getGroupOrders()
+                    //         .then(orders -> res.json(orders));
+                    //     return;
+                    case _:
                         res.type("text");
-                        res.end(orderStr);
-                    })
-                    .catchError(err -> {
-                        res.type("text");
-                        res.status(500).end(Std.string(err));
-                    });
+                        res.status(406).send("Can only return text or json");
+                        return;
+                }
                 return;
         }
         var tgBotInfo = tgBot.telegram.getMe();
@@ -400,7 +424,6 @@ class Admin extends View {
             case v: v;
         }
         // var now = Date.fromString("2020-08-18");
-        var hr = "\n--------------------------------------------------------------------------------\n";
         var errors = [];
         var sheets = [
             for (shop => doc in menuForm)
@@ -415,13 +438,18 @@ class Admin extends View {
                 sheet
                     .then(sheet -> getOrders(shop, sheet, now, t))
                     .then(orders -> orders.mapi((i, o) -> {
-                        var iceCreamPrices = o.iceCream.map(parsePrice);
-                        var iceCreamPrice = iceCreamPrices.has(null) ? "" : Std.string(iceCreamPrices.sum());
-                        [
-                            "單號: " + shop.info().name + " " + (switch (t) {
+                        merge(o, {
+                            code: shop.info().name + " " + (switch (t) {
                                 case Lunch: "L" + '${i+1}'.lpad("0", 2);
                                 case Dinner: "D" + '${i+1}'.lpad("0", 2);
                             }),
+                        });
+                    }))
+                    .then(orders -> orders.mapi((i, o) -> {
+                        var iceCreamPrices = o.iceCream.map(parsePrice);
+                        var iceCreamPrice = iceCreamPrices.has(null) ? "" : Std.string(iceCreamPrices.sum());
+                        [
+                            "單號: " + o.code,
                             "",
                             o.content,
                             o.iceCream.length > 0 ? "\n" + o.iceCream.join("\n") + "\n" : null,
