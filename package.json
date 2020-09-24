@@ -13,7 +13,7 @@
     "@types/js-cookie": "^2.2.6",
     "browserify": "^16.5.2",
     "dotenv-cli": "^4.0.0",
-    "dts2hx": "^0.14.0",
+    "dts2hx": "^0.14.1",
     "envify": "^4.1.0",
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.2",
