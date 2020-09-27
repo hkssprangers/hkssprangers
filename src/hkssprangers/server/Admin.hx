@@ -27,6 +27,22 @@ typedef User = {
     isAdmin:Bool,
 };
 
+typedef FormOrder = {
+    creationTime:Date,
+    shop:Shop<Dynamic>,
+    content: String,
+    iceCream: Array<String>,
+    wantTableware: Bool,
+    time: TimeSlot,
+    contactMethod: ContactMethod,
+    tg: String,
+    tel: String,
+    paymentMethod: Array<PaymentMethod>,
+    address: String,
+    pickupMethod: PickupMethod,
+    note: Null<String>,
+};
+
 class Admin extends View {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
@@ -39,7 +55,8 @@ class Admin extends View {
     }>;
     function get_user() return props.user;
 
-    override public function description() return "平台管理";
+    override function title():String return "平台管理";
+    override function description() return "平台管理";
     override function canonical() return Path.join([domain, "admin"]);
     override public function render() {
         return super.render();
@@ -154,15 +171,10 @@ class Admin extends View {
             });
     }
 
-    static function getOrders(shop:Shop<Dynamic>, sheet:GoogleSpreadsheetWorksheet, date:Date, timeSlotType:TimeSlotType) {
+    static function getOrders(shop:Shop<Dynamic>, sheet:GoogleSpreadsheetWorksheet, date:Date):Array<FormOrder> {
         var dateStr = (date.getMonth() + 1) + "月" + date.getDate() + "日";
         function isInTimeSlot(value:String):Bool {
-            return value.startsWith(dateStr) && switch (timeSlotType) {
-                case Lunch:
-                    value.indexOf("午") >= 0;
-                case Dinner:
-                    value.indexOf("晚") >= 0;
-            }
+            return value.startsWith(dateStr);
         }
         var headers = [
             for (col in 0...sheet.columnCount)
@@ -173,7 +185,9 @@ class Admin extends View {
             if (sheet.getCell(row, 0).value != null)
             if (isInTimeSlot(sheet.getCell(row, headers.findIndex(h -> h == "想幾時收到?")).value))
             {
-                var order = {
+                var order:FormOrder = {
+                    creationTime: null,
+                    shop: shop,
                     content: "",
                     iceCream: [],
                     wantTableware: null,
@@ -189,13 +203,35 @@ class Admin extends View {
                 var orderContent = [];
                 var extraOrderContent = [];
                 for (col => h in headers)
-                switch [shop, h, (sheet.getCell(row, col).value:String)] {
-                    case [_, "Timestamp" | "時間戳記" | "叫多份?" | "請選擇類別" | null, _]:
+                switch [shop, h, (sheet.getCell(row, col).formattedValue:String)] {
+                    case [_, "叫多份?" | "請選擇類別" | null, _]:
                         null;
+                    case [_, "Timestamp" | "時間戳記", v]:
+                        if (v.contains("年")) {
+                            // 2020年9月20日 上午03:24:53
+                            order.creationTime = Date.fromTime(Moment.call(v, "LL Ahh:mm:ss", "zh-hk", true).toDate().getTime());
+                        } else if (v.contains("/")) {
+                            // 9/2/2020 9:59:25
+                            order.creationTime = Date.fromTime(Moment.call(v, "M/D/YYYY H:m:s", true).toDate().getTime());
+                        } else if (v.contains("-")) {
+                            order.creationTime = Date.fromTime(Moment.call(v).toDate().getTime());
+                        } else {
+                            throw "unknown date format: " + v;
+                        }
                     case [_, _, null | "" | "明白了"]:
                         null;
                     case [_, "想幾時收到?", v]:
-                        order.time = v;
+                        var dateReg = ~/([0-9]+)月([0-9]+)日/;
+                        var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
+                        if (dateReg.match(v) && timeSlotReg.match(v)) {
+                            var dateStr = "2020-" + dateReg.matched(1).lpad("0", 2) + "-" + dateReg.matched(2).lpad("0", 2);
+                            order.time = ({
+                                start: dateStr + " " + timeSlotReg.matched(1) + ":00",
+                                end: dateStr + " " + timeSlotReg.matched(2) + ":00",
+                            }:TimeSlot);
+                        } else {
+                            throw 'Cannot parse datetime from ' + v;
+                        }
                     case [_, "你的地址", v]:
                         order.address = v;
                     case [_, "你的聯絡方式 (外賣員會和你聯絡同收款)", v]:
@@ -209,11 +245,15 @@ class Admin extends View {
                     case [_, "你的電話號碼" | "你的電話號碼/Whatsapp", v]:
                         order.tel = "https://wa.me/852" + v;
                     case [_, "俾錢方法", v]:
-                        order.paymentMethod = v;
+                        order.paymentMethod = v.split(",").map(v -> PaymentMethod.fromName(v.trim()));
                     case [_, "交收方法", v]:
-                        order.pickupMethod = v;
+                        order.pickupMethod = PickupMethod.fromName(v);
                     case [_, "需要餐具嗎?", v]:
-                        order.wantTableware = v + "餐具";
+                        order.wantTableware = switch (v) {
+                            case "要": true;
+                            case "唔要": false;
+                            case _: throw 'tableware? ' + v;
+                        };
                     case [_, "其他備註", v]:
                         order.note = v;
                     case [_, h, v] if (h.startsWith("你的tg username") || h.startsWith("你的Telegram username")):
@@ -369,7 +409,29 @@ class Admin extends View {
                 switch (req.accepts(["text", "json"])) {
                     case "text":
                         pullOrders(Date.fromString(dateStr))
-                            .then(orderStr -> {
+                            .then(orders -> {
+                                var orderStr = orders.mapi((i, o) -> {
+                                    var iceCreamPrices = o.iceCream.map(parsePrice);
+                                    var iceCreamPrice = iceCreamPrices.has(null) ? "" : Std.string(iceCreamPrices.sum());
+                                    [
+                                        "單號: " + o.code,
+                                        "",
+                                        o.content,
+                                        o.iceCream.length > 0 ? "\n" + o.iceCream.join("\n") + "\n" : null,
+                                        o.wantTableware ? "要餐具" : "唔要餐具",
+                                        o.note != null ? "*其他備註: " + o.note : null,
+                                        "",
+                                        "食物價錢: $" + parseTotalPrice(o.content),
+                                        o.iceCream.length > 0 ? "雪糕價錢: $" + iceCreamPrice : null,
+                                        o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
+                                        "",
+                                        "客人交收時段: " + o.time,
+                                        (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
+                                        (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
+                                        o.paymentMethod.map(m -> m.info().name).join(","),
+                                        o.address + " (" + o.pickupMethod.info().name + ")",
+                                    ].filter(l -> l != null).join("\n");
+                                }).join(hr);
                                 res.type("text");
                                 res.end(orderStr);
                             })
@@ -418,65 +480,50 @@ class Admin extends View {
         }).sum();
     }
 
-    static public function pullOrders(?date:Date):Promise<String> {
+    static public function pullOrders(?date:Date) {
         var now = switch (date) {
             case null: Date.now();
             case v: v;
         }
         // var now = Date.fromString("2020-08-18");
-        var errors = [];
         var sheets = [
             for (shop => doc in menuForm)
             shop => doc
                 .then(doc -> doc.sheetsByIndex[0])
                 .then(sheet -> sheet.loadCells().then(_ -> sheet))
         ];
-        return Promise.all([
-            for (t in [Lunch, Dinner])
+        return [
             for (shop => sheet in sheets)
-            {
-                sheet
-                    .then(sheet -> getOrders(shop, sheet, now, t))
-                    .then(orders -> orders.mapi((i, o) -> {
-                        merge(o, {
-                            code: shop.info().name + " " + (switch (t) {
-                                case Lunch: "L" + '${i+1}'.lpad("0", 2);
-                                case Dinner: "D" + '${i+1}'.lpad("0", 2);
-                            }),
-                        });
-                    }))
-                    .then(orders -> orders.mapi((i, o) -> {
-                        var iceCreamPrices = o.iceCream.map(parsePrice);
-                        var iceCreamPrice = iceCreamPrices.has(null) ? "" : Std.string(iceCreamPrices.sum());
-                        [
-                            "單號: " + o.code,
-                            "",
-                            o.content,
-                            o.iceCream.length > 0 ? "\n" + o.iceCream.join("\n") + "\n" : null,
-                            o.wantTableware,
-                            o.note != null ? "*其他備註: " + o.note : null,
-                            "",
-                            "食物價錢: $" + parseTotalPrice(o.content),
-                            o.iceCream.length > 0 ? "雪糕價錢: $" + iceCreamPrice : null,
-                            o.iceCream.length > 0 ? "食物+雪糕+運費: $" : "食物+運費: $",
-                            "",
-                            "客人交收時段: " + o.time,
-                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
-                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
-                            o.paymentMethod,
-                            o.address + " (" + o.pickupMethod + ")",
-                        ].filter(l -> l != null).join("\n");
-                    }).join(hr))
-                    .catchError((err:js.lib.Error) -> {
-                        errors.push('Failed to process ${shop.info().name}\'s spreadsheet.\n\n' + err.message);
-                    });
-            }
-        ]).then(strs -> {
-            if (errors.length > 0) {
-                Promise.reject(errors.join("\n\n\n\n"));
-            } else {
-                Promise.resolve(strs.filter((str:String) -> str.trim() != "").join(hr));
-            }
-        });
+            sheet
+                .then(sheet -> getOrders(shop, sheet, now))
+                .then(orders -> {
+                    [
+                        for (t in [Lunch, Dinner])
+                        orders
+                            .filter(o -> TimeSlotType.classify(o.time.start) == t)
+                            .mapi((i, o) -> {
+                                merge(o, {
+                                    code: o.shop.info().name + " " + (switch (t) {
+                                        case Lunch: "L" + '${i+1}'.lpad("0", 2);
+                                        case Dinner: "D" + '${i+1}'.lpad("0", 2);
+                                    }),
+                                });
+                            })
+                    ].fold((item, result:Array<FormOrder & {code:String}>) -> result.concat(item), []);
+                })
+        ]
+            .fold((item, result:Promise<Array<FormOrder & {code:String}>>) ->
+                item.then(orders ->
+                    result.then(all ->
+                        all.concat(orders)
+                    )
+                )
+            , Promise.resolve([]))
+            .then(orders -> {
+                [
+                    for (t in [Lunch, Dinner])
+                    orders.filter(o -> TimeSlotType.classify(o.time.start) == t)
+                ].fold((item, result:Array<FormOrder & {code:String}>) -> result.concat(item), []);
+            });
     }
 }

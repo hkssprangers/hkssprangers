@@ -63,7 +63,6 @@ class ServerMain {
         ],
         pickupLocation: "長沙灣地鐵站C1地面",
         pickupTimeSlot: {
-            type: Dinner,
             start: "2020-08-10 19:00:00",
             end: "2020-08-10 20:00:00",
         },

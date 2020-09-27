@@ -83,7 +83,6 @@ abstract LocalDateString(String) to String {
 }
 
 typedef TimeSlot = {
-    type: TimeSlotType,
     start: LocalDateString,
     end: LocalDateString,
 }
@@ -92,7 +91,7 @@ class TimeSlotTools {
     static public function print(slot:TimeSlot):String {
         var startDate = slot.start.toDate();
         var endDate = slot.end.toDate();
-        return '${startDate.getMonth() + 1}月${startDate.getDate()}日 (${Weekday.fromDay(startDate.getDay()).info().name}) ${slot.type.info().name} ${DateTools.format(startDate, "%H:%M")} - ${DateTools.format(endDate, "%H:%M")}';
+        return '${startDate.getMonth() + 1}月${startDate.getDate()}日 (${Weekday.fromDay(startDate.getDay()).info().name}) ${TimeSlotType.classify(slot.start).info().name} ${DateTools.format(startDate, "%H:%M")} - ${DateTools.format(endDate, "%H:%M")}';
     }
 }
 
@@ -694,6 +693,11 @@ enum abstract PaymentMethod(String) to String {
                 name: "FPS",
             }
     }
+
+    static public function fromName(name:String) {
+        name = name.toLowerCase();
+        return [PayMe, FPS].find(m -> m.info().name.toLowerCase() == name);
+    }
 }
 
 enum abstract ContactMethod(String) to String {
@@ -716,6 +720,7 @@ enum abstract ContactMethod(String) to String {
 
 enum abstract PickupMethod(String) to String {
     var Door;
+    var HangOutside;
     var Street;
 
     public function info() return switch (cast this:PickupMethod) {
@@ -724,11 +729,20 @@ enum abstract PickupMethod(String) to String {
                 id: Door,
                 name: "上門交收",
             }
+        case HangOutside:
+            {
+                id: HangOutside,
+                name: "食物外掛",
+            }
         case Street:
             {
                 id: Street,
                 name: "樓下交收",
             }
+    }
+
+    static public function fromName(name:String) {
+        return [Door, HangOutside, Street].find(m -> m.info().name == name);
     }
 }
 
