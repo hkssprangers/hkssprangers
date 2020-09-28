@@ -10,11 +10,11 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import mui.core.*;
 import js.npm.material_ui.Pickers;
-import hkssprangers.info.Info;
+import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
-using hkssprangers.info.Info.OrderTools;
-using hkssprangers.info.Info.TimeSlotTools;
+using hkssprangers.info.OrderTools;
+using hkssprangers.info.TimeSlotTools;
 using Lambda;
 using StringTools;
 

@@ -5,9 +5,12 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
-import hkssprangers.info.Info;
-using hkssprangers.info.Info.OrderTools;
-using hkssprangers.info.Info.TimeSlotTools;
+import hkssprangers.info.*;
+import hkssprangers.info.Shop;
+import hkssprangers.info.PickupMethod;
+import hkssprangers.info.menu.EightyNineItem;
+using hkssprangers.info.OrderTools;
+using hkssprangers.info.TimeSlotTools;
 using Lambda;
 
 class EightyNineItemForm extends ReactComponent {

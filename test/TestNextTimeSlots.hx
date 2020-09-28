@@ -1,5 +1,5 @@
 import utest.Assert;
-import hkssprangers.info.Info;
+import hkssprangers.info.Shop;
 
 class TestNextTimeSlots extends utest.Test {
     function test20200815234900() {

@@ -8,10 +8,10 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
-import hkssprangers.info.Info;
+import hkssprangers.info.*;
 import js.Browser.*;
-using hkssprangers.info.Info.OrderTools;
-using hkssprangers.info.Info.TimeSlotTools;
+using hkssprangers.info.OrderTools;
+using hkssprangers.info.TimeSlotTools;
 using Lambda;
 
 class LogInView extends ReactComponent {

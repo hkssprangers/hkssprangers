@@ -15,10 +15,11 @@ import telegraf.Markup;
 import js.npm.express.*;
 import js.Node.*;
 import comments.CommentString.*;
-import hkssprangers.info.Info;
+import hkssprangers.info.*;
+import hkssprangers.info.menu.EightyNineItem;
 using StringTools;
 using Lambda;
-using hkssprangers.info.Info.DeliveryTools;
+using hkssprangers.info.DeliveryTools;
 using hkssprangers.server.ExpressTools;
 
 class ServerMain {
