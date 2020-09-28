@@ -5,19 +5,19 @@ import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 using Lambda;
 
-enum abstract Shop<T>(String) to String {
-    var EightyNine:Shop<EightyNineItem>;
-    var DragonJapaneseCuisine:Shop<Dynamic>;
-    var YearsHK:Shop<Dynamic>;
-    var LaksaStore:Shop<Dynamic>;
-    var DongDong:Shop<Dynamic>;
-    var BiuKeeLokYuen:Shop<Dynamic>;
-    var KCZenzero:Shop<Dynamic>;
-    var HanaSoftCream:Shop<Dynamic>;
-    var Neighbor:Shop<Dynamic>;
-    var MGY:Shop<Dynamic>;
+enum abstract Shop(String) to String {
+    var EightyNine:Shop;
+    var DragonJapaneseCuisine:Shop;
+    var YearsHK:Shop;
+    var LaksaStore:Shop;
+    var DongDong:Shop;
+    var BiuKeeLokYuen:Shop;
+    var KCZenzero:Shop;
+    var HanaSoftCream:Shop;
+    var Neighbor:Shop;
+    var MGY:Shop;
 
-    public function info() return switch (cast this:Shop<T>) {
+    public function info() return switch (cast this:Shop) {
         case EightyNine:
             {
                 id: EightyNine,
@@ -391,7 +391,7 @@ enum abstract Shop<T>(String) to String {
     }
 
     public function nextTimeSlots(currentTime:Date):Array<TimeSlot & { isOff:Bool }> {
-        var info = (cast this:Shop<Dynamic>).info();
+        var info = (cast this:Shop).info();
         var today = DateTools.format(currentTime, "%Y-%m-%d");
         var tmr = DateTools.format(Date.fromTime(currentTime.getTime() + DateTools.days(1)), "%Y-%m-%d");
 

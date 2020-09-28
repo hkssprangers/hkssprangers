@@ -16,9 +16,9 @@ class DeliveryTools {
         }
 
         buf.add("\n");
-        var foodTotal = d.orders.fold((order:Order<Dynamic>, result:Cents) -> result + order.totalCents(), 0);
-        buf.add("食物價錢: " + foodTotal.print() + "\n");
-        buf.add("食物+運費: " + (foodTotal + d.deliveryFeeCents).print() + "\n");
+        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice, 0.0);
+        buf.add("食物價錢: " + foodTotal + "\n");
+        buf.add("食物+運費: " + (foodTotal + d.deliveryFee) + "\n");
 
         buf.add("\n");
         buf.add("客人交收時段: " + d.pickupTimeSlot.print() + "\n");

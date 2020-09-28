@@ -1,37 +1,37 @@
 package hkssprangers.browser;
 
 import react.*;
-import react.Fragment;
+import react.ReactComponent;
 import react.ReactMacro.jsx;
 import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
 import hkssprangers.info.*;
+import hkssprangers.info.Order;
 import hkssprangers.info.Shop;
 import hkssprangers.info.PickupMethod;
 import hkssprangers.info.menu.EightyNineItem;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TimeSlotTools;
+using hkssprangers.ObjectTools;
+using hkssprangers.MathTools;
 using Lambda;
 
-class EightyNineItemForm extends ReactComponent {
-    public var onChange(get, never):(isValid:Bool) -> Void;
-    function get_onChange() return props.onChange;
-
-    public var onRemove(get, never):() -> Void;
-    function get_onRemove() return props.onRemove;
-
-    public var item(get, never):{
+typedef EightyNineItemFormProps = {
+    var onChange:(isValid:Bool) -> Void;
+    var onRemove:() -> Void;
+    var item:{
         id: EightyNineItem,
         data: Dynamic,
-    }
-    function get_item() return props.item;
+    };
+}
 
+class EightyNineItemForm extends ReactComponentOfProps<EightyNineItemFormProps> {
     var randomId = Std.random(10000);
 
     function isValid():Bool {
-        return item != null && switch (item.id) {
+        return props.item != null && switch (props.item.id) {
             case EightyNineSet:
-                item.id.info(item.data).isValid;
+                props.item.id.info(props.item.data).isValid;
         }
         return false;
     }
@@ -50,7 +50,7 @@ class EightyNineItemForm extends ReactComponent {
         ]
             .map(main -> main.info())
             .map(info -> jsx('
-                <MenuItem key=${info.id} value=${info.id}>${info.name + " " + info.priceCents.print()}</MenuItem>
+                <MenuItem key=${info.id} value=${info.id}>${info.name + " $" + info.price}</MenuItem>
             '));
         var subItems = [
             EightyNineSetSub1,
@@ -64,7 +64,7 @@ class EightyNineItemForm extends ReactComponent {
         var cardAction = jsx('
             <Grid container=${true} spacing=${Spacing_0}>
                 <Grid item=${true}>
-                    <Button size=${Small} onClick=${evt -> onRemove()}>
+                    <Button size=${Small} onClick=${evt -> props.onRemove()}>
                         移除
                     </Button>
                 </Grid>
@@ -85,10 +85,10 @@ class EightyNineItemForm extends ReactComponent {
                                 <InputLabel id=${"select-main-" + randomId}>主菜選擇</InputLabel>
                                 <Select
                                     labelId=${"select-main-" + randomId}
-                                    value=${item.data.main != null ? item.data.main : ""}
+                                    value=${props.item.data.main != null ? props.item.data.main : ""}
                                     onChange=${(evt:js.html.Event, elm) -> {
-                                        item.data.main = (cast evt.target).value;
-                                        onChange(isValid());
+                                        props.item.data.main = (cast evt.target).value;
+                                        props.onChange(isValid());
                                     }}
                                 >
                                     ${mainItems}
@@ -102,10 +102,10 @@ class EightyNineItemForm extends ReactComponent {
                                 </InputLabel>
                                 <Select
                                     labelId=${"select-sub-" + randomId}
-                                    value=${item.data.sub != null ? item.data.sub : ""}
+                                    value=${props.item.data.sub != null ? props.item.data.sub : ""}
                                     onChange=${(evt, elm) -> {
-                                        item.data.sub = (cast evt.target).value;
-                                        onChange(isValid());
+                                        props.item.data.sub = (cast evt.target).value;
+                                        props.onChange(isValid());
                                     }}
                                 >
                                     ${subItems}
@@ -124,43 +124,33 @@ class EightyNineItemForm extends ReactComponent {
     }
 }
 
-class EightyNineOrderForm extends ReactComponent {
-    static public final maxItems = 3;
+typedef EightyNineOrderFormProps = {
+    var onChange:(isValid:Bool) -> Void;
+    var onPickupTimeSlotChange:(slot:TimeSlot) -> Void;
+    var order:OrderMeta;
+    var items:Array<{
+        id:EightyNineItem,
+        data:Dynamic,
+    }>;
+    var pickupTimeSlot:TimeSlot;
+    var pickupTimeSlotOptions:Array<TimeSlot & { isOff:Bool }>;
+}
 
-    public var onChange(get, never):(isValid:Bool) -> Void;
-    function get_onChange() return props.onChange;
-
-    public var onPickupTimeSlotChange(get, never):(slot:TimeSlot) -> Void;
-    function get_onPickupTimeSlotChange() return props.onPickupTimeSlotChange;
-
-    public var order(get, never):Order<EightyNineItem>;
-    function get_order() return props.order;
-
-    public var pickupTimeSlot(get, never):TimeSlot;
-    function get_pickupTimeSlot() return props.pickupTimeSlot;
-
-    public var pickupTimeSlotOptions(get, never):Array<TimeSlot & { isOff:Bool }>;
-    function get_pickupTimeSlotOptions() return props.pickupTimeSlotOptions;
-
-    public var editing(get, set):Map<{
+typedef EightyNineOrderFormState = {
+    var editing:Map<{
         id: EightyNineItem,
         data: Dynamic,
     }, Bool>;
-    function get_editing() return state.editing;
-    function set_editing(v) {
-        setState({
-            editing: v,
-        });
-        return v;
-    }
+}
+
+class EightyNineOrderForm extends ReactComponentOf<EightyNineOrderFormProps, EightyNineOrderFormState> {
+    static public final maxItems = 3;
+    inline static final dollar = "$";
 
     public function new(props):Void {
         super(props);
         state = {
-            editing: new Map<{
-                id: EightyNineItem,
-                data: Dynamic,
-            }, Bool>(),
+            editing: new Map(),
         };
     }
 
@@ -169,7 +159,11 @@ class EightyNineOrderForm extends ReactComponent {
     }
 
     function isValid():Bool {
-        return order.totalCents() > 0 && editing.foreach(v -> !v);
+        return orderPrice() > 0 && state.editing.foreach(v -> !v);
+    }
+
+    function orderPrice() {
+        return props.items.map(item -> item.id.info(item.data).price).sum();
     }
 
     function addItem() {
@@ -181,20 +175,20 @@ class EightyNineOrderForm extends ReactComponent {
                 given: EightyNineSetGiven1,
             }
         };
-        order.items.push(newItem);
-        editing[newItem] = true;
-        onChange(isValid());
-        editing = editing;
+        props.items.push(newItem);
+        state.editing[newItem] = true;
+        props.onChange(isValid());
+        setState({ editing: state.editing });
     }
 
     function timeSlotInput() {
-        var pickupTimeSlotString = if (pickupTimeSlot != null) {
-            pickupTimeSlot.print();
+        var pickupTimeSlotString = if (props.pickupTimeSlot != null) {
+            props.pickupTimeSlot.print();
         } else {
             "";
         }
 
-        var slots = pickupTimeSlotOptions.map(slot ->
+        var slots = props.pickupTimeSlotOptions.map(slot ->
             jsx('
                 <MenuItem
                     key=${slot.start}
@@ -217,7 +211,7 @@ class EightyNineOrderForm extends ReactComponent {
                         value=${pickupTimeSlotString}
                         onChange=${(evt, elm) -> {
                             var value:String = (cast evt.target).value;
-                            onPickupTimeSlotChange(pickupTimeSlotOptions.find(slot -> slot.print() == value));
+                            props.onPickupTimeSlotChange(props.pickupTimeSlotOptions.find(slot -> slot.print() == value));
                         }}
                     >
                         ${slots}
@@ -228,17 +222,17 @@ class EightyNineOrderForm extends ReactComponent {
     }
 
     override function render() {
-        var itemForms = order.items.map(item -> {
+        var itemForms = props.items.map(item -> {
             function onChange(isValid:Bool) {
-                editing[item] = !isValid;
-                editing = editing;
-                this.onChange(this.isValid());
+                state.editing[item] = !isValid;
+                setState({ editing: state.editing });
+                props.onChange(this.isValid());
             }
             function onRemove() {
-                order.items.remove(item);
-                editing.remove(item);
-                editing = editing;
-                this.onChange(this.isValid());
+                props.items.remove(item);
+                state.editing.remove(item);
+                setState({ editing: state.editing });
+                props.onChange(this.isValid());
             }
             jsx('
                 <Grid key=${item} item=${true} xs=${12}>
@@ -251,14 +245,14 @@ class EightyNineOrderForm extends ReactComponent {
             ');
         });
 
-        var addLabel = if (order.items.length > 0) {
+        var addLabel = if (props.items.length > 0) {
             "叫多份";
         } else {
             "揀食咩";
         }
-        var addMore = if (order.items.length < maxItems) {
+        var addMore = if (props.items.length < maxItems) {
             jsx('
-                <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled=${editing.has(true)}>
+                <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled=${state.editing.has(true)}>
                     ${addLabel}
                 </Button>
             ');
@@ -272,7 +266,7 @@ class EightyNineOrderForm extends ReactComponent {
                     </Grid>
                     <Grid>
                         <Typography variant=${Body2}>
-                            最多叫 ${maxItems} 份
+                            最多叫 ${Std.string(maxItems)} 份
                         </Typography>
                     </Grid>
                 </Grid>
@@ -294,7 +288,7 @@ class EightyNineOrderForm extends ReactComponent {
                     </Grid>
                     <Grid item=${true} xs=${12}>
                         <Typography>
-                            食物價錢: ${order.totalCents().print()}
+                            食物價錢: ${dollar}${Std.string(orderPrice())}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -303,45 +297,21 @@ class EightyNineOrderForm extends ReactComponent {
     }
 }
 
-class CustomerView extends ReactComponent {
-    public var tgBotName(get, never):String;
-    function get_tgBotName() return props.tgBotName;
+typedef CustomerViewProps = {
+    var tgBotName:String;
+}
 
-    public var selectedOrderForm(get, set):Null<Shop<Dynamic>>;
-    function get_selectedOrderForm() return state.selectedOrderForm;
-    function set_selectedOrderForm(v) {
-        setState({
-            selectedOrderForm: v,
-        });
-        return v;
-    }
+typedef CustomerViewState = {
+    var selectedOrderForm:Null<Shop>;
+    var delivery:Null<Delivery>;
+    var items:Array<{
+        id:EightyNineItem,
+        data:Dynamic,
+    }>;
+    var isValid:Bool;
+}
 
-    public var delivery(get, set):Null<Delivery>;
-    function get_delivery() return state.delivery;
-    function set_delivery(v) {
-        setState({
-            delivery: v,
-        });
-        return v;
-    }
-
-    public var order(get, set):Null<Order<Dynamic>>;
-    function get_order() return delivery.orders[0];
-    function set_order(v) {
-        delivery.orders[0] = v;
-        delivery = delivery;
-        return v;
-    }
-
-    public var isValid(get, set):Bool;
-    function get_isValid() return state.isValid;
-    function set_isValid(v) {
-        setState({
-            isValid: v,
-        });
-        return v;
-    }
-
+class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState> {
     function new(props):Void {
         super(props);
         state = {
@@ -349,10 +319,11 @@ class CustomerView extends ReactComponent {
             delivery: ({
                 courier: null,
                 orders: [{
+                    creationTime: null,
+                    orderCode: null,
                     shop: EightyNine,
-                    code: null,
-                    timestamp: null,
-                    items: [],
+                    orderDetails: null,
+                    orderPrice: 0.0,
                     wantTableware: null,
                     customerNote: null,
                 }],
@@ -364,23 +335,31 @@ class CustomerView extends ReactComponent {
                 pickupLocation: null,
                 pickupTimeSlot: null,
                 pickupMethod: null,
-                deliveryFeeCents: null,
+                deliveryFee: null,
                 customerNote: null,
             }:Delivery),
+            items: [],
             isValid: false,
         };
     }
 
     function handleTelegramResponse(response) {
-        delivery.customer.tg = {
-            id: response.id,
-            username: response.username,
-        };
-        delivery = delivery;
+        setState({
+            delivery: state.delivery.with({
+                customer: state.delivery.customer.with({
+                    tg: state.delivery.customer.tg.with({
+                        id: response.id,
+                        username: response.username,
+                    })
+                }),
+            }),
+        });
     }
 
+    inline static final dollar = "$";
+
     override function render() {
-        var orderContent = switch (selectedOrderForm) {
+        var orderContent = switch (state.selectedOrderForm) {
             case null:
                 jsx('
                     <Grid container=${true} spacing=${Spacing_1}>
@@ -399,7 +378,7 @@ class CustomerView extends ReactComponent {
                             <Grid item=${true}>
                                 <Button
                                     color=${Primary}
-                                    onClick=${(evt) -> selectedOrderForm = EightyNine}
+                                    onClick=${(evt) -> state.selectedOrderForm = EightyNine}
                                 >
                                     ${EightyNine.info().name}
                                 </Button>
@@ -425,18 +404,24 @@ class CustomerView extends ReactComponent {
                 ');
             case EightyNine:
                 function onChange(isValid:Bool) {
-                    this.isValid = isValid;
-                    order = order;
+                    setState({
+                        isValid: isValid,
+                        delivery: state.delivery,
+                    });
                 }
                 function onPickupTimeSlotChange(slot:TimeSlot) {
-                    delivery.pickupTimeSlot = slot;
-                    delivery = delivery;
+                    setState({
+                        delivery: state.delivery.with({
+                            pickupTimeSlot: slot,
+                        }),
+                    });
                 }
-                var pickupTimeSlotOptions = order.shop.nextTimeSlots(Date.now());
+                var pickupTimeSlotOptions = state.delivery.orders[0].shop.nextTimeSlots(Date.now());
                 jsx('
                     <EightyNineOrderForm
-                        order=${order}
-                        pickupTimeSlot=${delivery.pickupTimeSlot}
+                        order=${state.delivery.orders[0]}
+                        items=${state.items}
+                        pickupTimeSlot=${state.delivery.pickupTimeSlot}
                         pickupTimeSlotOptions=${pickupTimeSlotOptions}
                         onChange=${onChange}
                         onPickupTimeSlotChange=${onPickupTimeSlotChange}
@@ -461,13 +446,16 @@ class CustomerView extends ReactComponent {
             case MGY:
                 null;
         }
-        var dollar = "$";
         function onAddressChange(evt:js.html.Event) {
-            delivery.pickupLocation = (cast evt.target).value;
-            delivery = delivery;
+            setState({
+                delivery: state.delivery.with({
+                    pickupLocation: (cast evt.target).value,
+                }),
+            });
         }
         var pickupMethodItems = [
             Door,
+            HangOutside,
             Street,
         ]
             .map(v -> v.info())
@@ -475,26 +463,29 @@ class CustomerView extends ReactComponent {
                 <MenuItem key=${info.id} value=${info.id}>${info.name}</MenuItem>
             '));
         function onPickupMethodChange(evt, elm) {
-            delivery.pickupMethod = (cast evt.target).value;
-            delivery = delivery;
+            setState({
+                delivery: state.delivery.with({
+                    pickupMethod: (cast evt.target).value,
+                }),
+            });
         }
-        var customerTg = if (delivery.customer.tg != null) {
-            if (delivery.customer.tg.username != null)
+        var customerTg = if (state.delivery.customer.tg != null) {
+            if (state.delivery.customer.tg.username != null)
                 jsx('
                     <Typography>
-                        Telegram username: <a href=${"https://t.me/" + delivery.customer.tg.username} target="_blank">@${delivery.customer.tg.username}</a>
+                        Telegram username: <a href=${"https://t.me/" + state.delivery.customer.tg.username} target="_blank">@${state.delivery.customer.tg.username}</a>
                     </Typography>
                 ');
             else
                 jsx('
                     <Typography>
-                        Telegram ID: ${delivery.customer.tg.id}
+                        Telegram ID: ${Std.string(state.delivery.customer.tg.id)}
                     </Typography>
                 ');
         } else {
             jsx('
                 <TelegramLoginButton
-                    botName=${tgBotName}
+                    botName=${props.tgBotName}
                     dataOnauth=${handleTelegramResponse}
                 />
             ');
@@ -532,7 +523,7 @@ class CustomerView extends ReactComponent {
                         <TextField
                             label="交收地址"
                             required=${true}
-                            value=${delivery.pickupLocation != null ? delivery.pickupLocation: ""}
+                            value=${state.delivery.pickupLocation != null ? state.delivery.pickupLocation: ""}
                             onChange=${onAddressChange}
                         />
                     </Grid>
@@ -543,7 +534,7 @@ class CustomerView extends ReactComponent {
                             </InputLabel>
                             <Select
                                 labelId="select-pickup-method"
-                                value=${delivery.pickupMethod != null ? delivery.pickupMethod : ""}
+                                value=${state.delivery.pickupMethod != null ? state.delivery.pickupMethod : ""}
                                 onChange=${onPickupMethodChange}
                             >
                                 ${pickupMethodItems}

@@ -35,19 +35,11 @@ class ServerMain {
         },
         orders: [
             {
+                creationTime: Date.fromTime(1596965006),
+                orderCode: "01",
                 shop: EightyNine,
-                code: "01",
-                timestamp: 1596965006,
-                items: [
-                    {
-                        id: EightyNineSet,
-                        data: {
-                            main: EightyNineSetMain5,
-                            sub: EightyNineSetSub1,
-                            given: EightyNineSetGiven1,
-                        }
-                    },
-                ],
+                orderDetails: null,
+                orderPrice: 0.0,
                 wantTableware: false,
                 customerNote: null,
             }
@@ -68,7 +60,7 @@ class ServerMain {
             end: "2020-08-10 20:00:00",
         },
         pickupMethod: Street,
-        deliveryFeeCents: 2500,
+        deliveryFee: 25,
         customerNote: "如可以七點三至七半",
     }
     static final isMain = js.Syntax.code("require.main") == module;

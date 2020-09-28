@@ -1,13 +1,14 @@
 package hkssprangers.info;
 
-typedef Order<Item> = {
-    shop:Shop<Item>,
-    code:String,
-    timestamp:Int,
-    items: Array<{
-        id: Item,
-        data: Dynamic,
-    }>,
+typedef OrderMeta = {
+    creationTime:Date,
+    orderCode:String,
+    shop:Shop,
     wantTableware:Bool,
     customerNote:Null<String>,
+}
+
+typedef Order = OrderMeta & {
+    orderDetails:String,
+    orderPrice:Float,
 }

@@ -4,7 +4,7 @@ typedef Delivery = {
     courier: {
         tg: Tg
     },
-    orders:Array<Order<Dynamic>>,
+    orders:Array<Order>,
     customer: {
         tg: Tg,
         tel: String,
@@ -13,6 +13,6 @@ typedef Delivery = {
     pickupLocation: String,
     pickupTimeSlot: TimeSlot,
     pickupMethod: PickupMethod,
-    deliveryFeeCents: Cents,
+    deliveryFee: Float,
     customerNote: String,
 }

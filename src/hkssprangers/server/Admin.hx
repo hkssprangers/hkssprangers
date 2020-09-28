@@ -32,7 +32,7 @@ typedef User = {
 
 typedef FormOrder = {
     creationTime:Date,
-    shop:Shop<Dynamic>,
+    shop:Shop,
     content: String,
     iceCream: Array<String>,
     wantTableware: Bool,
@@ -76,7 +76,7 @@ class Admin extends View {
         ');
     }
 
-    static var menuForm(get, null):Map<Shop<Dynamic>, Promise<GoogleSpreadsheet>>;
+    static var menuForm(get, null):Map<Shop, Promise<GoogleSpreadsheet>>;
     static function get_menuForm() return menuForm != null ? menuForm : menuForm = [
         for (shop => sheetId in [
             YearsHK => "1Jq1AuOc6pG-EuqsGkRj_DS4TWvFXa-r3pGY9DFMqhGk",
@@ -174,7 +174,7 @@ class Admin extends View {
             });
     }
 
-    static function getOrders(shop:Shop<Dynamic>, sheet:GoogleSpreadsheetWorksheet, date:Date):Array<FormOrder> {
+    static function getOrders(shop:Shop, sheet:GoogleSpreadsheetWorksheet, date:Date):Array<FormOrder> {
         var dateStr = (date.getMonth() + 1) + "月" + date.getDate() + "日";
         function isInTimeSlot(value:String):Bool {
             return value.startsWith(dateStr);
