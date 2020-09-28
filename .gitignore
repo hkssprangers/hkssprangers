@@ -6,19 +6,19 @@
 *.js.map
 /lib/dts2hx/
 
-dump
+/dump
 
 node_modules
-.serverless
+/.serverless
 
-hkssprangers-1850e37b7d98.json
+/hkssprangers-1850e37b7d98.json
 
-orders
-menu
-summary
+/orders
+/menu
+/summary
 
-dev/initdb/002_data_courier.sql
-dev/initdb/003_data.sql
+/dev/initdb/002_data_courier.sql
+/dev/initdb/003_data.sql
 
-orders.json
-menuResponses.json
+/orders.json
+/menuResponses.json
