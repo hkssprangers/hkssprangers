@@ -4,6 +4,7 @@ using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
 using Lambda;
+using StringTools;
 
 class DeliveryTools {
     static public function print(d:Delivery):String {
@@ -27,8 +28,11 @@ class DeliveryTools {
         if (d.customer.tel != null)
             buf.add((d.customerPreferredContactMethod == WhatsApp ? "☑ " : "☐ ") + d.customer.tel + "\n");
         buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
-        buf.add(d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")");
+        buf.add(d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")\n");
 
-        return buf.toString();
+        if (d.customerNote != null)
+            buf.add("⚠️ " + d.customerNote + "\n");
+
+        return buf.toString().trim();
     }
 }

@@ -1,6 +1,6 @@
 package hkssprangers.info;
 
-import hkssprangers.info.menu.EightyNineItem;
+using StringTools;
 
 class OrderTools {
     static public function print(order:Order):String {
@@ -14,6 +14,9 @@ class OrderTools {
 
         buf.add("食物價錢: $" + order.orderPrice + "\n");
 
-        return buf.toString();
+        if (order.customerNote != null)
+            buf.add("⚠️ " + order.customerNote + "\n");
+
+        return buf.toString().trim();
     }
 }
