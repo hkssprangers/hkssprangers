@@ -27,42 +27,6 @@ class ServerMain {
         require('dotenv').config();
     }
 
-    static final delivery:Delivery = {
-        courier: {
-            tg: {
-                username: "fghgjghjghmf"
-            }
-        },
-        orders: [
-            {
-                creationTime: Date.fromTime(1596965006),
-                orderCode: "01",
-                shop: EightyNine,
-                orderDetails: null,
-                orderPrice: 0.0,
-                wantTableware: false,
-                customerNote: null,
-            }
-        ],
-        customer: {
-            tg: {
-                username: "asdfsdfasdfasdfsgdsggd",
-            },
-            tel: "12345648",
-        },
-        paymentMethods: [
-            PayMe,
-            FPS,
-        ],
-        pickupLocation: "長沙灣地鐵站C1地面",
-        pickupTimeSlot: {
-            start: "2020-08-10 19:00:00",
-            end: "2020-08-10 20:00:00",
-        },
-        pickupMethod: Street,
-        deliveryFee: 25,
-        customerNote: "如可以七點三至七半",
-    }
     static final isMain = js.Syntax.code("require.main") == module;
     static public final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
@@ -113,7 +77,7 @@ class ServerMain {
         }
 
         tgBot.start((ctx:Context) -> {
-            ctx.reply(delivery.print(), new Extra({}).HTML(true).markup(kbd));
+            ctx.reply("started", new Extra({}).HTML(true).markup(kbd));
         });
         tgBot.action("delete", (ctx:Context) -> ctx.deleteMessage());
 

@@ -44,6 +44,7 @@ DROP TABLE IF EXISTS `delivery`;
 CREATE TABLE `delivery` (
   `deliveryId` int NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
+  `deliveryCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `pickupLocation` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `pickupTimeSlotStart` timestamp NOT NULL,
   `pickupTimeSlotEnd` timestamp NOT NULL,
@@ -105,7 +106,7 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `orderId` int NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
-  `orderCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `orderCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `shopId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderDetails` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderPrice` decimal(5,2) NOT NULL,

@@ -317,6 +317,8 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
         state = {
             selectedOrderForm: EightyNine,
             delivery: ({
+                creationTime: null,
+                deliveryCode: null,
                 courier: null,
                 orders: [{
                     creationTime: null,
@@ -331,6 +333,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                     tg: null,
                     tel: null,
                 },
+                customerPreferredContactMethod: null,
                 paymentMethods: [],
                 pickupLocation: null,
                 pickupTimeSlot: null,

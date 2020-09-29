@@ -1,18 +1,24 @@
 package hkssprangers.info;
 
-typedef Delivery = {
+typedef DeliveryMeta = {
+    creationTime:LocalDateString,
+    deliveryCode:String,
     courier: {
         tg: Tg
     },
-    orders:Array<Order>,
     customer: {
         tg: Tg,
         tel: String,
     },
+    customerPreferredContactMethod:ContactMethod,
     paymentMethods: Array<PaymentMethod>,
     pickupLocation: String,
     pickupTimeSlot: TimeSlot,
     pickupMethod: PickupMethod,
     deliveryFee: Float,
     customerNote: String,
+}
+
+typedef Delivery = DeliveryMeta & {
+    orders:Array<Order>,
 }

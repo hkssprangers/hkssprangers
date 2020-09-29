@@ -1,8 +1,8 @@
 package hkssprangers.info;
 
 typedef OrderMeta = {
-    creationTime:Date,
-    orderCode:String,
+    creationTime:LocalDateString,
+    ?orderCode:String,
     shop:Shop,
     wantTableware:Bool,
     customerNote:Null<String>,

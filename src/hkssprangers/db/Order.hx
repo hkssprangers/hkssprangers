@@ -3,7 +3,7 @@ package hkssprangers.db;
 typedef Order = {
     @:autoIncrement @:primary var orderId:Id<Order>;
     var creationTime:Timestamp;
-    var orderCode:VarChar<50>;
+    var orderCode:Null<VarChar<50>>;
     var shopId:VarChar<50>;
     var orderDetails:VarChar<2048>;
     var orderPrice:Float;

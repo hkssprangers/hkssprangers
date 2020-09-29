@@ -2,6 +2,7 @@ package hkssprangers.db;
 
 typedef Delivery = {
     @:autoIncrement @:primary var deliveryId:Id<Delivery>;
+    var deliveryCode:VarChar<50>;
     var creationTime:Timestamp;
     var pickupLocation:VarChar<1024>;
     var pickupTimeSlotStart:Timestamp;
