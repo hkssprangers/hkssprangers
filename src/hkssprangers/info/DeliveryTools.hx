@@ -24,9 +24,9 @@ class DeliveryTools {
         buf.add("\n");
         buf.add(d.pickupTimeSlot.print() + "\n");
         if (d.customer.tg != null)
-            buf.add((d.customerPreferredContactMethod == Telegram ? "☑ " : "☐ ") + d.customer.tg.print() + "\n");
+            buf.add(d.customer.tg.print() + (d.customerPreferredContactMethod == Telegram ? " 👈" : "") + "\n");
         if (d.customer.tel != null)
-            buf.add((d.customerPreferredContactMethod == WhatsApp ? "☑ " : "☐ ") + d.customer.tel + "\n");
+            buf.add(d.customer.tel + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "") + "\n");
         buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
         buf.add(d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")\n");
 
