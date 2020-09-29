@@ -17,7 +17,7 @@ class DeliveryTools {
 
         buf.add(d.orders.map(o -> o.print()).join("\n\n"));
 
-        buf.add("\n");
+        buf.add("\n\n");
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice, 0.0);
         buf.add("總食物價錢+運費: $" + (foodTotal + d.deliveryFee) + "\n");
 
