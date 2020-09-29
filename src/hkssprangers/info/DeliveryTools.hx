@@ -15,7 +15,7 @@ class DeliveryTools {
         if (d.courier != null)
             buf.add("外賣員: " + d.courier.tg.print() + "\n");
 
-        buf.add(d.orders.map(o -> o.print()).join("\n"));
+        buf.add(d.orders.map(o -> o.print()).join("\n\n"));
 
         buf.add("\n");
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice, 0.0);
