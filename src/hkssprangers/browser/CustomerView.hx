@@ -319,13 +319,14 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
             delivery: ({
                 creationTime: null,
                 deliveryCode: null,
-                courier: null,
+                couriers: null,
                 orders: [{
                     creationTime: null,
                     orderCode: null,
                     shop: EightyNine,
                     orderDetails: null,
                     orderPrice: 0.0,
+                    platformServiceCharge: 0.0,
                     wantTableware: null,
                     customerNote: null,
                 }],

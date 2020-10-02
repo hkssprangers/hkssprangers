@@ -15,6 +15,7 @@ import hkssprangers.info.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.TimeSlotType;
+import hkssprangers.info.OrderTools.*;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.ObjectTools.*;
 using Lambda;
@@ -197,11 +198,12 @@ class Admin extends View {
                     customerNote: null,
                     orderDetails: null,
                     orderPrice: null,
+                    platformServiceCharge: null,
                 };
                 var delivery:Delivery = {
                     creationTime: null,
                     deliveryCode: null,
-                    courier: null,
+                    couriers: null,
                     customer: {
                         tg: null,
                         tel: null,
@@ -466,27 +468,6 @@ class Admin extends View {
                 user: user,
             }))
             .catchError(err -> res.status(500).json(err));
-    }
-
-    static public function parsePrice(str:String):Null<Int> {
-        var r = ~/\$(\d+)/;
-        if (!r.match(str))
-            return null;
-
-        return Std.parseInt(r.matched(1));
-    }
-
-    static public function parseTotalPrice(orderStr:String):Int {
-        var multi = ~/^.+\[.+\]: (\d+)份$/;
-        return orderStr.split("\n").map(line -> {
-            if (multi.match(line)) {
-                var n = Std.parseInt(multi.matched(1));
-                var each = parsePrice(line);
-                each * n;
-            } else {
-                line.split(", ").map(parsePrice).sum();
-            }
-        }).sum();
     }
 
     static public function getAllDeliveries(?date:Date) {

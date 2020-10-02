@@ -21,4 +21,5 @@ node_modules
 /dev/initdb/003_data.sql
 
 /orders.json
+/deliveries.json
 /menuResponses.json

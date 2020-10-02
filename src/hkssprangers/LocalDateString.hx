@@ -9,4 +9,16 @@ abstract LocalDateString(String) to String {
 
     @:from
     static public function fromDate(d:Date):LocalDateString return cast DateTools.format(d, "%Y-%m-%d %H:%M:%S");
+
+    @:op(A > B)
+    static function gt(a:LocalDateString, b:LocalDateString):Bool return (a:String) > (b:String);
+
+    @:op(A >= B)
+    static function gte(a:LocalDateString, b:LocalDateString):Bool return (a:String) >= (b:String);
+
+    @:op(A < B)
+    static function lt(a:LocalDateString, b:LocalDateString):Bool return (a:String) < (b:String);
+
+    @:op(A <= B)
+    static function lte(a:LocalDateString, b:LocalDateString):Bool return (a:String) <= (b:String);
 }

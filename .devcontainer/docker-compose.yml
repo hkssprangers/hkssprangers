@@ -2,7 +2,7 @@ version: '3'
 services:
   workspace:
     # build: .
-    image: hkssprangers/hkssprangers_devcontainer_workspace:20200905
+    image: hkssprangers/hkssprangers_devcontainer_workspace:20201002
     volumes:
       - ..:/workspace:cached
       - node_modules:/workspace/node_modules
@@ -19,6 +19,7 @@ services:
   mysql:
     image: mysql:8.0
     environment:
+      - TZ=Asia/Hong_Kong
       - MYSQL_ROOT_PASSWORD=devroot
       - MYSQL_DATABASE=hkssprangers
     ports:

@@ -11,4 +11,5 @@ typedef OrderMeta = {
 typedef Order = OrderMeta & {
     orderDetails:String,
     orderPrice:Float,
+    platformServiceCharge:Float,
 }

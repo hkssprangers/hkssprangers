@@ -12,8 +12,8 @@ class DeliveryTools {
 
         buf.add("📃 " + d.deliveryCode + "\n\n");
 
-        if (d.courier != null)
-            buf.add("外賣員: " + d.courier.tg.print() + "\n");
+        if (d.couriers != null && d.couriers.length > 0)
+            buf.add("外賣員: " + d.couriers.map(c -> c.tg.print()).join(" ") + "\n");
 
         buf.add(d.orders.map(o -> o.print()).join("\n\n"));
 

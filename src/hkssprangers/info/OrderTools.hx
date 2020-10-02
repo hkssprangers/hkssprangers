@@ -1,6 +1,7 @@
 package hkssprangers.info;
 
 using StringTools;
+using hkssprangers.MathTools;
 
 class OrderTools {
     static public function print(order:Order):String {
@@ -18,5 +19,26 @@ class OrderTools {
             buf.add("⚠️ " + order.customerNote + "\n");
 
         return buf.toString().trim();
+    }
+
+    static public function parsePrice(str:String):Null<Int> {
+        var r = ~/\$(\d+)/;
+        if (!r.match(str))
+            return null;
+
+        return Std.parseInt(r.matched(1));
+    }
+
+    static public function parseTotalPrice(orderStr:String):Int {
+        var multi = ~/^.+\[.+\]: (\d+)份$/;
+        return orderStr.split("\n").map(line -> {
+            if (multi.match(line)) {
+                var n = Std.parseInt(multi.matched(1));
+                var each = parsePrice(line);
+                each * n;
+            } else {
+                line.split(", ").map(parsePrice).sum();
+            }
+        }).sum();
     }
 }
