@@ -464,6 +464,15 @@ class ImportOrderDocs {
                         continue;
                     }
 
+                    var noteReg = ~/^(?:.*備註[:：]\s*|⚠️\s*)(.+)$/;
+                    if (noteReg.match(line)) {
+                        if (delivery.pickupLocation != null)
+                            delivery.customerNote = noteReg.matched(1);
+                        else
+                            order.customerNote = noteReg.matched(1);
+                        continue;
+                    }
+
                     if (delivery.couriers != null && order.wantTableware == null) {
                         switch (line.trim()) {
                             case "要餐具":
@@ -590,15 +599,6 @@ class ImportOrderDocs {
                     if (addressReg.match(line)) {
                         delivery.pickupLocation = addressReg.matched(1);
                         delivery.pickupMethod = PickupMethod.fromName(addressReg.matched(2));
-                        continue;
-                    }
-
-                    var noteReg = ~/^(?:.*備註:\s*|⚠️\s*)(.+)$/;
-                    if (noteReg.match(line)) {
-                        if (delivery.pickupLocation != null)
-                            delivery.customerNote = noteReg.matched(1);
-                        else
-                            order.customerNote = noteReg.matched(1);
                         continue;
                     }
 
