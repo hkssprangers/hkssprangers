@@ -30,7 +30,7 @@ class OrderTools {
     }
 
     static public function parseTotalPrice(orderStr:String):Int {
-        var multi = ~/^.+\[.+\]: (\d+)份$/;
+        var multi = ~/^.+: (\d+)份$/;
         return orderStr.split("\n").map(line -> {
             if (multi.match(line)) {
                 var n = Std.parseInt(multi.matched(1));
