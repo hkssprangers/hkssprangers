@@ -13,6 +13,7 @@ import hkssprangers.info.Shop;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PickupMethod;
+import hkssprangers.info.OrderTools.*;
 import hkssprangers.server.MySql;
 import thx.Decimal;
 using StringTools;
@@ -186,6 +187,158 @@ class ImportOrderDocs {
         if (o.orderDetails == null || o.orderDetails == "") {
             throw "orderDetails is null: \n" + printDelivery();
         }
+    }
+
+    static function importGroupPurchasing(xlsxFile:String) {
+        var deliveries:Array<Delivery> = [];
+        var workbook = Xlsx.readFile(xlsxFile, {
+            cellDates: true,
+        });
+        var sheet = workbook.Sheets[workbook.SheetNames[0]];
+        var rows:Array<Array<String>> = Xlsx.utils.sheet_to_json(sheet, {
+            header: 1,
+            raw: false,
+        });
+
+        var dateReg = ~/([0-9]+)月([0-9]+)日/;
+        var date = if (dateReg.match(rows[0][1]))
+            "2020-" + dateReg.matched(1).lpad("0", 2) + "-" + dateReg.matched(2).lpad("0", 2);
+        else
+            throw "cannot parse date from " + rows[0][1];
+
+        for (r in 1...rows.length) { // skip header row
+            var row = rows[r];
+            if (row.length == 0 || row[0] == null)
+                continue;
+
+            var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
+            var timeSlotStr = row.find(v -> timeSlotReg.match(v));
+            if (timeSlotStr == null) {
+                trace("Cannot find timeslot field in " + xlsxFile + " " + row);
+                continue;
+            }
+
+            var d:Delivery = {
+                creationTime: row[0],
+                deliveryCode: "團購",
+                couriers: [
+                    {
+                        tg: {
+                            username: "littlepine",
+                        },
+                        deliveryFee: null,
+                        deliverySubsidy: null,
+                    },
+                    {
+                        tg: {
+                            username: "mabpa",
+                        },
+                        deliveryFee: null,
+                        deliverySubsidy: null,
+                    }
+                ],
+                customer: {
+                    tg: null,
+                    tel: null
+                },
+                customerPreferredContactMethod: null,
+                paymentMethods: null,
+                pickupLocation: null,
+                pickupTimeSlot: {
+                    start: date + " " + timeSlotReg.matched(1) + ":00",
+                    end: date + " " + timeSlotReg.matched(2) + ":00"
+                },
+                pickupMethod: null,
+                deliveryFee: 15,
+                customerNote: null,
+                orders: [],
+            };
+
+            var orderDetails:Map<Shop, Array<String>> = [
+                EightyNine => [],
+                LaksaStore => [],
+                HanaSoftCream => [],
+            ];
+
+            var wantTableware = null;
+
+            for (i => h in rows[0]) {
+                switch [h, row[i]] {
+                    case ["Timestamp", _]:
+                        // pass
+                    case [h, v] if (h.startsWith("想幾時收到?")):
+                        if (v.endsWith("美孚交收")) {
+                            d.pickupLocation = "美孚";
+                        } else if (v.endsWith("荔枝角交收")) {
+                            d.pickupLocation = "荔枝角";
+                        } else {
+                            throw "unknown pickup location " + v;
+                        }
+                    case ["你的聯絡方式 (外賣員會和你聯絡同收款)", v]:
+                        d.customerPreferredContactMethod = if (v.toLowerCase().contains("whatsapp"))
+                            WhatsApp;
+                        else if (v.toLowerCase().contains("telegram"))
+                            Telegram;
+                        else
+                            throw "unknown contact method " + v;
+                    case ["你的Telegram username, 非顯示名稱 e.g. @ssprangers", v]:
+                        if (v != null)
+                            d.customer.tg = {
+                                username: v.charAt(0) == "@" ? v.substr(1) : v,
+                            };
+                    case ["你的電話號碼/Whatsapp", v]:
+                        d.customer.tel = v;
+                    case ["俾錢方法", v]:
+                        d.paymentMethods = v.split(",").map(v -> PaymentMethod.fromName(v.trim()));
+                    case ["需要餐具嗎?", "唔要"]:
+                        wantTableware = false;
+                    case ["需要餐具嗎?", "要"]:
+                        wantTableware = true;
+                    case ["其他備註", v]:
+                        d.customerNote = v;
+                    case [h, v] if (h.startsWith("喇沙專門店")):
+                        if (v != null)
+                            orderDetails[LaksaStore].push(h + ": " + v + "份");
+                    case [h, v] if (h.startsWith("89美食")):
+                        if (v != null)
+                            orderDetails[EightyNine].push(h + ": " + v + "份");
+                    case [h, v] if (h.startsWith("日本蕨餅")):
+                        if (v != null)
+                            orderDetails[HanaSoftCream].push(h + ": " + v + "份");
+                    case [h, v]:
+                        throw "unknown col " + h + " " + v;
+                }
+            }
+
+            for (shop in [EightyNine, LaksaStore, HanaSoftCream]) {
+                var orderDetails = orderDetails[shop].join("\n");
+                var orderPrice = parseTotalPrice(orderDetails);
+                if (orderDetails.length > 0) {
+                    d.orders.push({
+                        creationTime: d.creationTime,
+                        orderCode: null,
+                        shop: shop,
+                        wantTableware: wantTableware,
+                        customerNote: null,
+                        orderDetails: orderDetails,
+                        orderPrice: orderPrice,
+                        platformServiceCharge: ((orderPrice:Decimal) * 0.15).roundTo(4).toFloat(),
+                    });
+                }
+            }
+
+            var foodPrice = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();
+            var deliveryFeePerCourier = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
+            var deliverySubsidyPerCourier = ((foodPrice * 0.5) / d.couriers.length).roundTo(4).toFloat();
+            for (c in d.couriers) {
+                c.deliveryFee = deliveryFeePerCourier;
+                c.deliverySubsidy = deliverySubsidyPerCourier;
+            }
+
+            deliveries.push(d);
+        }
+
+        return deliveries;
     }
 
     static function importDocs():Void {
@@ -476,6 +629,9 @@ class ImportOrderDocs {
                 trace(err);
             }
         }
+
+        var gpDeliveries = importGroupPurchasing("menu/埗兵團購外賣預訂單 (Responses).xlsx");
+        deliveries = deliveries.concat(gpDeliveries);
 
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
