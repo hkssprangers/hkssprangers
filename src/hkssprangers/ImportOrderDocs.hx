@@ -139,7 +139,7 @@ class ImportOrderDocs {
         switch (d.deliveryFee) {
             case null:
                 throw "deliveryFee is null: \n" + printDelivery();
-            case 25 | 35 | 40 | 50 | 100:
+            case 15 | 20 | 25 | 35 | 40 | 50 | 100:
                 //pass
             case v:
                 throw "unusual deliveryFee: \n" + printDelivery();
@@ -248,7 +248,7 @@ class ImportOrderDocs {
                     start: date + " " + timeSlotReg.matched(1) + ":00",
                     end: date + " " + timeSlotReg.matched(2) + ":00"
                 },
-                pickupMethod: null,
+                pickupMethod: Street,
                 deliveryFee: 15,
                 customerNote: null,
                 orders: [],
@@ -520,6 +520,7 @@ class ImportOrderDocs {
 
                     var pricePlusReg = ~/^總食物價錢\+運費:\s*\$?\s*([0-9]+)\s*$/;
                     if (pricePlusReg.match(line)) {
+                        delivery.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - delivery.orders.map(o -> o.orderPrice).sum();
                         continue;
                     }
 
@@ -623,15 +624,18 @@ class ImportOrderDocs {
 
         for (d in deliveries) {
             setCreationTime(d, menuResponses);
+        }
+
+        var gpDeliveries = importGroupPurchasing("menu/埗兵團購外賣預訂單 (Responses).xlsx");
+        deliveries = deliveries.concat(gpDeliveries);
+
+        for (d in deliveries) {
             try {
                 validateDelivery(d);
             } catch(err) {
                 trace(err);
             }
         }
-
-        var gpDeliveries = importGroupPurchasing("menu/埗兵團購外賣預訂單 (Responses).xlsx");
-        deliveries = deliveries.concat(gpDeliveries);
 
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
@@ -749,6 +753,7 @@ class ImportOrderDocs {
         var orderRows = [
             for (d in deliveries)
             for (o in d.orders)
+            if (o.shop == shop)
             {
                 /* A */ "日期": (d.pickupTimeSlot.start:String).substr(0, 10),
                 /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(d.pickupTimeSlot.start))) {
@@ -770,16 +775,16 @@ class ImportOrderDocs {
             origin: { r: orderRows.length+1, c: 0 }
         });
 
-        Reflect.setField(ws, 'D${orderRows.length+3}', {
+        Reflect.setField(ws, 'E${orderRows.length+3}', {
             t: "s",
             v: '總訂單價',
         });
-        Reflect.setField(ws, 'E${orderRows.length+3}', {
+        Reflect.setField(ws, 'E${orderRows.length+4}', {
             t: "n",
             f: 'ROUND(SUM(E2:E${orderRows.length+1}), 1)',
         });
 
-        Reflect.setField(ws, 'E${orderRows.length+4}', {
+        Reflect.setField(ws, 'F${orderRows.length+3}', {
             t: "s",
             v: '總埗兵收費',
         });
@@ -807,7 +812,7 @@ class ImportOrderDocs {
                         case Dinner: "晚市";
                     },
                     /* C */ "單號": d.deliveryCode,
-                    /* D */ "店舖": d.orders.map(o -> o.shop.info().name).join("\n"),
+                    /* D */ "店舖": d.orders.map(o -> o.shop.info().name).join(", "),
                     /* E */ "訂單內容": d.orders.map(o -> o.print()).join("\n\n"),
                     /* F */ "總食物價錢": d.orders.map(o -> o.orderPrice).sum(),
                     /* G */ "運費": cd.deliveryFee,
@@ -861,6 +866,8 @@ class ImportOrderDocs {
             BiuKeeLokYuen,
             KCZenzero,
             HanaSoftCream,
+            Neighbor,
+            MGY,
         ];
         var charges = new Map<Shop, Decimal>();
         for (shop in shops) {
@@ -919,6 +926,7 @@ class ImportOrderDocs {
             var subsidyTotal:Decimal = [
                     for (d in deliveries)
                     for (c in d.couriers)
+                    if (c.tg.username == courier)
                     (c.deliverySubsidy:Decimal)
                 ]
                 .sum()
@@ -927,14 +935,15 @@ class ImportOrderDocs {
             var feeTotal:Decimal = [
                 for (d in deliveries)
                 for (c in d.couriers)
+                if (c.tg.username == courier)
                 (c.deliveryFee:Decimal)
             ]
-                .sum();
-            Sys.println('${courier.lpad(" ", courierNameMax)}: ${subsidyTotal.toString().lpad(" ", 5)} + ${feeTotal.toString().lpad(" ", 5)} = ${(subsidyTotal + feeTotal).toString().lpad(" ", 6)} (共 ${Std.string(deliveries.length).lpad(" ", 2)} 單)');
+                .sum()
+                .roundTo(1);
+            Sys.println('${courier.lpad(" ", courierNameMax)}: ${subsidyTotal.toString().lpad(" ", 6)} + ${feeTotal.toString().lpad(" ", 6)} = ${(subsidyTotal + feeTotal).toString().lpad(" ", 6)} (共 ${Std.string(deliveries.length).lpad(" ", 2)} 單)');
         }
         Sys.println("-----------------------------");
-        var allPayout:Decimal = [for (courier => v in courierPayout) v]
-            .fold((item, result) -> result + item, Decimal.zero);
+        var allPayout:Decimal = [for (courier => v in courierPayout) v].sum();
         Sys.println('All payouts: ${allPayout.toString()}');
         Sys.println("-----------------------------");
         Sys.println('Platform income: ${(allCharge - allPayout).toString()}');
