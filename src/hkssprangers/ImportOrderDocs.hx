@@ -637,6 +637,16 @@ class ImportOrderDocs {
             }
         }
 
+        var courierTgRename = [
+            "amabap" => "mabpa"
+        ];
+        for (oldTg => newTg in courierTgRename) {
+            for (d in deliveries)
+            for (c in d.couriers)
+            if (c.tg.username == oldTg)
+                c.tg.username = newTg;
+        }
+
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
         File.saveContent(deliveriesJsonFile, Json.stringify(deliveries, null, "  "));
