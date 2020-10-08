@@ -25,7 +25,7 @@
     "serverless-prune-plugin": "^1.4.3",
     "terser": "^5.3.4",
     "uglifyify": "^5.0.2",
-    "xlsx": "^0.16.7"
+    "xlsx": "^0.16.8"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
