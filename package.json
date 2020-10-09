@@ -21,7 +21,7 @@
     "ngrok": "^3.3.0",
     "nodemon": "^2.0.4",
     "react-telegram-login": "^1.1.2",
-    "serverless": "^2.4.0",
+    "serverless": "^2.5.0",
     "serverless-prune-plugin": "^1.4.3",
     "terser": "^5.3.4",
     "uglifyify": "^5.0.2",
