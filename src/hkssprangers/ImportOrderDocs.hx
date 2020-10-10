@@ -435,7 +435,7 @@ class ImportOrderDocs {
 
                 if (order != null) {
                     if (line.startsWith("@")) {
-                        var courierTgs = line.split(" ").map(s -> s.trim().substr(1));
+                        var courierTgs = line.trim().split(" ").map(s -> s.trim().substr(1));
                         delivery.couriers = [
                             for (c in courierTgs)
                             {
