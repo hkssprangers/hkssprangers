@@ -11,6 +11,7 @@ class MySql {
         host: host,
         user: user,
         password: password,
+        charset: "utf8mb4",
     });
 
     static public final db = new hkssprangers.db.Database("hkssprangers", MySql.driver);
