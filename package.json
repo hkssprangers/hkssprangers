@@ -11,7 +11,7 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/pickers": "^3.2.10",
     "@types/js-cookie": "^2.2.6",
-    "browserify": "^16.5.2",
+    "browserify": "^17.0.0",
     "dotenv-cli": "^4.0.0",
     "dts2hx": "^0.14.1",
     "envify": "^4.1.0",
