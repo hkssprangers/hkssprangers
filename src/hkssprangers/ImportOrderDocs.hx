@@ -22,9 +22,14 @@ using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.info.OrderTools;
+using hkssprangers.info.DeliveryTools;
 
 class ImportOrderDocs {
     static final deliveriesJsonFile = "deliveries.json";
+
+    static final courierTgRename = [
+        "amabap" => "mabpa"
+    ];
 
     static function docx2txt(file:String) {
         var r = ChildProcess.spawnSync("docx2txt", [file], {
@@ -359,7 +364,11 @@ class ImportOrderDocs {
             function addDelivery(d:Delivery) {
                 for (o in d.orders) {
                     o.orderDetails = orderDetails[o.shop].join("\n").trim();
-                    o.platformServiceCharge = ((o.orderPrice:Decimal) * 0.15).roundTo(4).toFloat();
+                    o.platformServiceCharge = switch [dateStr, d.deliveryCode] {
+                        case ["2020-08-05", "Years 02"]: 0; // Years gave a 85% discount
+                        case ["2020-08-05", "Years 03"]: 0; // Years gave a 85% discount
+                        case _: ((o.orderPrice:Decimal) * 0.15).roundTo(4).toFloat();
+                    };
                 }
                 if (d.deliveryFee == null)
                     d.deliveryFee = 25;
@@ -637,9 +646,6 @@ class ImportOrderDocs {
             }
         }
 
-        var courierTgRename = [
-            "amabap" => "mabpa"
-        ];
         for (oldTg => newTg in courierTgRename) {
             for (d in deliveries)
             for (c in d.couriers)
@@ -666,14 +672,12 @@ class ImportOrderDocs {
                     shopId: o.shop,
                     orderDetails: o.orderDetails,
                     orderPrice: o.orderPrice,
-                    platformServiceCharge:
-                        switch [(d.pickupTimeSlot.start:String).substr(0, 10), d.deliveryCode] {
-                            case ["2020-08-05", "Years 02"]: 0; // Years gave a 85% discount
-                            case ["2020-08-05", "Years 03"]: 0; // Years gave a 85% discount
-                            case _: ((o.orderPrice:Decimal) * 0.15).toFloat();
-                        },
+                    platformServiceCharge: o.platformServiceCharge,
                     wantTableware: o.wantTableware,
                     customerNote: o.customerNote,
+                }).mapError(err -> {
+                    trace("Failed to write\n" + Json.stringify(o, null, "  ") + "\n" + err);
+                    err;
                 })
             ];
             var deliveryId = MySql.db.delivery.insertOne({
@@ -686,23 +690,28 @@ class ImportOrderDocs {
                 pickupMethod: d.pickupMethod,
                 paymeAvailable: d.paymentMethods.has(PayMe),
                 fpsAvailable: d.paymentMethods.has(FPS),
-                customerPreferredContactMethod: null,
+                customerPreferredContactMethod: d.customerPreferredContactMethod,
                 customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
                 customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
                 customerTel: d.customer.tel,
                 customerNote: d.customerNote,
             });
-            var couriers = tink.Promise.inParallel(d.couriers.map(c ->
+            var couriers = tink.Promise.inParallel(d.couriers.map(c -> {
+                var tgUserName = c.tg.username;
                 MySql.db.courier
                     .select({
                         courierId: courier.courierId,
                     })
-                    .where(courier.courierTgUsername == c.tg.username)
+                    .where(courier.courierTgUsername == tgUserName)
                     .first()
+                    .mapError(err -> {
+                        trace("Couldn't find courier with tg " + tgUserName + "\n" + err);
+                        err;
+                    })
                     .next(r -> c.merge({
                         id: r.courierId,
-                    }))
-            ));
+                    }));
+            }));
             
             Promises.multi({
                 couriers: couriers,
@@ -721,13 +730,8 @@ class ImportOrderDocs {
                     MySql.db.deliveryCourier.insertOne({
                         deliveryId: r.deliveryId,
                         courierId: c.id,
-                        deliveryFee: d.deliveryFee / r.couriers.length,
-                        deliverySubsidy:
-                            switch [(d.pickupTimeSlot.start:String).substr(0, 10), d.deliveryCode] {
-                                case ["2020-08-05", "Years 02"]: 0; // Years gave a 85% discount
-                                case ["2020-08-05", "Years 03"]: 0; // Years gave a 85% discount
-                                case _: ((d.orders.map(o -> o.orderPrice).sum():Decimal) * 0.075 / r.couriers.length).toFloat();
-                            },
+                        deliveryFee: c.deliveryFee,
+                        deliverySubsidy: c.deliverySubsidy,
                     })
                 ];
                 Promise.inParallel(
@@ -735,6 +739,9 @@ class ImportOrderDocs {
                         insertDeliveryCouriers.map(c -> c.noise())
                     )
                 );
+            }).mapError(err -> {
+                trace("Failed to write\n" + d.print());
+                err;
             });
         }]).noise();
     }
