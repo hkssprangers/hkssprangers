@@ -70,8 +70,8 @@ DROP TABLE IF EXISTS `deliveryCourier`;
 CREATE TABLE `deliveryCourier` (
   `deliveryId` int NOT NULL,
   `courierId` int NOT NULL,
-  `deliveryFee` decimal(5,4) NOT NULL,
-  `deliverySubsidy` decimal(5,4) NOT NULL,
+  `deliveryFee` decimal(12,4) NOT NULL,
+  `deliverySubsidy` decimal(12,4) NOT NULL,
   PRIMARY KEY (`deliveryId`,`courierId`),
   KEY `deliveryCourier_FK_courier` (`courierId`),
   CONSTRAINT `deliveryCourier_FK_courier` FOREIGN KEY (`courierId`) REFERENCES `courier` (`courierId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -109,8 +109,8 @@ CREATE TABLE `order` (
   `orderCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `shopId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderDetails` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `orderPrice` decimal(5,4) NOT NULL,
-  `platformServiceCharge` decimal(5,4) NOT NULL,
+  `orderPrice` decimal(12,4) NOT NULL,
+  `platformServiceCharge` decimal(12,4) NOT NULL,
   `wantTableware` tinyint(1) NOT NULL,
   `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`orderId`)
@@ -126,4 +126,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-21 15:27:05
+-- Dump completed on 2020-10-10 14:39:20
