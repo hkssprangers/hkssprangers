@@ -34,7 +34,7 @@
     "google-spreadsheet": "^3.0.13",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
-    "react": "^16.13.1",
+    "react": "^16.14.0",
     "react-dom": "^16.13.1",
     "serverless-http": "^2.6.0",
     "telegraf": "^3.38.0"
