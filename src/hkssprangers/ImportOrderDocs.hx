@@ -685,6 +685,7 @@ class ImportOrderDocs {
                 deliveryCode: d.deliveryCode,
                 creationTime: Date.fromString(d.creationTime),
                 pickupLocation: d.pickupLocation,
+                deliveryFee: d.deliveryFee,
                 pickupTimeSlotStart: d.pickupTimeSlot.start.toDate(),
                 pickupTimeSlotEnd: d.pickupTimeSlot.end.toDate(),
                 pickupMethod: d.pickupMethod,

@@ -46,6 +46,7 @@ CREATE TABLE `delivery` (
   `creationTime` timestamp NOT NULL,
   `deliveryCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `pickupLocation` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `deliveryFee` decimal(12,4) NOT NULL,
   `pickupTimeSlotStart` timestamp NOT NULL,
   `pickupTimeSlotEnd` timestamp NOT NULL,
   `pickupMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -126,4 +127,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-10 14:39:20
+-- Dump completed on 2020-10-17 16:34:30

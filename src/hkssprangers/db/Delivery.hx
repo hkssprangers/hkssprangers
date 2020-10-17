@@ -5,6 +5,7 @@ typedef Delivery = {
     var deliveryCode:VarChar<50>;
     var creationTime:Timestamp;
     var pickupLocation:VarChar<1024>;
+    var deliveryFee:Float;
     var pickupTimeSlotStart:Timestamp;
     var pickupTimeSlotEnd:Timestamp;
     var pickupMethod:VarChar<64>;
