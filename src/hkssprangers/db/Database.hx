@@ -7,22 +7,33 @@ import hkssprangers.info.ContactMethod;
 import tink.core.*;
 import tink.core.ext.Promises;
 using hkssprangers.ObjectTools;
+using DateTools;
 
 class Database extends tink.sql.Database {
     @:table("courier")
-    var courier:Courier;
+    final courier:Courier;
 
     @:table("delivery")
-    var delivery:Delivery;
+    final delivery:Delivery;
 
     @:table("deliveryCourier")
-    var deliveryCourier:DeliveryCourier;
+    final deliveryCourier:DeliveryCourier;
 
     @:table("deliveryOrder")
-    var deliveryOrder:DeliveryOrder;
+    final deliveryOrder:DeliveryOrder;
 
     @:table("order")
-    var order:Order;
+    final order:Order;
+
+    public function getDeliveries(pickupDate:Date):Promise<Array<hkssprangers.info.Delivery>> {
+        var start = Date.fromString(pickupDate.format("%Y-%m-%d"));
+        var end = Date.fromTime(start.getTime() + DateTools.days(1));
+
+        return delivery
+            .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end)
+            .all()
+            .next(ds -> Promise.inParallel(ds.map(d -> DeliveryConverter.toDelivery(d, this))));
+    }
 }
 
 class CourierConverter {
@@ -67,7 +78,11 @@ class DeliveryConverter {
                 },
                 tel: d.customerTel,
             },
-            customerPreferredContactMethod: ContactMethod.fromName(d.customerPreferredContactMethod),
+            customerPreferredContactMethod:
+                if (d.customerPreferredContactMethod != null)
+                    ContactMethod.fromName(d.customerPreferredContactMethod)
+                else
+                    null,
             paymentMethods: {
                 var pm:Array<PaymentMethod> = [];
                 if (d.fpsAvailable)
@@ -81,7 +96,7 @@ class DeliveryConverter {
                 start: d.pickupTimeSlotStart,
                 end: d.pickupTimeSlotEnd,
             },
-            pickupMethod: PickupMethod.fromName(d.pickupMethod),
+            pickupMethod: PickupMethod.fromId(d.pickupMethod),
             deliveryFee: d.deliveryFee,
             customerNote: d.customerNote,
             orders: null
@@ -99,11 +114,21 @@ class DeliveryConverter {
                         }))
                 ))),
             orders: db.deliveryOrder
-                .where(r -> r.deliveryId == d.deliveryId).all()
+                .where(r -> r.deliveryId == d.deliveryId)
+                .all()
                 .next(dOrders -> tink.core.Promise.inParallel(dOrders.map(
                     dOrder -> db.order.where(o -> o.orderId == dOrder.orderId).first()
                 )))
-                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db))),
+                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db)))
+                .next(orders -> {
+                    // put Hana's order at the end
+                    orders.sort((a,b) -> switch [a.shop, b.shop] {
+                        case [_, HanaSoftCream]: -1;
+                        case [HanaSoftCream, _]: 1;
+                        case [a, b]: Reflect.compare(a, b);
+                    });
+                    orders;
+                }),
         }).next(p -> _d.with(p));
     }
 }

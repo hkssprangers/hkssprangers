@@ -28,4 +28,8 @@ enum abstract PickupMethod(String) to String {
     static public function fromName(name:String) {
         return [Door, HangOutside, Street].find(m -> m.info().name == name);
     }
+
+    static public function fromId(id:String) {
+        return [Door, HangOutside, Street].find(m -> (m.info().id:String) == id);
+    }
 }

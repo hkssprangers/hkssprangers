@@ -10,10 +10,12 @@ class DeliveryTools {
     static public function print(d:Delivery):String {
         var buf = new StringBuf();
 
-        buf.add("📃 " + d.deliveryCode + "\n\n");
+        buf.add("📃 " + d.deliveryCode + "\n");
 
         if (d.couriers != null && d.couriers.length > 0)
-            buf.add("外賣員: " + d.couriers.map(c -> c.tg.print()).join(" ") + "\n");
+            buf.add(d.couriers.map(c -> c.tg.print(false)).join(" ") + "\n");
+
+        buf.add("\n");
 
         buf.add(d.orders.map(o -> o.print()).join("\n\n"));
 

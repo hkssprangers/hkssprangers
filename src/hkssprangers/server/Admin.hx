@@ -20,6 +20,7 @@ import hkssprangers.server.ServerMain.*;
 import hkssprangers.ObjectTools.*;
 using Lambda;
 using StringTools;
+using DateTools;
 using hkssprangers.server.ExpressTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
@@ -470,49 +471,55 @@ class Admin extends View {
             .catchError(err -> res.status(500).json(err));
     }
 
-    static public function getAllDeliveries(?date:Date) {
+    static public function getAllDeliveries(?date:Date):Promise<Array<Delivery>> {
         var now = switch (date) {
             case null: Date.now();
             case v: v;
         }
         // var now = Date.fromString("2020-08-18");
-        var sheets = [
-            for (shop => doc in menuForm)
-            shop => doc
-                .then(doc -> doc.sheetsByIndex[0])
-                .then(sheet -> sheet.loadCells().then(_ -> sheet))
-        ];
-        return [
-            for (shop => sheet in sheets)
-            sheet
-                .then(sheet -> getDeliveries(shop, sheet, now))
-                .then(deliveries -> {
-                    [
-                        for (t in [Lunch, Dinner])
-                        deliveries
-                            .filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
-                            .mapi((i, d) -> {
-                                d.deliveryCode = d.orders[0].shop.info().name + " " + (switch (t) {
-                                    case Lunch: "L" + '${i+1}'.lpad("0", 2);
-                                    case Dinner: "D" + '${i+1}'.lpad("0", 2);
-                                });
-                                d;
-                            })
-                    ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
-                })
-        ]
-            .fold((item, result:Promise<Array<Delivery>>) ->
-                item.then(deliveries ->
-                    result.then(all ->
-                        all.concat(deliveries)
-                    )
-                )
-            , Promise.resolve([]))
-            .then(deliveries -> {
+        return MySql.db.getDeliveries(now)
+            .next(deliveries -> if (deliveries.length > 0) {
+                deliveries;
+            } else {
+                var sheets = [
+                    for (shop => doc in menuForm)
+                    shop => doc
+                        .then(doc -> doc.sheetsByIndex[0])
+                        .then(sheet -> sheet.loadCells().then(_ -> sheet))
+                ];
                 [
-                    for (t in [Lunch, Dinner])
-                        deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
-                ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
+                    for (shop => sheet in sheets)
+                    sheet
+                        .then(sheet -> getDeliveries(shop, sheet, now))
+                        .then(deliveries -> {
+                            [
+                                for (t in [Lunch, Dinner])
+                                deliveries
+                                    .filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
+                                    .mapi((i, d) -> {
+                                        d.deliveryCode = d.orders[0].shop.info().name + " " + (switch (t) {
+                                            case Lunch: "L" + '${i+1}'.lpad("0", 2);
+                                            case Dinner: "D" + '${i+1}'.lpad("0", 2);
+                                        });
+                                        d;
+                                    })
+                            ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
+                        })
+                ]
+                    .fold((item, result:Promise<Array<Delivery>>) ->
+                        item.then(deliveries ->
+                            result.then(all ->
+                                all.concat(deliveries)
+                            )
+                        )
+                    , Promise.resolve([]))
+                    .then(deliveries -> {
+                        [
+                            for (t in [Lunch, Dinner])
+                                deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
+                        ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
+                    });
             });
+        
     }
 }
