@@ -466,6 +466,7 @@ class ImportOrderDocs {
                                 orderDetails: null,
                                 orderPrice: null,
                                 wantTableware: null,
+                                customerNote: null,
                             });
                             orderDetails[HanaSoftCream] = [];
                             delivery.orders.push(order);
