@@ -1,8 +1,8 @@
 package hkssprangers.db;
 
 typedef DeliveryCourier = {
-    var deliveryId:Id<Delivery>;
-    var courierId:Id<Courier>;
-    var deliveryFee:Float;
-    var deliverySubsidy:Float;
+    final deliveryId:Id<Delivery>;
+    final courierId:Id<Courier>;
+    final deliveryFee:Float;
+    final deliverySubsidy:Float;
 }

@@ -1,19 +1,19 @@
 package hkssprangers.db;
 
 typedef Delivery = {
-    @:autoIncrement @:primary var deliveryId:Id<Delivery>;
-    var deliveryCode:VarChar<50>;
-    var creationTime:Timestamp;
-    var pickupLocation:VarChar<1024>;
-    var deliveryFee:Float;
-    var pickupTimeSlotStart:Timestamp;
-    var pickupTimeSlotEnd:Timestamp;
-    var pickupMethod:VarChar<64>;
-    var paymeAvailable:Bool;
-    var fpsAvailable:Bool;
-    var customerTgUsername:Null<VarChar<128>>;
-    var customerTgId:Null<Int>;
-    var customerTel:Null<VarChar<64>>;
-    var customerPreferredContactMethod:VarChar<64>;
-    var customerNote:Null<VarChar<2048>>;
+    @:autoIncrement @:primary final deliveryId:Id<Delivery>;
+    final deliveryCode:VarChar<50>;
+    final creationTime:Timestamp;
+    final pickupLocation:VarChar<1024>;
+    final deliveryFee:Float;
+    final pickupTimeSlotStart:Timestamp;
+    final pickupTimeSlotEnd:Timestamp;
+    final pickupMethod:VarChar<64>;
+    final paymeAvailable:Bool;
+    final fpsAvailable:Bool;
+    final customerTgUsername:Null<VarChar<128>>;
+    final customerTgId:Null<Int>;
+    final customerTel:Null<VarChar<64>>;
+    final customerPreferredContactMethod:VarChar<64>;
+    final customerNote:Null<VarChar<2048>>;
 }

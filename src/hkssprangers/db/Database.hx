@@ -93,7 +93,7 @@ class DeliveryConverter {
                 .next(dCouriers -> tink.core.Promise.inParallel(dCouriers.map(
                     dCourier -> db.courier
                         .where(c -> c.courierId == dCourier.courierId).first()
-                        .next(courier -> CourierConverter.toCourier(courier.copy(), db).merge({
+                        .next(courier -> CourierConverter.toCourier(courier, db).merge({
                             deliveryFee: dCourier.deliveryFee,
                             deliverySubsidy: dCourier.deliverySubsidy,
                         }))
@@ -103,7 +103,7 @@ class DeliveryConverter {
                 .next(dOrders -> tink.core.Promise.inParallel(dOrders.map(
                     dOrder -> db.order.where(o -> o.orderId == dOrder.orderId).first()
                 )))
-                .next(orders -> orders.map(o -> OrderConverter.toOrder(o.copy(), db))),
+                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db))),
         }).next(p -> _d.with(p));
     }
 }

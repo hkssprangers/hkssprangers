@@ -1,9 +1,9 @@
 package hkssprangers.db;
 
 typedef Courier = {
-    @:autoIncrement @:primary var courierId:Id<Courier>;
-    @:unique var courierTgUsername:VarChar<128>;
-    @:unique var courierTgId:Null<Int>;
-    var paymeAvailable:Bool;
-    var fpsAvailable:Bool;
+    @:autoIncrement @:primary final courierId:Id<Courier>;
+    @:unique final courierTgUsername:VarChar<128>;
+    @:unique final courierTgId:Null<Int>;
+    final paymeAvailable:Bool;
+    final fpsAvailable:Bool;
 }

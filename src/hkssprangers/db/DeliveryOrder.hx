@@ -1,6 +1,6 @@
 package hkssprangers.db;
 
 typedef DeliveryOrder = {
-    var deliveryId:Id<Delivery>;
-    var orderId:Id<Order>;
+    final deliveryId:Id<Delivery>;
+    final orderId:Id<Order>;
 }
