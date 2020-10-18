@@ -1,5 +1,7 @@
 package hkssprangers.info;
 
+using Lambda;
+
 enum abstract ContactMethod(String) to String {
     var Telegram;
     var WhatsApp;
@@ -15,5 +17,10 @@ enum abstract ContactMethod(String) to String {
                 id: WhatsApp,
                 name: "WhatsApp",
             }
+    }
+
+    static public function fromName(name:String) {
+        name = name.toLowerCase();
+        return [Telegram, WhatsApp].find(m -> m.info().name.toLowerCase() == name);
     }
 }

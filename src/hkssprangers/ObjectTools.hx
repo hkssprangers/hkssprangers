@@ -7,6 +7,34 @@ using Lambda;
 #end
 
 class ObjectTools {
+    macro static public function copy(obj:Expr):Expr {
+        var objType = switch (Context.follow(Context.typeof(obj))) {
+            case TAnonymous(ref):
+                ref.get();
+            case _:
+                Context.error("Should be an anonymous object.", obj.pos);
+        }
+        
+        var mappings = new Map<String, ObjectField>();
+        
+        for (f in objType.fields) {
+            var field = f.name;
+            mappings[field] = {
+                field: field,
+                expr: macro _input.$field,
+            }
+        }
+
+        var outputExpr = {
+            expr: EObjectDecl(mappings.array()),
+            pos: Context.currentPos(),
+        };
+        return macro {
+            var _input = ${obj};
+            ${outputExpr};
+        };
+    }
+
     macro static public function with(obj:Expr, changes:Expr):Expr {
         var objType = switch (Context.follow(Context.typeof(obj))) {
             case TAnonymous(ref):
@@ -60,10 +88,9 @@ class ObjectTools {
             expr: EObjectDecl(mappings.array()),
             pos: Context.currentPos(),
         };
-        var OrigCT = Context.toComplexType(Context.typeof(obj));
         return macro {
             var _input = ${inputExpr};
-            (${outputExpr}:$OrigCT);
+            ${outputExpr};
         };
     }
 

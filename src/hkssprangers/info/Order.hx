@@ -9,6 +9,7 @@ typedef OrderMeta = {
 }
 
 typedef Order = OrderMeta & {
+    ?orderId: Int,
     orderDetails:String,
     orderPrice:Float,
     platformServiceCharge:Float,

@@ -3,8 +3,7 @@ package hkssprangers.info;
 typedef DeliveryMeta = {
     creationTime:LocalDateString,
     deliveryCode:String,
-    couriers: Array<{
-        tg: Tg,
+    couriers: Array<Courier & {
         deliveryFee:Float,
         deliverySubsidy:Float,
     }>,
@@ -22,5 +21,6 @@ typedef DeliveryMeta = {
 }
 
 typedef Delivery = DeliveryMeta & {
+    ?deliveryId:Int,
     orders:Array<Order>,
 }

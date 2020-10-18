@@ -390,6 +390,22 @@ enum abstract Shop(String) to String {
                 }
     }
 
+    static public function fromId(shopId:String):Shop {
+        return switch (shopId) {
+            case EightyNine: EightyNine;
+            case DragonJapaneseCuisine: DragonJapaneseCuisine;
+            case YearsHK: YearsHK;
+            case LaksaStore: LaksaStore;
+            case DongDong: DongDong;
+            case BiuKeeLokYuen: BiuKeeLokYuen;
+            case KCZenzero: KCZenzero;
+            case HanaSoftCream: HanaSoftCream;
+            case Neighbor: Neighbor;
+            case MGY: MGY;
+            case _: null;
+        }
+    }
+
     public function nextTimeSlots(currentTime:Date):Array<TimeSlot & { isOff:Bool }> {
         var info = (cast this:Shop).info();
         var today = DateTools.format(currentTime, "%Y-%m-%d");
