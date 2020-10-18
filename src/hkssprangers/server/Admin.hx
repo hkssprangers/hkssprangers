@@ -150,7 +150,7 @@ class Admin extends View {
                                         throw 'Unknown contact method: ' + v;
                                     }
                                 case ["你的電話號碼" | "你的電話號碼/Whatsapp", v]:
-                                    order.tel = "https://wa.me/852" + v;
+                                    order.tel = v;
                                 case ["俾錢方法", v]:
                                     order.paymentMethod = v;
                                 case ["交收方法", v]:
@@ -262,7 +262,7 @@ class Admin extends View {
                             throw 'Unknown contact method: ' + v;
                         }
                     case [_, "你的電話號碼" | "你的電話號碼/Whatsapp", v]:
-                        delivery.customer.tel = "https://wa.me/852" + v;
+                        delivery.customer.tel = v;
                     case [_, "俾錢方法", v]:
                         delivery.paymentMethods = v.split(",").map(v -> PaymentMethod.fromName(v.trim()));
                     case [_, "交收方法", v]:

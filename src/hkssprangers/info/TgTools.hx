@@ -10,6 +10,6 @@ class TgTools {
         else if (tg.id != null)
             "" + tg.id;
         else
-            "[none]";
+            "[no tg]";
     }
 }
