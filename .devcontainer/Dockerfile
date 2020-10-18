@@ -13,13 +13,14 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils dialog 2>&1 \
     #
     # Verify git and needed tools are installed
-    && apt-get install -y dumb-init iproute2 procps sudo bash-completion build-essential curl python3 python3-pip software-properties-common libnss3-tools \
+    && apt-get install -y dumb-init iproute2 procps sudo bash-completion build-essential curl python3 python3-pip software-properties-common libnss3-tools direnv \
+    && echo 'eval "$(direnv hook bash)"' >> /etc/bash.bashrc \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs=12.* \
     && add-apt-repository ppa:git-core/ppa \
     && apt-get install -y git \
     && apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' \
-    && add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirror.rackspace.com/mariadb/repo/10.5/ubuntu bionic main' \
+    && add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.ubuntu-tw.org/mirror/mariadb/repo/10.5/ubuntu bionic main' \
     && apt-get install -y mariadb-server \
     && npm install -g yarn \
     && yarn global add lix --prefix /usr/local \

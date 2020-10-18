@@ -21,6 +21,7 @@ provider:
 package:
   exclude:
     - .env
+    - .envrc
     - .devcontainer/**
     - .github/**
     - .haxelib/**

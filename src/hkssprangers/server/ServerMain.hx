@@ -23,10 +23,6 @@ using hkssprangers.info.DeliveryTools;
 using hkssprangers.server.ExpressTools;
 
 class ServerMain {
-    static function __init__() {
-        require('dotenv').config();
-    }
-
     static final isMain = js.Syntax.code("require.main") == module;
     static public final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;

@@ -1,8 +1,9 @@
 .env
+.envrc
 
 .haxelib
 *.js
-!static/trackExceptions.js
+!/static/trackExceptions.js
 *.js.map
 /lib/dts2hx/
 
