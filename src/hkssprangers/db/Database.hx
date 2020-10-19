@@ -33,7 +33,7 @@ class Database extends tink.sql.Database {
         return delivery
             .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end)
             .all()
-            .next(ds -> Promise.inParallel(ds.map(d -> DeliveryConverter.toDelivery(d, this))))
+            .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, this))))
             .next(ds -> {
                 ds.sort((a,b) ->
                     switch [TimeSlotType.classify(a.pickupTimeSlot.start), TimeSlotType.classify(b.pickupTimeSlot.start)] {
@@ -117,7 +117,7 @@ class DeliveryConverter {
         return Promises.multi({
             couriers: db.deliveryCourier
                 .where(r -> r.deliveryId == d.deliveryId).all()
-                .next(dCouriers -> tink.core.Promise.inParallel(dCouriers.map(
+                .next(dCouriers -> tink.core.Promise.inSequence(dCouriers.map(
                     dCourier -> db.courier
                         .where(c -> c.courierId == dCourier.courierId).first()
                         .next(courier -> CourierConverter.toCourier(courier, db).merge({
@@ -127,20 +127,14 @@ class DeliveryConverter {
                 ))),
             orders: db.deliveryOrder
                 .where(r -> r.deliveryId == d.deliveryId)
+                .orderBy(r -> [{
+                    field: r.orderId, order: Asc,
+                }])
                 .all()
-                .next(dOrders -> tink.core.Promise.inParallel(dOrders.map(
+                .next(dOrders -> tink.core.Promise.inSequence(dOrders.map(
                     dOrder -> db.order.where(o -> o.orderId == dOrder.orderId).first()
                 )))
-                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db)))
-                .next(orders -> {
-                    // put Hana's order at the end
-                    orders.sort((a,b) -> switch [a.shop, b.shop] {
-                        case [_, HanaSoftCream]: -1;
-                        case [HanaSoftCream, _]: 1;
-                        case [a, b]: Reflect.compare(a, b);
-                    });
-                    orders;
-                }),
+                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db))),
         }).next(p -> _d.with(p));
     }
 }

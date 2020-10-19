@@ -663,7 +663,7 @@ class ImportOrderDocs {
         var deliveries:Array<Delivery> = Json.parse(File.getContent(deliveriesJsonFile));
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
-        return Promise.inParallel([for (d in deliveries) {
+        return Promise.inSequence([for (d in deliveries) {
             var insertOrders = [
                 for (o in d.orders)
                 MySql.db.order.insertOne({
@@ -698,7 +698,7 @@ class ImportOrderDocs {
                 customerTel: d.customer.tel,
                 customerNote: d.customerNote,
             });
-            var couriers = tink.Promise.inParallel(d.couriers.map(c -> {
+            var couriers = Promise.inSequence(d.couriers.map(c -> {
                 var tgUserName = c.tg.username;
                 MySql.db.courier
                     .select({
@@ -718,7 +718,7 @@ class ImportOrderDocs {
             Promises.multi({
                 couriers: couriers,
                 deliveryId: deliveryId,
-                orderIds: Promise.inParallel(insertOrders),
+                orderIds: Promise.inSequence(insertOrders),
             }).next(r -> {
                 var insertDeliveryOrder = MySql.db.deliveryOrder.insertMany([
                     for (orderId in r.orderIds)
@@ -736,7 +736,7 @@ class ImportOrderDocs {
                         deliverySubsidy: c.deliverySubsidy,
                     })
                 ];
-                Promise.inParallel(
+                Promise.inSequence(
                     [insertDeliveryOrder.noise()].concat(
                         insertDeliveryCouriers.map(c -> c.noise())
                     )
