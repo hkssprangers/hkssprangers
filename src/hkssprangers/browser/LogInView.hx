@@ -4,6 +4,7 @@ import js.html.URLSearchParams;
 import js_cookie.CookiesStatic;
 import global.JsCookieGlobal.*;
 import react.*;
+import react.ReactComponent;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import mui.core.*;
@@ -14,10 +15,11 @@ using hkssprangers.info.OrderTools;
 using hkssprangers.info.TimeSlotTools;
 using Lambda;
 
-class LogInView extends ReactComponent {
-    public var tgBotName(get, never):String;
-    function get_tgBotName() return props.tgBotName;
+typedef LogInViewProps = {
+    final tgBotName:String;
+}
 
+class LogInView extends ReactComponentOfProps<LogInViewProps> {
     function handleTelegramResponse(response) {
         Cookies.set("tg", response, {
             secure: true,
@@ -38,7 +40,7 @@ class LogInView extends ReactComponent {
             <Grid container=${true} justify=${Center}>
                 <Grid item=${true}>
                     <TelegramLoginButton
-                        botName=${tgBotName}
+                        botName=${props.tgBotName}
                         dataOnauth=${handleTelegramResponse}
                     />
                 </Grid>
