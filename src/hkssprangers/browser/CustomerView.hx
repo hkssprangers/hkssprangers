@@ -1,8 +1,5 @@
 package hkssprangers.browser;
 
-import react.*;
-import react.ReactComponent;
-import react.ReactMacro.jsx;
 import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
 import hkssprangers.info.*;

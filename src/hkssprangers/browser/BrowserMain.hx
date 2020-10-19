@@ -1,8 +1,6 @@
 package hkssprangers.browser;
 
 import haxe.*;
-import react.*;
-import react.ReactMacro.jsx;
 import js.html.DivElement;
 import js.jquery.*;
 import js.Browser.*;
