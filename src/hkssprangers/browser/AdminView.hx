@@ -14,6 +14,7 @@ using hkssprangers.info.OrderTools;
 using hkssprangers.info.TimeSlotTools;
 using Lambda;
 using StringTools;
+using DateTools;
 
 typedef AdminViewProps = {
     final tgBotName:String;
@@ -28,7 +29,7 @@ typedef AdminViewProps = {
 typedef AdminViewState = {
     final isLoading:Bool;
     final selectedDate:Date;
-    final orderString:String;
+    final deliveries:Array<Delivery>;
 }
 
 class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
@@ -39,7 +40,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         state = {
             isLoading: true,
             selectedDate: Date.now(),
-            orderString: "",
+            deliveries: [],
         };
 
         loadOrders(state.selectedDate);
@@ -71,7 +72,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 var deliveries:Array<Delivery> = json;
                 setState({
                     isLoading: false,
-                    orderString: deliveries.map(d -> DeliveryTools.print(d)).join(hr),
+                    deliveries: deliveries,
                 });
             });
     }
@@ -90,32 +91,46 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         var content = if (state.isLoading) {
             jsx('<CircularProgress />');
         } else {
-            jsx('<Typography component="pre">${state.orderString}</Typography>');
+            jsx('<Typography component="pre">${state.deliveries.map(DeliveryTools.print).join(hr)}</Typography>');
         }
 
         return jsx('
-            <Grid container=${true} justify=${Center}>
-                <Grid item=${true} xs=${12}>
-                    <Typography>Logged in as <a href=${tgMe} target="_blank">@${props.user.tg.username}</a></Typography>
+            <Container>
+                <Grid container justify=${Center}>
+                    <Grid item container xs=${12} justify=${Center}>
+                        <Grid item>
+                            <Typography>Logged in as <a href=${tgMe} target="_blank">@${props.user.tg.username}</a></Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs=${12} justify=${Center}>
+                        <Grid item>
+                            <MuiPickersUtilsProvider utils=${MomentUtils}>
+                                <DatePicker
+                                    autoOk
+                                    disableToolbar
+                                    format="YYYY-MM-DD"
+                                    openTo="date"
+                                    views=${["year", "month", "date"]}
+                                    value=${state.selectedDate}
+                                    onChange=${onSelectedDateChange}
+                                    disabled=${state.isLoading}
+                                />
+                            </MuiPickersUtilsProvider>
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs=${12} justify=${Center} alignItems=${Center}>
+                        <Grid item>
+                            <CopyButton
+                                title=${state.selectedDate.format("%Y-%m-%d")}
+                                text=${state.deliveries.map(DeliveryTools.print).join(hr)}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs=${12}>
+                        ${content}
+                    </Grid>
                 </Grid>
-                <Grid item=${true} xs=${12}>
-                    <MuiPickersUtilsProvider utils=${MomentUtils}>
-                        <DatePicker
-                            autoOk=${true}
-                            disableToolbar=${true}
-                            format="YYYY-MM-DD"
-                            openTo="date"
-                            views=${["year", "month", "date"]}
-                            value=${state.selectedDate}
-                            onChange=${onSelectedDateChange}
-                            disabled=${state.isLoading}
-                        />
-                    </MuiPickersUtilsProvider>
-                </Grid>
-                <Grid item=${true} xs=${12}>
-                    ${content}
-                </Grid>
-            </Grid>
+            </Container>
         ');
     }
 }
