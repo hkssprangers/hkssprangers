@@ -24,3 +24,5 @@ node_modules
 /orders.json
 /deliveries.json
 /menuResponses.json
+
+.DS_Store
