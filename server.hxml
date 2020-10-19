@@ -10,7 +10,5 @@
 --library tink_core_ext
 --library tink_sql
 --library CommentString
--D react_ver=16.12
--D react_fragments
 -D react_skip_extend_component_restriction
 --dce full
