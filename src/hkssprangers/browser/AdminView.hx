@@ -36,6 +36,8 @@ typedef AdminViewState = {
 }
 
 class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
+    static final hr = "\n--------------------------------------------------------------------------------\n";
+
     public function new(props):Void {
         super(props);
         state = {
@@ -47,30 +49,34 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         loadOrders(state.selectedDate);
     }
 
-    function loadOrders(date:Date):Promise<String> {
+    function loadOrders(date:Date):Promise<Void> {
         var qs = new URLSearchParams({
             date: DateTools.format(date, "%Y-%m-%d"),
         });
-        return window.fetch("/admin?" + qs)
+        return window.fetch("/admin?" + qs, {
+            headers: {
+                Accept: "application/json",
+            },
+        })
             .then(r ->
                 if (r.redirected && new URL(r.url).pathname.startsWith("/login")) {
                     location.assign("/login?" + new URLSearchParams({
                         redirectTo: location.pathname + location.search,
                     }));
                     null;
-                } else if (!r.ok || !r.headers.get("Content-Type").toLowerCase().contains("text/plain")) {
+                } else if (!r.ok) {
                     location.assign(r.url);
                     null;
                 } else {
-                    r.text();
+                    r.json();
                 }
             )
-            .then(str -> {
+            .then(json -> {
+                var deliveries:Array<Delivery> = json;
                 setState({
                     isLoading: false,
-                    orderString: str,
+                    orderString: deliveries.map(d -> DeliveryTools.print(d)).join(hr),
                 });
-                str;
             });
     }
 
