@@ -531,6 +531,7 @@ class ImportOrderDocs {
                                 shop: HanaSoftCream,
                                 orderDetails: orderDetails[HanaSoftCream].join("\n"),
                                 orderPrice: iceCreamPrice,
+                                customerNote: null,
                             }));
                             delivery.deliveryFee = Std.parseInt(pricePlusReg.matched(1)) - order.orderPrice - iceCreamPrice;
                         }
