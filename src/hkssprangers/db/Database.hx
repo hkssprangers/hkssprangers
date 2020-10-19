@@ -1,5 +1,6 @@
 package hkssprangers.db;
 
+import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Tg;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
@@ -32,7 +33,18 @@ class Database extends tink.sql.Database {
         return delivery
             .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end)
             .all()
-            .next(ds -> Promise.inParallel(ds.map(d -> DeliveryConverter.toDelivery(d, this))));
+            .next(ds -> Promise.inParallel(ds.map(d -> DeliveryConverter.toDelivery(d, this))))
+            .next(ds -> {
+                ds.sort((a,b) ->
+                    switch [TimeSlotType.classify(a.pickupTimeSlot.start), TimeSlotType.classify(b.pickupTimeSlot.start)] {
+                        case [Lunch, Dinner]: -1;
+                        case [Dinner, Lunch]: 1;
+                        case [Lunch, Lunch], [Dinner, Dinner]:
+                            Reflect.compare(a.deliveryCode, b.deliveryCode);
+                    }
+                );
+                ds;
+            });
     }
 }
 
