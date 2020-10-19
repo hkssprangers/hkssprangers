@@ -108,6 +108,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             views=${["year", "month", "date"]}
                             value=${state.selectedDate}
                             onChange=${onSelectedDateChange}
+                            disabled=${state.isLoading}
                         />
                     </MuiPickersUtilsProvider>
                 </Grid>
