@@ -665,9 +665,9 @@ class ImportOrderDocs {
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
         return Promise.inSequence([for (d in deliveries) {
-            var insertOrders = [
+            var orderId0 = MySql.db.order.insertMany([
                 for (o in d.orders)
-                MySql.db.order.insertOne({
+                {
                     orderId: null,
                     creationTime: Date.fromString(o.creationTime),
                     orderCode: o.orderCode,
@@ -677,11 +677,8 @@ class ImportOrderDocs {
                     platformServiceCharge: o.platformServiceCharge,
                     wantTableware: o.wantTableware,
                     customerNote: o.customerNote,
-                }).mapError(err -> {
-                    trace("Failed to write\n" + Json.stringify(o, null, "  ") + "\n" + err);
-                    err;
-                })
-            ];
+                }
+            ]);
             var deliveryId = MySql.db.delivery.insertOne({
                 deliveryId: null,
                 deliveryCode: d.deliveryCode,
@@ -712,36 +709,35 @@ class ImportOrderDocs {
                         err;
                     })
                     .next(r -> c.merge({
-                        id: r.courierId,
+                        courierId: r.courierId,
                     }));
             }));
             
             Promises.multi({
                 couriers: couriers,
                 deliveryId: deliveryId,
-                orderIds: Promise.inSequence(insertOrders),
+                orderId0: orderId0,
             }).next(r -> {
                 var insertDeliveryOrder = MySql.db.deliveryOrder.insertMany([
-                    for (orderId in r.orderIds)
+                    for (orderId in r.orderId0...r.orderId0 + d.orders.length)
                     {
                         deliveryId: r.deliveryId,
                         orderId: orderId,
                     }
                 ]);
-                var insertDeliveryCouriers = [
+                var insertDeliveryCouriers = MySql.db.deliveryCourier.insertMany([
                     for (c in r.couriers)
-                    MySql.db.deliveryCourier.insertOne({
+                    {
                         deliveryId: r.deliveryId,
-                        courierId: c.id,
+                        courierId: c.courierId,
                         deliveryFee: c.deliveryFee,
                         deliverySubsidy: c.deliverySubsidy,
-                    })
-                ];
-                Promise.inSequence(
-                    [insertDeliveryOrder.noise()].concat(
-                        insertDeliveryCouriers.map(c -> c.noise())
-                    )
-                );
+                    }
+                ]);
+                Promise.inSequence([
+                    insertDeliveryOrder.noise(),
+                    insertDeliveryCouriers.noise(),
+                ]);
             }).mapError(err -> {
                 trace("Failed to write\n" + d.print());
                 err;
