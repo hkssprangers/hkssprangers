@@ -111,15 +111,19 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             case v: v;
         }, 0.0);
 
-        var tg = if (d.customer.tg != null && d.customer.tg.username != null)
-            jsx('<Typography>${d.customer.tg.print() + (d.customerPreferredContactMethod == Telegram ? " 👈" : "")}</Typography>');
-        else
+        var tg = if (d.customer.tg != null && d.customer.tg.username != null) {
+            var tgUrl = "https://t.me/" + d.customer.tg.username;
+            jsx('<Typography><a href=${tgUrl} target="_blank">${tgUrl}</a> ${d.customerPreferredContactMethod == Telegram ? " 👈" : ""}</Typography>');
+        } else {
             null;
+        }
 
-        var wa = if (d.customer.tel != null)
-            jsx('<Typography>${'https://wa.me/852${d.customer.tel}' + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "")}</Typography>');
-        else
+        var wa = if (d.customer.tel != null) {
+            var waUrl = "https://wa.me/852" + d.customer.tel;
+            jsx('<Typography><a href=${waUrl} target="_blank">${waUrl}</a> ${d.customerPreferredContactMethod == WhatsApp ? " 👈" : ""}</Typography>');
+        } else {
             null;
+        }
 
         var paymentMethods = jsx('<Typography>${d.paymentMethods.map(p -> p.info().name).join(", ")}</Typography>');
         var pickupLocation = jsx('<Typography>${d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")"}</Typography>');
@@ -130,12 +134,23 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             null;
         }
 
+        var subheader = if (d.couriers == null) {
+            null;
+        } else {
+            var couriers = d.couriers.map(c -> jsx('
+                <Grid item><a key=${c.tg.username} href=${"https://t.me/" + c.tg.username} target="_blank">@${c.tg.username}</a></Grid>
+            '));
+            jsx('
+                <Grid container wrap=${NoWrap} spacing=${Spacing_1}>${couriers}</Grid>
+            ');
+        }
+
         return jsx('
             <Grid key=${key} item>
                 <Card>
                     <CardHeader
                         title=${"📃 " + d.deliveryCode}
-                        subheader=${d.couriers != null ? d.couriers.map(c -> "@" + c.tg.username).join(" ") : null}
+                        subheader=${subheader}
                     />
                     <CardContent>
                         <Grid container direction=${Column}>
