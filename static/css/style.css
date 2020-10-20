@@ -76,3 +76,7 @@ body .MuiPickersDay-current {
 .MuiInputBase-input {
     text-align: center;
 }
+
+.pre-wrap {
+    white-space: pre-wrap;
+}

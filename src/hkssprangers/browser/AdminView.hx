@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import mui.icon.SpaceBar;
 import js.html.URL;
 import moment.Moment;
 import js.html.URLSearchParams;
@@ -11,6 +12,7 @@ import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
 using hkssprangers.info.OrderTools;
+using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
 using Lambda;
 using StringTools;
@@ -86,23 +88,94 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         loadOrders(nativeDate);
     }
 
+    function renderOrder(key:Dynamic, o:Order) {
+        var customerNote = if (o.customerNote != null && o.customerNote != "") {
+            jsx('<Typography>⚠️ ${o.customerNote}</Typography>');
+        } else {
+            null;
+        }
+        return jsx('
+            <Grid key=${key} item>
+                <Typography>🔸 ${o.shop.info().name}</Typography>
+                <Typography className="pre-wrap">${o.orderDetails}</Typography>
+                ${customerNote}
+                <Typography>${o.wantTableware ? "要餐具" : "唔要餐具"}</Typography>
+                <Typography paragraph>食物價錢: $$${o.orderPrice}</Typography>
+            </Grid>
+        ');
+    }
+
+    function renderDelivery(key:Dynamic, d:Delivery) {
+        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + switch (order.orderPrice) {
+            case null: Math.NaN;
+            case v: v;
+        }, 0.0);
+
+        var tg = if (d.customer.tg != null && d.customer.tg.username != null)
+            jsx('<Typography>${d.customer.tg.print() + (d.customerPreferredContactMethod == Telegram ? " 👈" : "")}</Typography>');
+        else
+            null;
+
+        var wa = if (d.customer.tel != null)
+            jsx('<Typography>${'https://wa.me/852${d.customer.tel}' + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "")}</Typography>');
+        else
+            null;
+
+        var paymentMethods = jsx('<Typography>${d.paymentMethods.map(p -> p.info().name).join(", ")}</Typography>');
+        var pickupLocation = jsx('<Typography>${d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")"}</Typography>');
+
+        var customerNote = if (d.customerNote != null && d.customerNote != "") {
+            jsx('<Typography>⚠️ ${d.customerNote}</Typography>');
+        } else {
+            null;
+        }
+
+        return jsx('
+            <Grid key=${key} item>
+                <Card>
+                    <CardHeader
+                        title=${"📃 " + d.deliveryCode}
+                        subheader=${d.couriers != null ? d.couriers.map(c -> "@" + c.tg.username).join(" ") : null}
+                    />
+                    <CardContent>
+                        <Grid container direction=${Column}>
+                            ${d.orders.mapi(renderOrder)}
+                        </Grid>
+
+                        <Typography paragraph>總食物價錢+運費: $$${foodTotal + switch(d.deliveryFee) {
+                            case null: Math.NaN;
+                            case v: v;
+                        }}</Typography>
+
+                        <Typography>${d.pickupTimeSlot.print()}</Typography>
+                        ${tg}
+                        ${wa}
+                        ${paymentMethods}
+                        ${pickupLocation}
+                        ${customerNote}
+                    </CardContent>
+                </Card>
+            </Grid>
+        ');
+    }
+
     override function render() {
         var tgMe = 'https://t.me/${props.user.tg.username}';
         var content = if (state.isLoading) {
-            jsx('<CircularProgress />');
+            [jsx('<Grid key=${0} item><CircularProgress /></Grid>')];
         } else {
-            jsx('<Typography component="pre">${state.deliveries.map(DeliveryTools.print).join(hr)}</Typography>');
+            state.deliveries.mapi(renderDelivery);
         }
 
         return jsx('
             <Container>
-                <Grid container justify=${Center}>
-                    <Grid item container xs=${12} justify=${Center}>
+                <Grid container justify=${Center} direction=${Column}>
+                    <Grid item container justify=${Center}>
                         <Grid item>
                             <Typography>Logged in as <a href=${tgMe} target="_blank">@${props.user.tg.username}</a></Typography>
                         </Grid>
                     </Grid>
-                    <Grid item container xs=${12} justify=${Center}>
+                    <Grid item container justify=${Center}>
                         <Grid item>
                             <MuiPickersUtilsProvider utils=${MomentUtils}>
                                 <DatePicker
@@ -118,7 +191,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             </MuiPickersUtilsProvider>
                         </Grid>
                     </Grid>
-                    <Grid item container xs=${12} justify=${Center} alignItems=${Center}>
+                    <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
                             <CopyButton
                                 title=${state.selectedDate.format("%Y-%m-%d")}
@@ -126,9 +199,11 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             />
                         </Grid>
                     </Grid>
-                    <Grid item container xs=${12} justify=${Center}>
+                    <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
-                            ${content}
+                            <Grid item container direction=${Column} spacing=${Spacing_1}>
+                                ${content}
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

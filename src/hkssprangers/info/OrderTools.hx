@@ -11,12 +11,12 @@ class OrderTools {
 
         buf.add(order.orderDetails + "\n");
 
+        if (order.customerNote != null)
+            buf.add("⚠️ " + order.customerNote + "\n");
+
         buf.add(order.wantTableware ? "要餐具\n" : "唔要餐具\n");
 
         buf.add("食物價錢: $" + order.orderPrice + "\n");
-
-        if (order.customerNote != null)
-            buf.add("⚠️ " + order.customerNote + "\n");
 
         return buf.toString().trim();
     }
