@@ -126,8 +126,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             />
                         </Grid>
                     </Grid>
-                    <Grid item xs=${12}>
-                        ${content}
+                    <Grid item container xs=${12} justify=${Center}>
+                        <Grid item>
+                            ${content}
+                        </Grid>
                     </Grid>
                 </Grid>
             </Container>
