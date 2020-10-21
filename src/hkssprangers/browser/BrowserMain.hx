@@ -40,7 +40,7 @@ class BrowserMain {
                 ReactDOM.render(jsx('
                     <AdminView
                         tgBotName=${div.dataset.tgBotName}
-                        user=${Json.parse(div.dataset.user)}
+                        user=${div.dataset.user != null ? Json.parse(div.dataset.user) : null}
                     />
                 '), div);
         }

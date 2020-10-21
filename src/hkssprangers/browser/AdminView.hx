@@ -146,38 +146,39 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         }
 
         return jsx('
-            <Grid key=${key} item>
-                <Card>
-                    <CardHeader
-                        title=${"📃 " + d.deliveryCode}
-                        subheader=${subheader}
-                    />
-                    <CardContent>
-                        <Grid container direction=${Column}>
-                            ${d.orders.mapi(renderOrder)}
-                        </Grid>
+            <Card key=${key} className="mb-3">
+                <CardHeader
+                    title=${"📃 " + d.deliveryCode}
+                    subheader=${subheader}
+                />
+                <CardContent>
+                    <Grid container direction=${Column}>
+                        ${d.orders.mapi(renderOrder)}
+                    </Grid>
 
-                        <Typography paragraph>總食物價錢+運費: $$${foodTotal + switch(d.deliveryFee) {
-                            case null: Math.NaN;
-                            case v: v;
-                        }}</Typography>
+                    <Typography paragraph>總食物價錢+運費: $$${foodTotal + switch(d.deliveryFee) {
+                        case null: Math.NaN;
+                        case v: v;
+                    }}</Typography>
 
-                        <Typography>${d.pickupTimeSlot.print()}</Typography>
-                        ${tg}
-                        ${wa}
-                        ${paymentMethods}
-                        ${pickupLocation}
-                        ${customerNote}
-                    </CardContent>
-                </Card>
-            </Grid>
+                    <Typography>${d.pickupTimeSlot.print()}</Typography>
+                    ${tg}
+                    ${wa}
+                    ${paymentMethods}
+                    ${pickupLocation}
+                    ${customerNote}
+                </CardContent>
+            </Card>
         ');
     }
 
     override function render() {
-        var tgMe = 'https://t.me/${props.user.tg.username}';
+        var loggedInAs = if (props.user != null)
+            jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
+        else
+            null;
         var content = if (state.isLoading) {
-            [jsx('<Grid key=${0} item><CircularProgress /></Grid>')];
+            [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
             state.deliveries.mapi(renderDelivery);
         }
@@ -187,7 +188,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 <Grid container justify=${Center} direction=${Column}>
                     <Grid item container justify=${Center}>
                         <Grid item>
-                            <Typography>Logged in as <a href=${tgMe} target="_blank">@${props.user.tg.username}</a></Typography>
+                            ${loggedInAs}
                         </Grid>
                     </Grid>
                     <Grid item container justify=${Center}>
@@ -216,9 +217,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
-                            <Grid item container direction=${Column} spacing=${Spacing_1}>
-                                ${content}
-                            </Grid>
+                            ${content}
                         </Grid>
                     </Grid>
                 </Grid>
