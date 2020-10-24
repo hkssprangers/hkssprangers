@@ -385,72 +385,13 @@ class Admin extends View {
 
     static public function middleware(req:Request, res:Response) {
         var user:User = res.locals.user;
-        switch (req.query.group:String) {
-            case null:
-                // pass
-            case groupStr:
-                switch (req.accepts(["text", "json"])) {
-                    case "text":
-                        getGroupOrders()
-                            .then(orders -> {
-                                [
-                                    for (i => o in orders)
-                                    {
-                                        var totalPrice = parseTotalPrice(o.content);
-                                        [
-                                            "單號: " + '${i+1}'.lpad("0", 2),
-                                            "",
-                                            o.content,
-                                            o.wantTableware,
-                                            o.note != null ? "*其他備註: " + o.note : null,
-                                            "",
-                                            "食物價錢: $" + totalPrice,
-                                            "食物+運費: $" + (totalPrice + 15),
-                                            "",
-                                            "客人交收時段: " + o.time,
-                                            (o.contactMethod == Telegram ? "tg (客人首選):" : "tg: ") + o.tg,
-                                            (o.contactMethod == WhatsApp ? "wtsapp (客人首選):" : "wtsapp: ") + o.tel,
-                                            o.paymentMethod,
-                                        ].filter(l -> l != null).join("\n");
-                                    }
-                                ].join(hr);
-                            })
-                            .then(orderStr -> {
-                                res.type("text");
-                                res.end(orderStr);
-                            })
-                            .catchError(err -> {
-                                res.type("text");
-                                res.status(500).end(Std.string(err));
-                            });
-                        return;
-                    case "json":
-                        getGroupOrders()
-                            .then(orders -> res.json(orders));
-                        return;
-                    case _:
-                        res.type("text");
-                        res.status(406).send("Can only return text or json");
-                        return;
-                }
-        }
         switch (req.query.date:String) {
             case null:
                 // pass
             case dateStr:
                 switch (req.accepts(["text", "json"])) {
                     case "text":
-                        getAllDeliveries(Date.fromString(dateStr))
-                            .then(deliveries -> {
-                                // var str = Json.stringify(deliveries, null, "  ");
-                                var str = deliveries.map(d -> d.print()).join(hr);
-                                res.type("text");
-                                res.end(str);
-                            })
-                            .catchError(err -> {
-                                res.type("text");
-                                res.status(500).end(Std.string(err));
-                            });
+                        // pass
                     case "json":
                         getAllDeliveries(Date.fromString(dateStr))
                             .then(deliveries -> res.json(deliveries));
@@ -460,7 +401,6 @@ class Admin extends View {
                         res.status(406).send("Can only return text or json");
                         return;
                 }
-                return;
         }
         var tgBotInfo = tgBot.telegram.getMe();
         tgBotInfo.then(tgBotInfo ->

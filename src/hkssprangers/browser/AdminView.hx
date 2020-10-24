@@ -11,6 +11,7 @@ import js.npm.material_ui.Pickers;
 import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
+import react.router.Link;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
@@ -18,7 +19,7 @@ using Lambda;
 using StringTools;
 using DateTools;
 
-typedef AdminViewProps = {
+typedef AdminViewProps = react.router.Route.RouteRenderProps & {
     final tgBotName:String;
     final user:Null<{
         tg: {
@@ -30,25 +31,44 @@ typedef AdminViewProps = {
 
 typedef AdminViewState = {
     final isLoading:Bool;
-    final selectedDate:Date;
     final deliveries:Array<Delivery>;
 }
 
+@:wrap(react.router.ReactRouter.withRouter)
 class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     static final hr = "\n--------------------------------------------------------------------------------\n";
+
+    function getSelectedDate(?search:String) return switch (new URLSearchParams(search != null ? search : props.location.search).get("date")) {
+        case null: Date.now();
+        case v: Date.fromString(v);
+    }
+    function setSelectedDate(v:Date) {
+        var query = new URLSearchParams(props.location.search);
+        query.set("date", v.format("%Y-%m-%d"));
+        props.history.push(props.location.pathname + "?" + query);
+    }
+
+    override function componentDidUpdate(prevProps:AdminViewProps, prevState:AdminViewState) {
+        var currentSelectedDate = getSelectedDate();
+        if (getSelectedDate(prevProps.location.search).getTime() != currentSelectedDate.getTime())
+            loadOrders(currentSelectedDate);
+    }
 
     public function new(props):Void {
         super(props);
         state = {
             isLoading: true,
-            selectedDate: Date.now(),
             deliveries: [],
         };
 
-        loadOrders(state.selectedDate);
+        loadOrders(getSelectedDate(), false);
     }
 
-    function loadOrders(date:Date):Promise<Void> {
+    function loadOrders(date:Date, shouldSetState = true):Promise<Void> {
+        if (shouldSetState)
+            setState({
+                isLoading: true,
+            });
         var qs = new URLSearchParams({
             date: DateTools.format(date, "%Y-%m-%d"),
         });
@@ -81,11 +101,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
 
     function onSelectedDateChange(date:Moment) {
         var nativeDate:Date = cast date.toDate();
-        setState({
-            selectedDate: nativeDate,
-            isLoading: true,
-        });
-        loadOrders(nativeDate);
+        setSelectedDate(nativeDate);
     }
 
     function renderOrder(key:Dynamic, o:Order) {
@@ -183,6 +199,8 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             state.deliveries.mapi(renderDelivery);
         }
 
+        var selectedDate = getSelectedDate();
+
         return jsx('
             <Container>
                 <Grid container justify=${Center} direction=${Column}>
@@ -200,7 +218,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                                     format="YYYY-MM-DD"
                                     openTo="date"
                                     views=${["year", "month", "date"]}
-                                    value=${state.selectedDate}
+                                    value=${selectedDate}
                                     onChange=${onSelectedDateChange}
                                     disabled=${state.isLoading}
                                 />
@@ -210,7 +228,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
                             <CopyButton
-                                title=${state.selectedDate.format("%Y-%m-%d")}
+                                title=${selectedDate.format("%Y-%m-%d")}
                                 text=${state.deliveries.map(DeliveryTools.print).join(hr)}
                             />
                         </Grid>

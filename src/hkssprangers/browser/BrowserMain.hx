@@ -38,10 +38,12 @@ class BrowserMain {
             case elm:
                 var div:DivElement = cast elm;
                 ReactDOM.render(jsx('
-                    <AdminView
-                        tgBotName=${div.dataset.tgBotName}
-                        user=${div.dataset.user != null ? Json.parse(div.dataset.user) : null}
-                    />
+                    <BrowserRouter>
+                        <AdminView
+                            tgBotName=${div.dataset.tgBotName}
+                            user=${div.dataset.user != null ? Json.parse(div.dataset.user) : null}
+                        />
+                    </BrowserRouter>
                 '), div);
         }
     }

@@ -1,0 +1,6 @@
+# @install: lix --silent download "gh://github.com/kLabz/haxe-react-router#8c5dcc55f393f3f7f39eacc0d48c53633a89ed70" into react-router-4/0.2.8/github/8c5dcc55f393f3f7f39eacc0d48c53633a89ed70
+-lib history
+-cp ${HAXE_LIBCACHE}/react-router-4/0.2.8/github/8c5dcc55f393f3f7f39eacc0d48c53633a89ed70/src
+-D react-router-4=0.2.8
+--macro react.router.bundle.Bundle.addHook()
+
