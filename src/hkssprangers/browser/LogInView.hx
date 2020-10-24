@@ -33,8 +33,8 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
 
     override function render() {
         return jsx('
-            <Grid container=${true} justify=${Center}>
-                <Grid item=${true}>
+            <Grid container justify=${Center}>
+                <Grid item>
                     <TelegramLoginButton
                         botName=${props.tgBotName}
                         dataOnauth=${handleTelegramResponse}

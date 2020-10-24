@@ -59,8 +59,8 @@ class EightyNineItemForm extends ReactComponentOfProps<EightyNineItemFormProps> 
             '));
 
         var cardAction = jsx('
-            <Grid container=${true} spacing=${Spacing_0}>
-                <Grid item=${true}>
+            <Grid container spacing=${Spacing_0}>
+                <Grid item>
                     <Button size=${Small} onClick=${evt -> props.onRemove()}>
                         移除
                     </Button>
@@ -76,9 +76,9 @@ class EightyNineItemForm extends ReactComponentOfProps<EightyNineItemFormProps> 
                     action=${cardAction}
                 />
                 <CardContent>
-                    <Grid container=${true}>
-                        <Grid item=${true} xs=${12}>
-                            <FormControl required=${true}>
+                    <Grid container>
+                        <Grid item xs=${12}>
+                            <FormControl required>
                                 <InputLabel id=${"select-main-" + randomId}>主菜選擇</InputLabel>
                                 <Select
                                     labelId=${"select-main-" + randomId}
@@ -92,8 +92,8 @@ class EightyNineItemForm extends ReactComponentOfProps<EightyNineItemFormProps> 
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item=${true} xs=${12}>
-                            <FormControl required=${true}>
+                        <Grid item xs=${12}>
+                            <FormControl required>
                                 <InputLabel id=${"select-sub-" + randomId}>
                                     配菜選擇
                                 </InputLabel>
@@ -109,7 +109,7 @@ class EightyNineItemForm extends ReactComponentOfProps<EightyNineItemFormProps> 
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item=${true} xs=${12}>
+                        <Grid item xs=${12}>
                             <Typography>
                                 套餐附送 ${EightyNineSetGiven1.info().name}
                             </Typography>
@@ -198,8 +198,8 @@ class EightyNineOrderForm extends ReactComponentOf<EightyNineOrderFormProps, Eig
         );
 
         return jsx('
-            <Grid item=${true} xs=${12}>
-                <FormControl required=${true}>
+            <Grid item xs=${12}>
+                <FormControl required>
                     <InputLabel id=${"select-timeslot"}>
                         想幾時收到嘢食?
                     </InputLabel>
@@ -232,7 +232,7 @@ class EightyNineOrderForm extends ReactComponentOf<EightyNineOrderFormProps, Eig
                 props.onChange(this.isValid());
             }
             jsx('
-                <Grid key=${item} item=${true} xs=${12}>
+                <Grid key=${item} item xs=${12}>
                     <EightyNineItemForm
                         item=${item}
                         onChange=${onChange}
@@ -255,9 +255,9 @@ class EightyNineOrderForm extends ReactComponentOf<EightyNineOrderFormProps, Eig
             ');
         } else {
             jsx('
-                <Grid container=${true} spacing=${Spacing_1} alignItems=${Center}>
+                <Grid container spacing=${Spacing_1} alignItems=${Center}>
                     <Grid>
-                        <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled=${true}>
+                        <Button size=${Small} color=${Primary} onClick=${evt -> addItem()} disabled>
                             ${addLabel}
                         </Button>
                     </Grid>
@@ -271,19 +271,19 @@ class EightyNineOrderForm extends ReactComponentOf<EightyNineOrderFormProps, Eig
         }
 
         return jsx('
-            <Grid container=${true} spacing=${Spacing_1}>
-                <Grid container=${true} item=${true} xs=${12} justify=${Center}>
-                    <Grid item=${true}>
+            <Grid container spacing=${Spacing_1}>
+                <Grid container item xs=${12} justify=${Center}>
+                    <Grid item>
                         <Typography variant=${H2}>${EightyNine.info().name} x 埗兵 外賣預訂</Typography>
                     </Grid>
                 </Grid>
                 ${timeSlotInput()}
-                <Grid className="order-content" container=${true} item=${true} xs=${12}>
+                <Grid className="order-content" container item xs=${12}>
                     ${itemForms}
-                    <Grid item=${true} xs=${12}>
+                    <Grid item xs=${12}>
                         ${addMore}
                     </Grid>
-                    <Grid item=${true} xs=${12}>
+                    <Grid item xs=${12}>
                         <Typography>
                             食物價錢: ${dollar}${Std.string(orderPrice())}
                         </Typography>
@@ -363,12 +363,12 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
         var orderContent = switch (state.selectedOrderForm) {
             case null:
                 jsx('
-                    <Grid container=${true} spacing=${Spacing_1}>
-                        <Grid item=${true} xs=${12}>
+                    <Grid container spacing=${Spacing_1}>
+                        <Grid item xs=${12}>
                             <Typography variant=${H2} align=${Center}>落單</Typography>
                         </Grid>
-                        <Grid item=${true} container=${true} xs=${12} spacing=${Spacing_3} justify=${Center}>
-                            <Grid item=${true}>
+                        <Grid item container xs=${12} spacing=${Spacing_3} justify=${Center}>
+                            <Grid item>
                                 <Button
                                     color=${Primary}
                                     href="https://docs.google.com/forms/d/e/1FAIpQLSfKw5JY0no7Tgu7q0hT2LP05rJ23DCMRIcCjxfwyapfSMl-Bg/viewform"
@@ -376,7 +376,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                                     ${YearsHK.info().name}
                                 </Button>
                             </Grid>
-                            <Grid item=${true}>
+                            <Grid item>
                                 <Button
                                     color=${Primary}
                                     onClick=${(evt) -> state.selectedOrderForm = EightyNine}
@@ -384,7 +384,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                                     ${EightyNine.info().name}
                                 </Button>
                             </Grid>
-                            <Grid item=${true}>
+                            <Grid item>
                                 <Button
                                     color=${Primary}
                                     href="https://docs.google.com/forms/d/e/1FAIpQLSfvb1PDjceErVgyogijVDxkN3pXu0djpBFzc_H59oqrdSH0mQ/viewform"
@@ -392,7 +392,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                                     ${DragonJapaneseCuisine.info().name}
                                 </Button>
                             </Grid>
-                            <Grid item=${true}>
+                            <Grid item>
                                 <Button
                                     color=${Primary}
                                     href="https://docs.google.com/forms/u/1/d/e/1FAIpQLSffligA-KWnAQsNPbshjYFJeE8s00XkKoXP0IbUYd0xZReotg/viewform"
@@ -493,43 +493,43 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
         }
         return return jsx('
             <Container maxWidth=${SM}>
-                <Grid container=${true}>
+                <Grid container>
                     <Typography>
                         * 必填項目
                     </Typography>
                 </Grid>
-                <Grid container=${true}>
-                    <Grid item=${true} xs=${12}>
+                <Grid container>
+                    <Grid item xs=${12}>
                         ${orderContent}
                     </Grid>
                 </Grid>
                 <Divider variant=${Middle} />
-                <Grid container=${true}>
-                    <Grid item=${true} xs=${12}>
-                        <Typography variant=${H5} gutterBottom=${true}>
+                <Grid container>
+                    <Grid item xs=${12}>
+                        <Typography variant=${H5} gutterBottom>
                             有關運費
                         </Typography>
-                        <Typography paragraph=${true}>
+                        <Typography paragraph>
                             設定運費嘅原則:<br/>
                             ${dollar}25 - 步行15分鐘或以內<br/>
                             ${dollar}35 - 步行15至20分鐘<br/>
                             ${dollar}40 - 距離較遠需要車手負責外賣<br/>
                             價格會因應實際情況(如長樓梯)調整。
                         </Typography>
-                        <Typography paragraph=${true}>
+                        <Typography paragraph>
                             落單後，平台會因應地址及價目表計算運費，外賣員送餐前會經tg同你確認一次價錢。
                         </Typography>
                     </Grid>
-                    <Grid item=${true} xs=${12}>
+                    <Grid item xs=${12}>
                         <TextField
                             label="交收地址"
-                            required=${true}
+                            required
                             value=${state.delivery.pickupLocation != null ? state.delivery.pickupLocation: ""}
                             onChange=${onAddressChange}
                         />
                     </Grid>
-                    <Grid item=${true} xs=${12}>
-                        <FormControl required=${true}>
+                    <Grid item xs=${12}>
+                        <FormControl required>
                             <InputLabel id="select-pickup-method">
                                 交收方法
                             </InputLabel>
@@ -542,7 +542,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item=${true} xs=${12}>
+                    <Grid item xs=${12}>
                         ${customerTg}
                     </Grid>
                 </Grid>

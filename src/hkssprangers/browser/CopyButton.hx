@@ -37,11 +37,11 @@ class CopyButton extends ReactComponentOf<CopyButtonProps, CopyButtonState> {
         return jsx('
             <Tooltip
                 title="成功複製"
-                arrow=${true}
+                arrow
                 open=${state.openMessage}
-                disableFocusListener=${true}
-                disableHoverListener=${true}
-                disableTouchListener=${true}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
             >
                 <IconButton onClick=${onClickCopy}>
                     <i className="far fa-clipboard"></i>
