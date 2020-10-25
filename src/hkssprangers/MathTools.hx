@@ -9,6 +9,10 @@ class FloatTools {
     static public function sum(values:Array<Float>):Float {
         return values.fold((item, result) -> result + item, 0.0);
     }
+
+    static public function nanIfNull(v:Null<Float>):Float {
+        return v != null ? v : Math.NaN;
+    }
 }
 
 class IntTools {

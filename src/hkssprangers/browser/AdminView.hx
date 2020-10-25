@@ -15,6 +15,7 @@ import react.router.Link;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
+using hkssprangers.MathTools;
 using Lambda;
 using StringTools;
 using DateTools;
@@ -124,10 +125,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     function renderDelivery(key:Dynamic, d:Delivery) {
-        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + switch (order.orderPrice) {
-            case null: Math.NaN;
-            case v: v;
-        }, 0.0);
+        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
 
         var tg = if (d.customer.tg != null && d.customer.tg.username != null) {
             var tgUrl = "https://t.me/" + d.customer.tg.username;
@@ -144,7 +142,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         }
 
         var paymentMethods = jsx('<Typography>${d.paymentMethods.map(p -> p.info().name).join(", ")}</Typography>');
-        var pickupLocation = jsx('<Typography>${d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")"}</Typography>');
+        var pickupLocation = jsx('<Typography>${d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
 
         var customerNote = if (d.customerNote != null && d.customerNote != "") {
             jsx('<Typography>⚠️ ${d.customerNote}</Typography>');
@@ -174,10 +172,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         ${d.orders.mapi(renderOrder)}
                     </Grid>
 
-                    <Typography paragraph>總食物價錢+運費: $$${foodTotal + switch(d.deliveryFee) {
-                        case null: Math.NaN;
-                        case v: v;
-                    }}</Typography>
+                    <Typography paragraph>總食物價錢+運費: $$${foodTotal + d.deliveryFee.nanIfNull()}</Typography>
 
                     <Typography>${d.pickupTimeSlot.print()}</Typography>
                     ${tg}

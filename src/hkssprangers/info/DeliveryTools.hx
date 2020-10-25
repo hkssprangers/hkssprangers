@@ -3,6 +3,7 @@ package hkssprangers.info;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
+using hkssprangers.MathTools;
 using Lambda;
 using StringTools;
 
@@ -20,8 +21,8 @@ class DeliveryTools {
         buf.add(d.orders.map(o -> o.print()).join("\n\n"));
 
         buf.add("\n\n");
-        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice, 0.0);
-        buf.add("總食物價錢+運費: $" + (foodTotal + d.deliveryFee) + "\n");
+        var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
+        buf.add("總食物價錢+運費: $" + (foodTotal + d.deliveryFee.nanIfNull()) + "\n");
 
         buf.add("\n");
         buf.add(d.pickupTimeSlot.print() + "\n");
@@ -30,7 +31,7 @@ class DeliveryTools {
         if (d.customer.tel != null)
             buf.add('https://wa.me/852${d.customer.tel}' + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "") + "\n");
         buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
-        buf.add(d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee + ")\n");
+        buf.add(d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee.nanIfNull() + ")\n");
 
         if (d.customerNote != null)
             buf.add("⚠️ " + d.customerNote + "\n");
