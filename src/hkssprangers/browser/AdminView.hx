@@ -45,7 +45,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     function setSelectedDate(v:Date) {
         var query = new URLSearchParams(props.location.search);
         query.set("date", v.format("%Y-%m-%d"));
-        props.history.push(props.location.pathname + "?" + query);
+        props.history.push({
+            search: Std.string(query),
+        });
     }
 
     override function componentDidUpdate(prevProps:AdminViewProps, prevState:AdminViewState) {
