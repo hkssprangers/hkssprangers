@@ -81,7 +81,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
                         multiline
-                        fullWidth
                         rowsMax=${cast Math.POSITIVE_INFINITY}
                         value=${o.orderDetails}
                         onChange=${orderDetailsOnChange} />
@@ -91,7 +90,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
                         multiline
-                        fullWidth
                         rowsMax=${cast Math.POSITIVE_INFINITY}
                         value=${o.customerNote != null ? o.customerNote : ""}
                         placeholder="無"
@@ -102,7 +100,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         variant=${Filled}
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
-                        fullWidth
                         value=${o.wantTableware}
                         onChange=${wantTablewareOnChange}
                     >
@@ -112,7 +109,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     <TextField
                         label="食物價錢"
                         variant=${Filled}
-                        fullWidth
                         type=${Number}
                         InputProps=${inputProps.merge({
                             startAdornment: jsx('<InputAdornment position=${Start}>$$</InputAdornment>'),
@@ -197,7 +193,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     variant=${Filled}
                     InputProps=${inputProps}
                     InputLabelProps=${inputLabelProps}
-                    fullWidth
                     value=${switch (d.customerPreferredContactMethod) {
                         case null: "";
                         case m: (m:String);
@@ -242,7 +237,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 <TextField
                     label="客人Telegram"
                     variant=${Filled}
-                    fullWidth
                     InputProps=${inputProps.merge({
                         startAdornment: jsx('<InputAdornment position=${Start}>@</InputAdornment>'),
                     })}
@@ -275,7 +269,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 <TextField
                     label="客人WhatsApp"
                     variant=${Filled}
-                    fullWidth
                     InputProps=${inputProps.merge({
                         startAdornment: jsx('<InputAdornment position=${Start}>+852</InputAdornment>'),
                     })}
@@ -363,7 +356,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     <TextField
                         label="交收地點"
                         variant=${Filled}
-                        fullWidth
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
                         value=${d.pickupLocation}
@@ -374,7 +366,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         variant=${Filled}
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
-                        fullWidth
                         value=${(d.pickupMethod:String)}
                         onChange=${pickupMethodOnChange}
                     >
@@ -383,7 +374,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     <TextField
                         label="運費"
                         variant=${Filled}
-                        fullWidth
                         type=${Number}
                         InputProps=${inputProps.merge({
                             startAdornment: jsx('<InputAdornment position=${Start}>$$</InputAdornment>'),
@@ -418,7 +408,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     InputProps=${inputProps}
                     InputLabelProps=${inputLabelProps}
                     multiline
-                    fullWidth
                     rowsMax=${cast Math.POSITIVE_INFINITY}
                     value=${d.customerNote != null ? d.customerNote : ""}
                     placeholder="無"

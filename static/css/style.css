@@ -77,6 +77,21 @@ body .MuiPickersDay-current {
     text-align: center;
 }
 
+
+.delivery-card {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .delivery-card {
+        min-width: 556px;
+    }
+}
+
+.delivery-card .MuiFormControl-root {
+    display: flex;
+}
+
 .delivery-card .MuiInputBase-input {
     line-height: 1.5;
 }
