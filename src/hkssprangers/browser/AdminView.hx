@@ -110,7 +110,19 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     function renderDelivery(key:Dynamic, d:Delivery) {
         return jsx('
             <div key=${key} className="mb-3">
-                <DeliveryView delivery=${d} />
+                <DeliveryView
+                    delivery=${d}
+                    onChange=${(changed) -> {
+                        setState({
+                            deliveries:
+                                if (changed != null) {
+                                    state.deliveries.map(_d -> _d == d ? changed : _d);
+                                } else {
+                                    state.deliveries.filter(_d -> _d != d);
+                                },
+                        });
+                    }}
+                />
             </div>
         ');
     }
@@ -140,6 +152,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         <Grid item>
                             <MuiPickersUtilsProvider utils=${MomentUtils}>
                                 <DatePicker
+                                    className="date-picker"
                                     autoOk
                                     disableToolbar
                                     format="YYYY-MM-DD"

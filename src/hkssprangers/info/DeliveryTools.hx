@@ -4,6 +4,7 @@ using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.MathTools;
+using hkssprangers.ObjectTools;
 using Lambda;
 using StringTools;
 
@@ -37,5 +38,19 @@ class DeliveryTools {
             buf.add("⚠️ " + d.customerNote + "\n");
 
         return buf.toString().trim();
+    }
+
+    static public function deepClone(delivery:Delivery):Delivery {
+        return delivery.copy().with({
+            couriers: delivery.couriers != null ? delivery.couriers.map(c -> c.copy().with({
+                tg: c.tg.copy(),
+            })) : null,
+            customer: delivery.customer.copy().with({
+                tg: delivery.customer.tg != null ? delivery.customer.tg.copy() : null,
+            }),
+            orders: delivery.orders.map(o -> o.copy()),
+            paymentMethods: delivery.paymentMethods.copy(),
+            pickupTimeSlot: delivery.pickupTimeSlot.copy(),
+        });
     }
 }

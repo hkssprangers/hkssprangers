@@ -23,4 +23,8 @@ enum abstract ContactMethod(String) to String {
         name = name.toLowerCase();
         return [Telegram, WhatsApp].find(m -> m.info().name.toLowerCase() == name);
     }
+
+    static public function fromId(id:String) {
+        return [Telegram, WhatsApp].find(m -> (m:String) == id);
+    }
 }
