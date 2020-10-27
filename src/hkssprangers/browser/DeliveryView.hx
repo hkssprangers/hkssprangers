@@ -1,12 +1,15 @@
 package hkssprangers.browser;
 
+import moment.Moment;
 import js.html.Event;
+import js.npm.material_ui.Pickers;
 import mui.core.*;
 import hkssprangers.info.*;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
 using Lambda;
+using DateTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
@@ -73,7 +76,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 }));
             }
             return jsx('
-                <div key=${key}>
+                <div key=${key} className="mb-3">
                     <Typography>🔸 ${o.shop.info().name}</Typography>
                     <TextField
                         label="食物內容"
@@ -170,6 +173,65 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             state.editingDelivery;
         }
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
+
+        var pickupTimeSlot = if (!state.isEditing) {
+            jsx('<Typography>${d.pickupTimeSlot.print()}</Typography>');
+        } else {
+            function onStartTimeChange(date:Moment) {
+                var nativeDate:Date = cast date.toDate();
+                trace(nativeDate);
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        pickupTimeSlot: state.editingDelivery.pickupTimeSlot.with({
+                            start: (nativeDate:LocalDateString),
+                        })
+                    })
+                });
+            }
+            function onEndTimeChange(date:Moment) {
+                var nativeDate:Date = cast date.toDate();
+                trace(nativeDate);
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        pickupTimeSlot: state.editingDelivery.pickupTimeSlot.with({
+                            end: (nativeDate:LocalDateString),
+                        })
+                    })
+                });
+            }
+            jsx('
+                <div className="d-flex flex-wrap flex-sm-nowrap justify-content-between">
+                    <MuiPickersUtilsProvider utils=${MomentUtils}>
+                            <DateTimePicker
+                                className="flex-sm-grow-1 mr-sm-1"
+                                label="交收時段開始"
+                                inputVariant="filled"
+                                InputProps=${inputProps}
+                                InputLabelProps=${inputLabelProps}
+                                fullWidth
+                                ampm=${false}
+                                format="YYYY-MM-DD HH:mm"
+                                openTo="hours"
+                                value=${d.pickupTimeSlot.start.toDate()}
+                                onChange=${onStartTimeChange}
+                            />
+                            <DateTimePicker
+                                className="flex-sm-grow-1"
+                                label="交收時段完結"
+                                inputVariant="filled"
+                                InputProps=${inputProps}
+                                InputLabelProps=${inputLabelProps}
+                                fullWidth
+                                ampm=${false}
+                                format="YYYY-MM-DD HH:mm"
+                                openTo="hours"
+                                value=${d.pickupTimeSlot.end.toDate()}
+                                onChange=${onEndTimeChange}
+                            />
+                    </MuiPickersUtilsProvider>
+                </div>
+            ');
+        }
 
         var customerPreferredContactMethod = if (!state.isEditing) {
             null;
@@ -473,7 +535,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
                     <Typography paragraph>總食物價錢+運費: $$${foodTotal + d.deliveryFee.nanIfNull()}</Typography>
 
-                    <Typography>${d.pickupTimeSlot.print()}</Typography>
+                    ${pickupTimeSlot}
                     ${customerPreferredContactMethod}
                     ${tg}
                     ${wa}

@@ -16,3 +16,6 @@ extern class DateTimePicker extends ReactComponent {}
 
 @:jsRequire("@date-io/moment")
 extern class MomentUtils extends ReactComponent {}
+
+@:jsRequire("@material-ui/pickers", "KeyboardDateTimePicker")
+extern class KeyboardDateTimePicker extends ReactComponent {}
