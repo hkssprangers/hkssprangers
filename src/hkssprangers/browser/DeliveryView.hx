@@ -80,25 +80,40 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     shop: (cast evt.target).value,
                 }));
             }
+            function onDelete(evt:Event) {
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        orders: state.editingDelivery.orders.filter(_o -> _o != o),
+                    }),
+                });
+            }
             var shops = Shop.all.map(shop -> {
                 jsx('<MenuItem key=${shop} value=${shop}>${shop.info().name}</MenuItem>');
             });
             return jsx('
                 <div key=${key} className="mb-3">
-                    <TextField
-                        select
-                        label="店舖"
-                        variant=${Filled}
-                        InputProps=${inputProps}
-                        InputLabelProps=${inputLabelProps}
-                        value=${switch (o.shop) {
-                            case null: "";
-                            case shop: (shop:String);
-                        }}
-                        onChange=${shopOnChange}
-                    >
-                        ${shops}
-                    </TextField>
+                    <div className="d-flex align-items-center">
+                        <TextField
+                            className="flex-grow-1 mr-1"
+                            select
+                            label="店舖"
+                            variant=${Filled}
+                            InputProps=${inputProps}
+                            InputLabelProps=${inputLabelProps}
+                            value=${switch (o.shop) {
+                                case null: "";
+                                case shop: (shop:String);
+                            }}
+                            onChange=${shopOnChange}
+                        >
+                            ${shops}
+                        </TextField>
+                        <IconButton
+                            onClick=${onDelete}
+                        >
+                            <i className="fas fa-trash"></i>
+                        </IconButton>
+                    </div>
                     <TextField
                         label="食物內容"
                         variant=${Filled}
