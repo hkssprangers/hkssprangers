@@ -603,7 +603,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     }),
                 });
             }
-            var couriers = d.couriers.map(c -> {
+            var couriers = d.couriers == null ? [] : d.couriers.map(c -> {
                 function onDelete(evt) {
                     setState({
                         editingDelivery: state.editingDelivery.with({
