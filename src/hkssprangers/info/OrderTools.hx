@@ -7,7 +7,7 @@ class OrderTools {
     static public function print(order:Order):String {
         var buf = new StringBuf();
 
-        buf.add("🔸 " + order.shop.info().name + "\n");
+        buf.add("🔸 " + (order.shop != null ? order.shop.info().name : "null") + "\n");
 
         buf.add(order.orderDetails + "\n");
 

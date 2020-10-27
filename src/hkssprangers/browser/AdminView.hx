@@ -138,6 +138,55 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             state.deliveries.mapi(renderDelivery);
         }
 
+        function addDelivery() {
+            var now = Date.now();
+            setState({
+                deliveries: state.deliveries.concat([{
+                    creationTime: now,
+                    deliveryCode: null,
+                    couriers: null,
+                    customer: {
+                        tg: null,
+                        tel: null
+                    },
+                    customerPreferredContactMethod: null,
+                    paymentMethods: [],
+                    pickupLocation: null,
+                    pickupTimeSlot: {
+                        start: null,
+                        end: null
+                    },
+                    pickupMethod: null,
+                    deliveryFee: null,
+                    customerNote: null,
+                    orders: [{
+                        creationTime: now,
+                        orderCode: null,
+                        shop: null,
+                        wantTableware: null,
+                        customerNote: null,
+                        orderDetails: null,
+                        orderPrice: null,
+                        platformServiceCharge: null,
+                    }],
+                }]),
+            });
+        }
+
+        var addDeliveryButton = if (state.isLoading) {
+            null;
+        } else {
+            jsx('
+                <Button
+                    className="mb-2"
+                    size=${Small}
+                    onClick=${evt -> addDelivery()}
+                >
+                    Add delivery
+                </Button>
+            ');
+        }
+
         var selectedDate = getSelectedDate();
 
         return jsx('
@@ -176,6 +225,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
                             ${content}
+                            ${addDeliveryButton}
                         </Grid>
                     </Grid>
                 </Grid>

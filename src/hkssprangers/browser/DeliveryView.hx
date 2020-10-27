@@ -24,6 +24,7 @@ typedef DeliveryViewProps = {
 typedef DeliveryViewState = {
     final isEditing:Bool;
     final editingDelivery:Delivery;
+    final addCourierTg:String;
 }
 
 class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState> {
@@ -32,6 +33,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         state = {
             isEditing: false,
             editingDelivery: props.delivery.deepClone(),
+            addCourierTg: "",
         }
     }
 
@@ -163,7 +165,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             }
             return jsx('
                 <div key=${key}>
-                    <Typography>🔸 ${o.shop.info().name}</Typography>
+                    <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"}</Typography>
                     <Typography className="pre-wrap">${o.orderDetails}</Typography>
                     ${customerNote}
                     <Typography>${o.wantTableware ? "要餐具" : "唔要餐具"}</Typography>
@@ -209,11 +211,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
 
         var pickupTimeSlot = if (!state.isEditing) {
-            jsx('<Typography>${d.pickupTimeSlot.print()}</Typography>');
+            jsx('<Typography>${d.pickupTimeSlot != null && d.pickupTimeSlot.start != null && d.pickupTimeSlot.end != null ? d.pickupTimeSlot.print() : "null"}</Typography>');
         } else {
             function onStartTimeChange(date:Moment) {
                 var nativeDate:Date = cast date.toDate();
-                trace(nativeDate);
                 setState({
                     editingDelivery: state.editingDelivery.with({
                         pickupTimeSlot: state.editingDelivery.pickupTimeSlot.with({
@@ -224,7 +225,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             }
             function onEndTimeChange(date:Moment) {
                 var nativeDate:Date = cast date.toDate();
-                trace(nativeDate);
                 setState({
                     editingDelivery: state.editingDelivery.with({
                         pickupTimeSlot: state.editingDelivery.pickupTimeSlot.with({
@@ -246,7 +246,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             ampm=${false}
                             format="YYYY-MM-DD HH:mm"
                             openTo="hours"
-                            value=${d.pickupTimeSlot.start.toDate()}
+                            value=${d.pickupTimeSlot.start.toDate().emptyStrIfNull()}
                             onChange=${onStartTimeChange}
                         />
                         <DateTimePicker
@@ -259,7 +259,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             ampm=${false}
                             format="YYYY-MM-DD HH:mm"
                             openTo="hours"
-                            value=${d.pickupTimeSlot.end.toDate()}
+                            value=${d.pickupTimeSlot.end.toDate().emptyStrIfNull()}
                             onChange=${onEndTimeChange}
                         />
                     </MuiPickersUtilsProvider>
@@ -396,6 +396,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 ');
                 jsx('
                     <FormControlLabel
+                        key=${m}
                         control=${checkbox}
                         label=${m.info().name}
                     />
@@ -412,7 +413,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         }
 
         var pickupLocation = if (!state.isEditing) {
-            jsx('<Typography>${d.pickupLocation + " (" + d.pickupMethod.info().name + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
+            jsx('<Typography>${d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
         } else {
             function locOnChange(evt:Event) {
                 var v:String = (cast evt.target).value;
@@ -472,7 +473,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             startAdornment: jsx('<InputAdornment position=${Start}>$$</InputAdornment>'),
                         })}
                         InputLabelProps=${inputLabelProps}
-                        value=${d.deliveryFee}
+                        value=${d.deliveryFee.emptyStrIfNull()}
                         onChange=${deliveryFeeOnChange} />
                 </Fragment>
             ');
@@ -585,12 +586,91 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             ');
         }
 
-        return jsx('
-            <Card className="delivery-card" elevation=${state.isEditing ? 5 : 1}>
+        var cardHeader = if (!state.isEditing) {
+            jsx('
                 <CardHeader
                     title=${"📃 " + d.deliveryCode}
                     subheader=${subheader}
                 />
+            ');
+        } else {
+            function deliveryCodeOnChange(evt:Event) {
+                var v:String = (cast evt.target).value;
+                var customerNote = v != "" ? v : null;
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        customerNote: customerNote,
+                    }),
+                });
+            }
+            var couriers = d.couriers.map(c -> {
+                function onDelete(evt) {
+                    setState({
+                        editingDelivery: state.editingDelivery.with({
+                            couriers: state.editingDelivery.couriers.filter(_c -> _c != c),
+                        }),
+                    });
+                }
+                jsx('
+                    <Chip
+                        className="my-2 ml-2"
+                        key=${c.tg.username}
+                        label=${"@" + c.tg.username}
+                        onDelete=${onDelete}
+                    />
+                ');
+            });
+            function onAdd(evt) {
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        couriers: state.editingDelivery.couriers.concat([{
+                            tg: {
+                                username: state.addCourierTg,
+                            },
+                            deliveryFee: null,
+                            deliverySubsidy: null,
+                        }]),
+                    }),
+                    addCourierTg: "",
+                });
+            }
+            jsx('
+                <Fragment>
+                    <TextField
+                        label="運送編號"
+                        variant=${Filled}
+                        InputProps=${inputProps}
+                        InputLabelProps=${inputLabelProps}
+                        value=${d.deliveryCode.emptyStrIfNull()}
+                        onChange=${deliveryCodeOnChange}
+                    />
+                    <div className="d-flex">
+                        ${couriers}
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <Input
+                            className="badge badge-pill badge-light ml-2 mr-1"
+                            startAdornment=${jsx('<InputAdornment position=${Start}>@</InputAdornment>')}
+                            placeholder="增加外賣員"
+                            value=${state.addCourierTg.emptyStrIfNull()}
+                            onChange=${(evt:Event) -> setState({
+                                addCourierTg: (cast evt.target).value,
+                            })}
+                            {...inputProps}
+                        />
+                        <IconButton
+                            onClick=${onAdd}
+                        >
+                            <i className="fas fa-plus"></i>
+                        </IconButton>
+                    </div>
+                </Fragment>
+            ');
+        }
+
+        return jsx('
+            <Card className="delivery-card" elevation=${state.isEditing ? 5 : 1}>
+                ${cardHeader}
                 <CardContent>
                     ${d.orders.mapi(renderOrder)}
                     ${addOrderButton}
