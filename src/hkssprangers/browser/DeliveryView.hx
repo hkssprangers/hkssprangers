@@ -596,10 +596,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         } else {
             function deliveryCodeOnChange(evt:Event) {
                 var v:String = (cast evt.target).value;
-                var customerNote = v != "" ? v : null;
+                var deliveryCode = v != "" ? v : null;
                 setState({
                     editingDelivery: state.editingDelivery.with({
-                        customerNote: customerNote,
+                        deliveryCode: deliveryCode,
                     }),
                 });
             }
