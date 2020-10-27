@@ -17,6 +17,19 @@ enum abstract Shop(String) to String {
     var Neighbor:Shop;
     var MGY:Shop;
 
+    static public final all = [
+        EightyNine,
+        DragonJapaneseCuisine,
+        YearsHK,
+        LaksaStore,
+        DongDong,
+        BiuKeeLokYuen,
+        KCZenzero,
+        HanaSoftCream,
+        Neighbor,
+        MGY,
+    ];
+
     public function info() return switch (cast this:Shop) {
         case EightyNine:
             {

@@ -75,9 +75,30 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     orderPrice: Std.parseFloat((cast evt.target).value),
                 }));
             }
+            function shopOnChange(evt:Event) {
+                updateOrder(o, o.with({
+                    shop: (cast evt.target).value,
+                }));
+            }
+            var shops = Shop.all.map(shop -> {
+                jsx('<MenuItem key=${shop} value=${shop}>${shop.info().name}</MenuItem>');
+            });
             return jsx('
                 <div key=${key} className="mb-3">
-                    <Typography>🔸 ${o.shop.info().name}</Typography>
+                    <TextField
+                        select
+                        label="店舖"
+                        variant=${Filled}
+                        InputProps=${inputProps}
+                        InputLabelProps=${inputLabelProps}
+                        value=${switch (o.shop) {
+                            case null: "";
+                            case shop: (shop:String);
+                        }}
+                        onChange=${shopOnChange}
+                    >
+                        ${shops}
+                    </TextField>
                     <TextField
                         label="食物內容"
                         variant=${Filled}
