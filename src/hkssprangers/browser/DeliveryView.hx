@@ -623,7 +623,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             function onAdd(evt) {
                 setState({
                     editingDelivery: state.editingDelivery.with({
-                        couriers: state.editingDelivery.couriers.concat([{
+                        couriers: state.editingDelivery.couriers.ifNull([]).concat([{
                             tg: {
                                 username: state.addCourierTg,
                             },

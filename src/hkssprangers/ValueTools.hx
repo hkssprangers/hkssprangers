@@ -7,4 +7,11 @@ class ValueTools {
         else
             "";
     }
+
+    static public function ifNull<T>(v:Null<T>, defaultValue:T):T {
+        return if (v != null)
+            v;
+        else
+            defaultValue;
+    }
 }
