@@ -12,6 +12,7 @@ using Lambda;
 using DateTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
+using hkssprangers.ValueTools;
 using hkssprangers.info.DeliveryTools;
 using hkssprangers.info.TimeSlotTools;
 
@@ -100,10 +101,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             variant=${Filled}
                             InputProps=${inputProps}
                             InputLabelProps=${inputLabelProps}
-                            value=${switch (o.shop) {
-                                case null: "";
-                                case shop: (shop:String);
-                            }}
+                            value=${o.shop.emptyStrIfNull()}
                             onChange=${shopOnChange}
                         >
                             ${shops}
@@ -121,7 +119,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         InputLabelProps=${inputLabelProps}
                         multiline
                         rowsMax=${cast Math.POSITIVE_INFINITY}
-                        value=${o.orderDetails}
+                        value=${o.orderDetails.emptyStrIfNull()}
                         onChange=${orderDetailsOnChange} />
                     <TextField
                         label="食物備註"
@@ -130,7 +128,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         InputLabelProps=${inputLabelProps}
                         multiline
                         rowsMax=${cast Math.POSITIVE_INFINITY}
-                        value=${o.customerNote != null ? o.customerNote : ""}
+                        value=${o.customerNote.emptyStrIfNull()}
                         placeholder="無"
                         onChange=${customerNoteOnChange} />
                     <TextField
@@ -139,7 +137,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         variant=${Filled}
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
-                        value=${o.wantTableware}
+                        value=${o.wantTableware.emptyStrIfNull()}
                         onChange=${wantTablewareOnChange}
                     >
                         <MenuItem value=${true}>要餐具</MenuItem>
@@ -153,7 +151,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             startAdornment: jsx('<InputAdornment position=${Start}>$$</InputAdornment>'),
                         })}
                         InputLabelProps=${inputLabelProps}
-                        value=${o.orderPrice}
+                        value=${o.orderPrice.emptyStrIfNull()}
                         onChange=${orderPriceOnChange} />
                 </div>
             ');
@@ -238,32 +236,32 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             jsx('
                 <div className="d-flex flex-wrap flex-sm-nowrap justify-content-between">
                     <MuiPickersUtilsProvider utils=${MomentUtils}>
-                            <DateTimePicker
-                                className="flex-sm-grow-1 mr-sm-1"
-                                label="交收時段開始"
-                                inputVariant="filled"
-                                InputProps=${inputProps}
-                                InputLabelProps=${inputLabelProps}
-                                fullWidth
-                                ampm=${false}
-                                format="YYYY-MM-DD HH:mm"
-                                openTo="hours"
-                                value=${d.pickupTimeSlot.start.toDate()}
-                                onChange=${onStartTimeChange}
-                            />
-                            <DateTimePicker
-                                className="flex-sm-grow-1"
-                                label="交收時段完結"
-                                inputVariant="filled"
-                                InputProps=${inputProps}
-                                InputLabelProps=${inputLabelProps}
-                                fullWidth
-                                ampm=${false}
-                                format="YYYY-MM-DD HH:mm"
-                                openTo="hours"
-                                value=${d.pickupTimeSlot.end.toDate()}
-                                onChange=${onEndTimeChange}
-                            />
+                        <DateTimePicker
+                            className="flex-sm-grow-1 mr-sm-1"
+                            label="交收時段開始"
+                            inputVariant="filled"
+                            InputProps=${inputProps}
+                            InputLabelProps=${inputLabelProps}
+                            fullWidth
+                            ampm=${false}
+                            format="YYYY-MM-DD HH:mm"
+                            openTo="hours"
+                            value=${d.pickupTimeSlot.start.toDate()}
+                            onChange=${onStartTimeChange}
+                        />
+                        <DateTimePicker
+                            className="flex-sm-grow-1"
+                            label="交收時段完結"
+                            inputVariant="filled"
+                            InputProps=${inputProps}
+                            InputLabelProps=${inputLabelProps}
+                            fullWidth
+                            ampm=${false}
+                            format="YYYY-MM-DD HH:mm"
+                            openTo="hours"
+                            value=${d.pickupTimeSlot.end.toDate()}
+                            onChange=${onEndTimeChange}
+                        />
                     </MuiPickersUtilsProvider>
                 </div>
             ');
@@ -291,10 +289,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     variant=${Filled}
                     InputProps=${inputProps}
                     InputLabelProps=${inputLabelProps}
-                    value=${switch (d.customerPreferredContactMethod) {
-                        case null: "";
-                        case m: (m:String);
-                    }}
+                    value=${d.customerPreferredContactMethod.emptyStrIfNull()}
                     onChange=${customerPreferredContactMethodOnChange}
                 >
                     ${contactMethods}
@@ -371,7 +366,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         startAdornment: jsx('<InputAdornment position=${Start}>+852</InputAdornment>'),
                     })}
                     InputLabelProps=${inputLabelProps}
-                    value=${d.customer.tel != null ? d.customer.tel : ""}
+                    value=${d.customer.tel.emptyStrIfNull()}
                     onChange=${telOnChange} />
             ');
         }
@@ -456,7 +451,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         variant=${Filled}
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
-                        value=${d.pickupLocation}
+                        value=${d.pickupLocation.emptyStrIfNull()}
                         onChange=${locOnChange} />
                     <TextField
                         select
@@ -464,7 +459,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         variant=${Filled}
                         InputProps=${inputProps}
                         InputLabelProps=${inputLabelProps}
-                        value=${(d.pickupMethod:String)}
+                        value=${d.pickupMethod.emptyStrIfNull()}
                         onChange=${pickupMethodOnChange}
                     >
                         ${pickupMethods}
@@ -507,7 +502,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     InputLabelProps=${inputLabelProps}
                     multiline
                     rowsMax=${cast Math.POSITIVE_INFINITY}
-                    value=${d.customerNote != null ? d.customerNote : ""}
+                    value=${d.customerNote.emptyStrIfNull()}
                     placeholder="無"
                     onChange=${customerNoteOnChange}
                 />
@@ -522,6 +517,36 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             '));
             jsx('
                 <Grid container wrap=${NoWrap} spacing=${Spacing_1}>${couriers}</Grid>
+            ');
+        }
+
+        function addOrder() {
+            setState({
+                editingDelivery: state.editingDelivery.with({
+                    orders: state.editingDelivery.orders.concat([{
+                        creationTime: Date.now(),
+                        shop: null,
+                        wantTableware: null,
+                        customerNote: null,
+                        orderDetails: null,
+                        orderPrice: null,
+                        platformServiceCharge: null,
+                    }]),
+                }),
+            });
+        }
+
+        var addOrderButton = if (!state.isEditing) {
+            null;
+        } else {
+            jsx('
+                <Button
+                    className="mb-2"
+                    size=${Small}
+                    onClick=${evt -> addOrder()}
+                >
+                    Add order
+                </Button>
             ');
         }
 
@@ -568,6 +593,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 />
                 <CardContent>
                     ${d.orders.mapi(renderOrder)}
+                    ${addOrderButton}
 
                     <Typography paragraph>總食物價錢+運費: $$${foodTotal + d.deliveryFee.nanIfNull()}</Typography>
 
