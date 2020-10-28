@@ -143,9 +143,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         else
             null;
         var selectedTimeSlotType = getSelectedTimeSlotType();
-        var filteredDeliveries = state.deliveries.filter(d ->
-            TimeSlotType.classify(d.pickupTimeSlot.start) == selectedTimeSlotType
-        );
+        var filteredDeliveries = state.deliveries.filter(d -> {
+            if (d.pickupTimeSlot != null && d.pickupTimeSlot.start != null)
+                TimeSlotType.classify(d.pickupTimeSlot.start) == selectedTimeSlotType;
+            else
+                true;
+        });
         var content = if (state.isLoading) {
             [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
