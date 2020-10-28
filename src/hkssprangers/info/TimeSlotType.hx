@@ -1,6 +1,6 @@
 package hkssprangers.info;
 
-enum abstract TimeSlotType(String) {
+enum abstract TimeSlotType(String) to String {
     var Lunch;
     var Dinner;
 
@@ -25,5 +25,11 @@ enum abstract TimeSlotType(String) {
             Lunch;
         else
             Dinner;
+    }
+
+    static public function fromId(id:String) return switch (cast id:TimeSlotType) {
+        case Lunch: Lunch;
+        case Dinner: Dinner;
+        case _: null;
     }
 }

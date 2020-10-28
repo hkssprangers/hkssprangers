@@ -1,19 +1,17 @@
 package hkssprangers.browser;
 
-import mui.icon.SpaceBar;
 import js.html.URL;
+import js.html.Event;
 import moment.Moment;
 import js.html.URLSearchParams;
-import js_cookie.CookiesStatic;
-import global.JsCookieGlobal.*;
 import mui.core.*;
 import js.npm.material_ui.Pickers;
 import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
-import react.router.Link;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
+using hkssprangers.info.TimeSlotType;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.MathTools;
 using Lambda;
@@ -46,6 +44,18 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     function setSelectedDate(v:Date) {
         var query = new URLSearchParams(props.location.search);
         query.set("date", v.format("%Y-%m-%d"));
+        props.history.push({
+            search: Std.string(query),
+        });
+    }
+
+    function getSelectedTimeSlotType(?search:String) return switch (new URLSearchParams(search != null ? search : props.location.search).get("time")) {
+        case null: TimeSlotType.classify(Date.now());
+        case v: TimeSlotType.fromId(v);
+    }
+    function setSelectedTimeSlotType(v:TimeSlotType) {
+        var query = new URLSearchParams(props.location.search);
+        query.set("time", (v:String));
         props.history.push({
             search: Std.string(query),
         });
@@ -132,10 +142,14 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
         else
             null;
+        var selectedTimeSlotType = getSelectedTimeSlotType();
+        var filteredDeliveries = state.deliveries.filter(d ->
+            TimeSlotType.classify(d.pickupTimeSlot.start) == selectedTimeSlotType
+        );
         var content = if (state.isLoading) {
             [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
-            state.deliveries.mapi(renderDelivery);
+            filteredDeliveries.mapi(renderDelivery);
         }
 
         function addDelivery() {
@@ -197,7 +211,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             ${loggedInAs}
                         </Grid>
                     </Grid>
-                    <Grid item container justify=${Center}>
+                    <Grid item container justify=${Center} spacing=${Spacing_2}>
                         <Grid item>
                             <MuiPickersUtilsProvider utils=${MomentUtils}>
                                 <DatePicker
@@ -213,12 +227,22 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                                 />
                             </MuiPickersUtilsProvider>
                         </Grid>
+                        <Grid item>
+                            <RadioGroup
+                                className="d-flex flex-row"
+                                value=${getSelectedTimeSlotType()}
+                                onChange=${(evt:Event) -> setSelectedTimeSlotType((cast evt.target).value)}
+                            >
+                                <FormControlLabel value=${Lunch} control=${jsx('<Radio />')} label=${Lunch.info().name} />
+                                <FormControlLabel value=${Dinner} control=${jsx('<Radio />')} label=${Dinner.info().name} />
+                            </RadioGroup>
+                        </Grid>
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
                             <CopyButton
                                 title=${selectedDate.format("%Y-%m-%d")}
-                                text=${state.deliveries.map(DeliveryTools.print).join(hr)}
+                                text=${filteredDeliveries.map(DeliveryTools.print).join(hr)}
                             />
                         </Grid>
                     </Grid>
