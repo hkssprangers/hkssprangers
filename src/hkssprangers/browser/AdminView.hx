@@ -214,23 +214,29 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             var label = jsx('
                 <div className="d-flex flex-row align-items-center">
                     <span>${t.info().name}</span>
-                    <span className="badge badge-pill badge-info ml-1">${count}</span>
+                    <span className="badge badge-pill badge-info mx-1">${count}</span>
                 </div>
             ');
             jsx('
-                <FormControlLabel key=${t} value=${t} control=${jsx('<Radio />')} label=${label} />
+                <FormControlLabel
+                    key=${t}
+                    value=${t}
+                    control=${jsx('<Radio />')}
+                    label=${label}
+                    className="badge badge-pill badge-light mx-1"
+                />
             ');
         });
 
         return jsx('
             <Container>
                 <Grid container justify=${Center} direction=${Column}>
-                    <Grid item container justify=${Center}>
+                    <Grid item container justify=${Center} className="py-2">
                         <Grid item>
                             ${loggedInAs}
                         </Grid>
                     </Grid>
-                    <Grid item container justify=${Center} spacing=${Spacing_2}>
+                    <Grid item container justify=${Center} alignItems=${Center} spacing=${Spacing_2}>
                         <Grid item>
                             <MuiPickersUtilsProvider utils=${MomentUtils}>
                                 <DatePicker
@@ -256,7 +262,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             </RadioGroup>
                         </Grid>
                     </Grid>
-                    <Grid item container justify=${Center} alignItems=${Center}>
+                    <Grid item container justify=${Center} alignItems=${Center} className="pb-2">
                         <Grid item>
                             <CopyButton
                                 title=${selectedDate.format("%Y-%m-%d")}
