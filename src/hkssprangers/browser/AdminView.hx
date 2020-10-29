@@ -206,6 +206,22 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
 
         var selectedDate = getSelectedDate();
 
+        var timeSlotTypeRadios = [Lunch, Dinner].map(t -> {
+            var count = if (!state.isLoading)
+                Std.string(state.deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t).length);
+            else
+                "?";
+            var label = jsx('
+                <div className="d-flex flex-row align-items-center">
+                    <span>${t.info().name}</span>
+                    <span className="badge badge-pill badge-info ml-1">${count}</span>
+                </div>
+            ');
+            jsx('
+                <FormControlLabel key=${t} value=${t} control=${jsx('<Radio />')} label=${label} />
+            ');
+        });
+
         return jsx('
             <Container>
                 <Grid container justify=${Center} direction=${Column}>
@@ -236,8 +252,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                                 value=${getSelectedTimeSlotType()}
                                 onChange=${(evt:Event) -> setSelectedTimeSlotType((cast evt.target).value)}
                             >
-                                <FormControlLabel value=${Lunch} control=${jsx('<Radio />')} label=${Lunch.info().name} />
-                                <FormControlLabel value=${Dinner} control=${jsx('<Radio />')} label=${Dinner.info().name} />
+                                ${timeSlotTypeRadios}
                             </RadioGroup>
                         </Grid>
                     </Grid>
