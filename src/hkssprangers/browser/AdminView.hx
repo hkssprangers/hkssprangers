@@ -208,7 +208,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
 
         var timeSlotTypeRadios = [Lunch, Dinner].map(t -> {
             var count = if (!state.isLoading)
-                Std.string(state.deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t).length);
+                Std.string(state.deliveries.filter(d -> d.pickupTimeSlot == null || d.pickupTimeSlot.start == null || TimeSlotType.classify(d.pickupTimeSlot.start) == t).length);
             else
                 "?";
             var label = jsx('
