@@ -211,10 +211,14 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 Std.string(state.deliveries.filter(d -> d.pickupTimeSlot == null || d.pickupTimeSlot.start == null || TimeSlotType.classify(d.pickupTimeSlot.start) == t).length);
             else
                 "?";
+            var badgeColor = switch (count) {
+                case "0", "?": "badge-light";
+                case _: "badge-info";
+            }
             var label = jsx('
                 <div className="d-flex flex-row align-items-center">
                     <span>${t.info().name}</span>
-                    <span className="badge badge-pill badge-info mx-1">${count}</span>
+                    <span className=${'badge badge-pill ${badgeColor} mx-1'}>${count}</span>
                 </div>
             ');
             jsx('
