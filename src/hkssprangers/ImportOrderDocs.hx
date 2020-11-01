@@ -218,13 +218,13 @@ class ImportOrderDocs {
 
             var timeSlot = {
                 var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
-                var timeReg = ~/[0-9]{2}:[0-9]{2}/;
+                var timeReg = ~/([0-9]{2}:[0-9]{2}).*交收/;
                 if (row.find(v -> timeSlotReg.match(v)) != null) {
                     start: timeSlotReg.matched(1),
                     end: timeSlotReg.matched(2),
                 } else if (row.find(v -> timeReg.match(v)) != null) {
-                    start: timeReg.matched(0),
-                    end: timeReg.matched(0),
+                    start: timeReg.matched(1),
+                    end: timeReg.matched(1),
                 } else {
                     trace("Cannot find timeslot field in " + xlsxFile + " " + row);
                     continue;
