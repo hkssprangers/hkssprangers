@@ -10,6 +10,8 @@ import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
 using Lambda;
 using DateTools;
+using StringTools;
+using hkssprangers.TelegramTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
 using hkssprangers.ValueTools;
@@ -24,7 +26,6 @@ typedef DeliveryViewProps = {
 typedef DeliveryViewState = {
     final isEditing:Bool;
     final editingDelivery:Delivery;
-    final addCourierTg:String;
 }
 
 class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState> {
@@ -33,7 +34,6 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         state = {
             isEditing: false,
             editingDelivery: props.delivery.deepClone(),
-            addCourierTg: "",
         }
     }
 
@@ -603,7 +603,31 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     }),
                 });
             }
-            var couriers = d.couriers == null ? [] : d.couriers.map(c -> {
+            function addCourier() {
+                setState({
+                    editingDelivery: state.editingDelivery.with({
+                        couriers: state.editingDelivery.couriers.ifNull([]).concat([{
+                            tg: {
+                                username: "",
+                            },
+                            deliveryFee: null,
+                            deliverySubsidy: null,
+                        }]),
+                    }),
+                });
+            }
+            var couriers = d.couriers == null ? [] : d.couriers.mapi((i, c) -> {
+                function onChange(evt) {
+                    setState({
+                        editingDelivery: state.editingDelivery.with({
+                            couriers: state.editingDelivery.couriers.map(_c -> _c != c ? _c : _c.with({
+                                tg: _c.tg.with({
+                                    username: ((cast evt.target).value:String).trim().replace("@", ""),
+                                }),
+                            })),
+                        }),
+                    });
+                }
                 function onDelete(evt) {
                     setState({
                         editingDelivery: state.editingDelivery.with({
@@ -612,28 +636,23 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     });
                 }
                 jsx('
-                    <Chip
-                        className="my-2 ml-2"
-                        key=${c.tg.username}
-                        label=${"@" + c.tg.username}
-                        onDelete=${onDelete}
-                    />
+                    <div key=${i} className="d-flex flex-row align-items-center badge badge-pill badge-light mr-1 my-1">
+                        <Input
+                            className="courierTgInuput pl-2"
+                            startAdornment=${jsx('<InputAdornment position=${Start}>@</InputAdornment>')}
+                            value=${c.tg.username.emptyStrIfNull()}
+                            onChange=${onChange}
+                            {...inputProps}
+                        />
+                        <IconButton
+                            className="deleteBtn"
+                            onClick=${onDelete}
+                        >
+                            <i className="fas fa-times"></i>
+                        </IconButton>
+                    </div>
                 ');
             });
-            function onAdd(evt) {
-                setState({
-                    editingDelivery: state.editingDelivery.with({
-                        couriers: state.editingDelivery.couriers.ifNull([]).concat([{
-                            tg: {
-                                username: state.addCourierTg,
-                            },
-                            deliveryFee: null,
-                            deliverySubsidy: null,
-                        }]),
-                    }),
-                    addCourierTg: "",
-                });
-            }
             jsx('
                 <Fragment>
                     <TextField
@@ -644,25 +663,16 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         value=${d.deliveryCode.emptyStrIfNull()}
                         onChange=${deliveryCodeOnChange}
                     />
-                    <div className="d-flex">
+                    <div className="d-flex flex-wrap px-3">
                         ${couriers}
                     </div>
-                    <div className="d-flex align-items-center">
-                        <Input
-                            className="badge badge-pill badge-light ml-2 mr-1"
-                            startAdornment=${jsx('<InputAdornment position=${Start}>@</InputAdornment>')}
-                            placeholder="增加外賣員"
-                            value=${state.addCourierTg.emptyStrIfNull()}
-                            onChange=${(evt:Event) -> setState({
-                                addCourierTg: (cast evt.target).value,
-                            })}
-                            {...inputProps}
-                        />
-                        <IconButton
-                            onClick=${onAdd}
+                    <div className="d-flex align-items-center px-3">
+                        <Button
+                            size=${Small}
+                            onClick=${evt -> addCourier()}
                         >
-                            <i className="fas fa-plus"></i>
-                        </IconButton>
+                            Add Courier
+                        </Button>
                     </div>
                 </Fragment>
             ');

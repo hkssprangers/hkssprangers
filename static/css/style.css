@@ -111,3 +111,12 @@ body .MuiPickersDay-current {
 legend.MuiFormLabel-root {
     font-size: small;
 }
+
+.deleteBtn {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.courierTgInuput {
+    min-width: 5em;
+}
