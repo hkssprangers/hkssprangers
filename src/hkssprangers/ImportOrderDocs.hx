@@ -795,8 +795,8 @@ class ImportOrderDocs {
         }]).noise();
     }
 
-    static final dateStart = "2020-09-01 00:00:00";
-    static final dateEnd = "2020-09-30 23:59:59";
+    static final dateStart = "2020-10-01 00:00:00";
+    static final dateEnd = "2020-10-31 23:59:59";
 
     static function filterDelivery(d:Delivery):Bool {
         return
