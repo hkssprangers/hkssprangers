@@ -216,32 +216,47 @@ class ImportOrderDocs {
             if (row.length == 0 || row[0] == null)
                 continue;
 
-            var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
-            var timeSlotStr = row.find(v -> timeSlotReg.match(v));
-            if (timeSlotStr == null) {
-                trace("Cannot find timeslot field in " + xlsxFile + " " + row);
-                continue;
-            }
+            var timeSlot = {
+                var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
+                var timeReg = ~/[0-9]{2}:[0-9]{2}/;
+                if (row.find(v -> timeSlotReg.match(v)) != null) {
+                    start: timeSlotReg.matched(1),
+                    end: timeSlotReg.matched(2),
+                } else if (row.find(v -> timeReg.match(v)) != null) {
+                    start: timeReg.matched(0),
+                    end: timeReg.matched(0),
+                } else {
+                    trace("Cannot find timeslot field in " + xlsxFile + " " + row);
+                    continue;
+                }
+            };
 
             var d:Delivery = {
                 creationTime: row[0],
                 deliveryCode: "團購",
-                couriers: [
-                    {
-                        tg: {
-                            username: "littlepine",
-                        },
-                        deliveryFee: null,
-                        deliverySubsidy: null,
-                    },
-                    {
-                        tg: {
-                            username: "mabpa",
-                        },
-                        deliveryFee: null,
-                        deliverySubsidy: null,
-                    }
-                ],
+                couriers: switch (date) {
+                    case "2020-09-25":
+                        [
+                            {
+                                tg: {
+                                    username: "littlepine",
+                                },
+                                deliveryFee: null,
+                                deliverySubsidy: null,
+                            },
+                            {
+                                tg: {
+                                    username: "mabpa",
+                                },
+                                deliveryFee: null,
+                                deliverySubsidy: null,
+                            }
+                        ];
+                    case "2020-10-17":
+                        null;
+                    case _:
+                        throw "unkown couriers for group delivery " + date;
+                },
                 customer: {
                     tg: null,
                     tel: null
@@ -250,8 +265,8 @@ class ImportOrderDocs {
                 paymentMethods: null,
                 pickupLocation: null,
                 pickupTimeSlot: {
-                    start: date + " " + timeSlotReg.matched(1) + ":00",
-                    end: date + " " + timeSlotReg.matched(2) + ":00"
+                    start: date + " " + timeSlot.start + ":00",
+                    end: date + " " + timeSlot.end + ":00"
                 },
                 pickupMethod: Street,
                 deliveryFee: 15,
@@ -262,10 +277,12 @@ class ImportOrderDocs {
             var orderDetails:Map<Shop, Array<String>> = [
                 EightyNine => [],
                 LaksaStore => [],
+                KCZenzero => [],
+                DragonJapaneseCuisine => [],
                 HanaSoftCream => [],
             ];
 
-            var wantTableware = null;
+            var wantTableware = false;
 
             for (i => h in rows[0]) {
                 switch [h, row[i]] {
@@ -307,15 +324,23 @@ class ImportOrderDocs {
                     case [h, v] if (h.startsWith("89美食")):
                         if (v != null)
                             orderDetails[EightyNine].push(h + ": " + v + "份");
+                    case [h, v] if (h.startsWith("蕃廚")):
+                        if (v != null)
+                            orderDetails[KCZenzero].push(h + ": " + v + "份");
+                    case [h, v] if (h.startsWith("營業部")):
+                        if (v != null)
+                            orderDetails[DragonJapaneseCuisine].push(h + ": " + v + "份");
                     case [h, v] if (h.startsWith("日本蕨餅")):
                         if (v != null)
                             orderDetails[HanaSoftCream].push(h + ": " + v + "份");
+                    case [h, v] if (h.contains("手工啤")):
+                        // pass
                     case [h, v]:
                         throw "unknown col " + h + " " + v;
                 }
             }
 
-            for (shop in [EightyNine, LaksaStore, HanaSoftCream]) {
+            for (shop in orderDetails.keys()) {
                 var orderDetails = orderDetails[shop].join("\n");
                 var orderPrice = parseTotalPrice(orderDetails);
                 if (orderDetails.length > 0) {
@@ -330,6 +355,31 @@ class ImportOrderDocs {
                         platformServiceCharge: ((orderPrice:Decimal) * 0.15).roundTo(4).toFloat(),
                     });
                 }
+            }
+
+            switch [date, d.pickupLocation] {
+                case ["2020-10-17", "荔枝角"]:
+                    d.couriers = [
+                        {
+                            tg: {
+                                username: "Arbuuuuuuu"
+                            },
+                            deliveryFee: null,
+                            deliverySubsidy: null
+                        }
+                    ];
+                case ["2020-10-17", "美孚"]:
+                    d.couriers = [
+                        {
+                            tg: {
+                                username: "andyonthewings"
+                            },
+                            deliveryFee: null,
+                            deliverySubsidy: null
+                        }
+                    ];
+                case _:
+                    //pass
             }
 
             var foodPrice = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();
@@ -637,8 +687,8 @@ class ImportOrderDocs {
             setCreationTime(d, menuResponses);
         }
 
-        var gpDeliveries = importGroupPurchasing("menu/埗兵團購外賣預訂單 (Responses).xlsx");
-        deliveries = deliveries.concat(gpDeliveries);
+        deliveries = deliveries.concat(importGroupPurchasing("menu/埗兵團購外賣預訂單 2020-09-25 (Responses).xlsx"));
+        deliveries = deliveries.concat(importGroupPurchasing("menu/埗兵團購外賣預訂單 2020-10-17 (Responses).xlsx"));
 
         for (d in deliveries) {
             try {
