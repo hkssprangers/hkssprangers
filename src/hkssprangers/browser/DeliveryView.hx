@@ -21,6 +21,7 @@ using hkssprangers.info.TimeSlotTools;
 typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Void;
+    @:optional final needEdit:Bool;
 }
 
 typedef DeliveryViewState = {
@@ -32,7 +33,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
     function new(props):Void {
         super(props);
         state = {
-            isEditing: false,
+            isEditing: props.needEdit,
             editingDelivery: props.delivery.deepClone(),
         }
     }

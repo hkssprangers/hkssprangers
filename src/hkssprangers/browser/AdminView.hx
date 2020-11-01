@@ -132,6 +132,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                                 },
                         });
                     }}
+                    needEdit=${d.deliveryCode == null}
                 />
             </div>
         ');
