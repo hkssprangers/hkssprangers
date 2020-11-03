@@ -2,7 +2,7 @@ version: '3'
 services:
   workspace:
     # build: .
-    image: hkssprangers/hkssprangers_devcontainer_workspace:20201019
+    image: hkssprangers/hkssprangers_devcontainer_workspace:20201103
     volumes:
       - ..:/workspace:cached
       - node_modules:/workspace/node_modules
