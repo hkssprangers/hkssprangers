@@ -22,7 +22,7 @@
     "nodemon": "^2.0.6",
     "react-router-dom": "^5.2.0",
     "react-telegram-login": "^1.1.2",
-    "serverless": "^2.9.0",
+    "serverless": "^2.10.0",
     "serverless-prune-plugin": "^1.4.3",
     "terser": "^5.3.8",
     "uglifyify": "^5.0.2",
