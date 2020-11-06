@@ -266,7 +266,7 @@ class Admin extends View {
                     case [_, "俾錢方法", v]:
                         delivery.paymentMethods = v.split(",").map(v -> PaymentMethod.fromName(v.trim()));
                     case [_, "交收方法", v]:
-                        delivery.pickupMethod = PickupMethod.fromName(v);
+                        delivery.pickupMethod = PickupMethod.fromName(v.split(" ")[0]);
                     case [_, "需要餐具嗎?", v]:
                         order.wantTableware = switch (v) {
                             case "要": true;
