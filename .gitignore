@@ -18,8 +18,8 @@ node_modules
 /menu
 /summary
 
-/dev/initdb/002_data_courier.sql
-/dev/initdb/003_data.sql
+/dev/initdb/003_data_courier.sql
+/dev/initdb/004_data.sql
 
 /orders.json
 /deliveries.json
