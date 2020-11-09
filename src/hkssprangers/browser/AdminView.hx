@@ -101,10 +101,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     location.assign("/login?" + new URLSearchParams({
                         redirectTo: location.pathname + location.search,
                     }));
-                    null;
+                    Promise.resolve([]);
                 } else if (!r.ok) {
-                    location.assign(r.url);
-                    null;
+                    r.text().then(text -> window.alert(text));
+                    Promise.resolve([]);
                 } else {
                     r.json();
                 }
