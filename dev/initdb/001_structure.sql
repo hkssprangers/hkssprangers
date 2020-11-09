@@ -38,6 +38,7 @@ CREATE TABLE `courier` (
   `courierTgId` int DEFAULT NULL,
   `paymeAvailable` tinyint(1) NOT NULL,
   `fpsAvailable` tinyint(1) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`courierId`),
   UNIQUE KEY `courier_UN_tgUsername` (`courierTgUsername`),
   UNIQUE KEY `courier_UN_tgId` (`courierTgId`)
@@ -54,9 +55,9 @@ DROP TABLE IF EXISTS `delivery`;
 CREATE TABLE `delivery` (
   `deliveryId` int NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
-  `deliveryCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `deliveryCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `pickupLocation` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `deliveryFee` decimal(12,4) NOT NULL,
+  `deliveryFee` decimal(12,4) DEFAULT NULL,
   `pickupTimeSlotStart` timestamp NOT NULL,
   `pickupTimeSlotEnd` timestamp NOT NULL,
   `pickupMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE `delivery` (
   `customerTel` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerPreferredContactMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -83,6 +85,7 @@ CREATE TABLE `deliveryCourier` (
   `courierId` int NOT NULL,
   `deliveryFee` decimal(12,4) NOT NULL,
   `deliverySubsidy` decimal(12,4) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`,`courierId`),
   KEY `deliveryCourier_FK_courier` (`courierId`),
   CONSTRAINT `deliveryCourier_FK_courier` FOREIGN KEY (`courierId`) REFERENCES `courier` (`courierId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -100,6 +103,7 @@ DROP TABLE IF EXISTS `deliveryOrder`;
 CREATE TABLE `deliveryOrder` (
   `deliveryId` int NOT NULL,
   `orderId` int NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`,`orderId`),
   KEY `deliveryOrder_FK_order` (`orderId`),
   CONSTRAINT `deliveryOrder_FK_delivery` FOREIGN KEY (`deliveryId`) REFERENCES `delivery` (`deliveryId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -116,17 +120,32 @@ DROP TABLE IF EXISTS `flyway_schema_history`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `flyway_schema_history` (
   `installed_rank` int NOT NULL,
-  `version` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8mb4_bin NOT NULL,
-  `type` varchar(20) COLLATE utf8mb4_bin NOT NULL,
-  `script` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
+  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `checksum` int DEFAULT NULL,
-  `installed_by` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `execution_time` int NOT NULL,
   `success` tinyint(1) NOT NULL,
   PRIMARY KEY (`installed_rank`),
   KEY `flyway_schema_history_s_idx` (`success`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `googleFormImport`
+--
+
+DROP TABLE IF EXISTS `googleFormImport`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `googleFormImport` (
+  `importTime` timestamp NOT NULL,
+  `spreadsheetId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `lastRow` int unsigned NOT NULL,
+  PRIMARY KEY (`importTime`,`spreadsheetId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,6 +166,7 @@ CREATE TABLE `order` (
   `platformServiceCharge` decimal(12,4) NOT NULL,
   `wantTableware` tinyint(1) NOT NULL,
   `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`orderId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -160,4 +180,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-07  8:28:50
+-- Dump completed on 2020-11-09  9:35:50

@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import haxe.Json;
 import js.html.URL;
 import js.html.Event;
 import moment.Moment;
@@ -118,20 +119,58 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     function renderDelivery(key:Dynamic, d:Delivery) {
+        function onChange(changed:Null<Delivery>):Promise<Bool> {
+            return if (changed != null) {
+                window.fetch("/admin", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: Json.stringify({
+                        action: d.deliveryId != null ? "update" : "insert",
+                        delivery: changed,
+                    }),
+                })
+                    .then(r -> {
+                        if (r.ok) {
+                            setState({
+                                deliveries: state.deliveries.map(_d -> _d == d ? changed : _d),
+                            });
+                            true;
+                        } else {
+                            r.text().then(text -> window.alert(text));
+                            false;
+                        }
+                    });
+            } else {
+                window.fetch("/admin", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: Json.stringify({
+                        action: "delete",
+                        delivery: d,
+                    }),
+                })
+                    .then(r -> {
+                        if (r.ok) {
+                            setState({
+                                deliveries: state.deliveries.filter(_d -> _d != d),
+                            });
+                            true;
+                        } else {
+                            r.text().then(text -> window.alert(text));
+                            false;
+                        }
+                    });
+            }
+        }
         return jsx('
             <div key=${key} className="mb-3">
                 <DeliveryView
                     delivery=${d}
-                    onChange=${(changed) -> {
-                        setState({
-                            deliveries:
-                                if (changed != null) {
-                                    state.deliveries.map(_d -> _d == d ? changed : _d);
-                                } else {
-                                    state.deliveries.filter(_d -> _d != d);
-                                },
-                        });
-                    }}
+                    onChange=${onChange}
                     needEdit=${d.deliveryCode == null}
                 />
             </div>

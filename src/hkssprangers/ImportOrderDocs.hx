@@ -422,11 +422,7 @@ class ImportOrderDocs {
                 }
                 if (d.deliveryFee == null)
                     d.deliveryFee = 25;
-                var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
-                for (c in d.couriers) {
-                    c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
-                    c.deliverySubsidy = ((platformServiceChargeTotal * 0.5) / d.couriers.length).roundTo(4).toFloat();
-                }
+                d.setCouriersIncome();
                 deliveries.push(d);
             }
             for (line in lines) {
@@ -714,85 +710,7 @@ class ImportOrderDocs {
         var deliveries:Array<Delivery> = Json.parse(File.getContent(deliveriesJsonFile));
         deliveries.sort((a,b) -> Reflect.compare(a.creationTime, b.creationTime));
 
-        return Promise.inSequence([for (d in deliveries) {
-            var orderId0 = MySql.db.order.insertMany([
-                for (o in d.orders)
-                {
-                    orderId: null,
-                    creationTime: Date.fromString(o.creationTime),
-                    orderCode: o.orderCode,
-                    shopId: o.shop,
-                    orderDetails: o.orderDetails,
-                    orderPrice: o.orderPrice,
-                    platformServiceCharge: o.platformServiceCharge,
-                    wantTableware: o.wantTableware,
-                    customerNote: o.customerNote,
-                }
-            ]);
-            var deliveryId = MySql.db.delivery.insertOne({
-                deliveryId: null,
-                deliveryCode: d.deliveryCode,
-                creationTime: Date.fromString(d.creationTime),
-                pickupLocation: d.pickupLocation,
-                deliveryFee: d.deliveryFee,
-                pickupTimeSlotStart: d.pickupTimeSlot.start.toDate(),
-                pickupTimeSlotEnd: d.pickupTimeSlot.end.toDate(),
-                pickupMethod: d.pickupMethod,
-                paymeAvailable: d.paymentMethods.has(PayMe),
-                fpsAvailable: d.paymentMethods.has(FPS),
-                customerPreferredContactMethod: d.customerPreferredContactMethod,
-                customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
-                customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
-                customerTel: d.customer.tel,
-                customerNote: d.customerNote,
-            });
-            var couriers = Promise.inSequence(d.couriers.map(c -> {
-                var tgUserName = c.tg.username;
-                MySql.db.courier
-                    .select({
-                        courierId: courier.courierId,
-                    })
-                    .where(courier.courierTgUsername == tgUserName)
-                    .first()
-                    .mapError(err -> {
-                        trace("Couldn't find courier with tg " + tgUserName + "\n" + err);
-                        err;
-                    })
-                    .next(r -> c.merge({
-                        courierId: r.courierId,
-                    }));
-            }));
-            
-            Promises.multi({
-                couriers: couriers,
-                deliveryId: deliveryId,
-                orderId0: orderId0,
-            }).next(r -> {
-                var insertDeliveryOrder = MySql.db.deliveryOrder.insertMany([
-                    for (orderId in r.orderId0...r.orderId0 + d.orders.length)
-                    {
-                        deliveryId: r.deliveryId,
-                        orderId: orderId,
-                    }
-                ]);
-                var insertDeliveryCouriers = MySql.db.deliveryCourier.insertMany([
-                    for (c in r.couriers)
-                    {
-                        deliveryId: r.deliveryId,
-                        courierId: c.courierId,
-                        deliveryFee: c.deliveryFee,
-                        deliverySubsidy: c.deliverySubsidy,
-                    }
-                ]);
-                Promise.inSequence([
-                    insertDeliveryOrder.noise(),
-                    insertDeliveryCouriers.noise(),
-                ]);
-            }).mapError(err -> {
-                trace("Failed to write\n" + d.print());
-                err;
-            });
-        }]).noise();
+        return MySql.db.insertDeliveries(deliveries);
     }
 
     static final dateStart = "2020-10-01 00:00:00";

@@ -5,4 +5,5 @@ typedef DeliveryCourier = {
     final courierId:Id<Courier>;
     final deliveryFee:Float;
     final deliverySubsidy:Float;
+    final deleted:Bool;
 }

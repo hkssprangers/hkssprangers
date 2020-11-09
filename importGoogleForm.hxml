@@ -1,0 +1,14 @@
+--library compiletime
+--library tink_core
+--library tink_core_ext
+--library tink_sql
+--library hxnodejs
+--library thx.core
+--class-path src
+--class-path test
+--class-path lib/hxnodelibs
+--class-path lib/dts2hx
+--main hkssprangers.ImportGoogleForm
+--js importGoogleForm.js
+-D no-deprecation-warnings
+# --cmd node importGoogleForm.js

@@ -110,10 +110,12 @@ class ServerMain {
         });
         app.use(allowCors);
         app.use(require("cookie-parser")());
+        app.use(require("body-parser").json());
 
         app.get("/", index);
         app.get("/login", LogIn.middleware);
-        app.get("/admin", Admin.ensureAdmin, Admin.middleware);
+        app.get("/admin", Admin.ensureAdmin, Admin.get);
+        app.post("/admin", Admin.ensureAdmin, Admin.post);
         app.use(tgBot.webhookCallback(tgBotWebHook));
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));

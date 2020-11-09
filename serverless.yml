@@ -43,6 +43,11 @@ functions:
           method: ANY
           path: '{proxy+}'
           cors: true
+  # importGoogleForm:
+  #   handler: importGoogleForm
+  #   events:
+  #     - schedule:
+  #         rate: rate(5 minutes)
 
 plugins:
   - serverless-prune-plugin

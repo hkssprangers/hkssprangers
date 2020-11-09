@@ -1,14 +1,20 @@
 package hkssprangers.db;
 
+import haxe.Json;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Tg;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
 import hkssprangers.info.ContactMethod;
 import tink.core.*;
+import tink.core.Error.ErrorCode;
 import tink.core.ext.Promises;
+import tink.sql.expr.Functions as F;
 using hkssprangers.ObjectTools;
+using hkssprangers.ValueTools;
+using hkssprangers.info.DeliveryTools;
 using DateTools;
+using Lambda;
 
 class Database extends tink.sql.Database {
     @:table("courier")
@@ -26,12 +32,15 @@ class Database extends tink.sql.Database {
     @:table("order")
     final order:Order;
 
+    @:table("googleFormImport")
+    final googleFormImport:GoogleFormImport;
+
     public function getDeliveries(pickupDate:Date):Promise<Array<hkssprangers.info.Delivery>> {
         var start = Date.fromString(pickupDate.format("%Y-%m-%d"));
         var end = Date.fromTime(start.getTime() + DateTools.days(1));
 
         return delivery
-            .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end)
+            .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end && !d.deleted)
             .all()
             .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, this))))
             .next(ds -> {
@@ -45,6 +54,320 @@ class Database extends tink.sql.Database {
                 );
                 ds;
             });
+    }
+
+    public function getCouriersOfDelivery(deliveryId:Int) {
+        return deliveryCourier
+            .where(r -> r.deliveryId == deliveryId && !r.deleted).all()
+            .next(dCouriers -> tink.core.Promise.inSequence(dCouriers.map(
+                dCourier -> courier
+                    .where(c -> c.courierId == dCourier.courierId).first()
+                    .next(courier -> CourierConverter.toCourier(courier, this).merge({
+                        deliveryFee: dCourier.deliveryFee,
+                        deliverySubsidy: dCourier.deliverySubsidy,
+                    }))
+            )));
+    }
+
+    public function getOrdersOfDelivery(deliveryId:Int) {
+        return deliveryOrder
+            .where(r -> r.deliveryId == deliveryId && !r.deleted)
+            .orderBy(r -> [{
+                field: r.orderId, order: Asc,
+            }])
+            .all()
+            .next(dOrders -> tink.core.Promise.inSequence(dOrders.map(
+                dOrder -> order.where(o -> o.orderId == dOrder.orderId).first()
+            )))
+            .next(orders -> orders.map(o -> OrderConverter.toOrder(o, this)));
+    }
+
+    public function saveOrder(o:hkssprangers.info.Order) {
+        return order.update(f -> [
+            f.orderCode.set(o.orderCode),
+            f.shopId.set(o.shop),
+            f.orderDetails.set(o.orderDetails),
+            f.orderPrice.set(o.orderPrice),
+            f.platformServiceCharge.set(o.platformServiceCharge),
+            f.wantTableware.set(o.wantTableware),
+            f.customerNote.set(o.customerNote),
+        ], {
+            where: f -> f.orderId == o.orderId,
+            max: 1,
+        }).noise();
+    }
+
+    public function deleteOrder(o:hkssprangers.info.Order) {
+        return order.update(f -> [
+            f.deleted.set(true),
+        ], {
+            where: f -> f.orderId == o.orderId,
+            max: 1
+        }).noise();
+    }
+
+    public function saveDelivery(d:hkssprangers.info.Delivery) {
+        var dUpdate = delivery.update(f -> [
+            f.deliveryCode.set(d.deliveryCode),
+            f.pickupLocation.set(d.pickupLocation),
+            f.deliveryFee.set(d.deliveryFee),
+            f.pickupTimeSlotStart.set(d.pickupTimeSlot.start.toDate()),
+            f.pickupTimeSlotEnd.set(d.pickupTimeSlot.end.toDate()),
+            f.pickupMethod.set(d.pickupMethod),
+            f.paymeAvailable.set(d.paymentMethods.has(PayMe)),
+            f.fpsAvailable.set(d.paymentMethods.has(FPS)),
+            f.customerTgUsername.set(d.customer.tg != null ? d.customer.tg.username : null),
+            f.customerTgId.set(d.customer.tg != null ? d.customer.tg.id : null),
+            f.customerTel.set(d.customer.tel),
+            f.customerPreferredContactMethod.set(d.customerPreferredContactMethod),
+            f.customerNote.set(d.customerNote),
+        ], {
+            where: f -> f.deliveryId == d.deliveryId,
+            max: 1,
+        });
+
+        var newCouriers = Promise.inSequence(
+            d.couriers.map(c ->
+                courier
+                    .where(f -> f.courierTgUsername == c.tg.username)
+                    .first()
+                    .mapError(err -> {
+                        if (err.code == NotFound)
+                            new Error(ErrorCode.NotFound, 'Could not find courier with TG ${c.tg.username}');
+                        else
+                            err;
+                    })
+                    .next(courier -> CourierConverter.toCourier(courier, this).merge({
+                        deliveryFee: c.deliveryFee,
+                        deliverySubsidy: c.deliverySubsidy,
+                    }))
+            )
+        );
+
+        var cUpdate = Promises.multi({
+            newCouriers: newCouriers,
+            currentCouriers: getCouriersOfDelivery(d.deliveryId),
+        })
+            .next(r ->
+                Promise.inSequence(r.currentCouriers.map(cur -> {
+                    switch (r.newCouriers.find(c -> c.courierId == cur.courierId)) {
+                        case null: // removed
+                            deliveryCourier.update(f -> [
+                                f.deleted.set(true),
+                            ], {
+                                where: f -> f.deliveryId == d.deliveryId && f.courierId == cur.courierId,
+                                max: 1,
+                            }).noise();
+                        case newCourier: // maybe updated
+                            deliveryCourier.update(f -> [
+                                f.deliveryFee.set(newCourier.deliveryFee),
+                                f.deliverySubsidy.set(newCourier.deliverySubsidy),
+                            ], {
+                                where: f -> f.deliveryId == d.deliveryId && f.courierId == cur.courierId,
+                                max: 1,
+                            }).noise();
+                    }
+                })).next(_ -> {
+                    var added = r.newCouriers
+                        .filter(c -> !r.currentCouriers.exists(cur -> cur.courierId == c.courierId));
+                    deliveryCourier.insertMany([
+                        for (c in added)
+                        {
+                            deliveryId: d.deliveryId,
+                            courierId: c.courierId,
+                            deliveryFee: c.deliveryFee,
+                            deliverySubsidy: c.deliverySubsidy,
+                            deleted: false,
+                        }
+                    ]).noise();
+                })
+            );
+
+        var oUpdate = getOrdersOfDelivery(d.deliveryId)
+            .next(currentOrders -> {
+                var updateExisting = Promise.inSequence(
+                    d.orders
+                        .filter(o -> currentOrders.exists(cur -> cur.orderId == o.orderId))
+                        .map(saveOrder)
+                );
+                var addNew = insertOrders(d.orders.filter(o -> o.orderId == null))
+                    .next(oids -> {
+                        deliveryOrder.insertMany([
+                            for (oid in oids)
+                            {
+                                deliveryId: d.deliveryId,
+                                orderId: oid,
+                                deleted: false,
+                            }
+                        ]);
+                    })
+                    .mapError(err -> {
+                        trace('Failed to insert deliveryOrder\n' + err);
+                        err;
+                    });
+                var remove = Promise.inSequence(
+                    currentOrders
+                        .filter(cur -> !d.orders.exists(o -> o.orderId == cur.orderId))
+                        .map(o ->
+                            deliveryOrder.update(f -> [
+                                f.deleted.set(true),
+                            ], {
+                                where: f -> f.deliveryId == d.deliveryId && f.orderId == o.orderId,
+                                max: 1,
+                            }).next(_ -> deleteOrder(o))
+                        )
+                );
+                Promises.multi({
+                    updateExisting: updateExisting,
+                    addNew: addNew,
+                    remove: remove,
+                });
+            });
+
+        return Promises.multi({
+            oUpdate: oUpdate,
+            dUpdate: dUpdate,
+            cUpdate: cUpdate,
+        }).noise();
+    }
+
+    public function deleteDelivery(d:hkssprangers.info.Delivery) {
+        var dcDelete = getCouriersOfDelivery(d.deliveryId)
+            .next(couriers ->
+                Promise.inSequence(couriers.map(c ->
+                    deliveryCourier.update(f -> [
+                        f.deleted.set(true),
+                    ], {
+                        where: f -> f.deliveryId == d.deliveryId && f.courierId == c.courierId,
+                        max: 1,
+                    })
+                ))
+            );
+        return Promises.multi({
+            oDelete: Promise.inSequence(d.orders.map(deleteOrder)),
+            doDelete: Promise.inSequence(d.orders.map(o -> deliveryOrder.update(f -> [
+                f.deleted.set(true),
+            ], {
+                where: f -> f.deliveryId == d.deliveryId && f.orderId == o.orderId,
+                max: 1,
+            }))),
+            dcDelete: dcDelete,
+        }).next(_ -> delivery.update(f -> [
+            f.deleted.set(true),
+        ], {
+            where: f -> f.deliveryId == d.deliveryId,
+            max: 1,
+        })).noise();
+    }
+
+    public function insertOrders(orders:Array<hkssprangers.info.Order>):Promise<Array<Id<Order>>> {
+        return order.insertMany([
+            for (o in orders)
+            {
+                orderId: null,
+                creationTime: Date.fromString(o.creationTime),
+                orderCode: o.orderCode,
+                shopId: (o.shop:String),
+                orderDetails: o.orderDetails,
+                orderPrice: o.orderPrice,
+                platformServiceCharge: o.platformServiceCharge,
+                wantTableware: o.wantTableware,
+                customerNote: o.customerNote,
+                deleted: false,
+            }
+        ]).next(id0 -> {
+            var ids = [for (id in id0...(id0 + orders.length)) (id:Id<Order>)];
+            ids;
+        });
+    }
+
+    public function insertDeliveries(deliveries:Array<hkssprangers.info.Delivery>):Promise<Array<Id<Delivery>>> {
+        return Promise.inSequence(deliveries.map(d -> {
+            var orderIds = insertOrders(d.orders).mapError(err -> {
+                trace("Failed to write orders:\n" + err);
+                err;
+            });
+            var deliveryId = delivery.insertOne({
+                deliveryId: null,
+                deliveryCode: d.deliveryCode,
+                creationTime: Date.fromString(d.creationTime),
+                pickupLocation: d.pickupLocation,
+                deliveryFee: Math.isNaN(d.deliveryFee) ? null : d.deliveryFee,
+                pickupTimeSlotStart: d.pickupTimeSlot.start.toDate(),
+                pickupTimeSlotEnd: d.pickupTimeSlot.end.toDate(),
+                pickupMethod: d.pickupMethod,
+                paymeAvailable: d.paymentMethods.has(PayMe),
+                fpsAvailable: d.paymentMethods.has(FPS),
+                customerPreferredContactMethod: d.customerPreferredContactMethod,
+                customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
+                customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
+                customerTel: d.customer.tel,
+                customerNote: d.customerNote,
+                deleted: false,
+            }).mapError(err -> {
+                trace("Failed to write delivery\n" + err);
+                err;
+            });
+            var couriers = Promise.inSequence(d.couriers == null ? [] : d.couriers.map(c -> {
+                var tgUserName = c.tg.username;
+                courier
+                    .select({
+                        courierId: courier.courierId,
+                    })
+                    .where(courier.courierTgUsername == tgUserName)
+                    .first()
+                    .mapError(err -> {
+                        trace("Couldn't find courier with tg " + tgUserName + "\n" + err);
+                        err;
+                    })
+                    .next(r -> c.merge({
+                        courierId: r.courierId,
+                    }));
+            })).mapError(err -> {
+                trace("Failed to find couriers in db\n" + err);
+                err;
+            });
+
+            Promises.multi({
+                couriers: couriers,
+                deliveryId: deliveryId,
+                orderIds: orderIds,
+            })
+                .next(r -> {
+                    var insertDeliveryOrder = deliveryOrder.insertMany([
+                        for (orderId in r.orderIds)
+                        {
+                            deliveryId: r.deliveryId,
+                            orderId: orderId,
+                            deleted: false,
+                        }
+                    ]).mapError(err -> {
+                        trace("Failed to write deliveryOrder\n" + err);
+                        err;
+                    });
+                    var insertDeliveryCouriers = deliveryCourier.insertMany([
+                        for (c in r.couriers)
+                        {
+                            deliveryId: r.deliveryId,
+                            courierId: c.courierId,
+                            deliveryFee: c.deliveryFee,
+                            deliverySubsidy: c.deliverySubsidy,
+                            deleted: false,
+                        }
+                    ]).mapError(err -> {
+                        trace("Failed to write deliveryCourier\n" + err);
+                        err;
+                    });
+                    Promise.inSequence([
+                        insertDeliveryOrder.noise(),
+                        insertDeliveryCouriers.noise(),
+                    ]).next(_ -> deliveryId);
+                })
+                .mapError(err -> {
+                    trace("Failed to write\n" + err + "\n" + d.print());
+                    err;
+                });
+        }));
     }
 }
 
@@ -115,26 +438,8 @@ class DeliveryConverter {
         };
 
         return Promises.multi({
-            couriers: db.deliveryCourier
-                .where(r -> r.deliveryId == d.deliveryId).all()
-                .next(dCouriers -> tink.core.Promise.inSequence(dCouriers.map(
-                    dCourier -> db.courier
-                        .where(c -> c.courierId == dCourier.courierId).first()
-                        .next(courier -> CourierConverter.toCourier(courier, db).merge({
-                            deliveryFee: dCourier.deliveryFee,
-                            deliverySubsidy: dCourier.deliverySubsidy,
-                        }))
-                ))),
-            orders: db.deliveryOrder
-                .where(r -> r.deliveryId == d.deliveryId)
-                .orderBy(r -> [{
-                    field: r.orderId, order: Asc,
-                }])
-                .all()
-                .next(dOrders -> tink.core.Promise.inSequence(dOrders.map(
-                    dOrder -> db.order.where(o -> o.orderId == dOrder.orderId).first()
-                )))
-                .next(orders -> orders.map(o -> OrderConverter.toOrder(o, db))),
+            couriers: db.getCouriersOfDelivery(d.deliveryId),
+            orders: db.getOrdersOfDelivery(d.deliveryId),
         }).next(p -> _d.with(p));
     }
 }

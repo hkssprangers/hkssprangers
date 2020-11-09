@@ -9,6 +9,8 @@
 --library tink_core
 --library tink_core_ext
 --library tink_sql
+--library thx.core
 --library CommentString
 -D react_skip_extend_component_restriction
+-D no-deprecation-warnings
 --dce full

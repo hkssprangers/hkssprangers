@@ -1,5 +1,6 @@
 package hkssprangers.info;
 
+import thx.Decimal;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
@@ -53,5 +54,13 @@ class DeliveryTools {
             paymentMethods: delivery.paymentMethods.copy(),
             pickupTimeSlot: delivery.pickupTimeSlot.copy(),
         });
+    }
+
+    static public function setCouriersIncome(d:Delivery):Void {
+        var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
+        for (c in d.couriers) {
+            c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
+            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5) / d.couriers.length).roundTo(4).toFloat();
+        }
     }
 }

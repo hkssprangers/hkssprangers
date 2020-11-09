@@ -10,4 +10,5 @@ typedef Order = {
     final platformServiceCharge:Float;
     final wantTableware:Bool;
     final customerNote:Null<VarChar<2048>>;
+    final deleted:Bool;
 }

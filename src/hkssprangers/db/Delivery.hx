@@ -16,4 +16,5 @@ typedef Delivery = {
     final customerTel:Null<VarChar<64>>;
     final customerPreferredContactMethod:VarChar<64>;
     final customerNote:Null<VarChar<2048>>;
+    final deleted:Bool;
 }

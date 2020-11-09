@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import js.lib.Promise;
 import moment.Moment;
 import js.html.Event;
 import js.npm.material_ui.Pickers;
@@ -8,6 +9,7 @@ import hkssprangers.info.*;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
+import thx.Decimal;
 using Lambda;
 using DateTools;
 using StringTools;
@@ -20,12 +22,14 @@ using hkssprangers.info.TimeSlotTools;
 
 typedef DeliveryViewProps = {
     final delivery:Delivery;
-    final onChange:Null<Delivery>->Void;
+    final onChange:Null<Delivery>->Promise<Bool>;
     @:optional final needEdit:Bool;
 }
 
 typedef DeliveryViewState = {
     final isEditing:Bool;
+    final isSaving:Bool;
+    final isDeleting:Bool;
     final editingDelivery:Delivery;
 }
 
@@ -34,6 +38,8 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         super(props);
         state = {
             isEditing: props.needEdit,
+            isSaving: false,
+            isDeleting: false,
             editingDelivery: props.delivery.deepClone(),
         }
     }
@@ -75,9 +81,19 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 }));
             }
             function orderPriceOnChange(evt:Event) {
-                updateOrder(o, o.with({
-                    orderPrice: Std.parseFloat((cast evt.target).value),
-                }));
+                switch ((cast evt.target).value) {
+                    case "":
+                        updateOrder(o, o.with({
+                            orderPrice: Math.NaN,
+                            platformServiceCharge: Math.NaN,
+                        }));
+                    case str:
+                        var newPrice = Std.parseFloat(str);
+                        updateOrder(o, o.with({
+                            orderPrice: newPrice,
+                            platformServiceCharge: ((newPrice:Decimal) * 0.15).toFloat(),
+                        }));
+                }
             }
             function shopOnChange(evt:Event) {
                 updateOrder(o, o.with({
@@ -177,10 +193,20 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
     }
 
     function onSave() {
-        props.onChange(state.editingDelivery.deepClone());
         setState({
-            isEditing: false,
+            isSaving: true,
         });
+        props.onChange(state.editingDelivery.deepClone())
+            .then(ok -> {
+                setState({
+                    isSaving: false,
+                });
+                if (ok) {
+                    setState({
+                        isEditing: false,
+                    });
+                }
+            });
     }
 
     function onCancel() {
@@ -191,10 +217,15 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
     }
 
     function onDelete() {
-        props.onChange(null);
         setState({
-            isEditing: false,
+            isDeleting: true,
         });
+        props.onChange(null)
+            .then(ok -> {
+                setState({
+                    isDeleting: false,
+                });
+            });
     }
 
     function onEdit() {
@@ -560,6 +591,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         color=${Primary}
                         size=${Small}
                         onClick=${evt -> onSave()}
+                        disabled=${state.isSaving}
                     >
                         Save
                     </Button>
@@ -574,6 +606,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         size=${Small}
                         color=${Secondary}
                         onClick=${evt -> onDelete()}
+                        disabled=${state.isDeleting}
                     >
                         Delete
                     </Button>
@@ -605,16 +638,19 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 });
             }
             function addCourier() {
+                var newCouriers = state.editingDelivery.couriers.ifNull([]).concat([{
+                    tg: {
+                        username: "",
+                    },
+                    deliveryFee: null,
+                    deliverySubsidy: null,
+                }]);
+                var newDelivery = state.editingDelivery.with({
+                    couriers: newCouriers,
+                });
+                newDelivery.setCouriersIncome();
                 setState({
-                    editingDelivery: state.editingDelivery.with({
-                        couriers: state.editingDelivery.couriers.ifNull([]).concat([{
-                            tg: {
-                                username: "",
-                            },
-                            deliveryFee: null,
-                            deliverySubsidy: null,
-                        }]),
-                    }),
+                    editingDelivery: newDelivery,
                 });
             }
             var couriers = d.couriers == null ? [] : d.couriers.mapi((i, c) -> {
@@ -630,10 +666,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     });
                 }
                 function onDelete(evt) {
+                    var newDelivery = state.editingDelivery.with({
+                        couriers: state.editingDelivery.couriers.filter(_c -> _c != c),
+                    });
+                    newDelivery.setCouriersIncome();
                     setState({
-                        editingDelivery: state.editingDelivery.with({
-                            couriers: state.editingDelivery.couriers.filter(_c -> _c != c),
-                        }),
+                        editingDelivery: newDelivery,
                     });
                 }
                 jsx('
