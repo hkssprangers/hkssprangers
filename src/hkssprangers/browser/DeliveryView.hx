@@ -45,10 +45,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
     }
 
     function updateOrder(old:Order, updated:Order) {
+        var newDelivery = state.editingDelivery.deepClone().with({
+            orders: state.editingDelivery.orders.map(o -> o != old ? o : updated),
+        });
+        newDelivery.setCouriersIncome();
         setState({
-            editingDelivery: state.editingDelivery.with({
-                orders: state.editingDelivery.orders.map(o -> o != old ? o : updated),
-            }),
+            editingDelivery: newDelivery,
         });
     }
 
@@ -101,10 +103,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 }));
             }
             function onDelete(evt:Event) {
+                var newDelivery = state.editingDelivery.deepClone().with({
+                    orders: state.editingDelivery.orders.filter(_o -> _o != o),
+                });
+                newDelivery.setCouriersIncome();
                 setState({
-                    editingDelivery: state.editingDelivery.with({
-                        orders: state.editingDelivery.orders.filter(_o -> _o != o),
-                    }),
+                    editingDelivery: newDelivery,
                 });
             }
             var shops = Shop.all.map(shop -> {
@@ -564,18 +568,19 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         }
 
         function addOrder() {
+            var newDelivery = state.editingDelivery.deepClone();
+            newDelivery.orders.push({
+                creationTime: Date.now(),
+                shop: null,
+                wantTableware: null,
+                customerNote: null,
+                orderDetails: null,
+                orderPrice: null,
+                platformServiceCharge: null,
+            });
+            newDelivery.setCouriersIncome();
             setState({
-                editingDelivery: state.editingDelivery.with({
-                    orders: state.editingDelivery.orders.concat([{
-                        creationTime: Date.now(),
-                        shop: null,
-                        wantTableware: null,
-                        customerNote: null,
-                        orderDetails: null,
-                        orderPrice: null,
-                        platformServiceCharge: null,
-                    }]),
-                }),
+                editingDelivery: newDelivery,
             });
         }
 
