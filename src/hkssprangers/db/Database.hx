@@ -152,9 +152,7 @@ class Database extends tink.sql.Database {
                 Promise.inSequence(r.currentCouriers.map(cur -> {
                     switch (r.newCouriers.find(c -> c.courierId == cur.courierId)) {
                         case null: // removed
-                            deliveryCourier.update(f -> [
-                                f.deleted.set(true),
-                            ], {
+                            deliveryCourier.delete({
                                 where: f -> f.deliveryId == d.deliveryId && f.courierId == cur.courierId,
                                 max: 1,
                             }).noise();
@@ -209,9 +207,7 @@ class Database extends tink.sql.Database {
                     currentOrders
                         .filter(cur -> !d.orders.exists(o -> o.orderId == cur.orderId))
                         .map(o ->
-                            deliveryOrder.update(f -> [
-                                f.deleted.set(true),
-                            ], {
+                            deliveryOrder.delete({
                                 where: f -> f.deliveryId == d.deliveryId && f.orderId == o.orderId,
                                 max: 1,
                             }).next(_ -> deleteOrder(o))
