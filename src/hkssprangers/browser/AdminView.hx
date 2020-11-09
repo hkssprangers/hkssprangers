@@ -31,12 +31,17 @@ typedef AdminViewProps = react.router.Route.RouteRenderProps & {
 
 typedef AdminViewState = {
     final isLoading:Bool;
-    final deliveries:Array<Delivery>;
+    final deliveries:Array<{
+        var d:Delivery;
+        var key:Float;
+    }>;
 }
 
 @:wrap(react.router.ReactRouter.withRouter)
 class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     static final hr = "\n--------------------------------------------------------------------------------\n";
+
+    function random() return Math.random();
 
     function getSelectedDate(?search:String) return switch (new URLSearchParams(search != null ? search : props.location.search).get("date")) {
         case null: Date.now();
@@ -108,7 +113,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 var deliveries:Array<Delivery> = json;
                 setState({
                     isLoading: false,
-                    deliveries: deliveries,
+                    deliveries: deliveries.map(d -> {
+                        d: d,
+                        key: random(),
+                    }),
                 });
             });
     }
@@ -135,7 +143,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         if (r.ok) {
                             r.json().then(delivery -> {
                                 setState({
-                                    deliveries: state.deliveries.map(_d -> _d == d ? delivery : _d),
+                                    deliveries: state.deliveries.map(_d -> _d.d == d ? { d: delivery, key: random() } : _d),
                                 });
                                 delivery;
                             });
@@ -158,7 +166,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     .then(r -> {
                         if (r.ok) {
                             setState({
-                                deliveries: state.deliveries.filter(_d -> _d != d),
+                                deliveries: state.deliveries.filter(_d -> _d.d != d),
                             });
                             d;
                         } else {
@@ -186,48 +194,51 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             null;
         var selectedTimeSlotType = getSelectedTimeSlotType();
         var filteredDeliveries = state.deliveries.filter(d -> {
-            if (d.pickupTimeSlot != null && d.pickupTimeSlot.start != null)
-                TimeSlotType.classify(d.pickupTimeSlot.start) == selectedTimeSlotType;
+            if (d.d.pickupTimeSlot != null && d.d.pickupTimeSlot.start != null)
+                TimeSlotType.classify(d.d.pickupTimeSlot.start) == selectedTimeSlotType;
             else
                 true;
         });
         var content = if (state.isLoading) {
             [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
-            filteredDeliveries.mapi(renderDelivery);
+            filteredDeliveries.map(d -> renderDelivery(d.key, d.d));
         }
 
         function addDelivery() {
             var now = Date.now();
             setState({
                 deliveries: state.deliveries.concat([{
-                    creationTime: now,
-                    deliveryCode: null,
-                    couriers: [],
-                    customer: {
-                        tg: null,
-                        tel: null
-                    },
-                    customerPreferredContactMethod: null,
-                    paymentMethods: [],
-                    pickupLocation: null,
-                    pickupTimeSlot: {
-                        start: null,
-                        end: null
-                    },
-                    pickupMethod: null,
-                    deliveryFee: null,
-                    customerNote: null,
-                    orders: [{
+                    d: {
                         creationTime: now,
-                        orderCode: null,
-                        shop: null,
-                        wantTableware: null,
+                        deliveryCode: null,
+                        couriers: [],
+                        customer: {
+                            tg: null,
+                            tel: null
+                        },
+                        customerPreferredContactMethod: null,
+                        paymentMethods: [],
+                        pickupLocation: null,
+                        pickupTimeSlot: {
+                            start: null,
+                            end: null
+                        },
+                        pickupMethod: null,
+                        deliveryFee: null,
                         customerNote: null,
-                        orderDetails: null,
-                        orderPrice: null,
-                        platformServiceCharge: null,
-                    }],
+                        orders: [{
+                            creationTime: now,
+                            orderCode: null,
+                            shop: null,
+                            wantTableware: null,
+                            customerNote: null,
+                            orderDetails: null,
+                            orderPrice: null,
+                            platformServiceCharge: null,
+                        }],
+                    },
+                    key: random(),
                 }]),
             });
         }
@@ -250,7 +261,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
 
         var timeSlotTypeRadios = [Lunch, Dinner].map(t -> {
             var count = if (!state.isLoading)
-                Std.string(state.deliveries.filter(d -> d.pickupTimeSlot == null || d.pickupTimeSlot.start == null || TimeSlotType.classify(d.pickupTimeSlot.start) == t).length);
+                Std.string(state.deliveries.filter(d -> d.d.pickupTimeSlot == null || d.d.pickupTimeSlot.start == null || TimeSlotType.classify(d.d.pickupTimeSlot.start) == t).length);
             else
                 "?";
             var badgeColor = switch (count) {
@@ -312,7 +323,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         <Grid item>
                             <CopyButton
                                 title=${selectedDate.format("%Y-%m-%d")}
-                                text=${filteredDeliveries.map(DeliveryTools.print).join(hr)}
+                                text=${filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr)}
                             />
                         </Grid>
                     </Grid>
