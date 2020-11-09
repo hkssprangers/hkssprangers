@@ -119,7 +119,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     function renderDelivery(key:Dynamic, d:Delivery) {
-        function onChange(changed:Null<Delivery>):Promise<Bool> {
+        function onChange(changed:Null<Delivery>):Promise<Delivery> {
             return if (changed != null) {
                 window.fetch("/admin", {
                     method: "post",
@@ -133,13 +133,15 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 })
                     .then(r -> {
                         if (r.ok) {
-                            setState({
-                                deliveries: state.deliveries.map(_d -> _d == d ? changed : _d),
+                            r.json().then(delivery -> {
+                                setState({
+                                    deliveries: state.deliveries.map(_d -> _d == d ? delivery : _d),
+                                });
+                                delivery;
                             });
-                            true;
                         } else {
                             r.text().then(text -> window.alert(text));
-                            false;
+                            null;
                         }
                     });
             } else {
@@ -158,10 +160,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             setState({
                                 deliveries: state.deliveries.filter(_d -> _d != d),
                             });
-                            true;
+                            d;
                         } else {
                             r.text().then(text -> window.alert(text));
-                            false;
+                            null;
                         }
                     });
             }

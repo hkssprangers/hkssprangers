@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import tink.core.Noise;
 import haxe.ds.ReadOnlyArray;
 import js.npm.google_spreadsheet.GoogleSpreadsheet;
 import haxe.crypto.Sha256;
@@ -22,6 +23,7 @@ using hkssprangers.server.ExpressTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
+using hkssprangers.db.Database;
 
 typedef User = {
     tg: {
@@ -203,22 +205,36 @@ class Admin extends View {
                 // pass
             case ["insert", delivery]:
                 MySql.db.insertDeliveries([delivery])
-                    .handle(o -> switch o {
-                        case Success(data):
-                            res.end("ok");
-                        case Failure(failure):
-                            res.type("text");
-                            res.status(500).end(Std.string(failure));
+                    .next(dids -> MySql.db.delivery
+                        .where(f -> f.deliveryId == dids[0])
+                        .first()
+                        .next(d -> d.toDelivery(MySql.db))
+                        .next(d -> {
+                            res.json(d);
+                            Noise;
+                        })
+                    )
+                    .recover(err -> {
+                        res.type("text");
+                        res.status(500).end(Std.string(err));
+                        Noise;
                     });
                 return;
             case ["update", delivery]:
                 MySql.db.saveDelivery(delivery)
-                    .handle(o -> switch o {
-                        case Success(data):
-                            res.end("ok");
-                        case Failure(failure):
-                            res.type("text");
-                            res.status(500).end(Std.string(failure));
+                    .next(_ -> MySql.db.delivery
+                        .where(f -> f.deliveryId == delivery.deliveryId)
+                        .first()
+                        .next(d -> d.toDelivery(MySql.db))
+                        .next(d -> {
+                            res.json(d);
+                            Noise;
+                        })
+                    )
+                    .recover(err -> {
+                        res.type("text");
+                        res.status(500).end(Std.string(err));
+                        Noise;
                     });
                 return;
             case ["delete", delivery]:
