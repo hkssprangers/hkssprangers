@@ -222,7 +222,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             isDeleting: true,
         });
         props.onChange(null)
-            .then(ok -> {
+            .then(delivery -> {
                 setState({
                     isDeleting: false,
                 });
@@ -233,6 +233,14 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         setState({
             isEditing: true,
         });
+    }
+
+    override function componentDidUpdate(prevProps:DeliveryViewProps, prevState:DeliveryViewState) {
+        if (prevProps.delivery != props.delivery) {
+            setState({
+                editingDelivery: props.delivery.deepClone(),
+            });
+        }
     }
 
     override function render() {
@@ -469,10 +477,11 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             function deliveryFeeOnChange(evt:Event) {
                 var v:String = (cast evt.target).value;
                 var deliveryFee = Std.parseFloat(v);
+                var newDelivery = state.editingDelivery.deepClone();
+                newDelivery.deliveryFee = deliveryFee;
+                newDelivery.setCouriersIncome();
                 setState({
-                    editingDelivery: state.editingDelivery.with({
-                        deliveryFee: deliveryFee,
-                    }),
+                    editingDelivery: newDelivery,
                 });
             }
             var pickupMethods = [Door, HangOutside, Street].map(m -> {

@@ -57,6 +57,8 @@ class DeliveryTools {
     }
 
     static public function setCouriersIncome(d:Delivery):Void {
+        if (d.couriers == null)
+            return;
         var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
         for (c in d.couriers) {
             c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();

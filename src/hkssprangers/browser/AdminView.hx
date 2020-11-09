@@ -203,7 +203,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 deliveries: state.deliveries.concat([{
                     creationTime: now,
                     deliveryCode: null,
-                    couriers: null,
+                    couriers: [],
                     customer: {
                         tg: null,
                         tel: null

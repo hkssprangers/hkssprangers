@@ -52,7 +52,7 @@ class GoogleForms {
         var delivery:Delivery = {
             creationTime: null,
             deliveryCode: null,
-            couriers: null,
+            couriers: [],
             customer: {
                 tg: null,
                 tel: null,
