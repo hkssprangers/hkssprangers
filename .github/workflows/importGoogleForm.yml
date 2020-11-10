@@ -1,0 +1,27 @@
+name: importGoogleForm
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # At every 5th minute
+
+env:
+  TZ: Asia/Hong_Kong
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: hkssprangers/hkssprangers_devcontainer_workspace:20201103
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Run postCreateCommand
+        run: bash ./.devcontainer/postCreateCommand.sh
+      - name: Compile and run
+        run: haxe importGoogleForm.hxml && node importGoogleForm.js import
+        env:
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
+          FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}

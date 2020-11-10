@@ -27,17 +27,17 @@ class ImportGoogleForm {
             .all();
     }
 
-    // assuming 2020-11-08 has been imported
+    // assuming 2020-11-10 has been imported
     static final manualLastImportRow = [
         EightyNine => 41,
-        YearsHK => 46,
-        BiuKeeLokYuen => 30,
-        DragonJapaneseCuisine => 30,
+        YearsHK => 48,
+        BiuKeeLokYuen => 31,
+        DragonJapaneseCuisine => 31,
         Neighbor => 40,
-        LaksaStore => 54,
-        DongDong => 50,
+        LaksaStore => 55,
+        DongDong => 51,
         MGY => 12,
-        KCZenzero => 83,
+        KCZenzero => 84,
     ];
 
     static function insertManualLastImportRows() {
