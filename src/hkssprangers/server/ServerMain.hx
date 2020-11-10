@@ -35,11 +35,7 @@ class ServerMain {
     }
 
     static function index(req:Request, res:Response) {
-        tgBot.telegram.getMe()
-            .then(me -> res.sendView(Index, {
-                tgBotName: me.username,
-            }))
-            .catchError(err -> res.status(500).json(err));
+        res.redirect("https://www.facebook.com/hkssprangers");
     }
 
     static function main() {
