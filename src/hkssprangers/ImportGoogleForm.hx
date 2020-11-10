@@ -24,10 +24,11 @@ class ImportGoogleForm {
             .all();
     }
 
+    // assuming 2020-11-08 has been imported
     static final manualLastImportRow = [
         EightyNine => 41,
         YearsHK => 46,
-        BiuKeeLokYuen => 31,
+        BiuKeeLokYuen => 30,
         DragonJapaneseCuisine => 30,
         Neighbor => 40,
         LaksaStore => 54,
@@ -76,6 +77,7 @@ class ImportGoogleForm {
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
                                 if (deliveries.length > 0)
                                     MySql.db.insertDeliveries(deliveries)
+                                        .noise()
                                         .recover(err -> {
                                             trace('Could not insert deliveries of ${shop.info().name}. Deliveries:\n' + Json.stringify(deliveries));
                                             failed = true;
@@ -95,13 +97,13 @@ class ImportGoogleForm {
     }
 
     static function main():Void {
-        // insertManualLastImportRows().handle(_ -> Sys.exit(0));
-        importGoogleForms().handle(o -> switch o {
-            case Success(succeeded):
-                Sys.exit(succeeded ? 0 : 1);
-            case Failure(failure):
-                trace(failure);
-                Sys.exit(1);
-        });
+        insertManualLastImportRows().handle(_ -> Sys.exit(0));
+        // importGoogleForms().handle(o -> switch o {
+        //     case Success(succeeded):
+        //         Sys.exit(succeeded ? 0 : 1);
+        //     case Failure(failure):
+        //         trace(failure);
+        //         Sys.exit(1);
+        // });
     }
 }
