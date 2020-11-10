@@ -265,21 +265,22 @@ class Admin extends View {
                         // pass
                     case "json":
                         var date = Date.fromString(dateStr);
-                        MySql.db.getDeliveries(date)
-                            .handle(o -> switch (o) {
-                                case Success([]):
-                                    GoogleForms.getAllDeliveries(date)
-                                        .then(deliveries -> res.json(deliveries))
-                                        .catchError(err -> {
-                                            res.type("text");
-                                            res.status(500).end(Std.string(err));
-                                        });
-                                case Success(deliveries):
-                                    res.json(deliveries);
-                                case Failure(failure):
+                        if ((req.query.useDb:String) != "false")
+                            MySql.db.getDeliveries(date)
+                                .handle(o -> switch (o) {
+                                    case Success(deliveries):
+                                        res.json(deliveries);
+                                    case Failure(failure):
+                                        res.type("text");
+                                        res.status(500).end(Std.string(failure));
+                                });
+                        else
+                            GoogleForms.getAllDeliveries(date)
+                                .then(deliveries -> res.json(deliveries))
+                                .catchError(err -> {
                                     res.type("text");
-                                    res.status(500).end(Std.string(failure));
-                            });
+                                    res.status(500).end(Std.string(err));
+                                });
                         return;
                     case _:
                         res.type("text");

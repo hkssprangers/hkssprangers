@@ -67,6 +67,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         });
     }
 
+    function getUseDb(?search:String) return switch (new URLSearchParams(search != null ? search : props.location.search).get("useDb")) {
+        case null: true;
+        case "false" | "0": false;
+        case v: true;
+    }
+
     override function componentDidUpdate(prevProps:AdminViewProps, prevState:AdminViewState) {
         var currentSelectedDate = getSelectedDate();
         if (getSelectedDate(prevProps.location.search).getTime() != currentSelectedDate.getTime())
@@ -90,6 +96,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         var qs = new URLSearchParams({
             date: DateTools.format(date, "%Y-%m-%d"),
+            useDb: getUseDb() ? "true" : "false",
         });
         return window.fetch("/admin?" + qs, {
             headers: {
