@@ -1,6 +1,7 @@
 package hkssprangers;
 
 import thx.Decimal;
+import tink.CoreApi;
 import js.lib.Promise;
 import js.npm.google_spreadsheet.GoogleSpreadsheet;
 import js.npm.google_spreadsheet.GoogleSpreadsheetWorksheet;
@@ -35,6 +36,13 @@ class GoogleForms {
             var doc = new GoogleSpreadsheet(sheetId);
             shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
                 .then(_ -> doc.loadInfo())
+                .catchError(err -> {
+                    trace('Failed to loadInfo() for ${shop.info().name}\n' + err);
+                    trace('retry');
+                    (Future.delay(1000 * 3, Noise):tink.Promise<Noise>)
+                        .toJsPromise()
+                        .then(_ -> doc.loadInfo());
+                })
                 .then(_ -> doc);
         }
     ];

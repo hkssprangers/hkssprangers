@@ -78,7 +78,17 @@ class ImportGoogleForm {
                         }
                         var deliveries:js.lib.Promise<Array<Delivery>> = responseSheet
                             .then(doc -> doc.sheetsByIndex[0])
-                            .then(sheet -> sheet.loadCells().then(_ -> sheet))
+                            .then(sheet -> {
+                                sheet.loadCells()
+                                    .catchError(err -> {
+                                        trace('Failed to loadCells() for ${shop.info().name}\n' + err);
+                                        trace("retry");
+                                        (Future.delay(1000 * 3, Noise):Promise<Noise>)
+                                            .toJsPromise()
+                                            .then(_ -> sheet.loadCells());
+                                    })
+                                    .then(_ -> sheet);
+                            })
                             .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow))
                             .catchError(err -> {
                                 trace('Could not get deliveries of ${shop.info().name}\n' + err);
