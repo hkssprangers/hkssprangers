@@ -50,6 +50,7 @@ class ImportGoogleForm {
     }
 
     static function importGoogleForms():Promise<Bool> {
+        var now = Date.now();
         var failed = false;
         return getLastImportRows()
             .next(lastRows ->
@@ -77,9 +78,14 @@ class ImportGoogleForm {
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
                                 if (deliveries.length > 0)
                                     MySql.db.insertDeliveries(deliveries)
+                                        .next(_ -> MySql.db.googleFormImport.insertOne({
+                                            importTime: now,
+                                            spreadsheetId: GoogleForms.responseSheetId[shop],
+                                            lastRow: lastRow + deliveries.length,
+                                        }))
                                         .noise()
                                         .recover(err -> {
-                                            trace('Could not insert deliveries of ${shop.info().name}. Deliveries:\n' + Json.stringify(deliveries));
+                                            trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
                                             failed = true;
                                             Noise;
                                         })
@@ -97,13 +103,19 @@ class ImportGoogleForm {
     }
 
     static function main():Void {
-        insertManualLastImportRows().handle(_ -> Sys.exit(0));
-        // importGoogleForms().handle(o -> switch o {
-        //     case Success(succeeded):
-        //         Sys.exit(succeeded ? 0 : 1);
-        //     case Failure(failure):
-        //         trace(failure);
-        //         Sys.exit(1);
-        // });
+        switch (Sys.args()) {
+            case ["init"]:
+                insertManualLastImportRows().handle(_ -> Sys.exit(0));
+            case ["import"]:
+                importGoogleForms().handle(o -> switch o {
+                    case Success(succeeded):
+                        Sys.exit(succeeded ? 0 : 1);
+                    case Failure(failure):
+                        trace(failure);
+                        Sys.exit(1);
+                });
+            case args:
+                throw "unknown args: " + Json.stringify(args);
+        }
     }
 }
