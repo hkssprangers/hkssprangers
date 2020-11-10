@@ -1,5 +1,7 @@
 package hkssprangers;
 
+import hkssprangers.info.TimeSlot;
+import hkssprangers.info.TimeSlotType;
 import haxe.Json;
 import hkssprangers.server.MySql;
 import tink.CoreApi;
@@ -8,6 +10,7 @@ import hkssprangers.info.Shop;
 import hkssprangers.info.Delivery;
 import tink.sql.expr.Functions as F;
 using Lambda;
+using StringTools;
 
 class ImportGoogleForm {
     static function getLastImportRows():Promise<Array<{
@@ -49,6 +52,15 @@ class ImportGoogleForm {
         ]).noise();
     }
 
+    static final _existingDeliveries = new Map<String, Promise<Array<Delivery>>>();
+    static function existingDeliveries(date:String, shop:Shop, t:TimeSlotType) {
+        return (if (_existingDeliveries.exists(date)) {
+            _existingDeliveries[date];
+        } else {
+            _existingDeliveries[date] = MySql.db.getDeliveries(Date.fromString(date));
+        }).next(deliveries -> deliveries.filter(d -> d.orders[0].shop == shop && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
+    }
+
     static function importGoogleForms():Promise<Bool> {
         var now = Date.now();
         var failed = false;
@@ -64,7 +76,7 @@ class ImportGoogleForm {
                             case r:
                                 r.lastRow;
                         }
-                        var deliveries = responseSheet
+                        var deliveries:js.lib.Promise<Array<Delivery>> = responseSheet
                             .then(doc -> doc.sheetsByIndex[0])
                             .then(sheet -> sheet.loadCells().then(_ -> sheet))
                             .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow))
@@ -76,25 +88,46 @@ class ImportGoogleForm {
                         Promise.ofJsPromise(deliveries)
                             .next(deliveries -> {
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
-                                if (deliveries.length > 0)
-                                    MySql.db.insertDeliveries(deliveries)
-                                        .next(_ -> MySql.db.googleFormImport.insertOne({
-                                            importTime: now,
-                                            spreadsheetId: GoogleForms.responseSheetId[shop],
-                                            lastRow: lastRow + deliveries.length,
-                                        }))
-                                        .noise()
-                                        .recover(err -> {
-                                            trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
-                                            failed = true;
-                                            Noise;
-                                        })
-                                        .next(r -> {
-                                            trace("done insert of " + shop.info().name);
-                                            r;
-                                        });
-                                else
+                                if (deliveries.length > 0) {
+                                    var deliveriesByDate = [
+                                        for (d in deliveries)
+                                        (d.pickupTimeSlot.start:String).substr(0, 10) => null
+                                    ];
+                                    for (dateStr in deliveriesByDate.keys())
+                                        deliveriesByDate[dateStr] = deliveries.filter(d -> (d.pickupTimeSlot.start:String).startsWith(dateStr));
+                                    Promise.inSequence([
+                                        for (dateStr => deliveries in deliveriesByDate)
+                                        for (t in [Lunch, Dinner])
+                                        existingDeliveries(dateStr, shop, t)
+                                            .next(existings -> {
+                                                for (i => d in deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t))
+                                                    d.deliveryCode = d.orders[0].shop.info().name + " " + (switch t {
+                                                        case Lunch: "L";
+                                                        case Dinner: "D";
+                                                    }) + Std.string(i+1+existings.length).lpad("0", 2);
+                                                Noise;
+                                            })
+                                    ]).next(_ -> 
+                                        MySql.db.insertDeliveries(deliveries)
+                                            .next(_ -> MySql.db.googleFormImport.insertOne({
+                                                importTime: now,
+                                                spreadsheetId: GoogleForms.responseSheetId[shop],
+                                                lastRow: lastRow + deliveries.length,
+                                            }))
+                                            .noise()
+                                            .recover(err -> {
+                                                trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
+                                                failed = true;
+                                                Noise;
+                                            })
+                                            .next(r -> {
+                                                trace("done insert of " + shop.info().name);
+                                                r;
+                                            })
+                                    );
+                                } else {
                                     Promise.NOISE;
+                                }
                             });
                     }
                 ])
