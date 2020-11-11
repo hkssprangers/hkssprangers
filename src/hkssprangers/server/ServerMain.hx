@@ -90,7 +90,7 @@ class ServerMain {
 
                 var actual = StaticResource.hash(path);
                 if (md5 == actual) {
-                    res.setHeader("Cache-Control", "public, max-age=604800"); // 7 days
+                    res.setHeader("Cache-Control", "public, max-age=604800, immutable"); // 7 days
                 } else {
                     res.setHeader("Cache-Control", "no-cache");
                 }
