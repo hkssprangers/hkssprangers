@@ -81,18 +81,47 @@ class ImportGoogleForm {
                             .then(sheet -> {
                                 sheet.loadCells()
                                     .catchError(err -> {
-                                        trace('Failed to loadCells() for ${shop.info().name}\n' + err);
-                                        trace("retry");
-                                        (Future.delay(1000 * 3, Noise):Promise<Noise>)
-                                            .toJsPromise()
-                                            .then(_ -> sheet.loadCells());
+                                        trace('Failed to loadCells() for ${shop.info().name}');
+                                        var shouldRetry = switch (Std.downcast(err, js.lib.Error)) {
+                                            case null:
+                                                trace(Json.stringify(err, null, "  "));
+                                                true;
+                                            case jsErr if (jsErr.message.contains("[429]")): // Quota exceeded
+                                                trace(jsErr.message);
+                                                false;
+                                            case jsErr if (jsErr.message.contains("[503]")): // Service Unavailable
+                                                trace(jsErr.message);
+                                                true;
+                                            case jsErr:
+                                                trace(Json.stringify(jsErr, null, "  "));
+                                                true;
+                                        }
+                                        if (shouldRetry) {
+                                            trace("retry");
+                                            (Future.delay(1000 * 3, Noise):Promise<Noise>)
+                                                .toJsPromise()
+                                                .then(_ -> sheet.loadCells());
+                                        } else {
+                                            throw err;
+                                        }
                                     })
                                     .then(_ -> sheet);
                             })
                             .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow))
                             .catchError(err -> {
-                                trace('Could not get deliveries of ${shop.info().name}\n' + err);
-                                failed = true;
+                                trace('Could not get deliveries of ${shop.info().name}');
+                                switch (Std.downcast(err, js.lib.Error)) {
+                                    case null:
+                                        trace(Json.stringify(err, null, "  "));
+                                        failed = true;
+                                    case jsErr if (jsErr.message.contains("[429]")): // Quota exceeded
+                                        trace(jsErr.message);
+                                    case jsErr if (jsErr.message.contains("[503]")): // Service Unavailable
+                                        trace(jsErr.message);
+                                    case jsErr:
+                                        trace(Json.stringify(jsErr, null, "  "));
+                                        failed = true;
+                                }
                                 [];
                             });
                         Promise.ofJsPromise(deliveries)
