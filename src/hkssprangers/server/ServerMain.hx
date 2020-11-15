@@ -74,6 +74,10 @@ class ServerMain {
         tgBot.action("delete", (ctx:Context) -> ctx.deleteMessage());
 
         app = new Application();
+
+        // let telegraf process things before using any middleware like body-parser that may mess up
+        app.use(tgBot.webhookCallback(tgBotWebHook));
+
         app.set('json spaces', 2);
         app.use(function(req:Request, res:Response, next):Void {
             res.locals = {
@@ -112,7 +116,6 @@ class ServerMain {
         app.get("/login", LogIn.middleware);
         app.get("/admin", Admin.ensureAdmin, Admin.get);
         app.post("/admin", Admin.ensureAdmin, Admin.post);
-        app.use(tgBot.webhookCallback(tgBotWebHook));
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
         });
