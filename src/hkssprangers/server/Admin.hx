@@ -10,6 +10,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
 import js.npm.express.*;
+import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ContactMethod;
@@ -178,7 +179,7 @@ class Admin extends View {
             return;
         }
 
-        if (!TelegramTools.verifyLoginResponse(Sha256.encode(tgBotToken), cast tg)) {
+        if (!TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), cast tg)) {
             res.status(403).end('Invalid Telegram login response.');
             return;
         }

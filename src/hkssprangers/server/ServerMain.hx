@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.Timer;
 import haxe.crypto.Sha256;
 import js.lib.Promise;
 import telegraf.typings.markup.InlineKeyboardButton;
@@ -15,6 +16,7 @@ import telegraf.Markup;
 import js.npm.express.*;
 import js.Node.*;
 import comments.CommentString.*;
+import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 import hkssprangers.info.menu.EightyNineItem;
 using StringTools;
@@ -24,7 +26,6 @@ using hkssprangers.server.ExpressTools;
 
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == module;
-    static public final tgBotToken = Sys.getEnv("TGBOT_TOKEN");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
 
@@ -39,8 +40,8 @@ class ServerMain {
     }
 
     static function main() {
-        var tgBotWebHook = '/tgBot/${tgBotToken}';
-        tgBot = new Telegraf(tgBotToken);
+        var tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
+        tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
@@ -68,10 +69,9 @@ class ServerMain {
             **/;
         }
 
-        tgBot.start((ctx:Context) -> {
-            ctx.reply("started", new Extra({}).HTML(true).markup(kbd));
+        tgBot.on("message", (ctx:Context) -> {
+            trace(ctx.message);
         });
-        tgBot.action("delete", (ctx:Context) -> ctx.deleteMessage());
 
         app = new Application();
 
