@@ -66,6 +66,9 @@ class ImportGoogleForm {
     }
 
     static function notifyNewDeliveries(deliveries:Array<Delivery>) {
+        if (deliveries.length <= 0)
+            return Promise.resolve(null);
+
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
         var deliveryStrs = deliveries
             .map(d ->
