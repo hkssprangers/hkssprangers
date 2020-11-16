@@ -13,6 +13,7 @@ import telegraf.Telegraf;
 import telegraf.Context;
 import telegraf.Extra;
 import telegraf.Markup;
+import telegram_typings.User as TgUser;
 import js.npm.express.*;
 import js.Node.*;
 import comments.CommentString.*;
@@ -28,6 +29,7 @@ class ServerMain {
     static final isMain = js.Syntax.code("require.main") == module;
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
+    static public var tgMe:Promise<TgUser>;
 
     static function allowCors(req:Request, res:Response, next):Void {
         res.header("Access-Control-Allow-Origin", "*");
@@ -42,6 +44,17 @@ class ServerMain {
     static function main() {
         var tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
         tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        tgMe = tgBot.telegram.getMe();
+        tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
+            tgMe.then(me ->
+                MySql.db.tgMessage.insertOne({
+                    tgMessageId: null,
+                    receiverId: cast me.id,
+                    messageData: Json.stringify(ctx.message),
+                }).toJsPromise()
+            )
+                .then(_ -> next());
+        });
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
@@ -68,10 +81,6 @@ class ServerMain {
                 Counter: ${counter}
             **/;
         }
-
-        tgBot.on("message", (ctx:Context) -> {
-            trace(ctx.message);
-        });
 
         app = new Application();
 
@@ -136,7 +145,7 @@ class ServerMain {
                                     Sys.println(url);
                                     var hook = Path.join([url, tgBotWebHook]);
                                     tgBot.telegram.setWebhook(hook)
-                                        .then(_ -> tgBot.telegram.getMe())
+                                        .then(_ -> tgMe)
                                         .then(me -> {
                                             Sys.println('https://t.me/${me.username}');
                                         });

@@ -35,6 +35,9 @@ class Database extends tink.sql.Database {
     @:table("googleFormImport")
     final googleFormImport:GoogleFormImport;
 
+    @:table("tgMessage")
+    final tgMessage:TgMessage;
+
     public function getDeliveries(pickupDate:Date):Promise<Array<hkssprangers.info.Delivery>> {
         var start = Date.fromString(pickupDate.format("%Y-%m-%d"));
         var end = Date.fromTime(start.getTime() + DateTools.days(1));
