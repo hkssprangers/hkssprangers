@@ -25,3 +25,4 @@ jobs:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
           FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
+          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}

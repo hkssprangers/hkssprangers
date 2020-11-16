@@ -1,5 +1,7 @@
 package hkssprangers;
 
+import telegraf.Extra;
+import telegraf.Telegraf;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.TimeSlotType;
 import haxe.Json;
@@ -9,8 +11,10 @@ import tink.core.ext.Promises;
 import hkssprangers.info.Shop;
 import hkssprangers.info.Delivery;
 import tink.sql.expr.Functions as F;
+import comments.CommentString.*;
 using Lambda;
 using StringTools;
+using hkssprangers.info.TimeSlotTools;
 
 class ImportGoogleForm {
     static function getLastImportRows():Promise<Array<{
@@ -61,9 +65,32 @@ class ImportGoogleForm {
         }).next(deliveries -> deliveries.filter(d -> d.orders[0].shop == shop && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
     }
 
+    static function notifyNewDeliveries(deliveries:Array<Delivery>) {
+        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        var deliveryStrs = deliveries
+            .map(d ->
+                "📃 " + d.orders.map(o -> o.shop.info().name).join(", ") + "\n " + d.pickupTimeSlot.print()
+            )
+            .map(str -> StringTools.htmlEscape(str, false));
+        var msg = '啱啱收到 ${deliveries.length} 單';
+        if (deliveries.length > 0) {
+            msg += " ✨\n\n";
+            msg += deliveryStrs.join("\n\n");
+        }
+        return tgBot.telegram.sendMessage(
+            TelegramConfig.internalGroupChatId,
+            msg,
+            {
+                parse_mode: "HTML",
+                disable_web_page_preview: true,
+            }
+        );
+    }
+
     static function importGoogleForms():Promise<Bool> {
         var now = Date.now();
         var failed = false;
+        var newDeliveries = [];
         return getLastImportRows()
             .next(lastRows ->
                 Promise.inSequence([
@@ -153,15 +180,16 @@ class ImportGoogleForm {
                                                 spreadsheetId: GoogleForms.responseSheetId[shop],
                                                 lastRow: lastRow + deliveries.length,
                                             }))
-                                            .noise()
+                                            .next(_ -> {
+                                                trace("done insert of " + shop.info().name);
+                                                for (d in deliveries)
+                                                    newDeliveries.push(d);
+                                                Noise;
+                                            })
                                             .recover(err -> {
                                                 trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
                                                 failed = true;
                                                 Noise;
-                                            })
-                                            .next(r -> {
-                                                trace("done insert of " + shop.info().name);
-                                                r;
                                             })
                                     );
                                 } else {
@@ -171,6 +199,7 @@ class ImportGoogleForm {
                     }
                 ])
             )
+            .next(_ -> Promise.ofJsPromise(notifyNewDeliveries(newDeliveries)))
             .next(_ -> !failed);
     }
 
