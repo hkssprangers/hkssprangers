@@ -54,6 +54,10 @@ class ServerMain {
                     messageData: Json.stringify(ctx.message),
                 })
                     .toJsPromise()
+                    .then(v -> {
+                        trace("Logged msg " + v);
+                        null;
+                    })
                     .catchError(err -> {
                         trace("Failed to log tg message to db.\n" + err);
                         null;
