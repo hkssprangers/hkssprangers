@@ -46,41 +46,24 @@ class ServerMain {
         tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgMe = tgBot.telegram.getMe();
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
+            trace(ctx.message);
             tgMe.then(me ->
                 MySql.db.tgMessage.insertOne({
                     tgMessageId: null,
                     receiverId: cast me.id,
                     messageData: Json.stringify(ctx.message),
-                }).toJsPromise()
+                })
+                    .toJsPromise()
+                    .catchError(err -> {
+                        trace("Failed to log tg message to db.\n" + err);
+                        null;
+                    })
             )
                 .then(_ -> next());
         });
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
-
-        var kbd = Markup.inlineKeyboard_(cast ([
-            Markup.callbackButton_("delete", "delete"),
-        ]:Array<Dynamic>));
-
-        function counterMsg(ctx:Context) {
-            var fromLink = 'tg://user?id=${ctx.from.id}';
-            var name = switch (ctx.from) {
-                case {first_name: null, last_name: null}:
-                    'anonymous';
-                case {first_name: null, last_name: last_name}:
-                    '${last_name}';
-                case {first_name: first_name, last_name: null}:
-                    '${first_name}';
-                case {first_name: first_name, last_name: last_name}:
-                    '${first_name} ${last_name}';
-            }
-            var counter = Std.random(100);
-            return comment(unindent, format)/**
-                Hello, <a href="${fromLink.htmlEscape()}">${name.htmlEscape()}</a>!
-                Counter: ${counter}
-            **/;
-        }
 
         app = new Application();
 
