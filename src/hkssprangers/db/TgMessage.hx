@@ -3,5 +3,6 @@ package hkssprangers.db;
 typedef TgMessage = {
     @:autoIncrement @:primary final tgMessageId:Id<TgMessage>;
     final receiverId:Int;
-    final messageData:Text; //JSON
+    final updateType:Text;
+    final updateData:Text; //JSON
 }

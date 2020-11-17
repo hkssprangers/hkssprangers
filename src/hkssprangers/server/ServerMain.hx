@@ -50,7 +50,8 @@ class ServerMain {
                 MySql.db.tgMessage.insertOne({
                     tgMessageId: null,
                     receiverId: cast me.id,
-                    messageData: Json.stringify(ctx.message),
+                    updateType: ctx.updateType,
+                    updateData: Json.stringify(ctx.update),
                 })
                     .toJsPromise()
                     .then(v -> {
@@ -58,7 +59,7 @@ class ServerMain {
                     })
                     .catchError(err -> {
                         trace("Failed to log tg message to db.\n" + err);
-                        trace(ctx);
+                        trace(ctx.update);
                         null;
                     })
             )

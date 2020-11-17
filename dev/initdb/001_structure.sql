@@ -181,7 +181,9 @@ DROP TABLE IF EXISTS `tgMessage`;
 CREATE TABLE `tgMessage` (
   `tgMessageId` int NOT NULL AUTO_INCREMENT,
   `receiverId` int NOT NULL,
-  `messageData` json NOT NULL,
+  `messageData` json DEFAULT NULL,
+  `updateType` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
+  `updateData` json DEFAULT NULL,
   PRIMARY KEY (`tgMessageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -195,4 +197,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-16  4:04:04
+-- Dump completed on 2020-11-17  8:31:01

@@ -24,7 +24,8 @@ INSERT INTO `flyway_schema_history` VALUES (1,'1','<< Flyway Baseline >>','BASEL
 INSERT INTO `flyway_schema_history` VALUES (2,'2','googleFormImport','SQL','V2__googleFormImport.sql',1238516856,'root','2020-11-07 13:33:33',18,1);
 INSERT INTO `flyway_schema_history` VALUES (3,'3','relaxDeliveryTable','SQL','V3__relaxDeliveryTable.sql',981322026,'root','2020-11-08 09:50:56',107,1);
 INSERT INTO `flyway_schema_history` VALUES (4,'4','addDeletedFields','SQL','V4__addDeletedFields.sql',-1967513684,'root','2020-11-09 09:34:47',102,1);
-INSERT INTO `flyway_schema_history` VALUES (5,'5','tgMessage','SQL','V5__tgMessage.sql',-849229782,'root','2020-11-16 03:41:21',46,1);
+INSERT INTO `flyway_schema_history` VALUES (5,'5','tgMessage','SQL','V5__tgMessage.sql',-849229782,'ssp','2020-11-16 04:05:36',832,1);
+INSERT INTO `flyway_schema_history` VALUES (6,'6','tgMessage updateData','SQL','V6__tgMessage_updateData.sql',-348417920,'root','2020-11-17 08:28:27',117,1);
 /*!40000 ALTER TABLE `flyway_schema_history` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -36,4 +37,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-16  4:04:04
+-- Dump completed on 2020-11-17  8:31:01
