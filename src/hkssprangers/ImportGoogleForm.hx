@@ -31,7 +31,11 @@ class ImportGoogleForm {
                     case Dinner: "今晚";
                 }
                 if (curDeliveries.length <= 0) {
-                    tgBot.telegram.sendMessage(chatId, '${time}冇單 😔');
+                    tgBot.telegram.sendMessage(chatId, '${time}冇單 😔')
+                        .then(msg -> {
+                            tgBot.telegram.pinChatMessage(chatId, msg.message_id);
+                        })
+                        .then(_ -> null);
                 } else {
                     tgBot.telegram.sendPoll(chatId, '${time} ${curDeliveries.length} 單。邊個可以幫手送？',
                         [
@@ -43,7 +47,8 @@ class ImportGoogleForm {
                             is_anonymous: false,
                             allows_multiple_answers: false,
                         }
-                    );
+                    )
+                    .then(_ -> null);
                 }
             });
     }
