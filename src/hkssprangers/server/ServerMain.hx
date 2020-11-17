@@ -26,7 +26,7 @@ using hkssprangers.info.DeliveryTools;
 using hkssprangers.server.ExpressTools;
 
 class ServerMain {
-    static final isMain = js.Syntax.code("require.main") == module;
+    static final isMain = js.Syntax.code("require.main") == js.Node.module;
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
     static public var tgMe:Promise<TgUser>;
@@ -58,6 +58,7 @@ class ServerMain {
                     })
                     .catchError(err -> {
                         trace("Failed to log tg message to db.\n" + err);
+                        trace(ctx);
                         null;
                     })
             )

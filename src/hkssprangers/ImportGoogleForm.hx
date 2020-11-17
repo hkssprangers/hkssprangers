@@ -11,12 +11,43 @@ import tink.core.ext.Promises;
 import hkssprangers.info.Shop;
 import hkssprangers.info.Delivery;
 import tink.sql.expr.Functions as F;
-import comments.CommentString.*;
 using Lambda;
 using StringTools;
 using hkssprangers.info.TimeSlotTools;
 
 class ImportGoogleForm {
+    static final isMain = js.Syntax.code("require.main") == js.Node.module;
+
+    static function sendAttendancePoll(chatId:Float) {
+        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        var now = Date.now();
+        var curType = TimeSlotType.classify(now);
+        return MySql.db.getDeliveries(now)
+            .next(ds -> ds.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == curType))
+            .toJsPromise()
+            .then(curDeliveries -> {
+                var time = switch (curType) {
+                    case Lunch: "今朝";
+                    case Dinner: "今晚";
+                }
+                if (curDeliveries.length <= 0) {
+                    tgBot.telegram.sendMessage(chatId, '${time}冇單 😔');
+                } else {
+                    tgBot.telegram.sendPoll(chatId, '${time} ${curDeliveries.length} 單。邊個可以幫手送？',
+                        [
+                            "我想送 ✋",
+                            "冇人就搵我送 🧘",
+                            "送唔到 🙁",
+                        ],
+                        {
+                            is_anonymous: false,
+                            allows_multiple_answers: false,
+                        }
+                    );
+                }
+            });
+    }
+
     static function getLastImportRows():Promise<Array<{
         final spreadsheetId:String;
         final lastRow:Int;
@@ -207,19 +238,35 @@ class ImportGoogleForm {
     }
 
     static function main():Void {
-        switch (Sys.args()) {
-            case ["init"]:
-                insertManualLastImportRows().handle(_ -> Sys.exit(0));
-            case ["import"]:
-                importGoogleForms().handle(o -> switch o {
-                    case Success(succeeded):
-                        Sys.exit(succeeded ? 0 : 1);
-                    case Failure(failure):
-                        trace(failure);
-                        Sys.exit(1);
-                });
-            case args:
-                throw "unknown args: " + Json.stringify(args);
+        if (isMain) {
+            switch (Sys.args()) {
+                case ["init"]:
+                    insertManualLastImportRows().handle(_ -> Sys.exit(0));
+                case ["import"]:
+                    importGoogleForms().handle(o -> switch o {
+                        case Success(succeeded):
+                            Sys.exit(succeeded ? 0 : 1);
+                        case Failure(failure):
+                            trace(failure);
+                            Sys.exit(1);
+                    });
+                case ["sendAttendancePoll"]:
+                    sendAttendancePoll(TelegramConfig.internalGroupChatId)
+                        .then(_ -> Sys.exit(0))
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
+                        });
+                case ["sendAttendancePoll", "test"]:
+                    sendAttendancePoll(TelegramConfig.testingGroupChatId)
+                        .then(_ -> Sys.exit(0))
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
+                        });
+                case args:
+                    throw "unknown args: " + Json.stringify(args);
+            }
         }
     }
 }
