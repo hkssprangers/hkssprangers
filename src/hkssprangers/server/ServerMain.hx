@@ -46,7 +46,6 @@ class ServerMain {
         tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgMe = tgBot.telegram.getMe();
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
-            trace(ctx.message);
             tgMe.then(me ->
                 MySql.db.tgMessage.insertOne({
                     tgMessageId: null,
@@ -55,7 +54,6 @@ class ServerMain {
                 })
                     .toJsPromise()
                     .then(v -> {
-                        trace("Logged msg " + v);
                         null;
                     })
                     .catchError(err -> {
