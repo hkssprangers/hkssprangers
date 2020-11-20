@@ -24,7 +24,7 @@
     "react-telegram-login": "^1.1.2",
     "serverless": "^2.11.1",
     "serverless-prune-plugin": "^1.4.3",
-    "terser": "^5.4.0",
+    "terser": "^5.5.0",
     "uglifyify": "^5.0.2",
     "xlsx": "^0.16.8"
   },
