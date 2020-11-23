@@ -1,5 +1,6 @@
 package hkssprangers;
 
+import hkssprangers.info.OrderTools;
 import telegraf.Extra;
 import telegraf.Telegraf;
 import hkssprangers.info.TimeSlot;
@@ -126,6 +127,20 @@ class ImportGoogleForm {
         );
     }
 
+    static function isDuplicated(d1:Delivery, d2:Delivery):Bool {
+        return
+            (d1.customer.tg == null ? "" : d1.customer.tg.username) == (d2.customer.tg == null ? "" : d2.customer.tg.username) &&
+            d1.customer.tel == d2.customer.tel &&
+            d1.customerPreferredContactMethod == d2.customerPreferredContactMethod &&
+            d1.paymentMethods.join(",") == d2.paymentMethods.join(",") &&
+            d1.pickupLocation == d2.pickupLocation &&
+            d1.pickupTimeSlot.start == d2.pickupTimeSlot.start &&
+            d1.pickupTimeSlot.end == d2.pickupTimeSlot.end &&
+            d1.pickupMethod == d2.pickupMethod &&
+            d1.customerNote == d2.customerNote &&
+            d1.orders.map(OrderTools.print).join("\n") == d2.orders.map(OrderTools.print).join("\n");
+    }
+
     static function importGoogleForms():Promise<Bool> {
         var now = Date.now();
         var failed = false;
@@ -205,14 +220,21 @@ class ImportGoogleForm {
                                         for (t in [Lunch, Dinner])
                                         existingDeliveries(dateStr, shop, t)
                                             .next(existings -> {
-                                                for (i => d in deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t))
+                                                for (d in deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)) {
+                                                    if (existings.exists(e -> isDuplicated(e, d))) {
+                                                        trace("duplicated Google Form response");
+                                                        continue;
+                                                    }
                                                     d.deliveryCode = d.orders[0].shop.info().name + " " + (switch t {
                                                         case Lunch: "L";
                                                         case Dinner: "D";
-                                                    }) + Std.string(i+1+existings.length).lpad("0", 2);
+                                                    }) + Std.string(existings.length + 1).lpad("0", 2);
+                                                    existings.push(d);
+                                                }
                                                 Noise;
                                             })
-                                    ]).next(_ -> 
+                                    ]).next(_ -> {
+                                        var deliveries = deliveries.filter(d -> d.deliveryCode != null);
                                         MySql.db.insertDeliveries(deliveries)
                                             .next(_ -> MySql.db.googleFormImport.insertOne({
                                                 importTime: now,
@@ -229,8 +251,8 @@ class ImportGoogleForm {
                                                 trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
                                                 failed = true;
                                                 Noise;
-                                            })
-                                    );
+                                            });
+                                    });
                                 } else {
                                     Promise.NOISE;
                                 }
