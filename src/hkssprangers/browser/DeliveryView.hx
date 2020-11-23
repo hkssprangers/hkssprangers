@@ -31,6 +31,7 @@ typedef DeliveryViewState = {
     final isSaving:Bool;
     final isDeleting:Bool;
     final editingDelivery:Delivery;
+    final addedNewCourier:Bool;
 }
 
 class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState> {
@@ -41,6 +42,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             isSaving: false,
             isDeleting: false,
             editingDelivery: props.delivery.deepClone(),
+            addedNewCourier: false,
         }
     }
 
@@ -665,6 +667,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 });
                 newDelivery.setCouriersIncome();
                 setState({
+                    addedNewCourier: true,
                     editingDelivery: newDelivery,
                 });
             }
@@ -689,6 +692,14 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         editingDelivery: newDelivery,
                     });
                 }
+                function inputRef(input:js.html.InputElement) {
+                    if (input != null && input.value == "" && i == d.couriers.length - 1 && state.addedNewCourier) {
+                        input.focus();
+                        setState({
+                            addedNewCourier: false,
+                        });
+                    }
+                }
                 jsx('
                     <div key=${i} className="d-flex flex-row align-items-center badge badge-pill badge-light mr-1 my-1">
                         <Input
@@ -696,6 +707,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             startAdornment=${jsx('<InputAdornment position=${Start}>@</InputAdornment>')}
                             value=${c.tg.username.emptyStrIfNull()}
                             onChange=${onChange}
+                            inputRef=${cast inputRef}
                             {...inputProps}
                         />
                         <IconButton
