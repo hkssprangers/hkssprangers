@@ -136,6 +136,8 @@ class GoogleForms {
                 delivery.customer.tg = if (r.match(v.trim())) {
                     username: r.matched(1),
                 } else null;
+            case [_, _, v] if (v.contains("水玄信餅")):
+                iceCream.push(v);
             case [_, _, v] if (v.contains("雪糕")):
                 iceCream.push(v);
             case [_, h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:
