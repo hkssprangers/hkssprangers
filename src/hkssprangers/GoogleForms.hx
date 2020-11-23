@@ -195,6 +195,7 @@ class GoogleForms {
                 orderPrice: parseTotalPrice(iceCream.join("\n")),
             }));
         }
+        delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation);
         return delivery;
     }
 
