@@ -410,6 +410,17 @@ class DeliveryFee {
                 case NeighborCluster: 35;
                 case MGYCluster: 25;
             }
+        },
+        {
+            place: "曉盈",
+            match: address -> address.contains("曉盈") || address.toLowerCase().contains("high one grand"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
         }
     ];
 
