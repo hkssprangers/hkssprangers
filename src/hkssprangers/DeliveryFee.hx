@@ -421,6 +421,17 @@ class DeliveryFee {
                 case NeighborCluster: 25;
                 case MGYCluster: 25;
             }
+        },
+        {
+            place: "寶華閣",
+            match: address -> address.contains("寶華閣"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 35;
+                case NeighborCluster: 25;
+                case MGYCluster: 35;
+            }
         }
     ];
 
