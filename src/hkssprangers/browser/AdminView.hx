@@ -288,6 +288,17 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         });
 
+        var copyBtn = if (props.user.isAdmin) {
+            jsx('
+                <CopyButton
+                    title=${selectedDate.format("%Y-%m-%d")}
+                    text=${filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr)}
+                />
+            ');
+        } else {
+            null;
+        }
+
         return jsx('
             <Container>
                 <Grid container justify=${Center} direction=${Column}>
@@ -324,10 +335,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center} className="pb-2">
                         <Grid item>
-                            <CopyButton
-                                title=${selectedDate.format("%Y-%m-%d")}
-                                text=${filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr)}
-                            />
+                            ${copyBtn}
                         </Grid>
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center}>
