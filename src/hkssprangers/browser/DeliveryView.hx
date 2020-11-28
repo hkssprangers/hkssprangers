@@ -23,6 +23,7 @@ using hkssprangers.info.TimeSlotTools;
 typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Promise<Delivery>;
+    final canEdit:Bool;
     @:optional final needEdit:Bool;
 }
 
@@ -38,7 +39,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
     function new(props):Void {
         super(props);
         state = {
-            isEditing: props.needEdit,
+            isEditing: props.canEdit && props.needEdit,
             isSaving: false,
             isDeleting: false,
             editingDelivery: props.delivery.deepClone(),
@@ -186,13 +187,28 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
+            var orderDetails = if (o.orderDetails != null && o.orderDetails != "") {
+                jsx('<Typography className="pre-wrap">${o.orderDetails}</Typography>');
+            } else {
+                null;
+            }
+            var tableware = if (o.wantTableware != null) {
+                jsx('<Typography>${o.wantTableware ? "要餐具" : "唔要餐具"}</Typography>');
+            } else {
+                null;
+            }
+            var orderPrice = if (o.orderPrice != null && !Math.isNaN(o.orderPrice)) {
+                jsx('<Typography paragraph>食物價錢: $$${o.orderPrice}</Typography>');
+            } else {
+                null;
+            }
             return jsx('
                 <div key=${key}>
                     <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"}</Typography>
-                    <Typography className="pre-wrap">${o.orderDetails}</Typography>
+                    ${orderDetails}
                     ${customerNote}
-                    <Typography>${o.wantTableware ? "要餐具" : "唔要餐具"}</Typography>
-                    <Typography paragraph>食物價錢: $$${o.orderPrice}</Typography>
+                    ${tableware}
+                    ${orderPrice}
                 </div>
             ');
         }
@@ -419,7 +435,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         }
 
         var paymentMethods = if (!state.isEditing) {
-            jsx('<Typography>${d.paymentMethods.map(p -> p.info().name).join(", ")}</Typography>');
+            if (d.paymentMethods != null)
+                jsx('<Typography>${d.paymentMethods.map(p -> p.info().name).join(", ")}</Typography>');
+            else
+                null;
         } else {
             var items = [PayMe, FPS].map(m -> {
                 function onChange(evt) {
@@ -460,7 +479,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         }
 
         var pickupLocation = if (!state.isEditing) {
-            jsx('<Typography>${d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
+            if (d.pickupLocation != null)
+                jsx('<Typography>${d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
+            else
+                null;
         } else {
             function locOnChange(evt:Event) {
                 var v:String = (cast evt.target).value;
@@ -629,12 +651,14 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     </Button>
                 </CardActions>
             ');
-        } else {
+        } else if (props.canEdit) {
             jsx('
                 <CardActions>
                     <Button size=${Small} onClick=${evt -> onEdit()}>Edit</Button>
                 </CardActions>
             ');
+        } else {
+            null;
         }
 
         var cardHeader = if (!state.isEditing) {
@@ -659,6 +683,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     tg: {
                         username: "",
                     },
+                    isAdmin: null,
                     deliveryFee: null,
                     deliverySubsidy: null,
                 }]);
@@ -744,6 +769,15 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             ');
         }
 
+        var customerTotal = {
+            var total = foodTotal + d.deliveryFee.nanIfNull();
+            if (Math.isNaN(total)) {
+                jsx('<Typography paragraph></Typography>');
+            } else {
+                jsx('<Typography paragraph>總食物價錢+運費: $$${total}</Typography>');
+            }
+        }
+
         return jsx('
             <Card className="delivery-card" elevation=${state.isEditing ? 5 : 1}>
                 ${cardHeader}
@@ -751,7 +785,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     ${d.orders.mapi(renderOrder)}
                     ${addOrderButton}
 
-                    <Typography paragraph>總食物價錢+運費: $$${foodTotal + d.deliveryFee.nanIfNull()}</Typography>
+                    ${customerTotal}
 
                     ${pickupTimeSlot}
                     ${customerPreferredContactMethod}

@@ -377,7 +377,8 @@ class CourierConverter {
             tg: {
                 id: c.courierTgId,
                 username: c.courierTgUsername,
-            }
+            },
+            isAdmin: c.isAdmin,
         };
     }
 }

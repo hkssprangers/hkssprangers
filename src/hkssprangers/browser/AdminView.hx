@@ -21,12 +21,7 @@ using DateTools;
 
 typedef AdminViewProps = react.router.Route.RouteRenderProps & {
     final tgBotName:String;
-    final user:Null<{
-        tg: {
-            id:Int,
-            username:String,
-        }
-    }>;
+    final user:Null<Courier>;
 }
 
 typedef AdminViewState = {
@@ -188,6 +183,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 <DeliveryView
                     delivery=${d}
                     onChange=${onChange}
+                    canEdit=${props.user.isAdmin}
                     needEdit=${d.deliveryCode == null}
                 />
             </div>

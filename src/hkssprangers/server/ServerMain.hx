@@ -110,8 +110,8 @@ class ServerMain {
 
         app.get("/", index);
         app.get("/login", LogIn.middleware);
-        app.get("/admin", Admin.ensureAdmin, Admin.get);
-        app.post("/admin", Admin.ensureAdmin, Admin.post);
+        app.get("/admin", Admin.ensureCourier, Admin.get);
+        app.post("/admin", Admin.ensureCourier, Admin.post);
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
         });

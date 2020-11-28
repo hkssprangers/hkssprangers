@@ -33,8 +33,10 @@ class DeliveryTools {
             buf.add(d.customer.tg.print() + (d.customerPreferredContactMethod == Telegram ? " 👈" : "") + "\n");
         if (d.customer.tel != null)
             buf.add('https://wa.me/852${d.customer.tel}' + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "") + "\n");
-        buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
-        buf.add(d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")\n");
+        if (d.paymentMethods != null)
+            buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
+        if (d.pickupLocation != null)
+            buf.add(d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")\n");
 
         if (d.customerNote != null)
             buf.add("⚠️ " + d.customerNote + "\n");
@@ -51,7 +53,7 @@ class DeliveryTools {
                 tg: delivery.customer.tg != null ? delivery.customer.tg.copy() : null,
             }),
             orders: delivery.orders.map(o -> o.copy()),
-            paymentMethods: delivery.paymentMethods.copy(),
+            paymentMethods: delivery.paymentMethods != null ? delivery.paymentMethods.copy() : null,
             pickupTimeSlot: delivery.pickupTimeSlot.copy(),
         });
     }
@@ -63,6 +65,40 @@ class DeliveryTools {
         for (c in d.couriers) {
             c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
             c.deliverySubsidy = ((platformServiceChargeTotal * 0.5) / d.couriers.length).roundTo(4).toFloat();
+        }
+    }
+
+    static public function getMinInfo(d:Delivery):Delivery {
+        return {
+            creationTime: d.creationTime,
+            deliveryCode: d.deliveryCode,
+            couriers: d.couriers,
+            customer: {
+                tg: {},
+                tel: null,
+            },
+            customerPreferredContactMethod: d.customerPreferredContactMethod,
+            paymentMethods: null,
+            pickupLocation: null,
+            pickupTimeSlot: d.pickupTimeSlot,
+            pickupMethod: d.pickupMethod,
+            deliveryFee: Math.NaN,
+            customerNote: null,
+            deliveryId: d.deliveryId,
+            orders: d.orders.map(o -> {
+                var minInfo:Order = {
+                    creationTime: o.creationTime,
+                    orderCode: o.orderCode,
+                    shop: o.shop,
+                    wantTableware: null,
+                    customerNote: null,
+                    orderId: o.orderId,
+                    orderDetails: null,
+                    orderPrice: Math.NaN,
+                    platformServiceCharge: Math.NaN,
+                }
+                minInfo;
+            }),
         }
     }
 }

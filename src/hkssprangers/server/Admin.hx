@@ -25,14 +25,6 @@ using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
 using hkssprangers.db.Database;
 
-typedef User = {
-    tg: {
-        id:Int,
-        username:String,
-    },
-    isAdmin:Bool,
-};
-
 typedef FormOrder = {
     creationTime:Date,
     shop:Shop,
@@ -53,12 +45,7 @@ class Admin extends View {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var user(get, never):Null<{
-        tg: {
-            id:Int,
-            username:String,
-        }
-    }>;
+    public var user(get, never):Null<Courier>;
     function get_user() return props.user;
 
     override function title():String return "平台管理";
@@ -157,7 +144,7 @@ class Admin extends View {
             });
     }
 
-    static public function ensureAdmin(req:Request, res:Response, next) {
+    static public function ensureCourier(req:Request, res:Response, next) {
         var tg:Null<{
             id:Int,
             username:String,
@@ -178,21 +165,15 @@ class Admin extends View {
             return;
         }
 
-        MySql.db.courier.where(r -> r.courierTgId == tg.id).first().handle(o -> switch o {
+        MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first().handle(o -> switch o {
             case Success(null):
-                res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
+                res.status(403).end('${tg.username} (${tg.id}) is not one of the couriers.');
                 return;
             case Success(courierData):
-                if (
-                    !courierData.isAdmin
-                ) {
-                    res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
-                    return;
-                }
-
-                var user:User = {
+                var user:Courier = {
+                    courierId: courierData.courierId,
                     tg: tg,
-                    isAdmin: true,
+                    isAdmin: courierData.isAdmin,
                 }
         
                 res.locals.user = user;
@@ -203,6 +184,11 @@ class Admin extends View {
     }
 
     static public function post(req:Request, res:Response) {
+        var user:Courier = res.locals.user;
+        if (!user.isAdmin) {
+            res.status(403).end('${user.tg.username} (${user.tg.id}) is not one of the admins.');
+            return;
+        }
         if (req.body != null) switch [(req.body.action:String), (req.body.delivery:Delivery)] {
             case [null, _]:
                 // pass
@@ -258,7 +244,7 @@ class Admin extends View {
     }
 
     static public function get(req:Request, res:Response) {
-        var user:User = res.locals.user;
+        var user:Courier = res.locals.user;
         switch (req.query.date:String) {
             case null:
                 // pass
@@ -268,22 +254,37 @@ class Admin extends View {
                         // pass
                     case "json":
                         var date = Date.fromString(dateStr);
-                        if ((req.query.useDb:String) != "false")
-                            MySql.db.getDeliveries(date)
-                                .handle(o -> switch (o) {
-                                    case Success(deliveries):
+                        var now = Date.now();
+                        MySql.db.getDeliveries(date)
+                            .handle(o -> switch (o) {
+                                case Success(deliveries):
+                                    if (user.isAdmin) {
                                         res.json(deliveries);
-                                    case Failure(failure):
-                                        res.type("text");
-                                        res.status(500).end(Std.string(failure));
-                                });
-                        else
-                            GoogleForms.getAllDeliveries(date)
-                                .then(deliveries -> res.json(deliveries))
-                                .catchError(err -> {
+                                    } else {
+                                        res.json(deliveries.map(d -> {
+                                            if (
+                                                // today
+                                                (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
+                                                &&
+                                                switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
+                                                    case Lunch:
+                                                        now.getHours() >= 10;
+                                                    case Dinner:
+                                                        now.getHours() >= 17;
+                                                }
+                                            ) {
+                                                d;
+                                            } else {
+                                                d.getMinInfo();
+                                            }
+                                        }));
+                                    }
+                                    return;
+                                case Failure(failure):
                                     res.type("text");
-                                    res.status(500).end(Std.string(err));
-                                });
+                                    res.status(500).end(Std.string(failure));
+                                    return;
+                            });
                         return;
                     case _:
                         res.type("text");

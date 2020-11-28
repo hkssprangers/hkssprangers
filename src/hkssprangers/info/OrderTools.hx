@@ -9,14 +9,17 @@ class OrderTools {
 
         buf.add("🔸 " + (order.shop != null ? order.shop.info().name : "null") + "\n");
 
-        buf.add(order.orderDetails + "\n");
+        if (order.orderDetails != null)
+            buf.add(order.orderDetails + "\n");
 
         if (order.customerNote != null)
             buf.add("⚠️ " + order.customerNote + "\n");
 
-        buf.add(order.wantTableware ? "要餐具\n" : "唔要餐具\n");
+        if (order.wantTableware != null)
+            buf.add(order.wantTableware ? "要餐具\n" : "唔要餐具\n");
 
-        buf.add("食物價錢: $" + order.orderPrice + "\n");
+        if (order.orderPrice != null && !Math.isNaN(order.orderPrice))
+            buf.add("食物價錢: $" + order.orderPrice + "\n");
 
         return buf.toString().trim();
     }

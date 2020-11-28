@@ -1,6 +1,9 @@
 package hkssprangers;
 
 abstract LocalDateString(String) to String {
+    public function getDatePart():String return this.substr(0, 10);
+    public function getTimePart():String return this.substr(11);
+
     @:to
     static public function toDate(dateString:String) return dateString != null ? Date.fromString(dateString) : null;
 
