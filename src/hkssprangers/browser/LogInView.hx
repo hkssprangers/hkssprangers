@@ -20,7 +20,7 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
         Cookies.set("tg", response, {
             secure: true,
             sameSite: 'strict',
-            expires: 1, // expires 1 day from now
+            expires: 7, // expires 7 day from now
         });
         var params = new URLSearchParams(location.search);
         switch (params.get("redirectTo")) {
