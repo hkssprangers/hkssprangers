@@ -423,8 +423,8 @@ class DeliveryFee {
             }
         },
         {
-            place: "寶華閣",
-            match: address -> address.contains("寶華閣"),
+            place: "保安道寶華閣", // 有另一個寶華閣喺元州街
+            match: address -> address.contains("寶華閣") && address.contains("保安道"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case YearsCluster: 25;
