@@ -263,15 +263,20 @@ class Admin extends View {
                                     } else {
                                         res.json(deliveries.map(d -> {
                                             if (
-                                                // today
-                                                (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
-                                                &&
-                                                switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
-                                                    case Lunch:
-                                                        now.getHours() >= 10;
-                                                    case Dinner:
-                                                        now.getHours() >= 17;
-                                                }
+                                                d.couriers.exists(c -> c.courierId == user.courierId)
+                                                ||
+                                                (
+                                                    // today
+                                                    (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
+                                                    &&
+                                                    // time pass order cut-off
+                                                    switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
+                                                        case Lunch:
+                                                            now.getHours() >= 10;
+                                                        case Dinner:
+                                                            now.getHours() >= 17;
+                                                    }
+                                                )
                                             ) {
                                                 d;
                                             } else {
