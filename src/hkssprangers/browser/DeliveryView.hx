@@ -202,9 +202,27 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
+            var shopContact = if (o.orderDetails != null) {
+                o.shop.info().courierContact.map(contact -> {
+                    var label = if (contact.startsWith("tel:")) {
+                        jsx('<Fragment><i className="fas fa-phone"></i> telephone</Fragment>');
+                    } else if (contact.startsWith("https://wa.me/")) {
+                        jsx('<Fragment><i className="fab fa-whatsapp"></i> WhatsApp</Fragment>');
+                    } else {
+                        jsx('<Fragment><i className="fas fa-store"></i> contact</Fragment>');
+                    }
+                    jsx('
+                        <a key=${contact} href=${contact} target="_blank" className="courierContact badge badge-pill badge-light p-2 ml-1">
+                            ${label}
+                        </a>
+                    ');
+                });
+            } else {
+                null;
+            }
             return jsx('
                 <div key=${key}>
-                    <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"}</Typography>
+                    <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"} ${shopContact}</Typography>
                     ${orderDetails}
                     ${customerNote}
                     ${tableware}
