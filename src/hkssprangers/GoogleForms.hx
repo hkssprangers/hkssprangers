@@ -195,7 +195,15 @@ class GoogleForms {
                 orderPrice: parseTotalPrice(iceCream.join("\n")),
             }));
         }
-        delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation);
+        delivery.deliveryFee = switch (DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation)) {
+            case null: Math.NaN;
+            case fee:
+                if (delivery.pickupTimeSlot.start > ("2020-11-27 00:00:00":LocalDateString) && delivery.pickupTimeSlot.start <= ("2020-11-29 23:59:59":LocalDateString))
+                    // 懲罰祭減$5 https://www.facebook.com/hkssprangers/posts/169080954895475
+                    fee - 5;
+                else
+                    fee;
+        }
         return delivery;
     }
 
