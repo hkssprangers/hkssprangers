@@ -39,6 +39,7 @@ CREATE TABLE `courier` (
   `paymeAvailable` tinyint(1) NOT NULL,
   `fpsAvailable` tinyint(1) NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`courierId`),
   UNIQUE KEY `courier_UN_tgUsername` (`courierTgUsername`),
   UNIQUE KEY `courier_UN_tgId` (`courierTgId`)
@@ -182,7 +183,7 @@ CREATE TABLE `tgMessage` (
   `tgMessageId` int NOT NULL AUTO_INCREMENT,
   `receiverId` int NOT NULL,
   `messageData` json DEFAULT NULL,
-  `updateType` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
+  `updateType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `updateData` json DEFAULT NULL,
   PRIMARY KEY (`tgMessageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -197,4 +198,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-17  8:31:01
+-- Dump completed on 2020-11-28  5:02:30

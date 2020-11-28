@@ -1,7 +1,6 @@
 package hkssprangers.server;
 
 import tink.core.Noise;
-import haxe.ds.ReadOnlyArray;
 import js.npm.google_spreadsheet.GoogleSpreadsheet;
 import haxe.crypto.Sha256;
 import react.*;
@@ -158,11 +157,6 @@ class Admin extends View {
             });
     }
 
-    static final admins:ReadOnlyArray<String> = [
-        "andyonthewings",
-        "Arbuuuuuuu",
-    ];
-
     static public function ensureAdmin(req:Request, res:Response, next) {
         var tg:Null<{
             id:Int,
@@ -184,20 +178,28 @@ class Admin extends View {
             return;
         }
 
-        if (
-            !admins.exists(adminUsername -> adminUsername.toLowerCase() == tg.username.toLowerCase())
-        ) {
-            res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
-            return;
-        }
+        MySql.db.courier.where(r -> r.courierTgId == tg.id).first().handle(o -> switch o {
+            case Success(null):
+                res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
+                return;
+            case Success(courierData):
+                if (
+                    !courierData.isAdmin
+                ) {
+                    res.status(403).end('${tg.username} (${tg.id}) is not one of the admins.');
+                    return;
+                }
 
-        var user:User = {
-            tg: tg,
-            isAdmin: true,
-        }
-
-        res.locals.user = user;
-        next();
+                var user:User = {
+                    tg: tg,
+                    isAdmin: true,
+                }
+        
+                res.locals.user = user;
+                next();
+            case Failure(failure):
+                res.status(500).end(failure.message);
+        });
     }
 
     static public function post(req:Request, res:Response) {

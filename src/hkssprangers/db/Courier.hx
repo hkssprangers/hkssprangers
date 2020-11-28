@@ -6,4 +6,6 @@ typedef Courier = {
     @:unique final courierTgId:Null<Int>;
     final paymeAvailable:Bool;
     final fpsAvailable:Bool;
+    final deleted:Bool;
+    final isAdmin:Bool;
 }
