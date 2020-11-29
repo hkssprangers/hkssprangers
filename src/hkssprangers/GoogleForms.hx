@@ -207,30 +207,51 @@ class GoogleForms {
         return delivery;
     }
 
-    static public function getDeliveries(shop:Shop, sheet:GoogleSpreadsheetWorksheet, ?skipRow:Int, ?date:Date):{
+    static function duplicatedResponse(r1:Array<String>, r2:Array<String>):Bool {
+        if (r1.length != r2.length)
+            return false;
+
+        for (col in 1...r1.length) // ignore first col (index 0), which is timestamp
+            if (r1[col] != r2[col])
+                return false;
+
+        return true;
+    }
+
+    static public function getDeliveries(shop:Shop, sheet:GoogleSpreadsheetWorksheet, ?skipRow:Int):{
         /** 1-based **/
         final lastRow:Int;
         final deliveries:Array<Delivery>;
      } {
-        var dateStr = date != null ? (date.getMonth() + 1) + "月" + date.getDate() + "日" : null;
-        function isInTimeSlot(value:String):Bool {
-            return value.startsWith(dateStr);
-        }
         var headers = [
             for (col in 0...sheet.columnCount)
             (sheet.getCell(0, col).value:Null<String>)
         ];
         var pickupTimeCol = headers.findIndex(h -> h == "想幾時收到?");
+        if (skipRow == null)
+            skipRow = 1;
         var lastRow = null;
         var deliveries = [];
-        for (rowIndex in (skipRow == null ? 1 : skipRow)...sheet.rowCount) {
+        var rows = [];
+        for (rowIndex in 0...sheet.rowCount) {
+            var row:Array<String> = [for (col => _ in headers) (sheet.getCell(rowIndex, col).formattedValue:String)];
+            rows.push(row);
+
+            if (rowIndex < skipRow)
+                continue;
+
             if (sheet.getCell(rowIndex, 0).value == null)
                 break;
-            if (date == null || isInTimeSlot(sheet.getCell(rowIndex, pickupTimeCol).value))
-                deliveries.push(rowToDelivery(shop, headers, [for (col => _ in headers) (sheet.getCell(rowIndex, col).formattedValue:String)]));
 
+            switch (rows.findIndex(r -> row != r && duplicatedResponse(row, r))) {
+                case -1:
+                    deliveries.push(rowToDelivery(shop, headers, row));
+                case i:
+                    trace('${shop.info().name}: Row ${rowIndex + 1} is a duplicate of row ${i + 1}.');
+            }
             lastRow = rowIndex + 1;
         }
+
         return {
             lastRow: lastRow,
             deliveries: deliveries,

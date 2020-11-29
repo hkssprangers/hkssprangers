@@ -127,20 +127,6 @@ class ImportGoogleForm {
         );
     }
 
-    static function isDuplicated(d1:Delivery, d2:Delivery):Bool {
-        return
-            (d1.customer.tg == null ? "" : d1.customer.tg.username) == (d2.customer.tg == null ? "" : d2.customer.tg.username) &&
-            d1.customer.tel == d2.customer.tel &&
-            d1.customerPreferredContactMethod == d2.customerPreferredContactMethod &&
-            d1.paymentMethods.join(",") == d2.paymentMethods.join(",") &&
-            d1.pickupLocation == d2.pickupLocation &&
-            d1.pickupTimeSlot.start == d2.pickupTimeSlot.start &&
-            d1.pickupTimeSlot.end == d2.pickupTimeSlot.end &&
-            d1.pickupMethod == d2.pickupMethod &&
-            d1.customerNote == d2.customerNote &&
-            d1.orders.map(OrderTools.print).join("\n") == d2.orders.map(OrderTools.print).join("\n");
-    }
-
     static function importGoogleForms():Promise<Bool> {
         var now = Date.now();
         var failed = false;
@@ -206,10 +192,6 @@ class ImportGoogleForm {
                                         existingDeliveries(dateStr, shop, t)
                                             .next(existings -> {
                                                 for (d in deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)) {
-                                                    if (existings.exists(e -> isDuplicated(e, d))) {
-                                                        trace("duplicated Google Form response");
-                                                        continue;
-                                                    }
                                                     d.deliveryCode = d.orders[0].shop.info().name + " " + (switch t {
                                                         case Lunch: "L";
                                                         case Dinner: "D";
