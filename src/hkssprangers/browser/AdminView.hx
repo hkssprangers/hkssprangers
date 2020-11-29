@@ -325,8 +325,16 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         });
                     });
             }
+            var disabled =
+                state.isLoading || state.isAnnouncing
+                ||
+                (getSelectedDate():LocalDateString).getDatePart() != (Date.now():LocalDateString).getDatePart()
+                ||
+                filteredDeliveries.length == 0
+                ||
+                filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0);
             jsx('
-                <IconButton onClick=${onClickAnnounce} disabled=${state.isAnnouncing}>
+                <IconButton onClick=${onClickAnnounce} disabled=${disabled}>
                     <i className="fas fa-bullhorn"></i>
                 </IconButton>
             ');
