@@ -679,11 +679,23 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             null;
         }
 
+        var copyBtn = if (d.orders.foreach(o -> o.orderDetails != null)) {
+            jsx('
+                <CopyButton
+                    title=${d.deliveryCode}
+                    text=${DeliveryTools.print(d)}
+                />
+            ');
+        } else {
+            null;
+        }
+
         var cardHeader = if (!state.isEditing) {
             jsx('
                 <CardHeader
                     title=${"📃 " + d.deliveryCode}
                     subheader=${subheader}
+                    action=${copyBtn}
                 />
             ');
         } else {
