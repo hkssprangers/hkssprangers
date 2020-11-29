@@ -248,8 +248,7 @@ class Admin extends View {
                     c.tg.username => c.tg.username
                 ].array();
 
-                var domain = "https://master.ssprangers.com";
-                tgBot.telegram.sendMessage(TelegramConfig.testingGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n交俾你哋啦 🙇", {
+                tgBot.telegram.sendMessage(TelegramConfig.internalGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n交俾你哋啦 🙇", {
                     reply_markup: Markup.inlineKeyboard_([
                         Markup.loginButton_("登入睇單", Path.join([domain, "tgAuth?redirectTo=%2Fadmin"]), {
                             request_write_access: true,
