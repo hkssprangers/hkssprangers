@@ -49,6 +49,7 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
             <Grid container justify=${Center}>
                 <Grid item>
                     <TelegramLoginButton
+                        widgetVersion=${14}
                         botName=${props.tgBotName}
                         dataAuthUrl=${Path.join([window.location.origin, "tgAuth?" + params])}
                     />

@@ -21,7 +21,7 @@
     "ngrok": "^3.3.0",
     "nodemon": "^2.0.6",
     "react-router-dom": "^5.2.0",
-    "react-telegram-login": "^1.1.2",
+    "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
     "serverless": "^2.13.0",
     "serverless-prune-plugin": "^1.4.3",
     "terser": "^5.5.1",
