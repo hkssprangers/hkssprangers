@@ -246,7 +246,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         }
 
-        var addDeliveryButton = if (state.isLoading) {
+        var addDeliveryButton = if (state.isLoading || !props.user.isAdmin) {
             null;
         } else {
             jsx('
