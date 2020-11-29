@@ -26,6 +26,7 @@ typedef AdminViewProps = react.router.Route.RouteRenderProps & {
 
 typedef AdminViewState = {
     final isLoading:Bool;
+    final isAnnouncing:Bool;
     final deliveries:Array<{
         var d:Delivery;
         var key:Float;
@@ -78,6 +79,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         super(props);
         state = {
             isLoading: true,
+            isAnnouncing: false,
             deliveries: [],
         };
 
@@ -298,6 +300,39 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         } else {
             null;
         }
+        var announceBtn = if (props.user.isAdmin) {
+            function onClickAnnounce():Void {
+                setState({
+                    isAnnouncing: true,
+                });
+                window.fetch("/admin", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: Json.stringify({
+                        action: "announce",
+                        deliveries: filteredDeliveries.map(d -> d.d),
+                    }),
+                })
+                    .then(r -> {
+                        if (!r.ok) {
+                            r.text().then(text -> window.alert(text));
+                            null;
+                        }
+                        setState({
+                            isAnnouncing: false,
+                        });
+                    });
+            }
+            jsx('
+                <IconButton onClick=${onClickAnnounce} disabled=${state.isAnnouncing}>
+                    <i className="fas fa-bullhorn"></i>
+                </IconButton>
+            ');
+        } else {
+            null;
+        }
 
         return jsx('
             <Container>
@@ -336,6 +371,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     <Grid item container justify=${Center} alignItems=${Center} className="pb-2">
                         <Grid item>
                             ${copyBtn}
+                            ${announceBtn}
                         </Grid>
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center}>

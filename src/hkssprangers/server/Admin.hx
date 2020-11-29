@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import telegraf.Markup;
 import tink.core.Noise;
 import js.npm.google_spreadsheet.GoogleSpreadsheet;
 import haxe.crypto.Sha256;
@@ -189,10 +190,11 @@ class Admin extends View {
             res.status(403).end('${user.tg.username} (${user.tg.id}) is not one of the admins.');
             return;
         }
-        if (req.body != null) switch [(req.body.action:String), (req.body.delivery:Delivery)] {
-            case [null, _]:
+        if (req.body != null) switch (req.body.action:String) {
+            case null:
                 // pass
-            case ["insert", delivery]:
+            case "insert":
+                var delivery:Delivery = req.body.delivery;
                 MySql.db.insertDeliveries([delivery])
                     .next(dids -> MySql.db.delivery
                         .where(f -> f.deliveryId == dids[0])
@@ -209,7 +211,8 @@ class Admin extends View {
                         Noise;
                     });
                 return;
-            case ["update", delivery]:
+            case "update":
+                var delivery:Delivery = req.body.delivery;
                 MySql.db.saveDelivery(delivery)
                     .next(_ -> MySql.db.delivery
                         .where(f -> f.deliveryId == delivery.deliveryId)
@@ -226,7 +229,8 @@ class Admin extends View {
                         Noise;
                     });
                 return;
-            case ["delete", delivery]:
+            case "delete":
+                var delivery:Delivery = req.body.delivery;
                 MySql.db.deleteDelivery(delivery)
                     .handle(o -> switch o {
                         case Success(data):
@@ -236,7 +240,30 @@ class Admin extends View {
                             res.status(500).end(Std.string(failure));
                     });
                 return;
-            case [action, _]:
+            case "announce":
+                var deliveries:Array<Delivery> = req.body.deliveries;
+                var couriers = [
+                    for (d in deliveries)
+                    for (c in d.couriers)
+                    c.tg.username => c.tg.username
+                ].array();
+
+                var domain = "https://master.ssprangers.com";
+                tgBot.telegram.sendMessage(TelegramConfig.testingGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n交俾你哋啦 🙇", {
+                    reply_markup: Markup.inlineKeyboard_([
+                        Markup.loginButton_("登入睇單", Path.join([domain, "tgAuth?redirectTo=%2Fadmin"]), {
+                            request_write_access: true,
+                        }),
+                    ]),
+                }).then(_ -> {
+                    res.type("text");
+                    res.end("done");
+                }).catchError(err -> {
+                    res.type("text");
+                    res.status(500).end(Std.string(err));
+                });
+                return;
+            case action:
                 res.type("text");
                 res.status(406).end("Unknown action " + action);
                 return;

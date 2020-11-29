@@ -120,3 +120,9 @@ legend.MuiFormLabel-root {
 .courierTgInuput {
     min-width: 5em;
 }
+
+.MuiIconButton-root .MuiIconButton-label > i:only-child {
+    width: 1.1em;
+    height: 1.1em;
+    display: inline-block;
+}
