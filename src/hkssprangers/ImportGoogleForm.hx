@@ -157,7 +157,7 @@ class ImportGoogleForm {
                             case r:
                                 r.lastRow;
                         }
-                        var deliveries:js.lib.Promise<Array<Delivery>> = responseSheet
+                        var getDeliveries = responseSheet
                             .then(doc -> doc.sheetsByIndex[0])
                             .then(sheet -> {
                                 sheet.loadCells()
@@ -188,25 +188,10 @@ class ImportGoogleForm {
                                     })
                                     .then(_ -> sheet);
                             })
-                            .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow))
-                            .catchError(err -> {
-                                trace('Could not get deliveries of ${shop.info().name}');
-                                switch (Std.downcast(err, js.lib.Error)) {
-                                    case null:
-                                        trace(Json.stringify(err, null, "  "));
-                                        failed = true;
-                                    case jsErr if (jsErr.message.contains("[429]")): // Quota exceeded
-                                        trace(jsErr.message);
-                                    case jsErr if (jsErr.message.contains("[503]")): // Service Unavailable
-                                        trace(jsErr.message);
-                                    case jsErr:
-                                        trace(Json.stringify(jsErr, null, "  "));
-                                        failed = true;
-                                }
-                                [];
-                            });
-                        Promise.ofJsPromise(deliveries)
-                            .next(deliveries -> {
+                            .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow));
+                        Promise.ofJsPromise(getDeliveries)
+                            .next(getDeliveries -> {
+                                var deliveries = getDeliveries.deliveries;
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
                                 if (deliveries.length > 0) {
                                     var deliveriesByDate = [
@@ -239,7 +224,7 @@ class ImportGoogleForm {
                                             .next(_ -> MySql.db.googleFormImport.insertOne({
                                                 importTime: now,
                                                 spreadsheetId: GoogleForms.responseSheetId[shop],
-                                                lastRow: lastRow + deliveries.length,
+                                                lastRow: getDeliveries.lastRow,
                                             }))
                                             .next(_ -> {
                                                 trace("done insert of " + shop.info().name);

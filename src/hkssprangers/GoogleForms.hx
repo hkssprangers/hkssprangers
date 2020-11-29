@@ -207,7 +207,11 @@ class GoogleForms {
         return delivery;
     }
 
-    static public function getDeliveries(shop:Shop, sheet:GoogleSpreadsheetWorksheet, ?skipRow:Int, ?date:Date):Array<Delivery> {
+    static public function getDeliveries(shop:Shop, sheet:GoogleSpreadsheetWorksheet, ?skipRow:Int, ?date:Date):{
+        /** 1-based **/
+        final lastRow:Int;
+        final deliveries:Array<Delivery>;
+     } {
         var dateStr = date != null ? (date.getMonth() + 1) + "月" + date.getDate() + "日" : null;
         function isInTimeSlot(value:String):Bool {
             return value.startsWith(dateStr);
@@ -217,59 +221,19 @@ class GoogleForms {
             (sheet.getCell(0, col).value:Null<String>)
         ];
         var pickupTimeCol = headers.findIndex(h -> h == "想幾時收到?");
+        var lastRow = null;
         var deliveries = [];
-        for (row in (skipRow == null ? 1 : skipRow)...sheet.rowCount) {
-            if (sheet.getCell(row, 0).value == null)
+        for (rowIndex in (skipRow == null ? 1 : skipRow)...sheet.rowCount) {
+            if (sheet.getCell(rowIndex, 0).value == null)
                 break;
-            if (date == null || isInTimeSlot(sheet.getCell(row, pickupTimeCol).value))
-                deliveries.push(rowToDelivery(shop, headers, [for (col => _ in headers) (sheet.getCell(row, col).formattedValue:String)]));
-        }
-        return deliveries;
-    }
+            if (date == null || isInTimeSlot(sheet.getCell(rowIndex, pickupTimeCol).value))
+                deliveries.push(rowToDelivery(shop, headers, [for (col => _ in headers) (sheet.getCell(rowIndex, col).formattedValue:String)]));
 
-    static public function getAllDeliveries(?date:Date):Promise<Array<Delivery>> {
-        var now = switch (date) {
-            case null: Date.now();
-            case v: v;
+            lastRow = rowIndex + 1;
         }
-        // var now = Date.fromString("2020-08-18");
-        var sheets = [
-            for (shop => doc in responseSheet)
-            shop => doc
-                .then(doc -> doc.sheetsByIndex[0])
-                .then(sheet -> sheet.loadCells().then(_ -> sheet))
-        ];
-        return [
-            for (shop => sheet in sheets)
-            sheet
-                .then(sheet -> getDeliveries(shop, sheet, null, now))
-                .then(deliveries -> {
-                    [
-                        for (t in [Lunch, Dinner])
-                        deliveries
-                            .filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
-                            .mapi((i, d) -> {
-                                d.deliveryCode = d.orders[0].shop.info().name + " " + (switch (t) {
-                                    case Lunch: "L" + '${i+1}'.lpad("0", 2);
-                                    case Dinner: "D" + '${i+1}'.lpad("0", 2);
-                                });
-                                d;
-                            })
-                    ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
-                })
-        ]
-            .fold((item, result:Promise<Array<Delivery>>) ->
-                item.then(deliveries ->
-                    result.then(all ->
-                        all.concat(deliveries)
-                    )
-                )
-            , Promise.resolve([]))
-            .then(deliveries -> {
-                [
-                    for (t in [Lunch, Dinner])
-                        deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)
-                ].fold((item, result:Array<Delivery>) -> result.concat(item), []);
-            });
+        return {
+            lastRow: lastRow,
+            deliveries: deliveries,
+        }
     }
 }
