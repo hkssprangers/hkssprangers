@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import haxe.io.Path;
 import js.html.URLSearchParams;
 import js_cookie.CookiesStatic;
 import global.JsCookieGlobal.*;
@@ -10,6 +11,7 @@ import js.Browser.*;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TimeSlotTools;
 using Lambda;
+using StringTools;
 
 typedef LogInViewProps = {
     final tgBotName:String;
@@ -32,12 +34,23 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
     }
 
     override function render() {
+        var params = new URLSearchParams(location.search);
+        var redirectTo = switch (params.get("redirectTo")) {
+            case null:
+                window.location.origin;
+            case redirectTo:
+                if (redirectTo.startsWith("https://"))
+                    redirectTo;
+                else
+                    Path.join([window.location.origin, redirectTo]);
+        }
+        params.set("redirectTo", redirectTo);
         return jsx('
             <Grid container justify=${Center}>
                 <Grid item>
                     <TelegramLoginButton
                         botName=${props.tgBotName}
-                        dataOnauth=${handleTelegramResponse}
+                        dataAuthUrl=${Path.join([window.location.origin, "tgAuth?" + params])}
                     />
                 </Grid>
             </Grid>

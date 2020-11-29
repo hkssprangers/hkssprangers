@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.DynamicAccess;
 import haxe.Timer;
 import haxe.crypto.Sha256;
 import js.lib.Promise;
@@ -39,6 +40,32 @@ class ServerMain {
 
     static function index(req:Request, res:Response) {
         res.redirect("https://www.facebook.com/hkssprangers");
+    }
+
+    static function tgAuth(req:Request, res:Response) {
+        // expires 7 day from now
+        var expires = Date.fromTime(Date.now().getTime() + DateTools.days(7));
+
+        res.cookie("tg", Json.stringify({
+            var tg:DynamicAccess<String> = {};
+            for (k => v in (req.query:DynamicAccess<String>))
+                if (k != "redirectTo")
+                    tg[k] = v;
+            tg;
+        }), {
+            secure: true,
+            sameSite: 'strict',
+            expires: expires,
+        });
+
+        switch (req.query.redirectTo:String) {
+            case null:
+                res.redirect("/");
+                return;
+            case redirectTo:
+                res.redirect(redirectTo);
+                return;
+        }
     }
 
     static function main() {
@@ -109,6 +136,7 @@ class ServerMain {
         app.use(require("body-parser").json());
 
         app.get("/", index);
+        app.get("/tgAuth", tgAuth);
         app.get("/login", LogIn.middleware);
         app.get("/admin", Admin.ensureCourier, Admin.get);
         app.post("/admin", Admin.ensureCourier, Admin.post);
