@@ -247,13 +247,24 @@ class Admin extends View {
                     for (c in d.couriers)
                     c.tg.username => c.tg.username
                 ].array();
+                var you = if (couriers.length == 1) {
+                    "你";
+                } else {
+                    "你哋";
+                }
+                var time = switch (TimeSlotType.classify(deliveries[0].pickupTimeSlot.start)) {
+                    case Lunch: "今朝";
+                    case Dinner: "今晚";
+                }
 
-                tgBot.telegram.sendMessage(TelegramConfig.internalGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n交俾你哋啦 🙇", {
+                tgBot.telegram.sendMessage(TelegramConfig.internalGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n" + '${time}嘅 ${deliveries.length} 單交俾${you}啦 🙇', {
                     reply_markup: Markup.inlineKeyboard_([
                         Markup.loginButton_("登入睇單", Path.join([domain, "tgAuth?redirectTo=%2Fadmin"]), {
                             request_write_access: true,
                         }),
                     ]),
+                }).then(msg -> {
+                    tgBot.telegram.pinChatMessage(TelegramConfig.internalGroupChatId, msg.message_id);
                 }).then(_ -> {
                     res.type("text");
                     res.end("done");
