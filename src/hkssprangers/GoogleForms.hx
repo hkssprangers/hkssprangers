@@ -187,13 +187,15 @@ class GoogleForms {
         }
         order.orderDetails = orderContent.concat(extraOrderContent).join("\n");
         order.orderPrice = parseTotalPrice(order.orderDetails);
-        order.platformServiceCharge = (order.orderPrice:Decimal) * 0.15;
         if (iceCream.length > 0) {
             delivery.orders.push(order.with({
                 shop: HanaSoftCream,
                 orderDetails: iceCream.join("\n"),
                 orderPrice: parseTotalPrice(iceCream.join("\n")),
             }));
+        }
+        for (order in delivery.orders) {
+            order.platformServiceCharge = (order.orderPrice:Decimal) * 0.15;
         }
         delivery.deliveryFee = switch (DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation)) {
             case null: Math.NaN;
