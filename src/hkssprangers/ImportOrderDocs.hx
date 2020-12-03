@@ -44,10 +44,8 @@ class ImportOrderDocs {
             // }
         }
 
-        switch (d.deliveryFee) {
-            case null:
-                throw "deliveryFee is null: \n" + printDelivery();
-            case 15 | 20 | 25 | 35 | 40 | 50 | 100:
+        switch (d.deliveryFee % 5) {
+            case 0:
                 //pass
             case v:
                 throw "unusual deliveryFee: \n" + printDelivery();
@@ -91,9 +89,22 @@ class ImportOrderDocs {
             throw "pickupMethod is null: \n" + printDelivery();
         }
 
-        for (o in d.orders)
-        if (o.orderDetails == null || o.orderDetails == "") {
-            throw "orderDetails is null: \n" + printDelivery();
+        for (o in d.orders) {
+            if (o.orderDetails == null || o.orderDetails == "") {
+                throw "orderDetails is null: \n" + printDelivery();
+            }
+
+            if (o.platformServiceCharge != ((o.orderPrice:Decimal) * 0.15).roundTo(4)) {
+                throw "platformServiceCharge is not 15% of orderPrice: \n" + printDelivery();
+            }
+        }
+
+        var platformServiceChargeTotal = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();
+        var deliverySubsidy = (platformServiceChargeTotal * 0.5) / d.couriers.length;
+        for (c in d.couriers) {
+            if (c.deliverySubsidy != deliverySubsidy.toFloat()) {
+                throw "deliverySubsidy is not half of platformServiceChargeTotal: \n" + printDelivery();
+            }
         }
     }
 
@@ -203,6 +214,8 @@ class ImportOrderDocs {
     static function calculate(start:LocalDateString, end:LocalDateString) {
         return MySql.db.getDeliveries(start, end)
             .next(deliveries -> {
+                deliveries.iter(validateDelivery);
+
                 var summaryDir = "summary";
                 FileSystem.createDirectory(summaryDir);
 
