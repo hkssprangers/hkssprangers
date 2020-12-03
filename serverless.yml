@@ -43,11 +43,12 @@ functions:
           method: ANY
           path: '{proxy+}'
           cors: true
-  # importGoogleForm:
-  #   handler: importGoogleForm
-  #   events:
-  #     - schedule:
-  #         rate: rate(5 minutes)
+  importGoogleForm:
+    handler: importGoogleForm.importGoogleForms
+    events:
+      - schedule:
+          rate: rate(5 minutes)
+          enabled: ${self:custom.isProd.${opt:stage}, false}
 
 plugins:
   - serverless-prune-plugin
@@ -56,3 +57,5 @@ custom:
   prune:
     automatic: true
     number: 5
+  isProd:
+    production: true

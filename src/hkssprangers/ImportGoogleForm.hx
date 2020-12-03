@@ -232,6 +232,21 @@ class ImportGoogleForm {
     }
 
     static function main():Void {
+        js.Node.exports.importGoogleForms = function(evt, context) {
+            return importGoogleForms().toJsPromise()
+                .then(succeeded -> {
+                    statusCode: 200,
+                    body: "done",
+                })
+                .catchError(err -> {
+                    context.serverlessSdk.captureError(err);
+                    {
+                        statusCode: 500,
+                        body: Std.string(err),
+                    };
+                });
+        };
+
         if (isMain) {
             switch (Sys.args()) {
                 case ["init"]:
