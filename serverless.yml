@@ -45,6 +45,7 @@ functions:
           cors: true
   importGoogleForm:
     handler: importGoogleForm.importGoogleForms
+    timeout: 12
     events:
       - schedule:
           rate: rate(5 minutes)
