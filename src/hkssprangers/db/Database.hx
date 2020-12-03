@@ -38,12 +38,12 @@ class Database extends tink.sql.Database {
     @:table("tgMessage")
     final tgMessage:TgMessage;
 
-    public function getDeliveries(pickupDate:Date):Promise<Array<hkssprangers.info.Delivery>> {
-        var start = Date.fromString(pickupDate.format("%Y-%m-%d"));
-        var end = Date.fromTime(start.getTime() + DateTools.days(1));
+    public function getDeliveries(pickupTimeSlotStart:LocalDateString, ?pickupTimeSlotEnd:LocalDateString):Promise<Array<hkssprangers.info.Delivery>> {
+        if (pickupTimeSlotEnd == null)
+            pickupTimeSlotEnd = Date.fromTime(pickupTimeSlotStart.toDate().getTime() + DateTools.days(1));
 
         return delivery
-            .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotEnd < end && !d.deleted)
+            .where(d -> d.pickupTimeSlotStart >= pickupTimeSlotStart.toDate() && d.pickupTimeSlotEnd < pickupTimeSlotEnd.toDate() && !d.deleted)
             .all()
             .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, this))))
             .next(ds -> {
