@@ -167,9 +167,6 @@ class Admin extends View {
         }
 
         MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first().handle(o -> switch o {
-            case Success(null):
-                res.status(403).end('${tg.username} (${tg.id}) is not one of the couriers.');
-                return;
             case Success(courierData):
                 var user:Courier = {
                     courierId: courierData.courierId,
@@ -180,7 +177,12 @@ class Admin extends View {
                 res.locals.user = user;
                 next();
             case Failure(failure):
-                res.status(500).end(failure.message);
+                if (failure.code == 404) {
+                    res.status(403).end('${tg.username} (${tg.id}) is not one of the couriers.');
+                    return;
+                } else {
+                    res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
+                }
         });
     }
 
