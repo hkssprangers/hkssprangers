@@ -108,9 +108,6 @@ class ImportOrderDocs {
         }
     }
 
-    static final dateStart = "2020-10-01 00:00:00";
-    static final dateEnd = "2020-10-31 23:59:59";
-
     static function shopSummary(shop:Shop, deliveries:Array<Delivery>):WorkSheet {
         deliveries.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlot.start, b.pickupTimeSlot.start)) {
             case 0: Reflect.compare(a.deliveryCode, b.deliveryCode);
@@ -249,7 +246,7 @@ class ImportOrderDocs {
                     var ws = shopSummary(shop, deliveries);
 
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
-                    Xlsx.writeFile(wb, Path.join([summaryDir, "shop", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + shop.info().name + ".xlsx"]));
+                    Xlsx.writeFile(wb, Path.join([summaryDir, "shop", start.getDatePart() + "_" + end.getDatePart() + "_" + shop.info().name + ".xlsx"]));
 
                     var totalCharge = [
                         for (d in deliveries)
@@ -289,7 +286,7 @@ class ImportOrderDocs {
                     var ws = courierSummary(courier, deliveries);
 
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
-                    Xlsx.writeFile(wb, Path.join([summaryDir, "courier", dateStart.substr(0, 10) + "_" + dateEnd.substr(0, 10) + "_" + courier + ".xlsx"]));
+                    Xlsx.writeFile(wb, Path.join([summaryDir, "courier", start.getDatePart() + "_" + end.getDatePart() + "_" + courier + ".xlsx"]));
 
                     var subsidyTotal:Decimal = [
                             for (d in deliveries)
