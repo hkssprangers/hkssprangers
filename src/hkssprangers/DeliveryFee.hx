@@ -443,7 +443,18 @@ class DeliveryFee {
                 case NeighborCluster: 25;
                 case MGYCluster: 35;
             }
-        }
+        },
+        {
+            place: "喜韻",
+            match: address -> address.contains("喜韻"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 35;
+                case NeighborCluster: 25;
+                case MGYCluster: 40;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
