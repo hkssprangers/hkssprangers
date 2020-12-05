@@ -33,12 +33,27 @@ jobs:
         run: haxe importGoogleForm.hxml
       - name: Test
         run: haxe test.hxml
-      - name: Deploy master
+      - name: Set Env
+        run: |
+          set -ex
+          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+            echo "STAGE=master" >> $GITHUB_ENV
+            echo "TG_WEBHOOK=https://master.ssprangers.com" >> $GITHUB_ENV
+            echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF}" == "refs/heads/production" ]]; then
+            echo "STAGE=production" >> $GITHUB_ENV
+            echo "TG_WEBHOOK=https://ssprangers.com" >> $GITHUB_ENV
+            echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> $GITHUB_ENV
+          fi
+        env:
+          TGBOT_TOKEN_MASTER: ${{ secrets.TGBOT_TOKEN_MASTER }}
+          TGBOT_TOKEN_PRODUCTION: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
+      - name: Deploy
         if: github.ref == 'refs/heads/master'
         run: |
           set -ex
-          npx serverless deploy --stage master
-          node index.js setTgWebhook https://master.ssprangers.com
+          npx serverless deploy --stage "${STAGE}"
+          node index.js setTgWebhook "${TG_WEBHOOK}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
@@ -48,20 +63,3 @@ jobs:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
           FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
-          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_MASTER }}
-      - name: Deploy production
-        if: github.ref == 'refs/heads/production'
-        run: |
-          set -ex
-          npx serverless deploy --stage production
-          node index.js setTgWebhook https://ssprangers.com
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
-          FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
-          TGBOT_TOKEN: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
