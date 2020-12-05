@@ -36,11 +36,11 @@ jobs:
       - name: Set Env
         run: |
           set -ex
-          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+          if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
             echo "STAGE=master" >> $GITHUB_ENV
             echo "TG_WEBHOOK=https://master.ssprangers.com" >> $GITHUB_ENV
             echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> $GITHUB_ENV
-          elif [[ "${GITHUB_REF}" == "refs/heads/production" ]]; then
+          elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
             echo "STAGE=production" >> $GITHUB_ENV
             echo "TG_WEBHOOK=https://ssprangers.com" >> $GITHUB_ENV
             echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> $GITHUB_ENV
