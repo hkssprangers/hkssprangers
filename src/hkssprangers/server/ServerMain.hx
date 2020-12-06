@@ -93,27 +93,31 @@ class ServerMain {
             )
                 .then(_ -> next());
         });
-        tgBot.start((ctx:Context) -> {
-            trace("/start");
-            MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first().handle(o -> switch o {
-                case Success(courierData):
-                    trace("send button to log in " + host);
-                    ctx.reply('你好!', {
-                        reply_markup: Markup.inlineKeyboard_([
-                            Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
-                                request_write_access: true,
-                            }),
-                        ]),
-                    });
-                case Failure(failure):
-                    trace(failure);
-                    if (failure.code == 404) {
-                        ctx.reply('你好!');
-                    } else {
-                        trace(failure.message + "\n\n" + failure.exceptionStack);
-                        ctx.reply(failure.message);
-                    }
-            });
+        tgBot.start(function(ctx:Context):Promise<Dynamic> {
+            return switch (ctx.chat.type) {
+                case "private":
+                    MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first()
+                        .toJsPromise()
+                        .then(courierData -> {
+                            ctx.reply('你好!', {
+                                reply_markup: Markup.inlineKeyboard_([
+                                    Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
+                                        request_write_access: true,
+                                    }),
+                                ]),
+                            });
+                        })
+                        .catchError(failure -> {
+                            if (failure.code == 404) {
+                                ctx.reply('你好!');
+                            } else {
+                                trace(failure.message + "\n\n" + failure.exceptionStack);
+                                ctx.reply(failure.message);
+                            }
+                        });
+                case _:
+                    Promise.resolve(null);
+            }
         });
 
         app = new Application();
@@ -173,7 +177,8 @@ class ServerMain {
                     var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
 
                     ngrokUrl.then((url:String) -> {
-                        host = new URL(url).host;
+                        //host = new URL(url).host;
+                        host = "127.0.0.1";
                         certs.then(certs ->
                             js.Node.require("httpolyglot").createServer(certs, app)
                                 .listen(port, function(){
