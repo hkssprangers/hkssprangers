@@ -49,7 +49,6 @@ jobs:
           TGBOT_TOKEN_MASTER: ${{ secrets.TGBOT_TOKEN_MASTER }}
           TGBOT_TOKEN_PRODUCTION: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
       - name: Deploy
-        if: github.ref == 'refs/heads/master'
         run: |
           set -ex
           npx serverless deploy --stage "${DEPLOY_STAGE}"
