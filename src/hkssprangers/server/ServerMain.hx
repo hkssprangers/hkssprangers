@@ -68,7 +68,10 @@ class ServerMain {
 
     static function main() {
         var tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
-        tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        tgBot = new Telegraf(TelegramConfig.tgBotToken); 
+        tgBot.catch_((err, ctx:Context) -> {
+            console.error(err);
+        });
         tgMe = tgBot.telegram.getMe();
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
             tgMe.then(me ->
@@ -94,6 +97,7 @@ class ServerMain {
             trace("/start");
             MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first().handle(o -> switch o {
                 case Success(courierData):
+                    trace("send button to log in " + host);
                     ctx.reply('你好!', {
                         reply_markup: Markup.inlineKeyboard_([
                             Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
@@ -109,9 +113,6 @@ class ServerMain {
                         ctx.reply(failure.message);
                     }
             });
-        });
-        tgBot.catch_((err, ctx:Context) -> {
-            console.error(err);
         });
 
         app = new Application();
