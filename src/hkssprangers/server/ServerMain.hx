@@ -106,6 +106,7 @@ class ServerMain {
                         ]),
                     });
                 case Failure(failure):
+                    trace(failure);
                     if (failure.code == 404) {
                         ctx.reply('你好!');
                     } else {
