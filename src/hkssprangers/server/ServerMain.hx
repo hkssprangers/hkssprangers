@@ -94,11 +94,13 @@ class ServerMain {
                 .then(_ -> next());
         });
         tgBot.start(function(ctx:Context):Promise<Dynamic> {
+            trace("/start");
             return switch (ctx.chat.type) {
                 case "private":
                     MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first()
                         .toJsPromise()
                         .then(courierData -> {
+                            trace("send button to log in " + host);
                             ctx.reply('你好!', {
                                 reply_markup: Markup.inlineKeyboard_([
                                     Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
@@ -108,6 +110,7 @@ class ServerMain {
                             });
                         })
                         .catchError(failure -> {
+                            trace(failure);
                             if (failure.code == 404) {
                                 ctx.reply('你好!');
                             } else {
