@@ -16,7 +16,7 @@ class LogIn extends View {
 
     override function title():String return "登入";
     override public function description() return "登入";
-    override function canonical() return Path.join([domain, "login"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "login"]);
     override public function render() {
         return super.render();
     }

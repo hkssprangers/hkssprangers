@@ -37,12 +37,12 @@ jobs:
         run: |
           set -ex
           if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
-            echo "STAGE=master" >> $GITHUB_ENV
-            echo "TG_WEBHOOK=https://master.ssprangers.com" >> $GITHUB_ENV
+            echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
+            echo "SERVER_HOST=master.ssprangers.com" >> $GITHUB_ENV
             echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> $GITHUB_ENV
           elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
-            echo "STAGE=production" >> $GITHUB_ENV
-            echo "TG_WEBHOOK=https://ssprangers.com" >> $GITHUB_ENV
+            echo "DEPLOY_STAGE=production" >> $GITHUB_ENV
+            echo "SERVER_HOST=ssprangers.com" >> $GITHUB_ENV
             echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> $GITHUB_ENV
           fi
         env:
@@ -52,8 +52,8 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           set -ex
-          npx serverless deploy --stage "${STAGE}"
-          node index.js setTgWebhook "${TG_WEBHOOK}"
+          npx serverless deploy --stage "${DEPLOY_STAGE}"
+          node index.js setTgWebhook
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}

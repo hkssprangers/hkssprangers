@@ -51,7 +51,7 @@ class Admin extends View {
 
     override function title():String return "平台管理";
     override function description() return "平台管理";
-    override function canonical() return Path.join([domain, "admin"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "admin"]);
     override public function render() {
         return super.render();
     }
@@ -259,14 +259,14 @@ class Admin extends View {
                     case Dinner: "今晚";
                 }
 
-                tgBot.telegram.sendMessage(TelegramConfig.internalGroupChatId, couriers.map(c -> "@" + c).join(" ") + "\n" + '${time}嘅 ${deliveries.length} 單交俾${you}啦 🙇', {
+                tgBot.telegram.sendMessage(TelegramConfig.groupChatId(deployStage), couriers.map(c -> "@" + c).join(" ") + "\n" + '${time}嘅 ${deliveries.length} 單交俾${you}啦 🙇', {
                     reply_markup: Markup.inlineKeyboard_([
-                        Markup.loginButton_("登入睇單", Path.join([domain, "tgAuth?redirectTo=%2Fadmin"]), {
+                        Markup.loginButton_("登入睇單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
                             request_write_access: true,
                         }),
                     ]),
                 }).then(msg -> {
-                    tgBot.telegram.pinChatMessage(TelegramConfig.internalGroupChatId, msg.message_id);
+                    tgBot.telegram.pinChatMessage(TelegramConfig.groupChatId(deployStage), msg.message_id);
                 }).then(_ -> {
                     res.type("text");
                     res.end("done");

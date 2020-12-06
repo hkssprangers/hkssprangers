@@ -1,10 +1,8 @@
 package hkssprangers.server;
 
+import js.node.url.URL;
 import haxe.DynamicAccess;
-import haxe.Timer;
-import haxe.crypto.Sha256;
 import js.lib.Promise;
-import telegraf.typings.markup.InlineKeyboardButton;
 import haxe.Json;
 import react.*;
 import react.Fragment;
@@ -17,10 +15,8 @@ import telegraf.Markup;
 import telegram_typings.User as TgUser;
 import js.npm.express.*;
 import js.Node.*;
-import comments.CommentString.*;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
-import hkssprangers.info.menu.EightyNineItem;
 using StringTools;
 using Lambda;
 using hkssprangers.info.DeliveryTools;
@@ -28,6 +24,8 @@ using hkssprangers.server.ExpressTools;
 
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
+    static public final deployStage:DeployStage = Sys.getEnv("DEPLOY_STAGE");
+    static public var host(default, null) = Sys.getEnv("SERVER_HOST");
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
     static public var tgMe:Promise<TgUser>;
@@ -92,6 +90,26 @@ class ServerMain {
             )
                 .then(_ -> next());
         });
+        tgBot.start((ctx:Context) -> {
+            trace("/start");
+            MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first().handle(o -> switch o {
+                case Success(courierData):
+                    ctx.reply('你好!', {
+                        reply_markup: Markup.inlineKeyboard_([
+                            Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
+                                request_write_access: true,
+                            }),
+                        ]),
+                    });
+                case Failure(failure):
+                    if (failure.code == 404) {
+                        ctx.reply('你好!');
+                    } else {
+                        trace(failure.message + "\n\n" + failure.exceptionStack);
+                        ctx.reply(failure.message);
+                    }
+            });
+        });
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
@@ -152,7 +170,8 @@ class ServerMain {
                     var ngrokUrl:Promise<String> = require("ngrok").connect(port);
                     var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
 
-                    ngrokUrl.then((url:String) ->
+                    ngrokUrl.then((url:String) -> {
+                        host = new URL(url).host;
                         certs.then(certs ->
                             js.Node.require("httpolyglot").createServer(certs, app)
                                 .listen(port, function(){
@@ -165,13 +184,10 @@ class ServerMain {
                                             Sys.println('https://t.me/${me.username}');
                                         });
                                 })
-                        )
-                    );
+                        );
+                    });
                 case ["setTgWebhook"]:
-                    var hook = Path.join([domain, tgBotWebHook]);
-                    tgBot.telegram.setWebhook(hook);
-                case ["setTgWebhook", var domain]:
-                    var hook = Path.join([domain, tgBotWebHook]);
+                    var hook = Path.join(["https://" + host, tgBotWebHook]);
                     tgBot.telegram.setWebhook(hook);
                 case args:
                     throw "Unknown args: " + args;
