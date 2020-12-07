@@ -16,7 +16,7 @@
     "dts2hx": "^0.15.3",
     "envify": "^4.1.0",
     "httpolyglot": "^0.1.2",
-    "https-localhost": "^4.6.3",
+    "https-localhost": "^4.6.4",
     "js-cookie": "^2.2.1",
     "ngrok": "^3.3.0",
     "nodemon": "^2.0.6",
