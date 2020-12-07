@@ -1,5 +1,7 @@
 package hkssprangers.server;
 
+import hkssprangers.info.Courier;
+import hkssprangers.info.Tg;
 import js.npm.express.*;
 import react.*;
 
@@ -19,5 +21,18 @@ class ExpressTools {
         } catch (e:Dynamic) {
             throw e;
         }
+    }
+
+    static public function getUserTg(res:Response):Null<Tg> {
+        return res.locals.tg;
+    }
+    static public function setUserTg(res:Response, tg:Null<Tg>):Void {
+        res.locals.tg = tg;
+    }
+    static public function getCourier(res:Response):Null<Courier> {
+        return res.locals.courier;
+    }
+    static public function setCourier(res:Response, courier:Null<Courier>):Void {
+        res.locals.courier = courier;
     }
 }

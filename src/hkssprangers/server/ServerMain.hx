@@ -1,5 +1,9 @@
 package hkssprangers.server;
 
+import jsonwebtoken.verifier.BasicVerifier;
+import jsonwebtoken.Claims;
+import jsonwebtoken.signer.BasicSigner;
+import jsonwebtoken.crypto.NodeCrypto;
 import js.node.url.URL;
 import haxe.DynamicAccess;
 import js.lib.Promise;
@@ -25,10 +29,28 @@ using hkssprangers.server.ExpressTools;
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
     static public final deployStage:DeployStage = Sys.getEnv("DEPLOY_STAGE");
-    static public var host(default, null) = Sys.getEnv("SERVER_HOST");
+    static public final host = switch (Sys.getEnv("SERVER_HOST")) {
+        case null: "127.0.0.1";
+        case v: v;
+    }
     static public var app:Application;
     static public var tgBot:Telegraf<Dynamic>;
     static public var tgMe:Promise<TgUser>;
+
+    static final jwtIssuer = host;
+    static final jstSecret = switch (Sys.getEnv("JWT_SECRET")) {
+        case null: Std.string(Std.random(10000000));
+        case v: v;
+    }
+    static final jwtCrypto = new NodeCrypto();
+    static final jwtSigner = new BasicSigner(HS256(jstSecret), jwtCrypto);
+    static final jwtVerifier = new BasicVerifier(HS256(jstSecret), jwtCrypto, { iss: jwtIssuer });
+    static public function jwtSign(payload:Claims) {
+        return jwtSigner.sign(payload);
+    }
+    static public function jwtVerify(token) {
+        return jwtVerifier.verify(token);
+    }
 
     static function allowCors(req:Request, res:Response, next):Void {
         res.header("Access-Control-Allow-Origin", "*");
@@ -165,8 +187,8 @@ class ServerMain {
         app.get("/", index);
         app.get("/tgAuth", tgAuth);
         app.get("/login", LogIn.middleware);
-        app.get("/admin", Admin.ensureCourier, Admin.get);
-        app.post("/admin", Admin.ensureCourier, Admin.post);
+        app.get("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.get);
+        app.post("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.post);
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
         });
@@ -180,12 +202,10 @@ class ServerMain {
                     var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
 
                     ngrokUrl.then((url:String) -> {
-                        //host = new URL(url).host;
-                        host = "127.0.0.1";
                         certs.then(certs ->
                             js.Node.require("httpolyglot").createServer(certs, app)
                                 .listen(port, function(){
-                                    Sys.println('https://127.0.0.1');
+                                    Sys.println('https://' + host);
                                     Sys.println(url);
                                     var hook = Path.join([url, tgBotWebHook]);
                                     tgBot.telegram.setWebhook(hook)

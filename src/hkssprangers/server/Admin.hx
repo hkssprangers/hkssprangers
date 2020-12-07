@@ -145,51 +145,70 @@ class Admin extends View {
             });
     }
 
-    static public function ensureCourier(req:Request, res:Response, next) {
-        var tg:Null<{
-            id:Int,
-            username:String,
-        }> = if (req.cookies != null && req.cookies.tg != null) try {
+    static public function setTg(req:Request, res:Response, next) {
+        var tg:Dynamic = if (req.cookies != null && req.cookies.tg != null) try {
             Json.parse(req.cookies.tg);
         } catch(err) {
-            res.status(403).end('Error parsing Telegram login response.\n\n' + err.details());
-            return;
+            trace('Error parsing Telegram login response.\n\n' + err.details());
+            null;
         } else null;
 
-        if (tg == null) {
-            res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
-            return;
+        if (!TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), tg)) {
+            trace('Invalid Telegram login response.');
+            tg = null;
         }
 
-        if (!TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), cast tg)) {
-            res.status(403).end('Invalid Telegram login response.');
+        res.setUserTg(tg);
+        next();
+    }
+
+    static public function setCourier(req:Request, res:Response, next) {
+        var tg = res.getUserTg();
+
+        if (tg == null) {
+            next();
             return;
         }
 
         MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first().handle(o -> switch o {
             case Success(courierData):
-                var user:Courier = {
+                var courier:Courier = {
                     courierId: courierData.courierId,
                     tg: tg,
                     isAdmin: courierData.isAdmin,
                 }
-        
-                res.locals.user = user;
+
+                res.setCourier(courier);
                 next();
+                return;
             case Failure(failure):
                 if (failure.code == 404) {
-                    res.status(403).end('${tg.username} (${tg.id}) is not one of the couriers.');
+                    trace('${tg.username} (${tg.id}) is not one of the couriers.');
+                    next();
                     return;
                 } else {
-                    res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
+                    trace(failure.message + "\n\n" + failure.exceptionStack);
+                    next();
+                    return;
                 }
         });
     }
 
+    static public function ensureCourier(req:Request, res:Response, next) {
+        var courier = res.getCourier();
+
+        if (courier == null) {
+            res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
+            return;
+        }
+
+        next();
+    }
+
     static public function post(req:Request, res:Response) {
-        var user:Courier = res.locals.user;
-        if (!user.isAdmin) {
-            res.status(403).end('${user.tg.username} (${user.tg.id}) is not one of the admins.');
+        var user:Courier = res.getCourier();
+        if (user == null || !user.isAdmin) {
+            res.status(403).end('Only admins are allowed.');
             return;
         }
         if (req.body != null) switch (req.body.action:String) {
@@ -283,7 +302,7 @@ class Admin extends View {
     }
 
     static public function get(req:Request, res:Response) {
-        var user:Courier = res.locals.user;
+        var user:Courier = res.getCourier();
         switch (req.query.date:String) {
             case null:
                 // pass

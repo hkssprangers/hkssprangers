@@ -11,6 +11,7 @@
 --library tink_sql
 --library thx.core
 --library CommentString
+--library jsonwebtoken
 -D react_skip_extend_component_restriction
 -D no-deprecation-warnings
 --dce full
