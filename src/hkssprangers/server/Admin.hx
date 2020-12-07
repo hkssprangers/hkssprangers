@@ -2,7 +2,6 @@ package hkssprangers.server;
 
 import telegraf.Markup;
 import tink.core.Noise;
-import js.npm.google_spreadsheet.GoogleSpreadsheet;
 import haxe.crypto.Sha256;
 import react.*;
 import react.Fragment;
@@ -68,82 +67,6 @@ class Admin extends View {
     }
 
     static final hr = "\n--------------------------------------------------------------------------------\n";
-
-    static function getGroupOrders() {
-        var doc = new GoogleSpreadsheet("1xcwF-OucoIneLjaajM6b6MOf_waeAE9oeCyTOpzoAJA");
-        return doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
-            .then(_ -> doc.loadInfo())
-            .then(_ -> doc.sheetsByIndex[0])
-            .then(sheet -> {
-                sheet.loadCells().then(_ -> {
-                    var headers = [
-                        for (col in 0...sheet.columnCount)
-                        (sheet.getCell(0, col).value:Null<String>)
-                    ];
-                    var orders = [];
-                    for (row in 1...sheet.rowCount)
-                    if (sheet.getCell(row, 0).value != null)
-                    {
-                        var order = {
-                            creationTime: null,
-                            content: "",
-                            wantTableware: null,
-                            time: null,
-                            contactMethod: null,
-                            tg: null,
-                            tel: null,
-                            paymentMethod: null,
-                            address: null,
-                            pickupMethod: null,
-                            note: null,
-                        };
-                        var orderContent = [];
-                        for (col => h in headers)
-                            switch [h, (sheet.getCell(row, col).formattedValue:String)] {
-                                case [null, _]:
-                                    continue;
-                                case ["Timestamp" | "時間戳記", v]:
-                                    order.creationTime = v;
-                                case [_, null | ""]:
-                                    continue;
-                                case ["你的地址", v]:
-                                    order.address = v;
-                                case ["你的聯絡方式 (外賣員會和你聯絡同收款)", v]:
-                                    order.contactMethod = if (v.toLowerCase().startsWith("telegram")) {
-                                        Telegram;
-                                    } else if (v.toLowerCase().startsWith("whatsapp")) {
-                                        WhatsApp;
-                                    } else {
-                                        throw 'Unknown contact method: ' + v;
-                                    }
-                                case ["你的電話號碼" | "你的電話號碼/Whatsapp", v]:
-                                    order.tel = v;
-                                case ["俾錢方法", v]:
-                                    order.paymentMethod = v;
-                                case ["交收方法", v]:
-                                    order.pickupMethod = v;
-                                case ["需要餐具嗎?", v]:
-                                    order.wantTableware = v + "餐具";
-                                case ["其他備註", v]:
-                                    order.note = v;
-                                case [h, v] if (h.startsWith("你的Telegram username")):
-                                    var r = ~/^@?([A-Za-z0-9_]{5,})$/;
-                                    order.tg = if (r.match(v.trim()))
-                                        "https://t.me/" + r.matched(1);
-                                    else
-                                        v;
-                                case [h, v] if (h.startsWith("想幾時收到?")):
-                                    order.time = v;
-                                case [h, v]:
-                                    orderContent.push(h + ": " + v);
-                            }
-                        order.content = orderContent.join("\n");
-                        orders.push(order);
-                    }
-                    orders;
-                });
-            });
-    }
 
     static public function setTg(req:Request, res:Response, next) {
         var tg:Dynamic = if (req.cookies != null && req.cookies.tg != null) try {
@@ -362,5 +285,10 @@ class Admin extends View {
                 user: user,
             }))
             .catchError(err -> res.status(500).json(err));
+    }
+
+    static public function setup(app:Application) {
+        app.get("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.get);
+        app.post("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.post);
     }
 }

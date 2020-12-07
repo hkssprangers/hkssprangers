@@ -187,8 +187,7 @@ class ServerMain {
         app.get("/", index);
         app.get("/tgAuth", tgAuth);
         app.get("/login", LogIn.middleware);
-        app.get("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.get);
-        app.post("/admin", Admin.setTg, Admin.setCourier, Admin.ensureCourier, Admin.post);
+        Admin.setup(app);
         app.get("/server-time", function(req:Request, res:Response) {
             res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
         });
