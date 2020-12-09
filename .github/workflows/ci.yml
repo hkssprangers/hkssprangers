@@ -62,3 +62,4 @@ jobs:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
           FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}

@@ -19,6 +19,7 @@ provider:
     TGBOT_TOKEN: ${env:TGBOT_TOKEN}
     FORM_READER_EMAIL: ${env:FORM_READER_EMAIL}
     FORM_READER_PRIVATE_KEY: ${env:FORM_READER_PRIVATE_KEY}
+    JWT_SECRET: ${env:JWT_SECRET}
 
 package:
   exclude:
