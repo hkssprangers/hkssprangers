@@ -682,8 +682,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         var copyBtn = if (d.orders.foreach(o -> o.orderDetails != null)) {
             jsx('
                 <CopyButton
-                    title=${d.deliveryCode}
-                    text=${DeliveryTools.print(d)}
+                    text=${() -> Promise.resolve(DeliveryTools.print(d))}
                 />
             ');
         } else {

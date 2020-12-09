@@ -27,6 +27,7 @@ typedef AdminViewProps = react.router.Route.RouteRenderProps & {
 typedef AdminViewState = {
     final isLoading:Bool;
     final isAnnouncing:Bool;
+    final openAnnounceModal:Bool;
     final deliveries:Array<{
         var d:Delivery;
         var key:Float;
@@ -80,6 +81,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         state = {
             isLoading: true,
             isAnnouncing: false,
+            openAnnounceModal: false,
             deliveries: [],
         };
 
@@ -192,6 +194,31 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         ');
     }
 
+    function announceToCouriers(deliveries:Array<Delivery>) {
+        setState({
+            isAnnouncing: true,
+        });
+        window.fetch("/admin", {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: Json.stringify({
+                action: "announce",
+                deliveries: deliveries,
+            }),
+        })
+            .then(r -> {
+                if (!r.ok) {
+                    r.text().then(text -> window.alert(text));
+                    null;
+                }
+                setState({
+                    isAnnouncing: false,
+                });
+            });
+    }
+
     override function render() {
         var loggedInAs = if (props.user != null)
             jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
@@ -293,40 +320,21 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         var copyBtn = if (props.user.isAdmin) {
             jsx('
                 <CopyButton
-                    title=${selectedDate.format("%Y-%m-%d")}
-                    text=${filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr)}
+                    text=${() -> Promise.resolve(filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr))}
                 />
             ');
         } else {
             null;
         }
+        var announceBtnRef = React.createRef();
         var announceBtn = if (props.user.isAdmin) {
             function onClickAnnounce():Void {
                 setState({
-                    isAnnouncing: true,
+                    openAnnounceModal: true,
                 });
-                window.fetch("/admin", {
-                    method: "post",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: Json.stringify({
-                        action: "announce",
-                        deliveries: filteredDeliveries.map(d -> d.d),
-                    }),
-                })
-                    .then(r -> {
-                        if (!r.ok) {
-                            r.text().then(text -> window.alert(text));
-                            null;
-                        }
-                        setState({
-                            isAnnouncing: false,
-                        });
-                    });
             }
             var disabled =
-                state.isLoading || state.isAnnouncing
+                state.isLoading || state.openAnnounceModal
                 ||
                 (getSelectedDate():LocalDateString).getDatePart() != (Date.now():LocalDateString).getDatePart()
                 ||
@@ -334,12 +342,66 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 ||
                 filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0);
             jsx('
-                <IconButton onClick=${onClickAnnounce} disabled=${disabled}>
+                <IconButton ref=${announceBtnRef} onClick=${onClickAnnounce} disabled=${disabled}>
                     <i className="fas fa-bullhorn"></i>
                 </IconButton>
             ');
         } else {
             null;
+        }
+
+        function handleAnnounceModalClose() {
+            setState({
+                openAnnounceModal: false,
+            });
+        }
+
+        var linksForShop = [
+            for (d in filteredDeliveries)
+            for (o in d.d.orders)
+            o.shop => null
+        ];
+        if (state.openAnnounceModal) {
+            for (shop in linksForShop.keys()) {
+                function getLink() {
+                    return window.fetch("/admin", {
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: Json.stringify({
+                            action: "share",
+                            date: (selectedDate:LocalDateString),
+                            type: selectedTimeSlotType,
+                            shop: shop,
+                        }),
+                    })
+                        .then(r ->
+                            if (r.redirected && new URL(r.url).pathname.startsWith("/login")) {
+                                location.assign("/login?" + new URLSearchParams({
+                                    redirectTo: location.pathname + location.search,
+                                }));
+                                Promise.resolve(null);
+                            } else if (!r.ok) {
+                                r.text().then(text -> window.alert(text));
+                                Promise.resolve(null);
+                            } else {
+                                r.text().then(link -> {
+                                    trace(link);
+                                    link;
+                                });
+                            }
+                        );
+                }
+                linksForShop[shop] = jsx('
+                    <Grid key=${shop} item>
+                        Copy link for ${shop.info().name}
+                        <CopyButton
+                            text=${getLink}
+                        />
+                    </Grid>
+                ');
+            }
         }
 
         return jsx('
@@ -389,6 +451,34 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Popover
+                    open=${state.openAnnounceModal}
+                    onClose=${handleAnnounceModalClose}
+                    anchorEl=${() -> announceBtnRef.current}
+                    anchorOrigin=${{
+                        vertical: Center,
+                        horizontal: Center,
+                    }}
+                    transformOrigin=${{
+                        vertical: Center,
+                        horizontal: Center,
+                    }}
+                >
+                    <Grid container direction=${Column} alignItems=${FlexEnd}
+                        className="px-3 py-2"
+                    >
+                        <Grid item>
+                            Announce to couriers
+                            <IconButton
+                                onClick=${() -> announceToCouriers(filteredDeliveries.map(d -> d.d))}
+                                disabled=${state.isAnnouncing}
+                            >
+                                <i className="fab fa-telegram"></i>
+                            </IconButton>
+                        </Grid>
+                        ${linksForShop.array()}
+                    </Grid>
+                </Popover>
             </Container>
         ');
     }

@@ -2,11 +2,11 @@ package hkssprangers.browser;
 
 import mui.core.*;
 import js.Browser.*;
+import js.lib.Promise;
 import haxe.Timer;
 
 typedef CopyButtonProps = {
-    final title:String;
-    final text:String;
+    final text:()->Promise<String>;
 };
 
 typedef CopyButtonState = {
@@ -22,14 +22,16 @@ class CopyButton extends ReactComponentOf<CopyButtonProps, CopyButtonState> {
     }
 
     function onClickCopy():Void {
-        CopyToClipboard.call(props.text, {
-            format: "text/plain",
-            onCopy: function (d) {
-                setState({
-                    openMessage: true,
-                });
-                Timer.delay(() -> setState({ openMessage: false }), 4000);
-            },
+        props.text().then(text -> {
+            CopyToClipboard.call(text, {
+                format: "text/plain",
+                onCopy: function (d) {
+                    setState({
+                        openMessage: true,
+                    });
+                    Timer.delay(() -> setState({ openMessage: false }), 4000);
+                },
+            });
         });
     }
 
