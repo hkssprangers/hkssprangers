@@ -339,16 +339,8 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     openAnnounceModal: true,
                 });
             }
-            var disabled =
-                state.isLoading || state.openAnnounceModal
-                ||
-                (getSelectedDate():LocalDateString).getDatePart() != (Date.now():LocalDateString).getDatePart()
-                ||
-                filteredDeliveries.length == 0
-                ||
-                filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0);
             jsx('
-                <IconButton ref=${announceBtnRef} onClick=${onClickAnnounce} disabled=${disabled}>
+                <IconButton ref=${announceBtnRef} onClick=${onClickAnnounce}>
                     <i className="fas fa-bullhorn"></i>
                 </IconButton>
             ');
@@ -471,6 +463,15 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         }
 
+        var annouceToCouriersDisabled =
+            state.isAnnouncing || state.isLoading
+            ||
+            (getSelectedDate():LocalDateString).getDatePart() != (Date.now():LocalDateString).getDatePart()
+            ||
+            filteredDeliveries.length == 0
+            ||
+            filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0);
+
         return jsx('
             <Container>
                 <Grid container justify=${Center} direction=${Column}>
@@ -502,7 +503,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             Announce to couriers
                             <IconButton
                                 onClick=${() -> announceToCouriers(filteredDeliveries.map(d -> d.d))}
-                                disabled=${state.isAnnouncing}
+                                disabled=${annouceToCouriersDisabled}
                             >
                                 <i className="fab fa-telegram"></i>
                             </IconButton>
