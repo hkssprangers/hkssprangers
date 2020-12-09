@@ -47,14 +47,13 @@ class ServerMain {
     static final jwtSigner = new BasicSigner(HS256(jstSecret), jwtCrypto);
     static final jwtVerifier = new BasicVerifier(HS256(jstSecret), jwtCrypto, { iss: jwtIssuer });
     static public function jwtSign(payload:Claims) {
-        trace(payload);
         if (payload.iss == null)
             payload.iss = jwtIssuer;
         if (payload.iat == null)
             payload.iat = Date.now();
         return jwtSigner.sign(payload);
     }
-    static public function jwtVerify(token) {
+    static public function jwtVerifyToken(token:String):tink.core.Promise<Token> {
         return if (token == null)
             tink.core.Promise.reject(new Error(ErrorCode.Unauthorized, "no token"));
         else

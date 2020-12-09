@@ -10,6 +10,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
 import js.npm.express.*;
+import js.node.Querystring;
 import jsonwebtoken.Claims;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
@@ -50,8 +51,15 @@ class Admin extends View {
     public var user(get, never):Null<Courier>;
     function get_user() return props.user;
 
-    override function title():String return "平台管理";
-    override function description() return "平台管理";
+    public var token(get, never):Null<Token>;
+    function get_token() return props.token;
+
+    override function title():String return if (token == null)
+        "平台管理";
+    else
+        '${token.date} ${switch (token.time) { case Lunch: "午市"; case Dinner: "晚市"; }} ${token.shop.info().name} ${name}外賣單';
+
+    override function description() return title();
     override function canonical() return Path.join(["https://" + canonicalHost, "admin"]);
     override public function render() {
         return super.render();
@@ -78,7 +86,7 @@ class Admin extends View {
             null;
         } else null;
 
-        if (!TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), tg)) {
+        if (tg != null && !TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), tg)) {
             trace('Invalid Telegram login response.');
             tg = null;
         }
@@ -127,10 +135,11 @@ class Admin extends View {
             return;
         }
 
-        ServerMain.jwtVerify(req.query.token).handle(o -> switch o {
+        ServerMain.jwtVerifyToken(req.query.token).handle(o -> switch o {
             case Success(data):
-                var data = data; // TODO
+                res.setToken(data);
                 next();
+                return;
             case Failure(failure):
                 res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
                 return;
@@ -138,7 +147,6 @@ class Admin extends View {
     }
 
     static public function post(req:Request, res:Response) {
-        trace("got post");
         var user:Courier = res.getCourier();
         if (user == null || !user.isAdmin) {
             res.status(403).end('Only admins are allowed.');
@@ -233,22 +241,23 @@ class Admin extends View {
                 });
                 return;
             case "share":
-                trace(req.body);
                 var date:LocalDateString = req.body.date;
-                var type:TimeSlotType = req.body.type;
+                var time:TimeSlotType = req.body.time;
                 var shop:Shop = req.body.shop;
                 var payload:Dynamic = ({
                     exp: Date.fromTime(date.toDate().getTime() + DateTools.days(50)),
-                }:Claims);
-                payload.date = date.getDatePart();
-                payload.type = type;
-                payload.shop = shop;
-                trace(payload);
+                }:Claims).merge(({
+                    date: date.getDatePart(),
+                    time: time,
+                    shop: shop,
+                }:Token));
                 ServerMain.jwtSign(payload)
                     .handle(o -> switch(o) {
                         case Success(token):
                             res.type("text");
-                            res.end(Path.join(["https://" + host, "admin?token=" + token.urlEncode()]));
+                            res.end(Path.join(["https://" + host, "admin?" + Querystring.stringify({
+                                token: token,
+                            })]));
                         case Failure(failure):
                             res.type("text");
                             res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
@@ -261,67 +270,108 @@ class Admin extends View {
         }
     }
 
+    static public function getByToken(req:Request, res:Response) {
+        var token = res.getToken();
+        MySql.db.getDeliveries(token.date)
+            .handle(o -> switch (o) {
+                case Success(deliveries):
+                    res.json({
+                        deliveries: deliveries
+                            .filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == token.time)
+                            .map(d -> d.with({
+                                orders: d.orders.filter(o -> o.shop == token.shop),
+                                pickupLocation: null,
+                                paymentMethods: null,
+                                deliveryFee: null,
+                                customerNote: null,
+                            })),
+                        date: token.date,
+                        time: token.time,
+                        shop: token.shop,
+                    });
+                    return;
+                case Failure(failure):
+                    res.type("text");
+                    res.status(500).end(Std.string(failure));
+                    return;
+            });
+        return;
+    }
+
     static public function get(req:Request, res:Response) {
-        var user:Courier = res.getCourier();
-        switch (req.query.date:String) {
-            case null:
-                // pass
-            case dateStr:
-                switch (req.accepts(["text", "json"])) {
-                    case "text":
+        var user = res.getCourier();
+        switch (req.accepts(["text", "json"])) {
+            case "text":
+                var tgBotInfo = tgBot.telegram.getMe();
+                tgBotInfo.then(tgBotInfo ->
+                    res.sendView(Admin, {
+                        tgBotName: tgBotInfo.username,
+                        user: user,
+                        token: res.getToken(),
+                    }))
+                    .catchError(err -> res.status(500).json(err));
+                return;
+            case "json":
+                switch (res.getToken()) {
+                    case null:
                         // pass
-                    case "json":
-                        var date = Date.fromString(dateStr);
-                        var now = Date.now();
-                        MySql.db.getDeliveries(date)
-                            .handle(o -> switch (o) {
-                                case Success(deliveries):
-                                    if (user.isAdmin) {
-                                        res.json(deliveries);
-                                    } else {
-                                        res.json(deliveries.map(d -> {
-                                            if (
-                                                d.couriers.exists(c -> c.courierId == user.courierId)
-                                                ||
-                                                (
-                                                    // today
-                                                    (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
-                                                    &&
-                                                    // time pass order cut-off
-                                                    switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
-                                                        case Lunch:
-                                                            now.getHours() >= 10;
-                                                        case Dinner:
-                                                            now.getHours() >= 17;
-                                                    }
-                                                )
-                                            ) {
-                                                d;
-                                            } else {
-                                                d.getMinInfo();
-                                            }
-                                        }));
-                                    }
-                                    return;
-                                case Failure(failure):
-                                    res.type("text");
-                                    res.status(500).end(Std.string(failure));
-                                    return;
-                            });
-                        return;
-                    case _:
-                        res.type("text");
-                        res.status(406).end("Can only return text or json");
+                    case token:
+                        getByToken(req, res);
                         return;
                 }
+                var now = Date.now();
+                var date = switch (req.query.date) {
+                    case null: now;
+                    case date: Date.fromString(date);
+                }
+                MySql.db.getDeliveries(date)
+                    .handle(o -> switch (o) {
+                        case Success(deliveries):
+                            var time:TimeSlotType = req.query.time;
+                            if (time != null)
+                                deliveries = deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == time);
+                            if (user.isAdmin) {
+                                res.json({
+                                    deliveries: deliveries,
+                                });
+                            } else {
+                                res.json({
+                                    deliveries: deliveries.map(d -> {
+                                        if (
+                                            d.couriers.exists(c -> c.courierId == user.courierId)
+                                            ||
+                                            (
+                                                // today
+                                                (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
+                                                &&
+                                                // time pass order cut-off
+                                                switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
+                                                    case Lunch:
+                                                        now.getHours() >= 10;
+                                                    case Dinner:
+                                                        now.getHours() >= 17;
+                                                }
+                                            )
+                                        ) {
+                                            d;
+                                        } else {
+                                            d.getMinInfo();
+                                        }
+                                    }),
+                                });
+                            }
+                            return;
+                        case Failure(failure):
+                            res.type("text");
+                            res.status(500).end(Std.string(failure));
+                            return;
+                    });
+                return;
+            case _:
+                res.type("text");
+                res.status(406).end("Can only return text or json");
+                return;
         }
-        var tgBotInfo = tgBot.telegram.getMe();
-        tgBotInfo.then(tgBotInfo ->
-            res.sendView(Admin, {
-                tgBotName: tgBotInfo.username,
-                user: user,
-            }))
-            .catchError(err -> res.status(500).json(err));
     }
 
     static public function setup(app:Application) {

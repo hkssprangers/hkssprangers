@@ -35,4 +35,10 @@ class ExpressTools {
     static public function setCourier(res:Response, courier:Null<Courier>):Void {
         res.locals.courier = courier;
     }
+    static public function getToken(res:Response):Null<Token> {
+        return res.locals.token;
+    }
+    static public function setToken(res:Response, token:Null<Token>):Void {
+        res.locals.token = token;
+    }
 }

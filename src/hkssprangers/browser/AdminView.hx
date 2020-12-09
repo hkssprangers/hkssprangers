@@ -64,16 +64,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         });
     }
 
-    function getUseDb(?search:String) return switch (new URLSearchParams(search != null ? search : props.location.search).get("useDb")) {
-        case null: true;
-        case "false" | "0": false;
-        case v: true;
-    }
+    function getToken(?search:String) return new URLSearchParams(search != null ? search : props.location.search).get("token");
 
     override function componentDidUpdate(prevProps:AdminViewProps, prevState:AdminViewState) {
         var currentSelectedDate = getSelectedDate();
         if (getSelectedDate(prevProps.location.search).getTime() != currentSelectedDate.getTime())
-            loadOrders(currentSelectedDate);
+            loadOrders();
     }
 
     public function new(props):Void {
@@ -85,18 +81,22 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             deliveries: [],
         };
 
-        loadOrders(getSelectedDate(), false);
+        loadOrders(false);
     }
 
-    function loadOrders(date:Date, shouldSetState = true):Promise<Void> {
+    function loadOrders(shouldSetState = true):Promise<Void> {
+        var token = getToken();
         if (shouldSetState)
             setState({
                 isLoading: true,
             });
-        var qs = new URLSearchParams({
-            date: DateTools.format(date, "%Y-%m-%d"),
-            useDb: getUseDb() ? "true" : "false",
-        });
+        var qs = new URLSearchParams(
+            if (token == null) {
+                date: DateTools.format(getSelectedDate(), "%Y-%m-%d"),
+            } else {
+                token: token,
+            }
+        );
         return window.fetch("/admin?" + qs, {
             headers: {
                 Accept: "application/json",
@@ -107,16 +107,20 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     location.assign("/login?" + new URLSearchParams({
                         redirectTo: location.pathname + location.search,
                     }));
-                    Promise.resolve([]);
+                    Promise.resolve({
+                        deliveries: [],
+                    });
                 } else if (!r.ok) {
                     r.text().then(text -> window.alert(text));
-                    Promise.resolve([]);
+                    Promise.resolve({
+                        deliveries: [],
+                    });
                 } else {
                     r.json();
                 }
             )
             .then(json -> {
-                var deliveries:Array<Delivery> = json;
+                var deliveries:Array<Delivery> = json.deliveries;
                 setState({
                     isLoading: false,
                     deliveries: deliveries.map(d -> {
@@ -187,7 +191,8 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 <DeliveryView
                     delivery=${d}
                     onChange=${onChange}
-                    canEdit=${props.user.isAdmin}
+                    canEdit=${props.user != null && props.user.isAdmin}
+                    showCourierTools=${props.user != null}
                     needEdit=${d.deliveryCode == null}
                 />
             </div>
@@ -220,17 +225,18 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     override function render() {
-        var loggedInAs = if (props.user != null)
-            jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
-        else
-            null;
+        var token = getToken();
         var selectedTimeSlotType = getSelectedTimeSlotType();
-        var filteredDeliveries = state.deliveries.filter(d -> {
-            if (d.d.pickupTimeSlot != null && d.d.pickupTimeSlot.start != null)
-                TimeSlotType.classify(d.d.pickupTimeSlot.start) == selectedTimeSlotType;
-            else
-                true;
-        });
+        var filteredDeliveries = if (token == null) {
+            state.deliveries.filter(d -> {
+                if (d.d.pickupTimeSlot != null && d.d.pickupTimeSlot.start != null)
+                    TimeSlotType.classify(d.d.pickupTimeSlot.start) == selectedTimeSlotType;
+                else
+                    true;
+            });
+        } else {
+            state.deliveries;
+        }
         var content = if (state.isLoading) {
             [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
@@ -275,7 +281,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         }
 
-        var addDeliveryButton = if (state.isLoading || !props.user.isAdmin) {
+        var addDeliveryButton = if (state.isLoading || props.user == null || !props.user.isAdmin) {
             null;
         } else {
             jsx('
@@ -317,7 +323,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         });
 
-        var copyBtn = if (props.user.isAdmin) {
+        var copyBtn = if (props.user != null && props.user.isAdmin) {
             jsx('
                 <CopyButton
                     text=${() -> Promise.resolve(filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr))}
@@ -327,7 +333,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             null;
         }
         var announceBtnRef = React.createRef();
-        var announceBtn = if (props.user.isAdmin) {
+        var announceBtn = if (props.user != null && props.user.isAdmin) {
             function onClickAnnounce():Void {
                 setState({
                     openAnnounceModal: true,
@@ -372,7 +378,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         body: Json.stringify({
                             action: "share",
                             date: (selectedDate:LocalDateString),
-                            type: selectedTimeSlotType,
+                            time: selectedTimeSlotType,
                             shop: shop,
                         }),
                     })
@@ -404,9 +410,26 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             }
         }
 
-        return jsx('
-            <Container>
-                <Grid container justify=${Center} direction=${Column}>
+        var header = if (token != null) {
+            var count = if (!state.isLoading) {
+                '共 ${filteredDeliveries.length} 單';
+            } else {
+                "Loading";
+            }
+            jsx('
+                <Grid item container justify=${Center} className="py-2">
+                    <Grid item>
+                        ${count}
+                    </Grid>
+                </Grid>
+            ');
+        } else {
+            var loggedInAs = if (props.user != null)
+                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
+            else
+                null;
+            jsx('
+                <Fragment>
                     <Grid item container justify=${Center} className="py-2">
                         <Grid item>
                             ${loggedInAs}
@@ -444,6 +467,14 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             ${announceBtn}
                         </Grid>
                     </Grid>
+                </Fragment>
+            ');
+        }
+
+        return jsx('
+            <Container>
+                <Grid container justify=${Center} direction=${Column}>
+                    ${header}
                     <Grid item container justify=${Center} alignItems=${Center}>
                         <Grid item>
                             ${content}

@@ -24,6 +24,7 @@ typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Promise<Delivery>;
     final canEdit:Bool;
+    final showCourierTools:Bool;
     @:optional final needEdit:Bool;
 }
 
@@ -202,7 +203,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
-            var shopContact = if (o.orderDetails != null) {
+            var shopContact = if (props.showCourierTools && o.orderDetails != null) {
                 o.shop.info().courierContact.map(contact -> {
                     var label = if (contact.startsWith("tel:")) {
                         jsx('<Fragment><i className="fas fa-phone"></i> telephone</Fragment>');
