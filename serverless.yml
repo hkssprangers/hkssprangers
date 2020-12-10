@@ -52,11 +52,11 @@ functions:
     events:
       - schedule:
           # every 20 min, HKT 9:00 pm - 7:00 am
-          rate: cron(*/20 13-23 * * *)
+          rate: cron(*/20 13-23 * * ? *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
       - schedule:
           # every 2 min, HKT 8:00 am - 9:00 am
-          rate: cron(*/2 0-13 * * *)
+          rate: cron(*/2 0-13 * * ? *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
 
 plugins:
