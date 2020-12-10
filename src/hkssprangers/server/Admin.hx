@@ -300,8 +300,8 @@ class Admin extends View {
 
     static public function get(req:Request, res:Response) {
         var user = res.getCourier();
-        switch (req.accepts(["text", "json"])) {
-            case "text":
+        switch (req.accepts(["text/html", "application/json"])) {
+            case "text/html":
                 var tgBotInfo = tgBot.telegram.getMe();
                 tgBotInfo.then(tgBotInfo ->
                     res.sendView(Admin, {
@@ -311,7 +311,7 @@ class Admin extends View {
                     }))
                     .catchError(err -> res.status(500).json(err));
                 return;
-            case "json":
+            case "application/json":
                 switch (res.getToken()) {
                     case null:
                         // pass
@@ -369,7 +369,7 @@ class Admin extends View {
                 return;
             case _:
                 res.type("text");
-                res.status(406).end("Can only return text or json");
+                res.status(406).end("Can only return html or json");
                 return;
         }
     }
