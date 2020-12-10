@@ -60,8 +60,11 @@ class Admin extends View {
     else
         '${token.date} ${switch (token.time) { case Lunch: "午市"; case Dinner: "晚市"; }} ${token.shop.info().name} ${name}外賣單';
 
-    override function description() return title();
-    override function canonical() return Path.join(["https://" + canonicalHost, "admin"]);
+    override function canonical() return if (token == null)
+        Path.join(["https://" + canonicalHost, "admin"]);
+    else
+        null;
+
     override public function render() {
         return super.render();
     }

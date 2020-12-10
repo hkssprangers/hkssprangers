@@ -88,13 +88,23 @@ class View extends ReactComponent {
     function prefetch():Array<String> return [];
     function prefetchNode(link:String) return jsx('<link key=${link} rel="prefetch" href=${link} />');
 
-    function ogMeta() return jsx('
-        <Fragment>
-            <meta property="og:title" content=${title()} />
-            <meta property="og:description" content=${description()} />
-            <meta property="og:url" content=${canonical()} />
-        </Fragment>
-    ');
+    function ogMeta() {
+        var description = switch (description()) {
+            case null: null;
+            case v: jsx('<meta property="og:description" content=${v} />');
+        }
+        var canonical = switch (canonical()) {
+            case null: null;
+            case v: jsx('<meta property="og:url" content=${v} />');
+        }
+        return jsx('
+            <Fragment>
+                <meta property="og:title" content=${title()} />
+                ${description}
+                ${canonical}
+            </Fragment>
+        ');
+    }
 
     function head() return jsx('
         <head>
