@@ -151,14 +151,21 @@ class Admin extends View {
                     next();
                     return;
                 }
-        
-                var token = res.getToken();
-                if (token.exp.toInt() < (Date.now():EpochTimeSeconds).toInt()) {
-                    res.type("text");
-                    res.status(400).end("token expired");
+                
+                var tokenOk = switch (res.getToken()) {
+                    case null:
+                        false;
+                    case token:
+                        true;
                 }
-                next();
-                return;
+
+                if (tokenOk) {
+                    next();
+                    return;
+                } else {
+                    res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
+                    return;
+                }
             });
     }
 
