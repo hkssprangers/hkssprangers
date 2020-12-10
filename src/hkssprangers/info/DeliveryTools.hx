@@ -16,7 +16,7 @@ class DeliveryTools {
         buf.add("📃 " + d.deliveryCode + "\n");
 
         if (d.couriers != null && d.couriers.length > 0)
-            buf.add(d.couriers.map(c -> c.tg.print(false)).join(" ") + "\n");
+            buf.add("外賣員: " + d.couriers.map(c -> c.tg.print(false)).join(" ") + "\n");
 
         buf.add("\n");
 
@@ -24,9 +24,12 @@ class DeliveryTools {
 
         buf.add("\n\n");
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
-        buf.add("總食物價錢+運費: $" + (foodTotal + d.deliveryFee.nanIfNull()) + "\n");
+        var allTotal = foodTotal + d.deliveryFee.nanIfNull();
+        if (!Math.isNaN(allTotal)) {
+            buf.add("總食物價錢+運費: $" + allTotal + "\n");
+            buf.add("\n");
+        }
 
-        buf.add("\n");
         if (d.pickupTimeSlot != null && d.pickupTimeSlot.start != null && d.pickupTimeSlot.end != null)
             buf.add(d.pickupTimeSlot.print() + "\n");
         if (d.customer.tg != null && d.customer.tg.username != null)

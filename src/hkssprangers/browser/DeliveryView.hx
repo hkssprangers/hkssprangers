@@ -599,14 +599,16 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             ');
         }
 
-        var subheader = if (d.couriers == null) {
+        var subheader = if (d.couriers == null || d.couriers.length == 0) {
             null;
         } else {
             var couriers = d.couriers.map(c -> jsx('
                 <Grid item key=${c.tg.username}><a href=${"https://t.me/" + c.tg.username} target="_blank">@${c.tg.username}</a></Grid>
             '));
             jsx('
-                <Grid container wrap=${NoWrap} spacing=${Spacing_1}>${couriers}</Grid>
+                <Grid container wrap=${NoWrap} spacing=${Spacing_1} alignItems=${Center}>
+                    <Grid item>外賣員:</Grid>${couriers}
+                </Grid>
             ');
         }
 
