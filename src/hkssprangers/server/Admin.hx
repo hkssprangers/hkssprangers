@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import js.lib.Promise;
 import tink.core.Error.ErrorCode;
 import telegraf.Markup;
 import tink.core.Noise;
@@ -78,7 +79,7 @@ class Admin extends View {
 
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
-    static public function setTg(req:Request, res:Response, next) {
+    static public function setTg(req:Request, res:Response):Promise<Null<Tg>> {
         var tg:Dynamic = if (req.cookies != null && req.cookies.tg != null) try {
             Json.parse(req.cookies.tg);
         } catch(err) {
@@ -92,19 +93,18 @@ class Admin extends View {
         }
 
         res.setUserTg(tg);
-        next();
+        return Promise.resolve(tg);
     }
 
-    static public function setCourier(req:Request, res:Response, next) {
+    static public function setCourier(req:Request, res:Response):Promise<Null<Courier>> {
         var tg = res.getUserTg();
 
         if (tg == null) {
-            next();
-            return;
+            return Promise.resolve(null);
         }
 
-        MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first().handle(o -> switch o {
-            case Success(courierData):
+        return MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first()
+            .next(courierData -> {
                 var courier:Courier = {
                     courierId: courierData.courierId,
                     tg: tg,
@@ -112,38 +112,54 @@ class Admin extends View {
                 }
 
                 res.setCourier(courier);
-                next();
-                return;
-            case Failure(failure):
+                courier;
+            })
+            .tryRecover(failure -> {
                 if (failure.code == 404) {
                     trace('${tg.username} (${tg.id}) is not one of the couriers.');
-                    next();
-                    return;
                 } else {
                     trace(failure.message + "\n\n" + failure.exceptionStack);
-                    next();
-                    return;
                 }
-        });
+                tink.core.Promise.NULL;
+            }).toJsPromise();
+    }
+
+    static public function setToken(req:Request, res:Response):Promise<Null<Token>> {
+        return switch (req.query.token) {
+            case null:
+                Promise.resolve(null);
+            case token:
+                ServerMain.jwtVerifyToken(token)
+                    .tryRecover(failure -> {
+                        trace(failure.message + "\n\n" + failure.exceptionStack);
+                        tink.core.Promise.NULL;
+                    })
+                    .next(token -> {
+                        res.setToken(token);
+                        token;
+                    })
+                    .toJsPromise();
+        }
     }
 
     static public function ensurePermission(req:Request, res:Response, next) {
-        var courier = res.getCourier();
-
-        if (courier != null) {
-            next();
-            return;
-        }
-
-        ServerMain.jwtVerifyToken(req.query.token).handle(o -> switch o {
-            case Success(data):
-                res.setToken(data);
+        setTg(req, res)
+            .then(_ -> setCourier(req,res))
+            .then(_ -> setToken(req, res))
+            .then(_ -> {
+                if (res.getCourier() != null) {
+                    next();
+                    return;
+                }
+        
+                var token = res.getToken();
+                if (token.exp.toInt() < (Date.now():EpochTimeSeconds).toInt()) {
+                    res.type("text");
+                    res.status(400).end("token expired");
+                }
                 next();
                 return;
-            case Failure(failure):
-                res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
-                return;
-        });
+            });
     }
 
     static public function post(req:Request, res:Response) {
@@ -277,7 +293,11 @@ class Admin extends View {
                 case Success(deliveries):
                     res.json({
                         deliveries: deliveries
-                            .filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == token.time)
+                            .filter(d ->
+                                d.orders.exists(o -> o.shop == token.shop)
+                                &&
+                                TimeSlotType.classify(d.pickupTimeSlot.start) == token.time
+                            )
                             .map(d -> d.with({
                                 orders: d.orders.filter(o -> o.shop == token.shop),
                                 pickupLocation: null,
@@ -312,7 +332,8 @@ class Admin extends View {
                     .catchError(err -> res.status(500).json(err));
                 return;
             case "application/json":
-                switch (res.getToken()) {
+                var token = res.getToken();
+                switch (token) {
                     case null:
                         // pass
                     case token:
@@ -375,7 +396,7 @@ class Admin extends View {
     }
 
     static public function setup(app:Application) {
-        app.get("/admin", Admin.setTg, Admin.setCourier, Admin.ensurePermission, Admin.get);
-        app.post("/admin", Admin.setTg, Admin.setCourier, Admin.ensurePermission, Admin.post);
+        app.get("/admin", Admin.ensurePermission, Admin.get);
+        app.post("/admin", Admin.ensurePermission, Admin.post);
     }
 }
