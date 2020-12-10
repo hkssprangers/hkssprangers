@@ -246,6 +246,20 @@ class ImportGoogleForm {
                     };
                 });
         };
+        js.Node.exports.sendAttendancePoll = function(evt, context) {
+            sendAttendancePoll(TelegramConfig.internalGroupChatId)
+                .then(_ -> {
+                    statusCode: 200,
+                    body: "done",
+                })
+                .catchError(err -> {
+                    context.serverlessSdk.captureError(err);
+                    {
+                        statusCode: 500,
+                        body: Std.string(err),
+                    };
+                });
+        }
 
         if (isMain) {
             switch (Sys.args()) {
