@@ -247,7 +247,7 @@ class ImportGoogleForm {
                 });
         };
         js.Node.exports.sendAttendancePoll = function(evt, context) {
-            sendAttendancePoll(TelegramConfig.internalGroupChatId)
+            return sendAttendancePoll(TelegramConfig.internalGroupChatId)
                 .then(_ -> {
                     statusCode: 200,
                     body: "done",
