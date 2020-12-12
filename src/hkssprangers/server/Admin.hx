@@ -46,6 +46,9 @@ typedef FormOrder = {
 };
 
 class Admin extends View {
+    public var fontSize(get, never):String;
+    function get_fontSize() return props.fontSize;
+
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
@@ -67,6 +70,12 @@ class Admin extends View {
 
     override public function render() {
         return super.render();
+    }
+
+    override function htmlClasses() {
+        return super.htmlClasses().concat(
+            fontSize != null ? ["fontSize-" + fontSize] : []
+        );
     }
 
     override function bodyContent() {
@@ -281,9 +290,16 @@ class Admin extends View {
                     .handle(o -> switch(o) {
                         case Success(token):
                             res.type("text");
-                            res.end(Path.join(["https://" + host, "admin?" + Querystring.stringify({
+                            var qs:Dynamic = {
                                 token: token,
-                            })]));
+                            };
+                            switch (shop) {
+                                case MGY:
+                                    qs.fontSize = "larger";
+                                case _:
+                                    //pass
+                            }
+                            res.end(Path.join(["https://" + host, "admin?" + Querystring.stringify(qs)]));
                         case Failure(failure):
                             res.type("text");
                             res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
@@ -338,6 +354,7 @@ class Admin extends View {
                         tgBotName: tgBotInfo.username,
                         user: user,
                         token: res.getToken(),
+                        fontSize: req.query.fontSize,
                     }))
                     .catchError(err -> res.status(500).json(err));
                 return;

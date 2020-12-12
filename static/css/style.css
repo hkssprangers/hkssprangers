@@ -13,6 +13,10 @@ body {
     flex-direction: column;
 }
 
+html.fontSize-larger {
+    font-size: larger;
+}
+
 footer {
     margin-top: auto;
     padding-top: 1rem;

@@ -133,6 +133,10 @@ class View extends ReactComponent {
         </head>
     ');
 
+    function htmlClasses():Array<String> {
+        return [];
+    }
+
     function bodyClasses():Array<String> {
         return [];
     }
@@ -159,7 +163,7 @@ class View extends ReactComponent {
 
     override function render() {
         return jsx('
-            <html lang="zh">
+            <html lang="zh" className=${htmlClasses().join(" ")}>
                 ${head()}
                 ${body()}
             </html>
