@@ -269,6 +269,17 @@ class DeliveryFee {
             }
         },
         {
+            place: "美荷樓",
+            match: address -> address.contains("美荷樓"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
             place: "白田邨",
             match: address -> address.contains("白田邨") || address.contains("白田村"),
             deliveryFee: cluster -> switch cluster {
@@ -453,6 +464,87 @@ class DeliveryFee {
                 case BiuKeeCluster: 35;
                 case NeighborCluster: 25;
                 case MGYCluster: 40;
+            }
+        },
+        {
+            place: "麗群閣",
+            match: address -> address.contains("麗群閣"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case YearsCluster: 35;
+                case BiuKeeCluster: 35;
+                case NeighborCluster: 25;
+                case MGYCluster: 35;
+            }
+        },
+        {
+            place: "新寶大廈",
+            match: address -> address.contains("新寶大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 35;
+            }
+        },
+        {
+            place: "五聯大廈",
+            match: address -> address.contains("五聯大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "福榮街85號",
+            match: address -> ~/福榮街\s*(?:85)/.match(address),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "JCCAC",
+            match: address ->
+                address.contains("賽馬會創意藝術中心") ||
+                address.toLowerCase().contains("jockey club creative arts centre") ||
+                address.toLowerCase().contains("jockey club creative arts center") ||
+                address.toLowerCase().contains("jccac"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 40;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 40;
+                case MGYCluster: 35;
+            }
+        },
+        {
+            place: "東廬大樓",
+            match: address -> address.contains("東廬大樓"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "元州街龍寶酒樓",
+            match: address -> address.contains("元州街") && address.contains("龍寶酒樓"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 35;
             }
         },
     ];
