@@ -16,6 +16,7 @@ enum abstract Shop(String) to String {
     var HanaSoftCream:Shop;
     var Neighbor:Shop;
     var MGY:Shop;
+    var FastTasteSSP:Shop;
 
     static public final all = [
         EightyNine,
@@ -28,6 +29,7 @@ enum abstract Shop(String) to String {
         HanaSoftCream,
         Neighbor,
         MGY,
+        FastTasteSSP,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -429,6 +431,46 @@ enum abstract Shop(String) to String {
                         },
                     ]
                 }
+            case FastTasteSSP:
+                {
+                    id: FastTasteSSP,
+                    name: "Fast Taste (SSP)",
+                    address: "深水埗福華街110號地下",
+                    courierContact: [
+                        "tel:61628045",
+                    ],
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
+                    ],
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "12:30",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:00",
+                            end: "20:00"
+                        },
+                        {
+                            type: Dinner,
+                            start: "20:00",
+                            end: "21:00"
+                        },
+                    ]
+                }
     }
 
     static public function fromId(shopId:String):Shop {
@@ -443,6 +485,7 @@ enum abstract Shop(String) to String {
             case HanaSoftCream: HanaSoftCream;
             case Neighbor: Neighbor;
             case MGY: MGY;
+            case FastTasteSSP: FastTasteSSP;
             case _: null;
         }
     }

@@ -446,6 +446,8 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                 null;
             case MGY:
                 null;
+            case FastTasteSSP:
+                null;
         }
         function onAddressChange(evt:js.html.Event) {
             setState({
