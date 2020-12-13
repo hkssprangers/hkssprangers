@@ -121,6 +121,14 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             )
             .then(json -> {
                 var deliveries:Array<Delivery> = json.deliveries;
+                if (props.user != null)
+                deliveries.sort((a, b) -> {
+                    switch [a.couriers.exists(c -> c.courierId == props.user.courierId), b.couriers.exists(c -> c.courierId == props.user.courierId)] {
+                        case [true, false]: -1;
+                        case [false, true]: 1;
+                        case _: 0;
+                    }
+                });
                 setState({
                     isLoading: false,
                     deliveries: deliveries.map(d -> {
