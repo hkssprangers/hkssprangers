@@ -23,6 +23,7 @@ enum abstract ShopCluster(String) {
             case HanaSoftCream: DragonCentreCluster;
             case Neighbor: NeighborCluster;
             case MGY: MGYCluster;
+            case FastTasteSSP: BiuKeeCluster;
         }
     }
 }
