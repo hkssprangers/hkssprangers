@@ -28,6 +28,7 @@ class GoogleForms {
         KCZenzero => "1gHslFNSVO8KOoD6IEcV-mglGoGailUaHr4SbQRSzFOo",
         Neighbor => "15Mzv3r9wTbxpIiJEPbPPwF8O7oP4hQGQ5bksyMuKXHY",
         MGY => "1jbZng_nv2nx3WgY7BV6DfpGz_3AuheVH2VYNOxQCQvM",
+        FastTasteSSP => "1OeoNlkZlzj_QpZJV9UaKpXbQjdYSoXLUPbKi5YeWQdw",
     ];
 
     static public var responseSheet(get, null):Map<Shop, Promise<GoogleSpreadsheet>>;
@@ -176,8 +177,26 @@ class GoogleForms {
                 extraOrderContent.push("外賣盒 (+$1)");
             case [MGY, "小食選擇", v]:
                 orderContent.push(v);
+            case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料"))):
+                if (h.contains("請選擇")) {
+                    orderContent.push(v);
+                } else {
+                    orderContent.push(h + ": " + v);
+                }
+                var multi = ~/^.+: (\d+)份$/;
+                if (multi.match(v)) {
+                    for (_ in 0...Std.parseInt(multi.matched(1)))
+                        extraOrderContent.push("外賣盒 (+$1)");
+                } else {
+                    for (_ in v.split(","))
+                        extraOrderContent.push("外賣盒 (+$1)");
+                }
             case [_, h, v]:
-                orderContent.push(h + ": " + v);
+                if (h.contains("請選擇")) {
+                    orderContent.push(v);
+                } else {
+                    orderContent.push(h + ": " + v);
+                }
         }
         switch (shop) {
             case KCZenzero:
