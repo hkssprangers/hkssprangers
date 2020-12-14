@@ -22,6 +22,7 @@ jobs:
           path: |
             ~/haxe
             node_modules
+            terraform/.terraform
           key: ${{ runner.os }}
       - name: Run postCreateCommand
         run: bash ./.devcontainer/postCreateCommand.sh
@@ -34,7 +35,12 @@ jobs:
       - name: Test
         run: haxe test.hxml
       - name: Check Terraform state
-        run: terraform -chdir=terraform plan -detailed-exitcode
+        run: |
+          set -ex
+          pushd terraform
+          terraform init
+          terraform plan -detailed-exitcode
+          popd
         env:
           TF_INPUT: 0
           TF_IN_AUTOMATION: 1
