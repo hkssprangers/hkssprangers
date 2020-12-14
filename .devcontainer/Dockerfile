@@ -22,6 +22,10 @@ RUN apt-get update \
     && apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' \
     && add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.ubuntu-tw.org/mirror/mariadb/repo/10.5/ubuntu bionic main' \
     && apt-get install -y mariadb-server \
+    && curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
+    && apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+    && apt-get install -y terraform \
+    && echo "complete -C /usr/bin/terraform terraform" >> /etc/bash.bashrc \
     && npm install -g yarn \
     && yarn global add lix --prefix /usr/local \
     #

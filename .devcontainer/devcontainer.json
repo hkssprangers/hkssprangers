@@ -6,7 +6,8 @@
 	"postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
 	"extensions": [
 		"nadako.vshaxe",
-		"lix.lix"
+		"lix.lix",
+		"hashicorp.terraform",
 	],
 	"appPort": [ 3000, 443 ]
 }
