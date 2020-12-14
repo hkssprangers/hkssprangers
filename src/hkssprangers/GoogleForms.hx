@@ -178,12 +178,12 @@ class GoogleForms {
             case [MGY, "小食選擇", v]:
                 orderContent.push(v);
             case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料"))):
-                if (h.contains("請選擇")) {
+                if (h == "請選擇") {
                     orderContent.push(v);
                 } else {
                     orderContent.push(h + ": " + v);
                 }
-                var multi = ~/^.+: (\d+)份$/;
+                var multi = ~/^(\d+)份$/;
                 if (multi.match(v)) {
                     for (_ in 0...Std.parseInt(multi.matched(1)))
                         extraOrderContent.push("外賣盒 (+$1)");
@@ -192,7 +192,7 @@ class GoogleForms {
                         extraOrderContent.push("外賣盒 (+$1)");
                 }
             case [_, h, v]:
-                if (h.contains("請選擇")) {
+                if (h == "請選擇") {
                     orderContent.push(v);
                 } else {
                     orderContent.push(h + ": " + v);
