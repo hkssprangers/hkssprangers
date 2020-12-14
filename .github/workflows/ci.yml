@@ -33,6 +33,14 @@ jobs:
         run: haxe importGoogleForm.hxml
       - name: Test
         run: haxe test.hxml
+      - name: Check Terraform state
+        run: terraform -chdir=terraform plan -detailed-exitcode
+        env:
+          TF_INPUT: 0
+          TF_IN_AUTOMATION: 1
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-1
       - name: Set Env
         run: |
           set -ex
