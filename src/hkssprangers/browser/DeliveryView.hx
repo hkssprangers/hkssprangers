@@ -20,12 +20,19 @@ using hkssprangers.ValueTools;
 using hkssprangers.info.DeliveryTools;
 using hkssprangers.info.TimeSlotTools;
 
+enum abstract DeliveryViewMode(String) {
+    var AdminView;
+    var CourierView;
+    var ShopView;
+    var CustomerView;
+} 
+
 typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Promise<Delivery>;
     final canEdit:Bool;
-    final showCourierTools:Bool;
     @:optional final needEdit:Bool;
+    final viewMode:DeliveryViewMode;
 }
 
 typedef DeliveryViewState = {
@@ -203,7 +210,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
-            var shopContact = if (props.showCourierTools && o.orderDetails != null) {
+            var shopContact = if ((switch (props.viewMode) {
+                case AdminView | CourierView: true;
+                case CustomerView | ShopView: false;
+            }) && o.orderDetails != null) {
                 o.shop.info().courierContact.map(contact -> {
                     var label = if (contact.startsWith("tel:")) {
                         jsx('<Fragment><i className="fas fa-phone"></i> telephone</Fragment>');

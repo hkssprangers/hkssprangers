@@ -194,14 +194,22 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     });
             }
         }
+        var viewMode:hkssprangers.browser.DeliveryView.DeliveryViewMode = switch (props.user) {
+            case null:
+                ShopView;
+            case { isAdmin: true }:
+                AdminView;
+            case { isAdmin: false }:
+                CourierView;
+        }
         return jsx('
             <div key=${key} className="mb-3">
                 <DeliveryView
                     delivery=${d}
                     onChange=${onChange}
                     canEdit=${props.user != null && props.user.isAdmin}
-                    showCourierTools=${props.user != null}
                     needEdit=${d.deliveryCode == null}
+                    viewMode=${viewMode}
                 />
             </div>
         ');
