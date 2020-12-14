@@ -223,7 +223,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         jsx('<Fragment><i className="fas fa-store"></i> contact</Fragment>');
                     }
                     jsx('
-                        <a key=${contact} href=${contact} target="_blank" className="courierContact badge badge-pill badge-light p-2 ml-1">
+                        <a key=${contact} href=${contact} target="_blank" className="courierContact badge badge-pill badge-light p-2 ml-1 user-select-none">
                             ${label}
                         </a>
                     ');
