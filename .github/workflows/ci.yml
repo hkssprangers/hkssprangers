@@ -35,12 +35,11 @@ jobs:
       - name: Test
         run: haxe test.hxml
       - name: Check Terraform state
+        working-directory: ./terraform
         run: |
           set -ex
-          pushd terraform
           terraform init
           terraform plan -detailed-exitcode
-          popd
         env:
           TF_INPUT: 0
           TF_IN_AUTOMATION: 1
