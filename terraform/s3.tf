@@ -14,9 +14,10 @@ module "s3_bucket_uploads" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "~> 1.17"
 
-  bucket = "hkssprangers-uploads"
-  acl    = "public-read"
-  policy = <<-EOF
+  bucket        = "hkssprangers-uploads"
+  acl           = "public-read"
+  attach_policy = true
+  policy        = <<-EOF
   {
       "Version": "2012-10-17",
       "Statement": [
