@@ -13,4 +13,8 @@ typedef Order = OrderMeta & {
     orderDetails:String,
     orderPrice:Float,
     platformServiceCharge:Float,
+    receipts: Null<Array<{
+        receiptId:Int,
+        receiptUrl:String,
+    }>>,
 }

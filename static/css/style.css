@@ -130,3 +130,10 @@ legend.MuiFormLabel-root {
     height: 1.1em;
     display: inline-block;
 }
+
+.receipt ol {
+    margin-bottom: 0;
+    list-style: none;
+    padding-inline-start: 0;
+    line-height: 2em;
+}

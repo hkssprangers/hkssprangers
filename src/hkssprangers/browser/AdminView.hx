@@ -199,14 +199,38 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 ShopView;
             case { isAdmin: true }:
                 AdminView;
+            case { isAdmin: false } if (d.couriers.exists(c -> c.courierId == props.user.courierId)):
+                AssignedCourierView;
             case { isAdmin: false }:
                 CourierView;
+        }
+        function onAddReceipt(o:Order, dataUri:String):Promise<Dynamic> {
+            return window.fetch("/admin", {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: Json.stringify({
+                    action: "upload",
+                    orderId: o.orderId,
+                    file: dataUri,
+                }),
+            })
+                .then(r -> {
+                    if (r.ok) {
+                        window.alert("uploaded");
+                        loadOrders();
+                    } else {
+                        r.text().then(text -> window.alert(text));
+                    }
+                });
         }
         return jsx('
             <div key=${key} className="mb-3">
                 <DeliveryView
                     delivery=${d}
                     onChange=${onChange}
+                    onAddReceipt=${onAddReceipt}
                     canEdit=${props.user != null && props.user.isAdmin}
                     needEdit=${d.deliveryCode == null}
                     viewMode=${viewMode}
@@ -290,6 +314,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             orderDetails: null,
                             orderPrice: null,
                             platformServiceCharge: null,
+                            receipts: null,
                         }],
                     },
                     key: random(),

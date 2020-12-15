@@ -22,6 +22,7 @@ using hkssprangers.info.TimeSlotTools;
 
 enum abstract DeliveryViewMode(String) {
     var AdminView;
+    var AssignedCourierView;
     var CourierView;
     var ShopView;
     var CustomerView;
@@ -30,6 +31,7 @@ enum abstract DeliveryViewMode(String) {
 typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Promise<Delivery>;
+    final onAddReceipt:(order:Order, dataUri:String)->Promise<Dynamic>;
     final canEdit:Bool;
     @:optional final needEdit:Bool;
     final viewMode:DeliveryViewMode;
@@ -206,12 +208,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 null;
             }
             var orderPrice = if (o.orderPrice != null && !Math.isNaN(o.orderPrice)) {
-                jsx('<Typography paragraph>食物價錢: $$${o.orderPrice}</Typography>');
+                jsx('<Typography>食物價錢: $$${o.orderPrice}</Typography>');
             } else {
                 null;
             }
             var shopContact = if ((switch (props.viewMode) {
-                case AdminView | CourierView: true;
+                case AdminView | AssignedCourierView | CourierView: true;
                 case CustomerView | ShopView: false;
             }) && o.orderDetails != null) {
                 o.shop.info().courierContact.map(contact -> {
@@ -231,6 +233,55 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
+            var receipts = switch (props.viewMode) {
+                case AdminView | AssignedCourierView:
+                    function onAddRecept(evt) {
+                        var file:js.html.File = evt.currentTarget.files[0];
+                        var reader = new js.html.FileReader();
+                        reader.onload = function(e) {
+                            var dataUri:String = e.target.result;
+                            props.onAddReceipt(o, dataUri);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    var addReceiptBtn = jsx('
+                        <Button
+                            color=${Primary}
+                            component="label"
+                        >
+                            上傳收據
+                            <input
+                                accept="image/*"
+                                type="file"
+                                onChange=${onAddRecept}
+                                hidden
+                            />
+                        </Button>
+                    ');
+                    var receiptImages = if (o.receipts != null) {
+                        o.receipts.mapi((i,r) -> {
+                            jsx('
+                                <li key=${r.receiptId}>
+                                    <a className="receipt" href=${r.receiptUrl} target="_blank">
+                                        收據圖片 ${i+1}
+                                    </a>
+                                </li>
+                            ');
+                        });
+                    } else {
+                        null;
+                    }
+                    jsx('
+                        <div className="receipt mb-2">
+                            <ol>
+                                ${receiptImages}
+                            </ol>
+                            ${addReceiptBtn}
+                        </div>
+                    ');
+                case CourierView | CustomerView | ShopView:
+                    null;
+            }
             return jsx('
                 <div key=${key}>
                     <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"} ${shopContact}</Typography>
@@ -238,6 +289,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     ${customerNote}
                     ${tableware}
                     ${orderPrice}
+                    ${receipts}
                 </div>
             ');
         }
@@ -632,6 +684,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 orderDetails: null,
                 orderPrice: null,
                 platformServiceCharge: null,
+                receipts: null,
             });
             newDelivery.setCouriersIncome();
             setState({
@@ -813,11 +866,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
         var customerTotal = {
             var total = foodTotal + d.deliveryFee.nanIfNull();
-            if (Math.isNaN(total)) {
-                jsx('<Typography paragraph></Typography>');
+            var text = if (Math.isNaN(total)) {
+                "";
             } else {
-                jsx('<Typography paragraph>總食物價錢+運費: $$${total}</Typography>');
+                '總食物價錢+運費: $$${total}';
             }
+            jsx('<Typography paragraph className="py-2">${text}</Typography>');
         }
 
         return jsx('

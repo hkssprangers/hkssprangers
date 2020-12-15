@@ -305,11 +305,47 @@ class Admin extends View {
                             res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
                     });
                 return;
+            case "upload":
+                var fileDataUri:String = req.body.file;
+                var orderId:Int = req.body.orderId;
+                var file = js.npm.image_data_uri.ImageDataUri.decode(fileDataUri);
+                uploadImage(file.dataBuffer)
+                    .then(fileUrl -> {
+                        MySql.db.receipt.insertOne({
+                            receiptId: null,
+                            receiptUrl: fileUrl,
+                            orderId: orderId,
+                            uploaderCourierId: user.courierId,
+                        }).next(_ -> {
+                            res.type("text");
+                            res.end("done");
+                            Noise;
+                        }).toJsPromise();
+                    })
+                    .catchError(err -> {
+                        res.type("text");
+                        res.status(500).end(Std.string(err));
+                    });
+                return;
             case action:
                 res.type("text");
                 res.status(406).end("Unknown action " + action);
                 return;
         }
+    }
+
+    static public function uploadImage(img:js.node.Buffer):Promise<String> {
+        var fileBytes = haxe.io.Bytes.ofData(img.buffer);
+        var hash = haxe.crypto.Md5.make(fileBytes).toHex();
+        var imageType = js.npm.image_type.ImageType.imageType(img);
+        var fileName = hash + "." + imageType.ext;
+        return new js.npm.aws_sdk.S3().upload({
+            Bucket: "hkssprangers-uploads",
+            Key: fileName,
+            Body: img,
+            ContentType: imageType.mime,
+        }).promise()
+            .then(_ -> "https://uploads.ssprangers.com/" + fileName);
     }
 
     static public function getByToken(req:Request, res:Response) {

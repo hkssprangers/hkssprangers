@@ -1,5 +1,6 @@
 package hkssprangers.db;
 
+import hkssprangers.info.Shop;
 import haxe.Json;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Tg;
@@ -31,6 +32,9 @@ class Database extends tink.sql.Database {
 
     @:table("order")
     final order:Order;
+
+    @:table("receipt")
+    final receipt:Receipt;
 
     @:table("googleFormImport")
     final googleFormImport:GoogleFormImport;
@@ -82,7 +86,7 @@ class Database extends tink.sql.Database {
             .next(dOrders -> tink.core.Promise.inSequence(dOrders.map(
                 dOrder -> order.where(o -> o.orderId == dOrder.orderId).first()
             )))
-            .next(orders -> orders.map(o -> OrderConverter.toOrder(o, this)));
+            .next(orders -> Promise.inSequence(orders.map(o -> OrderConverter.toOrder(o, this))));
     }
 
     public function saveOrder(o:hkssprangers.info.Order) {
@@ -384,18 +388,25 @@ class CourierConverter {
 }
 
 class OrderConverter {
-    static public function toOrder(o:Order, db:Database):hkssprangers.info.Order {
-        return {
-            orderId: o.orderId,
-            creationTime: o.creationTime,
-            orderCode: o.orderCode,
-            shop: Shop.fromId(o.shopId),
-            wantTableware: o.wantTableware,
-            customerNote: o.customerNote,
-            orderDetails: o.orderDetails,
-            orderPrice: o.orderPrice,
-            platformServiceCharge: o.platformServiceCharge,
-        };
+    static public function toOrder(o:Order, db:Database):Promise<hkssprangers.info.Order> {
+        return db.receipt.where(r -> r.orderId == o.orderId).all()
+            .next(receipts -> {
+                {
+                    orderId: o.orderId,
+                    creationTime: (o.creationTime:LocalDateString),
+                    orderCode: o.orderCode,
+                    shop: Shop.fromId(o.shopId),
+                    wantTableware: o.wantTableware,
+                    customerNote: o.customerNote,
+                    orderDetails: o.orderDetails,
+                    orderPrice: o.orderPrice,
+                    platformServiceCharge: o.platformServiceCharge,
+                    receipts: receipts.map(r -> {
+                        receiptId: r.receiptId,
+                        receiptUrl: r.receiptUrl,
+                    }),
+                };
+            });
     }
 }
 

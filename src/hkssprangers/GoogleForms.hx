@@ -57,6 +57,7 @@ class GoogleForms {
             orderDetails: null,
             orderPrice: null,
             platformServiceCharge: null,
+            receipts: null,
         };
         var delivery:Delivery = {
             creationTime: null,

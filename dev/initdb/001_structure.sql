@@ -1,8 +1,8 @@
--- MariaDB dump 10.17  Distrib 10.5.6-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.18  Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: mysql    Database: hkssprangers
 -- ------------------------------------------------------
--- Server version	8.0.21
+-- Server version	8.0.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -173,6 +173,26 @@ CREATE TABLE `order` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `receipt`
+--
+
+DROP TABLE IF EXISTS `receipt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `receipt` (
+  `receiptId` int NOT NULL AUTO_INCREMENT,
+  `receiptUrl` varchar(1024) COLLATE utf8mb4_bin NOT NULL,
+  `orderId` int DEFAULT NULL,
+  `uploaderCourierId` int DEFAULT NULL,
+  PRIMARY KEY (`receiptId`),
+  KEY `receipt_order_FK` (`orderId`),
+  KEY `receipt_courier_FK` (`uploaderCourierId`),
+  CONSTRAINT `receipt_courier_FK` FOREIGN KEY (`uploaderCourierId`) REFERENCES `courier` (`courierId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `receipt_order_FK` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `tgMessage`
 --
 
@@ -198,4 +218,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28  5:02:30
+-- Dump completed on 2020-12-15 18:15:35

@@ -99,6 +99,7 @@ class DeliveryTools {
                     orderDetails: null,
                     orderPrice: Math.NaN,
                     platformServiceCharge: Math.NaN,
+                    receipts: null,
                 }
                 minInfo;
             }),

@@ -326,6 +326,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
                     platformServiceCharge: 0.0,
                     wantTableware: null,
                     customerNote: null,
+                    receipts: null,
                 }],
                 customer: {
                     tg: null,

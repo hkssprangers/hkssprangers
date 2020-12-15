@@ -20,6 +20,11 @@ provider:
     FORM_READER_EMAIL: ${env:FORM_READER_EMAIL}
     FORM_READER_PRIVATE_KEY: ${env:FORM_READER_PRIVATE_KEY}
     JWT_SECRET: ${env:JWT_SECRET}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource: "arn:aws:s3:::hkssprangers-uploads/*"
 
 package:
   exclude:

@@ -29,10 +29,13 @@
     "xlsx": "^0.16.9"
   },
   "dependencies": {
+    "aws-sdk": "^2.809.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "google-spreadsheet": "^3.0.14",
+    "image-data-uri": "^2.0.1",
+    "image-type": "^4.1.0",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "react": "^16.14.0",
