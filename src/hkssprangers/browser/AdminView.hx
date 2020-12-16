@@ -1,5 +1,7 @@
 package hkssprangers.browser;
 
+import haxe.io.Path;
+import js.html.File;
 import haxe.Json;
 import js.html.URL;
 import js.html.Event;
@@ -204,25 +206,72 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             case { isAdmin: false }:
                 CourierView;
         }
-        function onAddReceipt(o:Order, dataUri:String):Promise<Dynamic> {
+        function onAddReceipt(o:Order, file:File):Promise<Dynamic> {
             return window.fetch("/admin", {
                 method: "post",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: Json.stringify({
-                    action: "upload",
+                    action: "upload-get-signed-url",
                     orderId: o.orderId,
-                    file: dataUri,
+                    contentType: file.type,
+                    fileName: file.name,
                 }),
             })
                 .then(r -> {
-                    if (r.ok) {
-                        window.alert("uploaded");
-                        loadOrders();
+                    if (!r.ok) {
+                        r.text().then(Promise.reject);
                     } else {
-                        r.text().then(text -> window.alert(text));
+                        r.text();
                     }
+                })
+                .then(url -> {
+                    trace(url);
+                    window.fetch(url, {
+                        method: "PUT",
+                        mode: CORS,
+                        body: file,
+                        headers: {
+                            'Content-Type': file.type,
+                        },
+                    }).then(r -> {
+                        if (!r.ok) {
+                            r.text().then(Promise.reject);
+                        } else {
+                            Promise.resolve(url);
+                        }
+                    });
+                })
+                .then(url -> {
+                    var readUrl = {
+                        var url = new URL(url);
+                        Path.join([url.origin, url.pathname]);
+                    }
+                    window.fetch("/admin", {
+                        method: "post",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: Json.stringify({
+                            action: "upload-done",
+                            orderId: o.orderId,
+                            fileUrl: readUrl,
+                        }),
+                    }).then(r -> {
+                        if (!r.ok) {
+                            r.text().then(Promise.reject);
+                        } else {
+                            r.text();
+                        }
+                    });
+                })
+                .then(_ -> {
+                    loadOrders();
+                })
+                .catchError(err -> {
+                    trace(err);
+                    window.alert(err);
                 });
         }
         return jsx('

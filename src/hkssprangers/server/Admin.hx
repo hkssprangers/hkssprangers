@@ -11,6 +11,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
 import js.npm.express.*;
+import js.node.url.URL;
 import js.node.Querystring;
 import jsonwebtoken.Claims;
 import hkssprangers.TelegramConfig;
@@ -305,22 +306,35 @@ class Admin extends View {
                             res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
                     });
                 return;
-            case "upload":
-                var fileDataUri:String = req.body.file;
+            case "upload-get-signed-url":
                 var orderId:Int = req.body.orderId;
-                var file = js.npm.image_data_uri.ImageDataUri.decode(fileDataUri);
-                uploadImage(file.dataBuffer)
-                    .then(fileUrl -> {
-                        MySql.db.receipt.insertOne({
-                            receiptId: null,
-                            receiptUrl: fileUrl,
-                            orderId: orderId,
-                            uploaderCourierId: user.courierId,
-                        }).next(_ -> {
-                            res.type("text");
-                            res.end("done");
-                            Noise;
-                        }).toJsPromise();
+                var contentType:String = req.body.contentType;
+                var fileName:String = req.body.fileName;
+                var ext = Path.extension(fileName);
+                new js.npm.aws_sdk.S3().getSignedUrlPromise("putObject", {
+                    Bucket: "hkssprangers-uploads",
+                    Key: '${user.courierId}/${orderId}/${Std.random(1000000)}.${ext}',
+                    ContentType: contentType,
+                }).then(url -> {
+                    res.type("text");
+                    res.end(url);
+                }).catchError(err -> {
+                    res.type("text");
+                    res.status(500).end(Std.string(err));
+                });
+                return;
+            case "upload-done":
+                var fileUrl:String = req.body.fileUrl;
+                var orderId:Int = req.body.orderId;
+                MySql.db.receipt.insertOne({
+                    receiptId: null,
+                    receiptUrl: fileUrl,
+                    orderId: orderId,
+                    uploaderCourierId: user.courierId,
+                }).toJsPromise()
+                    .then(_ -> {
+                        res.type("text");
+                        res.end("done");
                     })
                     .catchError(err -> {
                         res.type("text");

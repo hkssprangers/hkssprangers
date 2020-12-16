@@ -35,4 +35,14 @@ module "s3_bucket_uploads" {
   website = {
     index_document = "index.html"
   }
+
+  cors_rule = [
+    {
+      allowed_methods = ["PUT"]
+      allowed_origins = ["*"]
+      allowed_headers = ["*"]
+      expose_headers  = ["ETag"]
+      max_age_seconds = 3000
+    }
+  ]
 }

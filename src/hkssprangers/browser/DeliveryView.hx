@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import js.html.File;
 import js.lib.Promise;
 import moment.Moment;
 import js.html.Event;
@@ -31,7 +32,7 @@ enum abstract DeliveryViewMode(String) {
 typedef DeliveryViewProps = {
     final delivery:Delivery;
     final onChange:Null<Delivery>->Promise<Delivery>;
-    final onAddReceipt:(order:Order, dataUri:String)->Promise<Dynamic>;
+    final onAddReceipt:(order:Order, file:File)->Promise<Dynamic>;
     final canEdit:Bool;
     @:optional final needEdit:Bool;
     final viewMode:DeliveryViewMode;
@@ -237,12 +238,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 case AdminView | AssignedCourierView:
                     function onAddRecept(evt) {
                         var file:js.html.File = evt.currentTarget.files[0];
-                        var reader = new js.html.FileReader();
-                        reader.onload = function(e) {
-                            var dataUri:String = e.target.result;
-                            props.onAddReceipt(o, dataUri);
-                        };
-                        reader.readAsDataURL(file);
+                        props.onAddReceipt(o, file);
                     }
                     var addReceiptBtn = jsx('
                         <Button

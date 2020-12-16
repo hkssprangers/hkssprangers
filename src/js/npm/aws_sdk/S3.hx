@@ -1,16 +1,13 @@
 package js.npm.aws_sdk;
 
-#if (haxe_ver >= 4)
 import js.lib.Promise;
-#else
-import js.Promise;
-#end
 import haxe.Constraints;
 
 @:jsRequire("aws-sdk", "S3")
 extern class S3 {
     public function new(?options:Dynamic):Void;
     public function upload(?params:Dynamic, ?options:Dynamic, ?callback:Dynamic):ManagedUpload;
+    public function getSignedUrlPromise(operation:String, params:Dynamic):Promise<String>;
 }
 
 @:jsRequire("aws-sdk", "S3.ManagedUpload")
