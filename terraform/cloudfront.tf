@@ -11,12 +11,12 @@ resource "aws_cloudfront_distribution" "uploads" {
   aliases = ["uploads.${cloudflare_zone.ssprangers.zone}"]
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
+    allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "s3_bucket_uploads"
 
     forwarded_values {
-      query_string = false
+      query_string = true
 
       cookies {
         forward = "none"
