@@ -34,9 +34,11 @@ package:
     - .github/**
     - .haxelib/**
     - .vscode/**
+    - haxe_libraries/**
     - lib/**
     - src/**
     - test/**
+    - terraform/**
     - '*.hxml'
 
 functions:
