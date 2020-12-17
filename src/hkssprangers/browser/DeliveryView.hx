@@ -240,20 +240,24 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         var file:js.html.File = evt.currentTarget.files[0];
                         props.onAddReceipt(o, file);
                     }
-                    var addReceiptBtn = jsx('
-                        <Button
-                            color=${Primary}
-                            component="label"
-                        >
-                            上傳收據
-                            <input
-                                accept="image/*"
-                                type="file"
-                                onChange=${onAddRecept}
-                                hidden
-                            />
-                        </Button>
-                    ');
+                    var addReceiptBtn = if (props.viewMode == AdminView) {
+                        jsx('
+                            <Button
+                                color=${Primary}
+                                component="label"
+                            >
+                                上傳收據
+                                <input
+                                    accept="image/*"
+                                    type="file"
+                                    onChange=${onAddRecept}
+                                    hidden
+                                />
+                            </Button>
+                        ');
+                    } else {
+                        null;
+                    }
                     var receiptImages = if (o.receipts != null) {
                         o.receipts.mapi((i,r) -> {
                             jsx('
