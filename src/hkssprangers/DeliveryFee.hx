@@ -622,6 +622,39 @@ class DeliveryFee {
                 case MGYCluster: 25;
             }
         },
+        {
+            place: "金必多大廈",
+            match: address -> address.contains("金必多大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "金濤閣",
+            match: address -> address.contains("金濤閣"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "黃金閣",
+            match: address -> address.contains("黃金閣") || address.toLowerCase().contains("golden court"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
