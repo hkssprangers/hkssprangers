@@ -36,6 +36,7 @@ typedef DeliveryViewProps = {
     final canEdit:Bool;
     @:optional final needEdit:Bool;
     final viewMode:DeliveryViewMode;
+    final courierLinkClasses:(c:Courier)->String;
 }
 
 typedef DeliveryViewState = {
@@ -665,7 +666,11 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             null;
         } else {
             var couriers = d.couriers.map(c -> jsx('
-                <Grid item key=${c.tg.username}><a href=${"https://t.me/" + c.tg.username} target="_blank">@${c.tg.username}</a></Grid>
+                <Grid item key=${c.tg.username}>
+                    <a className=${props.courierLinkClasses(c)} href=${"https://t.me/" + c.tg.username} target="_blank">
+                        @${c.tg.username}
+                    </a>
+                </Grid>
             '));
             jsx('
                 <Grid container wrap=${NoWrap} spacing=${Spacing_1} alignItems=${Center}>

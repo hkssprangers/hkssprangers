@@ -274,6 +274,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     window.alert(err);
                 });
         }
+        function courierLinkClasses(c:Courier):String {
+            if (props.user != null && props.user.courierId == c.courierId)
+                return "myDelivery badge-pill";
+            else
+                return "";
+        }
         return jsx('
             <div key=${key} className="mb-3">
                 <DeliveryView
@@ -283,6 +289,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     canEdit=${props.user != null && props.user.isAdmin}
                     needEdit=${d.deliveryCode == null}
                     viewMode=${viewMode}
+                    courierLinkClasses=${courierLinkClasses}
                 />
             </div>
         ');
