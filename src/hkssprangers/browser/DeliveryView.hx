@@ -263,7 +263,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             jsx('
                                 <li key=${r.receiptId}>
                                     <a className="receipt" href=${r.receiptUrl} target="_blank">
-                                        收據圖片 ${i+1}
+                                        <i className="fas fa-receipt"></i> 收據圖片 ${i+1}
                                     </a>
                                 </li>
                             ');
