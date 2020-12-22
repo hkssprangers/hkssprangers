@@ -178,7 +178,7 @@ class GoogleForms {
                 extraOrderContent.push("外賣盒 (+$1)");
             case [MGY, "小食選擇", v]:
                 orderContent.push(v);
-            case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料"))):
+            case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料") || h.startsWith("套餐: 跟餐選擇"))):
                 if (h == "請選擇") {
                     orderContent.push(v);
                 } else {
