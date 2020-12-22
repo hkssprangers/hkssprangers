@@ -18,7 +18,7 @@
     "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.4",
     "js-cookie": "^2.2.1",
-    "ngrok": "^3.3.0",
+    "ngrok": "^3.4.0",
     "nodemon": "^2.0.6",
     "react-router-dom": "^5.2.0",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
