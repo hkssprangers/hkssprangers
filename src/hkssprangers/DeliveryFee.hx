@@ -595,9 +595,9 @@ class DeliveryFee {
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case YearsCluster: 25;
-                case BiuKeeCluster: 35;
+                case BiuKeeCluster: 25;
                 case NeighborCluster: 25;
-                case MGYCluster: 40;
+                case MGYCluster: 35;
             }
         },
         {
