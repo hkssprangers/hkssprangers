@@ -158,7 +158,7 @@ class GoogleForms {
                     case 0, 1, 2: 48;
                     case n: 48 + (n - 2) * 5;
                 });
-            case [DongDong, "午餐選擇" | "小菜 - $58" | "以下套餐奉送例湯", v]:
+            case [DongDong, "午餐選擇" | "小菜" | "以下套餐奉送例湯", v]:
                 orderContent.push(h + ": " + v);
                 extraOrderContent.push("外賣盒 (+$1)");
             case [BiuKeeLokYuen, "雙併配料選擇", "唔加"]:
