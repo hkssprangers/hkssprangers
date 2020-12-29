@@ -7,14 +7,18 @@ import react.*;
 
 class FastifyTools {
     static public function sendView(reply:Reply, view, ?props:Dynamic) {
+        trace("sendView");
+
         if (props == null)
             props = {};
 
         return try {
             var element = React.createElement(view, props);
+            var markup = ReactDOMServer.renderToStaticMarkup(element);
+            trace(markup);
             reply
                 .header("Content-Type", 'text/html')
-                .send("<!DOCTYPE html>" + ReactDOMServer.renderToStaticMarkup(element));
+                .send("<!DOCTYPE html>" + markup);
         } catch (e) {
             trace(e);
             throw e;
