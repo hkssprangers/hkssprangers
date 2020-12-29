@@ -15,7 +15,8 @@ class FastifyTools {
             reply
                 .header("Content-Type", 'text/html')
                 .send("<!DOCTYPE html>" + ReactDOMServer.renderToStaticMarkup(element));
-        } catch (e:Dynamic) {
+        } catch (e) {
+            trace(e);
             throw e;
         }
     }
