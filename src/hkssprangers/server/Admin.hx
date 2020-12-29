@@ -379,14 +379,19 @@ class Admin extends View {
                     case "text/html":
                         trace("text/html");
                         var tgBotInfo = tgBot.telegram.getMe();
-                        tgBotInfo.then(tgBotInfo ->
+                        tgBotInfo.then(tgBotInfo -> {
+                            trace(tgBotInfo);
                             reply.sendView(Admin, {
                                 tgBotName: tgBotInfo.username,
                                 user: user,
                                 token: reply.getToken(),
                                 fontSize: req.query.fontSize,
-                            }))
-                            .catchError(err -> reply.status(500).send(err));
+                            });
+                        })
+                        .catchError(err -> {
+                            trace(err);
+                            reply.status(500).send(err);
+                        });
                     case "application/json":
                         trace("application/json");
                         var token = reply.getToken();
