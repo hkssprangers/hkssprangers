@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "aws-lambda-fastify": "^1.4.4",
-    "aws-sdk": "^2.809.0",
+    "aws-sdk": "^2.818.0",
     "fastify": "^3.9.2",
     "fastify-accepts": "^2.0.1",
     "fastify-cookie": "^5.0.2",
