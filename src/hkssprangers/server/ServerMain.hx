@@ -244,6 +244,7 @@ class ServerMain {
         } else {
             app = initServer();
             js.Node.exports.handler = require('aws-lambda-fastify')(app, {
+                // should match serverless.yml
                 binaryMimeTypes: [
                     "image/png",
                     "image/jpeg",
