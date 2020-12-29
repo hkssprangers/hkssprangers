@@ -8,14 +8,15 @@
   },
   "devDependencies": {
     "@date-io/moment": "1.x",
+    "@httptoolkit/httpolyglot": "^1.0.0",
     "@material-ui/core": "^4.11.2",
     "@material-ui/pickers": "^3.2.10",
+    "@types/accepts": "^1.3.5",
     "@types/js-cookie": "^2.2.6",
     "browserify": "^17.0.0",
     "copy-to-clipboard": "^3.3.1",
     "dts2hx": "^0.15.3",
     "envify": "^4.1.0",
-    "httpolyglot": "^0.1.2",
     "https-localhost": "^4.6.4",
     "js-cookie": "^2.2.1",
     "ngrok": "^3.4.0",
@@ -29,10 +30,13 @@
     "xlsx": "^0.16.9"
   },
   "dependencies": {
+    "aws-lambda-fastify": "^1.4.4",
     "aws-sdk": "^2.809.0",
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
+    "fastify": "^3.9.2",
+    "fastify-accepts": "^2.0.1",
+    "fastify-cookie": "^5.0.2",
+    "fastify-static": "^3.3.0",
+    "fastify-telegraf": "^1.0.1",
     "google-spreadsheet": "^3.0.14",
     "image-data-uri": "^2.0.1",
     "image-type": "^4.1.0",
@@ -40,7 +44,6 @@
     "mysql": "^2.18.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "serverless-http": "^2.6.0",
     "telegraf": "^3.38.0"
   },
   "private": true

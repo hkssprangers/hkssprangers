@@ -9,5 +9,4 @@
 		"lix.lix",
 		"hashicorp.terraform",
 	],
-	"appPort": [ 3000, 443 ]
 }

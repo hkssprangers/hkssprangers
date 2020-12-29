@@ -10,7 +10,7 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
-import js.npm.express.*;
+import fastify.*;
 import js.node.url.URL;
 import js.node.Querystring;
 import jsonwebtoken.Claims;
@@ -24,7 +24,7 @@ import hkssprangers.server.ServerMain.*;
 using Lambda;
 using StringTools;
 using DateTools;
-using hkssprangers.server.ExpressTools;
+using hkssprangers.server.FastifyTools;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
@@ -92,9 +92,10 @@ class Admin extends View {
 
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
-    static public function setTg(req:Request, res:Response):Promise<Null<Tg>> {
-        var tg:Dynamic = if (req.cookies != null && req.cookies.tg != null) try {
-            Json.parse(req.cookies.tg);
+    static public function setTg(req:Request, reply:Reply):Promise<Null<Tg>> {
+        var cookies = req.getCookies();
+        var tg:Dynamic = if (cookies != null && cookies.tg != null) try {
+            Json.parse(cookies.tg);
         } catch(err) {
             trace('Error parsing Telegram login response.\n\n' + err.details());
             null;
@@ -105,12 +106,12 @@ class Admin extends View {
             tg = null;
         }
 
-        res.setUserTg(tg);
+        reply.setUserTg(tg);
         return Promise.resolve(tg);
     }
 
-    static public function setCourier(req:Request, res:Response):Promise<Null<Courier>> {
-        var tg = res.getUserTg();
+    static public function setCourier(req:Request, reply:Reply):Promise<Null<Courier>> {
+        var tg = reply.getUserTg();
 
         if (tg == null) {
             return Promise.resolve(null);
@@ -124,7 +125,7 @@ class Admin extends View {
                     isAdmin: courierData.isAdmin,
                 }
 
-                res.setCourier(courier);
+                reply.setCourier(courier);
                 courier;
             })
             .tryRecover(failure -> {
@@ -137,7 +138,7 @@ class Admin extends View {
             }).toJsPromise();
     }
 
-    static public function setToken(req:Request, res:Response):Promise<Null<Token>> {
+    static public function setToken(req:Request, reply:Reply):Promise<Null<Token>> {
         return switch (req.query.token) {
             case null:
                 Promise.resolve(null);
@@ -148,24 +149,23 @@ class Admin extends View {
                         tink.core.Promise.NULL;
                     })
                     .next(token -> {
-                        res.setToken(token);
+                        reply.setToken(token);
                         token;
                     })
                     .toJsPromise();
         }
     }
 
-    static public function ensurePermission(req:Request, res:Response, next) {
-        setTg(req, res)
-            .then(_ -> setCourier(req,res))
-            .then(_ -> setToken(req, res))
+    static public function ensurePermission(req:Request, reply:Reply):Promise<Bool> {
+        return setTg(req, reply)
+            .then(_ -> setCourier(req, reply))
+            .then(_ -> setToken(req, reply))
             .then(_ -> {
-                if (res.getCourier() != null) {
-                    next();
-                    return;
+                if (reply.getCourier() != null) {
+                    return true;
                 }
                 
-                var tokenOk = switch (res.getToken()) {
+                var tokenOk = switch (reply.getToken()) {
                     case null:
                         false;
                     case token:
@@ -173,124 +173,105 @@ class Admin extends View {
                 }
 
                 if (tokenOk) {
-                    next();
-                    return;
+                    return true;
                 } else {
-                    res.redirect("/login?redirectTo=" + req.originalUrl.urlEncode());
-                    return;
+                    return false;
                 }
             });
     }
 
-    static public function post(req:Request, res:Response) {
-        var user:Courier = res.getCourier();
-        if (user == null || !user.isAdmin) {
-            res.status(403).end('Only admins are allowed.');
-            return;
-        }
-        if (req.body == null) {
-            res.status(ErrorCode.BadRequest).end("No request body.");
-            return;
-        }
-        switch (req.body.action:String) {
-            case null:
-                res.status(ErrorCode.BadRequest).end("No action.");
-                return;
-            case "insert":
-                var delivery:Delivery = req.body.delivery;
-                MySql.db.insertDeliveries([delivery])
-                    .next(dids -> MySql.db.delivery
-                        .where(f -> f.deliveryId == dids[0])
-                        .first()
-                        .next(d -> d.toDelivery(MySql.db))
-                        .next(d -> {
-                            res.json(d);
-                            Noise;
-                        })
-                    )
-                    .recover(err -> {
-                        res.type("text");
-                        res.status(500).end(Std.string(err));
-                        Noise;
-                    });
-                return;
-            case "update":
-                var delivery:Delivery = req.body.delivery;
-                MySql.db.saveDelivery(delivery)
-                    .next(_ -> MySql.db.delivery
-                        .where(f -> f.deliveryId == delivery.deliveryId)
-                        .first()
-                        .next(d -> d.toDelivery(MySql.db))
-                        .next(d -> {
-                            res.json(d);
-                            Noise;
-                        })
-                    )
-                    .recover(err -> {
-                        res.type("text");
-                        res.status(500).end(Std.string(err));
-                        Noise;
-                    });
-                return;
-            case "delete":
-                var delivery:Delivery = req.body.delivery;
-                MySql.db.deleteDelivery(delivery)
-                    .handle(o -> switch o {
-                        case Success(data):
-                            res.end("ok");
-                        case Failure(failure):
-                            res.type("text");
-                            res.status(500).end(Std.string(failure));
-                    });
-                return;
-            case "announce":
-                var deliveries:Array<Delivery> = req.body.deliveries;
-                var couriers = [
-                    for (d in deliveries)
-                    for (c in d.couriers)
-                    c.tg.username => c.tg.username
-                ].array();
-                var you = if (couriers.length == 1) {
-                    "你";
-                } else {
-                    "你哋";
-                }
-                var time = switch (TimeSlotType.classify(deliveries[0].pickupTimeSlot.start)) {
-                    case Lunch: "今朝";
-                    case Dinner: "今晚";
-                }
+    static public function post(req:Request, reply:Reply):Promise<Dynamic> {
+        return ensurePermission(req, reply).then(ok -> {
+            if (!ok) {
+                var url = new node.url.URL(req.raw.url, "http://example.com");
+                return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode()));
+            }
+            var user:Courier = reply.getCourier();
+            if (user == null || !user.isAdmin) {
+                return Promise.resolve(reply.status(403).send('Only admins are allowed.'));
+            }
+            if (req.body == null) {
+                return Promise.resolve(reply.status(ErrorCode.BadRequest).send("No request body."));
+            }
+            switch (req.body.action:String) {
+                case null:
+                    Promise.resolve(reply.status(ErrorCode.BadRequest).send("No action."));
+                case "insert":
+                    var delivery:Delivery = req.body.delivery;
+                    MySql.db.insertDeliveries([delivery]).toJsPromise()
+                        .then(dids -> MySql.db.delivery
+                            .where(f -> f.deliveryId == dids[0])
+                            .first()
+                            .next(d -> d.toDelivery(MySql.db))
+                            .toJsPromise()
+                            .then(d -> {
+                                reply.send(d);
+                            })
+                        );
+                case "update":
+                    var delivery:Delivery = req.body.delivery;
+                    MySql.db.saveDelivery(delivery).toJsPromise()
+                        .then(_ -> MySql.db.delivery
+                            .where(f -> f.deliveryId == delivery.deliveryId)
+                            .first()
+                            .next(d -> d.toDelivery(MySql.db))
+                            .toJsPromise()
+                            .then(d -> {
+                                reply.send(d);
+                            })
+                        );
+                case "delete":
+                    var delivery:Delivery = req.body.delivery;
+                    MySql.db.deleteDelivery(delivery).toJsPromise()
+                        .then(_ -> {
+                            reply.send("ok");
+                        });
+                case "announce":
+                    var deliveries:Array<Delivery> = req.body.deliveries;
+                    var couriers = [
+                        for (d in deliveries)
+                        for (c in d.couriers)
+                        c.tg.username => c.tg.username
+                    ].array();
+                    var you = if (couriers.length == 1) {
+                        "你";
+                    } else {
+                        "你哋";
+                    }
+                    var time = switch (TimeSlotType.classify(deliveries[0].pickupTimeSlot.start)) {
+                        case Lunch: "今朝";
+                        case Dinner: "今晚";
+                    }
 
-                tgBot.telegram.sendMessage(TelegramConfig.groupChatId(deployStage), couriers.map(c -> "@" + c).join(" ") + "\n" + '${time}嘅 ${deliveries.length} 單交俾${you}啦 🙇', {
-                    reply_markup: Markup.inlineKeyboard_([
-                        Markup.loginButton_("登入睇單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
-                            request_write_access: true,
-                        }),
-                    ]),
-                }).then(msg -> {
-                    tgBot.telegram.pinChatMessage(TelegramConfig.groupChatId(deployStage), msg.message_id);
-                }).then(_ -> {
-                    res.type("text");
-                    res.end("done");
-                }).catchError(err -> {
-                    res.type("text");
-                    res.status(500).end(Std.string(err));
-                });
-                return;
-            case "share":
-                var date:LocalDateString = req.body.date;
-                var time:TimeSlotType = req.body.time;
-                var shop:Shop = req.body.shop;
-                var payload:Dynamic = ({
-                    exp: Date.fromTime(date.toDate().getTime() + DateTools.days(50)),
-                }:Claims).merge(({
-                    date: date.getDatePart(),
-                    time: time,
-                    shop: shop,
-                }:Token));
-                ServerMain.jwtSign(payload)
-                    .handle(o -> switch(o) {
-                        case Success(token):
-                            res.type("text");
+                    tgBot.telegram.sendMessage(TelegramConfig.groupChatId(deployStage), couriers.map(c -> "@" + c).join(" ") + "\n" + '${time}嘅 ${deliveries.length} 單交俾${you}啦 🙇', {
+                        reply_markup: Markup.inlineKeyboard_([
+                            Markup.loginButton_("登入睇單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
+                                request_write_access: true,
+                            }),
+                        ]),
+                    }).then(msg -> {
+                        tgBot.telegram.pinChatMessage(TelegramConfig.groupChatId(deployStage), msg.message_id);
+                    }).then(_ -> {
+                        reply.type("text");
+                        reply.send("done");
+                    }).catchError(err -> {
+                        reply.type("text");
+                        reply.status(500).send(Std.string(err));
+                    });
+                case "share":
+                    var date:LocalDateString = req.body.date;
+                    var time:TimeSlotType = req.body.time;
+                    var shop:Shop = req.body.shop;
+                    var payload:Dynamic = ({
+                        exp: Date.fromTime(date.toDate().getTime() + DateTools.days(50)),
+                    }:Claims).merge(({
+                        date: date.getDatePart(),
+                        time: time,
+                        shop: shop,
+                    }:Token));
+                    ServerMain.jwtSign(payload).toJsPromise()
+                        .then(token -> {
+                            reply.type("text");
                             var qs:Dynamic = {
                                 token: token,
                             };
@@ -300,52 +281,46 @@ class Admin extends View {
                                 case _:
                                     //pass
                             }
-                            res.end(Path.join(["https://" + host, "admin?" + Querystring.stringify(qs)]));
-                        case Failure(failure):
-                            res.type("text");
-                            res.status(failure.code).end(failure.message + "\n\n" + failure.exceptionStack);
+                            reply.send(Path.join(["https://" + host, "admin?" + Querystring.stringify(qs)]));
+                        });
+                case "upload-get-signed-url":
+                    var orderId:Int = req.body.orderId;
+                    var contentType:String = req.body.contentType;
+                    var fileName:String = req.body.fileName;
+                    var ext = Path.extension(fileName);
+                    new js.npm.aws_sdk.S3().getSignedUrlPromise("putObject", {
+                        Bucket: "hkssprangers-uploads",
+                        Key: '${user.courierId}/${orderId}/${Std.random(1000000)}.${ext}',
+                        ContentType: contentType,
+                    }).then(url -> {
+                        reply.type("text");
+                        reply.send(url);
+                    }).catchError(err -> {
+                        reply.type("text");
+                        reply.status(500).send(Std.string(err));
                     });
-                return;
-            case "upload-get-signed-url":
-                var orderId:Int = req.body.orderId;
-                var contentType:String = req.body.contentType;
-                var fileName:String = req.body.fileName;
-                var ext = Path.extension(fileName);
-                new js.npm.aws_sdk.S3().getSignedUrlPromise("putObject", {
-                    Bucket: "hkssprangers-uploads",
-                    Key: '${user.courierId}/${orderId}/${Std.random(1000000)}.${ext}',
-                    ContentType: contentType,
-                }).then(url -> {
-                    res.type("text");
-                    res.end(url);
-                }).catchError(err -> {
-                    res.type("text");
-                    res.status(500).end(Std.string(err));
-                });
-                return;
-            case "upload-done":
-                var fileUrl:String = req.body.fileUrl;
-                var orderId:Int = req.body.orderId;
-                MySql.db.receipt.insertOne({
-                    receiptId: null,
-                    receiptUrl: fileUrl,
-                    orderId: orderId,
-                    uploaderCourierId: user.courierId,
-                }).toJsPromise()
-                    .then(_ -> {
-                        res.type("text");
-                        res.end("done");
-                    })
-                    .catchError(err -> {
-                        res.type("text");
-                        res.status(500).end(Std.string(err));
-                    });
-                return;
-            case action:
-                res.type("text");
-                res.status(406).end("Unknown action " + action);
-                return;
-        }
+                case "upload-done":
+                    var fileUrl:String = req.body.fileUrl;
+                    var orderId:Int = req.body.orderId;
+                    MySql.db.receipt.insertOne({
+                        receiptId: null,
+                        receiptUrl: fileUrl,
+                        orderId: orderId,
+                        uploaderCourierId: user.courierId,
+                    }).toJsPromise()
+                        .then(_ -> {
+                            reply.type("text");
+                            reply.send("done");
+                        })
+                        .catchError(err -> {
+                            reply.type("text");
+                            reply.status(500).send(Std.string(err));
+                        });
+                case action:
+                    reply.type("text");
+                    Promise.resolve(reply.status(406).send("Unknown action " + action));
+            }
+        });
     }
 
     static public function uploadImage(img:js.node.Buffer):Promise<String> {
@@ -362,118 +337,108 @@ class Admin extends View {
             .then(_ -> "https://uploads.ssprangers.com/" + fileName);
     }
 
-    static public function getByToken(req:Request, res:Response) {
-        var token = res.getToken();
-        MySql.db.getDeliveries(token.date)
-            .handle(o -> switch (o) {
-                case Success(deliveries):
-                    res.json({
-                        deliveries: deliveries
-                            .filter(d ->
-                                d.orders.exists(o -> o.shop == token.shop)
-                                &&
-                                TimeSlotType.classify(d.pickupTimeSlot.start) == token.time
-                            )
-                            .map(d -> d.with({
-                                orders: d.orders.filter(o -> o.shop == token.shop),
-                                pickupLocation: null,
-                                paymentMethods: null,
-                                deliveryFee: null,
-                                customerNote: null,
-                            })),
-                        date: token.date,
-                        time: token.time,
-                        shop: token.shop,
-                    });
-                    return;
-                case Failure(failure):
-                    res.type("text");
-                    res.status(500).end(Std.string(failure));
-                    return;
+    static public function getByToken(req:Request, reply:Reply) {
+        var token = reply.getToken();
+        return MySql.db.getDeliveries(token.date).toJsPromise()
+            .then(deliveries -> {
+                reply.send({
+                    deliveries: deliveries
+                        .filter(d ->
+                            d.orders.exists(o -> o.shop == token.shop)
+                            &&
+                            TimeSlotType.classify(d.pickupTimeSlot.start) == token.time
+                        )
+                        .map(d -> d.with({
+                            orders: d.orders.filter(o -> o.shop == token.shop),
+                            pickupLocation: null,
+                            paymentMethods: null,
+                            deliveryFee: null,
+                            customerNote: null,
+                        })),
+                    date: token.date,
+                    time: token.time,
+                    shop: token.shop,
+                });
             });
-        return;
     }
 
-    static public function get(req:Request, res:Response) {
-        var user = res.getCourier();
-        switch (req.accepts(["text/html", "application/json"])) {
-            case "text/html":
-                var tgBotInfo = tgBot.telegram.getMe();
-                tgBotInfo.then(tgBotInfo ->
-                    res.sendView(Admin, {
-                        tgBotName: tgBotInfo.username,
-                        user: user,
-                        token: res.getToken(),
-                        fontSize: req.query.fontSize,
-                    }))
-                    .catchError(err -> res.status(500).json(err));
-                return;
-            case "application/json":
-                var token = res.getToken();
-                switch (token) {
-                    case null:
-                        // pass
-                    case token:
-                        getByToken(req, res);
-                        return;
+    static public function get(req:Request, reply:Reply):Promise<Dynamic> {
+        return ensurePermission(req, reply)
+            .then(ok -> {
+                if (!ok) {
+                    var url = new node.url.URL(req.raw.url, "http://example.com");
+                    return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode()));
                 }
-                var now = Date.now();
-                var date = switch (req.query.date) {
-                    case null: now;
-                    case date: Date.fromString(date);
+                var user = reply.getCourier();
+                switch (req.accepts().type(["text/html", "application/json"])) {
+                    case "text/html":
+                        var tgBotInfo = tgBot.telegram.getMe();
+                        tgBotInfo.then(tgBotInfo ->
+                            reply.sendView(Admin, {
+                                tgBotName: tgBotInfo.username,
+                                user: user,
+                                token: reply.getToken(),
+                                fontSize: req.query.fontSize,
+                            }))
+                            .catchError(err -> reply.status(500).send(err));
+                    case "application/json":
+                        var token = reply.getToken();
+                        switch (token) {
+                            case null:
+                                // pass
+                            case token:
+                                return getByToken(req, reply);
+                        }
+                        var now = Date.now();
+                        var date = switch (req.query.date) {
+                            case null: now;
+                            case date: Date.fromString(date);
+                        }
+                        return MySql.db.getDeliveries(date).toJsPromise()
+                            .then(deliveries -> {
+                                var time:TimeSlotType = req.query.time;
+                                if (time != null)
+                                    deliveries = deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == time);
+                                if (user.isAdmin) {
+                                    reply.send({
+                                        deliveries: deliveries,
+                                    });
+                                } else {
+                                    reply.send({
+                                        deliveries: deliveries.map(d -> {
+                                            if (
+                                                d.couriers.exists(c -> c.courierId == user.courierId)
+                                                ||
+                                                (
+                                                    // today
+                                                    (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
+                                                    &&
+                                                    // time pass order cut-off
+                                                    switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
+                                                        case Lunch:
+                                                            now.getHours() >= 10;
+                                                        case Dinner:
+                                                            now.getHours() >= 17;
+                                                    }
+                                                )
+                                            ) {
+                                                d;
+                                            } else {
+                                                d.getMinInfo();
+                                            }
+                                        }),
+                                    });
+                                }
+                            });
+                    case _:
+                        reply.type("text");
+                        Promise.resolve(reply.status(406).send("Can only return html or json"));
                 }
-                MySql.db.getDeliveries(date)
-                    .handle(o -> switch (o) {
-                        case Success(deliveries):
-                            var time:TimeSlotType = req.query.time;
-                            if (time != null)
-                                deliveries = deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == time);
-                            if (user.isAdmin) {
-                                res.json({
-                                    deliveries: deliveries,
-                                });
-                            } else {
-                                res.json({
-                                    deliveries: deliveries.map(d -> {
-                                        if (
-                                            d.couriers.exists(c -> c.courierId == user.courierId)
-                                            ||
-                                            (
-                                                // today
-                                                (date:LocalDateString).getDatePart() == (now:LocalDateString).getDatePart()
-                                                &&
-                                                // time pass order cut-off
-                                                switch (TimeSlotType.classify(d.pickupTimeSlot.start)) {
-                                                    case Lunch:
-                                                        now.getHours() >= 10;
-                                                    case Dinner:
-                                                        now.getHours() >= 17;
-                                                }
-                                            )
-                                        ) {
-                                            d;
-                                        } else {
-                                            d.getMinInfo();
-                                        }
-                                    }),
-                                });
-                            }
-                            return;
-                        case Failure(failure):
-                            res.type("text");
-                            res.status(500).end(Std.string(failure));
-                            return;
-                    });
-                return;
-            case _:
-                res.type("text");
-                res.status(406).end("Can only return html or json");
-                return;
-        }
+            });
     }
 
-    static public function setup(app:Application) {
-        app.get("/admin", Admin.ensurePermission, Admin.get);
-        app.post("/admin", Admin.ensurePermission, Admin.post);
+    static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
+        app.get("/admin", Admin.get);
+        app.post("/admin", Admin.post);
     }
 }

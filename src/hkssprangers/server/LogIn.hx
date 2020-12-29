@@ -4,11 +4,10 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
-import js.npm.express.*;
 import hkssprangers.server.ServerMain.*;
 using Lambda;
 using StringTools;
-using hkssprangers.server.ExpressTools;
+using hkssprangers.server.FastifyTools;
 
 class LogIn extends View {
     public var tgBotName(get, never):String;
@@ -34,12 +33,12 @@ class LogIn extends View {
         ');
     }
 
-    static public function middleware(req:Request, res:Response) {
+    static public function middleware(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
         var tgBotInfo = tgBot.telegram.getMe();
-        tgBotInfo.then(tgBotInfo ->
-            res.sendView(LogIn, {
+        return tgBotInfo.then(tgBotInfo ->
+            reply.sendView(LogIn, {
                 tgBotName: tgBotInfo.username,
             }))
-            .catchError(err -> res.status(500).json(err));
+            .catchError(err -> reply.status(500).send(err));
     }
 }

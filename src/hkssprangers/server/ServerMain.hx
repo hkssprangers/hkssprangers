@@ -18,14 +18,15 @@ import telegraf.Context;
 import telegraf.Extra;
 import telegraf.Markup;
 import telegram_typings.User as TgUser;
-import js.npm.express.*;
+import Fastify;
+import fastify.*;
 import js.Node.*;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 using StringTools;
 using Lambda;
 using hkssprangers.info.DeliveryTools;
-using hkssprangers.server.ExpressTools;
+using hkssprangers.server.FastifyTools;
 
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
@@ -34,9 +35,10 @@ class ServerMain {
         case null: "127.0.0.1";
         case v: v;
     }
-    static public var app:Application;
+    static public var app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>;
     static public var tgBot:Telegraf<Dynamic>;
     static public var tgMe:Promise<TgUser>;
+    static public final tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
 
     static final jwtIssuer = host;
     static final jstSecret = switch (Sys.getEnv("JWT_SECRET")) {
@@ -60,21 +62,15 @@ class ServerMain {
             jwtVerifier.verify(token);
     }
 
-    static function allowCors(req:Request, res:Response, next):Void {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
+    static function index(req:Request, reply:Reply):Promise<Dynamic> {
+        return Promise.resolve(reply.redirect("https://www.facebook.com/hkssprangers"));
     }
 
-    static function index(req:Request, res:Response) {
-        res.redirect("https://www.facebook.com/hkssprangers");
-    }
-
-    static function tgAuth(req:Request, res:Response) {
+    static function tgAuth(req:Request, reply:Reply):Promise<Dynamic> {
         // expires 7 day from now
         var expires = Date.fromTime(Date.now().getTime() + DateTools.days(7));
 
-        res.cookie("tg", Json.stringify({
+        reply.setCookie("tg", Json.stringify({
             var tg:DynamicAccess<String> = {};
             for (k => v in (req.query:DynamicAccess<String>))
                 if (k != "redirectTo")
@@ -86,18 +82,75 @@ class ServerMain {
             expires: expires,
         });
 
-        switch (req.query.redirectTo:String) {
+        return switch (req.query.redirectTo:String) {
             case null:
-                res.redirect("/");
-                return;
+                Promise.resolve(reply.redirect("/"));
             case redirectTo:
-                res.redirect(redirectTo);
-                return;
+                Promise.resolve(reply.redirect(redirectTo));
         }
     }
 
+    static function noTrailingSlash(req:Request, reply:Reply):Promise<Any> {
+        var url = new node.url.URL(req.raw.url, "http://example.com");
+        if (url.pathname.endsWith('/') && url.pathname.length > 1) {
+            var redirectTo = url.pathname.substr(0, url.pathname.length-1) + url.search;
+            reply.redirect(redirectTo);
+        }
+        return Promise.resolve();
+    }
+
+    static function initServer(?opts:Dynamic) {
+        var app = Fastify.fastify(opts);
+
+        // let telegraf process things before using any middleware like body-parser that may mess up
+        app.register(require('fastify-telegraf'), { bot: tgBot, path: tgBotWebHook });
+
+        app.register(require('fastify-cookie'));
+        app.register(require('fastify-accepts'));
+
+        app.register(require('fastify-static'), {
+            root: sys.FileSystem.absolutePath(StaticResource.resourcesDir),
+            wildcard: false,
+        });
+        app.addHook("onSend", function(req:Request, reply:Reply, payload):Promise<Dynamic>{
+            if (payload != null) switch (untyped payload.filename:String) {
+                case null:
+                    // pass
+                case filename:
+                    var md5:Null<String> = req.query.md5;
+                    if (md5 == null) {
+                        return Promise.resolve(payload);
+                    }
+    
+                    var actual = StaticResource.hash(filename);
+                    if (md5 == actual) {
+                        reply.header("Cache-Control", "public, max-age=604800"); // 7 days
+                        return Promise.resolve(payload);
+                    } else {
+                        reply.header("Cache-Control", "no-cache");
+                        var redirectUrl = new URL(req.url, "http://example.com");
+                        redirectUrl.searchParams.set("md5", actual);
+                        reply.redirect(redirectUrl.pathname + redirectUrl.search);
+                        return Promise.resolve(null);
+                    }
+            }
+            return Promise.resolve(payload);
+        });
+
+        app.addHook("onRequest", noTrailingSlash);
+
+        app.get("/", index);
+        app.get("/tgAuth", tgAuth);
+        app.get("/login", LogIn.middleware);
+        Admin.setup(app);
+        app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {
+            return Promise.resolve(reply.send(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S")));
+        });
+
+        return app;
+    }
+
     static function main() {
-        var tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
         tgBot = new Telegraf(TelegramConfig.tgBotToken); 
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
@@ -153,54 +206,6 @@ class ServerMain {
             }
         });
 
-        app = new Application();
-
-        // let telegraf process things before using any middleware like body-parser that may mess up
-        app.use(tgBot.webhookCallback(tgBotWebHook));
-
-        app.set('json spaces', 2);
-        app.use(function(req:Request, res:Response, next):Void {
-            res.locals = {
-                req: req,
-            };
-            next();
-        });
-        app.use(Express.Static(StaticResource.resourcesDir, {
-            setHeaders: function(res:Response, path:String, stat:js.node.fs.Stats) {
-                var req:Request = res.locals.req;
-                var md5:Null<String> = req.query.md5;
-                if (md5 == null)
-                    return;
-
-                var actual = StaticResource.hash(path);
-                if (md5 == actual) {
-                    res.setHeader("Cache-Control", "public, max-age=604800, immutable"); // 7 days
-                } else {
-                    res.setHeader("Cache-Control", "no-cache");
-                }
-            },
-        }));
-        app.use(function(req:Request, res:Response, next) {
-            if (req.path.endsWith('/') && req.path.length > 1) {
-                var query = req.url.substr(req.path.length);
-                res.redirect(301, req.path.substr(0, req.path.length-1) + query);
-            } else {
-                next();
-            }
-        });
-        app.use(allowCors);
-        app.use(require("cookie-parser")());
-        app.use(require("body-parser").json());
-
-        app.get("/", index);
-        app.get("/tgAuth", tgAuth);
-        app.get("/login", LogIn.middleware);
-        Admin.setup(app);
-        app.get("/server-time", function(req:Request, res:Response) {
-            res.end(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S"));
-        });
-        // app.get("/admin/orders.json", )
-
         if (isMain) {
             switch (Sys.args()) {
                 case []:
@@ -209,19 +214,26 @@ class ServerMain {
                     var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
 
                     ngrokUrl.then((url:String) -> {
-                        certs.then(certs ->
-                            js.Node.require("httpolyglot").createServer(certs, app)
-                                .listen(port, function(){
-                                    Sys.println('https://' + host);
-                                    Sys.println(url);
-                                    var hook = Path.join([url, tgBotWebHook]);
-                                    tgBot.telegram.setWebhook(hook)
-                                        .then(_ -> tgMe)
-                                        .then(me -> {
-                                            Sys.println('https://t.me/${me.username}');
-                                        });
-                                })
-                        );
+                        certs.then(certs -> {
+                            app = initServer({
+                                serverFactory: (handler, opts) -> {
+                                    require('@httptoolkit/httpolyglot').createServer(certs, handler);
+                                },
+                            });
+                            app.listen(port, "0.0.0.0");
+                        }).then(_ -> {
+                            Sys.println('https://' + host);
+                            Sys.println(url);
+                            var hook = Path.join([url, tgBotWebHook]);
+                            tgBot.telegram.setWebhook(hook)
+                                .then(_ -> tgMe)
+                                .then(me -> {
+                                    Sys.println('https://t.me/${me.username}');
+                                });
+                        });
+                    }).catchError(err -> {
+                        trace(err);
+                        Sys.exit(1);
                     });
                 case ["setTgWebhook"]:
                     var hook = Path.join(["https://" + host, tgBotWebHook]);
@@ -230,10 +242,15 @@ class ServerMain {
                     throw "Unknown args: " + args;
             }
         } else {
-            var serverless = require('serverless-http');
-            js.Node.exports.handler = serverless(app, {
-                binary: [
-                    'image/*'
+            app = initServer();
+            js.Node.exports.handler = require('aws-lambda-fastify')(app, {
+                binaryMimeTypes: [
+                    "image/png",
+                    "image/jpeg",
+                    "image/gif",
+                    "image/bmp",
+                    "image/webp",
+                    "image/x-icon",
                 ],
             });
         }
