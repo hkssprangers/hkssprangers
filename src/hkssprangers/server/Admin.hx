@@ -381,16 +381,14 @@ class Admin extends View {
                         var tgBotInfo = tgBot.telegram.getMe();
                         tgBotInfo.then(tgBotInfo -> {
                             trace(tgBotInfo);
-                            reply.sendView(Admin, {
+                            var view = reply.sendView(Admin, {
                                 tgBotName: tgBotInfo.username,
                                 user: user,
                                 token: reply.getToken(),
                                 fontSize: req.query.fontSize,
                             });
-                        })
-                        .catchError(err -> {
-                            trace(err);
-                            reply.status(500).send(err);
+                            trace(view);
+                            view;
                         });
                     case "application/json":
                         trace("application/json");
