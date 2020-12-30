@@ -6,7 +6,7 @@ lix download
 
 mkdir -p node_modules
 sudo chmod a+rwx node_modules
-yarn
+yarn --network-concurrency 1 # https://github.com/yarnpkg/yarn/issues/6312
 npx dts2hx telegraf @types/js-cookie moment copy-to-clipboard fastify @types/accepts aws-serverless-fastify --noLibWrap --output lib/dts2hx
 
 pip3 install docx2txt
