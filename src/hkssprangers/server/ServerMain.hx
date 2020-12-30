@@ -63,31 +63,41 @@ class ServerMain {
     }
 
     static function index(req:Request, reply:Reply):Promise<Dynamic> {
-        return Promise.resolve(reply.redirect("https://www.facebook.com/hkssprangers"));
+        reply.redirect("https://www.facebook.com/hkssprangers");
+        return Promise.resolve();
     }
 
     static function tgAuth(req:Request, reply:Reply):Promise<Dynamic> {
         // expires 7 day from now
         var expires = Date.fromTime(Date.now().getTime() + DateTools.days(7));
 
-        reply.setCookie("tg", Json.stringify({
-            var tg:DynamicAccess<String> = {};
-            for (k => v in (req.query:DynamicAccess<String>))
-                if (k != "redirectTo")
-                    tg[k] = v;
-            tg;
-        }), {
-            secure: true,
-            sameSite: 'strict',
-            expires: expires,
-        });
+        trace(expires);
 
-        return switch (req.query.redirectTo:String) {
+        trace(req.query.redirectTo);
+
+        var redirectTo = switch (req.query.redirectTo:String) {
             case null:
-                Promise.resolve(reply.redirect("/"));
+                "/";
             case redirectTo:
-                Promise.resolve(reply.redirect(redirectTo));
+                redirectTo;
         }
+
+        reply
+            .setCookie("tg", Json.stringify({
+                var tg:DynamicAccess<String> = {};
+                for (k => v in (req.query:DynamicAccess<String>))
+                    if (k != "redirectTo")
+                        tg[k] = v;
+                tg;
+            }), {
+                secure: true,
+                sameSite: 'strict',
+                expires: expires,
+            })
+            .redirect(redirectTo);
+
+        trace("resolve");
+        return Promise.resolve();
     }
 
     static function noTrailingSlash(req:Request, reply:Reply):Promise<Any> {
@@ -100,10 +110,17 @@ class ServerMain {
     }
 
     static function initServer(?opts:Dynamic) {
-        var app = Fastify.fastify(opts);
+        var app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic> = Fastify.fastify(opts);
 
-        // let telegraf process things before using any middleware like body-parser that may mess up
+        // var p:Promise<Dynamic> = cast app.register(require('fastify-express'));
+        // p.then(_ -> {
+        //     // let telegraf process things before using any middleware like body-parser that may mess up
+        //     (untyped app.use)(tgBot.webhookCallback(tgBotWebHook));
+        // });
         app.register(require('fastify-telegraf'), { bot: tgBot, path: tgBotWebHook });
+        // app.post(tgBotWebHook, function(req:Request, reply:Reply):Promise<Dynamic> {
+        //     return tgBot.handleUpdate(req.body, reply.raw);
+        // });
 
         app.register(require('fastify-cookie'));
         app.register(require('fastify-accepts'));
@@ -147,11 +164,11 @@ class ServerMain {
             return Promise.resolve(reply.send(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S")));
         });
 
-        return app;
+        return Promise.resolve(app);
     }
 
     static function main() {
-        tgBot = new Telegraf(TelegramConfig.tgBotToken); 
+        tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
@@ -215,11 +232,13 @@ class ServerMain {
 
                     ngrokUrl.then((url:String) -> {
                         certs.then(certs -> {
-                            app = initServer({
+                            initServer({
                                 serverFactory: (handler, opts) -> {
                                     require('@httptoolkit/httpolyglot').createServer(certs, handler);
                                 },
                             });
+                        }).then(a -> {
+                            app = a;
                             app.listen(port, "0.0.0.0");
                         }).then(_ -> {
                             Sys.println('https://' + host);
@@ -237,23 +256,24 @@ class ServerMain {
                     });
                 case ["setTgWebhook"]:
                     var hook = Path.join(["https://" + host, tgBotWebHook]);
+                    trace(hook);
                     tgBot.telegram.setWebhook(hook);
                 case args:
                     throw "Unknown args: " + args;
             }
         } else {
-            app = initServer();
-            js.Node.exports.handler = require('aws-lambda-fastify')(app, {
-                // should match serverless.yml
-                binaryMimeTypes: [
-                    "image/png",
-                    "image/jpeg",
-                    "image/gif",
-                    "image/bmp",
-                    "image/webp",
-                    "image/x-icon",
-                ],
-            });
+            js.Node.exports.handler = function(event, context) {
+                return initServer().then(a -> {
+                    AwsServerlessFastify.proxy(app = a, event, context, [
+                        "image/png",
+                        "image/jpeg",
+                        "image/gif",
+                        "image/bmp",
+                        "image/webp",
+                        "image/x-icon",
+                    ]);
+                });
+            }
         }
     }
 }

@@ -927,11 +927,6 @@ avvio@^7.1.2:
     fastq "^1.6.1"
     queue-microtask "^1.1.2"
 
-aws-lambda-fastify@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/aws-lambda-fastify/-/aws-lambda-fastify-1.4.4.tgz#4ee8c823f9c271ff9944be4d8639d3ba1d87dda6"
-  integrity sha512-o8BuMHFIHStKUSzp3vwmAjvl3ftjnv4E6SY3f0Sy0jJwH/G81QzfUB3NakSPlnmDZ3CYr2lRvek2+LROT4vtRg==
-
 aws-sdk@^2.809.0, aws-sdk@^2.815.0:
   version "2.816.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.816.0.tgz#5c2f0bc4f321a3b2205fd79108c5380ebab9740c"
@@ -946,6 +941,12 @@ aws-sdk@^2.809.0, aws-sdk@^2.815.0:
     url "0.10.3"
     uuid "3.3.2"
     xml2js "0.4.19"
+
+"aws-serverless-fastify@https://github.com/andyli/aws-serverless-fastify.git#multiValueHeaders":
+  version "1.0.24"
+  resolved "https://github.com/andyli/aws-serverless-fastify.git#c7d109b1758ef13013bedcd88e5f02e89a8ea143"
+  dependencies:
+    type-is "^1.6.18"
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -6914,7 +6915,7 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-type-is@~1.6.17, type-is@~1.6.18:
+type-is@^1.6.18, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.yarnpkg.com/type-is/-/type-is-1.6.18.tgz#4e552cd05df09467dcbc4ef739de89f2cf37c131"
   integrity sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==

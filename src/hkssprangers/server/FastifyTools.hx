@@ -32,11 +32,11 @@ class FastifyTools {
     static public function getCookies(req:Request):Dynamic<String> {
         return untyped req.cookies;
     }
-    static public function setCookie(reply:Reply, name:String, value:String, options:Dynamic):Void {
-        (untyped reply.setCookie)(name, value, options);
+    static public function setCookie(reply:Reply, name:String, value:String, options:Dynamic):Reply {
+        return (untyped reply.setCookie)(name, value, options);
     }
-    static public function clearCookie(reply:Reply, name:String, options:Dynamic):Void {
-        (untyped reply.clearCookie)(name, options);
+    static public function clearCookie(reply:Reply, name:String, options:Dynamic):Reply {
+        return (untyped reply.clearCookie)(name, options);
     }
 
     static public function getUserTg(reply:Reply):Null<Tg> {
