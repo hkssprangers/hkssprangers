@@ -7,14 +7,8 @@ provider:
   region: ap-southeast-1
   runtime: nodejs12.x
   apiGateway:
-    # should match the types we pass to aws-lambda-fastify
     binaryMediaTypes:
-      - "image/png"
-      - "image/jpeg"
-      - "image/gif"
-      - "image/bmp"
-      - "image/webp"
-      - "image/x-icon"
+      - "*/*"
   environment:
     TZ: Asia/Hong_Kong
     DEPLOY_STAGE: ${env:DEPLOY_STAGE}
