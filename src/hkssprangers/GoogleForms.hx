@@ -77,6 +77,11 @@ class GoogleForms {
             orders: [order],
         };
         var iceCream = [];
+        var blablabla = {
+            wantTableware: null,
+            customerNote: null,
+            orderItems: [],
+        };
         var orderContent = [];
         var extraOrderContent = [];
         for (col => h in headers)
@@ -178,6 +183,16 @@ class GoogleForms {
                 extraOrderContent.push("外賣盒 (+$1)");
             case [MGY, "小食選擇", v]:
                 orderContent.push(v);
+            case [_, h, v] if (h.startsWith("加購壺說飲品")):
+                blablabla.orderItems.push(v);
+            case [_, "壺說飲品備註", v]:
+                blablabla.customerNote = v;
+            case [_, "需要飲管嗎?", v]:
+                blablabla.wantTableware = switch (v) {
+                    case "要": true;
+                    case "唔要": false;
+                    case _: throw '飲管? ' + v;
+                };
             case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料") || h.startsWith("套餐: 跟餐選擇"))):
                 if (h == "請選擇") {
                     orderContent.push(v);
@@ -212,6 +227,15 @@ class GoogleForms {
                 shop: HanaSoftCream,
                 orderDetails: iceCream.join("\n"),
                 orderPrice: parseTotalPrice(iceCream.join("\n")),
+            }));
+        }
+        if (blablabla.orderItems.length > 0) {
+            delivery.orders.push(order.with({
+                shop: BlaBlaBla,
+                orderDetails: blablabla.orderItems.join("\n"),
+                orderPrice: parseTotalPrice(blablabla.orderItems.join("\n")),
+                wantTableware: blablabla.wantTableware,
+                customerNote: blablabla.customerNote,
             }));
         }
         for (order in delivery.orders) {

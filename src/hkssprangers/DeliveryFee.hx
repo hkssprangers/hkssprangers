@@ -24,6 +24,7 @@ enum abstract ShopCluster(String) {
             case Neighbor: NeighborCluster;
             case MGY: MGYCluster;
             case FastTasteSSP: BiuKeeCluster;
+            case BlaBlaBla: BiuKeeCluster;
         }
     }
 }

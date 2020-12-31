@@ -17,6 +17,7 @@ enum abstract Shop(String) to String {
     var Neighbor:Shop;
     var MGY:Shop;
     var FastTasteSSP:Shop;
+    var BlaBlaBla:Shop;
 
     static public final all = [
         EightyNine,
@@ -30,6 +31,7 @@ enum abstract Shop(String) to String {
         Neighbor,
         MGY,
         FastTasteSSP,
+        BlaBlaBla,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -471,6 +473,25 @@ enum abstract Shop(String) to String {
                         },
                     ]
                 }
+            case BlaBlaBla:
+                {
+                    id: BlaBlaBla,
+                    name: "壺說",
+                    address: "深水埗福華街110號地下",
+                    courierContact: [
+                        "tel:91433611",
+                    ],
+                    openDays: [
+                        Monday,
+                        Tuesday,
+                        Wednesday,
+                        Thursday,
+                        Friday,
+                        Saturday,
+                        Sunday,
+                    ],
+                    timeSlots: []
+                }
     }
 
     static public function fromId(shopId:String):Shop {
@@ -486,6 +507,7 @@ enum abstract Shop(String) to String {
             case Neighbor: Neighbor;
             case MGY: MGY;
             case FastTasteSSP: FastTasteSSP;
+            case BlaBlaBla: BlaBlaBla;
             case _: null;
         }
     }
