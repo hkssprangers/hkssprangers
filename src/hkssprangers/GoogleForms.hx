@@ -78,7 +78,6 @@ class GoogleForms {
         };
         var iceCream = [];
         var blablabla = {
-            wantTableware: null,
             customerNote: null,
             orderItems: [],
         };
@@ -187,12 +186,6 @@ class GoogleForms {
                 blablabla.orderItems.push(v);
             case [_, "壺說飲品備註", v]:
                 blablabla.customerNote = v;
-            case [_, "需要飲管嗎?", v]:
-                blablabla.wantTableware = switch (v) {
-                    case "要": true;
-                    case "唔要": false;
-                    case _: throw '飲管? ' + v;
-                };
             case [FastTasteSSP, h, v] if (!(h.contains("飲品") || h.contains("配料") || h.startsWith("套餐: 跟餐選擇"))):
                 if (h == "請選擇") {
                     orderContent.push(v);
@@ -234,7 +227,6 @@ class GoogleForms {
                 shop: BlaBlaBla,
                 orderDetails: blablabla.orderItems.join("\n"),
                 orderPrice: parseTotalPrice(blablabla.orderItems.join("\n")),
-                wantTableware: blablabla.wantTableware,
                 customerNote: blablabla.customerNote,
             }));
         }
