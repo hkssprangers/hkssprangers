@@ -129,6 +129,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             var shops = Shop.all.map(shop -> {
                 jsx('<MenuItem key=${shop} value=${shop}>${shop.info().name}</MenuItem>');
             });
+            var product = switch (o.shop) {
+                case BlaBlaBla:
+                    "飲品";
+                case _:
+                    "食物";
+            }
             return jsx('
                 <div key=${key} className="mb-3">
                     <div className="d-flex align-items-center">
@@ -182,7 +188,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         <MenuItem value=${false}>唔要餐具</MenuItem>
                     </TextField>
                     <TextField
-                        label="食物價錢"
+                        label=${product + "價錢"}
                         variant=${Filled}
                         type=${Number}
                         InputProps=${inputProps.merge({
@@ -205,12 +211,26 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 null;
             }
             var tableware = if (o.wantTableware != null) {
-                jsx('<Typography>${o.wantTableware ? "要餐具" : "唔要餐具"}</Typography>');
+                var t = switch (o.shop) {
+                    case BlaBlaBla:
+                        o.wantTableware ? "要飲管" : "唔要飲管";
+                    case _:
+                        o.wantTableware ? "要餐具" : "唔要餐具";
+                }
+                jsx('<Typography>${t}</Typography>');
             } else {
                 null;
             }
+
+            var product = switch (o.shop) {
+                case BlaBlaBla:
+                    "飲品";
+                case _:
+                    "食物";
+            }
+            
             var orderPrice = if (o.orderPrice != null && !Math.isNaN(o.orderPrice)) {
-                jsx('<Typography>食物價錢: $$${o.orderPrice}</Typography>');
+                jsx('<Typography>${product}價錢: $$${o.orderPrice}</Typography>');
             } else {
                 null;
             }

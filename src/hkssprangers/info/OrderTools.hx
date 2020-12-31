@@ -15,11 +15,25 @@ class OrderTools {
         if (order.customerNote != null)
             buf.add("⚠️ " + order.customerNote + "\n");
 
-        if (order.wantTableware != null)
-            buf.add(order.wantTableware ? "要餐具\n" : "唔要餐具\n");
+        if (order.wantTableware != null) {
+            var t = switch (order.shop) {
+                case BlaBlaBla:
+                    order.wantTableware ? "要飲管" : "唔要飲管";
+                case _:
+                    order.wantTableware ? "要餐具" : "唔要餐具";
+            }
+            buf.add(t + "\n");
+        }
 
-        if (order.orderPrice != null && !Math.isNaN(order.orderPrice))
-            buf.add("食物價錢: $" + order.orderPrice + "\n");
+        if (order.orderPrice != null && !Math.isNaN(order.orderPrice)) {
+            var label = switch (order.shop) {
+                case BlaBlaBla:
+                    "飲品價錢";
+                case _:
+                    "食物價錢";
+            }
+            buf.add(label + ": $" + order.orderPrice + "\n");
+        }
 
         return buf.toString().trim();
     }
