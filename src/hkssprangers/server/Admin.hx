@@ -93,9 +93,7 @@ class Admin extends View {
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
     static public function setTg(req:Request, reply:Reply):Promise<Null<Tg>> {
-        trace("setTg");
         var cookies = req.getCookies();
-        trace(cookies);
         var tg:Dynamic = if (cookies != null && cookies.tg != null) try {
             Json.parse(cookies.tg);
         } catch(err) {
@@ -159,7 +157,6 @@ class Admin extends View {
     }
 
     static public function ensurePermission(req:Request, reply:Reply):Promise<Bool> {
-        trace("ensurePermission");
         return setTg(req, reply)
             .then(_ -> setCourier(req, reply))
             .then(_ -> setToken(req, reply))
@@ -366,32 +363,25 @@ class Admin extends View {
     }
 
     static public function get(req:Request, reply:Reply):Promise<Dynamic> {
-        trace("get admin");
         return ensurePermission(req, reply)
             .then(ok -> {
                 if (!ok) {
                     var url = new node.url.URL(req.raw.url, "http://example.com");
                     return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode()));
                 }
-                trace("ok");
                 var user = reply.getCourier();
                 switch (req.accepts().type(["text/html", "application/json"])) {
                     case "text/html":
-                        trace("text/html");
                         var tgBotInfo = tgBot.telegram.getMe();
                         tgBotInfo.then(tgBotInfo -> {
-                            trace(tgBotInfo);
-                            var view = reply.sendView(Admin, {
+                            reply.sendView(Admin, {
                                 tgBotName: tgBotInfo.username,
                                 user: user,
                                 token: reply.getToken(),
                                 fontSize: req.query.fontSize,
                             });
-                            trace(view);
-                            view;
                         });
                     case "application/json":
-                        trace("application/json");
                         var token = reply.getToken();
                         switch (token) {
                             case null:

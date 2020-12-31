@@ -71,10 +71,6 @@ class ServerMain {
         // expires 7 day from now
         var expires = Date.fromTime(Date.now().getTime() + DateTools.days(7));
 
-        trace(expires);
-
-        trace(req.query.redirectTo);
-
         var redirectTo = switch (req.query.redirectTo:String) {
             case null:
                 "/";
@@ -96,7 +92,6 @@ class ServerMain {
             })
             .redirect(redirectTo);
 
-        trace("resolve");
         return Promise.resolve();
     }
 
