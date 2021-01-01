@@ -154,7 +154,7 @@ class View extends ReactComponent {
             </div>
             <footer>
                 <p>
-                    Copyright (C) 2020  ${name}
+                    Copyright (C) 2020-2021  ${name}
                 </p>
             </footer>
             ${footJs()}

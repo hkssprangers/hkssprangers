@@ -105,7 +105,7 @@ class GoogleForms {
                 var dateReg = ~/([0-9]+)月([0-9]+)日/;
                 var timeSlotReg = ~/([0-9]{2}:[0-9]{2})\s*\-\s*([0-9]{2}:[0-9]{2})/;
                 if (dateReg.match(v) && timeSlotReg.match(v)) {
-                    var dateStr = "2020-" + dateReg.matched(1).lpad("0", 2) + "-" + dateReg.matched(2).lpad("0", 2);
+                    var dateStr = Date.now().getFullYear() + "-" + dateReg.matched(1).lpad("0", 2) + "-" + dateReg.matched(2).lpad("0", 2);
                     delivery.pickupTimeSlot = {
                         start: dateStr + " " + timeSlotReg.matched(1) + ":00",
                         end: dateStr + " " + timeSlotReg.matched(2) + ":00",
