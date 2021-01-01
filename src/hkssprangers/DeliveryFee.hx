@@ -744,6 +744,17 @@ class DeliveryFee {
                 case MGYCluster: 40;
             }
         },
+        {
+            place: "一號九龍道",
+            match: address -> address.contains("一號九龍道") || address.toLowerCase().contains("madison park"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 25;
+                case MGYCluster: 25;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
