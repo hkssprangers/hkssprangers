@@ -646,17 +646,6 @@ class DeliveryFee {
             }
         },
         {
-            place: "黃金閣",
-            match: address -> address.contains("黃金閣") || address.toLowerCase().contains("golden court"),
-            deliveryFee: cluster -> switch cluster {
-                case DragonCentreCluster: 25;
-                case YearsCluster: 25;
-                case BiuKeeCluster: 25;
-                case NeighborCluster: 25;
-                case MGYCluster: 25;
-            }
-        },
-        {
             place: "翠雲大廈",
             match: address -> address.contains("翠雲大廈"),
             deliveryFee: cluster -> switch cluster {
@@ -713,7 +702,11 @@ class DeliveryFee {
         },
         {
             place: "黃金/高登",
-            match: address -> address.contains("黃金電腦商場") || address.contains("黃金商場") || address.contains("高登電腦中心"),
+            match: address ->
+                address.contains("黃金電腦商場") || address.contains("黃金商場") ||
+                address.contains("高登電腦中心") ||
+                address.contains("黃金大廈") ||
+                address.contains("黃金閣") || address.toLowerCase().contains("golden court"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case YearsCluster: 25;
