@@ -26,8 +26,8 @@ class ImportOrderDocs {
     static function validateDelivery(d:Delivery) {
         function printDelivery() return Json.stringify(d, null, "  ");
 
-        if (d.creationTime > d.pickupTimeSlot.start)
-            throw "order.creationTime > order.pickupTimeSlotStart: \n" + printDelivery();
+        if (d.creationTime > d.pickupTimeSlot.end)
+            throw "creationTime > pickupTimeSlot.end: \n" + printDelivery();
 
         for (o in d.orders)
         if (o.orderPrice == null) {
@@ -222,18 +222,7 @@ class ImportOrderDocs {
                 });
 
                 FileSystem.createDirectory(Path.join([summaryDir, "shop"]));
-                var shops = [
-                    EightyNine,
-                    DragonJapaneseCuisine,
-                    YearsHK,
-                    LaksaStore,
-                    DongDong,
-                    BiuKeeLokYuen,
-                    KCZenzero,
-                    HanaSoftCream,
-                    Neighbor,
-                    MGY,
-                ];
+                var shops = Shop.all;
                 var charges = new Map<Shop, Decimal>();
                 for (shop in shops) {
                     var deliveries = deliveries.filter(d -> d.orders.exists(o -> o.shop == shop));
