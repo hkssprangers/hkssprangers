@@ -177,6 +177,13 @@ class ImportGoogleForm {
                             })
                             .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow));
                         return Promise.ofJsPromise(getDeliveries)
+                            .recover(err -> {
+                                trace(err);
+                                {
+                                    lastRow: null,
+                                    deliveries: [],
+                                }
+                            })
                             .next(getDeliveries -> {
                                 var deliveries = getDeliveries.deliveries;
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
