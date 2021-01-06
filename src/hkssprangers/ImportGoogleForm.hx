@@ -224,7 +224,8 @@ class ImportGoogleForm {
                                 } else {
                                     Promise.NOISE;
                                 }
-                            });
+                            })
+                            .next(_ -> Future.delay(5000, Noise));
                     })
                 ])
             )

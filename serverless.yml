@@ -55,7 +55,7 @@ functions:
           cors: true
   importGoogleForm:
     handler: importGoogleForm.importGoogleForms
-    timeout: 30
+    timeout: 90
     events:
       - schedule:
           # every 20 min, HKT 9:00 pm - 7:00 am
