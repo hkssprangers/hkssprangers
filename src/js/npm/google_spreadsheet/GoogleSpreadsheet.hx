@@ -7,6 +7,7 @@ import js.lib.Promise;
 extern class GoogleSpreadsheet {
     public function new(sheetId:String):Void;
     public function useServiceAccountAuth(opts:Dynamic):Promise<Void>;
+    public function useRawAccessToken(token:String):Promise<Void>;
     public function useApiKey(apiKey:String):Void;
     public function loadInfo():Promise<Void>;
     public function updateProperties(opts:Dynamic):Promise<Void>;

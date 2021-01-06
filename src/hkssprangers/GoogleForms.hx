@@ -1,5 +1,6 @@
 package hkssprangers;
 
+import google_auth_library.JWT;
 import thx.Decimal;
 import tink.CoreApi;
 import js.lib.Promise;
@@ -18,6 +19,16 @@ using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
 
 class GoogleForms {
+    static public var token(get, null):Promise<String>;
+    static function get_token() return token != null ? token : token = {
+        var creds = GoogleServiceAccount.formReaderServiceAccount;
+        new JWT({
+            email: creds.client_email,
+            key: creds.private_key,
+            scopes: "https://www.googleapis.com/auth/spreadsheets",
+        }).authorize().then(cred -> cred.access_token);
+    }
+
     static public final responseSheetId = [
         YearsHK => "1Jq1AuOc6pG-EuqsGkRj_DS4TWvFXa-r3pGY9DFMqhGk",
         EightyNine => "1Y-yqDQsYO4UeJa4Jxl2ZtZ56Su84cU58TVrm7QpXTHg",
@@ -33,7 +44,8 @@ class GoogleForms {
 
     static public function getResponseSheet(shop:Shop):Promise<GoogleSpreadsheet> {
         var doc = new GoogleSpreadsheet(responseSheetId[shop]);
-        return doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
+        return token
+            .then(token -> doc.useRawAccessToken(token))
             .then(_ -> doc.loadInfo())
             .catchError(err -> {
                 trace('Failed to loadInfo() for ${shop.info().name}\n' + err);
