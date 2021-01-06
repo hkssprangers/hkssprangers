@@ -31,22 +31,19 @@ class GoogleForms {
         FastTasteSSP => "1OeoNlkZlzj_QpZJV9UaKpXbQjdYSoXLUPbKi5YeWQdw",
     ];
 
-    static public var responseSheet(get, null):Map<Shop, Promise<GoogleSpreadsheet>>;
-    static function get_responseSheet() return responseSheet != null ? responseSheet : responseSheet = [
-        for (shop => sheetId in responseSheetId) {
-            var doc = new GoogleSpreadsheet(sheetId);
-            shop => doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
-                .then(_ -> doc.loadInfo())
-                .catchError(err -> {
-                    trace('Failed to loadInfo() for ${shop.info().name}\n' + err);
-                    trace('retry');
-                    (Future.delay(1000 * 3, Noise):tink.Promise<Noise>)
-                        .toJsPromise()
-                        .then(_ -> doc.loadInfo());
-                })
-                .then(_ -> doc);
-        }
-    ];
+    static public function getResponseSheet(shop:Shop):Promise<GoogleSpreadsheet> {
+        var doc = new GoogleSpreadsheet(responseSheetId[shop]);
+        return doc.useServiceAccountAuth(GoogleServiceAccount.formReaderServiceAccount)
+            .then(_ -> doc.loadInfo())
+            .catchError(err -> {
+                trace('Failed to loadInfo() for ${shop.info().name}\n' + err);
+                trace('retry');
+                (Future.delay(1000 * 3, Noise):tink.Promise<Noise>)
+                    .toJsPromise()
+                    .then(_ -> doc.loadInfo());
+            })
+            .then(_ -> doc);
+    }
 
     static function rowToDelivery(shop:Shop, headers:Array<String>, row:Array<String>):Delivery {
         var order:Order = {

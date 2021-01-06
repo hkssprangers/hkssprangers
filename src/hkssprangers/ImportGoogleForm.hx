@@ -134,7 +134,8 @@ class ImportGoogleForm {
         return getLastImportRows()
             .next(lastRows ->
                 Promise.inSequence([
-                    for (shop => responseSheet in GoogleForms.responseSheet)
+                    for (shop => id in GoogleForms.responseSheetId)
+                    Promise.lazy(function()
                     {
                         var lastRow = switch (lastRows.find(r -> r.spreadsheetId == GoogleForms.responseSheetId[shop])) {
                             case null:
@@ -143,7 +144,7 @@ class ImportGoogleForm {
                             case r:
                                 r.lastRow;
                         }
-                        var getDeliveries = responseSheet
+                        var getDeliveries = GoogleForms.getResponseSheet(shop)
                             .then(doc -> doc.sheetsByIndex[0])
                             .then(sheet -> {
                                 sheet.loadCells()
@@ -175,7 +176,7 @@ class ImportGoogleForm {
                                     .then(_ -> sheet);
                             })
                             .then(sheet -> GoogleForms.getDeliveries(shop, sheet, lastRow));
-                        Promise.ofJsPromise(getDeliveries)
+                        return Promise.ofJsPromise(getDeliveries)
                             .next(getDeliveries -> {
                                 var deliveries = getDeliveries.deliveries;
                                 trace('New deliveries of ${shop.info().name}: ' + deliveries.length);
@@ -224,7 +225,7 @@ class ImportGoogleForm {
                                     Promise.NOISE;
                                 }
                             });
-                    }
+                    })
                 ])
             )
             .next(_ -> Promise.ofJsPromise(notifyNewDeliveries(newDeliveries)))
