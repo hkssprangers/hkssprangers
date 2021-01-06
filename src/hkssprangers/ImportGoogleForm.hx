@@ -156,7 +156,7 @@ class ImportGoogleForm {
                                                 true;
                                             case jsErr if (jsErr.message.contains("[429]")): // Quota exceeded
                                                 trace(jsErr.message);
-                                                false;
+                                                true;
                                             case jsErr if (jsErr.message.contains("[503]")): // Service Unavailable
                                                 trace(jsErr.message);
                                                 true;
@@ -166,7 +166,7 @@ class ImportGoogleForm {
                                         }
                                         if (shouldRetry) {
                                             trace("retry");
-                                            (Future.delay(1000 * 3, Noise):Promise<Noise>)
+                                            (Future.delay(5000 * 3, Noise):Promise<Noise>)
                                                 .toJsPromise()
                                                 .then(_ -> sheet.loadCells());
                                         } else {
