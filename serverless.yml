@@ -62,8 +62,8 @@ functions:
           rate: cron(*/20 13-23 * * ? *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
       - schedule:
-          # every 5 min, HKT 8:00 am - 8:xx pm
-          rate: cron(*/5 0-12 * * ? *)
+          # every 2 min, HKT 8:00 am - 8:xx pm
+          rate: cron(*/2 0-12 * * ? *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
   sendAttendancePoll:
     handler: importGoogleForm.sendAttendancePoll

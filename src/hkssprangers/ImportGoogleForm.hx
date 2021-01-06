@@ -225,7 +225,7 @@ class ImportGoogleForm {
                                     Promise.NOISE;
                                 }
                             })
-                            .next(_ -> Future.delay(5000, Noise));
+                            .next(_ -> Future.delay(500, Noise));
                     })
                 ])
             )
