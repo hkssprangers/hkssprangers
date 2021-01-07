@@ -131,6 +131,7 @@ class ImportGoogleForm {
         var now = Date.now();
         var failed = false;
         var newDeliveries = [];
+        var token = GoogleForms.getToken();
         return getLastImportRows()
             .next(lastRows ->
                 Promise.inSequence([
@@ -144,7 +145,7 @@ class ImportGoogleForm {
                             case r:
                                 r.lastRow;
                         }
-                        var getDeliveries = GoogleForms.getResponseSheet(shop)
+                        var getDeliveries = GoogleForms.getResponseSheet(token, shop)
                             .then(doc -> doc.sheetsByIndex[0])
                             .then(sheet -> {
                                 sheet.loadCells()

@@ -19,10 +19,9 @@ using hkssprangers.ObjectTools;
 using hkssprangers.info.DeliveryTools;
 
 class GoogleForms {
-    static public var token(get, null):Promise<String>;
-    static function get_token() return token != null ? token : token = {
+    static public function getToken() {
         var creds = GoogleServiceAccount.formReaderServiceAccount;
-        new JWT({
+        return new JWT({
             email: creds.client_email,
             key: creds.private_key,
             scopes: "https://www.googleapis.com/auth/spreadsheets",
@@ -42,7 +41,7 @@ class GoogleForms {
         FastTasteSSP => "1OeoNlkZlzj_QpZJV9UaKpXbQjdYSoXLUPbKi5YeWQdw",
     ];
 
-    static public function getResponseSheet(shop:Shop):Promise<GoogleSpreadsheet> {
+    static public function getResponseSheet(token:Promise<String>, shop:Shop):Promise<GoogleSpreadsheet> {
         var doc = new GoogleSpreadsheet(responseSheetId[shop]);
         return token
             .then(token -> doc.useRawAccessToken(token))
