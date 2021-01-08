@@ -46,3 +46,32 @@ module "s3_bucket_uploads" {
     }
   ]
 }
+
+module "s3_bucket_logs" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 1.17"
+
+  bucket = "hkssprangers-logs"
+  acl    = "private"
+  attach_policy = true
+  policy        = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+          "Action": "s3:GetBucketAcl",
+          "Effect": "Allow",
+          "Resource": "arn:aws:s3:::hkssprangers-logs",
+          "Principal": { "Service": "logs.${data.aws_region.current.name}.amazonaws.com" }
+      },
+      {
+          "Action": "s3:PutObject" ,
+          "Effect": "Allow",
+          "Resource": "arn:aws:s3:::hkssprangers-logs/*",
+          "Condition": { "StringEquals": { "s3:x-amz-acl": "bucket-owner-full-control" } },
+          "Principal": { "Service": "logs.${data.aws_region.current.name}.amazonaws.com" }
+      }
+    ]
+  }
+  EOF
+}
