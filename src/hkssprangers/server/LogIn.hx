@@ -34,8 +34,7 @@ class LogIn extends View {
     }
 
     static public function middleware(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
-        var tgBotInfo = tgBot.telegram.getMe();
-        return tgBotInfo.then(tgBotInfo ->
+        return ServerMain.tgMe.then(tgBotInfo ->
             reply.sendView(LogIn, {
                 tgBotName: tgBotInfo.username,
             }))

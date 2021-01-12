@@ -372,8 +372,7 @@ class Admin extends View {
                 var user = reply.getCourier();
                 switch (req.accepts().type(["text/html", "application/json"])) {
                     case "text/html":
-                        var tgBotInfo = tgBot.telegram.getMe();
-                        tgBotInfo.then(tgBotInfo -> {
+                        ServerMain.tgMe.then(tgBotInfo -> {
                             reply.sendView(Admin, {
                                 tgBotName: tgBotInfo.username,
                                 user: user,

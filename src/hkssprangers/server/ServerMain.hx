@@ -167,7 +167,12 @@ class ServerMain {
         tgBot.catch_((err, ctx:Context) -> {
             console.error(err);
         });
-        tgMe = tgBot.telegram.getMe();
+        tgMe = PromiseRetry.call((retry, attempt) -> tgBot.telegram.getMe().catchError(err -> {
+            trace(err);
+            cast retry(err);
+        }), {
+            minTimeout: 1000 * 3, // 3 seconds
+        });
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
             tgMe.then(me ->
                 MySql.db.tgMessage.insertOne({
