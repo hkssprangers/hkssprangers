@@ -4932,7 +4932,7 @@ node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
-node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.6.0, node-fetch@^2.6.1:
+node-fetch@^2.3.0, node-fetch@^2.6.0, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
@@ -5207,6 +5207,11 @@ p-timeout@^2.0.1:
   integrity sha512-88em58dDVB/KzPEx1X0N3LwFfYZPyDc4B6eF38M1rk9VTZMbxXXgjugz8mmwpS9Ox4BDZ+t6t3QP5+/gazweIA==
   dependencies:
     p-finally "^1.0.0"
+
+p-timeout@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-4.1.0.tgz#788253c0452ab0ffecf18a62dff94ff1bd09ca0a"
+  integrity sha512-+/wmHtzJuWii1sXn3HCuH/FTwGhrp4tmJTxSKJbfS+vkipci6osxXM5mY0jUiRzWKMTgUT8l7HFbeSwZAynqHw==
 
 p-try@^1.0.0:
   version "1.0.0"
@@ -6021,7 +6026,7 @@ safe-regex2@^2.0.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sandwich-stream@^2.0.1:
+sandwich-stream@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/sandwich-stream/-/sandwich-stream-2.0.2.tgz#6d1feb6cf7e9fe9fadb41513459a72c2e84000fa"
   integrity sha512-jLYV0DORrzY3xaz/S9ydJL6Iz7essZeAfnAavsJ+zsJGZ1MOnsS52yRjU3uF3pJa/lla7+wisp//fxOwOH8SKQ==
@@ -6761,22 +6766,19 @@ tar@^6.0.5:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-telegraf@^3.38.0:
-  version "3.38.0"
-  resolved "https://registry.yarnpkg.com/telegraf/-/telegraf-3.38.0.tgz#745b447547a8e6cdb626055e4d616058aaae0759"
-  integrity sha512-va4VlrKWp64JrowFoZX/NPzzA6q38kvaIukVXOWFO1V+jR1G8+hCfgJy4TX8Z3rwLJzwaBEet1QhikHDRZWl3A==
+telegraf@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/telegraf/-/telegraf-4.0.0.tgz#c238feff20f6415183df08715bfd1d0c7a90e150"
+  integrity sha512-e4m9uJuAzzKe1gNUOn3z3NTLscfteV4GE4la5pfWFbm75OLWK3cp/qvz7Evy4oPpvc/bPlcDCyNgXnk4n2TBcw==
   dependencies:
-    debug "^4.0.1"
-    minimist "^1.2.0"
+    abort-controller "^3.0.0"
+    debug "^4.3.1"
+    minimist "^1.2.5"
     module-alias "^2.2.2"
-    node-fetch "^2.2.0"
-    sandwich-stream "^2.0.1"
-    telegram-typings "^3.6.0"
-
-telegram-typings@^3.6.0:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/telegram-typings/-/telegram-typings-3.6.1.tgz#1288d547f8694b61f1c01c2993e295f3114d9e25"
-  integrity sha512-njVv1EAhIZnmQVLocZEADYUyqA1WIXuVcDYlsp+mXua/XB0pxx+PKtMSPeZ/EE4wPWTw9h/hA9ASTT6yQelkiw==
+    node-fetch "^2.6.1"
+    p-timeout "^4.1.0"
+    sandwich-stream "^2.0.2"
+    typegram "^3.1.4"
 
 term-size@^2.1.0:
   version "2.2.0"
@@ -7003,6 +7005,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typegram@^3.1.4:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/typegram/-/typegram-3.1.5.tgz#43c3e228c927a53042fdff0c34058b54a04160b8"
+  integrity sha512-vHjXzIJatK1B+MYpa9kGCveC60ddctdzM631idNlJK1GNx7zG98xGeTijiRid45bZexacKbeMTx+Ptxp/Y9RHg==
 
 typescript@3.7.4:
   version "3.7.4"
