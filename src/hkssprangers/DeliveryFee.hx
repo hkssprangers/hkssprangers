@@ -458,17 +458,6 @@ class DeliveryFee {
             }
         },
         {
-            place: "喜韻",
-            match: address -> address.contains("喜韻"),
-            deliveryFee: cluster -> switch cluster {
-                case DragonCentreCluster: 35;
-                case YearsCluster: 25;
-                case BiuKeeCluster: 35;
-                case NeighborCluster: 25;
-                case MGYCluster: 40;
-            }
-        },
-        {
             place: "麗群閣",
             match: address -> address.contains("麗群閣"),
             deliveryFee: cluster -> switch cluster {
@@ -727,13 +716,24 @@ class DeliveryFee {
             }
         },
         {
-            place: "Heya",
-            match: address -> address.contains("喜盈") || address.contains("喜薈") || address.contains("喜漾") || address.contains("Heya"),
+            place: "喜韻",
+            match: address -> address.contains("喜韻"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 35;
+                case NeighborCluster: 25;
+                case MGYCluster: 40;
+            }
+        },
+        {
+            place: "喜盈/喜漾/喜薈",
+            match: address -> address.contains("喜盈") || address.contains("喜漾") || address.contains("喜薈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
                 case YearsCluster: 35;
                 case BiuKeeCluster: 35;
-                case NeighborCluster: 35;
+                case NeighborCluster: 25;
                 case MGYCluster: 40;
             }
         },
@@ -779,6 +779,28 @@ class DeliveryFee {
                 case BiuKeeCluster: 25;
                 case NeighborCluster: 25;
                 case MGYCluster: 35;
+            }
+        },
+        {
+            place: "One New York",
+            match: address -> address.toLowerCase().contains("one new york"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case YearsCluster: 35;
+                case BiuKeeCluster: 40;
+                case NeighborCluster: 25;
+                case MGYCluster: 40;
+            }
+        },
+        {
+            place: "明愛醫院",
+            match: address -> address.contains("明愛醫院"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case YearsCluster: 35;
+                case BiuKeeCluster: 40;
+                case NeighborCluster: 25;
+                case MGYCluster: 40;
             }
         },
     ];
