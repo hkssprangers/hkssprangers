@@ -465,7 +465,7 @@ class DeliveryFee {
                 case YearsCluster: 35;
                 case BiuKeeCluster: 35;
                 case NeighborCluster: 25;
-                case MGYCluster: 35;
+                case MGYCluster: 40;
             }
         },
         {
