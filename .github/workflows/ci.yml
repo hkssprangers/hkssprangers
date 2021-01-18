@@ -8,7 +8,6 @@ on:
 
 env:
   TZ: Asia/Hong_Kong
-  NODE_ENV: production
 
 jobs:
   build:
@@ -29,6 +28,8 @@ jobs:
         run: bash ./.devcontainer/postCreateCommand.sh
       - name: Build tailwind
         run: yarn tailwind
+        env:
+          NODE_ENV: production
       - name: Build browser.js
         run: haxe browser.hxml
       - name: Minify browser.js
