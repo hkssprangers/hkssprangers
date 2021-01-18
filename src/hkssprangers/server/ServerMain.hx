@@ -107,6 +107,12 @@ class ServerMain {
     static function initServer(?opts:Dynamic) {
         var app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic> = Fastify.fastify(opts);
 
+        app.setErrorHandler(function(error, request, reply):Promise<Dynamic> {
+            trace(error);
+            reply.status(500).send(error);
+            return Promise.resolve();
+        });
+
         // var p:Promise<Dynamic> = cast app.register(require('fastify-express'));
         // p.then(_ -> {
         //     // let telegraf process things before using any middleware like body-parser that may mess up

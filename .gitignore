@@ -4,6 +4,8 @@
 .haxelib
 *.js
 !/static/trackExceptions.js
+!/tailwind.config.js
+/static/css/tailwind.css
 *.js.map
 /lib/dts2hx/
 

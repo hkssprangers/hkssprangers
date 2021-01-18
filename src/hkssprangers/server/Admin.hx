@@ -10,7 +10,6 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
-import fastify.*;
 import js.node.url.URL;
 import js.node.Querystring;
 import jsonwebtoken.Claims;

@@ -137,9 +137,9 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             }
             return jsx('
                 <div key=${key} className="mb-3">
-                    <div className="d-flex align-items-center">
+                    <div className="flex items-center">
                         <TextField
-                            className="flex-grow-1 mr-1"
+                            className="flex-grow mr-1"
                             select
                             label="店舖"
                             variant=${Filled}
@@ -240,14 +240,14 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             }) && o.orderDetails != null) {
                 o.shop.info().courierContact.map(contact -> {
                     var label = if (contact.startsWith("tel:")) {
-                        jsx('<Fragment><i className="fas fa-phone"></i> telephone</Fragment>');
+                        jsx('<Fragment><i className="fas fa-phone mr-1"></i> telephone</Fragment>');
                     } else if (contact.startsWith("https://wa.me/")) {
-                        jsx('<Fragment><i className="fab fa-whatsapp"></i> WhatsApp</Fragment>');
+                        jsx('<Fragment><i className="fab fa-whatsapp mr-1"></i> WhatsApp</Fragment>');
                     } else {
-                        jsx('<Fragment><i className="fas fa-store"></i> contact</Fragment>');
+                        jsx('<Fragment><i className="fas fa-store mr-1"></i> contact</Fragment>');
                     }
                     jsx('
-                        <a key=${contact} href=${contact} target="_blank" className="courierContact badge badge-pill badge-light p-2 ml-1 user-select-none">
+                        <a key=${contact} href=${contact} target="_blank" className=${badge() + " bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800 font-bold"}>
                             ${label}
                         </a>
                     ');
@@ -399,10 +399,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 });
             }
             jsx('
-                <div className="d-flex flex-wrap flex-sm-nowrap justify-content-between">
+                <div className="flex flex-wrap sm:flex-nowrap justify-between">
                     <MuiPickersUtilsProvider utils=${MomentUtils}>
                         <DateTimePicker
-                            className="flex-sm-grow-1 mr-sm-1"
+                            className="sm:flex-grow sm:mr-1"
                             label="交收時段開始"
                             inputVariant="filled"
                             InputProps=${inputProps}
@@ -415,7 +415,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                             onChange=${onStartTimeChange}
                         />
                         <DateTimePicker
-                            className="flex-sm-grow-1"
+                            className="sm:flex-grow"
                             label="交收時段完結"
                             inputVariant="filled"
                             InputProps=${inputProps}
@@ -733,7 +733,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
         var actions = if (state.isEditing) {
             jsx('
-                <CardActions className="d-flex">
+                <CardActions className="flex">
                     <Button
                         variant=${Contained}
                         color=${Primary}
@@ -846,7 +846,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     }
                 }
                 jsx('
-                    <div key=${i} className="d-flex flex-row align-items-center badge badge-pill badge-light mr-1 my-1">
+                    <div key=${i} className=${badge() + " flex flex-row items-center bg-gray-100 mr-1 my-1 px-2"}>
                         <Input
                             className="courierTgInuput pl-2"
                             startAdornment=${jsx('<InputAdornment position=${Start}>@</InputAdornment>')}
@@ -874,10 +874,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         value=${d.deliveryCode.emptyStrIfNull()}
                         onChange=${deliveryCodeOnChange}
                     />
-                    <div className="d-flex flex-wrap px-3">
+                    <div className="flex flex-wrap px-3">
                         ${couriers}
                     </div>
-                    <div className="d-flex align-items-center px-3">
+                    <div className="flex items-center px-3">
                         <Button
                             size=${Small}
                             onClick=${evt -> addCourier()}

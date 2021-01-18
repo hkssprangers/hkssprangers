@@ -276,7 +276,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         }
         function courierLinkClasses(c:Courier):String {
             if (props.user != null && props.user.courierId == c.courierId)
-                return "myDelivery badge-pill";
+                return 'myDelivery ${badge()} px-2';
             else
                 return "";
         }
@@ -400,13 +400,13 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             else
                 "?";
             var badgeColor = switch (count) {
-                case "0", "?": "badge-light";
-                case _: "badge-info";
+                case "0", "?": "bg-white";
+                case _: "bg-green-500 text-white";
             }
             var label = jsx('
-                <div className="d-flex flex-row align-items-center">
+                <div className="flex flex-row items-center">
                     <span>${t.info().name}</span>
-                    <span className=${'badge badge-pill ${badgeColor} mx-1'}>${count}</span>
+                    <span className=${'${badge()} ${badgeColor} text-xs font-bold mx-1 px-1.5'}>${count}</span>
                 </div>
             ');
             jsx('
@@ -415,7 +415,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     value=${t}
                     control=${jsx('<Radio />')}
                     label=${label}
-                    className="badge badge-pill badge-light mx-1"
+                    className=${badge() + " bg-white mx-1 px-2"}
                 />
             ');
         });
@@ -542,7 +542,8 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         </Grid>
                         <Grid item>
                             <RadioGroup
-                                className="d-flex flex-row"
+                                className="mb-1"
+                                row
                                 value=${getSelectedTimeSlotType()}
                                 onChange=${(evt:Event) -> setSelectedTimeSlotType((cast evt.target).value)}
                             >

@@ -8,15 +8,17 @@ import charleywong.browser.*;
 
 class BrowserMain {
     static function onReady():Void {
-        switch (document.getElementById("CustomerView")) {
+        switch (document.getElementById("IndexView")) {
             case null:
                 //pass
             case elm:
                 var div:DivElement = cast elm;
                 ReactDOM.render(jsx('
-                    <CustomerView
-                        tgBotName=${div.dataset.tgBotName}
-                    />
+                    <BrowserRouter>
+                        <IndexView
+                            tgBotName=${div.dataset.tgBotName}
+                        />
+                    </BrowserRouter>
                 '), div);
         }
 

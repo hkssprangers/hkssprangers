@@ -23,8 +23,8 @@ class LogIn extends View {
     override function bodyContent() {
         return jsx('
             <div>
-                <div className="text-center">
-                    <a href="/"><img id="logo" src=${R("/images/ssprangers4-y.png")} className="rounded-circle" alt="埗兵" /></a>
+                <div className="flex justify-center my-4">
+                    <a href="/"><img src=${R("/images/ssprangers4-y.png")} className="rounded-full h-24 w-24" alt="埗兵" /></a>
                 </div>
                 <div id="LogInView"
                     data-tg-bot-name=${tgBotName}

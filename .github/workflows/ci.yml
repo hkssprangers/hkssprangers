@@ -8,6 +8,7 @@ on:
 
 env:
   TZ: Asia/Hong_Kong
+  NODE_ENV: production
 
 jobs:
   build:
@@ -26,10 +27,14 @@ jobs:
           key: ${{ runner.os }}
       - name: Run postCreateCommand
         run: bash ./.devcontainer/postCreateCommand.sh
-      - name: Compile index.js
-        run: haxe build.hxml
+      - name: Build tailwind
+        run: yarn tailwind
+      - name: Build browser.js
+        run: haxe browser.hxml
       - name: Minify browser.js
         run: npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
+      - name: Build server
+        run: haxe server.hxml
       - name: Build importGoogleForm.js
         run: haxe importGoogleForm.hxml
       - name: Test
