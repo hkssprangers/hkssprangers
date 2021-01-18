@@ -542,7 +542,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         </Grid>
                         <Grid item>
                             <RadioGroup
-                                className="mb-1"
+                                className="mb-1 relative left-3"
                                 row
                                 value=${getSelectedTimeSlotType()}
                                 onChange=${(evt:Event) -> setSelectedTimeSlotType((cast evt.target).value)}
