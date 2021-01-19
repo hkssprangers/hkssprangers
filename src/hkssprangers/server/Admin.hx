@@ -275,7 +275,7 @@ class Admin extends View {
                                 token: token,
                             };
                             switch (shop) {
-                                case MGY:
+                                case DongDong | MGY:
                                     qs.fontSize = "larger";
                                 case _:
                                     //pass
