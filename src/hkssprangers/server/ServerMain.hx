@@ -105,6 +105,10 @@ class ServerMain {
     }
 
     static function initServer(?opts:Dynamic) {
+        opts.rewriteUrl = function(req:Request):String {
+            return StaticResource.rewriteUrl(req.url);
+        }
+
         var app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic> = Fastify.fastify(opts);
 
         app.setErrorHandler(function(error, request, reply):Promise<Dynamic> {
@@ -135,20 +139,15 @@ class ServerMain {
                 case null:
                     // pass
                 case filename:
-                    var md5:Null<String> = req.query.md5;
-                    if (md5 == null) {
-                        return Promise.resolve(payload);
-                    }
-    
+                    var hash:Null<String> = req.query.md5;    
                     var actual = StaticResource.hash(filename);
-                    if (md5 == actual) {
+                    if (hash == actual) {
                         reply.header("Cache-Control", "public, max-age=604800"); // 7 days
                         return Promise.resolve(payload);
                     } else {
                         reply.header("Cache-Control", "no-cache");
                         var redirectUrl = new URL(req.url, "http://example.com");
-                        redirectUrl.searchParams.set("md5", actual);
-                        reply.redirect(redirectUrl.pathname + redirectUrl.search);
+                        reply.redirect(StaticResource.fingerprint(redirectUrl.pathname, actual) + redirectUrl.search);
                         return Promise.resolve(null);
                     }
             }

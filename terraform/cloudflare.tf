@@ -14,6 +14,7 @@ resource "cloudflare_record" "ssprangers" {
   name    = "ssprangers.com"
   value   = "production.ssprangers.com"
   type    = "CNAME"
+  proxied = true
 }
 
 resource "cloudflare_record" "production" {
@@ -21,6 +22,7 @@ resource "cloudflare_record" "production" {
   name    = "production"
   value   = "d-h25rgwffz8.execute-api.ap-southeast-1.amazonaws.com"
   type    = "CNAME"
+  proxied = true
 }
 
 resource "cloudflare_record" "master" {
@@ -28,6 +30,7 @@ resource "cloudflare_record" "master" {
   name    = "master"
   value   = "d-8njywa7so9.execute-api.ap-southeast-1.amazonaws.com"
   type    = "CNAME"
+  proxied = true
 }
 
 resource "cloudflare_record" "dev" {
