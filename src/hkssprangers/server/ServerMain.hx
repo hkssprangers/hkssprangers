@@ -105,6 +105,9 @@ class ServerMain {
     }
 
     static function initServer(?opts:Dynamic) {
+        if (opts == null)
+            opts = {}
+
         opts.rewriteUrl = function(req:Request):String {
             return StaticResource.rewriteUrl(req.url);
         }
