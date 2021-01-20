@@ -94,7 +94,7 @@ class DeliveryFee {
         },
         {
             place: "匯璽",
-            match: address -> address.contains("匯璽") || address.toLowerCase().contains("cullinan west"),
+            match: address -> address.contains("匯璽") || address.contains("滙璽") || address.toLowerCase().contains("cullinan west"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case YearsCluster: 25;
@@ -382,7 +382,7 @@ class DeliveryFee {
         },
         {
             place: "丰匯",
-            match: address -> address.contains("丰匯") || address.toLowerCase().contains("trinity towers"),
+            match: address -> address.contains("丰匯") || address.contains("丰滙") || address.toLowerCase().contains("trinity towers"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case YearsCluster: 25;
