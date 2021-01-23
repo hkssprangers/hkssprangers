@@ -27,29 +27,38 @@ class ImportGoogleForm {
             .next(ds -> ds.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == curType))
             .toJsPromise()
             .then(curDeliveries -> {
-                var time = switch (curType) {
-                    case Lunch: "今朝";
-                    case Dinner: "今晚";
-                }
-                if (curDeliveries.length <= 0) {
-                    tgBot.telegram.sendMessage(chatId, '${time}冇單 😔')
-                        .then(msg -> {
-                            tgBot.telegram.pinChatMessage(chatId, msg.message_id);
-                        })
-                        .then(_ -> null);
-                } else {
-                    tgBot.telegram.sendPoll(chatId, '${time} ${curDeliveries.length} 單。邊個可以幫手送？',
-                        [
-                            "我想送 ✋",
-                            "冇人就搵我送 🧘",
-                            "送唔到 🙁",
-                        ],
-                        {
-                            is_anonymous: false,
-                            allows_multiple_answers: false,
+                var choices = [
+                    "我想送 ✋",
+                    "冇人就搵我送 🧘",
+                    "送唔到 🙁",
+                ];
+                var opts = {
+                    is_anonymous: false,
+                    allows_multiple_answers: false,
+                };
+                switch (curType) {
+                    case Lunch:
+                        if (curDeliveries.length <= 0) {
+                            tgBot.telegram.sendMessage(chatId, '今朝冇單 😔')
+                                .then(msg -> {
+                                    tgBot.telegram.pinChatMessage(chatId, msg.message_id);
+                                })
+                                .then(_ -> null);
+                        } else {
+                            tgBot.telegram.sendPoll(chatId, '今朝 ${curDeliveries.length} 單。邊個可以幫手送？',
+                                choices,
+                                opts
+                            )
+                            .then(_ -> null);
                         }
-                    )
-                    .then(_ -> null);
+                    case Dinner:
+                        var msg = if (curDeliveries.length <= 0) {
+                            '今晚暫時未收到單。如果7點前有突發單，邊個可以幫手送？';
+                        } else {
+                            '今晚暫時收到 ${curDeliveries.length} 單。邊個可以幫手送？';
+                        }
+                        tgBot.telegram.sendPoll(chatId, msg, choices, opts)
+                            .then(_ -> null);
                 }
             });
     }
