@@ -72,8 +72,15 @@ functions:
     handler: importGoogleForm.sendAttendancePoll
     events:
       - schedule:
-          # at HKT 10:05 am and 17:05 pm
+          # at HKT 10:05 and 17:05
           rate: cron(5 2,9 * * ? *)
+          enabled: ${self:custom.isProd.${opt:stage}, false}
+  sendDutyPoll:
+    handler: importGoogleForm.sendDutyPoll
+    events:
+      - schedule:
+          # at HKT 21:00, Sunday and Thursday
+          rate: cron(0 13 ? * SUN,THU *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
 
 plugins:

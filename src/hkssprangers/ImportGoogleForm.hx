@@ -1,5 +1,8 @@
 package hkssprangers;
 
+import comments.CommentString.*;
+import thx.Weekday;
+import hkssprangers.info.Weekday;
 import hkssprangers.info.OrderTools;
 import telegraf.Extra;
 import telegraf.Telegraf;
@@ -18,6 +21,50 @@ using hkssprangers.info.TimeSlotTools;
 
 class ImportGoogleForm {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
+
+    static function sendDutyPoll(chatId:Float) {
+        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        var now = Date.now();
+        var nextDays = switch (Weekday.fromDay(now.getDay())) {
+            case Sunday:
+                [
+                    Date.fromTime(now.getTime() + DateTools.days(1)),
+                    Date.fromTime(now.getTime() + DateTools.days(2)),
+                    Date.fromTime(now.getTime() + DateTools.days(3)),
+                    Date.fromTime(now.getTime() + DateTools.days(4)),
+                ];
+            case Thursday:
+                [
+                    Date.fromTime(now.getTime() + DateTools.days(1)),
+                    Date.fromTime(now.getTime() + DateTools.days(2)),
+                    Date.fromTime(now.getTime() + DateTools.days(3)),
+                ];
+            case d:
+                throw "Unknown weekday: " + d;
+        }
+
+        var slots = [
+            for (d in nextDays)
+            for (t in [Lunch, Dinner])
+            (d.getMonth() + 1) + "月" + d.getDate() + "日 (" + Weekday.fromDay(d.getDay()).info().name + ") " + t.info().periodName
+        ];
+
+        var msg = comment(unindent)/**
+            又係時候麻煩各位報一報邊個時段得閒幫手. 
+            截單嘅時候我會照舊開設報到投票, 午市 10:30 晚市 17:15 截止報到投票.
+            會優先派單俾預早報咗當值嘅外賣員.
+            亦都希望預早報咗當值嘅外賣員會準時出現報到接單 (10:30/17:15), 唔想加罰則, 請自律~ 🙏
+        **/;
+
+        return tgBot.telegram.sendPoll(chatId, msg, slots.concat(["以上日子全部都唔得/唔肯定"]), {
+            is_anonymous: false,
+            allows_multiple_answers: true,
+        })
+            .then(msg -> {
+                tgBot.telegram.pinChatMessage(chatId, msg.message_id);
+            })
+            .then(_ -> null);
+    }
 
     static function sendAttendancePoll(chatId:Float) {
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
@@ -279,6 +326,20 @@ class ImportGoogleForm {
                     };
                 });
         }
+        js.Node.exports.sendDutyPoll = function(evt, context) {
+            return sendDutyPoll(TelegramConfig.internalGroupChatId)
+                .then(_ -> {
+                    statusCode: 200,
+                    body: "done",
+                })
+                .catchError(err -> {
+                    context.serverlessSdk.captureError(err);
+                    {
+                        statusCode: 500,
+                        body: Std.string(err),
+                    };
+                });
+        }
 
         if (isMain) {
             switch (Sys.args()) {
@@ -301,6 +362,20 @@ class ImportGoogleForm {
                         });
                 case ["sendAttendancePoll", "test"]:
                     sendAttendancePoll(TelegramConfig.testingGroupChatId)
+                        .then(_ -> Sys.exit(0))
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
+                        });
+                case ["sendDutyPoll"]:
+                    sendDutyPoll(TelegramConfig.internalGroupChatId)
+                        .then(_ -> Sys.exit(0))
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
+                        });
+                case ["sendDutyPoll", "test"]:
+                    sendDutyPoll(TelegramConfig.testingGroupChatId)
                         .then(_ -> Sys.exit(0))
                         .catchError(err -> {
                             trace(err);
