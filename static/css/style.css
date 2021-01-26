@@ -150,3 +150,11 @@ a.myDelivery {
     border: 2px solid #ffc;
     background: #ffc;
 }
+
+#IndexView .MuiFormLabel-root.Mui-disabled {
+    color: inherit;
+}
+
+#IndexView .MuiInputBase-root.Mui-disabled {
+    color: inherit;
+}

@@ -34,6 +34,7 @@ class Index extends View {
                     <a href="/"><img src=${R("/images/ssprangers4-y.png")} className="rounded-full h-24 w-24" alt="埗兵" /></a>
                 </div>
                 <div id="IndexView"
+                    className="flex justify-center"
                     data-tg-bot-name=${tgBotName}
                 />
             </div>

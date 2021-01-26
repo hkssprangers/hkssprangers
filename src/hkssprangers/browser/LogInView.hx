@@ -2,7 +2,6 @@ package hkssprangers.browser;
 
 import haxe.io.Path;
 import js.html.URLSearchParams;
-import js_cookie.CookiesStatic;
 import global.JsCookieGlobal.*;
 import mui.core.*;
 import js.npm.react_telegram_login.TelegramLoginButton;
