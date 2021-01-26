@@ -65,13 +65,13 @@ enum abstract Shop(String) to String {
                     },
                     {
                         type: Dinner,
-                        start: "19:00",
-                        end: "20:00"
+                        start: "18:30",
+                        end: "19:30"
                     },
                     {
                         type: Dinner,
-                        start: "20:00",
-                        end: "21:00"
+                        start: "19:30",
+                        end: "20:30"
                     },
                 ]
             }
@@ -105,13 +105,13 @@ enum abstract Shop(String) to String {
                     },
                     {
                         type: Dinner,
-                        start: "19:00",
-                        end: "20:00"
+                        start: "18:30",
+                        end: "19:30"
                     },
                     {
                         type: Dinner,
-                        start: "20:00",
-                        end: "21:00"
+                        start: "19:30",
+                        end: "20:30"
                     },
                 ]
             }
@@ -145,13 +145,13 @@ enum abstract Shop(String) to String {
                     },
                     {
                         type: Dinner,
-                        start: "19:00",
-                        end: "20:00"
+                        start: "18:30",
+                        end: "19:30"
                     },
                     {
                         type: Dinner,
-                        start: "20:00",
-                        end: "21:00"
+                        start: "19:30",
+                        end: "20:30"
                     },
                 ]
             }
@@ -185,13 +185,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -225,13 +225,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -265,13 +265,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -305,13 +305,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -343,13 +343,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -383,13 +383,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -423,13 +423,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -463,13 +463,13 @@ enum abstract Shop(String) to String {
                         },
                         {
                             type: Dinner,
-                            start: "19:00",
-                            end: "20:00"
+                            start: "18:30",
+                            end: "19:30"
                         },
                         {
                             type: Dinner,
-                            start: "20:00",
-                            end: "21:00"
+                            start: "19:30",
+                            end: "20:30"
                         },
                     ]
                 }
@@ -490,7 +490,28 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: []
+                    timeSlots: [
+                        {
+                            type: Lunch,
+                            start: "12:30",
+                            end: "13:30"
+                        },
+                        {
+                            type: Lunch,
+                            start: "13:30",
+                            end: "14:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "18:30",
+                            end: "19:30"
+                        },
+                        {
+                            type: Dinner,
+                            start: "19:30",
+                            end: "20:30"
+                        },
+                    ]
                 }
     }
 
