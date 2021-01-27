@@ -155,7 +155,7 @@ class ImportGoogleForm {
             _existingDeliveries[date];
         } else {
             _existingDeliveries[date] = MySql.db.getDeliveries(Date.fromString(date));
-        }).next(deliveries -> deliveries.filter(d -> d.orders[0].shop == shop && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
+        }).next(deliveries -> deliveries.filter(d -> d.orders.exists(o -> o.shop == shop) && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
     }
 
     static function notifyNewDeliveries(deliveries:Array<Delivery>) {
