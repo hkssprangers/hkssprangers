@@ -146,6 +146,9 @@ class DongDongForm extends ReactComponentOf<Dynamic, Dynamic> {
                             ]
                         }
                     },
+                    required: [
+                        "type",
+                    ],
                     dependencies: {
                         type: {
                             oneOf: [
@@ -312,6 +315,7 @@ class DongDongForm extends ReactComponentOf<Dynamic, Dynamic> {
                 <h1 className="text-center text-xl mb-2">
                     噹噹茶餐廳 x 埗兵 外賣表格
                 </h1>
+                <p className="text-sm text-gray-500">*必填項目</p>
                 <Form
                     schema=${schema}
                     uiSchema=${uiSchema}

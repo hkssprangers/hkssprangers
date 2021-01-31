@@ -105,6 +105,7 @@ class EightyNineForm extends ReactComponentOf<Dynamic, Dynamic> {
                 <h1 className="text-center text-xl mb-2">
                     89美食 x 埗兵 外賣表格
                 </h1>
+                <p className="text-sm text-gray-500">*必填項目</p>
                 <Form
                     schema=${schema}
                     uiSchema=${uiSchema}
