@@ -2,7 +2,6 @@ package hkssprangers.browser.forms;
 
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
-import js.npm.rjsf.material_ui.*;
 import mui.core.*;
 using hkssprangers.info.TimeSlotTools;
 
@@ -311,18 +310,12 @@ class DongDongForm extends ReactComponentOf<Dynamic, Dynamic> {
 
     override function render():ReactFragment {
         return jsx('
-            <div className="container max-w-screen-md mx-4 p-4">
-                <h1 className="text-center text-xl mb-2">
-                    噹噹茶餐廳 x 埗兵 外賣表格
-                </h1>
-                <p className="text-sm text-gray-500">*必填項目</p>
-                <Form
-                    schema=${schema}
-                    uiSchema=${uiSchema}
-                    onSubmit=${onSubmit}
-                >
-                </Form>
-            </div>
+            <OrderForm
+                shop=${DongDong}
+                schema=${schema}
+                uiSchema=${uiSchema}
+                onSubmit=${onSubmit}
+            />
         ');
     }
 }
