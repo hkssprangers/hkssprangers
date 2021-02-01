@@ -150,6 +150,7 @@ class ServerMain {
                     } else {
                         reply.header("Cache-Control", "no-cache");
                         var redirectUrl = new URL(req.url, "http://example.com");
+                        redirectUrl.searchParams.delete("md5");
                         reply.redirect(StaticResource.fingerprint(redirectUrl.pathname, actual) + redirectUrl.search);
                         return Promise.resolve(null);
                     }
