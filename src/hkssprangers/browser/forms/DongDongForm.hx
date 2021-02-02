@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.browser.forms.OrderForm.OrderData;
 import js.lib.Object;
 import haxe.Json;
 import hkssprangers.info.TimeSlotType;
@@ -22,7 +23,7 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
     final nextSlots = DongDong.nextTimeSlots(Date.now());
     final uiSchema:Dynamic;
 
-    static public function itemsSchema(pickupTimeSlot:TimeSlot):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:OrderData):Dynamic {
         if (pickupTimeSlot == null)
             return {
                 type: "null"
@@ -37,30 +38,59 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                     minItems: 1,
                 };
             case Dinner:
+                function itemSchema() return {
+                    type: "object",
+                    properties: {
+                        type: {
+                            title: "食物種類",
+                            type: "string",
+                            "enum": [
+                                "單叫小菜",
+                                "客飯/蒸飯套餐",
+                            ]
+                        },
+                    },
+                    required: [
+                        "type",
+                    ],
+                };
                 {
                     type: "array",
-                    items: {
-                        "$ref": "#/definitions/DongDongDinnerItem"
-                    },
+                    items: order.items == null ? [] : order.items.map(item -> {
+                        var itemSchema = itemSchema();
+                        switch (item.type) {
+                            case null:
+                                //pass
+                            case "單叫小菜":
+                                Object.assign(itemSchema.properties, {
+                                    item: {
+                                        "$ref": "#/definitions/DongDongDinnerDish",
+                                    },
+                                });
+                            case "客飯/蒸飯套餐":
+                                Object.assign(itemSchema.properties, {
+                                    item: {
+                                        "$ref": "#/definitions/DongDongDinnerSet",
+                                    },
+                                });
+                            case _:
+                                //pass
+                        }
+                        itemSchema;
+                    }),
+                    additionalItems: itemSchema(),
                     minItems: 1,
                 };
         }
     }
 
     static public final schemaDefinitions = {
-        DongDongTakeawayBox: {
-            description: "外賣盒收費 $1",
-            type: "null",
-        },
-        DongDongFreeSoup: {
-            description: "附送例湯",
-            type: "null",
-        },
         DongDongLunchSet: {
             title: "午餐",
             properties: {
                 main: {
                     title: "午餐選擇",
+                    description: "注意每份會另加外賣盒收費 $1.",
                     type: "string",
                     "enum": [
                         "椒鹽豬扒飯 - $48",
@@ -110,9 +140,6 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                         "檸檬可樂 (+$8)",
                     ],
                 },
-                charge: {
-                    "$ref": "#/definitions/DongDongTakeawayBox"
-                },
             },
             required: [
                 "main",
@@ -133,6 +160,7 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
             },
             required: [
                 "type",
+                "item",
             ],
             dependencies: {
                 type: {
@@ -146,6 +174,10 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                                     "$ref": "#/definitions/DongDongDinnerDish",
                                 },
                             },
+                            required: [
+                                "type",
+                                "item",
+                            ],
                         },
                         {
                             properties: {
@@ -156,6 +188,10 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                                     "$ref": "#/definitions/DongDongDinnerSet",
                                 },
                             },
+                            required: [
+                                "type",
+                                "item",
+                            ],
                         },
                     ],
                 },
@@ -186,6 +222,7 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
         },
         DongDongDinnerDish: {
             title: "晚餐 - 單叫小菜",
+            description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
             properties: {
                 main: {
                     title: "小菜",
@@ -208,12 +245,6 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                         "豆豉鯪魚油麥菜 - $78",
                     ],
                 },
-                drink: {
-                    "$ref": "#/definitions/DongDongDinnerDrink",
-                },
-                charge: {
-                    "$ref": "#/definitions/DongDongTakeawayBox"
-                },
             },
             required: [
                 "main",
@@ -222,6 +253,7 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
         },
         DongDongDinnerSet: {
             title: "晚餐 - 客飯/蒸飯套餐",
+            description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
             properties: {
                 main: {
                     title: "晚飯套餐",
@@ -265,12 +297,6 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                 },
                 drink: {
                     "$ref": "#/definitions/DongDongDinnerDrink",
-                },
-                given: {
-                    "$ref": "#/definitions/DongDongFreeSoup",
-                },
-                charge: {
-                    "$ref": "#/definitions/DongDongTakeawayBox"
                 },
             },
             required: [

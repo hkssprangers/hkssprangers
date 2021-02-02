@@ -8,7 +8,7 @@ typedef OrdersTemplateProps = Dynamic;
 
 class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
     static function DefaultArrayItem(props, removable:Bool) {
-        var removeBtn = if (props.hasRemove && removable) {
+        var removeBtn = if (removable) {
             jsx('
                 <Button
                     className="array-item-add"
