@@ -245,6 +245,9 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                         "豆豉鯪魚油麥菜 - $78",
                     ],
                 },
+                drink: {
+                    "$ref": "#/definitions/DongDongDinnerDrink",
+                },
             },
             required: [
                 "main",
