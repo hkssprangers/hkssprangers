@@ -24,7 +24,7 @@ typedef IndexViewState = {
 class IndexView extends ReactComponentOf<IndexViewProps, IndexViewState> {
     override function render() {
         return jsx('
-            <EightyNineForm />
+            <OrderForm />
         ');
     }
 }

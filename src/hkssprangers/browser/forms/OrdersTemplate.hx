@@ -4,11 +4,11 @@ import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
 
-typedef OrderItemsTemplateProps = Dynamic;
+typedef OrdersTemplateProps = Dynamic;
 
-class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynamic> {
-    static function DefaultArrayItem(props) {
-        var removeBtn = if (props.hasRemove) {
+class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
+    static function DefaultArrayItem(props, removable:Bool) {
+        var removeBtn = if (props.hasRemove && removable) {
             jsx('
                 <Button
                     className="array-item-add"
@@ -16,32 +16,34 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
                     disabled=${props.disabled || props.readonly}
                     onClick=${props.onDropIndexClick(props.index)}
                 >
-                    移除
+                    移除以上店舖
                 </Button>
             ');
         } else {
             null;
         }
         return jsx('
-            <Card key=${props.key} className="my-2">
-                <CardContent>
-                    ${props.children}
-                </CardContent>
-                <CardActions>
+            <div key=${props.key} className="my-2">
+                ${props.children}
+                <div>
                     ${removeBtn}
-                </CardActions>
-            </Card>
+                </div>
+            </div>
         ');
     }
 
     override function render():ReactFragment {
         var items = if (props.items != null) {
-            props.items.map(p -> DefaultArrayItem(p));
+            [
+                for (p in (props.items:Array<Dynamic>))
+                DefaultArrayItem(p, props.items.length > 1)
+            ];
         } else {
             null;
         }
         return jsx('
             <div key=${'array-item-list-${props.idSchema.field("$id")}'}>
+                <h2>揀食咩</h2>
                 <div>
                     ${items}
                 </div>
@@ -52,7 +54,7 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
                         onClick=${props.onAddClick}
                         disabled=${props.disabled || props.readonly}
                     >
-                        叫多樣
+                        叫多間店舖
                     </Button>
                 </div>
             </div>
