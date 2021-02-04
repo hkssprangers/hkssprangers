@@ -1042,10 +1042,10 @@ avvio@^7.1.2:
     fastq "^1.6.1"
     queue-microtask "^1.1.2"
 
-aws-sdk@^2.826.0, aws-sdk@^2.834.0:
-  version "2.834.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.834.0.tgz#1d9f8ed7cf2ed885041142d67e29f45cbb8621b7"
-  integrity sha512-9WRULrn4qAmgXI+tEW/IG5s/6ixJGZqjPOrmJsFZQev7/WRkxAZmJAjcwd4Ifm/jsJbXx2FSwO76gOPEvu2LqA==
+aws-sdk@^2.834.0, aws-sdk@^2.837.0:
+  version "2.837.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.837.0.tgz#e5c19e238051e89d1a10ede52cadcc1cf6ab4771"
+  integrity sha512-JaFiZaOjN923rwPuNEKfzcXPPzZymSAq21iKam1g9GZ5PhTwkTxijivhHDjVts5SYo0HCh2cO1ObqqgLhv32ow==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
