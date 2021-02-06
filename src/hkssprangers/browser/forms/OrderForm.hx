@@ -114,6 +114,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             items:{
                 items: {
                     "ui:ArrayFieldTemplate": OrderItemsTemplate,
+                    items: {
+                        "ui:FieldTemplate": OrderItemTemplate,
+                        item: {
+                            "ui:FieldTemplate": OrderItemTemplate,
+                        },
+                    },
                 }
             }
         },

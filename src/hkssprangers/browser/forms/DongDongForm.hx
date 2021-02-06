@@ -87,10 +87,10 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
     static public final schemaDefinitions = {
         DongDongLunchSet: {
             title: "午餐",
+            description: "注意每份會另加外賣盒收費 $1.",
             properties: {
                 main: {
                     title: "午餐選擇",
-                    description: "注意每份會另加外賣盒收費 $1.",
                     type: "string",
                     "enum": [
                         "椒鹽豬扒飯 - $48",
@@ -145,57 +145,6 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
                 "main",
                 "drink",
             ]
-        },
-        DongDongDinnerItem: {
-            type: "object",
-            properties: {
-                type: {
-                    title: "食物種類",
-                    type: "string",
-                    "enum": [
-                        "單叫小菜",
-                        "客飯/蒸飯套餐",
-                    ]
-                }
-            },
-            required: [
-                "type",
-                "item",
-            ],
-            dependencies: {
-                type: {
-                    oneOf: [
-                        {
-                            properties: {
-                                type: {
-                                    const: "單叫小菜"
-                                },
-                                item: {
-                                    "$ref": "#/definitions/DongDongDinnerDish",
-                                },
-                            },
-                            required: [
-                                "type",
-                                "item",
-                            ],
-                        },
-                        {
-                            properties: {
-                                type: {
-                                    const: "客飯/蒸飯套餐"
-                                },
-                                item: {
-                                    "$ref": "#/definitions/DongDongDinnerSet",
-                                },
-                            },
-                            required: [
-                                "type",
-                                "item",
-                            ],
-                        },
-                    ],
-                },
-            }
         },
         DongDongDinnerDrink: {
             title: "跟餐飲品",
