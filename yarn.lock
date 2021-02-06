@@ -240,10 +240,10 @@
     react-is "^16.9.0"
     shortid "^2.2.14"
 
-"@rjsf/material-ui@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@rjsf/material-ui/-/material-ui-2.4.1.tgz#b0dedff8877b114147e298966ca3faba895a7a62"
-  integrity sha512-pZaWL5Dw+km8S0hFLIK1lRHaeNtheMxTF2mZrWhf6HlGWCTGkQJnXta2UgshJN/nKtZPgO1L4FKz42Eun9nnhg==
+"@rjsf/material-ui@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@rjsf/material-ui/-/material-ui-2.4.2.tgz#3eb2900e0b4abb2fb78fa18450edb286eca34030"
+  integrity sha512-bTom2BvPOLCoJucnzXWAN4NvB7AzyIWrhBOxu4k0oixb0V9swneuNGy4R+QiioU3rtCmxD4KjXbMIB0vXJQJRw==
 
 "@serverless/cli@^1.5.2":
   version "1.5.2"
