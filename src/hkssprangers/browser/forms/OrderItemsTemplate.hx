@@ -7,8 +7,8 @@ using Reflect;
 typedef OrderItemsTemplateProps = Dynamic;
 
 class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynamic> {
-    static function DefaultArrayItem(props) {
-        var removeBtn = if (props.hasRemove) {
+    static function DefaultArrayItem(props, removable) {
+        var removeBtn = if (removable) {
             jsx('
                 <Button
                     className="array-item-add"
@@ -21,7 +21,7 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
             ');
         } else {
             null;
-        }
+        };
         return jsx('
             <Card key=${props.key} className="my-2">
                 <CardContent>
@@ -36,7 +36,7 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
 
     override function render():ReactFragment {
         var items = if (props.items != null) {
-            props.items.map(p -> DefaultArrayItem(p));
+            props.items.map(p -> DefaultArrayItem(p, true));
         } else {
             null;
         }
