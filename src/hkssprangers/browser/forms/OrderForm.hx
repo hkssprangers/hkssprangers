@@ -142,6 +142,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
 
     override function render():ReactFragment {
         var schema = getSchema(nextSlots, state.formData);
+        var uiSchema = getUiSchema(state.formData);
 
         function onChange(e:{
             edit:Bool,
@@ -180,8 +181,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 </h1>
                 <p className="text-sm text-gray-500">*必填項目</p>
                 <Form
+                    key=${Json.stringify({
+                        schema: schema,
+                        uiSchema: uiSchema,
+                    })}
                     schema=${schema}
-                    uiSchema=${getUiSchema(state.formData)}
+                    uiSchema=${uiSchema}
                     formData=${state.formData}
                     onChange=${onChange}
                     onSubmit=${onSubmit}
