@@ -52,28 +52,6 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                timeSlots: [
-                    {
-                        type: Lunch,
-                        start: "12:30",
-                        end: "13:30"
-                    },
-                    {
-                        type: Lunch,
-                        start: "13:30",
-                        end: "14:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "18:30",
-                        end: "19:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "19:30",
-                        end: "20:30"
-                    },
-                ]
             }
         case DragonJapaneseCuisine:
             {
@@ -92,28 +70,6 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                timeSlots: [
-                    {
-                        type: Lunch,
-                        start: "12:30",
-                        end: "13:30"
-                    },
-                    {
-                        type: Lunch,
-                        start: "13:30",
-                        end: "14:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "18:30",
-                        end: "19:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "19:30",
-                        end: "20:30"
-                    },
-                ]
             }
         case YearsHK:
             {
@@ -132,28 +88,6 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                timeSlots: [
-                    {
-                        type: Lunch,
-                        start: "12:30",
-                        end: "13:30"
-                    },
-                    {
-                        type: Lunch,
-                        start: "13:30",
-                        end: "14:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "18:30",
-                        end: "19:30"
-                    },
-                    {
-                        type: Dinner,
-                        start: "19:30",
-                        end: "20:30"
-                    },
-                ]
             }
             case LaksaStore:
                 {
@@ -172,28 +106,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case DongDong:
                 {
@@ -212,28 +124,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         // Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case BiuKeeLokYuen:
                 {
@@ -252,28 +142,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case KCZenzero:
                 {
@@ -292,28 +160,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case HanaSoftCream:
                 {
@@ -330,28 +176,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case Neighbor:
                 {
@@ -370,28 +194,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "13:00",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case MGY:
                 {
@@ -410,28 +212,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case FastTasteSSP:
                 {
@@ -450,28 +230,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
             case BlaBlaBla:
                 {
@@ -490,28 +248,6 @@ enum abstract Shop(String) to String {
                         Saturday,
                         Sunday,
                     ],
-                    timeSlots: [
-                        {
-                            type: Lunch,
-                            start: "12:30",
-                            end: "13:30"
-                        },
-                        {
-                            type: Lunch,
-                            start: "13:30",
-                            end: "14:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "18:30",
-                            end: "19:30"
-                        },
-                        {
-                            type: Dinner,
-                            start: "19:30",
-                            end: "20:30"
-                        },
-                    ]
                 }
     }
 
@@ -531,40 +267,5 @@ enum abstract Shop(String) to String {
             case BlaBlaBla: BlaBlaBla;
             case _: null;
         }
-    }
-
-    public function nextTimeSlots(currentTime:Date):Array<TimeSlot & { isOff:Bool }> {
-        var info = (cast this:Shop).info();
-        var today = DateTools.format(currentTime, "%Y-%m-%d");
-        var tmr = DateTools.format(Date.fromTime(currentTime.getTime() + DateTools.days(1)), "%Y-%m-%d");
-
-        // prepare slots more than we need and then filter them in the next step
-        var slots =
-            info.timeSlots.map(slot -> {
-                type: slot.type,
-                cutoff: Date.fromString(today + " " + slot.type.info().cutoffTime),
-                start: Date.fromString(today + " " + slot.start + ":00"),
-                end: Date.fromString(today + " " + slot.end + ":00"),
-            }).concat(info.timeSlots.map(slot -> {
-                type: slot.type,
-                cutoff: Date.fromString(tmr + " " + slot.type.info().cutoffTime),
-                start: Date.fromString(tmr + " " + slot.start + ":00"),
-                end: Date.fromString(tmr + " " + slot.end + ":00"),
-            }));
-
-        return slots
-            .filter(slot -> slot.cutoff.getTime() > currentTime.getTime())
-            .slice(0, 4)
-            .map(slot -> {
-                type: slot.type,
-                start: (slot.start:LocalDateString),
-                end: (slot.end:LocalDateString),
-                isOff: switch [info.id, DateTools.format(slot.start, "%Y-%m-%d"), slot.type] {
-                    case [EightyNine, "2020-08-17", _]:
-                        true;
-                    case _:
-                        !info.openDays.exists(d -> d.info().day == slot.start.getDay());
-                }
-            });
     }
 }

@@ -20,7 +20,6 @@ typedef DongDongFormState = {
 }
 
 class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState> {
-    final nextSlots = DongDong.nextTimeSlots(Date.now());
     final uiSchema:Dynamic;
 
     static public function itemsSchema(pickupTimeSlot:TimeSlot, order:OrderData):Dynamic {
