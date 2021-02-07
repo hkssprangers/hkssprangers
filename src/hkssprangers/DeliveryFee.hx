@@ -16,6 +16,7 @@ enum abstract ShopCluster(String) {
             case EightyNine: DragonCentreCluster;
             case DragonJapaneseCuisine: DragonCentreCluster;
             case YearsHK: YearsCluster;
+            case TheParkByYears: MGYCluster;
             case LaksaStore: DragonCentreCluster;
             case DongDong: YearsCluster;
             case BiuKeeLokYuen: BiuKeeCluster;

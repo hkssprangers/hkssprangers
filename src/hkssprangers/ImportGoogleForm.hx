@@ -124,31 +124,6 @@ class ImportGoogleForm {
             .all();
     }
 
-    // assuming 2020-11-10 has been imported
-    static final manualLastImportRow = [
-        EightyNine => 41,
-        YearsHK => 48,
-        BiuKeeLokYuen => 31,
-        DragonJapaneseCuisine => 31,
-        Neighbor => 40,
-        LaksaStore => 55,
-        DongDong => 51,
-        MGY => 12,
-        KCZenzero => 84,
-    ];
-
-    static function insertManualLastImportRows() {
-        var now = Date.now();
-        return MySql.db.googleFormImport.insertMany([
-            for (shop => lastRow in manualLastImportRow)
-            {
-                importTime: now,
-                spreadsheetId: GoogleForms.responseSheetId[shop],
-                lastRow: lastRow,
-            }
-        ]).noise();
-    }
-
     static final _existingDeliveries = new Map<String, Promise<Array<Delivery>>>();
     static function existingDeliveries(date:String, shop:Shop, t:TimeSlotType) {
         return (if (_existingDeliveries.exists(date)) {
@@ -343,8 +318,6 @@ class ImportGoogleForm {
 
         if (isMain) {
             switch (Sys.args()) {
-                case ["init"]:
-                    insertManualLastImportRows().handle(_ -> Sys.exit(0));
                 case ["import"]:
                     importGoogleForms().handle(o -> switch o {
                         case Success(succeeded):
