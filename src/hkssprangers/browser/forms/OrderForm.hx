@@ -112,6 +112,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         orders: {
             "ui:ArrayFieldTemplate": OrdersTemplate,
             items:{
+                shop: {
+                    "ui:widget": ShopSelectorWidget,
+                },
                 items: {
                     "ui:ArrayFieldTemplate": OrderItemsTemplate,
                     items: {
