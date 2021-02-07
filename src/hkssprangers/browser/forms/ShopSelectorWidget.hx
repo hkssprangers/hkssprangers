@@ -1,20 +1,28 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.Weekday;
+import hkssprangers.info.TimeSlot;
+import hkssprangers.info.Shop;
 import js.html.Event;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
+using Lambda;
 using hkssprangers.ObjectTools;
 
 typedef ShopSelectorWidgetProps = {
     final schema:Dynamic;
     final id:String;
-    final options:Dynamic;
+    final options:{
+        enumOptions:Dynamic,
+        enumDisabled:Dynamic,
+        pickupTimeSlot:Null<TimeSlot>,
+    };
     final label:String;
     final required:Bool;
     final disabled:Bool;
     final readonly:Bool;
-    final value:String;
+    final value:Shop;
     final multiple:Bool;
     final autofocus:Bool;
     final onChange:Dynamic;
@@ -28,11 +36,32 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
         return value;
     };
     override function render():ReactFragment {
-        var items = props.options.enumOptions.map((option:{ value:String, label:String }, i:Int) -> {
-            var disabled = props.options.enumDisabled && props.options.enumDisabled.indexOf(option.value) != -1;
+        var pickupTimeSlot = props.options.pickupTimeSlot;
+        var items = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> {
+            var info = option.value.info();
+            var disabledReason:Null<String> = (() -> {
+                if (pickupTimeSlot == null)
+                    return null;
+
+                if (!info.openDays.has(Weekday.fromDay(pickupTimeSlot.start.toDate().getDay())))
+                    return '休息';
+
+                if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
+                    return '最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收';
+
+                if (pickupTimeSlot.start.getTimePart() > info.latestPickupTime)
+                    return '最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收';
+
+                return null;
+            })();
+            var disabledMessage = if (disabledReason != null) jsx('
+                <span className="ml-2 text-sm text-red-500">${disabledReason}</span>
+            ') else {
+                null;
+            };
             return jsx('
-                <MenuItem key=${i} value=${option.value} disabled=${disabled}>
-                    ${option.label}
+                <MenuItem key=${option.value} value=${option.value} disabled=${disabledReason != null}>
+                    ${option.label}${disabledMessage}
                 </MenuItem>
             ');
         });
@@ -44,7 +73,7 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                     case v: v;
                 }}
                 select
-                value=${props.value == null ? "" : props.value}
+                value=${props.value == null ? "" : (props.value:String)}
                 required=${props.required}
                 disabled=${props.disabled || props.readonly}
                 autoFocus=${props.autofocus}

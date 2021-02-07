@@ -26,7 +26,14 @@ typedef OrderData = {
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     final nextSlots = TimeSlotTools.nextTimeSlots(Date.now());
+    static public function selectedPickupTimeSlot(formData:OrderFormData):TimeSlot {
+        return switch (formData.pickupTimeSlot) {
+            case null: null;
+            case str: Json.parse(str);
+        };
+    }
     static public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
+        var pickupTimeSlot = selectedPickupTimeSlot(formData);
         var shopSchema = {
             type: "string",
             title: "店舖",
@@ -67,8 +74,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                 Object.assign(orderSchema.properties, {
                                     shop: shopSchema,
                                     items: {
-                                        var ts = formData.pickupTimeSlot;
-                                        if (ts == null) {
+                                        if (pickupTimeSlot == null) {
                                             {
                                                 type: "array",
                                                 items: {
@@ -76,7 +82,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                                 }
                                             };
                                         } else {
-                                            DongDongForm.itemsSchema(Json.parse(ts), o);
+                                            DongDongForm.itemsSchema(pickupTimeSlot, o);
                                         }
                                     },
                                 });
@@ -108,24 +114,30 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         };
     }
 
-    function getUiSchema() return {
-        orders: {
-            "ui:ArrayFieldTemplate": OrdersTemplate,
-            items:{
-                shop: {
-                    "ui:widget": ShopSelectorWidget,
-                },
-                items: {
-                    "ui:ArrayFieldTemplate": OrderItemsTemplate,
-                    items: {
-                        "ui:FieldTemplate": OrderItemTemplate,
-                        item: {
-                            "ui:FieldTemplate": OrderItemTemplate,
+    function getUiSchema(formData:OrderFormData) {
+        var pickupTimeSlot = selectedPickupTimeSlot(formData);
+        return {
+            orders: {
+                "ui:ArrayFieldTemplate": OrdersTemplate,
+                items:{
+                    shop: {
+                        "ui:widget": ShopSelectorWidget,
+                        "ui:options": {
+                            pickupTimeSlot: pickupTimeSlot,
                         },
                     },
+                    items: {
+                        "ui:ArrayFieldTemplate": OrderItemsTemplate,
+                        items: {
+                            "ui:FieldTemplate": OrderItemTemplate,
+                            item: {
+                                "ui:FieldTemplate": OrderItemTemplate,
+                            },
+                        },
+                    }
                 }
-            }
-        },
+            },
+        };
     }
 
     override function render():ReactFragment {
@@ -169,7 +181,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 <p className="text-sm text-gray-500">*必填項目</p>
                 <Form
                     schema=${schema}
-                    uiSchema=${getUiSchema()}
+                    uiSchema=${getUiSchema(state.formData)}
                     formData=${state.formData}
                     onChange=${onChange}
                     onSubmit=${onSubmit}
