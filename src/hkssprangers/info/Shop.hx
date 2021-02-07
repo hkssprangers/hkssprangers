@@ -54,6 +54,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case DragonJapaneseCuisine:
             {
@@ -65,13 +67,15 @@ enum abstract Shop(String) to String {
                 ],
                 openDays: [
                     Monday,
-                    // Tuesday,
+                    Tuesday,
                     Wednesday,
                     Thursday,
                     Friday,
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case YearsHK:
             {
@@ -90,6 +94,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case TheParkByYears:
             {
@@ -108,6 +114,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case LaksaStore:
             {
@@ -126,6 +134,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case DongDong:
             {
@@ -144,6 +154,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     // Sunday,
                 ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "18:30:00",
             }
         case BiuKeeLokYuen:
             {
@@ -162,6 +174,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "20:30:00",
             }
         case KCZenzero:
             {
@@ -180,6 +194,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case HanaSoftCream:
             {
@@ -196,6 +212,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case Neighbor:
             {
@@ -214,6 +232,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "13:00:00",
+                latestPickupTime: "20:30:00",
             }
         case MGY:
             {
@@ -232,6 +252,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case FastTasteSSP:
             {
@@ -250,6 +272,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
         case BlaBlaBla:
             {
@@ -268,6 +292,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
             }
     }
 
