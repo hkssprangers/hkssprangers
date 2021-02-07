@@ -542,12 +542,12 @@ enum abstract Shop(String) to String {
         var slots =
             info.timeSlots.map(slot -> {
                 type: slot.type,
-                cutoff: Date.fromString(today + " " + slot.type.info().cutoffTime + ":00"),
+                cutoff: Date.fromString(today + " " + slot.type.info().cutoffTime),
                 start: Date.fromString(today + " " + slot.start + ":00"),
                 end: Date.fromString(today + " " + slot.end + ":00"),
             }).concat(info.timeSlots.map(slot -> {
                 type: slot.type,
-                cutoff: Date.fromString(tmr + " " + slot.type.info().cutoffTime + ":00"),
+                cutoff: Date.fromString(tmr + " " + slot.type.info().cutoffTime),
                 start: Date.fromString(tmr + " " + slot.start + ":00"),
                 end: Date.fromString(tmr + " " + slot.end + ":00"),
             }));

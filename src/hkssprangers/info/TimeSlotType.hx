@@ -10,14 +10,14 @@ enum abstract TimeSlotType(String) to String {
                 id: Lunch,
                 name: "午餐",
                 periodName: "午市",
-                cutoffTime: "10:00",
+                cutoffTime: "10:00:00",
             }
         case Dinner:
             {
                 id: Dinner,
                 name: "晚餐",
                 periodName: "晚市",
-                cutoffTime: "17:00",
+                cutoffTime: "17:00:00",
             }
     }
 

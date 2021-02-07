@@ -25,8 +25,8 @@ typedef OrderData = {
 }
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
-    final nextSlots = EightyNine.nextTimeSlots(Date.now());
-    static public function getSchema(nextSlots:Array<TimeSlot & {isOff:Bool}>, formData:OrderFormData) {
+    final nextSlots = TimeSlotTools.nextTimeSlots(Date.now());
+    static public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
         var shopSchema = {
             type: "string",
             title: "店舖",
@@ -51,7 +51,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 pickupTimeSlot: {
                     type: "string",
                     title: "想幾時收到?",
-                    oneOf: nextSlots.filter(s -> !s.isOff).map(s -> {
+                    oneOf: nextSlots.map(s -> {
                         title: s.print(),
                         const: Json.stringify(s),
                     }),
