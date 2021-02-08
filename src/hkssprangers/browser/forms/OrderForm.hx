@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
 import haxe.Json;
 import hkssprangers.info.TimeSlot;
@@ -17,7 +18,11 @@ typedef OrderFormState = {
 
 typedef OrderFormData = {
     ?pickupTimeSlot:String,
+    ?pickupLocation:String,
+    ?pickupMethod:PickupMethod,
     ?orders:Array<OrderData>,
+    ?paymentMethods:Array<PaymentMethod>,
+    ?customerNote:String,
 }
 
 typedef OrderData = {
@@ -99,13 +104,34 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     }),
                     additionalItems: orderSchema(),
                     minItems: 1,
-                }
+                },
+                paymentMethods: {
+                    type: "array",
+                    title: "交收方法",
+                    items: {
+                        type: "string",
+                        oneOf: [
+                            PaymentMethod.PayMe,
+                            PaymentMethod.FPS,
+                        ].map(m -> {
+                            title: m.info().name,
+                            const: m,
+                        }),
+                    },
+                    minItems: 1,
+                    uniqueItems: true,
+                },
+                customerNote: {
+                    type: "string",
+                    title: "其他運送備註",
+                },
             },
             required: [
                 "pickupTimeSlot",
                 "pickupLocation",
                 "pickupMethod",
                 "orders",
+                "paymentMethods",
             ],
             definitions: Object.assign(
                 {},
@@ -149,6 +175,14 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         },
                     }
                 }
+            },
+            paymentMethods: {
+                "ui:widget": "checkboxes",
+            },
+            customerNote: {
+                "ui:options": {
+                    multiline: true,
+                },
             },
         };
     }
