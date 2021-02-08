@@ -39,28 +39,21 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
         var pickupTimeSlot = props.options.pickupTimeSlot;
         var items = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> {
             var info = option.value.info();
-            var disabledReason:Null<String> = (() -> {
-                if (pickupTimeSlot == null)
-                    return null;
-
-                if (!info.openDays.has(Weekday.fromDay(pickupTimeSlot.start.toDate().getDay())))
-                    return '休息';
-
-                if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
-                    return '最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收';
-
-                if (pickupTimeSlot.start.getTimePart() > info.latestPickupTime)
-                    return '最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收';
-
-                return null;
-            })();
-            var disabledMessage = if (disabledReason != null) jsx('
-                <span className="ml-2 text-sm text-red-500">${disabledReason}</span>
-            ') else {
-                null;
+            var availability:Availability = if (pickupTimeSlot == null) {
+                Available;
+            } else {
+                option.value.checkAvailability(pickupTimeSlot);
+            }
+            var disabledMessage = switch (availability) {
+                case Available:
+                    null;
+                case Unavailable(reason):
+                    jsx('
+                        <span className="ml-2 text-sm text-red-500">${reason}</span>
+                    ');
             };
             return jsx('
-                <MenuItem key=${option.value} value=${option.value} disabled=${disabledReason != null}>
+                <MenuItem key=${option.value} value=${option.value} disabled=${availability.match(Unavailable(_))}>
                     ${option.label}${disabledMessage}
                 </MenuItem>
             ');

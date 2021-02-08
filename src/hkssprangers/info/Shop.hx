@@ -1,6 +1,5 @@
 package hkssprangers.info;
 
-import hkssprangers.info.menu.EightyNineItem;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 using Lambda;
@@ -295,6 +294,21 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
             }
+    }
+
+    public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
+        var info = info();
+
+        if (!info.openDays.has(Weekday.fromDay(pickupTimeSlot.start.toDate().getDay())))
+            return Unavailable('休息');
+
+        if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
+            return Unavailable('最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收');
+
+        if (pickupTimeSlot.start.getTimePart() > info.latestPickupTime)
+            return Unavailable('最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收');
+
+        return Available;
     }
 
     static public function fromId(shopId:String):Shop {
