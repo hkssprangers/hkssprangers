@@ -25,7 +25,10 @@ class DongDongForm extends ReactComponentOf<DongDongFormProps, DongDongFormState
     static public function itemsSchema(pickupTimeSlot:TimeSlot, order:OrderData):Dynamic {
         if (pickupTimeSlot == null)
             return {
-                type: "null"
+                type: "array",
+                items: {
+                    type: "object",
+                }
             };
         else return switch (TimeSlotType.classify(pickupTimeSlot.start)) {
             case Lunch:

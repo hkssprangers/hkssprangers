@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.PickupMethod;
 import haxe.Json;
 import hkssprangers.info.TimeSlot;
 import js.lib.Object;
@@ -63,6 +64,22 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         const: Json.stringify(s),
                     }),
                 },
+                pickupLocation: {
+                    type: "string",
+                    title: "運送目的地",
+                },
+                pickupMethod: {
+                    type: "string",
+                    title: "交收方法",
+                    oneOf: [
+                        PickupMethod.Door,
+                        PickupMethod.HangOutside,
+                        PickupMethod.Street,
+                    ].map(m -> {
+                        title: m.info().name,
+                        const: m,
+                    }),
+                },
                 orders: {
                     type: "array",
                     items: formData.orders == null ? [] : formData.orders.map(o -> {
@@ -73,18 +90,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                             case DongDong:
                                 Object.assign(orderSchema.properties, {
                                     shop: shopSchema,
-                                    items: {
-                                        if (pickupTimeSlot == null) {
-                                            {
-                                                type: "array",
-                                                items: {
-                                                    type: "object",
-                                                }
-                                            };
-                                        } else {
-                                            DongDongForm.itemsSchema(pickupTimeSlot, o);
-                                        }
-                                    },
+                                    items: DongDongForm.itemsSchema(pickupTimeSlot, o),
                                 });
                             case _:
                                 //pass
@@ -97,6 +103,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             },
             required: [
                 "pickupTimeSlot",
+                "pickupLocation",
+                "pickupMethod",
                 "orders",
             ],
             definitions: Object.assign(
@@ -117,6 +125,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     function getUiSchema(formData:OrderFormData) {
         var pickupTimeSlot = selectedPickupTimeSlot(formData);
         return {
+            pickupLocation: {
+                "ui:options": {
+                    multiline: true,
+                },
+            },
             orders: {
                 "ui:ArrayFieldTemplate": OrdersTemplate,
                 items:{
@@ -206,6 +219,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     onChange=${onChange}
                     onSubmit=${onSubmit}
                     validate=${validate}
+                    widgets=${{
+                        TextWidget: TextWidget,
+                    }}
                 >
                 </Form>
                 <pre>${haxe.Json.stringify(state.formData, null, "  ")}</pre>
