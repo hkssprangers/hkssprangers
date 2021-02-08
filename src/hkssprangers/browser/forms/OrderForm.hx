@@ -146,7 +146,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
 
         function onChange(e:{
             edit:Bool,
-            formData:Dynamic,
+            formData:OrderFormData,
             errors:Array<Dynamic>,
             errorSchema:Dynamic,
             idSchema:Dynamic,
@@ -165,13 +165,28 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         }
 
         function onSubmit(e:{
-            formData:Dynamic,
+            formData:OrderFormData,
         }, _) {
             var isValid:Bool = Ajv.call({
                 removeAdditional: "all",
             }).compile(schema).call(e.formData);
             trace(isValid);
             trace(Json.stringify(e.formData, null, "  "));
+        }
+
+        function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
+            var t = selectedPickupTimeSlot(formData);
+            for (i => o in formData.orders) {
+                if (o.shop != null) {
+                    switch o.shop.checkAvailability(t) {
+                        case Available:
+                            //pass
+                        case Unavailable(reason):
+                            errors.orders[i].addError(reason);
+                    }
+                }
+            }
+            return errors;
         }
         
         return jsx('
@@ -190,6 +205,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     formData=${state.formData}
                     onChange=${onChange}
                     onSubmit=${onSubmit}
+                    validate=${validate}
                 >
                 </Form>
                 <pre>${haxe.Json.stringify(state.formData, null, "  ")}</pre>
