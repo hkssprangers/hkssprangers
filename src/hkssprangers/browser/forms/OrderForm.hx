@@ -58,6 +58,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 "shop",
             ],
         };
+        function customerNote(shop:Shop) return {
+            type: "string",
+            title: '食物備註',
+            description: '留意 ${shop.info().name} 未必能完全配合, 請見諒',
+        };
         var schema = {
             type: "object",
             properties: {
@@ -96,6 +101,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                 Object.assign(orderSchema.properties, {
                                     shop: shopSchema,
                                     items: DongDongForm.itemsSchema(pickupTimeSlot, o),
+                                    customerNote: customerNote(o.shop),
                                 });
                             case _:
                                 //pass
@@ -107,7 +113,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 },
                 paymentMethods: {
                     type: "array",
-                    title: "交收方法",
+                    title: "俾錢方法",
+                    description: "本平台暫不接受現金付款",
                     items: {
                         type: "string",
                         oneOf: [
@@ -124,6 +131,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 customerNote: {
                     type: "string",
                     title: "其他運送備註",
+                    description: "留意店鋪/埗兵未必能完全配合, 請見諒",
                 },
             },
             required: [
