@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.Shop;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
@@ -7,7 +8,7 @@ using Reflect;
 typedef OrdersTemplateProps = Dynamic;
 
 class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
-    static function DefaultArrayItem(props, removable:Bool) {
+    static function DefaultArrayItem(props, order:{?shop:Shop}, removable:Bool) {
         var removeBtn = if (removable) {
             jsx('
                 <Button
@@ -16,7 +17,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                     disabled=${props.disabled || props.readonly}
                     onClick=${props.onDropIndexClick(props.index)}
                 >
-                    移除以上店舖
+                    ${order != null && order.shop != null ? "移除" + order.shop.info().name : "移除"}
                 </Button>
             ');
         } else {
@@ -33,10 +34,11 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
     }
 
     override function render():ReactFragment {
+        trace(props);
         var items = if (props.items != null) {
             [
-                for (p in (props.items:Array<Dynamic>))
-                DefaultArrayItem(p, props.items.length > 1)
+                for (i => p in (props.items:Array<Dynamic>))
+                DefaultArrayItem(p, props.formData[i], props.items.length > 1)
             ];
         } else {
             null;
