@@ -1042,10 +1042,10 @@ avvio@^7.1.2:
     fastq "^1.6.1"
     queue-microtask "^1.1.2"
 
-aws-sdk@^2.826.0, aws-sdk@^2.834.0:
-  version "2.834.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.834.0.tgz#1d9f8ed7cf2ed885041142d67e29f45cbb8621b7"
-  integrity sha512-9WRULrn4qAmgXI+tEW/IG5s/6ixJGZqjPOrmJsFZQev7/WRkxAZmJAjcwd4Ifm/jsJbXx2FSwO76gOPEvu2LqA==
+aws-sdk@^2.826.0, aws-sdk@^2.839.0:
+  version "2.842.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.842.0.tgz#2673f72c0981c4697f8ed5dc39061cff98d9057f"
+  integrity sha512-9vjVDxsLzNI79JChUgEHDUpv2obkTe35F3oGFGViKsf4C7xlOexzKOCfTRNcgzh0MON6rVDFpYBtF2LlEyDGKg==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -3669,10 +3669,10 @@ got@^9.6.0:
     to-readable-stream "^1.0.0"
     url-parse-lax "^3.0.0"
 
-graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
-  integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.5:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
+  integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
 graphlib@^2.1.7, graphlib@^2.1.8:
   version "2.1.8"
@@ -6588,10 +6588,10 @@ serverless-prune-plugin@^1.4.3:
   dependencies:
     bluebird "^3.4.7"
 
-serverless@^2.22.0:
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/serverless/-/serverless-2.22.0.tgz#fd06dd003a81dc0c763126d808c3669f87dbe94d"
-  integrity sha512-uXKeoPZfOrTU6ZpHUng7cYZfKQd8aFHfDsX11JHeznPGhBuq1KfF/14o2VEOoFPeTHTHKmHzkWbIKYhJHHBxuw==
+serverless@^2.23.0:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/serverless/-/serverless-2.23.0.tgz#3dcb41d343ec2669edb328f415cc8c712b5f14fb"
+  integrity sha512-D5RN0ywVPxL4EFfIzREx9K7vgkHlXBQQn9zTfDzlfz2WHkmKX0kW3LG89J51UYNdeKlBN1YXPIphybzZH3ujOw==
   dependencies:
     "@serverless/cli" "^1.5.2"
     "@serverless/components" "^3.6.0"
@@ -6600,7 +6600,7 @@ serverless@^2.22.0:
     ajv "^6.12.6"
     ajv-keywords "^3.5.2"
     archiver "^5.2.0"
-    aws-sdk "^2.834.0"
+    aws-sdk "^2.839.0"
     bluebird "^3.7.2"
     boxen "^5.0.0"
     cachedir "^2.3.0"
@@ -6618,7 +6618,7 @@ serverless@^2.22.0:
     get-stdin "^8.0.0"
     globby "^11.0.2"
     got "^11.8.1"
-    graceful-fs "^4.2.4"
+    graceful-fs "^4.2.5"
     https-proxy-agent "^5.0.0"
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
