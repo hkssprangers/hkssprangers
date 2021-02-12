@@ -81,7 +81,7 @@ functions:
       - schedule:
           # at HKT 21:00, Sunday and Thursday
           rate: cron(0 13 ? * SUN,THU *)
-          enabled: false
+          enabled: ${self:custom.isProd.${opt:stage}, false}
 
 plugins:
   - serverless-prune-plugin
