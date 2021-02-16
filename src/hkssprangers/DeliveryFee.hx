@@ -105,6 +105,28 @@ class DeliveryFee {
             }
         },
         {
+            place: "V·Walk",
+            match: address -> ~/V.?Walk/i.match(address),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 40;
+                case MGYCluster: 25;
+            }
+        },
+        {
+            place: "富昌站",
+            match: address -> address.contains("富昌站") || address.contains("富昌地鐵站") || address.contains("富昌港鐵站"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case YearsCluster: 25;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 40;
+                case MGYCluster: 25;
+            }
+        },
+        {
             place: "富昌邨",
             match: address -> address.contains("富昌邨") || address.contains("富昌村"),
             deliveryFee: cluster -> switch cluster {
