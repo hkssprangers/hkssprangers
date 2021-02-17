@@ -1,0 +1,4 @@
+-cp src
+--library compiletime
+--main hkssprangers.DimSumPaper
+--interp
