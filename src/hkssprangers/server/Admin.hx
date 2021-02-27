@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.DynamicAccess;
 import js.lib.Promise;
 import tink.core.Error.ErrorCode;
 import telegraf.Markup;
@@ -91,22 +92,21 @@ class Admin extends View {
 
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
-    static public function setTg(req:Request, reply:Reply):Promise<Null<Tg>> {
-        var cookies = req.getCookies();
-        var tg:Dynamic = if (cookies != null && cookies.tg != null) try {
-            Json.parse(cookies.tg);
-        } catch(err) {
-            trace('Error parsing Telegram login response.\n\n' + err.details());
-            null;
-        } else null;
-
-        if (tg != null && !TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), tg)) {
-            trace('Invalid Telegram login response.');
-            tg = null;
-        }
-
-        reply.setUserTg(tg);
-        return Promise.resolve(tg);
+    static public function setTg(req:Request, reply:Reply):Promise<Void> {
+        var cookies:DynamicAccess<String> = req.getCookies();
+        if (cookies == null || cookies[ServerMain.authCookieName] == null)
+            return Promise.resolve();
+        
+        return ServerMain.jwtVerifier.verify(cookies[ServerMain.authCookieName])
+            .toJsPromise()
+            .then(token -> {
+                var payload:CookiePayload = cast token;
+                reply.setUserTg(payload.sub.parse().tg);
+            })
+            .catchError(err -> {
+                trace('Error parsing auth cookie.\n\n' + err);
+                return Promise.resolve();
+            });
     }
 
     static public function setCourier(req:Request, reply:Reply):Promise<Null<Courier>> {
@@ -116,7 +116,7 @@ class Admin extends View {
             return Promise.resolve(null);
         }
 
-        return MySql.db.courier.where(r -> r.courierTgId == tg.id || r.courierTgUsername == tg.username).first()
+        return MySql.db.courier.where(r -> !r.deleted && (r.courierTgId == tg.id || r.courierTgUsername == tg.username)).first()
             .next(courierData -> {
                 var courier:Courier = {
                     courierId: courierData.courierId,

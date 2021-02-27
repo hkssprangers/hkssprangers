@@ -17,21 +17,6 @@ typedef LogInViewProps = {
 }
 
 class LogInView extends ReactComponentOfProps<LogInViewProps> {
-    function handleTelegramResponse(response) {
-        Cookies.set("tg", response, {
-            secure: true,
-            sameSite: 'strict',
-            expires: 7, // expires 7 day from now
-        });
-        var params = new URLSearchParams(location.search);
-        switch (params.get("redirectTo")) {
-            case null:
-                location.assign("/");
-            case redirectTo:
-                location.assign(redirectTo);
-        }
-    }
-
     override function render() {
         var params = new URLSearchParams(location.search);
         var redirectTo = switch (params.get("redirectTo")) {

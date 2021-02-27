@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.crypto.Sha256;
 import tink.core.Error;
 import jsonwebtoken.verifier.BasicVerifier;
 import jsonwebtoken.Claims;
@@ -40,14 +41,16 @@ class ServerMain {
     static public var tgMe:Promise<TgUser>;
     static public final tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
 
+    static public final authCookieName = "auth";
+
     static final jwtIssuer = host;
     static final jstSecret = switch (Sys.getEnv("JWT_SECRET")) {
         case null: Std.string(Std.random(10000000));
         case v: v;
     }
     static final jwtCrypto = new NodeCrypto();
-    static final jwtSigner = new BasicSigner(HS256(jstSecret), jwtCrypto);
-    static final jwtVerifier = new BasicVerifier(HS256(jstSecret), jwtCrypto, { iss: jwtIssuer });
+    static public final jwtSigner = new BasicSigner(HS256(jstSecret), jwtCrypto);
+    static public final jwtVerifier = new BasicVerifier(HS256(jstSecret), jwtCrypto, { iss: jwtIssuer });
     static public function jwtSign(payload:Claims) {
         if (payload.iss == null)
             payload.iss = jwtIssuer;
@@ -69,7 +72,8 @@ class ServerMain {
 
     static function tgAuth(req:Request, reply:Reply):Promise<Dynamic> {
         // expires 7 day from now
-        var expires = Date.fromTime(Date.now().getTime() + DateTools.days(7));
+        var now = Date.now();
+        var expires = Date.fromTime(now.getTime() + DateTools.days(7));
 
         var redirectTo = switch (req.query.redirectTo:String) {
             case null:
@@ -78,21 +82,39 @@ class ServerMain {
                 redirectTo;
         }
 
-        reply
-            .setCookie("tg", Json.stringify({
-                var tg:DynamicAccess<String> = {};
-                for (k => v in (req.query:DynamicAccess<String>))
-                    if (k != "redirectTo")
-                        tg[k] = v;
-                tg;
-            }), {
-                secure: true,
-                sameSite: 'strict',
-                expires: expires,
-            })
-            .redirect(redirectTo);
+        var tg:Dynamic = {
+            var tg:DynamicAccess<String> = {};
+            for (k => v in (req.query:DynamicAccess<String>))
+                if (k != "redirectTo")
+                    tg[k] = v;
+            tg;
+        };
 
-        return Promise.resolve();
+        if (!TelegramTools.verifyLoginResponse(Sha256.encode(TelegramConfig.tgBotToken), tg)) {
+            reply.status(400).send("Cannot verify Telegram login.");
+            return Promise.resolve();
+        }
+
+        var payload:CookiePayload = {
+            iss: jwtIssuer,
+            iat: now,
+            exp: expires,
+            sub: {
+                login: Telegram,
+                tg: tg,
+            }
+        }
+        return jwtSigner.sign(cast payload)
+            .toJsPromise()
+            .then(signed -> {
+                reply.setCookie(authCookieName, signed, {
+                    secure: true,
+                    sameSite: 'strict',
+                    expires: expires,
+                    httpOnly: true,
+                })
+                .redirect(redirectTo);
+            });
     }
 
     static function noTrailingSlash(req:Request, reply:Reply):Promise<Any> {
