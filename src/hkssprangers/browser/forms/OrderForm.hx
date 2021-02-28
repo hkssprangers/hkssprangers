@@ -1,17 +1,20 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
-import haxe.Json;
 import hkssprangers.info.TimeSlot;
-import js.lib.Object;
 import hkssprangers.info.Shop;
 import js.npm.rjsf.material_ui.*;
+import js.lib.Object;
 import mui.core.*;
+import haxe.Json;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
 
-typedef OrderFormProps = {}
+typedef OrderFormProps = {
+    final user:LoggedinUser;
+}
 typedef OrderFormState = {
     final formData:OrderFormData;
 }
@@ -243,13 +246,26 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             }
             return errors;
         }
+
+        var contact = switch (props.user) {
+            case null: null;
+            case {login: Telegram, tg: tg}:
+                jsx('
+                    <div>
+                        <p className="text-sm text-gray-500">主要聯絡</p>
+                        <p>Telegram: <a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a></p>
+                    </div>
+                ');
+            case _: null;
+        }
         
         return jsx('
             <div className="container max-w-screen-md mx-4 p-4">
                 <h1 className="text-center text-xl mb-2">
                     埗兵外賣表格
                 </h1>
-                <p className="text-sm text-gray-500">*必填項目</p>
+                <p className="text-sm text-gray-500 mb-2">*必填項目</p>
+                ${contact}
                 <Form
                     key=${Json.stringify({
                         schema: schema,

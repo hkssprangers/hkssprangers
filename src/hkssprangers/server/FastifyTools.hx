@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.Courier;
 import hkssprangers.info.Tg;
 import fastify.FastifyReply;
@@ -40,6 +41,12 @@ class FastifyTools {
     }
     static public function setUserTg(reply:Reply, tg:Null<Tg>):Void {
         untyped reply.tg = tg;
+    }
+    static public function getUser(reply:Reply):Null<LoggedinUser> {
+        return untyped reply.loggedinUser;
+    }
+    static public function setUser(reply:Reply, user:Null<LoggedinUser>):Void {
+        untyped reply.loggedinUser = user;
     }
     static public function getCourier(reply:Reply):Null<Courier> {
         return untyped reply.courier;

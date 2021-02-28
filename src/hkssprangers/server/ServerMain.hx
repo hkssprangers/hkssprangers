@@ -126,6 +126,40 @@ class ServerMain {
         return Promise.resolve();
     }
 
+    static public function setTg(req:Request, reply:Reply):Promise<Void> {
+        var cookies:DynamicAccess<String> = req.getCookies();
+        if (cookies == null || cookies[ServerMain.authCookieName] == null)
+            return Promise.resolve();
+        
+        return ServerMain.jwtVerifier.verify(cookies[ServerMain.authCookieName])
+            .toJsPromise()
+            .then(token -> {
+                var payload:CookiePayload = cast token;
+                reply.setUserTg(payload.sub.parse().tg);
+            })
+            .catchError(err -> {
+                trace('Error parsing auth cookie.\n\n' + err);
+                return Promise.resolve();
+            });
+    }
+
+    static public function setUser(req:Request, reply:Reply):Promise<Void> {
+        var cookies:DynamicAccess<String> = req.getCookies();
+        if (cookies == null || cookies[ServerMain.authCookieName] == null)
+            return Promise.resolve();
+        
+        return ServerMain.jwtVerifier.verify(cookies[ServerMain.authCookieName])
+            .toJsPromise()
+            .then(token -> {
+                var payload:CookiePayload = cast token;
+                reply.setUser(payload.sub.parse());
+            })
+            .catchError(err -> {
+                trace('Error parsing auth cookie.\n\n' + err);
+                return Promise.resolve();
+            });
+    }
+
     static function initServer(?opts:Dynamic) {
         if (opts == null)
             opts = {}

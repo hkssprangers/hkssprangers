@@ -92,23 +92,6 @@ class Admin extends View {
 
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
-    static public function setTg(req:Request, reply:Reply):Promise<Void> {
-        var cookies:DynamicAccess<String> = req.getCookies();
-        if (cookies == null || cookies[ServerMain.authCookieName] == null)
-            return Promise.resolve();
-        
-        return ServerMain.jwtVerifier.verify(cookies[ServerMain.authCookieName])
-            .toJsPromise()
-            .then(token -> {
-                var payload:CookiePayload = cast token;
-                reply.setUserTg(payload.sub.parse().tg);
-            })
-            .catchError(err -> {
-                trace('Error parsing auth cookie.\n\n' + err);
-                return Promise.resolve();
-            });
-    }
-
     static public function setCourier(req:Request, reply:Reply):Promise<Null<Courier>> {
         var tg = reply.getUserTg();
 
@@ -156,7 +139,7 @@ class Admin extends View {
     }
 
     static public function ensurePermission(req:Request, reply:Reply):Promise<Bool> {
-        return setTg(req, reply)
+        return ServerMain.setTg(req, reply)
             .then(_ -> setCourier(req, reply))
             .then(_ -> setToken(req, reply))
             .then(_ -> {

@@ -17,6 +17,7 @@ class BrowserMain {
                     <BrowserRouter>
                         <OrderView
                             tgBotName=${div.dataset.tgBotName}
+                            user=${Json.parse(div.dataset.user)}
                         />
                     </BrowserRouter>
                 '), div);
