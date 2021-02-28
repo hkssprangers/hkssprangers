@@ -12,19 +12,20 @@ using Lambda;
 using StringTools;
 using DateTools;
 
-typedef IndexViewProps = react.router.Route.RouteRenderProps & {
+typedef OrderViewProps = react.router.Route.RouteRenderProps & {
     final tgBotName:String;
 }
 
-typedef IndexViewState = {
+typedef OrderViewState = {
 
 }
 
 @:wrap(react.router.ReactRouter.withRouter)
-class IndexView extends ReactComponentOf<IndexViewProps, IndexViewState> {
+class OrderView extends ReactComponentOf<OrderViewProps, OrderViewState> {
     override function render() {
         return jsx('
-            <OrderForm />
+            <OrderForm
+             />
         ');
     }
 }

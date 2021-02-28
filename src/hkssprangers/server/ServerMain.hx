@@ -182,9 +182,10 @@ class ServerMain {
 
         app.addHook("onRequest", noTrailingSlash);
 
-        app.get("/", index);
         app.get("/tgAuth", tgAuth);
         app.get("/login", LogIn.middleware);
+        app.get("/", index);
+        OrderFood.setup(app);
         Admin.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {
             return Promise.resolve(reply.send(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S")));
@@ -231,10 +232,9 @@ class ServerMain {
                     MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first()
                         .toJsPromise()
                         .then(courierData -> {
-                            trace("send button to log in " + host);
                             ctx.reply('你好!', {
                                 reply_markup: Markup.inlineKeyboard_([
-                                    Markup.loginButton_("登入", Path.join(["https://" + host, "tgAuth?redirectTo=%2Fadmin"]), {
+                                    Markup.loginButton_("登入落單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]), {
                                         request_write_access: true,
                                     }),
                                 ]),

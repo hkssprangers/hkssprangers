@@ -8,14 +8,14 @@ import charleywong.browser.*;
 
 class BrowserMain {
     static function onReady():Void {
-        switch (document.getElementById("IndexView")) {
+        switch (document.getElementById("OrderView")) {
             case null:
                 //pass
             case elm:
                 var div:DivElement = cast elm;
                 ReactDOM.render(jsx('
                     <BrowserRouter>
-                        <IndexView
+                        <OrderView
                             tgBotName=${div.dataset.tgBotName}
                         />
                     </BrowserRouter>
