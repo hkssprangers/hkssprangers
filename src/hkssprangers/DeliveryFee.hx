@@ -548,6 +548,17 @@ class DeliveryFee {
             }
         },
         {
+            place: "福田大廈",
+            match: address -> address.contains("福田大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case YearsCluster: 35;
+                case BiuKeeCluster: 25;
+                case NeighborCluster: 35;
+                case MGYCluster: 35;
+            }
+        },
+        {
             place: "東廬大樓",
             match: address -> address.contains("東廬大樓"),
             deliveryFee: cluster -> switch cluster {
