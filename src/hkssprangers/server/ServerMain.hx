@@ -289,10 +289,17 @@ class ServerMain {
         });
 
         if (isMain) {
+            var ngrok:Dynamic = require("ngrok");
+            // probably shutdown when restarted by nodemon
+            process.once('SIGUSR2', function () {
+                ngrok.kill().then(() -> {
+                    process.kill(process.pid, 'SIGUSR2');
+                });
+            });
             switch (Sys.args()) {
                 case []:
                     var port = 3000;
-                    var ngrokUrl:Promise<String> = require("ngrok").connect(port);
+                    var ngrokUrl:Promise<String> = ngrok.connect(port);
                     var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
 
                     ngrokUrl.then((url:String) -> {
