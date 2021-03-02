@@ -290,7 +290,7 @@ class ServerMain {
 
         if (isMain) {
             var ngrok:Dynamic = require("ngrok");
-            // probably shutdown when restarted by nodemon
+            // properly shutdown when restarted by nodemon
             process.once('SIGUSR2', function () {
                 ngrok.kill().then(() -> {
                     process.kill(process.pid, 'SIGUSR2');
