@@ -1,10 +1,12 @@
 package hkssprangers.info;
 
+import haxe.ds.ReadOnlyArray;
 using Lambda;
 
 enum abstract ContactMethod(String) to String {
     var Telegram;
     var WhatsApp;
+    var Telephone;
 
     public function info() return switch (cast this:ContactMethod) {
         case Telegram:
@@ -17,14 +19,25 @@ enum abstract ContactMethod(String) to String {
                 id: WhatsApp,
                 name: "WhatsApp",
             }
+        case Telephone:
+            {
+                id: Telephone,
+                name: "電話",
+            }
     }
+
+    static public final all:ReadOnlyArray<ContactMethod> = [
+        Telegram,
+        WhatsApp,
+        Telephone,
+    ];
 
     static public function fromName(name:String) {
         name = name.toLowerCase();
-        return [Telegram, WhatsApp].find(m -> m.info().name.toLowerCase() == name);
+        return all.find(m -> m.info().name.toLowerCase() == name);
     }
 
     static public function fromId(id:String) {
-        return [Telegram, WhatsApp].find(m -> (m:String) == id);
+        return all.find(m -> (m:String) == id);
     }
 }

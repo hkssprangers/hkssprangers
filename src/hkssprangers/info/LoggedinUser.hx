@@ -1,8 +1,16 @@
 package hkssprangers.info;
 
-enum abstract LoginMethod(String) to String {
-    var Telegram;
-    var WhatsApp;
+import haxe.ds.ReadOnlyArray;
+
+@:forward
+enum abstract LoginMethod(ContactMethod) to ContactMethod {
+    final Telegram = ContactMethod.Telegram;
+    final WhatsApp = ContactMethod.WhatsApp;
+
+    static public final all:ReadOnlyArray<ContactMethod> = [
+        Telegram,
+        WhatsApp,
+    ];
 }
 
 typedef LoggedinUser = {

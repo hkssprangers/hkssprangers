@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.ContactMethod;
 import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
@@ -20,6 +21,8 @@ typedef OrderFormState = {
 }
 
 typedef OrderFormData = {
+    ?backupContactMethod:ContactMethod,
+    ?backupContactValue:String,
     ?pickupTimeSlot:String,
     ?pickupLocation:String,
     ?pickupMethod:PickupMethod,
@@ -41,7 +44,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case str: Json.parse(str);
         };
     }
-    static public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
+    public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
         var pickupTimeSlot = selectedPickupTimeSlot(formData);
         var shopSchema = {
             type: "string",
@@ -93,6 +96,46 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         const: m,
                     }),
                 },
+                backupContactMethod: {
+                    type: "string",
+                    title: "後備聯絡方法",
+                    oneOf: ContactMethod.all.filter(m -> switch (props.user) {
+                        case null: true;
+                        case {login: loginMethod}: m != loginMethod;
+                    }).map(m -> {
+                        title: m.info().name,
+                        const: m,
+                    }),
+                },
+                backupContactValue: (switch (formData.backupContactMethod){
+                    case Telegram: 
+                        {
+                            type: "string",
+                            title: "後備聯絡 " + Telegram.info().name,
+                            pattern: "@?[A-Za-z0-9_]{5,}",
+                        }
+                    case WhatsApp: 
+                        {
+                            type: "string",
+                            title: "後備聯絡 " + WhatsApp.info().name,
+                            pattern: "[0-9]{8}",
+                            minLength: 8,
+                            maxLength: 8,
+                        }
+                    case Telephone: 
+                        {
+                            type: "string",
+                            title: "後備聯絡" + Telephone.info().name,
+                            pattern: "[0-9]{8}",
+                            minLength: 8,
+                            maxLength: 8,
+                        }
+                    case _: 
+                        {
+                            type: "string",
+                            title: "後備聯絡",
+                        }
+                }:Dynamic),
                 orders: {
                     type: "array",
                     items: formData.orders == null ? [] : formData.orders.map(o -> {
@@ -117,7 +160,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 paymentMethods: {
                     type: "array",
                     title: "俾錢方法",
-                    description: "本平台暫不接受現金付款",
+                    description: "本平台不接受現金付款",
                     items: {
                         type: "string",
                         oneOf: [
@@ -141,6 +184,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 "pickupTimeSlot",
                 "pickupLocation",
                 "pickupMethod",
+                "backupContactMethod",
+                "backupContactValue",
                 "orders",
                 "paymentMethods",
             ],
