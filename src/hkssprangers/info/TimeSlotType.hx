@@ -1,8 +1,8 @@
 package hkssprangers.info;
 
 enum abstract TimeSlotType(String) to String {
-    var Lunch;
-    var Dinner;
+    final Lunch;
+    final Dinner;
 
     public function info() return switch (cast this:TimeSlotType) {
         case Lunch:

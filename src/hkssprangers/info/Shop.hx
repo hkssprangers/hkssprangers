@@ -1,25 +1,26 @@
 package hkssprangers.info;
 
+import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 using Lambda;
 
 enum abstract Shop(String) to String {
-    var EightyNine:Shop;
-    var DragonJapaneseCuisine:Shop;
-    var YearsHK:Shop;
-    var TheParkByYears:Shop;
-    var LaksaStore:Shop;
-    var DongDong:Shop;
-    var BiuKeeLokYuen:Shop;
-    var KCZenzero:Shop;
-    var HanaSoftCream:Shop;
-    var Neighbor:Shop;
-    var MGY:Shop;
-    var FastTasteSSP:Shop;
-    var BlaBlaBla:Shop;
+    final EightyNine:Shop;
+    final DragonJapaneseCuisine:Shop;
+    final YearsHK:Shop;
+    final TheParkByYears:Shop;
+    final LaksaStore:Shop;
+    final DongDong:Shop;
+    final BiuKeeLokYuen:Shop;
+    final KCZenzero:Shop;
+    final HanaSoftCream:Shop;
+    final Neighbor:Shop;
+    final MGY:Shop;
+    final FastTasteSSP:Shop;
+    final BlaBlaBla:Shop;
 
-    static public final all = [
+    static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
         DragonJapaneseCuisine,
         YearsHK,

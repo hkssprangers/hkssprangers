@@ -4,9 +4,9 @@ import haxe.ds.ReadOnlyArray;
 using Lambda;
 
 enum abstract ContactMethod(String) to String {
-    var Telegram;
-    var WhatsApp;
-    var Telephone;
+    final Telegram;
+    final WhatsApp;
+    final Telephone;
 
     public function info() return switch (cast this:ContactMethod) {
         case Telegram:

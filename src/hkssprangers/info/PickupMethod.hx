@@ -3,9 +3,9 @@ package hkssprangers.info;
 using Lambda;
 
 enum abstract PickupMethod(String) to String {
-    var Door;
-    var HangOutside;
-    var Street;
+    final Door;
+    final HangOutside;
+    final Street;
 
     public function info() return switch (cast this:PickupMethod) {
         case Door:

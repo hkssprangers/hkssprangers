@@ -3,8 +3,8 @@ package hkssprangers.info;
 using Lambda;
 
 enum abstract PaymentMethod(String) to String {
-    var PayMe;
-    var FPS;
+    final PayMe;
+    final FPS;
 
     public function info() return switch (cast this:PaymentMethod) {
         case PayMe:

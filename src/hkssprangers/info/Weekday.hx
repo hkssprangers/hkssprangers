@@ -1,13 +1,13 @@
 package hkssprangers.info;
 
 enum abstract Weekday(String) {
-    var Monday;
-    var Tuesday;
-    var Wednesday;
-    var Thursday;
-    var Friday;
-    var Saturday;
-    var Sunday;
+    final Monday;
+    final Tuesday;
+    final Wednesday;
+    final Thursday;
+    final Friday;
+    final Saturday;
+    final Sunday;
 
     static public function fromDay(day:Int) return switch (day % 7) {
         case 1: Monday;
