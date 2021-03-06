@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
@@ -9,6 +10,7 @@ import js.npm.rjsf.material_ui.*;
 using Reflect;
 using Lambda;
 using hkssprangers.ObjectTools;
+using hxLINQ.LINQ;
 
 typedef ShopSelectorWidgetProps = {
     final schema:Dynamic;
@@ -37,27 +39,42 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
     };
     override function render():ReactFragment {
         var pickupTimeSlot = props.options.pickupTimeSlot;
-        var items = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> {
-            var info = option.value.info();
-            var availability:Availability = if (pickupTimeSlot == null) {
-                Available;
-            } else {
-                option.value.checkAvailability(pickupTimeSlot);
-            }
-            var disabledMessage = switch (availability) {
-                case Available:
-                    null;
-                case Unavailable(reason):
+        var shops:Array<Shop> = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> option.value);
+        var items = shops.linq()
+            .groupBy(ShopCluster.classify)
+            .selectMany((group, i) -> {
+                var items = group.linq().select((shop, _) -> {
+                    var info = shop.info();
+                    var availability:Availability = if (pickupTimeSlot == null) {
+                        Available;
+                    } else {
+                        shop.checkAvailability(pickupTimeSlot);
+                    }
+                    var disabledMessage = switch (availability) {
+                        case Available:
+                            null;
+                        case Unavailable(reason):
+                            jsx('
+                                <span className="ml-2 text-sm text-red-500">${reason}</span>
+                            ');
+                    };
                     jsx('
-                        <span className="ml-2 text-sm text-red-500">${reason}</span>
+                        <MenuItem key=${shop} value=${shop} disabled=${availability.match(Unavailable(_))}>
+                            ${info.name}${disabledMessage}
+                        </MenuItem>
                     ');
-            };
-            return jsx('
-                <MenuItem key=${option.value} value=${option.value} disabled=${availability.match(Unavailable(_))}>
-                    ${option.label}${disabledMessage}
-                </MenuItem>
-            ');
-        });
+                }).toArray();
+                [
+                    jsx('
+                        <ListSubheader>
+                            <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
+                                <i className="fas fa-map-marker mr-1"></i>${group.key.info().name}
+                            </span>
+                        </ListSubheader>
+                    ')
+                ].concat(items);
+            })
+            .toArray();
         return jsx('
             <TextField
                 id=${props.id}

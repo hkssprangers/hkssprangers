@@ -12,6 +12,7 @@ import mui.core.*;
 import haxe.Json;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
+using hxLINQ.LINQ;
 
 typedef OrderFormProps = {
     final user:LoggedinUser;
@@ -338,7 +339,6 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     }}
                 >
                 </Form>
-                <pre>${haxe.Json.stringify(state.formData, null, "  ")}</pre>
             </div>
         ');
     }
