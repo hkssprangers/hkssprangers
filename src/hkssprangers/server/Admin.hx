@@ -116,7 +116,7 @@ class Admin extends View {
                 } else {
                     trace(failure.message + "\n\n" + failure.exceptionStack);
                 }
-                tink.core.Promise.NULL;
+                tink.core.Promise.resolve(null);
             }).toJsPromise();
     }
 
@@ -128,7 +128,7 @@ class Admin extends View {
                 ServerMain.jwtVerifyToken(token)
                     .tryRecover(failure -> {
                         trace(failure.message + "\n\n" + failure.exceptionStack);
-                        tink.core.Promise.NULL;
+                        tink.core.Promise.resolve(null);
                     })
                     .next(token -> {
                         reply.setToken(token);
@@ -170,14 +170,14 @@ class Admin extends View {
             }
             var user:Courier = reply.getCourier();
             if (user == null || !user.isAdmin) {
-                return Promise.resolve(reply.status(403).send('Only admins are allowed.'));
+                return Promise.resolve(reply.status(403).send('Only admins are allowed.')).then(_ -> null);
             }
             if (req.body == null) {
-                return Promise.resolve(reply.status(ErrorCode.BadRequest).send("No request body."));
+                return Promise.resolve(reply.status(ErrorCode.BadRequest).send("No request body.")).then(_ -> null);
             }
             switch (req.body.action:String) {
                 case null:
-                    Promise.resolve(reply.status(ErrorCode.BadRequest).send("No action."));
+                    Promise.resolve(reply.status(ErrorCode.BadRequest).send("No action.")).then(_ -> null);
                 case "insert":
                     var delivery:Delivery = req.body.delivery;
                     MySql.db.insertDeliveries([delivery]).toJsPromise()
@@ -189,7 +189,8 @@ class Admin extends View {
                             .then(d -> {
                                 reply.send(d);
                             })
-                        );
+                        )
+                        .then(_ -> null);
                 case "update":
                     var delivery:Delivery = req.body.delivery;
                     MySql.db.saveDelivery(delivery).toJsPromise()
@@ -201,13 +202,15 @@ class Admin extends View {
                             .then(d -> {
                                 reply.send(d);
                             })
-                        );
+                        )
+                        .then(_ -> null);
                 case "delete":
                     var delivery:Delivery = req.body.delivery;
                     MySql.db.deleteDelivery(delivery).toJsPromise()
                         .then(_ -> {
                             reply.send("ok");
-                        });
+                        })
+                        .then(_ -> null);
                 case "announce":
                     var deliveries:Array<Delivery> = req.body.deliveries;
                     var couriers = [
@@ -239,7 +242,8 @@ class Admin extends View {
                     }).catchError(err -> {
                         reply.type("text");
                         reply.status(500).send(Std.string(err));
-                    });
+                    })
+                    .then(_ -> null);
                 case "share":
                     var date:LocalDateString = req.body.date;
                     var time:TimeSlotType = req.body.time;
@@ -264,7 +268,8 @@ class Admin extends View {
                                     //pass
                             }
                             reply.send(Path.join(["https://" + host, "admin?" + Querystring.stringify(qs)]));
-                        });
+                        })
+                        .then(_ -> null);
                 case "upload-get-signed-url":
                     var orderId:Int = req.body.orderId;
                     var contentType:String = req.body.contentType;
@@ -280,7 +285,7 @@ class Admin extends View {
                     }).catchError(err -> {
                         reply.type("text");
                         reply.status(500).send(Std.string(err));
-                    });
+                    }).then(_ -> null);
                 case "upload-done":
                     var fileUrl:String = req.body.fileUrl;
                     var orderId:Int = req.body.orderId;
@@ -297,10 +302,11 @@ class Admin extends View {
                         .catchError(err -> {
                             reply.type("text");
                             reply.status(500).send(Std.string(err));
-                        });
+                        })
+                        .then(_ -> null);
                 case action:
                     reply.type("text");
-                    Promise.resolve(reply.status(406).send("Unknown action " + action));
+                    Promise.resolve(reply.status(406).send("Unknown action " + action)).then(_ -> null);
             }
         });
     }
@@ -349,7 +355,7 @@ class Admin extends View {
             .then(ok -> {
                 if (!ok) {
                     var url = new node.url.URL(req.raw.url, "http://example.com");
-                    return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode()));
+                    return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode())).then(_ -> null);
                 }
                 var user = reply.getCourier();
                 switch (req.accepts().type(["text/html", "application/json"])) {
@@ -361,7 +367,7 @@ class Admin extends View {
                                 token: reply.getToken(),
                                 fontSize: req.query.fontSize,
                             });
-                        });
+                        }).then(_ -> null);
                     case "application/json":
                         var token = reply.getToken();
                         switch (token) {
@@ -410,11 +416,12 @@ class Admin extends View {
                                         }),
                                     });
                                 }
-                            });
+                            })
+                            .then(_ -> null);
                     case type:
                         trace(type);
                         reply.type("text");
-                        Promise.resolve(reply.status(406).send("Can only return html or json"));
+                        Promise.resolve(reply.status(406).send("Can only return html or json")).then(_ -> null);
                 }
             });
     }
