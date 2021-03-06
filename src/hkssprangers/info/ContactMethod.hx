@@ -6,6 +6,7 @@ using Lambda;
 enum abstract ContactMethod(String) to String {
     final Telegram;
     final WhatsApp;
+    final Signal;
     final Telephone;
 
     public function info() return switch (cast this:ContactMethod) {
@@ -19,6 +20,11 @@ enum abstract ContactMethod(String) to String {
                 id: WhatsApp,
                 name: "WhatsApp",
             }
+        case Signal:
+            {
+                id: Signal,
+                name: "Signal",
+            }
         case Telephone:
             {
                 id: Telephone,
@@ -29,6 +35,7 @@ enum abstract ContactMethod(String) to String {
     static public final all:ReadOnlyArray<ContactMethod> = [
         Telegram,
         WhatsApp,
+        Signal,
         Telephone,
     ];
 

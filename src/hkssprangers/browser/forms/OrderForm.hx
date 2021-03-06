@@ -99,13 +99,18 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 backupContactMethod: {
                     type: "string",
                     title: "後備聯絡方法",
-                    oneOf: ContactMethod.all.filter(m -> switch (props.user) {
-                        case null: true;
-                        case {login: loginMethod}: m != loginMethod;
-                    }).map(m -> {
-                        title: m.info().name,
-                        const: m,
-                    }),
+                    oneOf: [{
+                        title: "無",
+                        const: "",
+                    }].concat(
+                        ContactMethod.all.filter(m -> switch (props.user) {
+                            case null: true;
+                            case {login: loginMethod}: m != loginMethod;
+                        }).map(m -> {
+                            title: m.info().name,
+                            const: m,
+                        })
+                    ),
                 },
                 backupContactValue: (switch (formData.backupContactMethod){
                     case Telegram: 
@@ -122,6 +127,14 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                             minLength: 8,
                             maxLength: 8,
                         }
+                    case Signal: 
+                        {
+                            type: "string",
+                            title: "後備聯絡 " + Signal.info().name,
+                            pattern: "[0-9]{8}",
+                            minLength: 8,
+                            maxLength: 8,
+                        }
                     case Telephone: 
                         {
                             type: "string",
@@ -132,7 +145,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         }
                     case _: 
                         {
-                            type: "string",
+                            type: "null",
                             title: "後備聯絡",
                         }
                 }:Dynamic),
@@ -184,11 +197,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 "pickupTimeSlot",
                 "pickupLocation",
                 "pickupMethod",
-                "backupContactMethod",
-                "backupContactValue",
                 "orders",
                 "paymentMethods",
-            ],
+            ].concat(switch formData.backupContactMethod {
+                case null: [];
+                case _: ["backupContactValue"];
+            }),
             definitions: Object.assign(
                 {},
                 DongDongForm.schemaDefinitions
@@ -296,10 +310,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case null: null;
             case {login: Telegram, tg: tg}:
                 jsx('
-                    <div>
-                        <p className="text-sm text-gray-500">主要聯絡</p>
-                        <p>Telegram: <a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a></p>
-                    </div>
+                    <p className="text-gray-500 mb-2"><a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a> 你好！請輸入以下資料，我哋收到後會經 Telegram 聯絡你。</p>
                 ');
             case _: null;
         }
@@ -309,8 +320,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 <h1 className="text-center text-xl mb-2">
                     埗兵外賣表格
                 </h1>
-                <p className="text-sm text-gray-500 mb-2">*必填項目</p>
                 ${contact}
+                <p className="text-sm text-gray-500">*必填項目</p>
                 <Form
                     key=${Json.stringify({
                         schema: schema,

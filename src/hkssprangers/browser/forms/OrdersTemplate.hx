@@ -34,7 +34,6 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
     }
 
     override function render():ReactFragment {
-        trace(props);
         var items = if (props.items != null) {
             [
                 for (i => p in (props.items:Array<Dynamic>))
