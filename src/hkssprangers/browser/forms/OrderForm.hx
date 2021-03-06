@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.ShopCluster;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.PaymentMethod;
@@ -10,8 +11,10 @@ import js.npm.rjsf.material_ui.*;
 import js.lib.Object;
 import mui.core.*;
 import haxe.Json;
+import haxe.ds.ReadOnlyArray;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
+using Lambda;
 using hxLINQ.LINQ;
 
 typedef OrderFormProps = {
@@ -47,19 +50,31 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     }
     public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
         var pickupTimeSlot = selectedPickupTimeSlot(formData);
-        var shopSchema = {
+        var clusterOptions = switch (formData) {
+            case null | { orders: null | [] }:
+                Shop.all;
+            case { orders: orders } if (orders[0].shop != null):
+                var cluster = ShopCluster.classify(orders[0].shop);
+                Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
+            case _:
+                Shop.all;
+        }
+        function shopSchema(options:ReadOnlyArray<Shop>) return if (options.length == 0) {
+            type: "null",
+            title: "店舖",
+        } else {
             type: "string",
             title: "店舖",
-            oneOf: Shop.all.map(s -> {
+            oneOf: options.map(s -> {
                 type: "string",
                 title: s.info().name,
                 const: s,
             }),
         };
-        function orderSchema() return {
+        function orderSchema(shopOptions:ReadOnlyArray<Shop>) return {
             type: "object",
             properties: {
-                shop: shopSchema,
+                shop: shopSchema(shopOptions),
             },
             required: [
                 "shop",
@@ -152,23 +167,24 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 }:Dynamic),
                 orders: {
                     type: "array",
-                    items: formData.orders == null ? [] : formData.orders.map(o -> {
-                        var orderSchema = orderSchema();
-                        switch (o.shop) {
-                            case null:
-                                //pass
-                            case DongDong:
-                                Object.assign(orderSchema.properties, {
-                                    shop: shopSchema,
-                                    items: DongDongForm.itemsSchema(pickupTimeSlot, o),
-                                    customerNote: customerNote(o.shop),
-                                });
-                            case _:
-                                //pass
-                        }
-                        orderSchema;
-                    }),
-                    additionalItems: orderSchema(),
+                    items: formData.orders == null || formData.orders.length == 0 ? [] : {
+                        formData.orders.linq().select((o, i) -> {
+                            var orderSchema = orderSchema(i == 0 ? Shop.all : clusterOptions.filter(s -> s == o.shop || !formData.orders.exists(_o -> _o.shop == s)));
+                            switch (o.shop) {
+                                case null:
+                                    //pass
+                                case DongDong:
+                                    Object.assign(orderSchema.properties, {
+                                        items: DongDongForm.itemsSchema(pickupTimeSlot, o),
+                                        customerNote: customerNote(o.shop),
+                                    });
+                                case _:
+                                    //pass
+                            }
+                            orderSchema;
+                        }).toArray();
+                    },
+                    additionalItems: orderSchema(clusterOptions),
                     minItems: 1,
                 },
                 paymentMethods: {
