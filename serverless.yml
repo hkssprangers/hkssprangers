@@ -20,11 +20,13 @@ provider:
     FORM_READER_EMAIL: ${env:FORM_READER_EMAIL}
     FORM_READER_PRIVATE_KEY: ${env:FORM_READER_PRIVATE_KEY}
     JWT_SECRET: ${env:JWT_SECRET}
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:PutObject"
-      Resource: "arn:aws:s3:::hkssprangers-uploads/*"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:PutObject"
+          Resource: "arn:aws:s3:::hkssprangers-uploads/*"
   logs:
     restApi:
       format: 'requestId: $context.requestId, ip: $context.identity.sourceIp, caller: $context.identity.caller, user: $context.identity.user, requestTime: $context.requestTime, httpMethod: $context.httpMethod, resourcePath: $context.resourcePath, status: $context.status, protocol: $context.protocol, responseLength: $context.responseLength, integrationErrorMessage: $context.integrationErrorMessage'
