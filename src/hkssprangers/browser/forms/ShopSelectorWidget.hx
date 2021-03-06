@@ -67,9 +67,11 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                 [
                     jsx('
                         <ListSubheader>
-                            <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
-                                <i className="fas fa-map-marker mr-1"></i>${group.key.info().name}
-                            </span>
+                            <div className="bg-white">
+                                <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
+                                    <i className="fas fa-map-marker mr-1"></i>${group.key.info().name}
+                                </span>
+                            </div>
                         </ListSubheader>
                     ')
                 ].concat(items);
