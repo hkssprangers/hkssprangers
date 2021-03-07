@@ -45,7 +45,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         var items = if (props.items != null) {
             [
                 for (i => p in props.items)
-                DefaultArrayItem(p, props.formData[i], props.items.length > 1)
+                DefaultArrayItem(p, props.formData[i], true)
             ];
         } else {
             null;

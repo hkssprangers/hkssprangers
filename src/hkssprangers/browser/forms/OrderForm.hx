@@ -53,23 +53,28 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         var clusterOptions = switch (formData) {
             case null | { orders: null | [] }:
                 Shop.all;
-            case { orders: orders } if (orders[0].shop != null):
-                var cluster = ShopCluster.classify(orders[0].shop);
+            case { orders: _.linq().select((o, _) -> o.shop).first(s -> s != null) => shop } if (shop != null):
+                var cluster = ShopCluster.classify(shop);
                 Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
             case _:
                 Shop.all;
         }
-        function shopSchema(options:ReadOnlyArray<Shop>) return if (options.length == 0) {
-            type: "null",
-            title: "店舖",
-        } else {
-            type: "string",
-            title: "店舖",
-            oneOf: options.map(s -> {
-                type: "string",
-                title: s.info().name,
-                const: s,
-            }),
+        function shopSchema(options:ReadOnlyArray<Shop>):Dynamic return switch (options) {
+            case []:
+                {
+                    type: "null",
+                    title: "店舖",
+                };
+            case options:
+                {
+                    type: "string",
+                    title: "店舖",
+                    oneOf: options.map(s -> {
+                        type: "string",
+                        title: s.info().name,
+                        const: s,
+                    }),
+                };
         };
         function orderSchema(shopOptions:ReadOnlyArray<Shop>) return {
             type: "object",
@@ -167,9 +172,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 }:Dynamic),
                 orders: {
                     type: "array",
-                    items: formData.orders == null || formData.orders.length == 0 ? [] : {
+                    items: (formData.orders == null || formData.orders.length == 0 ? orderSchema(clusterOptions) : {
                         formData.orders.linq().select((o, i) -> {
-                            var orderSchema = orderSchema(i == 0 ? Shop.all : clusterOptions.filter(s -> s == o.shop || !formData.orders.exists(_o -> _o.shop == s)));
+                            var orderSchema = orderSchema(o.shop != null ? [o.shop] : clusterOptions.filter(s -> !formData.orders.exists(_o -> _o.shop == s)));
                             switch (o.shop) {
                                 case null:
                                     //pass
@@ -183,7 +188,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                             }
                             orderSchema;
                         }).toArray();
-                    },
+                    }:Dynamic),
                     additionalItems: orderSchema(clusterOptions),
                     minItems: 1,
                 },
