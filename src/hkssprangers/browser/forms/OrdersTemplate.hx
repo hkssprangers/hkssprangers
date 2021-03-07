@@ -5,6 +5,7 @@ import hkssprangers.info.Shop;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
+using Lambda;
 
 typedef OrdersTemplateProps = {
     final idSchema:Dynamic;
@@ -45,32 +46,50 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         var items = if (props.items != null) {
             [
                 for (i => p in props.items)
-                DefaultArrayItem(p, props.formData[i], true)
+                DefaultArrayItem(p, props.formData[i], props.items.length > 1 || props.formData[i].shop != null)
             ];
         } else {
             null;
         }
-        var clusterOptions = if (props.formData != null && props.formData.length > 0 && props.formData[0].shop != null) {
-            var cluster = ShopCluster.classify(props.formData[0].shop);
+        var cluster = if (props.formData != null && props.formData.length > 0 && props.formData[0].shop != null) {
+            ShopCluster.classify(props.formData[0].shop);
+        } else {
+            null;
+        }
+        var clusterOptions = if (cluster != null) {
             Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
         } else {
             Shop.all;
         }
-        var addButton = if (props.formData != null && props.formData.length >= clusterOptions.length) {
-            null;
-        } else {
-            jsx('
-                <div>
-                    <Button
-                        className="array-item-add"
-                        color=${Primary}
-                        onClick=${props.onAddClick}
-                        disabled=${props.disabled || props.readonly}
-                    >
-                        叫多間店舖
-                    </Button>
-                </div>
-            ');
+        var addButton = switch (props.formData) {
+            case null | []:
+                jsx('
+                    <div>
+                        <Button
+                            className="array-item-add"
+                            color=${Primary}
+                            onClick=${props.onAddClick}
+                            disabled=${props.disabled || props.readonly}
+                        >
+                            揀店舖
+                        </Button>
+                    </div>
+                ');
+            case orders if (orders.length >= clusterOptions.length || orders.exists(o -> o.shop == null)):
+                null;
+            case _:
+                jsx('
+                    <div>
+                        <Button
+                            className="array-item-add"
+                            color=${Primary}
+                            onClick=${props.onAddClick}
+                            disabled=${props.disabled || props.readonly}
+                        >
+                            揀多間同範圍店舖
+                        </Button>
+                    </div>
+                ');
         }
         return jsx('
             <div key=${'array-item-list-${props.idSchema.field("$id")}'}>

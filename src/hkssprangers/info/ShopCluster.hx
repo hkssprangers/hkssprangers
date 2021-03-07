@@ -29,27 +29,27 @@ enum abstract ShopCluster(String) {
         case DragonCentreCluster:
             {
                 id: DragonCentreCluster,
-                name: "西九龍中心區",
+                name: "西九龍中心範圍",
             }
         case CLPCluster:
             {
                 id: CLPCluster,
-                name: "中電區",
+                name: "中電範圍",
             }
         case GoldenCluster:
             {
                 id: GoldenCluster,
-                name: "黃金商場區",
+                name: "黃金商場範圍",
             }
         case SmilingPlazaCluster:
             {
                 id: SmilingPlazaCluster,
-                name: "天悅廣場區",
+                name: "天悅廣場範圍",
             }
         case ParkCluster:
             {
                 id: ParkCluster,
-                name: "花園區",
+                name: "花園範圍",
             }
     }
 }
