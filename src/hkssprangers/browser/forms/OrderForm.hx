@@ -225,10 +225,6 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 case null: [];
                 case _: ["backupContactValue"];
             }),
-            definitions: Object.assign(
-                {},
-                DongDongForm.schemaDefinitions
-            ),
         };
         return schema;
     }
