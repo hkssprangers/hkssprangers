@@ -27,7 +27,7 @@ typedef OrderFormState = {
 typedef OrderFormData = {
     ?backupContactMethod:ContactMethod,
     ?backupContactValue:String,
-    ?pickupTimeSlot:String,
+    ?pickupTimeSlot:JsonString<TimeSlot>,
     ?pickupLocation:String,
     ?pickupMethod:PickupMethod,
     ?orders:Array<OrderData>,
@@ -45,7 +45,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     static public function selectedPickupTimeSlot(formData:OrderFormData):TimeSlot {
         return switch (formData.pickupTimeSlot) {
             case null: null;
-            case str: Json.parse(str);
+            case str: str.parse();
         };
     }
     public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData) {
