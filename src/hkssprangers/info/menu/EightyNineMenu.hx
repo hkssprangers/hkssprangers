@@ -1,7 +1,7 @@
 package hkssprangers.info.menu;
 
-class  EightyNineMenu {
-    static final EightyNineSet = {
+class EightyNineMenu {
+    static public final EightyNineSet = {
         title: "套餐",
         description: "主菜 + 配菜 + 絲苗白飯2個",
         properties: {
@@ -27,7 +27,7 @@ class  EightyNineMenu {
         },
         required: [
             "main",
-            "sup",
+            "sub",
         ]
     };
 

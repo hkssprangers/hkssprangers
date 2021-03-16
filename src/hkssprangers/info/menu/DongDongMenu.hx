@@ -8,7 +8,7 @@ using hkssprangers.info.TimeSlotTools;
 using Reflect;
 
 class DongDongMenu {
-    static final DongDongLunchSet = {
+    static public final DongDongLunchSet = {
         title: "午餐",
         description: "注意每份會另加外賣盒收費 $1.",
         properties: {
@@ -67,7 +67,7 @@ class DongDongMenu {
         ]
     };
 
-    static final DongDongDinnerDrink = {
+    static public final DongDongDinnerDrink = {
         title: "跟餐飲品",
         type: "string",
         "enum": [
@@ -91,7 +91,7 @@ class DongDongMenu {
         ],
     };
 
-    static final DongDongDinnerDish = {
+    static public final DongDongDinnerDish = {
         title: "晚餐 - 單叫小菜",
         description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
         properties: {
@@ -124,7 +124,7 @@ class DongDongMenu {
         ]
     };
 
-    static final DongDongDinnerSet = {
+    static public final DongDongDinnerSet = {
         title: "晚餐 - 客飯/蒸飯套餐",
         description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
         properties: {
