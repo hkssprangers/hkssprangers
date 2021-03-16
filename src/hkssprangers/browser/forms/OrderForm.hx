@@ -7,6 +7,7 @@ import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
+import hkssprangers.info.menu.*;
 import js.npm.rjsf.material_ui.*;
 import js.lib.Object;
 import mui.core.*;
@@ -180,7 +181,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                     //pass
                                 case DongDong:
                                     Object.assign(orderSchema.properties, {
-                                        items: DongDongForm.itemsSchema(pickupTimeSlot, o),
+                                        items: DongDongMenu.itemsSchema(pickupTimeSlot, o),
                                         customerNote: customerNote(o.shop),
                                     });
                                 case _:

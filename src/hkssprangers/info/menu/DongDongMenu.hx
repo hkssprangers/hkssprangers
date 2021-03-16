@@ -1,4 +1,4 @@
-package hkssprangers.browser.forms;
+package hkssprangers.info.menu;
 
 import hkssprangers.browser.forms.OrderForm.OrderData;
 import js.lib.Object;
@@ -7,7 +7,7 @@ import hkssprangers.info.TimeSlot;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
 
-class DongDongForm {
+class DongDongMenu {
     static final DongDongLunchSet = {
         title: "午餐",
         description: "注意每份會另加外賣盒收費 $1.",
