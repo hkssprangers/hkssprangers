@@ -153,8 +153,4 @@ class DragonJapaneseCuisineMenu {
             minItems: 1,
         };
     }
-
-    // static public function uiSchema(order:OrderData):Dynamic {
-        
-    // }
 }
