@@ -271,7 +271,7 @@ class GoogleForms {
         var headers = [
             for (col in 0...sheet.columnCount)
             (sheet.getCell(0, col).value:Null<String>)
-        ];
+        ].map(h -> if (h != null) h.trim() else null);
         var pickupTimeCol = headers.findIndex(h -> h == "想幾時收到?");
         if (skipRow == null)
             skipRow = 1;
