@@ -121,18 +121,13 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 backupContactMethod: {
                     type: "string",
                     title: "後備聯絡方法",
-                    oneOf: [{
-                        title: "無",
-                        const: "",
-                    }].concat(
-                        ContactMethod.all.filter(m -> switch (props.user) {
-                            case null: true;
-                            case {login: loginMethod}: m != loginMethod;
-                        }).map(m -> {
-                            title: m.info().name,
-                            const: m,
-                        })
-                    ),
+                    oneOf: ContactMethod.all.filter(m -> switch (props.user) {
+                        case null: true;
+                        case {login: loginMethod}: m != loginMethod;
+                    }).map(m -> {
+                        title: m.info().name,
+                        const: m,
+                    }),
                 },
                 backupContactValue: (switch (formData.backupContactMethod){
                     case Telegram: 
@@ -377,6 +372,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     validate=${validate}
                     widgets=${{
                         TextWidget: TextWidget,
+                        SelectWidget: SelectWidget,
                     }}
                 >
                 </Form>

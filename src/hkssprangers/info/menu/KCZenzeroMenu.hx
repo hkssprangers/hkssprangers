@@ -112,7 +112,7 @@ class KCZenzeroMenu {
         description: "任選醬汁/主食 $55",
         properties: {
             main: {
-                type: "array",
+                type: "string",
                 title: "Pasta主食選擇",
                 "enum": [
                     "芝士流心漢堡",
@@ -152,7 +152,7 @@ class KCZenzeroMenu {
         description: "主食 + 沙律 + 飲品 $40",
         properties: {
             main: {
-                type: "array",
+                type: "string",
                 title: "主食選擇",
                 "enum": [
                     "迷你肉醬烏冬",
