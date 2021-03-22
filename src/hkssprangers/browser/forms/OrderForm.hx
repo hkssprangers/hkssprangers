@@ -194,14 +194,19 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                         items: KCZenzeroMenu.itemsSchema(o),
                                         customerNote: customerNote(o.shop),
                                     });
+                                case HanaSoftCream:
+                                    Object.assign(orderSchema.properties, {
+                                        items: HanaSoftCreamMenu.itemsSchema(),
+                                        customerNote: customerNote(o.shop),
+                                    });
                                 case DongDong:
                                     Object.assign(orderSchema.properties, {
                                         items: DongDongMenu.itemsSchema(pickupTimeSlot, o),
                                         customerNote: customerNote(o.shop),
                                     });
-                                case HanaSoftCream:
+                                case FastTasteSSP:
                                     Object.assign(orderSchema.properties, {
-                                        items: HanaSoftCreamMenu.itemsSchema(),
+                                        items: FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o),
                                         customerNote: customerNote(o.shop),
                                     });
                                 case _:
