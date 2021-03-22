@@ -250,6 +250,7 @@ class KCZenzeroMenu {
                         Object.assign(itemSchema.properties, {
                             item: itemType.getDefinition(),
                         });
+                        itemSchema.required.push("item");
                 }
                 itemSchema;
             }),

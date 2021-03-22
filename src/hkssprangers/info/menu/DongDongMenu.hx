@@ -219,10 +219,12 @@ class DongDongMenu {
                                 Object.assign(itemSchema.properties, {
                                     item: DongDongDinnerDish,
                                 });
+                                itemSchema.required.push("item");
                             case "客飯/蒸飯套餐":
                                 Object.assign(itemSchema.properties, {
                                     item: DongDongDinnerSet,
                                 });
+                                itemSchema.required.push("item");
                             case _:
                                 //pass
                         }
