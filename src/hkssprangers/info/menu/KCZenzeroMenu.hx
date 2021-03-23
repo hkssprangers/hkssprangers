@@ -11,6 +11,7 @@ enum abstract KCZenzeroItem(String) to String {
     final LightSet;
     final HotpotSet;
     final RiceSet;
+    final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
         HotdogSet,
@@ -19,6 +20,7 @@ enum abstract KCZenzeroItem(String) to String {
         LightSet,
         HotpotSet,
         RiceSet,
+        Single,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:KCZenzeroItem) {
@@ -28,6 +30,7 @@ enum abstract KCZenzeroItem(String) to String {
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
         case RiceSet: KCZenzeroMenu.KCZenzeroRiceSet;
+        case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
 }
 
@@ -42,6 +45,23 @@ class KCZenzeroMenu {
             "自家沖玄米冷泡茶" + (price > 0 ? ' (+$$$price)' : ""),
             "自家沖玄米綠茶" + (price > 0 ? ' (+$$$price)' : ""),
             "自家沖玫瑰百寶茶" + (price > 0 ? ' (+$$$price)' : ""),
+        ],
+    };
+
+    static public final KCZenzeroSingle = {
+        title: "小食",
+        type: "string",
+        "enum": [
+            "辣茄醬蝦多士 $30",
+            "水牛城雞翼 $30",
+            "芝士肉醬燒大菇(辣) $25",
+            "芝士肉醬燒大菇(唔辣) $25",
+            "芝士茄父子(素) $25",
+            "芝士波隆納肉醬薯格 $25",
+            "流心奶黄牛角包 $10",
+            "紫薯撻 $12",
+            "芝士撻$12",
+            "葡撻 $8",
         ],
     };
 
