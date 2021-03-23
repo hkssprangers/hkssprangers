@@ -209,6 +209,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                         items: FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o),
                                         customerNote: customerNote(o.shop),
                                     });
+                                case BiuKeeLokYuen:
+                                    Object.assign(orderSchema.properties, {
+                                        items: BiuKeeLokYuenMenu.itemsSchema(o),
+                                        customerNote: customerNote(o.shop),
+                                    });
                                 case _:
                                     //pass
                             }
