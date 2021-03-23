@@ -8,17 +8,20 @@ enum abstract NeighborItem(String) to String {
     final Set;
     final Single;
     final Salad;
+    final Sub;
 
     static public final all:ReadOnlyArray<NeighborItem> = [
         Set,
         Single,
         Salad,
+        Sub,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:NeighborItem) {
         case Set: NeighborMenu.NeighborSet;
         case Single: NeighborMenu.NeighborSingle;
         case Salad: NeighborMenu.NeighborSalad;
+        case Sub: NeighborMenu.NeighborSub;
     }
 }
 
@@ -141,6 +144,24 @@ class NeighborMenu {
         required: [
             "salad",
         ]
+    };
+
+    static public final NeighborSub = {
+        title: "小食",
+        type: "string",
+        "enum": [
+            "魚手指 $31",
+            "鄰居雙色薯條 $33",
+            "洋蔥圈 $31",
+            "Mozzarella芝士脆條 $31",
+            "椰漿脆雞翼 (4隻) $38",
+            "椰漿脆雞翼 (6隻) $52",
+            "水牛城雞翼 (4隻) $38",
+            "水牛城雞翼 (6隻) $52",
+            "薯絲蝦 $36",
+            "黑松露醬芝士薯條 $45",
+            "鄰居拼盤 $80",
+        ],
     };
     
     static public function itemsSchema(order:OrderData):Dynamic {
