@@ -300,8 +300,9 @@ enum abstract Shop(String) to String {
     public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
         var info = info();
 
-        if (!info.openDays.has(Weekday.fromDay(pickupTimeSlot.start.toDate().getDay())))
-            return Unavailable('休息');
+        var day = Weekday.fromDay(pickupTimeSlot.start.toDate().getDay());
+        if (!info.openDays.has(day))
+            return Unavailable('逢星期${day.info().name}休息');
 
         if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
             return Unavailable('最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收');
