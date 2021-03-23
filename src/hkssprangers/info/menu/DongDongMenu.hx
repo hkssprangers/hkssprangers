@@ -1,11 +1,37 @@
 package hkssprangers.info.menu;
 
-import hkssprangers.browser.forms.OrderForm.OrderData;
 import js.lib.Object;
+import haxe.ds.ReadOnlyArray;
+import hkssprangers.browser.forms.OrderForm.OrderData;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.TimeSlot;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
+using Lambda;
+
+enum abstract DongDongItem(String) to String {
+    final LunchSet;
+    final DinnerDish;
+    final DinnerSet;
+
+    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<DongDongItem> return switch timeSlotType {
+        case Lunch:
+            [
+                LunchSet,
+            ];
+        case Dinner:
+            [
+                DinnerDish,
+                DinnerSet,
+            ];
+    };
+
+    public function getDefinition():Dynamic return switch (cast this:DongDongItem) {
+        case LunchSet: DongDongMenu.DongDongLunchSet;
+        case DinnerDish: DongDongMenu.DongDongDinnerDish;
+        case DinnerSet: DongDongMenu.DongDongDinnerSet;
+    }
+}
 
 class DongDongMenu {
     static public final DongDongLunchSet = {
@@ -71,7 +97,6 @@ class DongDongMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            "不需要",
             "熱奶茶 (+$4)",
             "熱咖啡 (+$4)",
             "熱檸茶 (+$4)",
@@ -92,7 +117,7 @@ class DongDongMenu {
     };
 
     static public final DongDongDinnerDish = {
-        title: "晚餐 - 單叫小菜",
+        title: "單叫小菜",
         description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
         properties: {
             main: {
@@ -120,12 +145,11 @@ class DongDongMenu {
         },
         required: [
             "main",
-            "drink",
         ]
     };
 
     static public final DongDongDinnerSet = {
-        title: "晚餐 - 客飯/蒸飯套餐",
+        title: "客飯/蒸飯套餐",
         description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
         properties: {
             main: {
@@ -172,67 +196,68 @@ class DongDongMenu {
         },
         required: [
             "main",
-            "drink",
         ]
     }
 
     static public function itemsSchema(pickupTimeSlot:TimeSlot, order:OrderData):Dynamic {
-        return if (pickupTimeSlot == null)
+        return if (pickupTimeSlot == null) {
+            type: "array",
+            items: {
+                type: "object",
+            }
+        } else {
+            var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
+            var itemDefs = [
+                for (item in DongDongItem.all(timeSlotType))
+                item => item.getDefinition()
+            ];
+            function itemSchema():Dynamic return switch itemDefs.count() {
+                case 1:
+                    itemDefs.find(_ -> true);
+                case n:
+                    {
+                        type: "object",
+                        properties: {
+                            type: {
+                                title: "食物種類",
+                                type: "string",
+                                oneOf: [
+                                    for (item => def in itemDefs)
+                                    {
+                                        title: def.title,
+                                        const: item,
+                                    }
+                                ],
+                            },
+                        },
+                        required: [
+                            "type",
+                        ],
+                    };
+            }
             {
                 type: "array",
-                items: {
-                    type: "object",
-                }
+                items: order.items == null ? [] : order.items.map(item -> {
+                    var itemSchema:Dynamic = itemSchema();
+                    switch (cast item.type:DongDongItem) {
+                        case null:
+                            //pass
+                        case itemType:
+                            switch (itemDefs[itemType]) {
+                                case null:
+                                    // pass
+                                case itemDef:
+                                    Object.assign(itemSchema.properties, {
+                                        item: itemDef,
+                                    });
+                                    itemSchema.required.push("item");
+                            }
+                    }
+                    itemSchema;
+                }),
+                additionalItems: itemSchema(),
+                minItems: 1,
             };
-        else switch (TimeSlotType.classify(pickupTimeSlot.start)) {
-            case Lunch:
-                {
-                    type: "array",
-                    items: DongDongLunchSet,
-                    minItems: 1,
-                };
-            case Dinner:
-                function itemSchema() return {
-                    type: "object",
-                    properties: {
-                        type: {
-                            title: "食物種類",
-                            type: "string",
-                            "enum": [
-                                "單叫小菜",
-                                "客飯/蒸飯套餐",
-                            ]
-                        },
-                    },
-                    required: [
-                        "type",
-                    ],
-                };
-                {
-                    type: "array",
-                    items: order.items == null ? [] : order.items.map(item -> {
-                        var itemSchema = itemSchema();
-                        switch (item.type) {
-                            case null:
-                                //pass
-                            case "單叫小菜":
-                                Object.assign(itemSchema.properties, {
-                                    item: DongDongDinnerDish,
-                                });
-                                itemSchema.required.push("item");
-                            case "客飯/蒸飯套餐":
-                                Object.assign(itemSchema.properties, {
-                                    item: DongDongDinnerSet,
-                                });
-                                itemSchema.required.push("item");
-                            case _:
-                                //pass
-                        }
-                        itemSchema;
-                    }),
-                    additionalItems: itemSchema(),
-                    minItems: 1,
-                };
-        }
+        };
     }
 }
