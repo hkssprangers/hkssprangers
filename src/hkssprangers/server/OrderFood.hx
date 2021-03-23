@@ -8,6 +8,7 @@ import haxe.io.Path;
 import haxe.Json;
 import hkssprangers.server.ServerMain.*;
 using hkssprangers.server.FastifyTools;
+using StringTools;
 
 class OrderFood extends View {
     public var tgBotName(get, never):String;
@@ -50,7 +51,7 @@ class OrderFood extends View {
         return ensurePermission(req, reply)
             .then(ok -> {
                 if (!ok) {
-                    Promise.resolve(reply.status(400).send("Login required"));
+                    Promise.resolve(reply.redirect("/login?redirectTo=" + "/order-food".urlEncode()));
                 }
                 ServerMain.tgMe
                     .then(tgMe -> {
