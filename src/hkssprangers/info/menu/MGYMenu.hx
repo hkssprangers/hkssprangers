@@ -8,17 +8,20 @@ enum abstract MGYItem(String) to String {
     final SingleDish;
     final Rice;
     final Noodle;
+    final Sub;
 
     static public final all:ReadOnlyArray<MGYItem> = [
         SingleDish,
         Rice,
         Noodle,
+        Sub,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MGYItem) {
         case SingleDish: MGYMenu.MGYSingleDish;
         case Rice: MGYMenu.MGYRice;
         case Noodle: MGYMenu.MGYNoodle;
+        case Sub: MGYMenu.MGYSub;
     }
 }
 
@@ -146,6 +149,22 @@ class MGYMenu {
             "noodle",
             "sub",
         ]
+    };
+
+    static public final MGYSub = {
+        title: "小食",
+        type: "string",
+        "enum": [
+            "湯餃子(8件) $28",
+            "炸餃子(4件) $15",
+            "薯蛋球(6件) $15",
+            "地瓜卷(6件) $15",
+            "炸薄脆(6件) $15",
+            "炸腐皮卷(4件) $15",
+            "椒鹽豆腐(8件) $15",
+            "白灼羽衣甘藍 $15",
+            "紫菜湯 $10",
+        ],
     };
     
     static public function itemsSchema(order:OrderData):Dynamic {
