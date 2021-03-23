@@ -229,8 +229,16 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                         items: MGYMenu.itemsSchema(o),
                                         customerNote: customerNote(o.shop),
                                     });
-                                case _:
-                                    //pass
+                                case YearsHK:
+                                    Object.assign(orderSchema.properties, {
+                                        items: YearsHKMenu.itemsSchema(o),
+                                        customerNote: customerNote(o.shop),
+                                    });
+                                case TheParkByYears:
+                                    Object.assign(orderSchema.properties, {
+                                        items: TheParkByYearsMenu.itemsSchema(o),
+                                        customerNote: customerNote(o.shop),
+                                    });
                             }
                             orderSchema;
                         }).toArray();
