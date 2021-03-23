@@ -253,7 +253,7 @@ enum abstract Shop(String) to String {
                     Sunday,
                 ],
                 earliestPickupTime: "12:30:00",
-                latestPickupTime: "20:30:00",
+                latestPickupTime: "18:30:00",
             }
         case FastTasteSSP:
             {
