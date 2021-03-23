@@ -123,7 +123,7 @@ class KCZenzeroMenu {
             },
             sauce: {
                 type: "string",
-                title: "麵類選擇",
+                title: "醬汁選擇",
                 "enum": [
                     "肉醬(豬)",
                     "鮮茄蘑菇",
