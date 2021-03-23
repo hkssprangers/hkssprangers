@@ -219,6 +219,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                         items: BlaBlaBlaMenu.itemsSchema(o),
                                         customerNote: customerNote(o.shop),
                                     });
+                                case Neighbor:
+                                    Object.assign(orderSchema.properties, {
+                                        items: NeighborMenu.itemsSchema(o),
+                                        customerNote: customerNote(o.shop),
+                                    });
                                 case _:
                                     //pass
                             }
