@@ -134,18 +134,11 @@ class DragonJapaneseCuisineMenu {
                 switch (cast item.type:DragonJapaneseCuisineItem) {
                     case null:
                         //pass
-                    case RamenSet:
+                    case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: RamenSet.getDefinition(),
+                            item: itemType.getDefinition(),
                         });
-                    case RiceSet:
-                        Object.assign(itemSchema.properties, {
-                            item: RiceSet.getDefinition(),
-                        });
-                    case SingleItem:
-                        Object.assign(itemSchema.properties, {
-                            item: SingleItem.getDefinition(),
-                        });
+                        itemSchema.required.push("item");
                 }
                 itemSchema;
             }),
