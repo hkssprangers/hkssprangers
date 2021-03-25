@@ -3,6 +3,7 @@ package hkssprangers.info;
 import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
+import hkssprangers.info.menu.*;
 using Lambda;
 
 enum abstract Shop(String) to String {
@@ -311,6 +312,37 @@ enum abstract Shop(String) to String {
             return Unavailable('最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收');
 
         return Available;
+    }
+
+    public function itemsSchema(pickupTimeSlot:TimeSlot, o:FormOrderData):Dynamic {
+        return switch (cast this:Shop) {
+            case EightyNine:
+                EightyNineMenu.itemsSchema();
+            case DragonJapaneseCuisine:
+                DragonJapaneseCuisineMenu.itemsSchema(o);
+            case LaksaStore:
+                LaksaStoreMenu.itemsSchema(o);
+            case KCZenzero:
+                KCZenzeroMenu.itemsSchema(o);
+            case HanaSoftCream:
+                HanaSoftCreamMenu.itemsSchema();
+            case DongDong:
+                DongDongMenu.itemsSchema(pickupTimeSlot, o);
+            case FastTasteSSP:
+                FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o);
+            case BiuKeeLokYuen:
+                BiuKeeLokYuenMenu.itemsSchema(o);
+            case BlaBlaBla:
+                BlaBlaBlaMenu.itemsSchema(o);
+            case Neighbor:
+                NeighborMenu.itemsSchema(o);
+            case MGY:
+                MGYMenu.itemsSchema(o);
+            case YearsHK:
+                YearsHKMenu.itemsSchema(o);
+            case TheParkByYears:
+                TheParkByYearsMenu.itemsSchema(o);
+        }
     }
 
     static public function fromId(shopId:String):Shop {

@@ -1,6 +1,6 @@
 package hkssprangers.info.menu;
 
-import hkssprangers.browser.forms.OrderForm.OrderData;
+import hkssprangers.info.menu.FormOrderData;
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 using Lambda;
@@ -32,7 +32,7 @@ class BlaBlaBlaMenu {
         { name:"凍百香果綠茶 $27", sweetOpts: sweetOpts, },
     ];
     
-    static public function itemsSchema(order:OrderData):Dynamic {
+    static public function itemsSchema(order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             title: "飲品",
             type: "object",

@@ -1,7 +1,7 @@
 package hkssprangers.info.menu;
 
 import haxe.ds.ReadOnlyArray;
-import hkssprangers.browser.forms.OrderForm.OrderData;
+import hkssprangers.info.menu.FormOrderData;
 import js.lib.Object;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.TimeSlot;
@@ -393,7 +393,7 @@ class FastTasteSSPMenu {
         };
     }
 
-    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:OrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:FormOrderData):Dynamic {
         return if (pickupTimeSlot == null) {
             type: "array",
             items: {

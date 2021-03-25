@@ -31,14 +31,9 @@ typedef OrderFormData = {
     ?pickupTimeSlot:JsonString<TimeSlot>,
     ?pickupLocation:String,
     ?pickupMethod:PickupMethod,
-    ?orders:Array<OrderData>,
+    ?orders:Array<FormOrderData>,
     ?paymentMethods:Array<PaymentMethod>,
     ?customerNote:String,
-}
-
-typedef OrderData = {
-    ?shop:Shop,
-    ?items:Array<Dynamic>,
 }
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
@@ -174,69 +169,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                             switch (o.shop) {
                                 case null:
                                     //pass
-                                case EightyNine:
+                                case shop:
                                     Object.assign(orderSchema.properties, {
-                                        items: EightyNineMenu.itemsSchema(),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case DragonJapaneseCuisine:
-                                    Object.assign(orderSchema.properties, {
-                                        items: DragonJapaneseCuisineMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case LaksaStore:
-                                    Object.assign(orderSchema.properties, {
-                                        items: LaksaStoreMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case KCZenzero:
-                                    Object.assign(orderSchema.properties, {
-                                        items: KCZenzeroMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case HanaSoftCream:
-                                    Object.assign(orderSchema.properties, {
-                                        items: HanaSoftCreamMenu.itemsSchema(),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case DongDong:
-                                    Object.assign(orderSchema.properties, {
-                                        items: DongDongMenu.itemsSchema(pickupTimeSlot, o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case FastTasteSSP:
-                                    Object.assign(orderSchema.properties, {
-                                        items: FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case BiuKeeLokYuen:
-                                    Object.assign(orderSchema.properties, {
-                                        items: BiuKeeLokYuenMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case BlaBlaBla:
-                                    Object.assign(orderSchema.properties, {
-                                        items: BlaBlaBlaMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case Neighbor:
-                                    Object.assign(orderSchema.properties, {
-                                        items: NeighborMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case MGY:
-                                    Object.assign(orderSchema.properties, {
-                                        items: MGYMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case YearsHK:
-                                    Object.assign(orderSchema.properties, {
-                                        items: YearsHKMenu.itemsSchema(o),
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                case TheParkByYears:
-                                    Object.assign(orderSchema.properties, {
-                                        items: TheParkByYearsMenu.itemsSchema(o),
+                                        items: shop.itemsSchema(pickupTimeSlot, o),
                                         customerNote: customerNote(o.shop),
                                     });
                             }

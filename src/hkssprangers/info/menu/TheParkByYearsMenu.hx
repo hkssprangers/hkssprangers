@@ -1,6 +1,6 @@
 package hkssprangers.info.menu;
 
-import hkssprangers.browser.forms.OrderForm.OrderData;
+import hkssprangers.info.menu.FormOrderData;
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
@@ -108,7 +108,7 @@ class TheParkByYearsMenu {
         ],
     };
 
-    static public function itemsSchema(order:OrderData):Dynamic {
+    static public function itemsSchema(order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
             properties: {

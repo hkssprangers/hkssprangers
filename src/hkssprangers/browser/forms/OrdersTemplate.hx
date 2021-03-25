@@ -2,6 +2,7 @@ package hkssprangers.browser.forms;
 
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Shop;
+import hkssprangers.info.menu.FormOrderData;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
@@ -10,7 +11,7 @@ using Lambda;
 typedef OrdersTemplateProps = {
     final idSchema:Dynamic;
     final items:Array<Dynamic>;
-    final formData:Array<OrderForm.OrderData>;
+    final formData:Array<FormOrderData>;
     final disabled:Bool;
     final readonly:Bool;
     final onAddClick:Dynamic;
