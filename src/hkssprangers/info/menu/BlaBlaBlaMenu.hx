@@ -5,6 +5,21 @@ import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 using Lambda;
 
+enum abstract BlaBlaBlaItem(String) to String {
+    final HotDrink;
+    final IceDrink;
+
+    static public final all:ReadOnlyArray<BlaBlaBlaItem> = [
+        HotDrink,
+        IceDrink,
+    ];
+
+    public function getDefinition():Dynamic return switch (cast this:BlaBlaBlaItem) {
+        case HotDrink: BlaBlaBlaMenu.BlaBlaBlaHotDrink;
+        case IceDrink: BlaBlaBlaMenu.BlaBlaBlaIceDrink;
+    }
+}
+
 class BlaBlaBlaMenu {
     static public final normalSweet = "正常";
     static public final normalIce = "正常";
@@ -31,60 +46,96 @@ class BlaBlaBlaMenu {
         { name:"凍桂花青茶 $27", sweetOpts: sweetOpts, },
         { name:"凍百香果綠茶 $27", sweetOpts: sweetOpts, },
     ];
+
+    static public final BlaBlaBlaHotDrink = {
+        title: "熱飲",
+        type: "object",
+        properties: {
+            drink: {
+                type: "string",
+                title: "飲品選擇",
+                "enum": hotDrinks.map(d -> d.name),
+            },
+            sweetOpt: {
+                type: "string",
+                title: "甜度選擇",
+                "default": normalSweet,
+            },
+        },
+        required: [
+            "drink",
+            "sweetOpt",
+        ]
+    };
+
+    static public final BlaBlaBlaIceDrink = {
+        title: "凍飲",
+        type: "object",
+        properties: {
+            drink: {
+                type: "string",
+                title: "飲品選擇",
+                "enum": iceDrinks.map(d -> d.name),
+            },
+            sweetOpt: {
+                type: "string",
+                title: "甜度選擇",
+                "default": normalSweet,
+            },
+            iceOpt: {
+                type: "string",
+                title: "冰量選擇",
+                "enum": iceOpts,
+                "default": normalIce,
+            },
+        },
+        required: [
+            "drink",
+            "sweetOpt",
+            "iceOpt",
+        ]
+    };
     
     static public function itemsSchema(order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
-            title: "飲品",
             type: "object",
             properties: {
-                drink: {
+                type: {
+                    title: "飲品種類",
                     type: "string",
-                    title: "飲品選擇",
-                    "enum": hotDrinks.map(d -> d.name).concat(iceDrinks.map(d -> d.name)),
+                    oneOf: BlaBlaBlaItem.all.map(item -> {
+                        title: item.getDefinition().title,
+                        const: item,
+                    }),
                 },
             },
             required: [
-                "drink",
-            ]
+                "type",
+            ],
         };
         return {
             type: "array",
             items: order.items == null ? [] : order.items.map(item -> {
                 var itemSchema:Dynamic = itemSchema();
-                switch (hotDrinks.find(d -> d.name == item.drink)) {
+                switch (cast item.type:BlaBlaBlaItem) {
                     case null:
                         //pass
-                    case hotDrink:
+                    case itemType:
                         Object.assign(itemSchema.properties, {
-                            sweetOpt: {
-                                type: "string",
-                                title: "甜度選擇",
-                                "enum": hotDrink.sweetOpts,
-                                "default": normalSweet,
-                            },
+                            item: itemType.getDefinition(),
                         });
-                        itemSchema.required.push("sweetOpt");
-                }
-                switch (iceDrinks.find(d -> d.name == item.drink)) {
-                    case null:
-                        //pass
-                    case iceDrink:
-                        Object.assign(itemSchema.properties, {
-                            sweetOpt: {
-                                type: "string",
-                                title: "甜度選擇",
-                                "enum": iceDrink.sweetOpts,
-                                "default": normalSweet,
-                            },
-                            iceOpt: {
-                                type: "string",
-                                title: "冰量選擇",
-                                "enum": iceOpts,
-                                "default": normalIce,
-                            }
-                        });
-                        itemSchema.required.push("sweetOpt");
-                        itemSchema.required.push("iceOpt");
+                        var sweetOpts = switch (item.item:Null<{drink:Null<String>}>) {
+                            case null | { drink:null }:
+                                [normalSweet];
+                            case hotDrinks.find(d -> d.name == _.drink) => d if (d != null):
+                                d.sweetOpts;
+                            case iceDrinks.find(d -> d.name == _.drink) => d if (d != null):
+                                d.sweetOpts;
+                            case _:
+                                [normalSweet];
+                        }
+                        Reflect.setField(itemSchema.properties.item.properties.sweetOpt, "enum", sweetOpts);
+                        itemSchema.required.push("item");
                 }
                 itemSchema;
             }),
