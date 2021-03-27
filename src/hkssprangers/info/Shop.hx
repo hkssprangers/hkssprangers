@@ -20,6 +20,7 @@ enum abstract Shop(String) to String {
     final MGY:Shop;
     final FastTasteSSP:Shop;
     final BlaBlaBla:Shop;
+    final ZeppelinHotDogSKM:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -35,6 +36,7 @@ enum abstract Shop(String) to String {
         MGY,
         FastTasteSSP,
         BlaBlaBla,
+        ZeppelinHotDogSKM,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -296,14 +298,42 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
             }
+        case ZeppelinHotDogSKM:
+            {
+                id: ZeppelinHotDogSKM,
+                name: "齊柏林熱狗 (石硤尾)",
+                address: "白田購物中心地下82號鋪",
+                courierContact: [
+                    "tel:55965529",
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
+            }
     }
 
     public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
         var info = info();
-
-        var day = Weekday.fromDay(pickupTimeSlot.start.toDate().getDay());
+        var date = pickupTimeSlot.start.toDate();
+        var day = Weekday.fromDay(date.getDay());
         if (!info.openDays.has(day))
             return Unavailable('逢星期${day.info().name}休息');
+
+        switch (cast this:Shop) {
+            case ZeppelinHotDogSKM:
+                if (date.getDate() == 21)
+                    return Unavailable('逢21號罷工');
+            case _:
+                //pass
+        }
 
         if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
             return Unavailable('最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收');
@@ -342,8 +372,17 @@ enum abstract Shop(String) to String {
                 YearsHKMenu.itemsSchema(o);
             case TheParkByYears:
                 TheParkByYearsMenu.itemsSchema(o);
+            case ZeppelinHotDogSKM:
+                ZeppelinHotDogSKMMenu.itemsSchema(o);
         }
     }
+
+    // public function processFormOrderItems(pickupTimeSlot:TimeSlot, o:FormOrderData):{
+    //     orderDetails:String,
+    //     orderPrice:Float,
+    // } {
+
+    // }
 
     static public function fromId(shopId:String):Shop {
         return switch (shopId) {

@@ -20,6 +20,20 @@ enum abstract BiuKeeLokYuenItem(String) to String {
         case LoMeinSet: BiuKeeLokYuenMenu.BiuKeeLokYuenLoMeinSet;
         case SingleDish: BiuKeeLokYuenMenu.BiuKeeLokYuenSingleDish;
     }
+
+    // public function processFormOrderItem(o:Dynamic):{
+    //     orderDetails:String,
+    //     orderPrice:Float,
+    // } {
+    //     switch (o.type:BiuKeeLokYuenItem) {
+    //         case NoodleSet:
+
+    //         case LoMeinSet:
+
+    //         case SingleDish:
+
+    //     }
+    // }
 }
 
 class BiuKeeLokYuenMenu {

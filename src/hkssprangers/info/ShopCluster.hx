@@ -6,6 +6,7 @@ enum abstract ShopCluster(String) {
     final GoldenCluster;
     final SmilingPlazaCluster;
     final ParkCluster;
+    final PakTinCluster;
 
     static public function classify(shop:Shop):ShopCluster {
         return switch shop {
@@ -22,6 +23,7 @@ enum abstract ShopCluster(String) {
             case MGY: ParkCluster;
             case FastTasteSSP: GoldenCluster;
             case BlaBlaBla: GoldenCluster;
+            case ZeppelinHotDogSKM: PakTinCluster;
         }
     }
 
@@ -49,7 +51,12 @@ enum abstract ShopCluster(String) {
         case ParkCluster:
             {
                 id: ParkCluster,
-                name: "花園範圍",
+                name: "石硤尾街休憩花園範圍",
+            }
+        case PakTinCluster:
+            {
+                id: PakTinCluster,
+                name: "白田範圍",
             }
     }
 }
