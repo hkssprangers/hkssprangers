@@ -239,19 +239,14 @@ class DongDongMenu {
                 type: "array",
                 items: order.items == null ? [] : order.items.map(item -> {
                     var itemSchema:Dynamic = itemSchema();
-                    switch (cast item.type:DongDongItem) {
+                    switch (itemDefs[cast item.type]) {
                         case null:
-                            //pass
-                        case itemType:
-                            switch (itemDefs[itemType]) {
-                                case null:
-                                    // pass
-                                case itemDef:
-                                    Object.assign(itemSchema.properties, {
-                                        item: itemDef,
-                                    });
-                                    itemSchema.required.push("item");
-                            }
+                            // pass
+                        case itemDef:
+                            Object.assign(itemSchema.properties, {
+                                item: itemDef,
+                            });
+                            itemSchema.required.push("item");
                     }
                     itemSchema;
                 }),
