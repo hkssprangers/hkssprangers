@@ -40,6 +40,7 @@ class GoogleForms {
         Neighbor => "15Mzv3r9wTbxpIiJEPbPPwF8O7oP4hQGQ5bksyMuKXHY",
         MGY => "1jbZng_nv2nx3WgY7BV6DfpGz_3AuheVH2VYNOxQCQvM",
         FastTasteSSP => "1OeoNlkZlzj_QpZJV9UaKpXbQjdYSoXLUPbKi5YeWQdw",
+        ZeppelinHotDogSKM => "1RME0bT1k1DVbJesBLc3F0aGPzpRlajsrTbPlzAqkFNg",
     ];
 
     static public function getResponseSheet(token:Promise<String>, shop:Shop):Promise<GoogleSpreadsheet> {
