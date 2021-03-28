@@ -1,6 +1,7 @@
 package hkssprangers.info;
 
 import haxe.ds.ReadOnlyArray;
+using StringTools;
 
 class MenuTools {
     static public function parsePrice(line:Null<String>):Float {
@@ -10,21 +11,28 @@ class MenuTools {
         return Std.parseFloat(r.matched(1));
     }
 
+    static final fullWidthSpace = "　";
+    static final fullWidthColon = "：";
+
     static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>):{
         orderDetails: String,
         orderPrice: Float,
     } {
         var orderDetails = [];
         var orderPrice = 0.0;
-        for (fieldName in fields) {
+        for (i => fieldName in fields) {
             var fieldDef = Reflect.field(def.properties, fieldName);
+            var prefix = if (i == 0)
+                def.title + fullWidthColon;
+            else
+                "".rpad(fullWidthSpace, def.title.length + 1);
             switch (fieldDef.type:String) {
                 case "string":
                     var fieldVal:Null<String> = Reflect.field(orderItem.item, fieldName);
                     switch (fieldVal) {
                         case null: //pass
                         case v:
-                            orderDetails.push('${def.title}: ${fieldDef.title}: ${v}');
+                            orderDetails.push('${prefix}${fieldDef.title}: ${v}');
                             orderPrice += parsePrice(v);
                     }
                 case "array":
@@ -35,7 +43,7 @@ class MenuTools {
                         case null: //pass
                         case options:
                             for (opt in options) {
-                                orderDetails.push('${def.title}: ${fieldDef.title}: ${opt}');
+                                orderDetails.push('${prefix}${fieldDef.title}: ${opt}');
                                 orderPrice += parsePrice(opt);
                             }
                     }
