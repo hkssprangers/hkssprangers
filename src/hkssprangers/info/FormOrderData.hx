@@ -6,4 +6,6 @@ typedef FormOrderData = {
         ?type:String,
         ?item:Dynamic,
     }>,
+    ?wantTableware:Bool,
+    ?customerNote:String,
 }

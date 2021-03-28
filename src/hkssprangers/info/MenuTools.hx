@@ -4,13 +4,16 @@ import haxe.ds.ReadOnlyArray;
 
 class MenuTools {
     static public function parsePrice(line:Null<String>):Float {
-        var r = ~/$$([0-9\.]+)/;
+        var r = ~/\$([0-9\.]+)/;
         if (!r.match(line))
             return 0;
         return Std.parseFloat(r.matched(1));
     }
 
-    static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>):OrderSummary {
+    static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>):{
+        orderDetails: String,
+        orderPrice: Float,
+    } {
         var orderDetails = [];
         var orderPrice = 0.0;
         for (fieldName in fields) {
@@ -44,7 +47,13 @@ class MenuTools {
         };
     }
 
-    static public function concatSummaries(summaries:Array<OrderSummary>):OrderSummary {
+    static public function concatSummaries(summaries:Array<{
+        orderDetails: String,
+        orderPrice: Float,
+    }>):{
+        orderDetails: String,
+        orderPrice: Float,
+    } {
         var orderDetails = [];
         var orderPrice = 0.0;
         for (o in summaries) {

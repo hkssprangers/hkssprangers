@@ -232,38 +232,38 @@ class BiuKeeLokYuenMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case null:
-                {
-                    orderDetails: "",
-                    orderPrice: 0,
-                }
             case NoodleSet:
                 summarizeOrderObject(orderItem, def, ["main1", "main2", "noodle", "options", "drink"]);
             case LoMeinSet:
                 summarizeOrderObject(orderItem, def, ["main1", "main2", "options", "drink"]);
             case SingleDish:
-                switch (orderItem.item:String) {
-                    case null: //pass
-                        {
-                            orderDetails: "",
-                            orderPrice: 0,
-                        }
-                    case v:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: v,
                             orderPrice: v.parsePrice(),
                         }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
                 }
         }
     }
 
-    static public function summarize(items:Array<{
-        ?type:BiuKeeLokYuenItem,
-        ?item:Dynamic,
-    }>):{
-        orderDetails:String,
-        orderPrice:Float,
-    } {
-        return concatSummaries(items.map(summarizeItem));
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

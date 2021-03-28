@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.Order;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.LoggedinUser;
@@ -15,6 +16,7 @@ import mui.core.*;
 import haxe.Json;
 import haxe.ds.ReadOnlyArray;
 using hkssprangers.info.TimeSlotTools;
+using hkssprangers.info.OrderTools;
 using Reflect;
 using Lambda;
 using hxLINQ.LINQ;
@@ -34,7 +36,6 @@ typedef OrderFormData = {
     ?pickupMethod:PickupMethod,
     ?orders:Array<FormOrderData>,
     ?paymentMethods:Array<PaymentMethod>,
-    ?customerNote:String,
 }
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
@@ -328,6 +329,37 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 ');
             case _: null;
         }
+
+        var orders:Array<Order> = switch (state.formData) {
+            case {
+                orders: orders,
+                pickupTimeSlot: pickupTimeSlot,
+            }
+            if (orders != null && pickupTimeSlot != null):
+                var summaries = [
+                    for (d in orders)
+                    if (d.shop != null && d.items != null)
+                    d.shop => d.shop.summarize(pickupTimeSlot.parse(), d)
+                ];
+                [
+                    for (shop => summary in summaries)
+                    if (summary != null)
+                    {
+                        orderId: null,
+                        creationTime: null,
+                        orderCode: null,
+                        shop: shop,
+                        wantTableware: summary.wantTableware,
+                        customerNote: summary.customerNote,
+                        orderDetails: summary.orderDetails,
+                        orderPrice: summary.orderPrice,
+                        platformServiceCharge: null,
+                        receipts: [],
+                    }
+                ];
+            case _:
+                [];
+        }
         
         return jsx('
             <div className="container max-w-screen-md mx-4 p-4">
@@ -353,6 +385,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     }}
                 >
                 </Form>
+                <pre>
+                    ${orders.map(o -> o.print()).join("\n")}
+                </pre>
             </div>
         ');
     }

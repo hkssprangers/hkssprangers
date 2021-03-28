@@ -380,7 +380,7 @@ enum abstract Shop(String) to String {
     public function summarize(pickupTimeSlot:TimeSlot, o:FormOrderData):OrderSummary {
         return switch (cast this:Shop) {
             case BiuKeeLokYuen:
-                BiuKeeLokYuenMenu.summarize(cast o.items);
+                BiuKeeLokYuenMenu.summarize(o);
             case _:
                 null;
         }
