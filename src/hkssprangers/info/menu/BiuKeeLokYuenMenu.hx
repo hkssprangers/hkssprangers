@@ -1,6 +1,6 @@
 package hkssprangers.info.menu;
 
-import hkssprangers.info.menu.FormOrderData;
+
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
@@ -20,20 +20,6 @@ enum abstract BiuKeeLokYuenItem(String) to String {
         case LoMeinSet: BiuKeeLokYuenMenu.BiuKeeLokYuenLoMeinSet;
         case SingleDish: BiuKeeLokYuenMenu.BiuKeeLokYuenSingleDish;
     }
-
-    // public function processFormOrderItem(o:Dynamic):{
-    //     orderDetails:String,
-    //     orderPrice:Float,
-    // } {
-    //     switch (o.type:BiuKeeLokYuenItem) {
-    //         case NoodleSet:
-
-    //         case LoMeinSet:
-
-    //         case SingleDish:
-
-    //     }
-    // }
 }
 
 class BiuKeeLokYuenMenu {
@@ -49,7 +35,7 @@ class BiuKeeLokYuenMenu {
         properties: {
             main1: {
                 type: "string",
-                title: "配料選擇",
+                title: "配料",
                 "enum": [
                     "標記新鮮牛雜 $48",
                     "秘製新鮮牛腩 $48",
@@ -72,7 +58,7 @@ class BiuKeeLokYuenMenu {
             },
             main2: {
                 type: "string",
-                title: "雙併配料選擇",
+                title: "雙併",
                 "enum": [
                     "自家製鮮蝦雲吞 (+$10)",
                     "手打魚蛋 (+$10)",
@@ -87,7 +73,7 @@ class BiuKeeLokYuenMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類選擇",
+                title: "麵類",
                 "enum": [
                     "河粉",
                     "麵",
@@ -98,7 +84,7 @@ class BiuKeeLokYuenMenu {
             },
             options: {
                 type: "array",
-                title: "其他配料",
+                title: "其他",
                 description: "不設另上",
                 items: {
                     type: "string",
@@ -124,7 +110,7 @@ class BiuKeeLokYuenMenu {
         properties: {
             main1: {
                 type: "string",
-                title: "配料選擇",
+                title: "配料",
                 "enum": [
                     "標記新鮮牛雜 $59",
                     "秘製新鮮牛腩 $59",
@@ -145,7 +131,7 @@ class BiuKeeLokYuenMenu {
             },
             main2: {
                 type: "string",
-                title: "雙併配料選擇",
+                title: "雙併",
                 "enum": [
                     "自家製鮮蝦雲吞 (+$10)",
                     "手打魚蛋 (+$10)",
@@ -160,7 +146,7 @@ class BiuKeeLokYuenMenu {
             },
             options: {
                 type: "array",
-                title: "其他配料",
+                title: "其他",
                 description: "不設另上",
                 items: {
                     type: "string",
@@ -235,5 +221,49 @@ class BiuKeeLokYuenMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:BiuKeeLokYuenItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case null:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+            case NoodleSet:
+                summarizeOrderObject(orderItem, def, ["main1", "main2", "noodle", "options", "drink"]);
+            case LoMeinSet:
+                summarizeOrderObject(orderItem, def, ["main1", "main2", "options", "drink"]);
+            case SingleDish:
+                switch (orderItem.item:String) {
+                    case null: //pass
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                    case v:
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                }
+        }
+    }
+
+    static public function summarize(items:Array<{
+        ?type:BiuKeeLokYuenItem,
+        ?item:Dynamic,
+    }>):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        return concatSummaries(items.map(summarizeItem));
     }
 }

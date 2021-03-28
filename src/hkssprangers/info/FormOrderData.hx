@@ -1,4 +1,4 @@
-package hkssprangers.info.menu;
+package hkssprangers.info;
 
 typedef FormOrderData = {
     ?shop:Shop,

@@ -377,12 +377,14 @@ enum abstract Shop(String) to String {
         }
     }
 
-    // public function processFormOrderItems(pickupTimeSlot:TimeSlot, o:FormOrderData):{
-    //     orderDetails:String,
-    //     orderPrice:Float,
-    // } {
-
-    // }
+    public function summarize(pickupTimeSlot:TimeSlot, o:FormOrderData):OrderSummary {
+        return switch (cast this:Shop) {
+            case BiuKeeLokYuen:
+                BiuKeeLokYuenMenu.summarize(cast o.items);
+            case _:
+                null;
+        }
+    }
 
     static public function fromId(shopId:String):Shop {
         return switch (shopId) {

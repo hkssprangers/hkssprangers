@@ -2,7 +2,7 @@ package hkssprangers.browser.forms;
 
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Shop;
-import hkssprangers.info.menu.FormOrderData;
+import hkssprangers.info.FormOrderData;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;

@@ -1,6 +1,5 @@
 package hkssprangers.info.menu;
 
-import hkssprangers.info.menu.FormOrderData;
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 using Lambda;

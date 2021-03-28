@@ -1,7 +1,6 @@
 package hkssprangers.info.menu;
 
 import haxe.ds.ReadOnlyArray;
-import hkssprangers.info.menu.FormOrderData;
 import js.lib.Object;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.TimeSlot;
