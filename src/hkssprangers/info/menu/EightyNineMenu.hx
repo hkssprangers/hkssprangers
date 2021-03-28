@@ -6,7 +6,7 @@ class EightyNineMenu {
         description: "主菜 + 配菜 + 絲苗白飯2個",
         properties: {
             main: {
-                title: "主菜選擇",
+                title: "主菜",
                 type: "string",
                 "enum": [
                     "香茅豬頸肉 $85",
@@ -17,7 +17,7 @@ class EightyNineMenu {
                 ]
             },
             sub: {
-                title: "配菜選擇",
+                title: "配菜",
                 type: "string",
                 "enum": [
                     "涼拌青瓜拼木耳",
@@ -38,5 +38,22 @@ class EightyNineMenu {
             items:  EightyNineSet,
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        return summarizeOrderObject(orderItem, EightyNineSet, ["main", "sub"], ["絲苗白飯2個"]);
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

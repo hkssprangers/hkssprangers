@@ -205,7 +205,7 @@ class BiuKeeLokYuenMenu {
         };
         return {
             type: "array",
-            items: order.items == null ? [] : order.items.map(item -> {
+            items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                 var itemSchema:Dynamic = itemSchema();
                 switch (cast item.type:BiuKeeLokYuenItem) {
                     case null:
@@ -233,9 +233,9 @@ class BiuKeeLokYuenMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case NoodleSet:
-                summarizeOrderObject(orderItem, def, ["main1", "main2", "noodle", "options", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main1", "main2", "noodle", "options", "drink"]);
             case LoMeinSet:
-                summarizeOrderObject(orderItem, def, ["main1", "main2", "options", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main1", "main2", "options", "drink"]);
             case SingleDish:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):

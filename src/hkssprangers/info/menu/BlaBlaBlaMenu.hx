@@ -114,7 +114,7 @@ class BlaBlaBlaMenu {
         };
         return {
             type: "array",
-            items: order.items == null ? [] : order.items.map(item -> {
+            items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                 var itemSchema:Dynamic = itemSchema();
                 switch (cast item.type:BlaBlaBlaItem) {
                     case null:
@@ -153,9 +153,9 @@ class BlaBlaBlaMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case HotDrink:
-                summarizeOrderObject(orderItem, def, ["drink", "sweetOpt"]);
+                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt"]);
             case IceDrink:
-                summarizeOrderObject(orderItem, def, ["drink", "sweetOpt", "iceOpt"]);
+                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt", "iceOpt"]);
             case _:
                 {
                     orderDetails: "",

@@ -122,7 +122,7 @@ class YearsHKMenu {
         };
         return {
             type: "array",
-            items: order.items == null ? [] : order.items.map(item -> {
+            items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                 var itemSchema:Dynamic = itemSchema();
                 switch (cast item.type:YearsHKItem) {
                     case null:

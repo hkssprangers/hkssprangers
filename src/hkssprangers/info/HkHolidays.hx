@@ -6,9 +6,18 @@ import js.npm.fetch.Fetch;
 #end
 import js.lib.Promise;
 import haxe.*;
+using Reflect;
 
 class HkHolidays {
     static public final holidays = CompileTime.parseJsonFile("holidays.json");
+
+    static public function isRedDay(date:Date):Bool {
+        return switch (Weekday.fromDay(date.getDay())) {
+            case Monday | Tuesday | Wednesday | Thursday | Friday:
+                HkHolidays.holidays.hasField((date:LocalDateString).getDatePart());
+            case Saturday | Sunday: true;
+        }
+    }
 
     #if (!browser)
     static public final icalUrl = "https://www.1823.gov.hk/common/ical/gc/tc.ics";

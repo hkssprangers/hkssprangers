@@ -35,7 +35,7 @@ class DragonJapaneseCuisineMenu {
         title: "拉麵",
         properties: {
             main: {
-                title: "拉麵選擇",
+                title: "拉麵",
                 type: "string",
                 "enum": [
                     "鹽酥雞拉麵 $50",
@@ -57,7 +57,7 @@ class DragonJapaneseCuisineMenu {
                         "轉黑蒜油湯底 (+$8)",
                         "拉麵加底 (+$5)",
                         "加糖心蛋 (+$8)",
-                        "轉烏冬",
+                        "轉烏冬 (免費)",
                     ],
                 },
                 uniqueItems: true,
@@ -74,7 +74,7 @@ class DragonJapaneseCuisineMenu {
         title: "飯類/輕食",
         properties: {
             main: {
-                title: "飯類/輕食選擇",
+                title: "飯類/輕食",
                 type: "string",
                 "enum": [
                     "滷肉飯配滷蛋 $38",
@@ -128,7 +128,7 @@ class DragonJapaneseCuisineMenu {
         };
         return {
             type: "array",
-            items: order.items == null ? [] : order.items.map(item -> {
+            items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                 var itemSchema:Dynamic = itemSchema();
                 switch (cast item.type:DragonJapaneseCuisineItem) {
                     case null:
@@ -144,5 +144,49 @@ class DragonJapaneseCuisineMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:DragonJapaneseCuisineItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case RamenSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
+            case RiceSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+            case SingleItem:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

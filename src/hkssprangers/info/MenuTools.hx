@@ -14,7 +14,7 @@ class MenuTools {
     inline static final fullWidthSpace = "　";
     inline static final fullWidthColon = "：";
 
-    static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>):{
+    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>):{
         orderDetails: String,
         orderPrice: Float,
     } {
@@ -32,7 +32,7 @@ class MenuTools {
                 fieldDef.title + fullWidthColon;
             switch (fieldDef.type:String) {
                 case "string":
-                    var fieldVal:Null<String> = Reflect.field(orderItem.item, fieldName);
+                    var fieldVal:Null<String> = Reflect.field(orderItem, fieldName);
                     switch (fieldVal) {
                         case null: //pass
                         case v:
@@ -42,7 +42,7 @@ class MenuTools {
                 case "array":
                     if (fieldDef.items.type != "string")
                         throw 'cannot proccess array of ${fieldDef.items.type}';
-                    var fieldVal:Null<Array<String>> = Reflect.field(orderItem.item, fieldName);
+                    var fieldVal:Null<Array<String>> = Reflect.field(orderItem, fieldName);
                     switch (fieldVal) {
                         case null: //pass
                         case options:

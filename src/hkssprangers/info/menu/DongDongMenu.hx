@@ -273,7 +273,7 @@ class DongDongMenu {
             }
             {
                 type: "array",
-                items: order.items == null ? [] : order.items.map(item -> {
+                items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                     var itemSchema:Dynamic = itemSchema();
                     switch (itemDefs[cast item.type]) {
                         case null:
@@ -302,13 +302,13 @@ class DongDongMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case LunchSet:
-                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
             case UsualSet:
-                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
             case DinnerDish:
-                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
             case DinnerSet:
-                summarizeOrderObject(orderItem, def, ["main", "drink"], ["附送例湯", box]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["附送例湯", box]);
             case _:
                 {
                     orderDetails: "",

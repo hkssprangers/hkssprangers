@@ -54,6 +54,7 @@ enum abstract FastTasteSSPItem(String) to String {
 }
 
 class FastTasteSSPMenu {
+    static public final box = "外賣盒 $1";
     static public function FastTasteSSPBurgerSetDrink(basePrice:Float) return {
         title: "跟餐飲品",
         type: "string",
@@ -148,12 +149,13 @@ class FastTasteSSPMenu {
         "酸瓜 (+$8)",
     ];
     static public function FastTasteSSPBurgerSet(timeSlotType:TimeSlotType, isRedDay:Bool) {
+        var title = '漢堡套餐（${isRedDay ? "紅日": "平日"}${timeSlotType.info().name}）';
         return {
-            title: '漢堡套餐 (${isRedDay ? "紅日": "平日"}${timeSlotType.info().name})',
+            title: title,
             properties: {
                 burger: {
                     type: "string",
-                    title: "漢堡選擇",
+                    title: title,
                     "enum": burgers,
                 },
                 options: {
@@ -167,7 +169,7 @@ class FastTasteSSPMenu {
                 },
                 setItem: {
                     type: "string",
-                    title: "跟餐選擇",
+                    title: "跟餐小食",
                     "enum": [
                         "薯條",
                         "薯格",
@@ -192,12 +194,13 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPBurger(timeSlotType:TimeSlotType) {
+        var title = '單叫漢堡（${timeSlotType.info().name}）';
         return {
-            title: '單叫漢堡 (${timeSlotType.info().name})',
+            title: title,
             properties: {
                 burger: {
                     type: "string",
-                    title: "漢堡選擇",
+                    title: "漢堡",
                     "enum": burgers,
                 },
                 options: {
@@ -217,11 +220,12 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPSeafood(timeSlotType:TimeSlotType) {
+        var title = '海鮮（${timeSlotType.info().name}）';
         return {
-            title: '海鮮 (${timeSlotType.info().name})',
+            title: title,
             properties: {
                 seafood: {
-                    title: "海鮮選擇",
+                    title: title,
                     type: "string",
                     "enum": [
                         "炸魚薯條 $70",
@@ -248,7 +252,7 @@ class FastTasteSSPMenu {
             properties: {
                 meat: {
                     type: "string",
-                    title: "肉類選擇",
+                    title: "肉類",
                     "enum": [
                         "紐西蘭肉眼(10安士)配薯條 $158",
                         "(自制)鮮士多啤梨汁燒豬仔骨配薯條 $128",
@@ -267,12 +271,13 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPItalian(timeSlotType:TimeSlotType) {
+        var title = '意大利麵／意大利飯（${timeSlotType.info().name}）';
         return {
-            title: '意大利麵/意大利飯 (${timeSlotType.info().name})',
+            title: title,
             properties: {
                 italian: {
                     type: "string",
-                    title: "意大利麵/意大利飯選擇",
+                    title: title,
                     "enum": [
                         "意式鮮茄海鮮墨魚麵 $78",
                         "卡邦尼意大利麵 $62",
@@ -300,7 +305,7 @@ class FastTasteSSPMenu {
             properties: {
                 veg: {
                     type: "string",
-                    title: "素食選擇",
+                    title: "素食精選",
                     "enum": [
                         "素牛扒漢堡配薯條 (漢堡配芥末蜜糖汁) $55",
                         "素牛扒漢堡配薯條 (漢堡配黑醋汁) $55",
@@ -318,7 +323,7 @@ class FastTasteSSPMenu {
                 },
                 options: {
                     type: "array",
-                    title: "可加配",
+                    title: "加配",
                     items: {
                         type: "string",
                         "enum": [
@@ -347,7 +352,7 @@ class FastTasteSSPMenu {
             properties: {
                 salad: {
                     type: "string",
-                    title: "沙律選擇",
+                    title: "沙律",
                     "enum": [
                         "田園沙律(芝麻汁) $35",
                         "田園沙律(黑醋汁) $35",
@@ -356,7 +361,7 @@ class FastTasteSSPMenu {
                 },
                 options: {
                     type: "array",
-                    title: "可加配",
+                    title: "加配料",
                     items: {
                         type: "string",
                         "enum": [
@@ -375,7 +380,7 @@ class FastTasteSSPMenu {
     }
     static public function FastTasteSSPMisc() {
         return {
-            title: "自制湯類 / 配菜 / 甜品",
+            title: "自制湯類／配菜／甜品",
             type: "string",
             "enum": [
                 "黑松露忌廉磨菇湯 $30",
@@ -400,11 +405,7 @@ class FastTasteSSPMenu {
             }
         } else {
             var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
-            var isRedDay = switch (Weekday.fromDay(pickupTimeSlot.start.toDate().getDay())) {
-                case Monday | Tuesday | Wednesday | Thursday | Friday:
-                    HkHolidays.holidays.hasField(pickupTimeSlot.start.getDatePart());
-                case Saturday | Sunday: true;
-            }
+            var isRedDay = HkHolidays.isRedDay(pickupTimeSlot.start.toDate());
             var itemDefs = [
                 for (item in FastTasteSSPItem.all(timeSlotType))
                 item => item.getDefinition(timeSlotType, isRedDay)
@@ -430,7 +431,7 @@ class FastTasteSSPMenu {
             };
             {
                 type: "array",
-                items: order.items == null ? [] : order.items.map(item -> {
+                items: order.items == null || order.items.length == 0 ? itemSchema() : order.items.map(item -> {
                     var itemSchema:Dynamic = itemSchema();
                     switch (itemDefs[cast item.type]) {
                         case null:
@@ -447,5 +448,59 @@ class FastTasteSSPMenu {
                 minItems: 1,
             };
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:FastTasteSSPItem,
+        ?item:Dynamic,
+    }, timeSlotType:TimeSlotType, isRedDay:Bool):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition(timeSlotType, isRedDay);
+        return switch (orderItem.type) {
+            case BurgerSet:
+                summarizeOrderObject(orderItem.item, def, ["burger", "options", "setItem", "drink"], [box]);
+            case Burger:
+                summarizeOrderObject(orderItem.item, def, ["burger", "options", "drink"], [box]);
+            case Italian:
+                summarizeOrderObject(orderItem.item, def, ["italian", "drink"], [box]);
+            case Seafood:
+                summarizeOrderObject(orderItem.item, def, ["seafood", "drink"], [box]);
+            case Meat:
+                summarizeOrderObject(orderItem.item, def, ["meat", "drink"], [box]);
+            case Veg:
+                summarizeOrderObject(orderItem.item, def, ["veg", "options", "drink"], if (orderItem.item != null && orderItem.item.options != null) [for (_ in 0...orderItem.item.options.length + 1) box] else [box]);
+            case Salad:
+                summarizeOrderObject(orderItem.item, def, ["salad", "options"], [box]);
+            case Misc:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v + "\n" + box,
+                            orderPrice: v.parsePrice() + box.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData, timeSlotType:TimeSlotType, isRedDay:Bool):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item, timeSlotType, isRedDay)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }
