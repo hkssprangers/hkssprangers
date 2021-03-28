@@ -10,6 +10,7 @@ using Lambda;
 
 enum abstract DongDongItem(String) to String {
     final LunchSet;
+    final UsualSet;
     final DinnerDish;
     final DinnerSet;
 
@@ -17,6 +18,7 @@ enum abstract DongDongItem(String) to String {
         case Lunch:
             [
                 LunchSet,
+                UsualSet,
             ];
         case Dinner:
             [
@@ -27,18 +29,20 @@ enum abstract DongDongItem(String) to String {
 
     public function getDefinition():Dynamic return switch (cast this:DongDongItem) {
         case LunchSet: DongDongMenu.DongDongLunchSet;
+        case UsualSet: DongDongMenu.DongDongUsualSet;
         case DinnerDish: DongDongMenu.DongDongDinnerDish;
         case DinnerSet: DongDongMenu.DongDongDinnerSet;
     }
 }
 
 class DongDongMenu {
+    static public final box = "外賣盒 $1";
     static public final DongDongLunchSet = {
         title: "午餐",
-        description: "注意每份會另加外賣盒收費 $1.",
+        description: "注意每份會另加" + box,
         properties: {
             main: {
-                title: "午餐選擇",
+                title: "午餐",
                 type: "string",
                 "enum": [
                     "京都豬扒飯 $50",
@@ -56,11 +60,49 @@ class DongDongMenu {
                     "司華力腸配吉魚飯 $55",
                     "焗鮮茄芝士豬扒飯 $55",
                     "焗白汁芝士海鮮飯 $55",
-                    "[常餐]沙嗲牛肉麵配炒滑蛋及牛油多士 $44",
-                    "[常餐]火腿通粉配炒滑蛋及牛油多士 $44",
-                    "[常餐]香茅豬扒配炒滑蛋及牛油多士 $44",
-                    "[常餐]香茅雞扒配炒滑蛋及牛油多士 $44",
-                    "[常餐]吉烈魚柳伴德國腸配炒滑蛋及牛油多士 $44",
+                ]
+            },
+            drink: {
+                title: "跟餐飲品",
+                type: "string",
+                "enum": [
+                    "熱奶茶",
+                    "熱咖啡",
+                    "熱檸茶",
+                    "熱檸水",
+                    "熱好立克",
+                    "熱阿華田",
+                    "熱檸蜜 (+$2)",
+                    "凍奶茶 (+$2)",
+                    "凍咖啡 (+$2)",
+                    "凍檸茶 (+$2)",
+                    "凍檸水 (+$2)",
+                    "凍好立克 (+$2)",
+                    "凍阿華田 (+$2)",
+                    "罐裝可樂 (+$3)",
+                    "凍檸蜜 (+$4)",
+                    "檸檬可樂 (+$8)",
+                ],
+            },
+        },
+        required: [
+            "main",
+            "drink",
+        ]
+    };
+    static public final DongDongUsualSet = {
+        title: "常餐",
+        description: "注意每份會另加" + box,
+        properties: {
+            main: {
+                title: "常餐",
+                type: "string",
+                "enum": [
+                    "沙嗲牛肉麵配炒滑蛋及牛油多士 $44",
+                    "火腿通粉配炒滑蛋及牛油多士 $44",
+                    "香茅豬扒配炒滑蛋及牛油多士 $44",
+                    "香茅雞扒配炒滑蛋及牛油多士 $44",
+                    "吉烈魚柳伴德國腸配炒滑蛋及牛油多士 $44",
                 ]
             },
             drink: {
@@ -117,10 +159,10 @@ class DongDongMenu {
 
     static public final DongDongDinnerDish = {
         title: "單叫小菜",
-        description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
+        description: "注意每份會另加外賣盒" + box,
         properties: {
             main: {
-                title: "小菜",
+                title: "單叫小菜",
                 type: "string",
                 "enum": [
                     "咖哩燴牛脷 $88",
@@ -148,8 +190,8 @@ class DongDongMenu {
     };
 
     static public final DongDongDinnerSet = {
-        title: "客飯/蒸飯套餐",
-        description: "附送例湯. 注意每份會另加外賣盒收費 $1.",
+        title: "晚飯套餐",
+        description: "附送例湯. 注意每份會另加" + box,
         properties: {
             main: {
                 title: "晚飯套餐",
@@ -210,29 +252,24 @@ class DongDongMenu {
                 for (item in DongDongItem.all(timeSlotType))
                 item => item.getDefinition()
             ];
-            function itemSchema():Dynamic return switch itemDefs.count() {
-                case 1:
-                    itemDefs.find(_ -> true);
-                case n:
-                    {
-                        type: "object",
-                        properties: {
-                            type: {
-                                title: "食物種類",
-                                type: "string",
-                                oneOf: [
-                                    for (item => def in itemDefs)
-                                    {
-                                        title: def.title,
-                                        const: item,
-                                    }
-                                ],
-                            },
-                        },
-                        required: [
-                            "type",
+            function itemSchema():Dynamic return {
+                type: "object",
+                properties: {
+                    type: {
+                        title: "食物種類",
+                        type: "string",
+                        oneOf: [
+                            for (item => def in itemDefs)
+                            {
+                                title: def.title,
+                                const: item,
+                            }
                         ],
-                    };
+                    },
+                },
+                required: [
+                    "type",
+                ],
             }
             {
                 type: "array",
@@ -253,5 +290,40 @@ class DongDongMenu {
                 minItems: 1,
             };
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:DongDongItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case LunchSet:
+                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+            case UsualSet:
+                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+            case DinnerDish:
+                summarizeOrderObject(orderItem, def, ["main", "drink"], [box]);
+            case DinnerSet:
+                summarizeOrderObject(orderItem, def, ["main", "drink"], ["附送例湯", box]);
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

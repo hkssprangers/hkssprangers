@@ -14,25 +14,29 @@ class MenuTools {
     inline static final fullWidthSpace = "　";
     inline static final fullWidthColon = "：";
 
-    static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>):{
+    static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>):{
         orderDetails: String,
         orderPrice: Float,
     } {
         var orderDetails = [];
         var orderPrice = 0.0;
-        for (i => fieldName in fields) {
+        function prefix() return if (orderDetails.length == 0)
+            def.title + fullWidthColon;
+        else
+            "".rpad(fullWidthSpace, def.title.length + 1);
+        for (fieldName in fields) {
             var fieldDef = Reflect.field(def.properties, fieldName);
-            var prefix = if (i == 0)
-                def.title + fullWidthColon;
+            var fieldTitle = if (fieldDef.title == def.title)
+                "";
             else
-                "".rpad(fullWidthSpace, def.title.length + 1);
+                fieldDef.title + fullWidthColon;
             switch (fieldDef.type:String) {
                 case "string":
                     var fieldVal:Null<String> = Reflect.field(orderItem.item, fieldName);
                     switch (fieldVal) {
                         case null: //pass
                         case v:
-                            orderDetails.push('${prefix}${fieldDef.title}${fullWidthColon}${v}');
+                            orderDetails.push('${prefix()}${fieldTitle}${v}');
                             orderPrice += parsePrice(v);
                     }
                 case "array":
@@ -43,12 +47,19 @@ class MenuTools {
                         case null: //pass
                         case options:
                             for (opt in options) {
-                                orderDetails.push('${prefix}${fieldDef.title}${fullWidthColon}${opt}');
+                                orderDetails.push('${prefix()}${fieldTitle}${opt}');
                                 orderPrice += parsePrice(opt);
                             }
                     }
+                case type:
+                    throw "Cannot handle " + type;
             }
         }
+        if (extra != null)
+            for (item in extra) {
+                orderDetails.push('${prefix()}${item}');
+                orderPrice += parsePrice(item);
+            }
         return {
             orderDetails: orderDetails.join("\n"),
             orderPrice: orderPrice,

@@ -381,6 +381,10 @@ enum abstract Shop(String) to String {
         return switch (cast this:Shop) {
             case BiuKeeLokYuen:
                 BiuKeeLokYuenMenu.summarize(o);
+            case BlaBlaBla:
+                BlaBlaBlaMenu.summarize(o);
+            case DongDong:
+                DongDongMenu.summarize(o);
             case _:
                 null;
         }
