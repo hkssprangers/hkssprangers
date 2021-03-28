@@ -11,8 +11,8 @@ class MenuTools {
         return Std.parseFloat(r.matched(1));
     }
 
-    static final fullWidthSpace = "　";
-    static final fullWidthColon = "：";
+    inline static final fullWidthSpace = "　";
+    inline static final fullWidthColon = "：";
 
     static public function summarizeOrderObject(orderItem:{type:String, item:Dynamic}, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>):{
         orderDetails: String,
@@ -32,7 +32,7 @@ class MenuTools {
                     switch (fieldVal) {
                         case null: //pass
                         case v:
-                            orderDetails.push('${prefix}${fieldDef.title}: ${v}');
+                            orderDetails.push('${prefix}${fieldDef.title}${fullWidthColon}${v}');
                             orderPrice += parsePrice(v);
                     }
                 case "array":
@@ -43,7 +43,7 @@ class MenuTools {
                         case null: //pass
                         case options:
                             for (opt in options) {
-                                orderDetails.push('${prefix}${fieldDef.title}: ${opt}');
+                                orderDetails.push('${prefix}${fieldDef.title}${fullWidthColon}${opt}');
                                 orderPrice += parsePrice(opt);
                             }
                     }
