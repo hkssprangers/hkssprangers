@@ -1,5 +1,6 @@
 package hkssprangers.info;
 
+import global.moment.unitoftime._Date;
 import haxe.ds.ReadOnlyArray;
 using StringTools;
 
@@ -13,8 +14,7 @@ class MenuTools {
 
     inline static final fullWidthSpace = "　";
     inline static final fullWidthColon = "：";
-
-    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>):{
+    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?fieldPrice:(fieldName:String, value:Dynamic)->Float):{
         orderDetails: String,
         orderPrice: Float,
     } {
@@ -36,6 +36,12 @@ class MenuTools {
                     switch (fieldVal) {
                         case null: //pass
                         case v:
+                            if (fieldPrice != null) switch (fieldPrice(fieldName, fieldVal)) {
+                                case p if (p > 0):
+                                    v += " $" + p;
+                                case _:
+                                    // pass
+                            }
                             orderDetails.push('${prefix()}${fieldTitle}${v}');
                             orderPrice += parsePrice(v);
                     }
@@ -46,6 +52,20 @@ class MenuTools {
                     switch (fieldVal) {
                         case null: //pass
                         case options:
+                            if (fieldPrice != null) switch (fieldPrice(fieldName, fieldVal)) {
+                                case p if (p > 0):
+                                    orderPrice += p;
+                                    var titlePad = "".rpad(fullWidthSpace, fieldTitle.length);
+                                    for (i => opt in options) {
+                                        var title = i == 0 ? fieldTitle : titlePad;
+                                        orderDetails.push('${prefix()}${title}${opt}');
+                                    }
+                                    orderDetails.push('${prefix()}${titlePad}$$${p}');
+                                    continue;
+                                case _:
+                                    //pass
+                            }
+                            
                             for (opt in options) {
                                 orderDetails.push('${prefix()}${fieldTitle}${opt}');
                                 orderPrice += parsePrice(opt);

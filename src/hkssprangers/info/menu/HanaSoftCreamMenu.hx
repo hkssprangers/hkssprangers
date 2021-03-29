@@ -22,12 +22,39 @@ class HanaSoftCreamMenu {
         ]
     };
 
-    
     static public function itemsSchema():Dynamic {
         return {
             type: "array",
             items:  HanaSoftCreamItem,
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:Null<String>):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        return switch (orderItem) {
+            case v if (Std.isOfType(v, String)):
+                {
+                    orderDetails: v,
+                    orderPrice: v.parsePrice(),
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

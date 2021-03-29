@@ -391,6 +391,10 @@ enum abstract Shop(String) to String {
                 EightyNineMenu.summarize(o);
             case FastTasteSSP:
                 FastTasteSSPMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start), HkHolidays.isRedDay(pickupTimeSlot.start));
+            case HanaSoftCream:
+                HanaSoftCreamMenu.summarize(o);
+            case KCZenzero:
+                KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start));
             case _:
                 null;
         }

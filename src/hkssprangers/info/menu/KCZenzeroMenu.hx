@@ -34,6 +34,7 @@ enum abstract KCZenzeroItem(String) to String {
 }
 
 class KCZenzeroMenu {
+    static public final box = "外賣盒 $2";
     static public function KCZenzeroSetDrink(price:Float) return {
         title: "跟餐飲品",
         type: "string",
@@ -66,9 +67,10 @@ class KCZenzeroMenu {
 
     static public function KCZenzeroHotdogSet(timeSlotType:TimeSlotType) return {
         title: "熱狗",
+        description: "$38",
         properties: {
             main: {
-                title: "熱狗 $38",
+                title: "熱狗",
                 type: "string",
                 "enum": [
                     "波隆納肉醬熱狗",
@@ -100,7 +102,7 @@ class KCZenzeroMenu {
         properties: {
             options: {
                 type: "array",
-                title: "車仔粉主食選擇",
+                title: "主食",
                 description: "任選兩款，之後每款額外加 $5",
                 items: {
                     type: "string",
@@ -118,7 +120,7 @@ class KCZenzeroMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類選擇",
+                title: "麵類",
                 "enum": [
                     "意粉",
                     "螺絲粉",
@@ -138,12 +140,12 @@ class KCZenzeroMenu {
     };
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
-        title: "意式Pasta",
+        title: "意粉",
         description: "任選醬汁/主食 $55",
         properties: {
             main: {
                 type: "string",
-                title: "Pasta主食選擇",
+                title: "主食",
                 "enum": [
                     "芝士流心漢堡",
                     "炸芝士海鮮條",
@@ -153,7 +155,7 @@ class KCZenzeroMenu {
             },
             sauce: {
                 type: "string",
-                title: "醬汁選擇",
+                title: "醬汁",
                 "enum": [
                     "肉醬(豬)",
                     "鮮茄蘑菇",
@@ -162,7 +164,7 @@ class KCZenzeroMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類選擇",
+                title: "麵類",
                 "enum": [
                     "意粉",
                     "螺絲粉",
@@ -187,7 +189,7 @@ class KCZenzeroMenu {
         properties: {
             main: {
                 type: "string",
-                title: "主食選擇",
+                title: "主食",
                 "enum": [
                     "迷你肉醬烏冬",
                     "迷你熱狗",
@@ -195,7 +197,7 @@ class KCZenzeroMenu {
             },
             salad: {
                 type: "string",
-                title: "沙律選擇",
+                title: "沙律",
                 "enum": [
                     "蟹柳吞拿魚沙律",
                     "雞串吞拿魚沙律",
@@ -211,12 +213,12 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "一人癲雞煲 (要早一日預訂)",
+        title: "一人癲雞煲（要早一日預訂）",
         description: "有半隻春雞，跟發熱包 $68",
         properties: {
             soup: {
                 type: "string",
-                title: "湯底選擇",
+                title: "湯底",
                 "enum": [
                     "蕃茄湯底",
                     "癲雞辣湯底",
@@ -292,5 +294,78 @@ class KCZenzeroMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:KCZenzeroItem,
+        ?item:Dynamic,
+    }, timeSlotType:TimeSlotType):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def:Dynamic = orderItem.type.getDefinition(timeSlotType);
+        function priceInDescription(fieldName) {
+            return (fn, value) -> if (fieldName == fn) {
+                parsePrice(def.description);
+            } else {
+                0;
+            }
+        }
+        return switch (orderItem.type) {
+            case HotdogSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main"));
+            case NoodleSet:
+                summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink"], null, (fieldName, value) -> switch fieldName {
+                    case "options":
+                        switch (value != null ? value.length : 0) {
+                            case 0, 1, 2:
+                                (def.description:String).parsePrice();
+                            case n:
+                                (def.description:String).parsePrice() + (n - 2) * (def.properties.options.description:String).parsePrice();
+                        }
+                    case _: 0;
+                });
+            case PastaSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink"], null, priceInDescription("main"));
+            case LightSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main"));
+            case HotpotSet:
+                summarizeOrderObject(orderItem.item, def, ["soup", "options"], null, priceInDescription("soup"));
+            case RiceSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+            case Single:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        };
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        };
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                };
+        }
+    }
+
+    static public function summarize(formData:FormOrderData, timeSlotType:TimeSlotType):OrderSummary {
+        var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
+        summaries.push({
+            orderDetails: box,
+            orderPrice: box.parsePrice(),
+        });
+        var s = concatSummaries(summaries);
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }
