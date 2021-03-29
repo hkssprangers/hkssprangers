@@ -353,7 +353,7 @@ enum abstract Shop(String) to String {
             case LaksaStore:
                 LaksaStoreMenu.itemsSchema(o);
             case KCZenzero:
-                KCZenzeroMenu.itemsSchema(o);
+                KCZenzeroMenu.itemsSchema(pickupTimeSlot, o);
             case HanaSoftCream:
                 HanaSoftCreamMenu.itemsSchema();
             case DongDong:

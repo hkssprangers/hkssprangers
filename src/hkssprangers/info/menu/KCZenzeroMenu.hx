@@ -22,10 +22,10 @@ enum abstract KCZenzeroItem(String) to String {
         Single,
     ];
 
-    public function getDefinition():Dynamic return switch (cast this:KCZenzeroItem) {
-        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet;
-        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet;
-        case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet;
+    public function getDefinition(timeSlotType:TimeSlotType):Dynamic return switch (cast this:KCZenzeroItem) {
+        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(timeSlotType);
+        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(timeSlotType);
+        case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(timeSlotType);
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
         case RiceSet: KCZenzeroMenu.KCZenzeroRiceSet;
@@ -64,7 +64,7 @@ class KCZenzeroMenu {
         ],
     };
 
-    static public final KCZenzeroHotdogSet = {
+    static public function KCZenzeroHotdogSet(timeSlotType:TimeSlotType) return {
         title: "熱狗",
         properties: {
             main: {
@@ -81,14 +81,20 @@ class KCZenzeroMenu {
                     "意式肉丸熱狗",
                 ]
             },
-            drink: KCZenzeroSetDrink(10),
+            drink: KCZenzeroSetDrink(switch timeSlotType {
+                case Lunch: 0;
+                case Dinner: 10;
+            }),
         },
-        required: [
-            "main",
-        ]
+        required: switch timeSlotType {
+            case Lunch:
+                ["main", "drink"];
+            case Dinner:
+                ["main"];
+        },
     }
 
-    static public final KCZenzeroNoodleSet = {
+    static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
         title: "意式濃厚蕃茄湯車仔粉",
         description: "蕃茄湯底車仔粉任選兩款主食 $48",
         properties: {
@@ -118,15 +124,20 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(10),
+            drink: KCZenzeroSetDrink(switch timeSlotType {
+                case Lunch: 0;
+                case Dinner: 10;
+            }),
         },
-        required: [
-            "options",
-            "noodle",
-        ]
+        required: switch timeSlotType {
+            case Lunch:
+                ["options", "noodle", "drink"];
+            case Dinner:
+                ["options", "noodle"];
+        },
     };
 
-    static public final KCZenzeroPastaSet = {
+    static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
         title: "意式Pasta",
         description: "任選醬汁/主食 $55",
         properties: {
@@ -157,13 +168,17 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(10),
+            drink: KCZenzeroSetDrink(switch timeSlotType {
+                case Lunch: 0;
+                case Dinner: 10;
+            }),
         },
-        required: [
-            "main",
-            "sauce",
-            "noodle",
-        ]
+        required: switch timeSlotType {
+            case Lunch:
+                ["main", "sauce", "noodle", "drink"];
+            case Dinner:
+                ["main", "sauce", "noodle"];
+        },
     };
 
     static public final KCZenzeroLightSet = {
@@ -241,7 +256,8 @@ class KCZenzeroMenu {
         ]
     }
     
-    static public function itemsSchema(order:FormOrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:FormOrderData):Dynamic {
+        var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
@@ -249,7 +265,7 @@ class KCZenzeroMenu {
                     title: "食物種類",
                     type: "string",
                     oneOf: KCZenzeroItem.all.map(item -> {
-                        title: item.getDefinition().title,
+                        title: item.getDefinition(timeSlotType).title,
                         const: item,
                     }),
                 },
@@ -267,7 +283,7 @@ class KCZenzeroMenu {
                         //pass
                     case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: itemType.getDefinition(),
+                            item: itemType.getDefinition(timeSlotType),
                         });
                         itemSchema.required.push("item");
                 }
