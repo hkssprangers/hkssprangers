@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import haxe.DynamicAccess;
 import hkssprangers.info.Order;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.ContactMethod;
@@ -248,6 +249,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         "ui:ArrayFieldTemplate": OrderItemsTemplate,
                         items: {
                             "ui:FieldTemplate": OrderItemTemplate,
+                            "ui:ObjectFieldTemplate": OrderItemObjectFieldTemplate,
                             item: {
                                 "ui:FieldTemplate": OrderItemTemplate,
                                 options: {
