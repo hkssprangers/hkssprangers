@@ -25,9 +25,10 @@ enum abstract MGYItem(String) to String {
 }
 
 class MGYMenu {
+    static public final box = "外賣盒 $1";
     static public final MGYSingleDish = {
         title: "小菜",
-        description: "小菜 $53. 請注意每份會另加外賣盒收費 $1",
+        description: "小菜 $53. 請注意每份會另加" + box,
         properties: {
             dish: {
                 title: "小菜",
@@ -60,12 +61,12 @@ class MGYMenu {
     }
 
     static public final MGYRice = {
-        title: "客飯 / 炒粉飯 / 日式冷麵",
-        description: "客飯配白飯及例湯. 請注意每份會另加外賣盒收費 $1",
+        title: "客飯／炒粉飯／日式冷麵",
+        description: "客飯配白飯及例湯. 請注意每份會另加" + box,
         properties: {
             rice: {
                 type: "string",
-                title: "客飯 / 炒粉飯 / 日式冷麵",
+                title: "客飯／炒粉飯／日式冷麵",
                 "enum": [
                     "豉汁素楊玉(客飯) $58",
                     "咕嚕素芝球(客飯) $58",
@@ -101,11 +102,11 @@ class MGYMenu {
 
     static public final MGYNoodle = {
         title: "濃湯粉麵套餐",
-        description: "濃湯粉麵套餐 $43. 請注意每個餐會另加外賣盒收費 $1",
+        description: "濃湯粉麵套餐 $43. 請注意每個餐會另加" + box,
         properties: {
             main: {
                 type: "string",
-                title: "主食選擇",
+                title: "主食",
                 "enum": [
                     "時菜",
                     "楊玉",
@@ -119,7 +120,7 @@ class MGYMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類選擇",
+                title: "麵類",
                 "enum": [
                     "米線",
                     "蕎麥麵 (+$5)",
@@ -130,7 +131,7 @@ class MGYMenu {
             },
             sub: {
                 type: "string",
-                title: "小食選擇",
+                title: "小食",
                 "enum": [
                     "炸餃子(2件)",
                     "薯蛋球(3件)",
@@ -201,5 +202,51 @@ class MGYMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:MGYItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case SingleDish:
+                summarizeOrderObject(orderItem.item, def, ["dish"], [box], priceInDescription("dish", def));
+            case Rice:
+                summarizeOrderObject(orderItem.item, def, ["rice"], [box]);
+            case Noodle:
+                summarizeOrderObject(orderItem.item, def, ["main", "noodle", "sub"], [box], priceInDescription("main", def));
+            case Sub:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

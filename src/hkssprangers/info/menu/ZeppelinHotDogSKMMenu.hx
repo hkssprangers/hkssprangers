@@ -23,13 +23,14 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
 
 class ZeppelinHotDogSKMMenu {
     static public final ZeppelinHotDogSKMSetOptions = {
-        title: "+$12 轉套餐 任選2樣",
-        description: "",
+        title: "跟餐",
+        description: "任選2樣 $12",
         type: "array",
         items: {
             type: "string",
             "enum": [
                 "細薯條",
+                "大薯條 (+$5)",
                 "牛油粟米杯",
                 "冰菠蘿",
                 "可樂",
@@ -79,27 +80,26 @@ class ZeppelinHotDogSKMMenu {
     ];
 
     static public final ZeppelinHotDogSKMHotdogSet = {
-        title: "熱狗套餐",
+        title: "套餐",
         properties: {
             main: {
-                title: "熱狗",
+                title: "主食",
                 type: "string",
                 "enum": hotdogs,
             },
-            options: ZeppelinHotDogSKMSetOptions,
             extraOptions: {
-                title: "其他升級選擇",
+                title: "升級",
                 type: "array",
                 items: {
                     type: "string",
                     "enum": [
-                        "細薯條轉大薯條 +$5",
-                        "熱狗加熱溶芝士 +$10",
-                        "熱狗轉素腸 +$15",
+                        "加熱溶芝士 +$10",
+                        "轉素腸 +$15",
                     ],
                 },
                 uniqueItems: true,
             },
+            options: ZeppelinHotDogSKMSetOptions,
         },
         required: [
             "main",
@@ -108,21 +108,21 @@ class ZeppelinHotDogSKMMenu {
     }
 
     static public final ZeppelinHotDogSKMHotdog = {
-        title: "單叫熱狗",
+        title: "單叫",
         properties: {
             main: {
-                title: "熱狗",
+                title: "單叫",
                 type: "string",
                 "enum": hotdogs,
             },
             extraOptions: {
-                title: "其他升級選擇",
+                title: "升級",
                 type: "array",
                 items: {
                     type: "string",
                     "enum": [
-                        "熱狗加熱溶芝士 +$10",
-                        "熱狗轉素腸 +$15",
+                        "加熱溶芝士 +$10",
+                        "轉素腸 +$15",
                     ],
                 },
                 uniqueItems: true,
@@ -168,5 +168,59 @@ class ZeppelinHotDogSKMMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:ZeppelinHotDogSKMItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case HotdogSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions", "options"], null, (fieldName, value) -> switch fieldName {
+                    case "options":
+                        var sum = 0.0;
+                        for (opt in (value:Array<String>)) {
+                            sum += opt.parsePrice();
+                        }
+                        sum += (def.properties.options.description:String).parsePrice();
+                        sum;
+                    case _:
+                        0;
+                });
+            case Hotdog:
+                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"]);
+            case Single:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

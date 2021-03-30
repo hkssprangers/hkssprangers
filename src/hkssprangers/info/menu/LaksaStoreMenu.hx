@@ -35,11 +35,11 @@ class LaksaStoreMenu {
     };
 
     static public final LaksaStoreNoodleSet = {
-        title: "喇沙 / 冬蔭公",
-        description: "套餐: 湯麵 + 飲品 ($50)",
+        title: "喇沙／冬蔭公",
+        description: "套餐: 湯麵 + 飲品 $50",
         properties: {
             soup: {
-                title: "湯底選擇",
+                title: "湯底",
                 type: "string",
                 "enum": [
                     "喇沙",
@@ -48,7 +48,7 @@ class LaksaStoreMenu {
             },
             ingredient: {
                 type: "string",
-                title: "配料選擇",
+                title: "配料",
                 description: "「新」四寶 = 霸王卷(魚), 甜不辣(魚), 蝦卷(雜菜,蝦), 哈哈笑丸(咸蛋流心丸)",
                 "enum": [
                     "雞扒",
@@ -61,7 +61,7 @@ class LaksaStoreMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類選擇",
+                title: "麵類",
                 "enum": [
                     "上海幼麵",
                     "米線",
@@ -135,5 +135,36 @@ class LaksaStoreMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:LaksaStoreItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case NoodleSet:
+                summarizeOrderObject(orderItem.item, def, ["soup", "ingredient", "noodle", "drink"], null, priceInDescription("soup", def));
+            case RiceSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

@@ -72,7 +72,7 @@ class TheParkByYearsMenu {
         title: "套餐",
         properties: {
             main: {
-                title: "主食選擇",
+                title: "主食",
                 type: "string",
                 "enum": [
                     "⾁桂蘋果燕麥碗 (暖食) $88",
@@ -95,7 +95,7 @@ class TheParkByYearsMenu {
     }
 
     static public final TheParkByYearsSingle = {
-        title: "單叫小食/甜品",
+        title: "單叫小食／甜品",
         type: "string",
         "enum": [
             "炸薯片配秘製蛋黃醬 $58",
@@ -142,5 +142,47 @@ class TheParkByYearsMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:TheParkByYearsItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case Set:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+            case Single:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

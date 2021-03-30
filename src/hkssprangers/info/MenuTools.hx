@@ -12,6 +12,14 @@ class MenuTools {
         return Std.parseFloat(r.matched(1));
     }
 
+    static public function priceInDescription(fieldName, def) {
+        return (fn, value) -> if (fieldName == fn) {
+            parsePrice(def.description);
+        } else {
+            0;
+        }
+    }
+
     inline static final fullWidthSpace = "　";
     inline static final fullWidthColon = "：";
     static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?fieldPrice:(fieldName:String, value:Dynamic)->Float):{

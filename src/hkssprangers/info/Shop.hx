@@ -395,8 +395,18 @@ enum abstract Shop(String) to String {
                 HanaSoftCreamMenu.summarize(o);
             case KCZenzero:
                 KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start));
-            case _:
-                null;
+            case LaksaStore:
+                LaksaStoreMenu.summarize(o);
+            case MGY:
+                MGYMenu.summarize(o);
+            case Neighbor:
+                NeighborMenu.summarize(o);
+            case TheParkByYears:
+                TheParkByYearsMenu.summarize(o);
+            case YearsHK:
+                YearsHKMenu.summarize(o);
+            case ZeppelinHotDogSKM:
+                ZeppelinHotDogSKMMenu.summarize(o);
         }
     }
 

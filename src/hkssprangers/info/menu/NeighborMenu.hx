@@ -63,16 +63,16 @@ class NeighborMenu {
         "portobello mushroom (+$24)",
     ];
     static public final NeighborSet = {
-        title: "漢堡/熱狗套餐",
+        title: "漢堡／熱狗套餐",
         properties: {
             main: {
-                title: "主食選擇",
+                title: "主食",
                 type: "string",
                 "enum": burgers,
             },
             options: {
                 type: "array",
-                title: "配料選擇",
+                title: "配料",
                 items: {
                     type: "string",
                     "enum": opts,
@@ -81,7 +81,7 @@ class NeighborMenu {
             },
             sub: {
                 type: "string",
-                title: "跟餐選擇",
+                title: "跟餐",
                 "enum": [
                     "雙色薯條",
                     "新鮮沙律菜",
@@ -97,16 +97,16 @@ class NeighborMenu {
     }
 
     static public final NeighborSingle = {
-        title: "單叫漢堡/熱狗",
+        title: "單叫漢堡／熱狗",
         properties: {
             main: {
-                title: "漢堡/熱狗",
+                title: "主食",
                 type: "string",
                 "enum": burgers,
             },
             options: {
                 type: "array",
-                title: "配料選擇",
+                title: "配料",
                 items: {
                     type: "string",
                     "enum": opts,
@@ -124,7 +124,7 @@ class NeighborMenu {
         properties: {
             salad: {
                 type: "string",
-                title: "沙律選擇",
+                title: "沙律",
                 "enum": [
                     "新鮮沙律菜 $31",
                     "大烤菇沙律 $52",
@@ -132,7 +132,7 @@ class NeighborMenu {
             },
             options: {
                 type: "array",
-                title: "配料選擇",
+                title: "配料",
                 items: {
                     type: "string",
                     "enum": opts,
@@ -198,5 +198,51 @@ class NeighborMenu {
             additionalItems: itemSchema(),
             minItems: 1,
         };
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:NeighborItem,
+        ?item:Dynamic,
+    }):{
+        orderDetails:String,
+        orderPrice:Float,
+    } {
+        var def = orderItem.type.getDefinition();
+        return switch (orderItem.type) {
+            case Set:
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink"]);
+            case Single:
+                summarizeOrderObject(orderItem.item, def, ["main", "options"]);
+            case Salad:
+                summarizeOrderObject(orderItem.item, def, ["salad", "options"]);
+            case Sub:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: v,
+                            orderPrice: v.parsePrice(),
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0,
+                        }
+                }
+            case _:
+                {
+                    orderDetails: "",
+                    orderPrice: 0,
+                }
+        }
+    }
+
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        return {
+            orderDetails: s.orderDetails,
+            orderPrice: s.orderPrice,
+            wantTableware: formData.wantTableware,
+            customerNote: formData.customerNote,
+        }
     }
 }

@@ -304,16 +304,9 @@ class KCZenzeroMenu {
         orderPrice:Float,
     } {
         var def:Dynamic = orderItem.type.getDefinition(timeSlotType);
-        function priceInDescription(fieldName) {
-            return (fn, value) -> if (fieldName == fn) {
-                parsePrice(def.description);
-            } else {
-                0;
-            }
-        }
         return switch (orderItem.type) {
             case HotdogSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main"));
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main", def));
             case NoodleSet:
                 summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink"], null, (fieldName, value) -> switch fieldName {
                     case "options":
@@ -326,11 +319,11 @@ class KCZenzeroMenu {
                     case _: 0;
                 });
             case PastaSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink"], null, priceInDescription("main"));
+                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink"], null, priceInDescription("main", def));
             case LightSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main"));
+                summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main", def));
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["soup", "options"], null, priceInDescription("soup"));
+                summarizeOrderObject(orderItem.item, def, ["soup", "options"], null, priceInDescription("soup", def));
             case RiceSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case Single:
