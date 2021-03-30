@@ -76,7 +76,6 @@ class ZeppelinHotDogSKMMenu {
         "芝味熱狗 $38",
         "澳式風情熱狗 $38",
         "德國酸菜熱狗 $38",
-        "墨西哥勁辣雞堡 $40",
     ];
 
     static public final ZeppelinHotDogSKMHotdogSet = {
