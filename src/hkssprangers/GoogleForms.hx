@@ -40,7 +40,7 @@ class GoogleForms {
         Neighbor => "15Mzv3r9wTbxpIiJEPbPPwF8O7oP4hQGQ5bksyMuKXHY",
         MGY => "1jbZng_nv2nx3WgY7BV6DfpGz_3AuheVH2VYNOxQCQvM",
         FastTasteSSP => "1OeoNlkZlzj_QpZJV9UaKpXbQjdYSoXLUPbKi5YeWQdw",
-        ZeppelinHotDogSKM => "1RME0bT1k1DVbJesBLc3F0aGPzpRlajsrTbPlzAqkFNg",
+        ZeppelinHotDogSKM => "1ciZ6PlYlyjRcU_R1VEu_Xf7MloX9A3w-S_2edzd86HE",
     ];
 
     static public function getResponseSheet(token:Promise<String>, shop:Shop):Promise<GoogleSpreadsheet> {
@@ -193,6 +193,11 @@ class GoogleForms {
             case [ZeppelinHotDogSKM, "轉套餐 +$12", v]:
                 orderContent.push(h);
                 v.split(", ").iter(item -> orderContent.push(item));
+            case [ZeppelinHotDogSKM, "跟餐選項 1", v]:
+                orderContent.push("轉套餐 +$12");
+                orderContent.push(h + ": " + v);
+            case [ZeppelinHotDogSKM, "跟餐選項 2", v]:
+                orderContent.push(h + ": " + v);
             case [_, h, v] if (h.startsWith("加購壺說飲品")):
                 blablabla.orderItems.push(v);
             case [_, "壺說飲品備註", v]:
