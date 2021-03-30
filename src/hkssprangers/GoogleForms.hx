@@ -190,6 +190,9 @@ class GoogleForms {
                 extraOrderContent.push("外賣盒 (+$1)");
             case [MGY, "小食選擇", v]:
                 orderContent.push(v);
+            case [ZeppelinHotDogSKM, "轉套餐 +$12", v]:
+                orderContent.push(h);
+                v.split(", ").iter(item -> orderContent.push(item));
             case [_, h, v] if (h.startsWith("加購壺說飲品")):
                 blablabla.orderItems.push(v);
             case [_, "壺說飲品備註", v]:
