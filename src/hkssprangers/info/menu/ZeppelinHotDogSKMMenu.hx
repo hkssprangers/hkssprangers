@@ -22,29 +22,18 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
 }
 
 class ZeppelinHotDogSKMMenu {
-    static public final ZeppelinHotDogSKMSetOptions = {
-        title: "跟餐",
-        description: "任選2樣 $12",
-        type: "array",
-        items: {
-            type: "string",
-            "enum": [
-                "細薯條",
-                "大薯條 (+$5)",
-                "牛油粟米杯",
-                "冰菠蘿",
-                "可樂",
-                "忌廉",
-                "芬達",
-                "雪碧",
-                "C.C. Lemon",
-                "Coke Zero",
-            ],
-        },
-        uniqueItems: true,
-        minItems: 2,
-        maxItems: 2,
-    };
+    static public final setOptions = [
+        "細薯條",
+        "大薯條 (+$5)",
+        "牛油粟米杯",
+        "冰菠蘿",
+        "可樂",
+        "忌廉",
+        "芬達",
+        "雪碧",
+        "C.C. Lemon",
+        "Coke Zero",
+    ];
 
     static public final ZeppelinHotDogSKMSingle = {
         title: "小食",
@@ -83,6 +72,7 @@ class ZeppelinHotDogSKMMenu {
 
     static public final ZeppelinHotDogSKMHotdogSet = {
         title: "套餐",
+        description: "套餐 +$12",
         properties: {
             main: {
                 title: "主食",
@@ -101,11 +91,21 @@ class ZeppelinHotDogSKMMenu {
                 },
                 uniqueItems: true,
             },
-            options: ZeppelinHotDogSKMSetOptions,
+            setOption1: {
+                title: "跟餐 1",
+                type: "string",
+                "enum": setOptions,
+            },
+            setOption2: {
+                title: "跟餐 2",
+                type: "string",
+                "enum": setOptions,
+            },
         },
         required: [
             "main",
-            "options",
+            "setOption1",
+            "setOption2",
         ]
     }
 
@@ -182,17 +182,7 @@ class ZeppelinHotDogSKMMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case HotdogSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions", "options"], null, (fieldName, value) -> switch fieldName {
-                    case "options":
-                        var sum = 0.0;
-                        for (opt in (value:Array<String>)) {
-                            sum += opt.parsePrice();
-                        }
-                        sum += (def.properties.options.description:String).parsePrice();
-                        sum;
-                    case _:
-                        0;
-                });
+                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions", "setOption1", "setOption2"], [ZeppelinHotDogSKMHotdogSet.description]);
             case Hotdog:
                 summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"]);
             case Single:
