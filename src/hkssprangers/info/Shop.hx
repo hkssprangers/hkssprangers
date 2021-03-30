@@ -425,6 +425,7 @@ enum abstract Shop(String) to String {
             case MGY: MGY;
             case FastTasteSSP: FastTasteSSP;
             case BlaBlaBla: BlaBlaBla;
+            case ZeppelinHotDogSKM: ZeppelinHotDogSKM;
             case _: null;
         }
     }
