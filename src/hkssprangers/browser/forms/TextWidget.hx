@@ -20,6 +20,8 @@ typedef TextWidgetProps = {
     final onFocus:Dynamic;
     final autofocus:Bool;
     final options:{
+        ?inputType:String,
+        ?startAdornment:String,
         ?multiline:Bool,
     };
     final schema:Dynamic;
@@ -29,14 +31,15 @@ typedef TextWidgetProps = {
 }
 
 class TextWidget extends ReactComponentOf<TextWidgetProps, Dynamic> {
-    final inputLabelProps = {
-        shrink: true,
-    }
 
     override function render():ReactFragment {
-        var inputType:InputType = switch [props.type, props.schema.type].find(t -> t != null) {
+        var inputType:InputType = switch [props.options.inputType, props.type, props.schema.type].find(t -> t != null) {
             case "string": Text;
             case type: cast type;
+        };
+        var inputLabelProps = {
+            shrink: true,
+            startAdornment: props.options.startAdornment,
         };
         return jsx('
             <TextField

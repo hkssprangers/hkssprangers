@@ -137,7 +137,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         {
                             type: "string",
                             title: "後備聯絡 " + Telegram.info().name,
-                            pattern: "@?[A-Za-z0-9_]{5,}",
+                            pattern: "[A-Za-z0-9_]{5,}",
                         }
                     case WhatsApp: 
                         {
@@ -243,6 +243,31 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 "ui:options": {
                     multiline: true,
                 },
+            },
+            backupContactValue: {
+                "ui:options": switch formData.backupContactMethod {
+                    case null:
+                        {
+                            inputType: "text",
+                        };
+                    case Telegram:
+                        {
+                            inputType: "text",
+                            startAdornment: "@",
+                        };
+                    case WhatsApp:
+                        {
+                            inputType: "tel",
+                        };
+                    case Signal:
+                        {
+                            inputType: "tel",
+                        };
+                    case Telephone:
+                        {
+                            inputType: "tel",
+                        };
+                }
             },
             orders: {
                 "ui:ArrayFieldTemplate": OrdersTemplate,
