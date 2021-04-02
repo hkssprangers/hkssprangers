@@ -8,9 +8,14 @@ import js.Browser.*;
 import charleywong.browser.*;
 
 class BrowserMain {
-    static final theme = MuiTheme.createMuiTheme({
+    static public final theme = MuiTheme.createMuiTheme({
         typography: {
             fontFamily: "'Noto Sans HK', sans-serif",
+        },
+        palette: {
+            secondary: {
+                main: "#FBBF24",
+            },
         },
     });
 

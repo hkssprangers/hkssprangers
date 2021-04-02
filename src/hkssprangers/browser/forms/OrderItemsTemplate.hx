@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import mui.core.styles.Styles;
 import mui.core.*;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
@@ -7,29 +8,40 @@ using Reflect;
 typedef OrderItemsTemplateProps = Dynamic;
 
 class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynamic> {
+    static final RemoveButton = Styles.styled(mui.core.Fab)({
+        color: "#EF4444",
+        background: "#F9FAFB",
+        position: Absolute,
+        top: -5,
+        right: -20,
+        zIndex: 10,
+    });
+
+    static final Card = Styles.styled(mui.core.Card)({
+        overflow: Visible,
+    });
+
     static function DefaultArrayItem(props, removable) {
         var removeBtn = if (removable) {
             jsx('
-                <Button
+                <RemoveButton
                     className="array-item-add"
-                    color=${Secondary}
                     disabled=${props.disabled || props.readonly}
                     onClick=${props.onDropIndexClick(props.index)}
+                    size="small"
                 >
-                    移除
-                </Button>
+                    <i className="fas fa-trash"></i>
+                </RemoveButton>
             ');
         } else {
             null;
         };
         return jsx('
             <Card key=${props.key} className="my-2">
-                <CardContent>
+                <CardContent className="relative">
+                    ${removeBtn}
                     ${props.children}
                 </CardContent>
-                <CardActions>
-                    ${removeBtn}
-                </CardActions>
             </Card>
         ');
     }

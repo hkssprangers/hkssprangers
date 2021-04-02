@@ -21,7 +21,7 @@ class OrderItemObjectFieldTemplate extends ReactComponentOf<OrderItemObjectField
     override function render():ReactFragment {
         if (props.formData != null && props.formData.type != null && !isTypeValid()) {
             return jsx('
-                <div>
+                <div className="text-red-600">
                     ⚠️ 請移除此項目。
                 </div>
             ');
