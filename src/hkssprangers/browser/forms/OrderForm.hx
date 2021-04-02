@@ -247,6 +247,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             orders: {
                 "ui:ArrayFieldTemplate": OrdersTemplate,
                 items:{
+                    "ui:ObjectFieldTemplate": OrderObjectFieldTemplate,
                     shop: {
                         "ui:widget": ShopSelectorWidget,
                         "ui:options": {
@@ -386,6 +387,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     schema=${schema}
                     uiSchema=${uiSchema}
                     formData=${state.formData}
+                    formContext=${state.formData}
                     onChange=${onChange}
                     onSubmit=${onSubmit}
                     validate=${validate}

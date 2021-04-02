@@ -6,6 +6,7 @@ import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import js.html.Event;
 import mui.core.*;
+import mui.core.styles.Styles;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
 using Lambda;
@@ -34,6 +35,10 @@ typedef ShopSelectorWidgetProps = {
 }
 
 class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynamic> {
+    static final TextField = Styles.styled(mui.core.TextField)({
+        marginRight: 50,
+    });
+
     static function processValue(schema:Dynamic, value:Dynamic) {
         return value;
     };
@@ -55,7 +60,8 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                         <span className="ml-2 text-sm text-red-500">⚠ ${reason}</span>
                     ');
             };
-            return jsx('<div>🔸 ${info.name}${disabledMessage}</div>');
+            // return jsx('<div>🔸 ${info.name}${disabledMessage}</div>');
+            return null;
         }
         var shops:Array<Shop> = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> option.value);
         switch (shops) {

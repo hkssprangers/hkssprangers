@@ -10,7 +10,7 @@ typedef OrderItemsTemplateProps = Dynamic;
 class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynamic> {
     static final RemoveButton = Styles.styled(mui.core.Fab)({
         color: "#EF4444",
-        background: "#F9FAFB",
+        background: "#F3F4F6",
         position: Absolute,
         top: -5,
         right: -20,
