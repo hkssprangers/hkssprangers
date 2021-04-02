@@ -5276,13 +5276,13 @@ node-forge@^0.10.0:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
   integrity sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
 
-node-ical@^0.12.9:
-  version "0.12.9"
-  resolved "https://registry.yarnpkg.com/node-ical/-/node-ical-0.12.9.tgz#bca89ff8a9dd8dba2ad6b4955b56d49a73522693"
-  integrity sha512-5nUEZfZPpBpeZbmYCCmNRLsoP08+SGZy/fKxNBX9k67JMUTMFPLEyZ0CXApPDIExX0izMRndG1PsymhEkkSL2Q==
+node-ical@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/node-ical/-/node-ical-0.13.0.tgz#c5a756768afa590210b0faa473655b5ce2f0fa16"
+  integrity sha512-hfV7HsY0oTehirXLtkKgAdVomSv6/zjSw66z/RTkKfEp9MwwIz1asyE/g9x4ZKWE2YqGnr81Se5zSRcligPY5Q==
   dependencies:
     moment-timezone "^0.5.31"
-    request "^2.88.2"
+    node-fetch "^2.6.1"
     rrule "2.6.8"
     uuid "^8.3.1"
 
@@ -6319,7 +6319,7 @@ request-promise-native@^1.0.8:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.88.0, request@^2.88.2:
+request@^2.88.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
