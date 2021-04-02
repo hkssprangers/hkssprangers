@@ -250,9 +250,6 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     "ui:ObjectFieldTemplate": OrderObjectFieldTemplate,
                     shop: {
                         "ui:widget": ShopSelectorWidget,
-                        "ui:options": {
-                            pickupTimeSlot: pickupTimeSlot,
-                        },
                     },
                     items: {
                         "ui:ArrayFieldTemplate": OrderItemsTemplate,

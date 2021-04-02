@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.browser.forms.OrderForm.OrderFormData;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.TimeSlot;
@@ -16,6 +17,7 @@ using hxLINQ.LINQ;
 typedef ShopSelectorWidgetProps = {
     final schema:Dynamic;
     final id:String;
+    final formContext:OrderFormData;
     final options:{
         enumOptions:Dynamic,
         enumDisabled:Dynamic,
@@ -43,7 +45,10 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
         return value;
     };
     override function render():ReactFragment {
-        var pickupTimeSlot = props.options.pickupTimeSlot;
+        var pickupTimeSlot = switch (props.formContext.pickupTimeSlot) {
+            case null: null;
+            case str: str.parse();
+        };
         if (props.value != null) {
             var shop:Shop = props.value;
             var info = shop.info();
