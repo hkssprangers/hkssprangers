@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import mui.core.styles.*;
 import haxe.*;
 import js.html.DivElement;
 import js.jquery.*;
@@ -7,19 +8,33 @@ import js.Browser.*;
 import charleywong.browser.*;
 
 class BrowserMain {
+    static final theme = MuiTheme.createMuiTheme({
+        typography: {
+            fontFamily: "'Noto Sans HK', sans-serif",
+        },
+    });
+
+    static function render(e:ReactFragment, div:DivElement) {
+        ReactDOM.render(jsx('
+            <BrowserRouter>
+                <MuiThemeProvider theme=${theme}>
+                    ${e}
+                </MuiThemeProvider>
+            </BrowserRouter>
+        '), div);
+    }
+
     static function onReady():Void {
         switch (document.getElementById("OrderView")) {
             case null:
                 //pass
             case elm:
                 var div:DivElement = cast elm;
-                ReactDOM.render(jsx('
-                    <BrowserRouter>
-                        <OrderView
-                            tgBotName=${div.dataset.tgBotName}
-                            user=${Json.parse(div.dataset.user)}
-                        />
-                    </BrowserRouter>
+                render(jsx('
+                    <OrderView
+                        tgBotName=${div.dataset.tgBotName}
+                        user=${Json.parse(div.dataset.user)}
+                    />
                 '), div);
         }
 
@@ -28,7 +43,7 @@ class BrowserMain {
                 //pass
             case elm:
                 var div:DivElement = cast elm;
-                ReactDOM.render(jsx('
+                render(jsx('
                     <LogInView
                         tgBotName=${div.dataset.tgBotName}
                     />
@@ -40,13 +55,11 @@ class BrowserMain {
                 //pass
             case elm:
                 var div:DivElement = cast elm;
-                ReactDOM.render(jsx('
-                    <BrowserRouter>
-                        <AdminView
-                            tgBotName=${div.dataset.tgBotName}
-                            user=${div.dataset.user != null ? Json.parse(div.dataset.user) : null}
-                        />
-                    </BrowserRouter>
+                render(jsx('
+                    <AdminView
+                        tgBotName=${div.dataset.tgBotName}
+                        user=${div.dataset.user != null ? Json.parse(div.dataset.user) : null}
+                    />
                 '), div);
         }
     }

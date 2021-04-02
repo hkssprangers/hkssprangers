@@ -13,6 +13,10 @@ body {
     flex-direction: column;
 }
 
+* {
+    font-family: 'Noto Sans HK', sans-serif;
+}
+
 html.fontSize-larger {
     font-size: larger;
 }
