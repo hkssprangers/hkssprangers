@@ -89,6 +89,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             title: '食物備註',
             description: '留意 ${shop.info().name} 未必能完全配合, 請見諒',
         };
+        var wantTableware = {
+            type: "boolean",
+            title: '要餐具/飲管?',
+            "default": false,
+        }
         var schema = {
             type: "object",
             properties: {
@@ -175,8 +180,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                 case shop:
                                     Object.assign(orderSchema.properties, {
                                         items: shop.itemsSchema(pickupTimeSlot, o),
+                                        wantTableware: wantTableware,
                                         customerNote: customerNote(o.shop),
                                     });
+                                    orderSchema.required.push("items");
+                                    orderSchema.required.push("wantTableware");
                             }
                             orderSchema;
                         }).toArray();
