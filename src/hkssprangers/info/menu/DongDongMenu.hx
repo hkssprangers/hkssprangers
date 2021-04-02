@@ -240,7 +240,7 @@ class DongDongMenu {
         ]
     }
 
-    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:FormOrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         return if (pickupTimeSlot == null) {
             type: "array",
             items: {

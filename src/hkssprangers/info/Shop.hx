@@ -344,7 +344,7 @@ enum abstract Shop(String) to String {
         return Available;
     }
 
-    public function itemsSchema(pickupTimeSlot:TimeSlot, o:FormOrderData):Dynamic {
+    public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, o:FormOrderData):Dynamic {
         return switch (cast this:Shop) {
             case EightyNine:
                 EightyNineMenu.itemsSchema();

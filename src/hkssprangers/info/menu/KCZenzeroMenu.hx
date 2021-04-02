@@ -85,13 +85,13 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroSetDrink(switch timeSlotType {
                 case Lunch: 0;
-                case Dinner: 10;
+                case Dinner | null: 10;
             }),
         },
         required: switch timeSlotType {
             case Lunch:
                 ["main", "drink"];
-            case Dinner:
+            case Dinner | null:
                 ["main"];
         },
     }
@@ -128,13 +128,13 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroSetDrink(switch timeSlotType {
                 case Lunch: 0;
-                case Dinner: 10;
+                case Dinner | null: 10;
             }),
         },
         required: switch timeSlotType {
             case Lunch:
                 ["options", "noodle", "drink"];
-            case Dinner:
+            case Dinner | null:
                 ["options", "noodle"];
         },
     };
@@ -172,13 +172,13 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroSetDrink(switch timeSlotType {
                 case Lunch: 0;
-                case Dinner: 10;
+                case Dinner | null: 10;
             }),
         },
         required: switch timeSlotType {
             case Lunch:
                 ["main", "sauce", "noodle", "drink"];
-            case Dinner:
+            case Dinner | null:
                 ["main", "sauce", "noodle"];
         },
     };
@@ -258,8 +258,8 @@ class KCZenzeroMenu {
         ]
     }
     
-    static public function itemsSchema(pickupTimeSlot:TimeSlot, order:FormOrderData):Dynamic {
-        var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
+        var timeSlotType = pickupTimeSlot != null ? TimeSlotType.classify(pickupTimeSlot.start) : null;
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
