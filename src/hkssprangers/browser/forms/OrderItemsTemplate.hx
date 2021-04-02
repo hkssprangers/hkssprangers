@@ -37,7 +37,7 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
             null;
         };
         return jsx('
-            <Card key=${props.key} className="my-2">
+            <Card key=${props.key} className="mb-5">
                 <CardContent className="relative">
                     ${removeBtn}
                     ${props.children}
