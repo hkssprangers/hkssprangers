@@ -395,9 +395,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     }}
                 >
                 </Form>
-                <pre>
+                <div className="whitespace-pre-wrap">
                     ${orders.map(o -> o.print()).join("\n")}
-                </pre>
+                </div>
             </div>
         ');
     }

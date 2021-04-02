@@ -120,10 +120,6 @@ body .MuiPickersDay-current {
     background-color: #EEE;
 }
 
-.pre-wrap {
-    white-space: pre-wrap;
-}
-
 legend.MuiFormLabel-root {
     font-size: small;
 }

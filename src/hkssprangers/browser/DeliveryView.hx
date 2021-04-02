@@ -201,12 +201,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             ');
         } else {
             var customerNote = if (o.customerNote != null && o.customerNote != "") {
-                jsx('<Typography>⚠️ ${o.customerNote}</Typography>');
+                jsx('<Typography className="whitespace-pre-wrap text-red-600">⚠️ ${o.customerNote}</Typography>');
             } else {
                 null;
             }
             var orderDetails = if (o.orderDetails != null && o.orderDetails != "") {
-                jsx('<Typography className="pre-wrap">${o.orderDetails}</Typography>');
+                jsx('<Typography className="whitespace-pre-wrap">${o.orderDetails}</Typography>');
             } else {
                 null;
             }
@@ -653,7 +653,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
         var customerNote = if (!state.isEditing) {
             if (d.customerNote != null && d.customerNote != "") {
-                jsx('<Typography>⚠️ ${d.customerNote}</Typography>');
+                jsx('<Typography className="whitespace-pre-wrap text-red-600">⚠️ ${d.customerNote}</Typography>');
             } else {
                 null;
             }
