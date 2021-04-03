@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.info.Delivery;
 import haxe.DynamicAccess;
 import hkssprangers.info.Order;
 import hkssprangers.info.ShopCluster;
@@ -18,6 +19,7 @@ import haxe.Json;
 import haxe.ds.ReadOnlyArray;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.info.OrderTools;
+using hkssprangers.info.DeliveryTools;
 using Reflect;
 using Lambda;
 using hxLINQ.LINQ;
@@ -37,6 +39,7 @@ typedef OrderFormData = {
     ?pickupMethod:PickupMethod,
     ?orders:Array<FormOrderData>,
     ?paymentMethods:Array<PaymentMethod>,
+    ?customerNote:String,
 }
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
@@ -393,7 +396,61 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case _:
                 [];
         }
-        
+
+        var delivery:Delivery = {
+            creationTime: null,
+            deliveryCode: "訂單預覽",
+            couriers: null,
+            customer: {
+                tg: null,
+                tel:null,
+                whatsApp: null,
+                signal: null,
+            },
+            customerPreferredContactMethod: null,
+            customerBackupContactMethod: null,
+            paymentMethods: state.formData.paymentMethods,
+            pickupLocation: state.formData.pickupLocation,
+            pickupTimeSlot: switch (state.formData.pickupTimeSlot) {
+                case null: null;
+                case str: str.parse();
+            },
+            pickupMethod: state.formData.pickupMethod,
+            deliveryFee: null,
+            customerNote: state.formData.customerNote,
+            deliveryId: null,
+            orders: orders
+        };
+
+        switch (props.user) {
+            case null: null;
+            case {login: Telegram, tg: tg}:
+                delivery.customerPreferredContactMethod = Telegram;
+                delivery.customer.tg = tg;
+            case {login: WhatsApp, tel: tel}:
+                delivery.customerPreferredContactMethod = WhatsApp;
+                delivery.customer.tel = tel;
+        }
+
+        switch state.formData.backupContactMethod {
+            case null:
+                // pass
+            case Telegram:
+                delivery.customerBackupContactMethod = Telegram;
+                delivery.customer.tg = {
+                    username: state.formData.backupContactValue,
+                }
+            case WhatsApp:
+                delivery.customerBackupContactMethod = WhatsApp;
+                delivery.customer.whatsApp = state.formData.backupContactValue;
+            case Signal:
+                delivery.customerBackupContactMethod = Signal;
+                delivery.customer.signal = state.formData.backupContactValue;
+            case Telephone:
+                delivery.customerBackupContactMethod = Telephone;
+                delivery.customer.tel = state.formData.backupContactValue;
+        }
+
         return jsx('
             <div className="container max-w-screen-md mx-4 p-4">
                 <h1 className="text-center text-xl mb-2">
@@ -420,7 +477,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 >
                 </Form>
                 <div className="whitespace-pre-wrap">
-                    ${orders.map(o -> o.print()).join("\n")}
+                    ${delivery.print()}
                 </div>
             </div>
         ');

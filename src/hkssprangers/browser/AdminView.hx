@@ -349,9 +349,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                         couriers: [],
                         customer: {
                             tg: null,
-                            tel: null
+                            tel: null,
+                            whatsApp: null,
+                            signal: null,
                         },
                         customerPreferredContactMethod: null,
+                        customerBackupContactMethod: null,
                         paymentMethods: [],
                         pickupLocation: null,
                         pickupTimeSlot: {

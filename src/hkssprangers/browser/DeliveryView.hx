@@ -2,6 +2,7 @@ package hkssprangers.browser;
 
 import js.html.File;
 import js.lib.Promise;
+import js.lib.Object;
 import moment.Moment;
 import js.html.Event;
 import js.npm.material_ui.Pickers;
@@ -10,6 +11,7 @@ import hkssprangers.info.*;
 import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PaymentMethod;
 import hkssprangers.info.PickupMethod;
+import hkssprangers.info.Delivery;
 import thx.Decimal;
 using Lambda;
 using DateTools;
@@ -20,6 +22,7 @@ using hkssprangers.ObjectTools;
 using hkssprangers.ValueTools;
 using hkssprangers.info.DeliveryTools;
 using hkssprangers.info.TimeSlotTools;
+using hkssprangers.info.TgTools;
 
 enum abstract DeliveryViewMode(String) {
     var AdminView;
@@ -367,6 +370,104 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         }
     }
 
+    static function renderContact(customer:Customer, contact:ContactMethod) {
+        return switch (contact) {
+            case null:
+                null;
+            case Telegram:
+                var tgUrl = customer.tg.print();
+                jsx('<a href=${tgUrl} target="_blank">${tgUrl}</a>');
+            case WhatsApp:
+                var waUrl = switch (customer) {
+                    case { whatsApp: tel} if (tel != null):
+                        'https://wa.me/852${tel}';
+                    case { tel: tel} if (tel != null):
+                        'https://wa.me/852${tel}';
+                    case _:
+                        null;
+                }
+                jsx('<a href=${waUrl} target="_blank">${waUrl}</a>');
+            case Signal:
+                jsx('<span>Signal:${customer.signal}</span>');
+            case Telephone:
+                var url = 'tel:${customer.tel}';
+                jsx('<a href=${url} target="_blank">${url}</a>');
+        }
+    }
+
+    function renderContactEditor(contact:ContactMethod) {
+        if (contact == null)
+            return null;
+
+        var d = state.editingDelivery;
+        var value = switch (contact) {
+            case null:
+                "";
+            case Telegram:
+                d.customer.tg != null && d.customer.tg.username != null ? d.customer.tg.username : "";
+            case WhatsApp:
+                d.customer.whatsApp != null ? d.customer.whatsApp : "";
+            case Signal:
+                d.customer.signal != null ? d.customer.signal : "";
+            case Telephone:
+                d.customer.tel != null ? d.customer.tel : "";
+        } 
+        function onChange(evt:Event) {
+            var value = switch ((cast evt.target).value) {
+                case null | "": null;
+                case v: v;
+            }
+            setState({
+                editingDelivery: state.editingDelivery.with({
+                    customer: cast Object.assign({}, state.editingDelivery.customer, switch(contact) {
+                        case Telegram:
+                            {
+                                tg: switch (state.editingDelivery.customer.tg) {
+                                    case null:
+                                        ({
+                                            username: value,
+                                        }:Tg);
+                                    case tg:
+                                        tg.with({
+                                            username: value,
+                                        });
+                                }
+                            };
+                        case WhatsApp:
+                            {
+                                whatsApp: value,
+                            };
+                        case Signal:
+                            {
+                                signal: value,
+                            };
+                        case Telephone:
+                            {
+                                tel: value,
+                            };
+                    }),
+                }),
+            });
+        }
+        var inputProps = switch (contact) {
+            case Telegram:
+                inputProps.merge({
+                    startAdornment: jsx('<InputAdornment position=${Start}>@</InputAdornment>'),
+                });
+            case _:
+                inputProps;
+        };
+        return jsx('
+            <TextField
+                label=${"客人" + contact.info().name}
+                variant=${Filled}
+                InputProps=${inputProps}
+                InputLabelProps=${inputLabelProps}
+                value=${value}
+                onChange=${onChange} />
+        ');
+    }
+
     override function render() {
         var d = if (!state.isEditing) {
             props.delivery;
@@ -435,7 +536,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         var customerPreferredContactMethod = if (!state.isEditing) {
             null;
         } else {
-            var contactMethods = [Telegram, WhatsApp].map(m -> {
+            var contactMethods = ContactMethod.all.map(m -> {
                 jsx('<MenuItem key=${m} value=${m}>${m.info().name}</MenuItem>');
             });
             function customerPreferredContactMethodOnChange(evt:Event) {
@@ -462,46 +563,56 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             ');
         }
 
-        var tg = if (!state.isEditing) {
-            if (d.customer.tg != null && d.customer.tg.username != null) {
-                var tgUrl = "https://t.me/" + d.customer.tg.username;
-                jsx('<Typography><a href=${tgUrl} target="_blank">${tgUrl}</a> ${d.customerPreferredContactMethod == Telegram ? " 👈" : ""}</Typography>');
-            } else {
-                null;
-            }
+        var preferredContact = if (!state.isEditing) {
+            jsx('
+                <Typography>
+                    ${renderContact(d.customer, d.customerPreferredContactMethod)} 👈
+                </Typography>
+            ');
         } else {
-            var tgUsername = d.customer.tg != null && d.customer.tg.username != null ? d.customer.tg.username : "";
-            function tgUsernameOnChange(evt:Event) {
+            renderContactEditor(d.customerPreferredContactMethod);
+        }
+        
+
+        var customerBackupContactMethod = if (!state.isEditing) {
+            null;
+        } else {
+            var contactMethods = ContactMethod.all.map(m -> {
+                jsx('<MenuItem key=${m} value=${m}>${m.info().name}</MenuItem>');
+            });
+            function customerBackupContactMethodOnChange(evt:Event) {
                 var v:String = (cast evt.target).value;
-                var username = v != "" ? v : null;
+                var m = ContactMethod.fromId(v);
                 setState({
                     editingDelivery: state.editingDelivery.with({
-                        customer: state.editingDelivery.customer.with({
-                            tg: switch (state.editingDelivery.customer.tg) {
-                                case null:
-                                    ({
-                                        username: username,
-                                    }:Tg);
-                                case tg:
-                                    tg.with({
-                                        username: username,
-                                    });
-                            }
-                        }),
+                        customerBackupContactMethod: m,
                     }),
                 });
             }
             jsx('
                 <TextField
-                    label="客人Telegram"
+                    select
+                    label="後備聯絡方法"
                     variant=${Filled}
-                    InputProps=${inputProps.merge({
-                        startAdornment: jsx('<InputAdornment position=${Start}>@</InputAdornment>'),
-                    })}
+                    InputProps=${inputProps}
                     InputLabelProps=${inputLabelProps}
-                    value=${tgUsername}
-                    onChange=${tgUsernameOnChange} />
+                    value=${d.customerBackupContactMethod.emptyStrIfNull()}
+                    onChange=${customerBackupContactMethodOnChange}
+                >
+                    <MenuItem value="">無</MenuItem>
+                    ${contactMethods}
+                </TextField>
             ');
+        }
+
+        var backupContact = if (!state.isEditing) {
+            jsx('
+                <Typography>
+                    ${renderContact(d.customer, d.customerBackupContactMethod)}
+                </Typography>
+            ');
+        } else {
+            renderContactEditor(d.customerBackupContactMethod);
         }
 
         var wa = if (!state.isEditing) {
@@ -910,8 +1021,9 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
                     ${pickupTimeSlot}
                     ${customerPreferredContactMethod}
-                    ${tg}
-                    ${wa}
+                    ${preferredContact}
+                    ${customerBackupContactMethod}
+                    ${backupContact}
                     ${paymentMethods}
                     ${pickupLocation}
                     ${customerNote}

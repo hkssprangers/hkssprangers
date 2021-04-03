@@ -1,6 +1,7 @@
 package hkssprangers.info;
 
 import thx.Decimal;
+import hkssprangers.info.Delivery;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
@@ -10,6 +11,27 @@ using Lambda;
 using StringTools;
 
 class DeliveryTools {
+    static function printCustomerContact(customer:Customer, contactMethod:ContactMethod) {
+        return switch (contactMethod) {
+            case null:
+                null;
+            case Telegram:
+                customer.tg.print();
+            case WhatsApp:
+                switch (customer) {
+                    case { whatsApp: tel} if (tel != null):
+                        'https://wa.me/852${tel}';
+                    case { tel: tel} if (tel != null):
+                        'https://wa.me/852${tel}';
+                    case _:
+                        null;
+                }
+            case Signal:
+                'Signal:${customer.signal}';
+            case Telephone:
+                'tel:${customer.tel}';
+        }
+    }
     static public function print(d:Delivery):String {
         var buf = new StringBuf();
 
@@ -32,11 +54,20 @@ class DeliveryTools {
 
         if (d.pickupTimeSlot != null && d.pickupTimeSlot.start != null && d.pickupTimeSlot.end != null)
             buf.add(d.pickupTimeSlot.print() + "\n");
-        if (d.customer.tg != null && d.customer.tg.username != null)
-            buf.add(d.customer.tg.print() + (d.customerPreferredContactMethod == Telegram ? " 👈" : "") + "\n");
-        if (d.customer.tel != null)
-            buf.add('https://wa.me/852${d.customer.tel}' + (d.customerPreferredContactMethod == WhatsApp ? " 👈" : "") + "\n");
-        if (d.paymentMethods != null)
+
+        switch (d.customerPreferredContactMethod) {
+            case null:
+                //pass
+            case m:
+                buf.add(printCustomerContact(d.customer, m) + " 👈\n");
+        }
+        switch (d.customerBackupContactMethod) {
+            case null:
+                //pass
+            case m:
+                buf.add(printCustomerContact(d.customer, m));
+        }
+        if (d.paymentMethods != null && d.paymentMethods.length > 0)
             buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
         if (d.pickupLocation != null)
             buf.add(d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")\n");
@@ -79,8 +110,11 @@ class DeliveryTools {
             customer: {
                 tg: {},
                 tel: null,
+                whatsApp: null,
+                signal: null,
             },
             customerPreferredContactMethod: d.customerPreferredContactMethod,
+            customerBackupContactMethod: d.customerBackupContactMethod,
             paymentMethods: null,
             pickupLocation: null,
             pickupTimeSlot: d.pickupTimeSlot,

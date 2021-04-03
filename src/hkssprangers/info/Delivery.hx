@@ -1,5 +1,14 @@
 package hkssprangers.info;
 
+import hkssprangers.info.ContactMethod;
+
+typedef Customer = {
+    tg: Tg,
+    tel: String,
+    whatsApp: String,
+    signal: String,
+}
+
 typedef DeliveryMeta = {
     creationTime:LocalDateString,
     deliveryCode:String,
@@ -7,11 +16,9 @@ typedef DeliveryMeta = {
         deliveryFee:Float,
         deliverySubsidy:Float,
     }>,
-    customer: {
-        tg: Tg,
-        tel: String,
-    },
+    customer: Customer,
     customerPreferredContactMethod:ContactMethod,
+    customerBackupContactMethod:ContactMethod,
     paymentMethods: Array<PaymentMethod>,
     pickupLocation: String,
     pickupTimeSlot: TimeSlot,

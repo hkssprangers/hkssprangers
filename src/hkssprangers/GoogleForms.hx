@@ -76,8 +76,11 @@ class GoogleForms {
             customer: {
                 tg: null,
                 tel: null,
+                whatsApp: null,
+                signal: null,
             },
             customerPreferredContactMethod: null,
+            customerBackupContactMethod: null,
             paymentMethods: null,
             pickupLocation: null,
             pickupTimeSlot: null,
@@ -134,7 +137,13 @@ class GoogleForms {
                     throw 'Unknown contact method: ' + v;
                 }
             case [_, "你的電話號碼" | "你的電話號碼/Whatsapp", v]:
-                delivery.customer.tel = v;
+                delivery.customer.whatsApp = v;
+                switch delivery.customerPreferredContactMethod {
+                    case WhatsApp:
+                        // pass
+                    case _:
+                        delivery.customerBackupContactMethod = WhatsApp;
+                }
             case [_, "俾錢方法", v]:
                 delivery.paymentMethods = v.split(",").map(v -> PaymentMethod.fromName(v.trim()));
             case [_, "交收方法", v]:
@@ -152,6 +161,12 @@ class GoogleForms {
                 delivery.customer.tg = if (r.match(v.trim())) {
                     username: r.matched(1),
                 } else null;
+                switch delivery.customerPreferredContactMethod {
+                    case Telegram:
+                        // pass
+                    case _:
+                        delivery.customerBackupContactMethod = Telegram;
+                }
             case [_, h, v] if (h.contains("HANA SOFT CREAM")):
                 iceCream.push(v);
             case [_, h, v = "涼拌青瓜拼木耳" | "郊外油菜"]:

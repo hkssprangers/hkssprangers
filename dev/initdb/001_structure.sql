@@ -67,7 +67,10 @@ CREATE TABLE `delivery` (
   `customerTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerTgId` int DEFAULT NULL,
   `customerTel` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerWhatsApp` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerSignal` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   `customerPreferredContactMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerBackupContactMethod` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`)
@@ -181,7 +184,7 @@ DROP TABLE IF EXISTS `receipt`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `receipt` (
   `receiptId` int NOT NULL AUTO_INCREMENT,
-  `receiptUrl` varchar(1024) COLLATE utf8mb4_bin NOT NULL,
+  `receiptUrl` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderId` int DEFAULT NULL,
   `uploaderCourierId` int DEFAULT NULL,
   PRIMARY KEY (`receiptId`),
@@ -218,4 +221,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-15 18:15:35
+-- Dump completed on 2021-04-03 12:09:40

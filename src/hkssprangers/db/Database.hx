@@ -126,7 +126,10 @@ class Database extends tink.sql.Database {
             f.customerTgUsername.set(d.customer.tg != null ? d.customer.tg.username : null),
             f.customerTgId.set(d.customer.tg != null ? d.customer.tg.id : null),
             f.customerTel.set(d.customer.tel),
+            f.customerWhatsApp.set(d.customer.whatsApp),
+            f.customerSignal.set(d.customer.signal),
             f.customerPreferredContactMethod.set(d.customerPreferredContactMethod),
+            f.customerBackupContactMethod.set(d.customerBackupContactMethod),
             f.customerNote.set(d.customerNote),
         ], {
             where: f -> f.deliveryId == d.deliveryId,
@@ -302,9 +305,12 @@ class Database extends tink.sql.Database {
                 paymeAvailable: d.paymentMethods.has(PayMe),
                 fpsAvailable: d.paymentMethods.has(FPS),
                 customerPreferredContactMethod: d.customerPreferredContactMethod,
+                customerBackupContactMethod: d.customerBackupContactMethod,
                 customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
                 customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
                 customerTel: d.customer.tel,
+                customerWhatsApp: d.customer.whatsApp,
+                customerSignal: d.customer.signal,
                 customerNote: d.customerNote,
                 deleted: false,
             }).mapError(err -> {
@@ -423,10 +429,17 @@ class DeliveryConverter {
                     username: d.customerTgUsername,
                 },
                 tel: d.customerTel,
+                whatsApp: d.customerWhatsApp,
+                signal: d.customerSignal,
             },
             customerPreferredContactMethod:
                 if (d.customerPreferredContactMethod != null)
                     ContactMethod.fromName(d.customerPreferredContactMethod)
+                else
+                    null,
+            customerBackupContactMethod:
+                if (d.customerBackupContactMethod != null)
+                    ContactMethod.fromName(d.customerBackupContactMethod)
                 else
                     null,
             paymentMethods: {

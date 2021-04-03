@@ -28,6 +28,7 @@ INSERT INTO `flyway_schema_history` VALUES (5,'5','tgMessage','SQL','V5__tgMessa
 INSERT INTO `flyway_schema_history` VALUES (6,'6','tgMessage updateData','SQL','V6__tgMessage_updateData.sql',-348417920,'ssp','2020-11-17 08:32:37',1449,1);
 INSERT INTO `flyway_schema_history` VALUES (7,'7','isAdmin','SQL','V7__isAdmin.sql',-684888593,'ssp','2020-11-28 05:03:45',861,1);
 INSERT INTO `flyway_schema_history` VALUES (8,'8','receiptTable','SQL','V8__receiptTable.sql',-1443645347,'root','2020-12-14 14:00:14',39,1);
+INSERT INTO `flyway_schema_history` VALUES (9,'9','contacts','SQL','V9__contacts.sql',1097319996,'root','2021-04-03 12:09:29',440,1);
 /*!40000 ALTER TABLE `flyway_schema_history` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -39,4 +40,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-15 18:15:35
+-- Dump completed on 2021-04-03 12:09:40

@@ -14,7 +14,10 @@ typedef Delivery = {
     final customerTgUsername:Null<VarChar<128>>;
     final customerTgId:Null<Int>;
     final customerTel:Null<VarChar<64>>;
+    final customerWhatsApp:Null<VarChar<64>>;
+    final customerSignal:Null<VarChar<64>>;
     final customerPreferredContactMethod:VarChar<64>;
+    final customerBackupContactMethod:VarChar<64>;
     final customerNote:Null<VarChar<2048>>;
     final deleted:Bool;
 }
