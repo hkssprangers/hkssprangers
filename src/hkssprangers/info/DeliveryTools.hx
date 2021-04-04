@@ -65,7 +65,7 @@ class DeliveryTools {
             case null:
                 //pass
             case m:
-                buf.add(printCustomerContact(d.customer, m));
+                buf.add(printCustomerContact(d.customer, m) + "\n");
         }
         if (d.paymentMethods != null && d.paymentMethods.length > 0)
             buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");

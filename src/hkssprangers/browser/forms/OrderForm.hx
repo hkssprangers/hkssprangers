@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import mui.core.styles.Styles;
 import hkssprangers.info.Delivery;
 import haxe.DynamicAccess;
 import hkssprangers.info.Order;
@@ -29,6 +30,8 @@ typedef OrderFormProps = {
 }
 typedef OrderFormState = {
     final formData:OrderFormData;
+    final deliveryPreview:Delivery;
+    final previewOpen:Bool;
 }
 
 typedef OrderFormData = {
@@ -43,6 +46,12 @@ typedef OrderFormData = {
 }
 
 class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
+    static final ClosePreviewButton = Styles.styled(mui.core.IconButton)({
+        position: Absolute,
+        top: 5,
+        right: 5,
+    });
+
     final nextSlots = TimeSlotTools.nextTimeSlots(Date.now());
     static public function selectedPickupTimeSlot(formData:OrderFormData):TimeSlot {
         return switch (formData.pickupTimeSlot) {
@@ -236,6 +245,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         super(props, context);
         state = {
             formData: {},
+            deliveryPreview: null,
+            previewOpen: false,
         };
     }
 
@@ -308,65 +319,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         };
     }
 
-    override function render():ReactFragment {
-        var schema = getSchema(nextSlots, state.formData);
-        var uiSchema = getUiSchema(state.formData);
-
-        function onChange(e:{
-            edit:Bool,
-            formData:OrderFormData,
-            errors:Array<Dynamic>,
-            errorSchema:Dynamic,
-            idSchema:Dynamic,
-            schema:Dynamic,
-            uiSchema:Dynamic,
-            ?status:String,
-        }) {
-            // trace(e.formData);
-            // Ajv.call({
-            //     removeAdditional: "all"
-            // }).compile(schema).call(e.formData);
-            // trace(e.formData);
-            setState({
-                formData: e.formData,
-            });
-        }
-
-        function onSubmit(e:{
-            formData:OrderFormData,
-        }, _) {
-            var isValid:Bool = Ajv.call({
-                removeAdditional: "all",
-            }).compile(schema).call(e.formData);
-            trace(isValid);
-            trace(Json.stringify(e.formData, null, "  "));
-        }
-
-        function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
-            var t = selectedPickupTimeSlot(formData);
-            for (i => o in formData.orders) {
-                if (o.shop != null) {
-                    switch o.shop.checkAvailability(t) {
-                        case Available:
-                            //pass
-                        case Unavailable(reason):
-                            errors.orders[i].addError(reason);
-                    }
-                }
-            }
-            return errors;
-        }
-
-        var contact = switch (props.user) {
-            case null: null;
-            case {login: Telegram, tg: tg}:
-                jsx('
-                    <p className="text-gray-500 mb-2"><a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a> 你好！請輸入以下資料，我哋收到後會經 Telegram 聯絡你。</p>
-                ');
-            case _: null;
-        }
-
-        var orders:Array<Order> = switch (state.formData) {
+    static function formDataToDelivery(formData:OrderFormData, user:LoggedinUser):Delivery {
+        var orders:Array<Order> = switch (formData) {
             case {
                 orders: orders,
                 pickupTimeSlot: pickupTimeSlot,
@@ -409,20 +363,20 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             },
             customerPreferredContactMethod: null,
             customerBackupContactMethod: null,
-            paymentMethods: state.formData.paymentMethods,
-            pickupLocation: state.formData.pickupLocation,
-            pickupTimeSlot: switch (state.formData.pickupTimeSlot) {
+            paymentMethods: formData.paymentMethods,
+            pickupLocation: formData.pickupLocation,
+            pickupTimeSlot: switch (formData.pickupTimeSlot) {
                 case null: null;
                 case str: str.parse();
             },
-            pickupMethod: state.formData.pickupMethod,
+            pickupMethod: formData.pickupMethod,
             deliveryFee: null,
-            customerNote: state.formData.customerNote,
+            customerNote: formData.customerNote,
             deliveryId: null,
             orders: orders
         };
 
-        switch (props.user) {
+        switch (user) {
             case null: null;
             case {login: Telegram, tg: tg}:
                 delivery.customerPreferredContactMethod = Telegram;
@@ -432,24 +386,100 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 delivery.customer.tel = tel;
         }
 
-        switch state.formData.backupContactMethod {
+        switch formData.backupContactMethod {
             case null:
                 // pass
             case Telegram:
                 delivery.customerBackupContactMethod = Telegram;
                 delivery.customer.tg = {
-                    username: state.formData.backupContactValue,
+                    username: formData.backupContactValue,
                 }
             case WhatsApp:
                 delivery.customerBackupContactMethod = WhatsApp;
-                delivery.customer.whatsApp = state.formData.backupContactValue;
+                delivery.customer.whatsApp = formData.backupContactValue;
             case Signal:
                 delivery.customerBackupContactMethod = Signal;
-                delivery.customer.signal = state.formData.backupContactValue;
+                delivery.customer.signal = formData.backupContactValue;
             case Telephone:
                 delivery.customerBackupContactMethod = Telephone;
-                delivery.customer.tel = state.formData.backupContactValue;
+                delivery.customer.tel = formData.backupContactValue;
         }
+
+        return delivery;
+    }
+
+    function closePreview() {
+        setState({
+            previewOpen: false,
+        });
+    }
+
+    override function render():ReactFragment {
+        var schema = getSchema(nextSlots, state.formData);
+        var uiSchema = getUiSchema(state.formData);
+
+        function onChange(e:{
+            edit:Bool,
+            formData:OrderFormData,
+            errors:Array<Dynamic>,
+            errorSchema:Dynamic,
+            idSchema:Dynamic,
+            schema:Dynamic,
+            uiSchema:Dynamic,
+            ?status:String,
+        }) {
+            // trace(e.formData);
+            // Ajv.call({
+            //     removeAdditional: "all"
+            // }).compile(schema).call(e.formData);
+            // trace(e.formData);
+            setState({
+                formData: e.formData,
+            });
+        }
+
+        function onSubmit(e:{
+            formData:OrderFormData,
+        }, _) {
+            var isValid:Bool = Ajv.call({
+                removeAdditional: "all",
+            }).compile(schema).call(e.formData);
+            if (isValid) {
+                setState({
+                    formData: e.formData,
+                    deliveryPreview: formDataToDelivery(e.formData, props.user),
+                    previewOpen: true,
+                });
+            }
+        }
+
+        function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
+            var t = selectedPickupTimeSlot(formData);
+            for (i => o in formData.orders) {
+                if (o.shop != null) {
+                    switch o.shop.checkAvailability(t) {
+                        case Available:
+                            //pass
+                        case Unavailable(reason):
+                            errors.orders[i].addError(reason);
+                    }
+                }
+            }
+            return errors;
+        }
+
+        var contact = switch (props.user) {
+            case null: null;
+            case {login: Telegram, tg: tg}:
+                jsx('
+                    <p className="text-gray-500 mb-2"><a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a> 你好！請輸入以下資料，我哋收到後會經 Telegram 聯絡你。</p>
+                ');
+            case _: null;
+        }
+
+        var dialogTitleProps = {
+            onClose: closePreview,
+        };
 
         return jsx('
             <div className="container max-w-screen-md mx-4 p-4">
@@ -475,10 +505,31 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         SelectWidget: SelectWidget,
                     }}
                 >
+                    <div className="my-5">
+                        <Button variant=${Contained} color=${Primary} type=${Submit}>
+                            下一步
+                        </Button>
+                    </div>
                 </Form>
-                <div className="whitespace-pre-wrap">
-                    ${delivery.print()}
-                </div>
+                <Dialog
+                    open=${state.previewOpen}
+                    onClose=${closePreview}
+                >
+                    <ClosePreviewButton
+                        aria-label="close"
+                        onClick=${closePreview}
+                    >
+                        <i className="fas fa-times"></i>
+                    </ClosePreviewButton>
+                    <DialogContent className="whitespace-pre-wrap mt-4">
+                        ${state.deliveryPreview != null ? state.deliveryPreview.print() : null}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick=${() -> trace("submit")} variant=${Contained} color=${Primary}>
+                            確認訂單
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         ');
     }
