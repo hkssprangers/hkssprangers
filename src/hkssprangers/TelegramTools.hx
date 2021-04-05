@@ -30,7 +30,7 @@ class TelegramTools {
     }
 
     #if (sys || nodejs)
-    static public function notifyNewDeliveries(deliveries:Array<Delivery>) {
+    static public function notifyNewDeliveries(deliveries:Array<Delivery>, stage:DeployStage) {
         if (deliveries.length <= 0)
             return Promise.resolve(null);
 
@@ -46,7 +46,7 @@ class TelegramTools {
             msg += deliveryStrs.join("\n\n");
         }
         return tgBot.telegram.sendMessage(
-            TelegramConfig.internalGroupChatId,
+            TelegramConfig.groupChatId(stage),
             msg,
             {
                 parse_mode: "HTML",

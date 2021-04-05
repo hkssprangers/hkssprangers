@@ -1,5 +1,7 @@
 package hkssprangers.server;
 
+import hkssprangers.browser.forms.*;
+import tink.core.Error.ErrorCode;
 import js.lib.Promise;
 import react.*;
 import react.Fragment;
@@ -47,11 +49,12 @@ class OrderFood extends View {
         ');
     }
 
-    static public function get(req:Request, reply:Reply):Promise<Dynamic> {
+    static public function get(req:Request, reply:Reply) {
         return ensurePermission(req, reply)
             .then(ok -> {
                 if (!ok) {
-                    Promise.resolve(reply.redirect("/login?redirectTo=" + "/order-food".urlEncode()));
+                    reply.redirect("/login?redirectTo=" + "/order-food".urlEncode());
+                    return Promise.resolve(null);
                 }
                 ServerMain.tgMe
                     .then(tgMe -> {
@@ -60,6 +63,47 @@ class OrderFood extends View {
                             user: reply.getUser(),
                         }));
                     });
+            });
+    }
+
+    static public function post(req:Request, reply:Reply):Promise<Dynamic> {
+        return ensurePermission(req, reply)
+            .then(ok -> {
+                if (!ok) {
+                    reply.status(ErrorCode.Forbidden).send("Log in required.");
+                    return Promise.resolve(null);
+                }
+
+                if (req.body == null) {
+                    reply.status(ErrorCode.BadRequest).send("No request body.");
+                    return Promise.resolve(null);
+                }
+
+                var user = reply.getUser();
+                var formData:OrderFormData = req.body;
+                var schema = OrderFormSchema.getSchema([formData.pickupTimeSlot.parse()], formData, user);
+
+                var validate = Ajv.call({
+                    removeAdditional: "all",
+                }).compile(schema);
+                var isValid:Bool = validate.call(formData);
+                if (!isValid) {
+                    reply.status(ErrorCode.BadRequest).send(validate.errors.map(err -> err.message).join("\n"));
+                    return Promise.resolve(null);
+                }
+
+                var now = Date.now();
+                var delivery = OrderFormSchema.formDataToDelivery(formData, user);
+                delivery.creationTime = now;
+                for (o in delivery.orders) {
+                    o.creationTime = now;
+                }
+                var deliveries = [delivery];
+
+                MySql.db.insertDeliveries(deliveries)
+                    .toJsPromise()
+                    .then(_ -> TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage))
+                    .then(_ -> null);
             });
     }
 
@@ -72,5 +116,6 @@ class OrderFood extends View {
 
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         app.get("/order-food", OrderFood.get);
+        app.post("/order-food", OrderFood.post);
     }
 }

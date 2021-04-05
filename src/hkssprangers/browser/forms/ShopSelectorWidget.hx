@@ -1,6 +1,6 @@
 package hkssprangers.browser.forms;
 
-import hkssprangers.browser.forms.OrderForm.OrderFormData;
+import hkssprangers.browser.forms.OrderFormData;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.TimeSlot;

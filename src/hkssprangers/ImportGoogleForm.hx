@@ -226,7 +226,7 @@ class ImportGoogleForm {
                     })
                 ])
             )
-            .next(_ -> Promise.ofJsPromise(TelegramTools.notifyNewDeliveries(newDeliveries)))
+            .next(_ -> Promise.ofJsPromise(TelegramTools.notifyNewDeliveries(newDeliveries, production)))
             .next(_ -> !failed);
     }
 
