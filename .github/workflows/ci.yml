@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: hkssprangers/hkssprangers_devcontainer_workspace:20201215
+    container: hkssprangers/hkssprangers_devcontainer_workspace:20210405182612
     steps:
       - uses: actions/checkout@v2
         with:

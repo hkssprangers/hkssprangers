@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils dialog 2>&1 \
     #
     # Verify git and needed tools are installed
-    && apt-get install -y dumb-init iproute2 procps sudo bash-completion build-essential curl wget python3 python3-pip software-properties-common libnss3-tools direnv \
+    && apt-get install -y dumb-init iproute2 procps sudo bash-completion build-essential curl wget python3 python3-pip software-properties-common libnss3-tools direnv tzdata \
     && echo 'eval "$(direnv hook bash)"' >> /etc/bash.bashrc \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs=12.* \
