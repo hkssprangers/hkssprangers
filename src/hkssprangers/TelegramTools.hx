@@ -29,6 +29,7 @@ class TelegramTools {
         return ~/^[A-Za-z0-9_]{5,}$/.match(username);
     }
 
+    #if (sys || nodejs)
     static public function notifyNewDeliveries(deliveries:Array<Delivery>) {
         if (deliveries.length <= 0)
             return Promise.resolve(null);
@@ -53,4 +54,5 @@ class TelegramTools {
             }
         );
     }
+    #end
 }
