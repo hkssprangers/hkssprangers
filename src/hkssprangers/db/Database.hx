@@ -16,6 +16,7 @@ using hkssprangers.ValueTools;
 using hkssprangers.info.DeliveryTools;
 using DateTools;
 using Lambda;
+using StringTools;
 
 class Database extends tink.sql.Database {
     @:table("courier")
@@ -293,88 +294,109 @@ class Database extends tink.sql.Database {
                 trace("Failed to write orders:\n" + err);
                 err;
             });
-            var deliveryId = delivery.insertOne({
-                deliveryId: null,
-                deliveryCode: d.deliveryCode,
-                creationTime: Date.fromString(d.creationTime),
-                pickupLocation: d.pickupLocation,
-                deliveryFee: Math.isNaN(d.deliveryFee) ? null : d.deliveryFee,
-                pickupTimeSlotStart: d.pickupTimeSlot.start.toDate(),
-                pickupTimeSlotEnd: d.pickupTimeSlot.end.toDate(),
-                pickupMethod: d.pickupMethod,
-                paymeAvailable: d.paymentMethods.has(PayMe),
-                fpsAvailable: d.paymentMethods.has(FPS),
-                customerPreferredContactMethod: d.customerPreferredContactMethod,
-                customerBackupContactMethod: d.customerBackupContactMethod,
-                customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
-                customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
-                customerTel: d.customer.tel,
-                customerWhatsApp: d.customer.whatsApp,
-                customerSignal: d.customer.signal,
-                customerNote: d.customerNote,
-                deleted: false,
-            }).mapError(err -> {
-                trace("Failed to write delivery\n" + err);
-                err;
-            });
-            var couriers = Promise.inSequence(d.couriers == null ? [] : d.couriers.map(c -> {
-                var tgUserName = c.tg.username;
-                courier
-                    .select({
-                        courierId: courier.courierId,
-                    })
-                    .where(courier.courierTgUsername == tgUserName)
-                    .first()
-                    .mapError(err -> {
-                        trace("Couldn't find courier with tg " + tgUserName + "\n" + err);
+            Promise.lazy(() -> {
+                switch (d.deliveryCode) {
+                    case null:
+                        var t = TimeSlotType.classify(d.pickupTimeSlot.start);
+                        var date = (d.pickupTimeSlot.start:LocalDateString).getDatePart();
+                        var start = (date + " " + t.info().pickupStart:LocalDateString).toDate();
+                        var end = (date + " " + t.info().pickupEnd:LocalDateString).toDate();
+                        var codePrefix = switch t {
+                            case Lunch: "L";
+                            case Dinner: "D";
+                        }
+                        delivery.where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotStart < end)
+                            .count()
+                            .next(count -> {
+                                codePrefix + Std.string(count + 1).lpad("0", 2);
+                            });
+                    case deliveryCode:
+                        Promise.resolve(deliveryCode);
+                }
+            }).next(deliveryCode -> {
+                    var deliveryId = delivery.insertOne({
+                        deliveryId: null,
+                        deliveryCode: deliveryCode,
+                        creationTime: Date.fromString(d.creationTime),
+                        pickupLocation: d.pickupLocation,
+                        deliveryFee: Math.isNaN(d.deliveryFee) ? null : d.deliveryFee,
+                        pickupTimeSlotStart: d.pickupTimeSlot.start.toDate(),
+                        pickupTimeSlotEnd: d.pickupTimeSlot.end.toDate(),
+                        pickupMethod: d.pickupMethod,
+                        paymeAvailable: d.paymentMethods.has(PayMe),
+                        fpsAvailable: d.paymentMethods.has(FPS),
+                        customerPreferredContactMethod: d.customerPreferredContactMethod,
+                        customerBackupContactMethod: d.customerBackupContactMethod,
+                        customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
+                        customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
+                        customerTel: d.customer.tel,
+                        customerWhatsApp: d.customer.whatsApp,
+                        customerSignal: d.customer.signal,
+                        customerNote: d.customerNote,
+                        deleted: false,
+                    }).mapError(err -> {
+                        trace("Failed to write delivery\n" + err);
                         err;
-                    })
-                    .next(r -> c.merge({
-                        courierId: r.courierId,
-                    }));
-            })).mapError(err -> {
-                trace("Failed to find couriers in db\n" + err);
-                err;
-            });
+                    });
+                    var couriers = Promise.inSequence(d.couriers == null ? [] : d.couriers.map(c -> {
+                        var tgUserName = c.tg.username;
+                        courier
+                            .select({
+                                courierId: courier.courierId,
+                            })
+                            .where(courier.courierTgUsername == tgUserName)
+                            .first()
+                            .mapError(err -> {
+                                trace("Couldn't find courier with tg " + tgUserName + "\n" + err);
+                                err;
+                            })
+                            .next(r -> c.merge({
+                                courierId: r.courierId,
+                            }));
+                    })).mapError(err -> {
+                        trace("Failed to find couriers in db\n" + err);
+                        err;
+                    });
 
-            Promises.multi({
-                couriers: couriers,
-                deliveryId: deliveryId,
-                orderIds: orderIds,
-            })
-                .next(r -> {
-                    var insertDeliveryOrder = deliveryOrder.insertMany([
-                        for (orderId in r.orderIds)
-                        {
-                            deliveryId: r.deliveryId,
-                            orderId: orderId,
-                            deleted: false,
-                        }
-                    ]).mapError(err -> {
-                        trace("Failed to write deliveryOrder\n" + err);
-                        err;
-                    });
-                    var insertDeliveryCouriers = deliveryCourier.insertMany([
-                        for (c in r.couriers)
-                        {
-                            deliveryId: r.deliveryId,
-                            courierId: c.courierId,
-                            deliveryFee: c.deliveryFee,
-                            deliverySubsidy: c.deliverySubsidy,
-                            deleted: false,
-                        }
-                    ]).mapError(err -> {
-                        trace("Failed to write deliveryCourier\n" + err);
-                        err;
-                    });
-                    Promise.inSequence([
-                        insertDeliveryOrder.noise(),
-                        insertDeliveryCouriers.noise(),
-                    ]).next(_ -> deliveryId);
-                })
-                .mapError(err -> {
-                    trace("Failed to write\n" + err + "\n" + d.print());
-                    err;
+                    Promises.multi({
+                        couriers: couriers,
+                        deliveryId: deliveryId,
+                        orderIds: orderIds,
+                    })
+                        .next(r -> {
+                            var insertDeliveryOrder = deliveryOrder.insertMany([
+                                for (orderId in r.orderIds)
+                                {
+                                    deliveryId: r.deliveryId,
+                                    orderId: orderId,
+                                    deleted: false,
+                                }
+                            ]).mapError(err -> {
+                                trace("Failed to write deliveryOrder\n" + err);
+                                err;
+                            });
+                            var insertDeliveryCouriers = deliveryCourier.insertMany([
+                                for (c in r.couriers)
+                                {
+                                    deliveryId: r.deliveryId,
+                                    courierId: c.courierId,
+                                    deliveryFee: c.deliveryFee,
+                                    deliverySubsidy: c.deliverySubsidy,
+                                    deleted: false,
+                                }
+                            ]).mapError(err -> {
+                                trace("Failed to write deliveryCourier\n" + err);
+                                err;
+                            });
+                            Promise.inSequence([
+                                insertDeliveryOrder.noise(),
+                                insertDeliveryCouriers.noise(),
+                            ]).next(_ -> deliveryId);
+                        })
+                        .mapError(err -> {
+                            trace("Failed to write\n" + err + "\n" + d.print());
+                            err;
+                        });
                 });
         }));
     }

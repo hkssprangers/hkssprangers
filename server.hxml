@@ -12,6 +12,7 @@
 --library thx.core
 --library CommentString
 --library jsonwebtoken
+--library hxLINQ
 -D react_skip_extend_component_restriction
 -D no-deprecation-warnings
 --dce full

@@ -133,31 +133,6 @@ class ImportGoogleForm {
         }).next(deliveries -> deliveries.filter(d -> d.orders.exists(o -> o.shop == shop) && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
     }
 
-    static function notifyNewDeliveries(deliveries:Array<Delivery>) {
-        if (deliveries.length <= 0)
-            return Promise.resolve(null);
-
-        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
-        var deliveryStrs = deliveries
-            .map(d ->
-                "📃 " + d.orders.map(o -> o.shop.info().name).join(", ") + "\n " + d.pickupTimeSlot.print()
-            )
-            .map(str -> StringTools.htmlEscape(str, false));
-        var msg = '啱啱收到 ${deliveries.length} 單';
-        if (deliveries.length > 0) {
-            msg += " ✨\n\n";
-            msg += deliveryStrs.join("\n\n");
-        }
-        return tgBot.telegram.sendMessage(
-            TelegramConfig.internalGroupChatId,
-            msg,
-            {
-                parse_mode: "HTML",
-                disable_web_page_preview: true,
-            }
-        );
-    }
-
     static function importGoogleForms():Promise<Bool> {
         var now = Date.now();
         var failed = false;
@@ -226,40 +201,23 @@ class ImportGoogleForm {
                                     ];
                                     for (dateStr in deliveriesByDate.keys())
                                         deliveriesByDate[dateStr] = deliveries.filter(d -> (d.pickupTimeSlot.start:String).startsWith(dateStr));
-                                    Promise.inSequence([
-                                        for (dateStr => deliveries in deliveriesByDate)
-                                        for (t in [Lunch, Dinner])
-                                        existingDeliveries(dateStr, shop, t)
-                                            .next(existings -> {
-                                                for (d in deliveries.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == t)) {
-                                                    d.deliveryCode = d.orders[0].shop.info().name + " " + (switch t {
-                                                        case Lunch: "L";
-                                                        case Dinner: "D";
-                                                    }) + Std.string(existings.length + 1).lpad("0", 2);
-                                                    existings.push(d);
-                                                }
-                                                Noise;
-                                            })
-                                    ]).next(_ -> {
-                                        var deliveries = deliveries.filter(d -> d.deliveryCode != null);
-                                        MySql.db.insertDeliveries(deliveries)
-                                            .next(_ -> MySql.db.googleFormImport.insertOne({
-                                                importTime: now,
-                                                spreadsheetId: GoogleForms.responseSheetId[shop],
-                                                lastRow: getDeliveries.lastRow,
-                                            }))
-                                            .next(_ -> {
-                                                trace("done insert of " + shop.info().name);
-                                                for (d in deliveries)
-                                                    newDeliveries.push(d);
-                                                Noise;
-                                            })
-                                            .recover(err -> {
-                                                trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
-                                                failed = true;
-                                                Noise;
-                                            });
-                                    });
+                                    MySql.db.insertDeliveries(deliveries)
+                                        .next(_ -> MySql.db.googleFormImport.insertOne({
+                                            importTime: now,
+                                            spreadsheetId: GoogleForms.responseSheetId[shop],
+                                            lastRow: getDeliveries.lastRow,
+                                        }))
+                                        .next(_ -> {
+                                            trace("done insert of " + shop.info().name);
+                                            for (d in deliveries)
+                                                newDeliveries.push(d);
+                                            Noise;
+                                        })
+                                        .recover(err -> {
+                                            trace('Could not insert deliveries of ${shop.info().name}.\n' + err);
+                                            failed = true;
+                                            Noise;
+                                        });
                                 } else {
                                     Promise.NOISE;
                                 }
@@ -268,7 +226,7 @@ class ImportGoogleForm {
                     })
                 ])
             )
-            .next(_ -> Promise.ofJsPromise(notifyNewDeliveries(newDeliveries)))
+            .next(_ -> Promise.ofJsPromise(TelegramTools.notifyNewDeliveries(newDeliveries)))
             .next(_ -> !failed);
     }
 
