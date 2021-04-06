@@ -261,9 +261,12 @@ class ServerMain {
         });
         tgBot.start(function(ctx:Context):Promise<Dynamic> {
             trace("/start");
-            return switch (ctx.chat.type) {
+            switch (ctx.chat.type) {
                 case "private":
-                        ctx.reply('你好！請㩒「登入落單」制。', {
+                        if (ctx.from.username == null) {
+                            return ctx.reply("唔好意思。我留意到你未設定 Telegram username。咁嘅話我哋嘅外賣員唔可以直接聯絡到你。麻煩你去設定返先，之後同我講 /start 🙏\n\n關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one");
+                        }
+                        return ctx.reply('你好！請㩒「登入落單」制。', {
                             reply_markup: Markup.inlineKeyboard_([
                                 Markup.loginButton_("登入落單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]), {
                                     request_write_access: true,
@@ -275,7 +278,7 @@ class ServerMain {
                             ctx.reply(failure.message);
                         });
                 case _:
-                    Promise.resolve(null);
+                    return Promise.resolve(null);
             }
         });
 
