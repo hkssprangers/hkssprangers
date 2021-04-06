@@ -693,7 +693,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
 
         var pickupLocation = if (!state.isEditing) {
             if (d.pickupLocation != null)
-                jsx('<Typography>${d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")"}</Typography>');
+                jsx('<Typography>${d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ")" + (d.deliveryFee != null && !Math.isNaN(d.deliveryFee) ? " (運費 $" + d.deliveryFee + ")" : "")}</Typography>');
             else
                 null;
         } else {

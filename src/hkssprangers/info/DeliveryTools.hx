@@ -46,9 +46,14 @@ class DeliveryTools {
 
         buf.add("\n\n");
         var foodTotal = d.orders.fold((order:Order, result:Float) -> result + order.orderPrice.nanIfNull(), 0.0);
-        var allTotal = foodTotal + d.deliveryFee.nanIfNull();
-        if (!Math.isNaN(allTotal)) {
-            buf.add("總食物價錢+運費: $" + allTotal + "\n");
+        if (d.deliveryFee != null && !Math.isNaN(d.deliveryFee)) {
+            var allTotal = foodTotal + d.deliveryFee.nanIfNull();
+            if (!Math.isNaN(allTotal)) {
+                buf.add("總食物價錢+運費: $" + allTotal + "\n");
+                buf.add("\n");
+            }
+        } else {
+            buf.add("總食物價錢+運費: $" + foodTotal + " + 運費\n");
             buf.add("\n");
         }
 
@@ -70,7 +75,7 @@ class DeliveryTools {
         if (d.paymentMethods != null && d.paymentMethods.length > 0)
             buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
         if (d.pickupLocation != null)
-            buf.add(d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ") ($" + d.deliveryFee.nanIfNull() + ")\n");
+            buf.add(d.pickupLocation + " (" + (d.pickupMethod != null ? d.pickupMethod.info().name : "null") + ")" + (d.deliveryFee != null && !Math.isNaN(d.deliveryFee) ? " (運費 $" + d.deliveryFee + ")" : "") + "\n");
 
         if (d.customerNote != null)
             buf.add("⚠️ " + d.customerNote + "\n");
