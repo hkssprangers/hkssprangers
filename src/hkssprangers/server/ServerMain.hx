@@ -263,16 +263,12 @@ class ServerMain {
             trace("/start");
             return switch (ctx.chat.type) {
                 case "private":
-                    MySql.db.courier.where(r -> r.courierTgId == (cast ctx.from.id:Int) || r.courierTgUsername == ctx.from.username).first()
-                        .toJsPromise()
-                        .then(courierData -> {
-                            ctx.reply('你好!', {
-                                reply_markup: Markup.inlineKeyboard_([
-                                    Markup.loginButton_("登入落單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]), {
-                                        request_write_access: true,
-                                    }),
-                                ]),
-                            });
+                        ctx.reply('你好!', {
+                            reply_markup: Markup.inlineKeyboard_([
+                                Markup.loginButton_("登入落單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]), {
+                                    request_write_access: true,
+                                }),
+                            ]),
                         })
                         .catchError(failure -> {
                             trace(failure);
