@@ -305,7 +305,7 @@ class Database extends tink.sql.Database {
                             case Lunch: "L";
                             case Dinner: "D";
                         }
-                        delivery.where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotStart < end)
+                        delivery.where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotStart < end && d.deliveryCode.like(codePrefix + "%"))
                             .count()
                             .next(count -> {
                                 codePrefix + Std.string(count + 1).lpad("0", 2);
