@@ -25,7 +25,7 @@ class ZeppelinHotDogSKMMenu {
     static public final setOptions = [
         "細薯條",
         "大薯條 (+$5)",
-        "薯餅 (+$6)",
+        "薯餅",
         "牛油粟米杯",
         "冰菠蘿",
         "可樂",
@@ -44,7 +44,7 @@ class ZeppelinHotDogSKMMenu {
             "洋蔥圈(9件) $20",
             "雞塊(6件) $15",
             "雞塊(9件) $20",
-            "植系炸雞塊(4塊) $18",
+            // "植系炸雞塊(4塊) $18",
             "細薯格 $15",
             "大薯格 $22",
             "薯餅 $8",
