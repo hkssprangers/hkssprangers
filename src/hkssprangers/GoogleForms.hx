@@ -112,7 +112,7 @@ class GoogleForms {
                 } else {
                     throw "unknown date format: " + v;
                 }
-            case [_, _, null | "" | "明白了"]:
+            case [_, _, null | "" | "明白了" | "知道了"]:
                 null;
             case [_, "想幾時收到?", v]:
                 var dateReg = ~/([0-9]+)月([0-9]+)日/;
