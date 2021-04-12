@@ -1,6 +1,6 @@
 resource "aws_db_instance" "first" {
   engine                  = "mysql"
-  engine_version          = "8.0.20"
+  engine_version          = "8.0.23"
   instance_class          = "db.t2.micro"
   username                = "ssp"
   parameter_group_name    = "default.mysql8.0"
@@ -14,6 +14,7 @@ resource "aws_db_instance" "first" {
   publicly_accessible     = true
   skip_final_snapshot     = true
   deletion_protection     = true
+  apply_immediately       = true
   enabled_cloudwatch_logs_exports = [
     "error",
     "general",
