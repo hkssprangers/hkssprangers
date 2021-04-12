@@ -1,4 +1,4 @@
--- MariaDB dump 10.18  Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.9-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: mysql    Database: hkssprangers
 -- ------------------------------------------------------
@@ -29,6 +29,7 @@ INSERT INTO `flyway_schema_history` VALUES (6,'6','tgMessage updateData','SQL','
 INSERT INTO `flyway_schema_history` VALUES (7,'7','isAdmin','SQL','V7__isAdmin.sql',-684888593,'ssp','2020-11-28 05:03:45',861,1);
 INSERT INTO `flyway_schema_history` VALUES (8,'8','receiptTable','SQL','V8__receiptTable.sql',-1443645347,'root','2020-12-14 14:00:14',39,1);
 INSERT INTO `flyway_schema_history` VALUES (9,'9','contacts','SQL','V9__contacts.sql',1097319996,'root','2021-04-03 12:09:29',440,1);
+INSERT INTO `flyway_schema_history` VALUES (10,'10','tgMessage indexes','SQL','V10__tgMessage_indexes.sql',2096343071,'root','2021-04-12 14:50:58',1014,1);
 /*!40000 ALTER TABLE `flyway_schema_history` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -40,4 +41,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-03 12:09:40
+-- Dump completed on 2021-04-13  2:39:26

@@ -1,4 +1,4 @@
--- MariaDB dump 10.18  Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.9-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: mysql    Database: hkssprangers
 -- ------------------------------------------------------
@@ -67,10 +67,10 @@ CREATE TABLE `delivery` (
   `customerTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerTgId` int DEFAULT NULL,
   `customerTel` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `customerWhatsApp` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
-  `customerSignal` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerWhatsApp` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerSignal` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerPreferredContactMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `customerBackupContactMethod` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
+  `customerBackupContactMethod` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `customerNote` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`)
@@ -208,7 +208,13 @@ CREATE TABLE `tgMessage` (
   `messageData` json DEFAULT NULL,
   `updateType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `updateData` json DEFAULT NULL,
-  PRIMARY KEY (`tgMessageId`)
+  PRIMARY KEY (`tgMessageId`),
+  KEY `receiverId` (`receiverId`),
+  KEY `updateId` ((json_value(`updateData`, _utf8mb4'$.update_id' returning signed))),
+  KEY `messageId` ((json_value(`updateData`, _utf8mb4'$.message.message_id' returning signed))),
+  KEY `messageDate` ((json_value(`updateData`, _utf8mb4'$.message.date' returning signed))),
+  KEY `messageChatId` ((json_value(`updateData`, _utf8mb4'$.message.chat.id' returning signed))),
+  KEY `messageFromId` ((json_value(`updateData`, _utf8mb4'$.message.from.id' returning signed)))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -221,4 +227,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-03 12:09:40
+-- Dump completed on 2021-04-13  2:39:26

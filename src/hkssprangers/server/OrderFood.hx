@@ -103,6 +103,7 @@ class OrderFood extends View {
                 MySql.db.insertDeliveries(deliveries)
                     .toJsPromise()
                     .then(_ -> TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage))
+                    .then(_ -> ServerMain.notifyDeliveryRequestReceived(delivery))
                     .then(_ -> null);
             });
     }

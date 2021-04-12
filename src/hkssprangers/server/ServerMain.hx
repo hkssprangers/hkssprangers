@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import tink.sql.Expr.Functions;
 import haxe.crypto.Sha256;
 import tink.core.Error;
 import jsonwebtoken.verifier.BasicVerifier;
@@ -24,6 +25,7 @@ import fastify.*;
 import js.Node.*;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
+import comments.CommentString.*;
 using StringTools;
 using Lambda;
 using hkssprangers.info.DeliveryTools;
@@ -228,6 +230,40 @@ class ServerMain {
         return Promise.resolve(app);
     }
 
+    static public function notifyDeliveryRequestReceived(delivery:Delivery) {
+        switch (delivery.customerPreferredContactMethod) {
+            case Telegram:
+                tgMe.then(tgMe -> {
+                    MySql.db.tgMessage
+                        .where(r ->
+                            r.receiverId == (cast tgMe.id:Int)
+                            &&
+                            Functions.jsonValue(r.updateData, "$.message.from.id", VInt) == delivery.customer.tg.id
+                            &&
+                            Functions.jsonValue(r.updateData, "$.message.chat.type", VString) == "private"
+                        )
+                        .first()
+                        .toJsPromise()
+                        .then(tgm -> tgm.updateData.message.chat.id)
+                        .then(chatId -> {
+                            tgBot.telegram.sendMessage(
+                                chatId,
+                                comment(unindent, format)/**
+                                    我哋已經收到你嘅訂單。多謝支持🙇
+
+                                    ${delivery.print()}
+                                **/,
+                                {
+                                    disable_web_page_preview: true,
+                                }
+                            );
+                        });
+                });
+            case _:
+                throw "Unsupported";
+        }
+    }
+
     static function main() {
         tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgBot.catch_((err, ctx:Context) -> {
@@ -264,7 +300,13 @@ class ServerMain {
             switch (ctx.chat.type) {
                 case "private":
                         if (ctx.from.username == null) {
-                            return ctx.reply("唔好意思。我留意到你未設定 Telegram username。咁嘅話我哋嘅外賣員唔可以直接聯絡到你。麻煩你去設定返先，之後同我講 /start 🙏\n\n關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one");
+                            return ctx.reply(comment(unindent)/**
+                                唔好意思。我留意到你未設定 Telegram username。咁嘅話我哋嘅外賣員唔可以直接聯絡到你。
+
+                                麻煩你去設定返先，之後同我講 /start
+
+                                關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one
+                            **/);
                         }
                         return ctx.reply('你好！請㩒「登入落單」制。', {
                             reply_markup: Markup.inlineKeyboard_([
