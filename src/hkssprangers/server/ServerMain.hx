@@ -245,7 +245,7 @@ class ServerMain {
                     tgMessageId: null,
                     receiverId: cast me.id,
                     updateType: ctx.updateType,
-                    updateData: Json.stringify(ctx.update),
+                    updateData: ctx.update,
                 })
                     .toJsPromise()
                     .then(v -> {
