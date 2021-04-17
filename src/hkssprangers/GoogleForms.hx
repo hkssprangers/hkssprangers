@@ -43,6 +43,21 @@ class GoogleForms {
         ZeppelinHotDogSKM => "1ciZ6PlYlyjRcU_R1VEu_Xf7MloX9A3w-S_2edzd86HE",
     ];
 
+    static public final formUrls:Map<Shop, String> = [
+        YearsHK => "https://docs.google.com/forms/d/e/1FAIpQLSfKw5JY0no7Tgu7q0hT2LP05rJ23DCMRIcCjxfwyapfSMl-Bg/viewform",
+        TheParkByYears => "https://docs.google.com/forms/d/e/1FAIpQLSeJRVOAZM9L8pLe_qrdUj7gjWmQxf8Q1QIzMjQwBDXzxhRSDw/viewform",
+        EightyNine => "https://docs.google.com/forms/d/e/1FAIpQLSc48HZ4IZrZNM-LXBOf7NhrV2BGqlvqHBnAKodh4u4R5e283A/viewform",
+        DragonJapaneseCuisine => "https://docs.google.com/forms/d/e/1FAIpQLSfvb1PDjceErVgyogijVDxkN3pXu0djpBFzc_H59oqrdSH0mQ/viewform",
+        LaksaStore => "https://docs.google.com/forms/d/e/1FAIpQLSffligA-KWnAQsNPbshjYFJeE8s00XkKoXP0IbUYd0xZReotg/viewform",
+        DongDong => "https://docs.google.com/forms/d/e/1FAIpQLSfwCYsPYHdnFbkNUmwHQ1UZDwWTwUfJErCssoB3CI2afnueBg/viewform",
+        BiuKeeLokYuen => "https://docs.google.com/forms/d/e/1FAIpQLSdeYTBqB7Kvd-eIYhIVZuk0nEiEtgeQmedxKR1If2s9QkRKpg/viewform",
+        KCZenzero => "https://docs.google.com/forms/d/e/1FAIpQLSfiBRyzOSzsysdmwfPQcSmgJIBkTfoWalYe7sFuXUprOEV_hA/viewform",
+        Neighbor => "https://docs.google.com/forms/d/e/1FAIpQLSdosn59te6wdqpwlVQHKAZIzI_tEyQGh31fMbdUMgH5lnMW0A/viewform",
+        MGY => "https://docs.google.com/forms/d/e/1FAIpQLScylR1E3a5JBlQm1MNr04MyBx8_Kx1BXp3J0t0ZpXkQOvLUug/viewform",
+        FastTasteSSP => "https://docs.google.com/forms/d/e/1FAIpQLSdvZflTUNw8NgsVbzfvySH-UctceKeNggwWZtLZhLw5HgKxfw/viewform",
+        ZeppelinHotDogSKM => "https://docs.google.com/forms/d/e/1FAIpQLSfKOxMMu0JK8POfaLHfOdYUWqiQ9aWL6EBQ2xruD_F9ZK2FXQ/viewform",
+    ];
+
     static public function getResponseSheet(token:Promise<String>, shop:Shop):Promise<GoogleSpreadsheet> {
         var doc = new GoogleSpreadsheet(responseSheetId[shop]);
         return token

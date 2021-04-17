@@ -220,7 +220,7 @@ class ServerMain {
 
         app.get("/tgAuth", tgAuth);
         app.get("/login", LogIn.middleware);
-        app.get("/", index);
+        Index.setup(app);
         OrderFood.setup(app);
         Admin.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {

@@ -1,160 +1,286 @@
 button:focus {
-    outline: none;
+  outline: none;
 }
 
-html, body {
-    height:100%;
-    margin:0;
-    background-color: #EEE;
+html {
+  height: 100%;
+  margin: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  margin: 0;
+  background: #f7f2ec;
+  display: flex;
+  flex-direction: column;
+  
+  background-attachment: fixed;
+  background-image: url(../images/ssp-bg-dot.png);
+  background-repeat: repeat-x;
+  background-position: 0 290%;
+  background-size: auto 80%;
 }
 
 * {
-    font-family: 'Noto Sans HK', sans-serif;
+  font-family: 'Noto Sans HK', sans-serif;
 }
 
 html.fontSize-larger {
-    font-size: larger;
+  font-size: larger;
 }
 
 footer {
-    margin-top: auto;
-    padding-top: 1rem;
-    text-align: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  text-align: center;
 }
 
 a {
-    color: #007bff;
+  color: #007bff;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #CustomerView .MuiContainer-root {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    background-color: white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: white;
 }
 
 #logo {
-    width: 10em;
-    margin: 1em;
+  width: 10em;
+  margin: 1em;
 }
 
 #CustomerView .MuiTypography-h2 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 #CustomerView .MuiTypography-h3 {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
-.order-content > * {
-    padding-bottom: 1rem;
+.order-content>* {
+  padding-bottom: 1rem;
 }
 
-.order-content > *:last-child {
-    padding-bottom: 0;
+.order-content>*:last-child {
+  padding-bottom: 0;
 }
 
 .order-content .is-not-editing .MuiCardHeader-root {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .order-content .is-not-editing .MuiCardHeader-action {
-    padding-top: 0.25rem;
+  padding-top: 0.25rem;
 }
 
 .order-content .MuiCardContent-root {
-    padding-top: 0.1em;
+  padding-top: 0.1em;
 }
 
 #CustomerView .MuiFormControl-root {
-    width: 100%;
-    margin-bottom: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 #CustomerView .MuiDivider-root {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 body .MuiPickersDay-current {
-    border: 2px solid #3f51b5;
+  border: 2px solid #3f51b5;
 }
 
 .date-picker .MuiInputBase-input {
-    text-align: center;
+  text-align: center;
 }
 
-
 .delivery-card {
-    width: 100%;
+  width: 100%;
 }
 
 @media (min-width: 576px) {
-    .delivery-card {
-        min-width: 556px;
-    }
+  .delivery-card {
+    min-width: 556px;
+  }
 }
 
 .delivery-card .MuiFormControl-root {
-    display: flex;
+  display: flex;
 }
 
 .delivery-card .MuiInputBase-input {
-    line-height: 1.5;
+  line-height: 1.5;
 }
 
 .delivery-card .MuiFormControl-root {
-    margin: 0 0 0.2em 0;
+  margin: 0 0 0.2em 0;
 }
 
 .delivery-card .MuiFilledInput-root {
-    background-color: #EEE;
+  background-color: #EEE;
 }
 
 legend.MuiFormLabel-root {
-    font-size: small;
+  font-size: small;
 }
 
 .deleteBtn {
-    width: 1.5em;
-    height: 1.5em;
+  width: 1.5em;
+  height: 1.5em;
 }
 
 .courierTgInuput {
-    min-width: 5em;
+  min-width: 5em;
 }
 
-.MuiIconButton-root .MuiIconButton-label > i:only-child {
-    width: 1.1em;
-    height: 1.1em;
-    display: inline-block;
+.MuiIconButton-root .MuiIconButton-label>i:only-child {
+  width: 1.1em;
+  height: 1.1em;
+  display: inline-block;
 }
 
 .receipt ol {
-    margin-bottom: 0;
-    list-style: none;
-    padding-inline-start: 0;
-    line-height: 2em;
+  margin-bottom: 0;
+  list-style: none;
+  padding-inline-start: 0;
+  line-height: 2em;
 }
 
 a.myDelivery {
-    border: 2px solid #ffc;
-    background: #ffc;
+  border: 2px solid #ffc;
+  background: #ffc;
 }
 
 #IndexView .MuiFormLabel-root.Mui-disabled {
-    color: inherit;
+  color: inherit;
 }
 
 #IndexView .MuiInputBase-root.Mui-disabled {
-    color: inherit;
+  color: inherit;
+}
+
+.poppins {
+  font-family: 'Poppins';
+}
+
+.bg-bowl {
+  background: url(../images/ssp-bg-dot.png);
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.cover-img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(../images/the-park-by-years.jpg);
+}
+
+.ice-cream {
+  background: url(../images/ssp-icecream.png);
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 25%;
+}
+
+@media(min-width: 768px) {
+  .ice-cream {
+    background: url(../images/ssp-icecream.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 22%;
+  }
+}
+
+@media(min-width: 1024px) {
+  .ice-cream {
+    background: url(../images/ssp-icecream.png);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 50%;
+  }
+}
+
+.blabla {
+  background: url(../images/bla.png);
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 25%;
+}
+
+@media(min-width: 768px) {
+  .blabla {
+    background: url(../images/bla.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 22%;
+  }
+}
+
+@media(min-width: 1024px) {
+  .blabla {
+    background: url(../images/bla.png);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 80%;
+  }
+}
+
+.bg-curve {
+  background: url(../images/bg-curve.svg);
+  background-size: 5%;
+  background-position: center;
+  background-repeat: repeat no-repeat;
+}
+
+.align-center-hover {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  opacity: 0;
+  transition-duration: 100ms;
+}
+
+.menu:hover .align-center-hover {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.menu:hover .btn-menu::before {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAALklEQVQYVxXLwQ0AIAyAQNjPbXW+Yvo9gtNcAhTruGCuHeE501VO9DbYtMPLEPj28RwMvKvlJAAAAABJRU5ErkJggg==) repeat;
+  position: absolute;
+  transition-duration: 50ms;
+  z-index: 1;
+}
+
+.highlight {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAPElEQVQYVyWL0QnAIBTELth56iKv04qDaMfRckW9j0AIB1o7HG8YwdbRw9ddAKTZHqdcYPWvh1OuSN7XHwFBESW6niP2AAAAAElFTkSuQmCC);
+  background-repeat: repeat-x;
+  background-position: 0px calc(1em - 2px);
+}
+
+.squircle {
+  -webkit-mask-image: url(../images/squircle.svg);
+  -webkit-mask-size: cover;
+  mask-image: url(../images/squircle.svg);
+  mask-size: cover;
+  z-index: 0;
+}
+
+.btn-menu p {
+  z-index: 2;
+}
+
+.bg-body {
+  background: #f7f2ec;
 }

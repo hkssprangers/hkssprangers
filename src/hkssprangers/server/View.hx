@@ -148,16 +148,19 @@ class View extends ReactComponent {
 
     function bodyContent() return null;
 
+    function footer() return jsx('
+        <footer className="p-6 text-center">
+            <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank">Charley</a></p>
+            <p>&copy; 2020-2021 ${name}</p>
+        </footer>
+    ');
+
     function body() return jsx('
         <body className=${bodyClasses().join(" ")} {...bodyAttributes()}>
             <div id="content">
                 ${bodyContent()}
             </div>
-            <footer>
-                <p>
-                    Copyright (C) 2020-2021  ${name}
-                </p>
-            </footer>
+            ${footer()}
             ${footJs()}
         </body>
     ');
