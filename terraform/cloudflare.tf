@@ -39,3 +39,10 @@ resource "cloudflare_record" "dev" {
   value   = "d-ip6lixd84a.execute-api.ap-southeast-1.amazonaws.com"
   type    = "CNAME"
 }
+
+resource "cloudflare_record" "facebook-domain-verification" {
+  zone_id = cloudflare_zone.ssprangers.id
+  name    = "ssprangers.com"
+  value   = "facebook-domain-verification=jsmou9muxf1ful63ux8f80ppc20qfn"
+  type    = "TXT"
+}
