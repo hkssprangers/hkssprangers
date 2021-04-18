@@ -14,13 +14,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/haxe
-            node_modules
-            terraform/.terraform
-          key: ${{ runner.os }}
+      - name: Link workspace
+        run: |
+          ln -s /workspace/node_modules .
+          ln -s /workspace/lib/dts2hx .
       - name: Build tailwind
         run: yarn tailwind
         env:
