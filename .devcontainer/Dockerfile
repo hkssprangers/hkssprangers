@@ -66,6 +66,14 @@ RUN cd / \
 # Install yq
 RUN wget https://github.com/mikefarah/yq/releases/download/v4.7.0/yq_linux_amd64.tar.gz -O - | tar xz && mv yq_linux_amd64 /usr/bin/yq
 
+WORKDIR /workspace
+ENV YARN_CACHE_FOLDER=/yarn
+ENV HAXESHIM_ROOT=/haxe
+COPY workspace/package.json workspace/yarn.lock /workspace/
+RUN yarn
+COPY workspace /workspace/
+RUN mkdir -p "$HAXESHIM_ROOT" && lix download
+
 # Expose pip installed binaries
 ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 
@@ -76,3 +84,4 @@ ENV DEBIAN_FRONTEND=
 # to the Docker socket. The script will also execute CMD as needed.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
+USER vscode

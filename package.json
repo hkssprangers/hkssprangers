@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tailwind": "tailwindcss-cli build -o static/css/tailwind.css",
+    "dts2hx": "dts2hx telegraf @types/js-cookie moment copy-to-clipboard fastify @types/accepts aws-serverless-fastify google-auth-library abort-controller @types/promise-retry ajv node-ical --noLibWrap --output lib/dts2hx",
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
