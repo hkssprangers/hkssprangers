@@ -3,7 +3,6 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "workspace",
 	"workspaceFolder": "/workspace",
-	"postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},

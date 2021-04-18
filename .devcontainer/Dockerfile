@@ -73,6 +73,8 @@ COPY workspace/package.json workspace/yarn.lock /workspace/
 RUN yarn
 COPY workspace /workspace/
 RUN mkdir -p "$HAXESHIM_ROOT" && lix download
+RUN yarn dts2hx
+VOLUME /workspace/node_modules /workspace/lib/dts2hx
 
 # Expose pip installed binaries
 ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"

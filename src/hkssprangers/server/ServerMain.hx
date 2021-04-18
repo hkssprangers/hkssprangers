@@ -1,5 +1,7 @@
 package hkssprangers.server;
 
+import sys.io.File;
+import sys.FileSystem;
 import tink.sql.Expr.Functions;
 import haxe.crypto.Sha256;
 import tink.core.Error;

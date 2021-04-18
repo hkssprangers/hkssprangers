@@ -16,3 +16,4 @@
 -D react_skip_extend_component_restriction
 -D no-deprecation-warnings
 --dce full
+--macro hkssprangers.server.Macros.build()

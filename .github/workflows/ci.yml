@@ -9,7 +9,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210419001527"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210419030920"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,8 +21,6 @@ jobs:
             node_modules
             terraform/.terraform
           key: ${{ runner.os }}
-      - name: Run postCreateCommand
-        run: bash ./.devcontainer/postCreateCommand.sh
       - name: Build tailwind
         run: yarn tailwind
         env:
