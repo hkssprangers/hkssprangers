@@ -1,9 +1,10 @@
 version: '3'
 services:
   workspace:
-    # build: .
-    image: hkssprangers/hkssprangers_devcontainer_workspace:20210405182612
+    image: hkssprangers/hkssprangers_devcontainer_workspace:20210418171301
+    init: true
     volumes:
+      - /var/run/docker.sock:/var/run/docker-host.sock
       - ..:/workspace:cached
       - node_modules:/workspace/node_modules
     environment:
@@ -16,7 +17,8 @@ services:
       - "3000:3000"
       - "80:3000"
       - "443:3000"
-    user: user
+    user: vscode
+    entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity
   mysql:
     image: mysql:8.0
@@ -29,6 +31,5 @@ services:
     volumes:
       - ../dev/initdb:/docker-entrypoint-initdb.d
     restart: unless-stopped
-
 volumes:
   node_modules:
