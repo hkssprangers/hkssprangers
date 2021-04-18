@@ -84,4 +84,3 @@ ENV DEBIAN_FRONTEND=
 # to the Docker socket. The script will also execute CMD as needed.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
-USER vscode
