@@ -3095,10 +3095,10 @@ fastify-static@^4.0.1:
     readable-stream "^3.4.0"
     send "^0.17.1"
 
-fastify-telegraf@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/fastify-telegraf/-/fastify-telegraf-1.0.1.tgz#c6b5fca79c692cfec5862cae95226d1a0ba186e8"
-  integrity sha512-w1qVCY0tAOzuYiUovjhVSWqwWig6IlAEutx8cf8SuhJTfubZDfcRw92YO99elL8fjW1HwxNgPXk696ERdQph/Q==
+fastify-telegraf@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/fastify-telegraf/-/fastify-telegraf-1.0.2.tgz#884760b4c9c68f1b15b29c92fc9b71a7d73fb1cb"
+  integrity sha512-7HNZLmkAcQj3Imr4ONpEQhQOtqJHFyq4lk6T7F8WxvrwNm2azqkGKKW/icGQ9D69frskTYFxIzo5fMzxzbWUaQ==
   dependencies:
     fastify-plugin "^3.0.0"
 
