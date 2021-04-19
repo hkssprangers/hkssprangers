@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import twilio.lib.twiml.MessagingResponse;
 import sys.io.File;
 import sys.FileSystem;
 import tink.sql.Expr.Functions;
@@ -36,7 +37,7 @@ using hkssprangers.server.FastifyTools;
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
     static public final deployStage:DeployStage = Sys.getEnv("DEPLOY_STAGE");
-    static public final host = switch (Sys.getEnv("SERVER_HOST")) {
+    static public var host = switch (Sys.getEnv("SERVER_HOST")) {
         case null: "127.0.0.1";
         case v: v;
     }
@@ -44,6 +45,8 @@ class ServerMain {
     static public var tgBot:Telegraf<Dynamic>;
     static public var tgMe:Promise<TgUser>;
     static public final tgBotWebHook = '/tgBot/${TelegramConfig.tgBotToken}';
+
+    static public var twilio:twilio.Twilio;
 
     static public final authCookieName = "auth";
 
@@ -71,6 +74,40 @@ class ServerMain {
 
     static function index(req:Request, reply:Reply):Promise<Dynamic> {
         reply.redirect("https://www.facebook.com/hkssprangers");
+        return Promise.resolve();
+    }
+
+    static function twilioWebhook(req:Request, reply:Reply):Promise<Dynamic> {
+        var twilioSignature = (req.headers:DynamicAccess<String>)["x-twilio-signature"];
+        var reqBody:{
+            SmsMessageSid:String,
+            NumMedia:String,
+            ProfileName:String,
+            SmsSid:String,
+            WaId:String, // 852xxxxxxxx
+            SmsStatus:String, // "received"
+            Body:String,
+            To:String, // "whatsapp:+852xxxxxxxx"
+            NumSegments:String,
+            MessageSid:String,
+            AccountSid:String,
+            From:String, // "whatsapp:+852xxxxxxxx"
+            ApiVersion:String, // "2010-04-01"
+        } = req.body;
+        if (reqBody.AccountSid != TwilioConfig.sid) {
+            trace("Wrong Twilio account sid.");
+            reply.status(ErrorCode.Unauthorized).send("Wrong Twilio account sid.");
+            return Promise.resolve();
+        }
+        if (!Twilio.validateRequest(TwilioConfig.authToken, twilioSignature, Path.join(["https://" + host, "twilio"]), reqBody)) {
+            trace("Request validation failed.");
+            reply.status(ErrorCode.Unauthorized).send("Request validation failed.");
+            return Promise.resolve();
+        }
+        // trace(haxe.Json.stringify(reqBody, null, "  "));
+        var twiml = new MessagingResponse();
+        twiml.message("The Robots are coming! Head for the hills!");
+        reply.type("text/xml").send(twiml.toString());
         return Promise.resolve();
     }
 
@@ -190,6 +227,7 @@ class ServerMain {
         //     return tgBot.handleUpdate(req.body, reply.raw);
         // });
 
+        app.register(require('fastify-formbody'));
         app.register(require('fastify-cookie'));
         app.register(require('fastify-accepts'));
 
@@ -221,6 +259,7 @@ class ServerMain {
         app.addHook("onRequest", noTrailingSlash);
 
         app.get("/tgAuth", tgAuth);
+        app.post("/twilio", twilioWebhook);
         app.get("/login", LogIn.middleware);
         Index.setup(app);
         OrderFood.setup(app);
@@ -326,6 +365,8 @@ class ServerMain {
             }
         });
 
+        twilio = Twilio.call(TwilioConfig.sid, TwilioConfig.authToken);
+
         if (isMain) {
             var ngrok:Dynamic = require("ngrok");
             // properly shutdown when restarted by nodemon
@@ -353,6 +394,7 @@ class ServerMain {
                         }).then(_ -> {
                             Sys.println('https://' + host);
                             Sys.println(url);
+                            host = new URL(url).host;
                             var hook = Path.join([url, tgBotWebHook]);
                             tgBot.telegram.setWebhook(hook)
                                 .then(_ -> tgMe)
