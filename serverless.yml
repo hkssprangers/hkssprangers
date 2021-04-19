@@ -20,6 +20,8 @@ provider:
     FORM_READER_EMAIL: ${env:FORM_READER_EMAIL}
     FORM_READER_PRIVATE_KEY: ${env:FORM_READER_PRIVATE_KEY}
     JWT_SECRET: ${env:JWT_SECRET}
+    TWILIO_SID: ${env:TWILIO_SID}
+    TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
   iam:
     role:
       statements:
