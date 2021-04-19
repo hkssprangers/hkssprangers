@@ -19,7 +19,7 @@ class TimeSlotTools {
         { start: "18:00:00", end: "19:00:00", cutoff: "18:00:00" },
         { start: "18:30:00", end: "19:30:00", cutoff: "18:30:00" },
         { start: "19:00:00", end: "20:00:00", cutoff: "19:00:00" },
-        { start: "19:30:00", end: "20:30:00", cutoff: "19:30:00" },
+        { start: "19:30:00", end: "20:30:00", cutoff: "19:00:00" },
     ];
 
     static public function nextTimeSlots(currentTime:Date):Array<TimeSlot> {
