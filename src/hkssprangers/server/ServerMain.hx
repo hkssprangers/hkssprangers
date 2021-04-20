@@ -78,6 +78,7 @@ class ServerMain {
     }
 
     static function twilioWebhook(req:Request, reply:Reply):Promise<Dynamic> {
+        var now = Date.now();
         var twilioSignature = (req.headers:DynamicAccess<String>)["x-twilio-signature"];
         var reqBody:{
             SmsMessageSid:String,
@@ -105,10 +106,16 @@ class ServerMain {
             return Promise.resolve();
         }
         // trace(haxe.Json.stringify(reqBody, null, "  "));
-        var twiml = new MessagingResponse();
-        twiml.message("The Robots are coming! Head for the hills!");
-        reply.type("text/xml").send(twiml.toString());
-        return Promise.resolve();
+        return MySql.db.twilioMessage.insertOne({
+            twilioMessageId: null,
+            creationTime: now,
+            data: reqBody,
+        }).toJsPromise()
+            .then(_ -> {
+                var twiml = new MessagingResponse();
+                twiml.message("The Robots are coming! Head for the hills!");
+                reply.type("text/xml").send(twiml.toString());
+            });
     }
 
     static function tgAuth(req:Request, reply:Reply):Promise<Dynamic> {

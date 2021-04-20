@@ -43,6 +43,9 @@ class Database extends tink.sql.Database {
     @:table("tgMessage")
     final tgMessage:TgMessage;
 
+    @:table("twilioMessage")
+    final twilioMessage:TwilioMessage;
+
     public function getDeliveries(pickupTimeSlotStart:LocalDateString, ?pickupTimeSlotEnd:LocalDateString):Promise<Array<hkssprangers.info.Delivery>> {
         if (pickupTimeSlotEnd == null)
             pickupTimeSlotEnd = Date.fromTime(pickupTimeSlotStart.toDate().getTime() + DateTools.days(1));

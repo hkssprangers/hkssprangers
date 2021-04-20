@@ -217,6 +217,25 @@ CREATE TABLE `tgMessage` (
   KEY `messageFromId` ((json_value(`updateData`, _utf8mb4'$.message.from.id' returning signed)))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `twilioMessage`
+--
+
+DROP TABLE IF EXISTS `twilioMessage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `twilioMessage` (
+  `twilioMessageId` int NOT NULL AUTO_INCREMENT,
+  `creationTime` timestamp NOT NULL,
+  `data` json NOT NULL,
+  PRIMARY KEY (`twilioMessageId`),
+  KEY `_To` ((json_value(`data`, _utf8mb4'$.To' returning char(512)))),
+  KEY `_From` ((json_value(`data`, _utf8mb4'$.From' returning char(512)))),
+  KEY `_AccountSid` ((json_value(`data`, _utf8mb4'$.AccountSid' returning char(512)))),
+  KEY `_MessageSid` ((json_value(`data`, _utf8mb4'$.MessageSid' returning char(512))))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -227,4 +246,4 @@ CREATE TABLE `tgMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-13  2:39:26
+-- Dump completed on 2021-04-21  1:48:58
