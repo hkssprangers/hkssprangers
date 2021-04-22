@@ -152,6 +152,12 @@ class View extends ReactComponent {
         <footer className="p-6 text-center">
             <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank">Charley</a></p>
             <p>&copy; 2020-2021 ${name}</p>
+            <div className="my-3 flex justify-center">
+                <a className="mx-2" href="https://www.facebook.com/hkssprangers"><i className="text-xl text-black fab fa-facebook-f"></i></a>
+                <a className="mx-2" href="https://www.instagram.com/hkssprangers/"><i className="text-xl text-black fab fa-instagram"></i></a>
+                <a className="mx-2" href="https://t.me/hkssprangers"><i className="text-xl text-black fab fa-telegram-plane"></i></a>
+                <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers"><img className="w-12" src="images/mewe.png" alt="MeWe" /></a>
+            </div>
         </footer>
     ');
 
