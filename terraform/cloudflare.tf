@@ -46,3 +46,10 @@ resource "cloudflare_record" "facebook-domain-verification" {
   value   = "facebook-domain-verification=jsmou9muxf1ful63ux8f80ppc20qfn"
   type    = "TXT"
 }
+
+resource "cloudflare_record" "google-search-console-verification" {
+  zone_id = cloudflare_zone.ssprangers.id
+  name    = "ssprangers.com"
+  value   = "google-site-verification=zQFfIq4Ga3UXepK3AoXpDvKwpKgBFQySpAkTM9N1_Zc"
+  type    = "TXT"
+}
