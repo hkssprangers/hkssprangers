@@ -37,7 +37,7 @@
     "xlsx": "^0.16.9"
   },
   "dependencies": {
-    "aws-sdk": "^2.826.0",
+    "aws-sdk": "^2.892.0",
     "aws-serverless-fastify": "https://github.com/andyli/aws-serverless-fastify.git#multiValueHeaders",
     "fastify": "^3.15.0",
     "fastify-accepts": "^2.0.1",
