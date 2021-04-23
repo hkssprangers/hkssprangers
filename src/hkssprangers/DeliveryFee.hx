@@ -956,6 +956,30 @@ class DeliveryFee {
                 case PakTinCluster: 25;
             }
         },
+        {
+            place: "建和閣",
+            match: address -> address.contains("建和閣"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+            }
+        },
+        {
+            place: "金安大廈",
+            match: address -> address.contains("金安大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
