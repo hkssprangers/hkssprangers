@@ -5300,10 +5300,10 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngrok@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ngrok/-/ngrok-4.0.0.tgz#31a7b15b3b7c899f3461e4e4cfb32603692ab3fb"
-  integrity sha512-fECZeX/gSHnk+Re+ycIK0SDKeTV0G86mxc6n2hbqMNwqmxYqh0lfInjZG+QhsPyAOWiIsAteydP/jFPF/WIWCA==
+ngrok@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ngrok/-/ngrok-4.0.1.tgz#1c472f67a1d193788072db4029898021ebda1f41"
+  integrity sha512-1RDEaP6urGt8dVzZ68mlf1799VXucJ3bEcNDOSwWoGUjgXS7MxMw+ngyw/2H/O+EMk1Fj1+Md2Au595rB4lG5w==
   dependencies:
     "@types/node" "^8.10.50"
     decompress-zip "^0.3.2"
