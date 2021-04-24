@@ -353,6 +353,7 @@ class ServerMain {
     }
 
     static public function notifyDeliveryRequestReceived(delivery:Delivery) {
+        trace(notifyDeliveryRequestReceived);
         var deliveryText = delivery.print(switch (delivery.customerPreferredContactMethod) {
             case WhatsApp:
                 { noLink: true }
@@ -364,6 +365,7 @@ class ServerMain {
             我哋已經收到你嘅訂單：
             ${deliveryText}
         **/;
+        trace(msg);
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
@@ -393,6 +395,9 @@ class ServerMain {
                     from: "whatsapp:+85264507612",
                     to: 'whatsapp:+852' + delivery.customer.tel,
                     body: msg,
+                }).then(msg -> {
+                    trace(msg);
+                    null;
                 });
             case _:
                 throw "Unsupported";
