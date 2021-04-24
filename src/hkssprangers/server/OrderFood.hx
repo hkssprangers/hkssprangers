@@ -95,6 +95,7 @@ class OrderFood extends View {
                 var now = Date.now();
                 var delivery = OrderFormSchema.formDataToDelivery(formData, user);
                 delivery.creationTime = now;
+                delivery.deliveryCode = null;
                 for (o in delivery.orders) {
                     o.creationTime = now;
                 }
@@ -102,7 +103,17 @@ class OrderFood extends View {
 
                 MySql.db.insertDeliveries(deliveries)
                     .toJsPromise()
-                    .then(_ -> TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage))
+                    .then(ids -> MySql.db.delivery
+                        .select({
+                            deliveryCode: delivery.deliveryCode,
+                        })
+                        .where(f -> f.deliveryId == ids[0]).first()
+                        .toJsPromise()
+                    )
+                    .then(result -> {
+                        delivery.deliveryCode = result.deliveryCode;
+                        TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage);
+                    })
                     .then(_ -> ServerMain.notifyDeliveryRequestReceived(delivery))
                     .then(_ -> null);
             });

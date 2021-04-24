@@ -106,15 +106,88 @@ class ServerMain {
             return Promise.resolve();
         }
         // trace(haxe.Json.stringify(reqBody, null, "  "));
-        return MySql.db.twilioMessage.insertOne({
+
+        var promises:Array<Promise<Dynamic>> = [];
+        promises.push(MySql.db.twilioMessage.insertOne({
             twilioMessageId: null,
             creationTime: now,
             data: reqBody,
-        }).toJsPromise()
-            .then(_ -> {
-                var twiml = new MessagingResponse();
-                twiml.message("The Robots are coming! Head for the hills!");
-                reply.type("text/xml").send(twiml.toString());
+        }).toJsPromise());
+
+        if (reqBody.Body.trim() == "登入落單") {
+            var validDays = 90;
+            var expires = Date.fromTime(now.getTime() + DateTools.days(validDays));
+            
+            var r = ~/^whatsapp:\+852([0-9]{8})$/;
+            if (!r.match(reqBody.From)) {
+                throw "Cannot parse from whatsapp number";
+            }
+            var tel = r.matched(1);
+
+            var payload:CookiePayload = {
+                iss: jwtIssuer,
+                iat: now,
+                exp: expires,
+                sub: {
+                    login: WhatsApp,
+                    tel: tel,
+                }
+            }
+            promises.push(
+                jwtSigner.sign(cast payload)
+                .toJsPromise()
+                .then(signed -> {
+                    var link = Path.join(["https://" + host, "jwtAuth?redirectTo=%2Forder-food&jwt=" + signed]);
+                    var twiml = new MessagingResponse();
+                    twiml.message(comment(unindent, format)/**
+                        你好！以下登入連結 ${validDays} 日內有效。你可以隨時再同我講「登入落單」拎個新嘅登入連結。
+                        ${link}
+                    **/);
+                    reply.type("text/xml").send(twiml.toString());
+                })
+            );
+        } else {
+            var twiml = new MessagingResponse();
+            twiml.message(comment(unindent, format)/**
+                唔好意思。我唔係好識「登入落單」以外嘅嘢...
+                如果有問題，麻煩你聯絡返我哋 Facebook，會有真人回答你 🙇‍
+                https://m.me/hkssprangers
+            **/);
+            reply.type("text/xml").send(twiml.toString());
+        }
+        return Promise.all(promises);
+    }
+
+    static function jwtAuth(req:Request, reply:Reply):Promise<Dynamic> {
+        var redirectTo = switch (req.query.redirectTo:String) {
+            case null:
+                "/";
+            case redirectTo:
+                redirectTo;
+        }
+        var jwt = switch (req.query.jwt:String) {
+            case null:
+                reply.status(400).send("Missing jwt");
+                return Promise.resolve();
+            case jwt:
+                jwt;
+        }
+
+        return ServerMain.jwtVerifier.verify(jwt)
+            .toJsPromise()
+            .then(token -> {
+                var payload:CookiePayload = cast token;
+                reply.setCookie(authCookieName, jwt, {
+                    secure: true,
+                    sameSite: 'strict',
+                    expires: payload.exp.toDate(),
+                    httpOnly: true,
+                })
+                .redirect(redirectTo);
+            })
+            .catchError(err -> {
+                reply.status(400).send('Token failed validation.\n\n' + err);
+                return Promise.resolve();
             });
     }
 
@@ -266,6 +339,7 @@ class ServerMain {
         app.addHook("onRequest", noTrailingSlash);
 
         app.get("/tgAuth", tgAuth);
+        app.get("/jwtAuth", jwtAuth);
         app.post("/twilio", twilioWebhook);
         app.get("/login", LogIn.middleware);
         Index.setup(app);
@@ -279,6 +353,17 @@ class ServerMain {
     }
 
     static public function notifyDeliveryRequestReceived(delivery:Delivery) {
+        var deliveryText = delivery.print(switch (delivery.customerPreferredContactMethod) {
+            case WhatsApp:
+                { noLink: true }
+            case _:
+                null;
+        });
+        var msg = comment(unindent, format)/**
+            多謝支持🙇
+            我哋已經收到你嘅訂單：
+            ${deliveryText}
+        **/;
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
@@ -296,16 +381,18 @@ class ServerMain {
                         .then(chatId -> {
                             tgBot.telegram.sendMessage(
                                 chatId,
-                                comment(unindent, format)/**
-                                    我哋已經收到你嘅訂單。多謝支持🙇
-
-                                    ${delivery.print()}
-                                **/,
+                                msg,
                                 {
                                     disable_web_page_preview: true,
                                 }
                             );
                         });
+                });
+            case WhatsApp:
+                twilio.messages.create({
+                    from: "whatsapp:+85264507612",
+                    to: 'whatsapp:+852' + delivery.customer.tel,
+                    body: msg,
                 });
             case _:
                 throw "Unsupported";

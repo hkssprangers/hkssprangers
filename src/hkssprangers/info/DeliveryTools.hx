@@ -11,18 +11,24 @@ using Lambda;
 using StringTools;
 
 class DeliveryTools {
-    static function printCustomerContact(customer:Customer, contactMethod:ContactMethod) {
+    static function printCustomerContact(customer:Customer, contactMethod:ContactMethod, noLink = false) {
         return switch (contactMethod) {
             case null:
                 null;
             case Telegram:
-                customer.tg.print();
+                customer.tg.print(!noLink);
             case WhatsApp:
                 switch (customer) {
                     case { whatsApp: tel} if (tel != null):
-                        'https://wa.me/852${tel}';
+                        if (!noLink)
+                            'https://wa.me/852${tel}';
+                        else
+                            'WhatsApp:${tel}';
                     case { tel: tel} if (tel != null):
-                        'https://wa.me/852${tel}';
+                        if (!noLink)
+                            'https://wa.me/852${tel}';
+                        else
+                            'WhatsApp:${tel}';
                     case _:
                         null;
                 }
@@ -32,7 +38,9 @@ class DeliveryTools {
                 'tel:${customer.tel}';
         }
     }
-    static public function print(d:Delivery):String {
+    static public function print(d:Delivery, ?opts:{
+        ?noLink:Bool,
+    }):String {
         var buf = new StringBuf();
 
         buf.add("📃 " + d.deliveryCode + "\n");
@@ -64,13 +72,13 @@ class DeliveryTools {
             case null:
                 //pass
             case m:
-                buf.add(printCustomerContact(d.customer, m) + " 👈\n");
+                buf.add(printCustomerContact(d.customer, m, opts == null ? false : opts.noLink) + " 👈\n");
         }
         switch (d.customerBackupContactMethod) {
             case null:
                 //pass
             case m:
-                buf.add(printCustomerContact(d.customer, m) + "\n");
+                buf.add(printCustomerContact(d.customer, m, opts == null ? false : opts.noLink) + "\n");
         }
         if (d.paymentMethods != null && d.paymentMethods.length > 0)
             buf.add(d.paymentMethods.map(p -> p.info().name).join(", ") + "\n");
