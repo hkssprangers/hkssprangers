@@ -266,7 +266,9 @@ class OrderFormSchema {
                 delivery.customer.tg = tg;
             case {login: WhatsApp, tel: tel}:
                 delivery.customerPreferredContactMethod = WhatsApp;
-                delivery.customer.tel = tel;
+                delivery.customer.whatsApp = tel;
+            case _:
+                throw "Unknown login: " + user;
         }
 
         switch formData.backupContactMethod {

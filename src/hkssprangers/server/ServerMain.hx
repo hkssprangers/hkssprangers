@@ -393,7 +393,7 @@ class ServerMain {
             case WhatsApp:
                 twilio.messages.create({
                     from: "whatsapp:+85264507612",
-                    to: 'whatsapp:+852' + delivery.customer.tel,
+                    to: 'whatsapp:+852' + delivery.customer.whatsApp,
                     body: msg,
                 }).then(msg -> {
                     trace(msg);
