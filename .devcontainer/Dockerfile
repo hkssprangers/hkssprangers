@@ -38,6 +38,7 @@ RUN apt-get update \
         libnss3-tools \
         direnv \
         tzdata \
+        imagemagick \
     && echo 'eval "$(direnv hook bash)"' >> /etc/bash.bashrc \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs=12.* \

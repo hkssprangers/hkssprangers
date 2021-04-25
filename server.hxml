@@ -13,6 +13,7 @@
 --library CommentString
 --library jsonwebtoken
 --library hxLINQ
+--library format
 -D react_skip_extend_component_restriction
 -D no-deprecation-warnings
 --dce full

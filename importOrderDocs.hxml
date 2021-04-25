@@ -4,6 +4,7 @@
 --library tink_sql
 --library hxnodejs
 --library thx.core
+--library format
 --class-path src
 --class-path test
 --class-path lib/hxnodelibs

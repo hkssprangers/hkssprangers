@@ -156,7 +156,7 @@ class View extends ReactComponent {
                 <a className="mx-2" href="https://www.facebook.com/hkssprangers"><i className="text-xl text-black fab fa-facebook-f"></i></a>
                 <a className="mx-2" href="https://www.instagram.com/hkssprangers/"><i className="text-xl text-black fab fa-instagram"></i></a>
                 <a className="mx-2" href="https://t.me/hkssprangers"><i className="text-xl text-black fab fa-telegram-plane"></i></a>
-                <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers"><img className="w-12" src="images/mewe.png" alt="MeWe" /></a>
+                <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers">${StaticResource.image("/images/mewe.png", "MeWe", "w-12")}</a>
             </div>
         </footer>
     ');

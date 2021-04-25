@@ -1,6 +1,7 @@
 package hkssprangers;
 
 import sys.*;
+import sys.io.File;
 import sys.io.Process;
 import haxe.io.*;
 import haxe.macro.*;
@@ -42,6 +43,43 @@ class StaticResource {
             return macro hkssprangers.StaticResource.fingerprint($v{path}, $v{h});
         }
     };
+
+    macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>) {
+        if (!path.startsWith("/")) {
+            Context.error('$path should relative to root (starts with /)', Context.currentPos());
+        }
+
+        var staticPath = Path.join([resourcesDir, path]);
+        if (!FileSystem.exists(staticPath)) {
+            throw Context.error('$path does not exist', Context.currentPos());
+        } else {
+            var h = hash(staticPath);
+            var path = hkssprangers.StaticResource.fingerprint(path, h);
+            var header:{
+                width:Int,
+                height:Int,
+            } = switch (Path.extension(staticPath).toLowerCase()) {
+                case "png":
+                    var png = new format.png.Reader(File.read(staticPath));
+                    format.png.Tools.getHeader(png.read());
+                case _:
+                    var p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}', staticPath]);
+                    if (p.exitCode() != 0) {
+                        Context.error(p.stderr.readAll().toString(), Context.currentPos());
+                    }
+                    var out = p.stdout.readAll().toString();
+                    p.close();
+                    haxe.Json.parse(out);
+            }
+            return macro {
+                var className = ${className};
+                var alt = ${alt};
+                var header = $v{header};
+                var path = $v{path};
+                jsx('<img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} />');
+            }
+        }
+    }
 
     static public function fingerprint(path:String, hash:String):String {
         var p = new Path(path);
