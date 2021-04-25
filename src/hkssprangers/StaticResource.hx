@@ -44,7 +44,7 @@ class StaticResource {
         }
     };
 
-    macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>) {
+    macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>, ?useBackgroudColor:Bool = null) {
         if (!path.startsWith("/")) {
             Context.error('$path should relative to root (starts with /)', Context.currentPos());
         }
@@ -71,12 +71,41 @@ class StaticResource {
                     p.close();
                     haxe.Json.parse(out);
             }
+            var useBackgroudColor = if (useBackgroudColor != null) {
+                useBackgroudColor;
+            } else {
+                var p = new sys.io.Process("identify", ["-format", "%[opaque]", staticPath]);
+                if (p.exitCode() != 0) {
+                    Context.error(p.stderr.readAll().toString(), Context.currentPos());
+                }
+                var out = p.stdout.readAll().toString();
+                p.close();
+                haxe.Json.parse(out);
+            }
+            var bg = if (useBackgroudColor) {
+                var p = new sys.io.Process("convert", [staticPath, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
+                if (p.exitCode() != 0) {
+                    Context.error(p.stderr.readAll().toString(), Context.currentPos());
+                }
+                var out = p.stdout.readAll().toString();
+                p.close();
+                var r = ~/^s(rgba?\(.+\))$/;
+                if (!r.match(out)) {
+                    Context.error("Cannot parse color: " + out, Context.currentPos());
+                }
+                r.matched(1);
+            } else {
+                "unset";
+            }
             return macro {
                 var className = ${className};
                 var alt = ${alt};
                 var header = $v{header};
                 var path = $v{path};
-                jsx('<img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} />');
+                var style = {
+                    backgroundColor: $v{bg},
+                };
+                jsx('<img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} style=${style} />');
             }
         }
     }
