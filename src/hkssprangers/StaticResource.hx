@@ -104,11 +104,10 @@ class StaticResource {
                 var path = $v{path};
                 var bg = $v{bg};
                 jsx('
-                    <div className=${className} style=${{backgroundColor: bg}}>
-                        <img alt=${alt} width=${header.width} height=${header.height} src=${path} />
-                    </div>
+                    <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} style=${{backgroundColor: bg}} />
                 ');
-            } else macro {var className = ${className};
+            } else macro {
+                var className = ${className};
                 var alt = ${alt};
                 var header = $v{header};
                 var path = $v{path};
