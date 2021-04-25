@@ -95,17 +95,26 @@ class StaticResource {
                 }
                 r.matched(1);
             } else {
-                "unset";
+                null;
             }
-            return macro {
+            return if (bg != null) macro {
                 var className = ${className};
                 var alt = ${alt};
                 var header = $v{header};
                 var path = $v{path};
-                var style = {
-                    backgroundColor: $v{bg},
-                };
-                jsx('<img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} style=${style} />');
+                var bg = $v{bg};
+                jsx('
+                    <div className=${className} style=${{backgroundColor: bg}}>
+                        <img alt=${alt} width=${header.width} height=${header.height} src=${path} />
+                    </div>
+                ');
+            } else macro {var className = ${className};
+                var alt = ${alt};
+                var header = $v{header};
+                var path = $v{path};
+                jsx('
+                    <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} />
+                ');
             }
         }
     }
