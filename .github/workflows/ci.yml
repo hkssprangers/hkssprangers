@@ -10,7 +10,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210425150710"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210428193500"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,6 +24,7 @@ jobs:
         run: yarn tailwind
         env:
           NODE_ENV: production
+      - run: haxe processCss.hxml
       - name: Build browser.js
         run: haxe browser.hxml
       - name: Minify browser.js
