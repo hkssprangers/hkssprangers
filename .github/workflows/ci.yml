@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - production
+concurrency: ${{ github.ref }}
 env:
   TZ: Asia/Hong_Kong
 jobs:
