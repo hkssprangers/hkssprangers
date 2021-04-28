@@ -13,8 +13,9 @@ body {
   background: #f7f2ec;
   display: flex;
   flex-direction: column;
+  
   background-attachment: fixed;
-  background-image: url(../images/ssp-bg-dot.288281b475efe99301263b091519ea65.png);
+  background-image: url(../images/ssp-bg-dot.png);
   background-repeat: repeat-x;
   background-position: 0 290%;
   background-size: auto 80%;
@@ -170,30 +171,30 @@ a.myDelivery {
 }
 
 .bg-bowl {
-  background: url(../images/ssp-bg-dot.288281b475efe99301263b091519ea65.png);
+  background: url(../images/ssp-bg-dot.png);
   background-repeat: repeat-x;
   background-position: bottom;
 }
 
 .ice-cream {
-  background: url(../images/ssp-icecream.b1999b240cf02d77001686c6671c3647.png);
+  background: url(../images/ssp-icecream.png);
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 25%;
 }
 
-@media (min-width: 768px) {
+@media(min-width: 768px) {
   .ice-cream {
-    background: url(../images/ssp-icecream.b1999b240cf02d77001686c6671c3647.png);
+    background: url(../images/ssp-icecream.png);
     background-repeat: no-repeat;
     background-position: bottom right;
     background-size: 22%;
   }
 }
 
-@media (min-width: 1024px) {
+@media(min-width: 1024px) {
   .ice-cream {
-    background: url(../images/ssp-icecream.b1999b240cf02d77001686c6671c3647.png);
+    background: url(../images/ssp-icecream.png);
     background-repeat: no-repeat;
     background-position: bottom left;
     background-size: 50%;
@@ -201,24 +202,24 @@ a.myDelivery {
 }
 
 .blabla {
-  background: url(../images/bla.67628637e17a434a78a5579cd4a0d9b1.png);
+  background: url(../images/bla.png);
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 25%;
 }
 
-@media (min-width: 768px) {
+@media(min-width: 768px) {
   .blabla {
-    background: url(../images/bla.67628637e17a434a78a5579cd4a0d9b1.png);
+    background: url(../images/bla.png);
     background-repeat: no-repeat;
     background-position: bottom right;
     background-size: 22%;
   }
 }
 
-@media (min-width: 1024px) {
+@media(min-width: 1024px) {
   .blabla {
-    background: url(../images/bla.67628637e17a434a78a5579cd4a0d9b1.png);
+    background: url(../images/bla.png);
     background-repeat: no-repeat;
     background-position: bottom left;
     background-size: 80%;
@@ -226,7 +227,7 @@ a.myDelivery {
 }
 
 .bg-curve {
-  background: url(../images/bg-curve.6a13a83cf68c02de59266982d4ac09c2.svg);
+  background: url(../images/bg-curve.svg);
   background-size: 5%;
   background-position: center;
   background-repeat: repeat no-repeat;
@@ -263,9 +264,9 @@ a.myDelivery {
 }
 
 .squircle {
-  -webkit-mask-image: url(../images/squircle.16116e058ac602a00fa993640431e27a.svg);
+  -webkit-mask-image: url(../images/squircle.svg);
   -webkit-mask-size: cover;
-  mask-image: url(../images/squircle.16116e058ac602a00fa993640431e27a.svg);
+  mask-image: url(../images/squircle.svg);
   mask-size: cover;
   z-index: 0;
 }
