@@ -6,27 +6,37 @@ import sys.*;
 import sys.io.*;
 using StringTools;
 
+typedef CssAst = {
+    type:String,
+}
+
+@:jsRequire("css")
+extern class Css {
+    static public function parse(css:String, ?opts:Dynamic):CssAst;
+    static public function stringify(ast:CssAst, ?opts:Dynamic):String;
+}
+
 class ProcessCss {
     static function processCssRules(rules:Array<{type:String}>) {
         for (rule in rules) {
             switch (rule.type) {
                 case "rule":
-                    var rule:css.Rule = cast rule;
+                    var rule:Dynamic = rule;
                     processCssDeclarations(rule.declarations);
                 case "media":
-                    var media:css.Media = cast rule;
+                    var media:Dynamic = rule;
                     processCssRules(media.rules);
                 case _:
                     //pass
             }
         }
     }
-    static function processCssDeclarations(declarations:Array<ts.AnyOf2<css.Declaration, css.Comment>>) {
+    static function processCssDeclarations(declarations:Array<{type:String}>) {
         var urlValue = ~/^url\((.+)\)$/;
         for (declaration in declarations)
-        switch ((declaration:Dynamic).type) {
+        switch (declaration.type) {
             case "declaration":
-                var declaration:css.Declaration = declaration;
+                var declaration:Dynamic = declaration;
                 if (urlValue.match(declaration.value)) {
                     var url = urlValue.matched(1);
                     if (!url.startsWith("data:")) {
@@ -47,7 +57,7 @@ class ProcessCss {
     static public function processCss() {
         var filePath = Path.join([resourcesDir, "css", "style.css"]);
         var cssString = sys.io.File.getContent(filePath);
-        var css = Css.parse(cssString);
+        var css:Dynamic = Css.parse(cssString);
         // trace(haxe.Json.stringify(css, null, "  "));
         processCssRules(css.stylesheet.rules);
         sys.io.File.saveContent(filePath, Css.stringify(css));
