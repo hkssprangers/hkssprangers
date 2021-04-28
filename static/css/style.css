@@ -176,12 +176,6 @@ a.myDelivery {
   background-position: bottom;
 }
 
-.cover-img {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(../images/the-park-by-years.jpg);
-}
-
 .ice-cream {
   background: url(../images/ssp-icecream.png);
   background-repeat: no-repeat;
