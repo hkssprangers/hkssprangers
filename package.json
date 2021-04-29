@@ -54,7 +54,7 @@
     "mysql": "^2.18.1",
     "node-ical": "^0.13.0",
     "promise-retry": "^2.0.1",
-    "react": "^16.14.0",
+    "react": "^17.0.2",
     "react-dom": "^16.14.0",
     "telegraf": "^3.38.0",
     "twilio": "^3.61.0"
