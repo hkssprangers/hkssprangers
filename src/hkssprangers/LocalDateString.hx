@@ -24,4 +24,9 @@ abstract LocalDateString(String) to String {
 
     @:op(A <= B)
     static function lte(a:LocalDateString, b:LocalDateString):Bool return (a:String) <= (b:String);
+
+    public function is2021GoldenWeek():Bool {
+        var date = getDatePart();
+        return date >= "2021-05-01" && date <= "2021-05-09";
+    }
 }

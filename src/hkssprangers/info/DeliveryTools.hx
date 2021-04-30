@@ -111,7 +111,7 @@ class DeliveryTools {
         var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
         for (c in d.couriers) {
             c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
-            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5) / d.couriers.length).roundTo(4).toFloat();
+            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (d.pickupTimeSlot.start.is2021GoldenWeek() ? 5 : 0)) / d.couriers.length).roundTo(4).toFloat();
         }
     }
 
