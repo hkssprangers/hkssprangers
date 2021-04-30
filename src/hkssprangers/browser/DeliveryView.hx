@@ -109,10 +109,10 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         }));
                     case str:
                         var newPrice = Std.parseFloat(str);
-                        updateOrder(o, o.with({
-                            orderPrice: newPrice,
-                            platformServiceCharge: ((newPrice:Decimal) * 0.15).toFloat(),
-                        }));
+                        var newOrder = o.copy();
+                        newOrder.orderPrice = newPrice;
+                        OrderTools.setPlatformServiceCharge(newOrder);
+                        updateOrder(o, newOrder);
                 }
             }
             function shopOnChange(evt:Event) {

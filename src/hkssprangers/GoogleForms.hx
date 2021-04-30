@@ -265,7 +265,7 @@ class GoogleForms {
             }));
         }
         for (order in delivery.orders) {
-            order.platformServiceCharge = (order.orderPrice:Decimal) * 0.15;
+            OrderTools.setPlatformServiceCharge(order);
         }
         delivery.deliveryFee = switch (DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation)) {
             case null: Math.NaN;

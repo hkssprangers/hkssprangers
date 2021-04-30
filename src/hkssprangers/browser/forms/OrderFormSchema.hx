@@ -226,13 +226,16 @@ class OrderFormSchema {
                         customerNote: summary.customerNote,
                         orderDetails: summary.orderDetails,
                         orderPrice: summary.orderPrice,
-                        platformServiceCharge: (summary.orderPrice:Decimal) * 0.15,
+                        platformServiceCharge: 0,
                         receipts: [],
                     }
                 ];
             case _:
                 [];
         }
+
+        for (o in orders)
+            OrderTools.setPlatformServiceCharge(o);
 
         var delivery:Delivery = {
             creationTime: null,
