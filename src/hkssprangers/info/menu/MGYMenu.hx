@@ -6,29 +6,25 @@ import haxe.ds.ReadOnlyArray;
 enum abstract MGYItem(String) to String {
     final SingleDish;
     final Rice;
-    final Noodle;
     final Sub;
 
     static public final all:ReadOnlyArray<MGYItem> = [
         SingleDish,
         Rice,
-        Noodle,
         Sub,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MGYItem) {
         case SingleDish: MGYMenu.MGYSingleDish;
         case Rice: MGYMenu.MGYRice;
-        case Noodle: MGYMenu.MGYNoodle;
         case Sub: MGYMenu.MGYSub;
     }
 }
 
 class MGYMenu {
-    static public final box = "外賣盒 $1";
     static public final MGYSingleDish = {
         title: "小菜",
-        description: "小菜 $53. 請注意每份會另加" + box,
+        description: "小菜 $63",
         properties: {
             dish: {
                 title: "小菜",
@@ -62,36 +58,36 @@ class MGYMenu {
 
     static public final MGYRice = {
         title: "客飯／炒粉飯／日式冷麵",
-        description: "客飯配白飯及例湯. 請注意每份會另加" + box,
+        description: "客飯配白飯及例湯",
         properties: {
             rice: {
                 type: "string",
                 title: "客飯／炒粉飯／日式冷麵",
                 "enum": [
-                    "豉汁素楊玉(客飯) $58",
-                    "咕嚕素芝球(客飯) $58",
-                    "泰式西芹花枝片(客飯) $58",
-                    "鮮茄燜枝竹(客飯) $58",
-                    "白汁粟米蓉金磚豆卜(客飯) $58",
-                    "如香茄子(客飯) $58",
-                    "欖菜菇絲芸豆(客飯) $58",
-                    "瓣醬豆腐(客飯) $58",
-                    "香草焗薯角(客飯) $58",
-                    "香椿鮮菇燜淮山(客飯) $58",
-                    "咖哩薯仔(客飯) $58",
-                    "八珍豆腐時蔬(客飯) $58",
-                    "豉汁尖椒(客飯) $58",
-                    "豉汁菇片炒涼瓜(客飯) $58",
-                    "香椿如腐雲耳炒勝瓜(客飯) $58",
-                    "黑椒菇角炒脆玉瓜(客飯) $58",
-                    "金菇絲燴娃娃菜(客飯) $58",
-                    "羅漢齋(客飯) $58",
-                    "香椿松子炒飯 $43",
-                    "黃薑瓜粒炒飯 $43",
-                    "黑椒蘑菇意粉 $43",
-                    "羅漢齋烏冬 $43",
-                    "日式冷麵-蕎麥麵配羽衣甘藍 $53",
-                    "日式冷麵-抹茶麵配羽衣甘藍 $53",
+                    "豉汁素楊玉(客飯) $72",
+                    "咕嚕素芝球(客飯) $72",
+                    "泰式西芹花枝片(客飯) $72",
+                    "鮮茄燜枝竹(客飯) $72",
+                    "白汁粟米蓉金磚豆卜(客飯) $72",
+                    "如香茄子(客飯) $72",
+                    "欖菜菇絲芸豆(客飯) $72",
+                    "瓣醬豆腐(客飯) $72",
+                    "香草焗薯角(客飯) $72",
+                    "香椿鮮菇燜淮山(客飯) $72",
+                    "咖哩薯仔(客飯) $72",
+                    "八珍豆腐時蔬(客飯) $72",
+                    "豉汁尖椒(客飯) $72",
+                    "豉汁菇片炒涼瓜(客飯) $72",
+                    "香椿如腐雲耳炒勝瓜(客飯) $72",
+                    "黑椒菇角炒脆玉瓜(客飯) $72",
+                    "金菇絲燴娃娃菜(客飯) $72",
+                    "羅漢齋(客飯) $72",
+                    "香椿松子炒飯 $54",
+                    "黃薑瓜粒炒飯 $54",
+                    "黑椒蘑菇意粉 $54",
+                    "羅漢齋烏冬 $54",
+                    "日式冷麵-蕎麥麵配羽衣甘藍 $72",
+                    "日式冷麵-抹茶麵配羽衣甘藍 $72",
                 ],
             },
         },
@@ -100,70 +96,18 @@ class MGYMenu {
         ]
     };
 
-    static public final MGYNoodle = {
-        title: "濃湯粉麵套餐",
-        description: "濃湯粉麵套餐 $43. 請注意每個餐會另加" + box,
-        properties: {
-            main: {
-                type: "string",
-                title: "主食",
-                "enum": [
-                    "時菜",
-                    "楊玉",
-                    "醬燒BB菇",
-                    "片頭",
-                    "脆珠",
-                    "餃子",
-                    "如寶",
-                    "花枝丸",
-                ],
-            },
-            noodle: {
-                type: "string",
-                title: "麵類",
-                "enum": [
-                    "米線",
-                    "蕎麥麵 (+$5)",
-                    "烏冬 (+$5)",
-                    "抹茶麵 (+$5)",
-                ],
-                "default": "米線",
-            },
-            sub: {
-                type: "string",
-                title: "小食",
-                "enum": [
-                    "炸餃子(2件)",
-                    "薯蛋球(3件)",
-                    "地瓜卷(3件)",
-                    "炸薄脆(3件)",
-                    "炸腐皮卷(2件)",
-                    "椒鹽豆腐(4件)",
-                    "白灼羽衣甘藍",
-                    "紫菜湯",
-                ],
-            },
-        },
-        required: [
-            "main",
-            "noodle",
-            "sub",
-        ]
-    };
-
     static public final MGYSub = {
         title: "小食",
         type: "string",
         "enum": [
-            "湯餃子(8件) $28",
-            "炸餃子(4件) $15",
-            "薯蛋球(6件) $15",
-            "地瓜卷(6件) $15",
-            "炸薄脆(6件) $15",
-            "炸腐皮卷(4件) $15",
-            "椒鹽豆腐(8件) $15",
-            "白灼羽衣甘藍 $15",
-            "紫菜湯 $10",
+            "湯餃子(8件) $36",
+            "炸餃子(4件) $25",
+            "薯蛋球(6件) $25",
+            "地瓜卷(6件) $25",
+            "炸薄脆(6件) $25",
+            "炸腐皮卷(4件) $25",
+            "椒鹽豆腐(8件) $25",
+            "白灼羽衣甘藍 $25",
         ],
     };
     
@@ -214,11 +158,9 @@ class MGYMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case SingleDish:
-                summarizeOrderObject(orderItem.item, def, ["dish"], [box], priceInDescription("dish", def));
+                summarizeOrderObject(orderItem.item, def, ["dish"], [], priceInDescription("dish", def));
             case Rice:
-                summarizeOrderObject(orderItem.item, def, ["rice"], [box]);
-            case Noodle:
-                summarizeOrderObject(orderItem.item, def, ["main", "noodle", "sub"], [box], priceInDescription("main", def));
+                summarizeOrderObject(orderItem.item, def, ["rice"], []);
             case Sub:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
