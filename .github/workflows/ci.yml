@@ -2,11 +2,10 @@ name: CI
 on: ["push", "pull_request"]
 env:
   TZ: Asia/Hong_Kong
-defaults:
-  runs-on: ubuntu-latest
-  container: "hkssprangers/hkssprangers_devcontainer_workspace:20210429024723"
 jobs:
   build:
+    runs-on: ubuntu-latest
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210429024723"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -42,6 +41,8 @@ jobs:
     needs: build
     if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
     concurrency: ${{ github.ref }}
+    runs-on: ubuntu-latest
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210429024723"
     steps:
       - uses: actions/checkout@v2
         with:
