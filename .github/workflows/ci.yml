@@ -30,6 +30,7 @@ jobs:
         run: haxe importGoogleForm.hxml
       - uses: actions/upload-artifact@v2
         with:
+          name: artifact
           path: |
             index.js
             static/browser.bundled.js
@@ -53,8 +54,8 @@ jobs:
           cp -r /workspace/lib/dts2hx lib/
       - run: yarn
       - uses: actions/download-artifact@v2
-      - name: move artifacts
-        run: mv artifacts/* . && rm -r artifacts
+        with:
+          name: artifact
       - name: Check Terraform state
         working-directory: ./terraform
         run: |
