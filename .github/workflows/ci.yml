@@ -1,16 +1,12 @@
 name: CI
-on:
-  push:
-    branches:
-      - master
-      - production
-concurrency: ${{ github.ref }}
+on: ["push", "pull_request"]
 env:
   TZ: Asia/Hong_Kong
+defaults:
+  runs-on: ubuntu-latest
+  container: "hkssprangers/hkssprangers_devcontainer_workspace:20210429024723"
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210429024723"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,8 +29,29 @@ jobs:
         run: haxe server.hxml
       - name: Build importGoogleForm.js
         run: haxe importGoogleForm.hxml
+      - uses: actions/upload-artifact@v2
+        with:
+          path: |
+            index.js
+            static/browser.bundled.js
+            static/css
+            importGoogleForm.js
       - name: Test
         run: haxe test.hxml
+  deploy:
+    needs: build
+    if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
+    concurrency: ${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Copy libs from /workspace
+        run: |
+          cp -r /workspace/node_modules .
+          cp -r /workspace/lib/dts2hx lib/
+      - run: yarn
+      - uses: actions/download-artifact@v2
       - name: Check Terraform state
         working-directory: ./terraform
         run: |
