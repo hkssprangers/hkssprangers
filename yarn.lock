@@ -524,11 +524,6 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/css@^0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@types/css/-/css-0.0.31.tgz#235cf80e4991a9d769fd640b4b8644b0a4139895"
-  integrity sha512-Xt3xp8o0zueqrdIkAOO5gy5YNs+jYfmIUPeoeKiwrcmCRXuNWkIgR2Ph6vHuVfi1y6c9Tx214EQBWPEkU97djw==
-
 "@types/http-cache-semantics@*":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/http-cache-semantics/-/http-cache-semantics-4.0.0.tgz#9140779736aa2655635ee756e2467d787cfe8a2a"
@@ -3127,10 +3122,10 @@ fastify-warning@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-warning/-/fastify-warning-0.2.0.tgz#e717776026a4493dc9a2befa44db6d17f618008f"
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
-fastify@^3.15.0:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.15.0.tgz#fb61bc9eecfa0535e7f060de6c9b4f2e3a67d17b"
-  integrity sha512-7YJhWI1msebpMDmbiKFA43255PWJG3ugt/d6Nz2ceH16enKYBFbYlgRmebWrxvCGtRo1i0jmX32XGsl8F1Y5SQ==
+fastify@^3.15.1:
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.15.1.tgz#6d257cd7d04938d97e8fcd5d727bc363e5e4dabe"
+  integrity sha512-QZBGrSOwcR+IJF5OwYTZ5662wEd68SqC6sG4aMu0GncKbYlG9GF88EF2PzN2HfXCCD9K0d/+ZNowuF8S893mOg==
   dependencies:
     "@fastify/proxy-addr" "^3.0.0"
     abstract-logging "^2.0.0"
