@@ -343,6 +343,7 @@ class ServerMain {
         app.post("/twilio", twilioWebhook);
         app.get("/login", LogIn.middleware);
         Index.setup(app);
+        Menu.setup(app);
         OrderFood.setup(app);
         Admin.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {
