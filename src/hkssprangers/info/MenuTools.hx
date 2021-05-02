@@ -5,18 +5,28 @@ import haxe.ds.ReadOnlyArray;
 using StringTools;
 
 class MenuTools {
-    static public function parsePrice(line:Null<String>):Float {
-        var r = ~/\$([0-9\.]+)/;
-        if (!r.match(line))
-            return 0;
-        return Std.parseFloat(r.matched(1));
+    static public function parsePrice(line:Null<String>):{
+        item: String,
+        price: Float,
+    } {
+        var r = ~/^(.+?)\s*\$([0-9\.]+)/;
+        return if (!r.match(line))
+            {
+                item: line,
+                price: null,
+            };
+        else 
+            {
+                item: r.matched(1),
+                price: Std.parseFloat(r.matched(2)),
+            };
     }
 
     static public function priceInDescription(fieldName, def) {
         return (fn, value) -> if (fieldName == fn) {
-            parsePrice(def.description);
+            parsePrice(def.description).price;
         } else {
-            0;
+            0.0;
         }
     }
 
@@ -51,7 +61,7 @@ class MenuTools {
                                     // pass
                             }
                             orderDetails.push('${prefix()}${fieldTitle}${v}');
-                            orderPrice += parsePrice(v);
+                            orderPrice += parsePrice(v).price;
                     }
                 case "array":
                     if (fieldDef.items.type != "string")
@@ -76,7 +86,7 @@ class MenuTools {
                             
                             for (opt in options) {
                                 orderDetails.push('${prefix()}${fieldTitle}${opt}');
-                                orderPrice += parsePrice(opt);
+                                orderPrice += parsePrice(opt).price;
                             }
                     }
                 case type:
@@ -86,7 +96,7 @@ class MenuTools {
         if (extra != null)
             for (item in extra) {
                 orderDetails.push('${prefix()}${item}');
-                orderPrice += parsePrice(item);
+                orderPrice += parsePrice(item).price;
             }
         return {
             orderDetails: orderDetails.join("\n"),

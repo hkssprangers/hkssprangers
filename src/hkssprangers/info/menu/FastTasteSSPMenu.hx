@@ -478,18 +478,18 @@ class FastTasteSSPMenu {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: v + "\n" + box,
-                            orderPrice: v.parsePrice() + box.parsePrice(),
+                            orderPrice: v.parsePrice().price + box.parsePrice().price,
                         }
                     case _:
                         {
                             orderDetails: "",
-                            orderPrice: 0,
+                            orderPrice: 0.0,
                         }
                 }
             case _:
                 {
                     orderDetails: "",
-                    orderPrice: 0,
+                    orderPrice: 0.0,
                 }
         }
     }

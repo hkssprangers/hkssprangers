@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import hkssprangers.info.MenuTools;
 import react.ReactComponent.ReactElement;
 import js.lib.Promise;
 import react.*;
@@ -7,9 +8,10 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
-import hkssprangers.GoogleForms.formUrls;
+import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 using hkssprangers.server.FastifyTools;
+using Reflect;
 
 class Menu extends View {
     public var shop(get, never):Shop;
@@ -89,40 +91,39 @@ class Menu extends View {
         }
     }
 
+    function renderItems(items:Array<String>) {
+        return [
+            for (item in items)
+            renderItemRow(item)
+        ];
+    }
+
+    function renderItemRow(item:String) {
+        var parsed = MenuTools.parsePrice(item);
+        return if (parsed.price != null) jsx('
+            <div key=${item} className="flex flex-row">
+                <div className="flex-grow p-3">${parsed.item}</div>
+                <div className="p-3">$$${parsed.price}</div>
+            </div>
+        ') else jsx('
+            <div key=${item} className="p-3">${parsed.item}</div>
+        ');
+    }
+
     function renderEightyNine() {
         return jsx('
             <div className="p-3">
                 <div className="p-3 text-xl bg-pt2 font-bold">
-                    套餐: 主菜 + 配菜 + 絲苗白飯2個
+                ${EightyNineMenu.EightyNineSet.title}: ${EightyNineMenu.EightyNineSet.description}
                 </div>
                 <div className="md:flex flex-row md:mt-3">
                     <div className="md:w-1/2 md:pr-3 md:border-r-4 border-red-500">
-                        <div className="p-3"><b>主菜選擇</b></div>
-                        <div className="flex flex-row">
-                            <div className="flex-grow p-3">香茅豬頸肉</div>
-                            <div className="p-3">$$85</div>
-                        </div>
-                        <div className="flex flex-row">
-                            <div className="flex-grow p-3">招牌口水雞 (例)</div>
-                            <div className="p-3">$$85</div>
-                        </div>
-                        <div className="flex flex-row">
-                            <div className="flex-grow p-3">去骨海南雞 (例)</div>
-                            <div className="p-3">$$85</div>
-                        </div>
-                        <div className="flex flex-row">
-                            <div className="flex-grow p-3"><span className="highlight">招牌口水雞 (例) 拼香茅豬頸肉</span></div>
-                            <div className="p-3">$$98</div>
-                        </div>
-                        <div className="flex flex-row">
-                            <div className="flex-grow p-3">去骨海南雞 (例) 拼香茅豬頸肉</div>
-                            <div className="p-3">$$98</div>
-                        </div>              
+                        <div className="p-3"><b>${EightyNineMenu.EightyNineSet.properties.main.title}</b></div>
+                        ${renderItems(EightyNineMenu.EightyNineSet.properties.main.field("enum"))}
                     </div>
                     <div className="md:w-1/2 md:ml-3">
-                        <div className="p-3"><b>配菜選擇</b></div>
-                        <div className="p-3">涼拌青瓜拼木耳</div>
-                        <div className="p-3">郊外油菜</div>
+                        <div className="p-3"><b>${EightyNineMenu.EightyNineSet.properties.sub.title}</b></div>
+                        ${renderItems(EightyNineMenu.EightyNineSet.properties.sub.field("enum"))}
                     </div>
                 </div>
             </div>

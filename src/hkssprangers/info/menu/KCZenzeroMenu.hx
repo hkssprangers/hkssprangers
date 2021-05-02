@@ -312,9 +312,9 @@ class KCZenzeroMenu {
                     case "options":
                         switch (value != null ? value.length : 0) {
                             case 0, 1, 2:
-                                (def.description:String).parsePrice();
+                                (def.description:String).parsePrice().price;
                             case n:
-                                (def.description:String).parsePrice() + (n - 2) * (def.properties.options.description:String).parsePrice();
+                                (def.description:String).parsePrice().price + (n - 2) * (def.properties.options.description:String).parsePrice().price;
                         }
                     case _: 0;
                 });
@@ -331,18 +331,18 @@ class KCZenzeroMenu {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: v,
-                            orderPrice: v.parsePrice(),
+                            orderPrice: v.parsePrice().price,
                         };
                     case _:
                         {
                             orderDetails: "",
-                            orderPrice: 0,
+                            orderPrice: 0.0,
                         };
                 }
             case _:
                 {
                     orderDetails: "",
-                    orderPrice: 0,
+                    orderPrice: 0.0,
                 };
         }
     }
@@ -351,7 +351,7 @@ class KCZenzeroMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
         summaries.push({
             orderDetails: box,
-            orderPrice: box.parsePrice(),
+            orderPrice: box.parsePrice().price,
         });
         var s = concatSummaries(summaries);
         return {
