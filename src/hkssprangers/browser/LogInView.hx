@@ -44,7 +44,7 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
             ');
         } else {
             return jsx('
-                <div className="text-center">
+                <div className="text-center p-2">
                     <p>請使用我哋嘅 Telegram (建議) / WhatsApp 機械人登入我哋嘅落單系統。</p>
                     <div className="flex flex-wrap mt-2 max-w-md mx-auto">
                         <a
