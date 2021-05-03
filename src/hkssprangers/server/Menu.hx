@@ -1,6 +1,5 @@
 package hkssprangers.server;
 
-import hkssprangers.info.MenuTools;
 import react.ReactComponent.ReactElement;
 import js.lib.Promise;
 import react.*;
@@ -8,10 +7,13 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
-import hkssprangers.info.menu.*;
+import hkssprangers.info.menu.EightyNineMenu.*;
+import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.Shop;
 using hkssprangers.server.FastifyTools;
+using hkssprangers.info.MenuTools;
 using Reflect;
+using Lambda;
 
 class Menu extends View {
     public var shop(get, never):Shop;
@@ -75,7 +77,7 @@ class Menu extends View {
             case BiuKeeLokYuen:
                 null;
             case KCZenzero:
-                null;
+                renderKCZenzero();
             case HanaSoftCream:
                 null;
             case Neighbor:
@@ -110,21 +112,101 @@ class Menu extends View {
         ');
     }
 
+    static function slashes(items:Array<String>) return items
+        .map(item -> jsx('<span key=${item} className="whitespace-nowrap">${item}</span>'))
+        .fold(
+            function(item:ReactElement, result:ReactElement):ReactElement {
+                return if (result == null) {
+                    item;
+                } else {
+                    jsx('
+                        <Fragment>
+                            ${result} / ${item}
+                        </Fragment>
+                    ');
+                }
+            },
+            null
+        );
+
     function renderEightyNine() {
         return jsx('
             <div className="p-3">
                 <div className="p-3 text-xl bg-pt2 font-bold">
-                ${EightyNineMenu.EightyNineSet.title}: ${EightyNineMenu.EightyNineSet.description}
+                ${EightyNineSet.title}: ${EightyNineSet.description}
                 </div>
                 <div className="md:flex flex-row md:mt-3">
                     <div className="md:w-1/2 md:pr-3 md:border-r-4 border-red-500">
-                        <div className="p-3"><b>${EightyNineMenu.EightyNineSet.properties.main.title}</b></div>
-                        ${renderItems(EightyNineMenu.EightyNineSet.properties.main.field("enum"))}
+                        <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
+                        ${renderItems(EightyNineSet.properties.main.field("enum"))}
                     </div>
                     <div className="md:w-1/2 md:ml-3">
-                        <div className="p-3"><b>${EightyNineMenu.EightyNineSet.properties.sub.title}</b></div>
-                        ${renderItems(EightyNineMenu.EightyNineSet.properties.sub.field("enum"))}
+                        <div className="p-3"><b>${EightyNineSet.properties.sub.title}</b></div>
+                        ${renderItems(EightyNineSet.properties.sub.field("enum"))}
                     </div>
+                </div>
+            </div>
+        ');
+    }
+
+    function renderKCZenzero() {
+        var hotdogSet = KCZenzeroHotdogSet(Lunch);
+        var noodleSet = KCZenzeroNoodleSet(Lunch);
+        var pastaSet = KCZenzeroPastaSet(Lunch);
+        
+        return jsx('
+            <div className="md:flex flex-row">
+                <div className="p-3 md:w-1/2 md:border-r-4 border-red-500">
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="flex-grow p-3">${hotdogSet.title}</div>
+                        <div className="p-3">${hotdogSet.description}</div>
+                    </div>
+                    ${renderItems(hotdogSet.properties.main.field("enum"))}
+
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="flex-grow p-3">${KCZenzeroLightSet.title}</div>
+                        <div className="p-3">$$${MenuTools.parsePrice(KCZenzeroLightSet.description).price}</div>
+                    </div>
+                    <div className="p-3 font-bold">${KCZenzeroLightSet.properties.main.title}選擇</div>
+                    <div className="p-3">${slashes(KCZenzeroLightSet.properties.main.enums())}</div>
+                    <div className="p-3 font-bold">${KCZenzeroLightSet.properties.salad.title}選擇</div>
+                    <div className="p-3">${slashes(KCZenzeroLightSet.properties.salad.enums())}</div>
+                    <div className="font-bold p-3">${KCZenzeroLightSet.properties.drink.title}選擇</div>
+                    <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums())}</div>
+
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="p-3">${KCZenzeroRiceSet.title}</div>
+                    </div>
+                    ${renderItems(KCZenzeroRiceSet.properties.main.enums())}
+                </div>
+                <div className="p-3 md:w-1/2">
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="flex-grow p-3">${noodleSet.title}</div>
+                        <div className="p-3">$$${noodleSet.description.parsePrice().price}</div>
+                    </div>
+                    <div className="p-3"><b>${noodleSet.properties.options.title}選擇</b> ${noodleSet.properties.options.description}</div>
+                    <div className="p-3">
+                        ${slashes(noodleSet.properties.options.items.enums())}
+                    </div>
+
+                    <div className="font-bold p-3">${noodleSet.properties.noodle.title}選擇</div>
+                    <div className="p-3">${slashes(noodleSet.properties.noodle.enums())}</div>
+
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="flex-grow p-3">${pastaSet.title}</div>
+                        <div className="p-3">$$${pastaSet.description.parsePrice().price}</div>
+                    </div>
+                    <div className="p-3 font-bold">${pastaSet.properties.main.title}選擇</div>
+                    <div className="p-3">${slashes(pastaSet.properties.main.enums())}</div>
+                    <div className="p-3 font-bold">${pastaSet.properties.sauce.title}選擇</div>
+                    <div className="p-3">${slashes(pastaSet.properties.sauce.enums())}</div>
+                    <div className="p-3 font-bold">${pastaSet.properties.noodle.title}選擇</div>
+                    <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
+
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="p-3">${KCZenzeroSingle.title}</div>
+                    </div>
+                    ${renderItems(KCZenzeroSingle.enums())}
                 </div>
             </div>
         ');

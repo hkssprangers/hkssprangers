@@ -122,4 +122,6 @@ class MenuTools {
             orderPrice: orderPrice,
         };
     }
+
+    inline static public function enums(obj:Dynamic):Array<String> return Reflect.field(obj, "enum");
 }
