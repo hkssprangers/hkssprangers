@@ -282,3 +282,27 @@ a.myDelivery {
 .bg-body {
   background: #f7f2ec;
 }
+
+.bg-pt2-red-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAASElEQVQYV1WNwQ3AMAgDjxGyE30ybZ4lKzUjUAUpKb2fZZ8sU7W34UYIEGxWYl7a2+32VYL8d0eohSAET9oj7UP+uRusUaF+vOaLFwsXGPB0AAAAAElFTkSuQmCC) repeat;
+}
+
+.bg-pt2-green-400 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATUlEQVQYV2M0vTxj82m9DF+G/4wMDAz/GSCAkQHEYzC9BJLM9AVLgOWhElBlEDGYDmQDwLpBRutm+oKNgmk3vTx982ndDF+4HTAJZDsARvYaDX23mycAAAAASUVORK5CYII=) repeat;
+}
+
+.bg-pt2-pink-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAS0lEQVQYV2NkAAFGBgaG/4wMjAz/QRSUDZZhYHjjOWOzyPYMXygXrJbhjceMzSI7MnyhiiE6wByYMrixENPhdoCUwHUj64CxQfYBAFFuGolx5VqAAAAAAElFTkSuQmCC) repeat;
+}
+
+.bg-pt2-yellow-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATUlEQVQYV2O8UcG2WaPzly/DfwYGRgYGhv9QghFE36hk26ze/suXAQmAJf4ji4DZjAxIEowMjAz/4bpBGuDgZgXbZnWwfSBFyOYiGQsAEs4YCkyf7/MAAAAASUVORK5CYII=) repeat;
+}
+
+.bg-pt2-green-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATElEQVQYV1WNyxHAIAhEl4NJdRSC6Ufsg+r0okMkk4Hb/h50NbFZlQECsHCOQC6Lik3pnIKonBbWv8kAoAT6RX3ku4mNR9kN9/PfYG+yoRgJauwbWAAAAABJRU5ErkJggg==) repeat;
+}
+
+.bg-pt2-blue-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAASElEQVQYV1WNwQ3AMAgDjxGyE30ybZ4lKzUjUAUpKb2fZZ8sU7W34UYIEGxWYl7a2+32VYL8d0eohSAET9oj7UP+uRusUaF+vOaLFwsXGPB0AAAAAElFTkSuQmCC) repeat;
+}

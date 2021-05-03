@@ -10,6 +10,7 @@ import hkssprangers.server.ServerMain.*;
 import hkssprangers.info.menu.EightyNineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.Shop;
+import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
 using hkssprangers.info.MenuTools;
 using Reflect;
@@ -35,6 +36,43 @@ class Menu extends View {
         </Fragment>
     ');
 
+    static final clusterStyle = [
+        DragonCentreCluster => {
+            borderClasses: ["border-red-500"],
+            headerClasses: ["bg-pt2-red-500"],
+        },
+        CLPCluster => {
+            borderClasses: ["border-green-400"],
+            headerClasses: ["bg-pt2-green-400"],
+        },
+        GoldenCluster => {
+            borderClasses: ["border-pink-500"],
+            headerClasses: ["bg-pt2-pink-500"],
+        },
+        SmilingPlazaCluster => {
+            borderClasses: ["border-yellow-600"],
+            headerClasses: ["bg-pt2-yellow-600"],
+        },
+        ParkCluster => {
+            borderClasses: ["border-green-600"],
+            headerClasses: ["bg-pt2-green-600"],
+        },
+        PakTinCluster => {
+            borderClasses: ["border-blue-500"],
+            headerClasses: ["bg-pt2-blue-500"],
+        },
+    ];
+
+    final style:{
+        borderClasses:Array<String>,
+        headerClasses:Array<String>,
+    };
+    
+    function new(props, context) {
+        super(props, context);
+        style = clusterStyle[ShopCluster.classify(shop)];
+    }
+
     override function bodyContent() {
         return jsx('
             <main className="overflow-hidden">
@@ -44,8 +82,8 @@ class Menu extends View {
                             ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-1/4 lg:w-1/6")}
                         </a>
                     </div>
-                    <div className="border-l-4 border-r-4 border-b-4 border-red-500">
-                        <div className="border-t-4 border-b-4 border-red-500 font-bold">
+                    <div className=${["border-l-4", "border-r-4", "border-b-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["border-t-4", "border-b-4", "font-bold"].concat(style.borderClasses).join(" ")}>
                             <div className="p-3 text-xl md:text-2xl text-center">
                                 <h1>
                                     <span className="whitespace-nowrap">${shop.info().name}</span> <span className="whitespace-nowrap">埗兵外賣餐牌</span>
@@ -132,11 +170,11 @@ class Menu extends View {
     function renderEightyNine() {
         return jsx('
             <div className="p-3">
-                <div className="p-3 text-xl bg-pt2 font-bold">
+                <div className=${["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                 ${EightyNineSet.title}: ${EightyNineSet.description}
                 </div>
                 <div className="md:flex flex-row md:mt-3">
-                    <div className="md:w-1/2 md:pr-3 md:border-r-4 border-red-500">
+                    <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
                         ${renderItems(EightyNineSet.properties.main.field("enum"))}
                     </div>
@@ -156,14 +194,14 @@ class Menu extends View {
         
         return jsx('
             <div className="md:flex flex-row">
-                <div className="p-3 md:w-1/2 md:border-r-4 border-red-500">
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${hotdogSet.title}</div>
                         <div className="p-3">${hotdogSet.description}</div>
                     </div>
                     ${renderItems(hotdogSet.properties.main.field("enum"))}
 
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${KCZenzeroLightSet.title}</div>
                         <div className="p-3">$$${MenuTools.parsePrice(KCZenzeroLightSet.description).price}</div>
                     </div>
@@ -174,13 +212,13 @@ class Menu extends View {
                     <div className="font-bold p-3">${KCZenzeroLightSet.properties.drink.title}選擇</div>
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums())}</div>
 
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroRiceSet.title}</div>
                     </div>
                     ${renderItems(KCZenzeroRiceSet.properties.main.enums())}
                 </div>
                 <div className="p-3 md:w-1/2">
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${noodleSet.title}</div>
                         <div className="p-3">$$${noodleSet.description.parsePrice().price}</div>
                     </div>
@@ -192,7 +230,7 @@ class Menu extends View {
                     <div className="font-bold p-3">${noodleSet.properties.noodle.title}選擇</div>
                     <div className="p-3">${slashes(noodleSet.properties.noodle.enums())}</div>
 
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${pastaSet.title}</div>
                         <div className="p-3">$$${pastaSet.description.parsePrice().price}</div>
                     </div>
@@ -203,7 +241,7 @@ class Menu extends View {
                     <div className="p-3 font-bold">${pastaSet.properties.noodle.title}選擇</div>
                     <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
 
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroSingle.title}</div>
                     </div>
                     ${renderItems(KCZenzeroSingle.enums())}
