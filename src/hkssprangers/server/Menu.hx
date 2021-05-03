@@ -10,6 +10,7 @@ import hkssprangers.server.ServerMain.*;
 import hkssprangers.info.menu.EightyNineMenu.*;
 import hkssprangers.info.menu.DragonJapaneseCuisineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
+import hkssprangers.info.menu.YearsHKMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -113,7 +114,7 @@ class Menu extends View {
             case DragonJapaneseCuisine:
                 renderDragonJapaneseCuisine();
             case YearsHK:
-                null;
+                renderYearsHK();
             case TheParkByYears:
                 null;
             case LaksaStore:
@@ -289,6 +290,39 @@ class Menu extends View {
                     ${renderItems(KCZenzeroSingle.enums())}
                 </div>
             </div>
+        ');
+    }
+
+    function renderYearsHK() {
+        var drinks = YearsHKSetDrink.enums();
+        var cut = Std.int(drinks.length * 0.5);
+        var drinks1 = drinks.slice(0, cut);
+        var drinks2 = drinks.slice(cut);
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${YearsHKSet.properties.main.title}</div>
+                        ${renderItems(YearsHKSet.properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${YearsHKSingle.title}</div>
+                        ${renderItems(YearsHKSingle.enums())}
+                    </div>
+                </div>
+                <div className="p-3">
+                    <div className=${headerClasses}>${YearsHKSetDrink.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(drinks1, true)}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(drinks2, true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
         ');
     }
 
