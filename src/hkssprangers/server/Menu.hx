@@ -8,6 +8,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.info.menu.EightyNineMenu.*;
+import hkssprangers.info.menu.DragonJapaneseCuisineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
@@ -40,32 +41,39 @@ class Menu extends View {
         DragonCentreCluster => {
             borderClasses: ["border-red-500"],
             headerClasses: ["bg-pt2-red-500"],
+            boxClasses: ["bg-slash-red-500"],
         },
         CLPCluster => {
             borderClasses: ["border-green-400"],
             headerClasses: ["bg-pt2-green-400"],
+            boxClasses: [],
         },
         GoldenCluster => {
             borderClasses: ["border-pink-500"],
             headerClasses: ["bg-pt2-pink-500"],
+            boxClasses: ["bg-slash-pink-500"],
         },
         SmilingPlazaCluster => {
             borderClasses: ["border-yellow-600"],
             headerClasses: ["bg-pt2-yellow-600"],
+            boxClasses: ["bg-slash-yellow-600"],
         },
         ParkCluster => {
             borderClasses: ["border-green-600"],
             headerClasses: ["bg-pt2-green-600"],
+            boxClasses: [],
         },
         PakTinCluster => {
             borderClasses: ["border-blue-500"],
             headerClasses: ["bg-pt2-blue-500"],
+            boxClasses: [],
         },
     ];
 
     final style:{
         borderClasses:Array<String>,
         headerClasses:Array<String>,
+        boxClasses:Array<String>,
     };
     
     function new(props, context) {
@@ -103,7 +111,7 @@ class Menu extends View {
             case EightyNine:
                 renderEightyNine();
             case DragonJapaneseCuisine:
-                null;
+                renderDragonJapaneseCuisine();
             case YearsHK:
                 null;
             case TheParkByYears:
@@ -131,19 +139,20 @@ class Menu extends View {
         }
     }
 
-    function renderItems(items:Array<String>) {
+    function renderItems(items:Array<String>, isAddons = false) {
         return [
             for (item in items)
-            renderItemRow(item)
+            renderItemRow(item, isAddons)
         ];
     }
 
-    function renderItemRow(item:String) {
+    function renderItemRow(item:String, isAddons = false) {
         var parsed = MenuTools.parsePrice(item);
+        function printPrice() return isAddons ? "+$" + parsed.price : "$" + parsed.price;
         return if (parsed.price != null) jsx('
             <div key=${item} className="flex flex-row">
                 <div className="flex-grow p-3">${parsed.item}</div>
-                <div className="p-3">$$${parsed.price}</div>
+                <div className="p-3">${printPrice()}</div>
             </div>
         ') else jsx('
             <div key=${item} className="p-3">${parsed.item}</div>
@@ -176,12 +185,45 @@ class Menu extends View {
                 <div className="md:flex flex-row md:mt-3">
                     <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
-                        ${renderItems(EightyNineSet.properties.main.field("enum"))}
+                        ${renderItems(EightyNineSet.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 md:ml-3">
                         <div className="p-3"><b>${EightyNineSet.properties.sub.title}</b></div>
-                        ${renderItems(EightyNineSet.properties.sub.field("enum"))}
+                        ${renderItems(EightyNineSet.properties.sub.enums())}
                     </div>
+                </div>
+            </div>
+        ');
+    }
+
+    function renderDragonJapaneseCuisine() {
+        return jsx('
+            <div className="md:flex flex-row">
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    <div className="p-3 text-xl bg-pt2 font-bold">${DragonJapaneseCuisineRamenSet.title}</div>
+                    ${renderItems(DragonJapaneseCuisineRamenSet.properties.main.enums())}
+                    <div className="font-bold p-3">${DragonJapaneseCuisineRamenSet.properties.drink.title}選擇</div>
+                    <div className="p-3">${slashes(DragonJapaneseCuisineRamenSet.properties.drink.enums())}</div>
+                    <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                        <div className="p-3 text-xl rounded-t-xl font-bold">
+                            ${DragonJapaneseCuisineRamenSet.properties.options.title}
+                        </div>
+                        <div className="bg-body rounded-b-xl">
+                            ${renderItems(DragonJapaneseCuisineRamenSet.properties.options.items.enums(), true)}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-3 md:w-1/2">
+                    <div className="p-3 text-xl bg-pt2 font-bold">${DragonJapaneseCuisineRiceSet.title}</div>
+                    ${renderItems(DragonJapaneseCuisineRiceSet.properties.main.enums())}
+                    <div className="font-bold p-3">${DragonJapaneseCuisineRiceSet.properties.drink.title}選擇</div>
+                    <div className="p-3">${slashes(DragonJapaneseCuisineRiceSet.properties.drink.enums())}</div>
+
+                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                        <div className="p-3">${DragonJapaneseCuisineSingleItem.title}</div>
+                    </div>
+                    ${renderItems(DragonJapaneseCuisineSingleItem.enums())}
                 </div>
             </div>
         ');
@@ -199,7 +241,7 @@ class Menu extends View {
                         <div className="flex-grow p-3">${hotdogSet.title}</div>
                         <div className="p-3">${hotdogSet.description}</div>
                     </div>
-                    ${renderItems(hotdogSet.properties.main.field("enum"))}
+                    ${renderItems(hotdogSet.properties.main.enums())}
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${KCZenzeroLightSet.title}</div>
