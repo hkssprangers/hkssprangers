@@ -12,6 +12,7 @@ import hkssprangers.info.menu.DragonJapaneseCuisineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.menu.YearsHKMenu.*;
 import hkssprangers.info.menu.TheParkByYearsMenu.*;
+import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -119,7 +120,7 @@ class Menu extends View {
             case TheParkByYears:
                 renderTheParkByYears();
             case LaksaStore:
-                null;
+                renderLaksaStore();
             case DongDong:
                 null;
             case BiuKeeLokYuen:
@@ -353,6 +354,41 @@ class Menu extends View {
                         </div>
                         <div className="md:w-1/2 md:pl-3">
                             ${renderItems(drinks2, true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderLaksaStore() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className="p-3">
+                    <div className=${headerClasses}>${renderItemRow(LaksaStoreNoodleSet.description)}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className="p-3"><b>${LaksaStoreNoodleSet.properties.soup.title}選擇</b></div>
+                            <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.soup.enums())}</div>
+                            <div className="p-3"><b>${LaksaStoreNoodleSet.properties.ingredient.title}選擇</b></div>
+                            <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.ingredient.enums())}</div>
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            <div className="p-3"><b>${LaksaStoreNoodleSet.properties.noodle.title}選擇</b></div>
+                            <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.noodle.enums())}</div>
+                            <div className="p-3"><b>${LaksaStoreNoodleSet.properties.drink.title}</b></div>
+                            <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.drink.enums())}</div>
+                        </div>
+                    </div>
+                </div>
+                <div className=${["md:border-t-4", "p-3"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${LaksaStoreRiceSet.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(LaksaStoreRiceSet.properties.main.enums())}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
                         </div>
                     </div>
                 </div>
