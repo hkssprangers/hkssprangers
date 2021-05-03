@@ -200,7 +200,7 @@ class Menu extends View {
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    <div className="p-3 text-xl bg-pt2 font-bold">${DragonJapaneseCuisineRamenSet.title}</div>
+                    <div className=${["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>${DragonJapaneseCuisineRamenSet.title}</div>
                     ${renderItems(DragonJapaneseCuisineRamenSet.properties.main.enums())}
                     <div className="font-bold p-3">${DragonJapaneseCuisineRamenSet.properties.drink.title}選擇</div>
                     <div className="p-3">${slashes(DragonJapaneseCuisineRamenSet.properties.drink.enums())}</div>
@@ -215,12 +215,12 @@ class Menu extends View {
                 </div>
 
                 <div className="p-3 md:w-1/2">
-                    <div className="p-3 text-xl bg-pt2 font-bold">${DragonJapaneseCuisineRiceSet.title}</div>
+                    <div className=${["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>${DragonJapaneseCuisineRiceSet.title}</div>
                     ${renderItems(DragonJapaneseCuisineRiceSet.properties.main.enums())}
                     <div className="font-bold p-3">${DragonJapaneseCuisineRiceSet.properties.drink.title}選擇</div>
                     <div className="p-3">${slashes(DragonJapaneseCuisineRiceSet.properties.drink.enums())}</div>
 
-                    <div className="flex flex-row text-xl bg-pt2 font-bold">
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${DragonJapaneseCuisineSingleItem.title}</div>
                     </div>
                     ${renderItems(DragonJapaneseCuisineSingleItem.enums())}
