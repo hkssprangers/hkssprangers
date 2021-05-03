@@ -13,6 +13,7 @@ import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.menu.YearsHKMenu.*;
 import hkssprangers.info.menu.TheParkByYearsMenu.*;
 import hkssprangers.info.menu.LaksaStoreMenu.*;
+import hkssprangers.info.menu.DongDongMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -122,7 +123,7 @@ class Menu extends View {
             case LaksaStore:
                 renderLaksaStore();
             case DongDong:
-                null;
+                renderDongDong();
             case BiuKeeLokYuen:
                 null;
             case KCZenzero:
@@ -390,6 +391,38 @@ class Menu extends View {
                         </div>
                         <div className="md:w-1/2 md:pl-3">
                         </div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderDongDong() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${DongDongLunchSet.title}</div>
+                        <div className="p-3">${DongDongLunchSet.description}</div>
+                        ${renderItems(DongDongLunchSet.properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${DongDongUsualSet.title}</div>
+                        <div className="p-3">${DongDongUsualSet.description}</div>
+                        ${renderItems(DongDongUsualSet.properties.main.enums())}
+                    </div>
+                </div>
+                <div className="md:flex flex-row">
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${DongDongDinnerSet.title}</div>
+                        <div className="p-3">${DongDongDinnerSet.description}</div>
+                        ${renderItems(DongDongDinnerSet.properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>晚餐${DongDongDinnerDish.title}</div>
+                        <div className="p-3">${DongDongDinnerDish.description}</div>
+                        ${renderItems(DongDongDinnerDish.properties.main.enums())}
                     </div>
                 </div>
             </Fragment>
