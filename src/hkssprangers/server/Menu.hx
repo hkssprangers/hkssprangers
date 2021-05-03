@@ -11,6 +11,7 @@ import hkssprangers.info.menu.EightyNineMenu.*;
 import hkssprangers.info.menu.DragonJapaneseCuisineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
 import hkssprangers.info.menu.YearsHKMenu.*;
+import hkssprangers.info.menu.TheParkByYearsMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -116,7 +117,7 @@ class Menu extends View {
             case YearsHK:
                 renderYearsHK();
             case TheParkByYears:
-                null;
+                renderTheParkByYears();
             case LaksaStore:
                 null;
             case DongDong:
@@ -313,6 +314,39 @@ class Menu extends View {
                 </div>
                 <div className="p-3">
                     <div className=${headerClasses}>${YearsHKSetDrink.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(drinks1, true)}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(drinks2, true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderTheParkByYears() {
+        var drinks = TheParkByYearsSetDrink.enums();
+        var cut = Std.int(drinks.length * 0.5);
+        var drinks1 = drinks.slice(0, cut);
+        var drinks2 = drinks.slice(cut);
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${TheParkByYearsSet.properties.main.title}</div>
+                        ${renderItems(TheParkByYearsSet.properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
+                        ${renderItems(TheParkByYearsSingle.enums())}
+                    </div>
+                </div>
+                <div className="p-3">
+                    <div className=${headerClasses}>${TheParkByYearsSetDrink.title}</div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             ${renderItems(drinks1, true)}
