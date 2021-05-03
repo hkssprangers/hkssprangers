@@ -14,10 +14,12 @@ import hkssprangers.info.menu.YearsHKMenu.*;
 import hkssprangers.info.menu.TheParkByYearsMenu.*;
 import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.menu.DongDongMenu.*;
+import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
 using hkssprangers.info.MenuTools;
+using hkssprangers.ValueTools;
 using Reflect;
 using Lambda;
 
@@ -125,7 +127,7 @@ class Menu extends View {
             case DongDong:
                 renderDongDong();
             case BiuKeeLokYuen:
-                null;
+                renderBiuKeeLokYuen();
             case KCZenzero:
                 renderKCZenzero();
             case HanaSoftCream:
@@ -144,22 +146,24 @@ class Menu extends View {
     }
 
     function renderItems(items:Array<String>, isAddons = false) {
-        return [
-            for (item in items)
-            renderItemRow(item, isAddons)
-        ];
+        return items.map(item -> {
+            var parsed = MenuTools.parsePrice(item);
+            renderItemRow(parsed.item, if (parsed.price != null) {
+                isAddons ? "+$" + parsed.price : "$" + parsed.price;
+            } else {
+                null;
+            });
+        });
     }
 
-    function renderItemRow(item:String, isAddons = false) {
-        var parsed = MenuTools.parsePrice(item);
-        function printPrice() return isAddons ? "+$" + parsed.price : "$" + parsed.price;
-        return if (parsed.price != null) jsx('
+    function renderItemRow(item:String, price:String) {
+        return if (price != null) jsx('
             <div key=${item} className="flex flex-row">
-                <div className="flex-grow p-3">${parsed.item}</div>
-                <div className="p-3">${printPrice()}</div>
+                <div className="flex-grow p-3">${item}</div>
+                <div className="p-3 whitespace-nowrap">${price}</div>
             </div>
         ') else jsx('
-            <div key=${item} className="p-3">${parsed.item}</div>
+            <div key=${item} className="p-3">${item}</div>
         ');
     }
 
@@ -298,7 +302,7 @@ class Menu extends View {
 
     function renderYearsHK() {
         var drinks = YearsHKSetDrink.enums();
-        var cut = Std.int(drinks.length * 0.5);
+        var cut = Math.ceil(drinks.length * 0.5);
         var drinks1 = drinks.slice(0, cut);
         var drinks2 = drinks.slice(cut);
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
@@ -331,7 +335,7 @@ class Menu extends View {
 
     function renderTheParkByYears() {
         var drinks = TheParkByYearsSetDrink.enums();
-        var cut = Std.int(drinks.length * 0.5);
+        var cut = Math.ceil(drinks.length * 0.5);
         var drinks1 = drinks.slice(0, cut);
         var drinks2 = drinks.slice(cut);
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
@@ -367,7 +371,10 @@ class Menu extends View {
         return jsx('
             <Fragment>
                 <div className="p-3">
-                    <div className=${headerClasses}>${renderItemRow(LaksaStoreNoodleSet.description)}</div>
+                    <div className=${headerClasses}>${{
+                        var p = LaksaStoreNoodleSet.description.parsePrice();
+                        renderItemRow(p.item, "$" + p.price);
+                    }}</div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             <div className="p-3"><b>${LaksaStoreNoodleSet.properties.soup.title}選擇</b></div>
@@ -426,6 +433,74 @@ class Menu extends View {
                     </div>
                 </div>
             </Fragment>
+        ');
+    }
+
+    function renderBiuKeeLokYuen() {
+        var noodles = BiuKeeLokYuenNoodleSet.properties.main1.enums().map(MenuTools.parsePrice);
+        var lomeins = BiuKeeLokYuenLoMeinSet.properties.main1.enums().map(MenuTools.parsePrice);
+        var fused = [
+            for (p in noodles)
+            {
+                item: p.item,
+                noodlePrice: p.price,
+                lomeinPrice: switch (lomeins.find(l -> l.item == p.item)) {
+                    case null: null;
+                    case l: l.price;
+                }
+            }
+        ].map(p -> {
+            renderItemRow(p.item, (p.noodlePrice != null ? "$" + p.noodlePrice : "----") + " / " + (p.lomeinPrice != null ? "$" + p.noodlePrice : "----"));
+        });
+
+        var singleCutoff = Math.ceil(BiuKeeLokYuenSingleDish.enums().length * 0.5);
+        var single1 = BiuKeeLokYuenSingleDish.enums().slice(0, singleCutoff);
+        var single2 = BiuKeeLokYuenSingleDish.enums().slice(singleCutoff);
+
+        var headerClasses = ["text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
+        return jsx('
+            <div>
+                <div className="p-3">
+                    <div className=${headerClasses}>
+                        <div className="p-3">${BiuKeeLokYuenNoodleSet.title} / ${BiuKeeLokYuenLoMeinSet.title}</div>
+                    </div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className="md:w-1/2 md:border-r-4 border-pink-500">
+                            ${fused}
+                        </div>
+                        <div className="md:w-1/2">
+                            <div className="p-3 font-bold">
+                                ${BiuKeeLokYuenNoodleSet.title}${BiuKeeLokYuenNoodleSet.properties.noodle.title}選擇
+                            </div>
+                            <div className="p-3">${slashes(BiuKeeLokYuenNoodleSet.properties.noodle.enums())}</div>
+                            <div className="p-3 font-bold">
+                                ${BiuKeeLokYuenNoodleSet.properties.options.title}選擇
+                            </div>
+                            ${renderItems(BiuKeeLokYuenNoodleSet.properties.options.items.enums(), true)}
+                            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                                <div className="p-3 text-xl rounded-t-xl font-bold">${BiuKeeLokYuenNoodleSet.properties.main2.title}</div>
+                                <div className="bg-body rounded-b-xl">
+                                    ${renderItems(BiuKeeLokYuenNoodleSet.properties.main2.enums(), true)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="p-3 border-t-4 border-pink-500">
+                    <div className=${headerClasses}>
+                        <div className="p-3">${BiuKeeLokYuenSingleDish.title}</div>
+                    </div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className="md:w-1/2 md:border-r-4 border-pink-500">
+                            ${renderItems(single1)}
+                        </div>
+                        <div className="md:w-1/2">
+                            ${renderItems(single2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
         ');
     }
 
