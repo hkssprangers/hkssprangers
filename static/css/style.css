@@ -283,6 +283,8 @@ a.myDelivery {
   background: #f7f2ec;
 }
 
+/*http://www.patternify.com*/
+/*bg-pt2-pattern:6x6,(1,1),(2,2),(4,5),(5,4) */
 
 .bg-pt2-red-500 {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAASElEQVQYV1WNwQ3AMAgDjxGyE30ybZ4lKzUjUAUpKb2fZZ8sU7W34UYIEGxWYl7a2+32VYL8d0eohSAET9oj7UP+uRusUaF+vOaLFwsXGPB0AAAAAElFTkSuQmCC) repeat;
