@@ -586,8 +586,8 @@ class Menu extends View {
         var veg = FastTasteSSPVeg();
         var misc = FastTasteSSPMisc();
         return jsx('
-            <div className="border-pink-500 md:flex flex-row">
-                <div className="p-3 md:w-1/2 md:border-r-4 border-pink-500">
+            <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>漢堡</div>
                     ${renderItems(FastTasteSSPBurgers)}
                     <div className=${boxClasses}>
