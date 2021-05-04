@@ -296,8 +296,8 @@ a.myDelivery {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAS0lEQVQYV2NkAAFGBgaG/4wMjAz/QRSUDZZhYHjjOWOzyPYMXygXrJbhjceMzSI7MnyhiiE6wByYMrixENPhdoCUwHUj64CxQfYBAFFuGolx5VqAAAAAAElFTkSuQmCC) repeat;
 }
 
-.bg-pt2-yellow-600 {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATUlEQVQYV2O8UcG2WaPzly/DfwYGRgYGhv9QghFE36hk26ze/suXAQmAJf4ji4DZjAxIEowMjAz/4bpBGuDgZgXbZnWwfSBFyOYiGQsAEs4YCkyf7/MAAAAASUVORK5CYII=) repeat;
+.bg-pt2-yellow-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAARklEQVQYV2WNQQ6AMBACh6vrJ43/qp90vWJstzFGbgQGdLbwuqewADMkHkce4dguCVdUwWx1osBOTPOh32WRbXHU34+od26vTxoLpWKbTAAAAABJRU5ErkJggg==) repeat;
 }
 
 .bg-pt2-green-600 {
@@ -317,6 +317,6 @@ a.myDelivery {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAPklEQVQYVy2KWxGAMAwE90QAloKTyjgZQQkgiVZEGDp87kMSUKIoehwWiE/2SK9X8xyeSG9384xjTy/nD8ALZJwRWPQwDS8AAAAASUVORK5CYII=) repeat;
 }
 
-.bg-slash-yellow-600 {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAAYUlEQVQYVzXM0Q2AMAgE0ONDHKU6DPOIE1jnYZjWUeQHU1J/yCXcPQIIRAAQ6AdbxnG6rlbqK/nsylZul5Gpn2z75ZIjmsAk0HSxFCkCTdn26r+x2na7xDAeZduqS2QT+AB3liQkwS9NUwAAAABJRU5ErkJggg==) repeat;
+.bg-slash-yellow-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAOElEQVQYVx2JsQ0AIAzD4pnyJfzRP+DLwlxUrCyOQShJFXebl9cUu7uNUwe6y7zN+JXzSzigVOoBKWkSKa/yK+oAAAAASUVORK5CYII=) repeat;
 }
