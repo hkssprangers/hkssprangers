@@ -623,7 +623,7 @@ class Menu extends View {
 
     function renderZeppelinHotDogSKM() {
         return jsx('
-            <div class="p-3">
+            <div className="p-3">
                 ${StaticResource.image("/images/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
             </div>
         ');
