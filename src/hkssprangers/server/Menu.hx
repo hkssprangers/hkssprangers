@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import haxe.ds.ReadOnlyArray;
 import react.ReactComponent.ReactElement;
 import js.lib.Promise;
 import react.*;
@@ -15,6 +16,7 @@ import hkssprangers.info.menu.TheParkByYearsMenu.*;
 import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.menu.DongDongMenu.*;
 import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
+import hkssprangers.info.menu.NeighborMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -133,7 +135,7 @@ class Menu extends View {
             case HanaSoftCream:
                 null;
             case Neighbor:
-                null;
+                renderNeighbor();
             case MGY:
                 null;
             case FastTasteSSP:
@@ -145,7 +147,7 @@ class Menu extends View {
         }
     }
 
-    function renderItems(items:Array<String>, isAddons = false) {
+    function renderItems(items:ReadOnlyArray<String>, isAddons = false) {
         return items.map(item -> {
             var parsed = MenuTools.parsePrice(item);
             renderItemRow(parsed.item, if (parsed.price != null) {
@@ -466,7 +468,7 @@ class Menu extends View {
                         <div className="p-3">${BiuKeeLokYuenNoodleSet.title} / ${BiuKeeLokYuenLoMeinSet.title}</div>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
-                        <div className="md:w-1/2 md:border-r-4 border-pink-500">
+                        <div className=${["md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             ${fused}
                         </div>
                         <div className="md:w-1/2">
@@ -487,12 +489,12 @@ class Menu extends View {
                         </div>
                     </div>
                 </div>
-                <div className="p-3 border-t-4 border-pink-500">
+                <div className=${["p-3", "border-t-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>
                         <div className="p-3">${BiuKeeLokYuenSingleDish.title}</div>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
-                        <div className="md:w-1/2 md:border-r-4 border-pink-500">
+                        <div className=${["md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             ${renderItems(single1)}
                         </div>
                         <div className="md:w-1/2">
@@ -501,6 +503,51 @@ class Menu extends View {
                     </div>
                 </div>
             </div>
+        ');
+    }
+
+    function renderNeighbor() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${burgerOrHotdog}</div>
+                        ${renderItems(NeighborBurgers)}
+                        <div className=${headerClasses}>${NeighborSalad.title}</div>
+                        ${renderItems(NeighborSalad.properties.salad.enums())}
+                        <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                            <div className="p-3 text-xl bg-slash rounded-t-xl font-bold">升級配料選擇</div>
+                            <div className="bg-body rounded-b-xl">
+                                <div className="p-3 font-bold">漢堡 / 熱狗 / 沙律 適用</div>
+                                ${renderItems(NeighborOpts, true)}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${NeighborSub.title}</div>
+                        ${renderItems(NeighborSub.enums())}
+                    </div>
+                </div>
+                
+                <div className=${["md:border-t-4", "p-3"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${burgerOrHotdog}轉套餐</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className="p-3 font-bold">
+                                ${NeighborSet.properties.sub.title}選擇
+                            </div>
+                            ${renderItems(NeighborSet.properties.sub.enums())}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            <div className="p-3 font-bold">
+                                ${NeighborSetDrink.title}
+                            </div>
+                            ${renderItems(NeighborSetDrink.enums(), true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
         ');
     }
 
