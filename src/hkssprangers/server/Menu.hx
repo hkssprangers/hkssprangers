@@ -19,6 +19,8 @@ import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.menu.NeighborMenu.*;
 import hkssprangers.info.menu.MGYMenu.*;
 import hkssprangers.info.menu.FastTasteSSPMenu.*;
+import hkssprangers.info.menu.HanaSoftCreamMenu.*;
+import hkssprangers.info.menu.BlaBlaBlaMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -26,6 +28,7 @@ using hkssprangers.info.MenuTools;
 using hkssprangers.ValueTools;
 using Reflect;
 using Lambda;
+using hxLINQ.LINQ;
 
 class Menu extends View {
     public var shop(get, never):Shop;
@@ -135,15 +138,15 @@ class Menu extends View {
             case KCZenzero:
                 renderKCZenzero();
             case HanaSoftCream:
-                null;
+                renderHanaSoftCream();
             case Neighbor:
                 renderNeighbor();
             case MGY:
                 renderMGY();
             case FastTasteSSP:
-                renderFastTasteSSPMenu();
+                renderFastTasteSSP();
             case BlaBlaBla:
-                null;
+                renderBlaBlaBla();
             case ZeppelinHotDogSKM:
                 renderZeppelinHotDogSKM();
         }
@@ -576,7 +579,7 @@ class Menu extends View {
         ');
     }
 
-    function renderFastTasteSSPMenu() {
+    function renderFastTasteSSP() {
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
         var boxClasses = ["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ");
         var seafood = FastTasteSSPSeafood(Lunch);
@@ -625,6 +628,42 @@ class Menu extends View {
         return jsx('
             <div className="p-3">
                 ${StaticResource.image("/images/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
+            </div>
+        ');
+    }
+
+    function renderHanaSoftCream() {
+        var cutoff = Math.ceil(HanaSoftCreamItem.enums().length * 0.5);
+        var items1 = HanaSoftCreamItem.enums().slice(0, cutoff);
+        var items2 = HanaSoftCreamItem.enums().slice(cutoff);
+        return jsx('
+            <div className="p-3">
+                <div className="md:flex flex-row md:mt-3">
+                    <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        ${renderItems(items1)}
+                    </div>
+                    <div className="md:w-1/2 md:ml-3">
+                        ${renderItems(items2)}
+                    </div>
+                </div>
+            </div>
+        ');
+    }
+
+    function renderBlaBlaBla() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <div className="p-3">
+                <div className="md:flex flex-row md:mt-3">
+                    <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${BlaBlaBlaHotDrink.title}</div>
+                        ${renderItems(BlaBlaBlaHotDrink.properties.drink.enums())}
+                    </div>
+                    <div className="md:w-1/2 md:ml-3">
+                        <div className=${headerClasses}>${BlaBlaBlaIceDrink.title}</div>
+                        ${renderItems(BlaBlaBlaIceDrink.properties.drink.enums())}
+                    </div>
+                </div>
             </div>
         ');
     }
