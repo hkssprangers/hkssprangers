@@ -145,7 +145,7 @@ class Menu extends View {
             case BlaBlaBla:
                 null;
             case ZeppelinHotDogSKM:
-                null;
+                renderZeppelinHotDogSKM();
         }
     }
 
@@ -617,6 +617,14 @@ class Menu extends View {
                     <div className=${headerClasses}>${misc.title}</div>
                     ${renderItems(misc.enums())}
                 </div>
+            </div>
+        ');
+    }
+
+    function renderZeppelinHotDogSKM() {
+        return jsx('
+            <div class="p-3">
+                ${StaticResource.image("/images/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
             </div>
         ');
     }
