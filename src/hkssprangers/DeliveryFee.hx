@@ -306,7 +306,7 @@ class DeliveryFee {
         },
         {
             place: "白田邨",
-            match: address -> address.contains("白田邨") || address.contains("白田村"),
+            match: address -> ~/白田[上下]?[邨村]/.match(address),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
                 case CLPCluster: 40;

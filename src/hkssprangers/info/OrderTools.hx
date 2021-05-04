@@ -1,5 +1,6 @@
 package hkssprangers.info;
 
+import thx.Decimal;
 using StringTools;
 using hkssprangers.MathTools;
 
@@ -57,5 +58,9 @@ class OrderTools {
                 line.split(", ").map(parsePrice).sum();
             }
         }).sum();
+    }
+
+    static public function setPlatformServiceCharge(order:Order):Void {
+        order.platformServiceCharge = (order.orderPrice:Decimal) * 0.15;
     }
 }

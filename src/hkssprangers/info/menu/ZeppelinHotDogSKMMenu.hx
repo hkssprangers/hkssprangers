@@ -193,18 +193,18 @@ class ZeppelinHotDogSKMMenu {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: v,
-                            orderPrice: v.parsePrice(),
+                            orderPrice: v.parsePrice().price,
                         }
                     case _:
                         {
                             orderDetails: "",
-                            orderPrice: 0,
+                            orderPrice: 0.0,
                         }
                 }
             case _:
                 {
                     orderDetails: "",
-                    orderPrice: 0,
+                    orderPrice: 0.0,
                 }
         }
     }

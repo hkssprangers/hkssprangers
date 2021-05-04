@@ -39,14 +39,24 @@ class Index extends View {
         ');
     }
 
-    static final isNewSystemReleased = false;
+    static final isNewSystemReleased = switch ServerMain.deployStage {
+        case dev | master: true;
+        case production: false;
+    }
 
-    function sameAreaNote() return !isNewSystemReleased ? null : jsx('
-        <p className="pb-6 text-center">🙋可以同一張單叫晒鄰近嘅餐廳，埗兵送埋俾你🙋</p>
+    static public function sameAreaNote() return jsx('
+        <div className="flex flex-nowrap justify-center pb-6">
+            <p className="mx-1">🙋</p>
+            <p className="text-center">
+                <span className="whitespace-nowrap">可以同一張單叫晒鄰近嘅餐廳，</span>
+                <span className="whitespace-nowrap">埗兵一次過送俾你</span>
+            </p>
+            <p className="mx-1">🙋</p>
+        </div>
     ');
 
     function banner() return !isNewSystemReleased ? null : jsx('
-        <div className="bg-yellow-400 text-center md:text-left">
+        <div className="bg-yellow-400 text-center md:text-left px-2">
             <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
                 <lord-icon
                     src="https://cdn.lordicon.com//lupuorrc.json"
@@ -63,14 +73,22 @@ class Index extends View {
         </div>
     ');
 
-    function orderButton() return !isNewSystemReleased ? null : jsx('
-        <Fragment>
-            <div className="fixed bottom-4 right-4 w-20 h-20 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400">&nbsp;</div>
-            <button className="fixed bottom-4 right-4 w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 hover:bg-yellow-1000 text-center text-sm">
-                ${StaticResource.image("/images/writing.svg", "order", "w-1/2 inline")}<br />
-                立即落單
-            </button>
-        </Fragment>
+    static public function orderButton() return jsx('
+        <div className="fixed overflow-hidden bottom-0 right-0 select-none">
+            <div className="p-5 pl-12 pt-12">
+                <div className="absolute pointer-events-none w-20 h-20 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400">&nbsp;</div>
+                <a
+                    className="flex justify-center items-center w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 hover:bg-yellow-1000 no-underline"
+                    href="/order-food"
+                >
+                    <span className="text-black text-center text-sm">
+                        ${StaticResource.image("/images/writing.svg", "order", "w-1/2 inline", false)}
+                        <br />
+                        立即落單
+                    </span>
+                </a>
+            </div>
+        </div>
     ');
 
     override function bodyContent() {
@@ -85,12 +103,12 @@ class Index extends View {
                             </a>
                         </div>
                         <div className="p-6 text-xl lg:text-4xl font-bold text-center">
-                            埗兵係為深水埗黃店服務為主嘅外賣平台
+                            埗兵係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
                         </div>
                         <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
                             合作餐廳 / 商店
                         </div>
-                        ${sameAreaNote()}
+                        ${isNewSystemReleased ? sameAreaNote() : null}
                         <div className="bg-white mb-3 rounded-xl ">
                             <div className="pt-6 px-6">
                                 <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-red-500"></i> 西九龍中心</h3>
@@ -101,14 +119,14 @@ class Index extends View {
                                 </div>
                                 <div className="lg:w-3/4 p-6 lg:flex text-center">
                                     <div className="flex flex-1 justify-center mb-6 lg:mb-0">
-                                        <a href=${formUrls[EightyNine]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", EightyNine]) : formUrls[EightyNine]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/89.jpg", EightyNine.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
                                             </div>
                                             <h1>${EightyNine.info().name}</h1>
                                         </a>
-                                        <a href=${formUrls[LaksaStore]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", LaksaStore]) : formUrls[LaksaStore]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/laksa.jpg", LaksaStore.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
@@ -118,14 +136,14 @@ class Index extends View {
                                         </a>
                                     </div>
                                     <div className="flex flex-1 justify-center">
-                                        <a href=${formUrls[DragonJapaneseCuisine]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu  text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", DragonJapaneseCuisine]) : formUrls[DragonJapaneseCuisine]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu  text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/yyp.jpg", DragonJapaneseCuisine.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
                                             </div>
                                             <h1>${DragonJapaneseCuisine.info().name}</h1>
                                         </a>
-                                        <a href=${formUrls[KCZenzero]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu  text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", KCZenzero]) : formUrls[KCZenzero]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu  text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/tomato.jpg", KCZenzero.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
@@ -147,14 +165,14 @@ class Index extends View {
                                     </div>
                                     <div className="lg:w-3/4 p-6">
                                         <div className="flex justify-center">
-                                            <a href=${formUrls[BiuKeeLokYuen]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                            <a href=${isNewSystemReleased ? Path.join(["/menu", BiuKeeLokYuen]) : formUrls[BiuKeeLokYuen]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                                 <div className="relative btn-menu">
                                                     ${StaticResource.image("/images/bill.jpg", BiuKeeLokYuen.info().name, "squircle mb-3")}
                                                     <p className="absolute align-center-hover text-lg"><i className="text-pink-500 fas fa-book-open"></i><br />menu</p>
                                                 </div>
                                                 <h1>${BiuKeeLokYuen.info().name}</h1>
                                             </a>
-                                            <a href=${formUrls[FastTasteSSP]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                            <a href=${isNewSystemReleased ? Path.join(["/menu", FastTasteSSP]) : formUrls[FastTasteSSP]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                                 <div className="relative btn-menu">
                                                     ${StaticResource.image("/images/fasttaste.jpg", FastTasteSSP.info().name, "squircle mb-3")}
                                                     <p className="absolute align-center-hover text-lg"><i className="text-pink-500 fas fa-book-open"></i><br />menu</p>
@@ -170,7 +188,7 @@ class Index extends View {
                                     <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-600"></i> 天悅廣場</h3>
                                 </div>
                                 <div className="p-6 flex">
-                                    <a href=${formUrls[Neighbor]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                    <a href=${isNewSystemReleased ? Path.join(["/menu", Neighbor]) : formUrls[Neighbor]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                         <div className="relative btn-menu">
                                             ${StaticResource.image("/images/neighbor.jpg", Neighbor.info().name, "squircle mb-3")}
                                             <p className="absolute align-center-hover text-lg"><i className="text-yellow-600 fas fa-book-open"></i><br />menu</p>
@@ -187,14 +205,14 @@ class Index extends View {
                                 </div>
                                 <div className="p-6 text-center">
                                     <div className="flex justify-center">
-                                        <a href=${formUrls[TheParkByYears]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", TheParkByYears]) : formUrls[TheParkByYears]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/park.jpg", TheParkByYears.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-green-600 fas fa-book-open"></i><br />menu</p>
                                             </div>
                                             <h1>${TheParkByYears.info().name}</h1>
                                         </a>
-                                        <a href=${formUrls[MGY]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", MGY]) : formUrls[MGY]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/mgy.jpg", MGY.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-green-600 fas fa-book-open"></i><br />menu</p>
@@ -211,14 +229,14 @@ class Index extends View {
                                 </div>
                                 <div className="p-6 text-center">
                                     <div className="flex justify-center">
-                                        <a href=${formUrls[YearsHK]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", YearsHK]) : formUrls[YearsHK]} className="w-1/2 lg:w-36 mr-3 lg:mr-auto mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/years.jpg", YearsHK.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
                                             </div>
                                             <h1>${YearsHK.info().name}</h1>
                                         </a>
-                                        <a href=${formUrls[DongDong]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                        <a href=${isNewSystemReleased ? Path.join(["/menu", DongDong]) : formUrls[DongDong]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                             <div className="relative btn-menu">
                                                 ${StaticResource.image("/images/dong.jpg", DongDong.info().name, "squircle mb-3")}
                                                 <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
@@ -236,7 +254,7 @@ class Index extends View {
                                     <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> 白田</h3>
                                 </div>
                                 <div className="p-6 flex">
-                                    <a href=${formUrls[ZeppelinHotDogSKM]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
+                                    <a href=${isNewSystemReleased ? Path.join(["/menu", ZeppelinHotDogSKM]) : formUrls[ZeppelinHotDogSKM]} className="w-1/2 lg:w-36 mx-auto text-center cursor-pointer rounded-3xl p-2 menu text-black">
                                         <div className="relative btn-menu">
                                             ${StaticResource.image("/images/zeppelin.jpg", ZeppelinHotDogSKM.info().name, "squircle mb-3")}
                                             <p className="absolute align-center-hover text-lg"><i className=" text-blue-500 fas fa-book-open"></i><br />menu</p>
@@ -353,7 +371,7 @@ class Index extends View {
                                 </div>
                             </div>
                         </div>
-                        ${orderButton()}
+                        ${isNewSystemReleased ? orderButton() : null}
                     </div>
                 </main>
             </Fragment>

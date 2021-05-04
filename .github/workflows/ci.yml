@@ -1,15 +1,11 @@
 name: CI
-on:
-  push:
-    branches:
-      - master
-      - production
+on: ["push", "pull_request"]
 env:
   TZ: Asia/Hong_Kong
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210425150710"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210501141201"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -23,6 +19,7 @@ jobs:
         run: yarn tailwind
         env:
           NODE_ENV: production
+      - run: haxe processCss.hxml
       - name: Build browser.js
         run: haxe browser.hxml
       - name: Minify browser.js
@@ -31,8 +28,34 @@ jobs:
         run: haxe server.hxml
       - name: Build importGoogleForm.js
         run: haxe importGoogleForm.hxml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: |
+            index.js
+            static/browser.bundled.js
+            static/css
+            importGoogleForm.js
       - name: Test
         run: haxe test.hxml
+  deploy:
+    needs: build
+    if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
+    concurrency: ${{ github.ref }}
+    runs-on: ubuntu-latest
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210501141201"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Copy libs from /workspace
+        run: |
+          cp -r /workspace/node_modules .
+          cp -r /workspace/lib/dts2hx lib/
+      - run: yarn
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
       - name: Check Terraform state
         working-directory: ./terraform
         run: |

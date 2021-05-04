@@ -139,7 +139,7 @@ class View extends ReactComponent {
     }
 
     function bodyClasses():Array<String> {
-        return [];
+        return ["overflow-y-scroll"];
     }
 
     function bodyAttributes():DynamicAccess<String> {

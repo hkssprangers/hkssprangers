@@ -43,6 +43,10 @@ a:hover {
   text-decoration: underline;
 }
 
+a.no-underline:hover {
+  text-decoration: none;
+}
+
 #CustomerView .MuiContainer-root {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -176,12 +180,6 @@ a.myDelivery {
   background-position: bottom;
 }
 
-.cover-img {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(../images/the-park-by-years.jpg);
-}
-
 .ice-cream {
   background: url(../images/ssp-icecream.png);
   background-repeat: no-repeat;
@@ -283,4 +281,42 @@ a.myDelivery {
 
 .bg-body {
   background: #f7f2ec;
+}
+
+
+.bg-pt2-red-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAASElEQVQYV1WNwQ3AMAgDjxGyE30ybZ4lKzUjUAUpKb2fZZ8sU7W34UYIEGxWYl7a2+32VYL8d0eohSAET9oj7UP+uRusUaF+vOaLFwsXGPB0AAAAAElFTkSuQmCC) repeat;
+}
+
+.bg-pt2-green-400 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATUlEQVQYV2M0vTxj82m9DF+G/4wMDAz/GSCAkQHEYzC9BJLM9AVLgOWhElBlEDGYDmQDwLpBRutm+oKNgmk3vTx982ndDF+4HTAJZDsARvYaDX23mycAAAAASUVORK5CYII=) repeat;
+}
+
+.bg-pt2-pink-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAS0lEQVQYV2NkAAFGBgaG/4wMjAz/QRSUDZZhYHjjOWOzyPYMXygXrJbhjceMzSI7MnyhiiE6wByYMrixENPhdoCUwHUj64CxQfYBAFFuGolx5VqAAAAAAElFTkSuQmCC) repeat;
+}
+
+.bg-pt2-yellow-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATUlEQVQYV2O8UcG2WaPzly/DfwYGRgYGhv9QghFE36hk26ze/suXAQmAJf4ji4DZjAxIEowMjAz/4bpBGuDgZgXbZnWwfSBFyOYiGQsAEs4YCkyf7/MAAAAASUVORK5CYII=) repeat;
+}
+
+.bg-pt2-green-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAATElEQVQYV1WNyxHAIAhEl4NJdRSC6Ufsg+r0okMkk4Hb/h50NbFZlQECsHCOQC6Lik3pnIKonBbWv8kAoAT6RX3ku4mNR9kN9/PfYG+yoRgJauwbWAAAAABJRU5ErkJggg==) repeat;
+}
+
+.bg-pt2-blue-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAASElEQVQYV1WNwQ3AMAgDjxGyE30ybZ4lKzUjUAUpKb2fZZ8sU7W34UYIEGxWYl7a2+32VYL8d0eohSAET9oj7UP+uRusUaF+vOaLFwsXGPB0AAAAAElFTkSuQmCC) repeat;
+}
+
+
+.bg-slash-red-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAAWklEQVQYVyWNwRHDQAgDpRLslHTck2p5hmsJl6CMHH7ssAsJDyECT0SRJCBg9qqrO18wK+o+nZJAn13nJKW/bMMBN2atepuGE7tuNwye7eWbEsHZUZ/u9CdrP1NmKWV76bjiAAAAAElFTkSuQmCC) repeat;
+}
+
+.bg-slash-pink-500 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAPklEQVQYVy2KWxGAMAwE90QAloKTyjgZQQkgiVZEGDp87kMSUKIoehwWiE/2SK9X8xyeSG9384xjTy/nD8ALZJwRWPQwDS8AAAAASUVORK5CYII=) repeat;
+}
+
+.bg-slash-yellow-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAAYUlEQVQYVzXM0Q2AMAgE0ONDHKU6DPOIE1jnYZjWUeQHU1J/yCXcPQIIRAAQ6AdbxnG6rlbqK/nsylZul5Gpn2z75ZIjmsAk0HSxFCkCTdn26r+x2na7xDAeZduqS2QT+AB3liQkwS9NUwAAAABJRU5ErkJggg==) repeat;
 }

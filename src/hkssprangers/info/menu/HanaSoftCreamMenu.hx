@@ -7,12 +7,12 @@ class HanaSoftCreamMenu {
         "enum": [
             "特濃意大利黑朱古力雪糕 $26",
             "北海道8.0牛奶雪糕 $26",
-            "伯爵茶雪糕 $27",
             "日本柚子雪糕 $26",
             "北海道十勝紅豆雪糕 $27",
             "日本巨峰乳酪雪糕 $27",
-            "百香果鳳梨味雪糕 $28",
             "水信玄餅 $20",
+            "意大利脆皮波波雪糕(牛奶) $48",
+            "意大利脆皮波波雪糕(黑朱古力) $48",
             "家庭裝特濃意大利黑朱古力雪糕300g $70",
             "家庭裝北海道8.0牛奶雪糕雪糕300g $70",
             "山梨縣桃8.0乳酪特飲 $42",
@@ -38,12 +38,12 @@ class HanaSoftCreamMenu {
             case v if (Std.isOfType(v, String)):
                 {
                     orderDetails: v,
-                    orderPrice: v.parsePrice(),
+                    orderPrice: v.parsePrice().price,
                 }
             case _:
                 {
                     orderDetails: "",
-                    orderPrice: 0,
+                    orderPrice: 0.0,
                 }
         }
     }

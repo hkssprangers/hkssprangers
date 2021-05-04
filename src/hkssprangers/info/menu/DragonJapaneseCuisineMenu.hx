@@ -53,11 +53,11 @@ class DragonJapaneseCuisineMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "轉地獄湯底 (+$5)",
-                        "轉黑蒜油湯底 (+$8)",
-                        "拉麵加底 (+$5)",
-                        "加糖心蛋 (+$8)",
-                        "轉烏冬 (免費)",
+                        "轉地獄湯底 +$5",
+                        "轉黑蒜油湯底 +$8",
+                        "拉麵加底 +$5",
+                        "加糖心蛋 +$8",
+                        "轉烏冬 +$0",
                     ],
                 },
                 uniqueItems: true,
@@ -164,18 +164,18 @@ class DragonJapaneseCuisineMenu {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: v,
-                            orderPrice: v.parsePrice(),
+                            orderPrice: v.parsePrice().price,
                         }
                     case _:
                         {
                             orderDetails: "",
-                            orderPrice: 0,
+                            orderPrice: 0.0,
                         }
                 }
             case _:
                 {
                     orderDetails: "",
-                    orderPrice: 0,
+                    orderPrice: 0.0,
                 }
         }
     }
