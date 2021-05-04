@@ -17,6 +17,7 @@ import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.menu.DongDongMenu.*;
 import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.menu.NeighborMenu.*;
+import hkssprangers.info.menu.MGYMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -137,7 +138,7 @@ class Menu extends View {
             case Neighbor:
                 renderNeighbor();
             case MGY:
-                null;
+                renderMGY();
             case FastTasteSSP:
                 null;
             case BlaBlaBla:
@@ -158,14 +159,16 @@ class Menu extends View {
         });
     }
 
-    function renderItemRow(item:String, price:String) {
+    function renderItemRow(item:String, price:String, ?extraClasses:Array<String>) {
+        if (extraClasses == null)
+            extraClasses = [];
         return if (price != null) jsx('
-            <div key=${item} className="flex flex-row">
+            <div key=${item} className=${["flex", "flex-row"].concat(extraClasses).join(" ")}>
                 <div className="flex-grow p-3">${item}</div>
                 <div className="p-3 whitespace-nowrap">${price}</div>
             </div>
         ') else jsx('
-            <div key=${item} className="p-3">${item}</div>
+            <div key=${item} className=${["p-3"].concat(extraClasses).join(" ")}>${item}</div>
         ');
     }
 
@@ -548,6 +551,27 @@ class Menu extends View {
                     </div>
                 </div>
             </Fragment>
+        ');
+    }
+
+    function renderMGY() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    ${{
+                        var p = MGYSingleDish.description.parsePrice();
+                        renderItemRow(p.item, "$" + p.price, ["text-xl", "font-bold"].concat(style.headerClasses));
+                    }}
+                    ${renderItems(MGYSingleDish.properties.dish.enums())}
+                    <div className=${headerClasses}>${MGYSub.title}</div>
+                    ${renderItems(MGYSub.enums())}
+                </div>
+                <div className="md:w-1/2 p-3">
+                    <div className=${headerClasses}>${MGYRice.title}</div>
+                    ${renderItems(MGYRice.properties.rice.enums())}
+                </div>
+            </div>
         ');
     }
 
