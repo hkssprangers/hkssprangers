@@ -67,9 +67,9 @@ class Menu extends View {
             boxClasses: ["bg-slash-pink-500"],
         },
         SmilingPlazaCluster => {
-            borderClasses: ["border-yellow-600"],
-            headerClasses: ["bg-pt2-yellow-600"],
-            boxClasses: ["bg-slash-yellow-600"],
+            borderClasses: ["border-yellow-500"],
+            headerClasses: ["bg-pt2-yellow-500"],
+            boxClasses: ["bg-slash-yellow-500"],
         },
         ParkCluster => {
             borderClasses: ["border-green-600"],
