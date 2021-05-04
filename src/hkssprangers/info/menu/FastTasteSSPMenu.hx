@@ -59,75 +59,75 @@ class FastTasteSSPMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            '凍柑橘檸檬 (+$$${0 + basePrice})',
-            '凍⾹芒橙汁 (+$$${0 + basePrice})',
-            '熱檸檬⽔ (+$$${0 + basePrice})',
-            '熱柑橘檸檬 (+$$${0 + basePrice})',
-            '熱朱古⼒ (+$$${0 + basePrice})',
-            '可樂 (+$$${0 + basePrice})',
-            '無糖可樂 (+$$${0 + basePrice})',
-            '忌廉 (+$$${0 + basePrice})',
-            '雪碧 (+$$${0 + basePrice})',
-            '凍朱古⼒ (+$$${9 + basePrice})',
-            '熱即磨咖啡 (+$$${10 + basePrice})',
-            '凍即磨咖啡 (+$$${13 + basePrice})',
-            '凍蘋果汁 (+$$${8 + basePrice})',
-            '凍檸檬⽔ (+$$${9 + basePrice})',
-            '凍鮮檸利賓納 (+$$${9 + basePrice})',
-            '凍檸檬紅茶 (+$$${9 + basePrice})',
-            '凍青檸梳打 (+$$${13 + basePrice})',
-            '凍雜果賓治 (+$$${13 + basePrice})',
+            '凍柑橘檸檬 +$$${0 + basePrice}',
+            '凍⾹芒橙汁 +$$${0 + basePrice}',
+            '熱檸檬⽔ +$$${0 + basePrice}',
+            '熱柑橘檸檬 +$$${0 + basePrice}',
+            '熱朱古⼒ +$$${0 + basePrice}',
+            '可樂 +$$${0 + basePrice}',
+            '無糖可樂 +$$${0 + basePrice}',
+            '忌廉 +$$${0 + basePrice}',
+            '雪碧 +$$${0 + basePrice}',
+            '凍朱古⼒ +$$${9 + basePrice}',
+            '熱即磨咖啡 +$$${10 + basePrice}',
+            '凍即磨咖啡 +$$${13 + basePrice}',
+            '凍蘋果汁 +$$${8 + basePrice}',
+            '凍檸檬⽔ +$$${9 + basePrice}',
+            '凍鮮檸利賓納 +$$${9 + basePrice}',
+            '凍檸檬紅茶 +$$${9 + basePrice}',
+            '凍青檸梳打 +$$${13 + basePrice}',
+            '凍雜果賓治 +$$${13 + basePrice}',
         ],
     };
     static public function FastTasteSSPVegSetDrink() return {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            '熱檸檬⽔ (+$0)',
-            '熱朱古⼒ (+$0)',
-            '熱柑橘檸檬 (+$0)',
-            '凍柑橘檸檬 (+$0)',
-            '凍⾹芒橙汁 (+$0)',
-            '凍蘋果汁 (+$0)',
-            '可樂 (+$0)',
-            '無糖可樂 (+$0)',
-            '忌廉 (+$0)',
-            '雪碧 (+$0)',
-            '凍朱古⼒ (+$9)',
-            '熱即磨咖啡 (+$10)',
-            '凍即磨咖啡 (+$13)',
-            '凍檸檬⽔ (+$9)',
-            '凍鮮檸利賓納 (+$9)',
-            '凍檸檬紅茶 (+$9)',
-            '凍青檸梳打 (+$13)',
-            '凍雜果賓治 (+$13)',
+            '熱檸檬⽔ +$0',
+            '熱朱古⼒ +$0',
+            '熱柑橘檸檬 +$0',
+            '凍柑橘檸檬 +$0',
+            '凍⾹芒橙汁 +$0',
+            '凍蘋果汁 +$0',
+            '可樂 +$0',
+            '無糖可樂 +$0',
+            '忌廉 +$0',
+            '雪碧 +$0',
+            '凍朱古⼒ +$9',
+            '熱即磨咖啡 +$10',
+            '凍即磨咖啡 +$13',
+            '凍檸檬⽔ +$9',
+            '凍鮮檸利賓納 +$9',
+            '凍檸檬紅茶 +$9',
+            '凍青檸梳打 +$13',
+            '凍雜果賓治 +$13',
         ],
     };
     static public function FastTasteSSPDrink(priceScale:Float) return {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            '可樂 (+$$${10 * priceScale})',
-            '無糖可樂 (+$$${10 * priceScale})',
-            '忌廉 (+$$${10 * priceScale})',
-            '雪碧 (+$$${10 * priceScale})',
-            '凍⾹芒橙汁 (+$$${16 * priceScale})',
-            '凍蘋果汁 (+$$${16 * priceScale})',
-            '熱柑橘檸檬 (+$$${16 * priceScale})',
-            '凍柑橘檸檬 (+$$${16 * priceScale})',
-            '熱檸檬⽔ (+$$${16 * priceScale})',
-            '凍檸檬⽔ (+$$${18 * priceScale})',
-            '熱朱古⼒ (+$$${16 * priceScale})',
-            '凍朱古⼒ (+$$${18 * priceScale})',
-            '熱即磨咖啡 (+$$${20 * priceScale})',
-            '凍即磨咖啡 (+$$${26 * priceScale})',
-            '凍鮮檸利賓納 (+$$${18 * priceScale})',
-            '凍檸檬紅茶 (+$$${18 * priceScale})',
-            '凍青檸梳打 (+$$${26 * priceScale})',
-            '凍雜果賓治 (+$$${26 * priceScale})',
+            '可樂 +$$${10 * priceScale}',
+            '無糖可樂 +$$${10 * priceScale}',
+            '忌廉 +$$${10 * priceScale}',
+            '雪碧 +$$${10 * priceScale}',
+            '凍⾹芒橙汁 +$$${16 * priceScale}',
+            '凍蘋果汁 +$$${16 * priceScale}',
+            '熱柑橘檸檬 +$$${16 * priceScale}',
+            '凍柑橘檸檬 +$$${16 * priceScale}',
+            '熱檸檬⽔ +$$${16 * priceScale}',
+            '凍檸檬⽔ +$$${18 * priceScale}',
+            '熱朱古⼒ +$$${16 * priceScale}',
+            '凍朱古⼒ +$$${18 * priceScale}',
+            '熱即磨咖啡 +$$${20 * priceScale}',
+            '凍即磨咖啡 +$$${26 * priceScale}',
+            '凍鮮檸利賓納 +$$${18 * priceScale}',
+            '凍檸檬紅茶 +$$${18 * priceScale}',
+            '凍青檸梳打 +$$${26 * priceScale}',
+            '凍雜果賓治 +$$${26 * priceScale}',
         ],
     };
-    static public final burgers:ReadOnlyArray<String> = [
+    static public final FastTasteSSPBurgers:ReadOnlyArray<String> = [
         "經典牛魔堡 $57",
         "公司漢堡 $99",
         "極上和牛堡 $85",
@@ -137,33 +137,33 @@ class FastTasteSSPMenu {
         "菠蘿炸雞堡 $55",
         "深海鱈魚堡 $57",
     ];
-    static public final burgerOptions:ReadOnlyArray<String> = [
-        "自制牛漢堡 (+$30)",
-        "菠特菇 (+$15)",
-        "菠蘿 (+$8)",
-        "煙肉 (+$8)",
-        "煎蛋 (+$8)",
-        "烤洋蔥 (+$8)",
-        "生洋蔥碎 (+$8)",
-        "車打芝士 (+$8)",
-        "酸瓜 (+$8)",
+    static public final FastTasteSSPBurgerOptions:ReadOnlyArray<String> = [
+        "自制牛漢堡 +$30",
+        "菠特菇 +$15",
+        "菠蘿 +$8",
+        "煙肉 +$8",
+        "煎蛋 +$8",
+        "烤洋蔥 +$8",
+        "生洋蔥碎 +$8",
+        "車打芝士 +$8",
+        "酸瓜 +$8",
     ];
     static public function FastTasteSSPBurgerSet(timeSlotType:TimeSlotType, isRedDay:Bool) {
-        var title = '漢堡套餐（${isRedDay ? "紅日": "平日"}${timeSlotType.info().name}）';
+        var title = '漢堡套餐';
         return {
             title: title,
             properties: {
                 burger: {
                     type: "string",
                     title: title,
-                    "enum": burgers,
+                    "enum": FastTasteSSPBurgers,
                 },
                 options: {
                     type: "array",
                     title: "加配料",
                     items: {
                         type: "string",
-                        "enum": burgerOptions,
+                        "enum": FastTasteSSPBurgerOptions,
                     },
                     uniqueItems: true,
                 },
@@ -194,21 +194,21 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPBurger(timeSlotType:TimeSlotType) {
-        var title = '單叫漢堡（${timeSlotType.info().name}）';
+        var title = '單叫漢堡';
         return {
             title: title,
             properties: {
                 burger: {
                     type: "string",
                     title: "漢堡",
-                    "enum": burgers,
+                    "enum": FastTasteSSPBurgers,
                 },
                 options: {
                     type: "array",
                     title: "加配料",
                     items: {
                         type: "string",
-                        "enum": burgerOptions,
+                        "enum": FastTasteSSPBurgerOptions,
                     },
                     uniqueItems: true,
                 },
@@ -220,7 +220,7 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPSeafood(timeSlotType:TimeSlotType) {
-        var title = '海鮮（${timeSlotType.info().name}）';
+        var title = '海鮮';
         return {
             title: title,
             properties: {
@@ -271,7 +271,7 @@ class FastTasteSSPMenu {
         };
     }
     static public function FastTasteSSPItalian(timeSlotType:TimeSlotType) {
-        var title = '意大利麵／意大利飯（${timeSlotType.info().name}）';
+        var title = '意大利麵／意大利飯';
         return {
             title: title,
             properties: {
@@ -327,13 +327,13 @@ class FastTasteSSPMenu {
                     items: {
                         type: "string",
                         "enum": [
-                            "沙律 (+$9)",
-                            "餐湯 (+$9)",
-                            "薯條 (+$9)",
-                            "薯格 (+$9)",
-                            "蕃薯條 (+$9)",
-                            "洋蔥圈 (+$9)",
-                            "芝⼠條(2條) (+$9)",
+                            "沙律 +$9",
+                            "餐湯 +$9",
+                            "薯條 +$9",
+                            "薯格 +$9",
+                            "蕃薯條 +$9",
+                            "洋蔥圈 +$9",
+                            "芝⼠條(2條) +$9",
                         ],
                     },
                     uniqueItems: true,
@@ -365,9 +365,9 @@ class FastTasteSSPMenu {
                     items: {
                         type: "string",
                         "enum": [
-                            "煙三文魚 (+$15)",
-                            "烤雞 (+$15)",
-                            "鮮蝦 (+$15)",
+                            "煙三文魚 +$15",
+                            "烤雞 +$15",
+                            "鮮蝦 +$15",
                         ],
                     },
                     uniqueItems: true,
@@ -392,7 +392,7 @@ class FastTasteSSPMenu {
                 "洋蔥圈 $32",
                 "原味雞翼(5隻) $40",
                 "墨西哥煙辣椒雞翼(5隻) $45",
-                "小食拼盤(薯條，薯格，芝士條，洋蔥圈) $7",
+                "小食拼盤(薯條，薯格，芝士條，洋蔥圈) $70",
             ],
         };
     }

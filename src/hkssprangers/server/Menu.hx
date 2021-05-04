@@ -18,6 +18,7 @@ import hkssprangers.info.menu.DongDongMenu.*;
 import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.menu.NeighborMenu.*;
 import hkssprangers.info.menu.MGYMenu.*;
+import hkssprangers.info.menu.FastTasteSSPMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -140,7 +141,7 @@ class Menu extends View {
             case MGY:
                 renderMGY();
             case FastTasteSSP:
-                null;
+                renderFastTasteSSPMenu();
             case BlaBlaBla:
                 null;
             case ZeppelinHotDogSKM:
@@ -570,6 +571,51 @@ class Menu extends View {
                 <div className="md:w-1/2 p-3">
                     <div className=${headerClasses}>${MGYRice.title}</div>
                     ${renderItems(MGYRice.properties.rice.enums())}
+                </div>
+            </div>
+        ');
+    }
+
+    function renderFastTasteSSPMenu() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        var boxClasses = ["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ");
+        var seafood = FastTasteSSPSeafood(Lunch);
+        var meat = FastTasteSSPMeat(Dinner);
+        var salad = FastTasteSSPSalad();
+        var italian = FastTasteSSPItalian(Lunch);
+        var veg = FastTasteSSPVeg();
+        var misc = FastTasteSSPMisc();
+        return jsx('
+            <div className="border-pink-500 md:flex flex-row">
+                <div className="p-3 md:w-1/2 md:border-r-4 border-pink-500">
+                    <div className=${headerClasses}>漢堡</div>
+                    ${renderItems(FastTasteSSPBurgers)}
+                    <div className=${boxClasses}>
+                        <div className="p-3 text-xl rounded-t-xl font-bold">升級配料選擇</div>
+                        <div className="bg-body rounded-b-xl">
+                            ${renderItems(FastTasteSSPBurgerOptions, true)}
+                        </div>
+                    </div>
+                    <div className=${headerClasses}>${seafood.title}</div>
+                    ${renderItems(seafood.properties.seafood.enums())}
+                    <div className=${headerClasses}>${meat.title} (晚餐供應)</div>
+                    ${renderItems(meat.properties.meat.enums())}
+                    <div className=${headerClasses}>${salad.title}</div>
+                    ${renderItems(salad.properties.salad.enums())}
+                    <div className=${boxClasses}>
+                        <div className="p-3 text-xl rounded-t-xl font-bold">${salad.title}${salad.properties.options.title}</div>
+                        <div className="bg-body rounded-b-xl">
+                            ${renderItems(salad.properties.options.items.enums(), true)}
+                        </div>
+                    </div>
+                </div>
+                <div className="md:w-1/2 p-3">
+                    <div className=${headerClasses}>${italian.title}</div>
+                    ${renderItems(italian.properties.italian.enums())}
+                    <div className=${headerClasses}>${veg.title}</div>
+                    ${renderItems(veg.properties.veg.enums())}
+                    <div className=${headerClasses}>${misc.title}</div>
+                    ${renderItems(misc.enums())}
                 </div>
             </div>
         ');
