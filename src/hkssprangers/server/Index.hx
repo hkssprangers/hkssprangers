@@ -16,7 +16,7 @@ class Index extends View {
     function get_tgBotName() return props.tgBotName;
 
     override public function description() return "深水埗區外賣團隊";
-    override function canonical() return host;
+    override function canonical() return "https://" + host;
     override public function render() {
         return super.render();
     }
@@ -26,7 +26,7 @@ class Index extends View {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join([host, R("/images/ssprangers4-y.png")])} />
+            <meta property="og:image" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
         </Fragment>
     ');
 

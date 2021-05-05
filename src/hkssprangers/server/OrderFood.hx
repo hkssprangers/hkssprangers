@@ -20,7 +20,7 @@ class OrderFood extends View {
     function get_user() return props.user;
 
     override public function description() return "叫外賣";
-    override function canonical() return Path.join([host, "order-food"]);
+    override function canonical() return Path.join(["https://" + host, "order-food"]);
     override public function render() {
         return super.render();
     }
@@ -30,7 +30,7 @@ class OrderFood extends View {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join([host, R("/images/ssprangers4-y.png")])} />
+            <meta property="og:image" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
         </Fragment>
     ');
 

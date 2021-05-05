@@ -36,7 +36,7 @@ class Menu extends View {
 
     override public function title() return '${shop.info().name} 埗兵外賣餐牌';
     override public function description() return '${shop.info().name} 埗兵外賣餐牌';
-    override function canonical() return host;
+    override function canonical() return Path.join(["https://" + host, "menu", shop]);
     override public function render() {
         return super.render();
     }
@@ -46,7 +46,7 @@ class Menu extends View {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join([host, R("/images/ssprangers4-y.png")])} />
+            <meta property="og:image" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
         </Fragment>
     ');
 

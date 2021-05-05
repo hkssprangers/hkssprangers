@@ -465,7 +465,12 @@ class ServerMain {
             }
         });
 
-        twilio = Twilio.call(TwilioConfig.sid, TwilioConfig.authToken);
+        switch [TwilioConfig.sid, TwilioConfig.authToken] {
+            case [null, null]:
+                trace("No TWILIO_SID and TWILIO_AUTH_TOKEN, Twilio is not configured");
+            case _:
+                twilio = Twilio.call(TwilioConfig.sid, TwilioConfig.authToken);
+        }
 
         if (isMain) {
             var ngrok:Dynamic = require("ngrok");

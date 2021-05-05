@@ -107,32 +107,40 @@ class View extends ReactComponent {
         ');
     }
 
-    function head() return jsx('
-        <head>
-            ${gtag()}
-            <meta charSet="UTF-8" />
-            <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <title>${title()}</title>
+    function head() {
+        var canonical = switch (canonical()) {
+            case null:
+                null;
+            case v:
+                jsx('<link rel="canonical" href=${v} />');
+        }
+        return jsx('
+            <head>
+                ${gtag()}
+                <meta charSet="UTF-8" />
+                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                <title>${title()}</title>
 
-            <link rel="manifest" href="/manifest.webmanifest" />
-            <meta name="mobile-web-app-capable" content="yes" />
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="application-name" content=${name} />
-            <meta name="apple-mobile-web-app-title" content=${name} />
-            <meta name="msapplication-starturl" content="/" />
+                <link rel="manifest" href="/manifest.webmanifest" />
+                <meta name="mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="application-name" content=${name} />
+                <meta name="apple-mobile-web-app-title" content=${name} />
+                <meta name="msapplication-starturl" content="/" />
 
-            ${favicon()}
-            ${descriptionTag()}
-            <link rel="canonical" href=${canonical()} />
-            ${ogMeta()}
-            ${depCss()}
-            ${depScript()}
-            ${css()}
-            ${script()}
-            ${prefetch().map(prefetchNode)}
-        </head>
-    ');
+                ${favicon()}
+                ${descriptionTag()}
+                ${canonical}
+                ${ogMeta()}
+                ${depCss()}
+                ${depScript()}
+                ${css()}
+                ${script()}
+                ${prefetch().map(prefetchNode)}
+            </head>
+        ');
+    }
 
     function htmlClasses():Array<String> {
         return [];

@@ -69,6 +69,15 @@ class Admin extends View {
     else
         null;
 
+    override function ogMeta() return jsx('
+        <Fragment>
+            <meta name="twitter:card" content="summary_large_image" />
+            ${super.ogMeta()}
+            <meta property="og:type" content="website" />
+            <meta property="og:image" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
+        </Fragment>
+    ');
+
     override public function render() {
         return super.render();
     }
