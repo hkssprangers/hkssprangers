@@ -7,6 +7,8 @@ import hkssprangers.StaticResource.R;
 import haxe.*;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
+import comments.CommentString.comment;
+import comments.CommentString.unindent;
 
 class View extends ReactComponent {
     function title():String return name;
@@ -26,12 +28,12 @@ class View extends ReactComponent {
     function gtag() {
         var id = "UA-174916152-1";
         var content = {
-            __html: "
+            __html: comment(unindent)/**
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '" + id + "');
-            "
+            **/
         };
         var scriptSrc = 'https://www.googletagmanager.com/gtag/js?id=${id}';
         return jsx('
