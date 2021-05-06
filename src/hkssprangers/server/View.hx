@@ -161,13 +161,24 @@ class View extends ReactComponent {
 
     function footer() return jsx('
         <footer className="p-6 text-center">
-            <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank">Charley</a></p>
+            <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank" className="underline text-black">Charley</a></p>
             <p>&copy; 2020-2021 ${name}</p>
             <div className="my-3 flex justify-center">
-                <a className="mx-2" href="https://www.facebook.com/hkssprangers"><i className="text-xl text-black fab fa-facebook-f"></i></a>
-                <a className="mx-2" href="https://www.instagram.com/hkssprangers/"><i className="text-xl text-black fab fa-instagram"></i></a>
-                <a className="mx-2" href="https://t.me/hkssprangers"><i className="text-xl text-black fab fa-telegram-plane"></i></a>
-                <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers">${StaticResource.image("/images/mewe.png", "MeWe", "w-12")}</a>
+                <a className="mx-2" href="https://www.facebook.com/hkssprangers">
+                    <i className="text-xl text-black fab fa-facebook-f"></i>
+                    <span className="sr-only">Facebook</span>
+                </a>
+                <a className="mx-2" href="https://www.instagram.com/hkssprangers/">
+                    <i className="text-xl text-black fab fa-instagram"></i>
+                    <span className="sr-only">Instagram</span>
+                </a>
+                <a className="mx-2" href="https://t.me/hkssprangers">
+                    <i className="text-xl text-black fab fa-telegram-plane"></i>
+                    <span className="sr-only">Telegram</span>
+                </a>
+                <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers">
+                    ${StaticResource.image("/images/mewe.png", "MeWe", "w-12")}
+                </a>
             </div>
         </footer>
     ');
