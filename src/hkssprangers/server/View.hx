@@ -74,11 +74,7 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function script() return jsx('
-        <Fragment>
-            <script src=${R("/browser.bundled.js")}></script>
-        </Fragment>
-    ');
+    function script() return null;
 
     function favicon() return jsx('
         <Fragment>
@@ -93,7 +89,9 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function prefetch():Array<String> return [];
+    function prefetch():Array<String> return [
+        R("/browser.bundled.js"),
+    ];
     function prefetchNode(link:String) return jsx('<link key=${link} rel="prefetch" href=${link} />');
 
     function ogMeta() {

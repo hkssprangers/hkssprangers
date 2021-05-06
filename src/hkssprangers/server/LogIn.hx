@@ -20,6 +20,13 @@ class LogIn extends View {
         return super.render();
     }
 
+    override function script() return jsx('
+        <Fragment>
+            ${super.script()}
+            <script src=${R("/browser.bundled.js")}></script>
+        </Fragment>
+    ');
+
     override function bodyContent() {
         return jsx('
             <div>

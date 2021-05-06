@@ -34,6 +34,13 @@ class OrderFood extends View {
         </Fragment>
     ');
 
+    override function script() return jsx('
+        <Fragment>
+            ${super.script()}
+            <script src=${R("/browser.bundled.js")}></script>
+        </Fragment>
+    ');
+
     override function bodyContent() {
         return jsx('
             <div>
