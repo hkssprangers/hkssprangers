@@ -39,6 +39,10 @@ class Index extends View {
         ');
     }
 
+    override function prefetch():Array<String> return super.prefetch().concat([
+        R("/browser.bundled.js"),
+    ]);
+
     static final isNewSystemReleased = switch ServerMain.deployStage {
         case dev | master: true;
         case production: false;

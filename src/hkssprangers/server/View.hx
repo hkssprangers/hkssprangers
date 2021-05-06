@@ -89,9 +89,7 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function prefetch():Array<String> return [
-        R("/browser.bundled.js"),
-    ];
+    function prefetch():Array<String> return [];
     function prefetchNode(link:String) return jsx('<link key=${link} rel="prefetch" href=${link} />');
 
     function ogMeta() {
