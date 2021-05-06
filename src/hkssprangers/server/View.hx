@@ -5,6 +5,8 @@ import react.Fragment;
 import react.ReactMacro.jsx;
 import hkssprangers.StaticResource.R;
 import haxe.*;
+import haxe.io.Path;
+import hkssprangers.server.ServerMain.*;
 
 class View extends ReactComponent {
     function title():String return name;
@@ -78,10 +80,13 @@ class View extends ReactComponent {
 
     function favicon() return jsx('
         <Fragment>
-            <link rel="apple-touch-icon" sizes="720x720" href=${R("/images/ssprangers4-y.png")}/>
-            <link rel="icon" type="image/png" sizes="720x720"  href=${R("/images/ssprangers4-y.png")}/>
+            <link rel="icon" type="image/png" sizes="720x720" href=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])}/>
+            <link rel="icon" type="image/x-icon" sizes="48x48" href=${Path.join(["https://" + host, R("/favicon.ico")])}/>
+            <link rel="icon" type="image/png" sizes="32x32" href=${Path.join(["https://" + host, R("/images/favicon-32x32.png")])}/>
+            <link rel="icon" type="image/png" sizes="16x16" href=${Path.join(["https://" + host, R("/images/favicon-16x16.png")])}/>
+            <link rel="apple-touch-icon" sizes="720x720" href=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])}/>
             <meta name="msapplication-TileColor" content="#ffffff" />
-            <meta name="msapplication-TileImage" content=${R("/images/ssprangers4-y.png")} />
+            <meta name="msapplication-TileImage" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
             <meta name="theme-color" content="#ffffff" />
         </Fragment>
     ');
