@@ -34,19 +34,19 @@ provider:
       format: 'requestId: $context.requestId, ip: $context.identity.sourceIp, caller: $context.identity.caller, user: $context.identity.user, requestTime: $context.requestTime, httpMethod: $context.httpMethod, resourcePath: $context.resourcePath, status: $context.status, protocol: $context.protocol, responseLength: $context.responseLength, integrationErrorMessage: $context.integrationErrorMessage'
 
 package:
-  exclude:
-    - .env
-    - .envrc
-    - .devcontainer/**
-    - .github/**
-    - .haxelib/**
-    - .vscode/**
-    - haxe_libraries/**
-    - lib/**
-    - src/**
-    - test/**
-    - terraform/**
-    - '*.hxml'
+  patterns:
+    - '!.env'
+    - '!.envrc'
+    - '!.devcontainer/**'
+    - '!.github/**'
+    - '!.haxelib/**'
+    - '!.vscode/**'
+    - '!haxe_libraries/**'
+    - '!lib/**'
+    - '!src/**'
+    - '!test/**'
+    - '!terraform/**'
+    - '!*.hxml'
 
 functions:
   web:
