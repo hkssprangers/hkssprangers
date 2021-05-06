@@ -120,7 +120,7 @@ class StaticResource {
 
     static public function fingerprint(path:String, hash:String):String {
         var p = new Path(path);
-        return Path.join([p.dir, p.file + "." + hash + "." + p.ext]);
+        return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file + "." + hash + "." + p.ext]);
     }
 
     static public function parseUrl(url:String) {
