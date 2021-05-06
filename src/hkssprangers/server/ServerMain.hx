@@ -323,7 +323,7 @@ class ServerMain {
                     var hash:Null<String> = req.query.md5;    
                     var actual = StaticResource.hash(filename);
                     if (hash == actual) {
-                        reply.header("Cache-Control", "public, max-age=604800, immutable"); // 7 days
+                        reply.header("Cache-Control", "public, max-age=31536000, immutable"); // 1 year
                         return Promise.resolve(payload);
                     } else {
                         reply.header("Cache-Control", "no-cache");
