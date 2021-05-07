@@ -465,11 +465,16 @@ class ServerMain {
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {
-            return ctx.reply(comment(unindent, format)/**
-                唔好意思。我唔係好識「/start」以外嘅嘢...
-                如果有問題，麻煩你聯絡返我哋 Facebook，會有真人回答你 🙇‍
-                https://m.me/hkssprangers
-            **/);
+            switch (ctx.chat.type) {
+                case "private":
+                    return ctx.reply(comment(unindent, format)/**
+                        唔好意思。我唔係好識「/start」以外嘅嘢...
+                        如果有問題，麻煩你聯絡返我哋 Facebook，會有真人回答你 🙇‍
+                        https://m.me/hkssprangers
+                    **/);
+                case _:
+                    return Promise.resolve(null);
+            }
         });
 
         switch [TwilioConfig.sid, TwilioConfig.authToken] {
