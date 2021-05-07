@@ -48,12 +48,12 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
                     <p>請使用我哋嘅 Telegram (建議) / WhatsApp 機械人登入我哋嘅落單系統。</p>
                     <div className="flex flex-wrap mt-2 max-w-md mx-auto">
                         <a
-                            href="https://t.me/hkssprangers_bot"
+                            href=${"https://t.me/" + props.tgBotName}
                             className="flex-1 m-2 py-2 px-5 text-center rounded-lg text-white no-underline"
                             style=${{"backgroundColor": "#0088cc"}}
                         >
                             <h2 className="font-bold whitespace-nowrap"><i className="fab fa-telegram-plane"></i> Telegram</h2>
-                            <p className="whitespace-nowrap">@hkssprangers_bot</p>
+                            <p className="whitespace-nowrap">@${props.tgBotName}</p>
                         </a>
                         <a
                             href="http://wa.me/85264507612?text=%E7%99%BB%E5%85%A5%E8%90%BD%E5%96%AE"
