@@ -571,7 +571,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ||
             filteredDeliveries.length == 0
             ||
-            filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0);
+            filteredDeliveries.exists(d -> d.d.couriers == null || d.d.couriers.length == 0 || d.d.deliveryFee == null || Math.isNaN(d.d.deliveryFee));
 
         return jsx('
             <Container>
