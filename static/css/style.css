@@ -17,8 +17,8 @@ body {
   background-attachment: fixed;
   background-image: url(../images/ssp-bg-dot.png);
   background-repeat: repeat-x;
-  background-position: 0 290%;
-  background-size: auto 80%;
+  background-position: center 55vh;
+  background-size: auto 80vh;
 }
 
 * {
