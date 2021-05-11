@@ -12,9 +12,6 @@ import hkssprangers.info.Shop;
 using hkssprangers.server.FastifyTools;
 
 class Index extends View {
-    public var tgBotName(get, never):String;
-    function get_tgBotName() return props.tgBotName;
-
     override public function description() return "深水埗區外賣團隊";
     override function canonical() return "https://" + host;
     override public function render() {
@@ -43,11 +40,6 @@ class Index extends View {
         R("/browser.bundled.js"),
     ]);
 
-    static final isNewSystemReleased = switch ServerMain.deployStage {
-        case dev | master: true;
-        case production: false;
-    }
-
     static public function sameAreaNote() return jsx('
         <div className="flex flex-nowrap justify-center pb-6">
             <p className="mx-1">🙋</p>
@@ -59,7 +51,7 @@ class Index extends View {
         </div>
     ');
 
-    function banner() return !isNewSystemReleased ? null : jsx('
+    function banner() return jsx('
         <div className="bg-yellow-400 text-center md:text-left px-2">
             <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
                 <lord-icon
@@ -100,9 +92,9 @@ class Index extends View {
         var blockClasses        = "w-1/2 lg:flex-1 mx-auto lg:mx-0";
         var linkClasses         = "block text-center cursor-pointer rounded-3xl menu text-black py-4 sm:py-6 lg:py-0";
         var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto px-4 sm:px-6 lg:px-0";
-        return if (isNewSystemReleased) {
-            jsx('
-                <Fragment>
+        return jsx('
+            <Fragment>
+                ${sameAreaNote()}
                 <div className="bg-white mb-3 rounded-xl ">
                     <div className="pt-6 px-6">
                         <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-red-500"></i> 西九龍中心</h3>
@@ -303,184 +295,8 @@ class Index extends View {
                         </div>
                     </div>
                 </div>
-                </Fragment>
-            ');
-        } else {
-            jsx('
-                <Fragment>
-                    ${sameAreaNote()}
-                    <div className="bg-white mb-3 rounded-xl ">
-                        <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-red-500"></i> 西九龍中心</h3>
-                        </div>
-                        <div className="lg:flex">
-                            <div className="lg:w-1/4 p-6 h-36 lg:h-auto ice-cream">
-                                <p className="pr-20 lg:pr-0">幫襯任何一間餐廳都可以加購 HANA SOFT CREAM 雪糕 / 特飲</p>
-                            </div>
-                            <div className="lg:w-3/4 p-6 lg:flex text-center">
-                                <div className="flex flex-1 justify-center mb-6 lg:mb-0">
-                                    <a href=${formUrls[EightyNine]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/89.jpg", EightyNine.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${EightyNine.info().name}</h4>
-                                    </a>
-                                    <a href=${formUrls[LaksaStore]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/laksa.jpg", LaksaStore.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${LaksaStore.info().name}</h4>
-                                        <p className="text-xs">逢星期三休息</p>
-                                    </a>
-                                </div>
-                                <div className="flex flex-1 justify-center">
-                                    <a href=${formUrls[DragonJapaneseCuisine]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/yyp.jpg", DragonJapaneseCuisine.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${DragonJapaneseCuisine.info().name}</h4>
-                                    </a>
-                                    <a href=${formUrls[KCZenzero]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/tomato.jpg", KCZenzero.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${KCZenzero.info().name}</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lg:flex">
-                        <div className="lg:w-2/3 mb-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-pink-500"></i> 黃金商場</h3>
-                            </div>
-                            <div className="lg:flex">
-                                <div className="lg:w-1/4 p-6 h-36 lg:h-auto blabla">
-                                    <p className="pr-20 lg:pr-0">幫襯任何一間餐廳都可以加購壺說飲品</p>
-                                </div>
-                                <div className="lg:w-3/4 p-6">
-                                    <div className="flex justify-center">
-                                        <a href=${formUrls[BiuKeeLokYuen]} className=${linkClasses}>
-                                            <div className=${thumbnailDivClasses}>
-                                                ${StaticResource.image("/images/bill.jpg", BiuKeeLokYuen.info().name, "squircle mb-3")}
-                                                <p className="absolute align-center-hover text-lg"><i className="text-pink-500 fas fa-book-open"></i><br />menu</p>
-                                            </div>
-                                            <h4>${BiuKeeLokYuen.info().name}</h4>
-                                        </a>
-                                        <a href=${formUrls[FastTasteSSP]} className=${linkClasses}>
-                                            <div className=${thumbnailDivClasses}>
-                                                ${StaticResource.image("/images/fasttaste.jpg", FastTasteSSP.info().name, "squircle mb-3")}
-                                                <p className="absolute align-center-hover text-lg"><i className="text-pink-500 fas fa-book-open"></i><br />menu</p>
-                                            </div>
-                                            <h4>${FastTasteSSP.info().name}</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-600"></i> 天悅廣場</h3>
-                            </div>
-                            <div className="p-6 flex">
-                                <a href=${formUrls[Neighbor]} className=${linkClasses}>
-                                    <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/neighbor.jpg", Neighbor.info().name, "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className="text-yellow-600 fas fa-book-open"></i><br />menu</p>
-                                    </div>
-                                    <h4>${Neighbor.info().name}</h4>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lg:flex">
-                        <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-600"></i> 石硤尾街休憩花園</h3>
-                            </div>
-                            <div className="p-6 text-center">
-                                <div className="flex justify-center">
-                                    <a href=${formUrls[TheParkByYears]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/park.jpg", TheParkByYears.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-green-600 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${TheParkByYears.info().name}</h4>
-                                    </a>
-                                    <a href=${formUrls[MGY]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/mgy.jpg", MGY.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-green-600 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${MGY.info().name}</h4>
-                                        <p className="text-xs">逢星期一休息</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> 中電</h3>
-                            </div>
-                            <div className="p-6 text-center">
-                                <div className="flex justify-center">
-                                    <a href=${formUrls[YearsHK]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/years.jpg", YearsHK.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${YearsHK.info().name}</h4>
-                                    </a>
-                                    <a href=${formUrls[DongDong]} className=${linkClasses}>
-                                        <div className=${thumbnailDivClasses}>
-                                            ${StaticResource.image("/images/dong.jpg", DongDong.info().name, "squircle mb-3")}
-                                            <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
-                                        </div>
-                                        <h4>${DongDong.info().name}</h4>
-                                        <p className="text-xs">逢星期日休息</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lg:flex">
-                        <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> 白田</h3>
-                            </div>
-                            <div className="p-6 flex">
-                                <a href=${formUrls[ZeppelinHotDogSKM]} className=${linkClasses}>
-                                    <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/zeppelin.jpg", ZeppelinHotDogSKM.info().name, "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className=" text-blue-500 fas fa-book-open"></i><br />menu</p>
-                                    </div>
-                                    <h4>${ZeppelinHotDogSKM.info().name}</h4>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
-                            <div className="pt-6 px-6">
-                                <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同埸加映消毒用品</h3>
-                            </div>
-                            <div className="p-6 flex">
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform" className=${linkClasses}>
-                                    <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/hyginova.jpg", "Hyginova", "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className="text-indigo-500 fas fa-shopping-cart"></i><br />預訂</p>
-                                    </div>
-                                    <h4>Hyginova</h4>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </Fragment>
-            ');
-        }
+            </Fragment>
+        ');
     }
 
     override function bodyContent() {
@@ -594,7 +410,7 @@ class Index extends View {
                                 </div>
                             </div>
                         </div>
-                        ${isNewSystemReleased ? orderButton() : null}
+                        ${orderButton()}
                     </div>
                 </main>
             </Fragment>
