@@ -131,7 +131,7 @@ class StaticResource {
                 var fpPath = $v{fpPath};
                 var bg = $v{bg};
                 jsx('
-                    <picture style=${{backgroundColor: bg}}>
+                    <picture>
                         ${webpSource}
                         <source srcSet=${fpPath} />
                         <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} style=${{backgroundColor: bg}} />
