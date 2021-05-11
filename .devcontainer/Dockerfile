@@ -39,6 +39,7 @@ RUN apt-get update \
         direnv \
         tzdata \
         imagemagick \
+        webp \
     && echo 'eval "$(direnv hook bash)"' >> /etc/bash.bashrc \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs=12.* \

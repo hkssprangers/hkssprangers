@@ -3,6 +3,7 @@
 
 .haxelib
 *.js
+*.webp
 !/static/trackExceptions.js
 !/tailwind.config.js
 /static/css/tailwind.css

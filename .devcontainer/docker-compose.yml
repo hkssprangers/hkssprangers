@@ -1,7 +1,7 @@
 version: '3'
 services:
   workspace:
-    image: hkssprangers/hkssprangers_devcontainer_workspace:20210501141201
+    image: hkssprangers/hkssprangers_devcontainer_workspace:20210511213455
     init: true
     volumes:
       - /var/run/docker.sock:/var/run/docker-host.sock

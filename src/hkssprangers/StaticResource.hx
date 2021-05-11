@@ -54,7 +54,7 @@ class StaticResource {
             throw Context.error('$path does not exist', Context.currentPos());
         } else {
             var h = hash(staticPath);
-            var path = hkssprangers.StaticResource.fingerprint(path, h);
+            var fpPath = hkssprangers.StaticResource.fingerprint(path, h);
             var header:{
                 width:Int,
                 height:Int,
@@ -97,22 +97,59 @@ class StaticResource {
             } else {
                 null;
             }
+            var webp = {
+                var webpStaticPath = {
+                    var path = new Path(staticPath);
+                    path.ext = "webp";
+                    path.toString();
+                };
+                if (!FileSystem.exists(webpStaticPath)) {
+                    var p = new sys.io.Process("convert", [staticPath, webpStaticPath]);
+                    if (p.exitCode() != 0) {
+                        Context.error(p.stderr.readAll().toString(), Context.currentPos());
+                    }
+                    // var out = p.stdout.readAll().toString();
+                    p.close();
+                }
+                if (FileSystem.stat(webpStaticPath).size < FileSystem.stat(staticPath).size) {
+                    var webpPath = {
+                        var p = new Path(path);
+                        p.ext = "webp";
+                        p.toString();
+                    };
+                    hkssprangers.StaticResource.fingerprint(webpPath, hash(webpStaticPath));
+                } else {
+                    null;
+                }
+            }
             return if (bg != null) macro {
                 var className = ${className};
                 var alt = ${alt};
                 var header = $v{header};
-                var path = $v{path};
+                var webp = $v{webp};
+                var webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
+                var fpPath = $v{fpPath};
                 var bg = $v{bg};
                 jsx('
-                    <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} style=${{backgroundColor: bg}} />
+                    <picture style=${{backgroundColor: bg}}>
+                        ${webpSource}
+                        <source srcSet=${fpPath} />
+                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} style=${{backgroundColor: bg}} />
+                    </picture>
                 ');
             } else macro {
                 var className = ${className};
                 var alt = ${alt};
                 var header = $v{header};
-                var path = $v{path};
+                var webp = $v{webp};
+                var webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
+                var fpPath = $v{fpPath};
                 jsx('
-                    <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${path} />
+                    <picture>
+                        ${webpSource}
+                        <source srcSet=${fpPath} />
+                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} />
+                    </picture>
                 ');
             }
         }

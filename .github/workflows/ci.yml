@@ -5,7 +5,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210501141201"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210511213455"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -35,6 +35,7 @@ jobs:
             index.js
             static/browser.bundled.js
             static/css
+            static/**/*.webp
             importGoogleForm.js
       - name: Test
         run: haxe test.hxml
@@ -43,7 +44,7 @@ jobs:
     if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
     concurrency: ${{ github.ref }}
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210501141201"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210511213455"
     steps:
       - uses: actions/checkout@v2
         with:
