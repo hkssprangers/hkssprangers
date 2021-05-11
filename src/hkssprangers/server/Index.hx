@@ -98,8 +98,8 @@ class Index extends View {
     function renderShops() {
         var rowClasses          = "lg:p-6 flex flex-wrap lg:flex-nowrap";
         var blockClasses        = "w-1/2 lg:flex-1 mx-auto lg:mx-0";
-        var linkClasses         = "block text-center cursor-pointer rounded-3xl menu text-black p-6 lg:p-0";
-        var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto";
+        var linkClasses         = "block text-center cursor-pointer rounded-3xl menu text-black py-4 sm:py-6 lg:py-0";
+        var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto px-4 sm:px-6 lg:px-0";
         return if (isNewSystemReleased) {
             jsx('
                 <Fragment>
