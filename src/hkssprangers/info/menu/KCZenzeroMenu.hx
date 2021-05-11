@@ -141,7 +141,7 @@ class KCZenzeroMenu {
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
         title: "意粉",
-        description: "任選醬汁/主食 $55",
+        description: "任選醬汁／主食 $55",
         properties: {
             main: {
                 type: "string",

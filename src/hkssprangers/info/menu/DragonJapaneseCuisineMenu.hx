@@ -71,10 +71,10 @@ class DragonJapaneseCuisineMenu {
     };
 
     static public final DragonJapaneseCuisineRiceSet = {
-        title: "飯類/輕食",
+        title: "飯類／輕食",
         properties: {
             main: {
-                title: "飯類/輕食",
+                title: "飯類／輕食",
                 type: "string",
                 "enum": [
                     "滷肉飯配滷蛋 $38",

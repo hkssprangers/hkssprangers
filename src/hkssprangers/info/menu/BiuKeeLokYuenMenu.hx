@@ -164,7 +164,7 @@ class BiuKeeLokYuenMenu {
     };
 
     static public final BiuKeeLokYuenSingleDish = {
-        title: "淨食牛腩/牛雜/小食",
+        title: "淨食牛腩／牛雜／小食",
         description: "請留意外賣消費最低 $30。限量食品售完即止，外賣員當日會確認食物供應。",
         type: "string",
         "enum": [
