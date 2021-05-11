@@ -2,22 +2,16 @@ button:focus {
   outline: none;
 }
 
-html {
-  height: 100%;
-  margin: 0;
-}
-
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
   background: #f7f2ec;
   display: flex;
   flex-direction: column;
-  
-  background-attachment: fixed;
+
   background-image: url(../images/ssp-bg-dot.png);
   background-repeat: repeat-x;
-  background-position: center 55vh;
+  background-position: center bottom;
   background-size: auto 80vh;
 }
 
