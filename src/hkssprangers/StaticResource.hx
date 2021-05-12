@@ -97,31 +97,28 @@ class StaticResource {
             } else {
                 null;
             }
-            var webp = {
-                var webpStaticPath = {
-                    var path = new Path(staticPath);
+            function createWebp() {
+                function newPath(path:String):String {
+                    var path = new Path(path);
                     path.ext = "webp";
-                    path.toString();
-                };
+                    return path.toString();
+                }
+                var webpStaticPath = newPath(staticPath);
                 if (!FileSystem.exists(webpStaticPath)) {
                     var p = new sys.io.Process("convert", [staticPath, webpStaticPath]);
                     if (p.exitCode() != 0) {
                         Context.error(p.stderr.readAll().toString(), Context.currentPos());
                     }
-                    // var out = p.stdout.readAll().toString();
                     p.close();
                 }
-                if (FileSystem.stat(webpStaticPath).size < FileSystem.stat(staticPath).size) {
-                    var webpPath = {
-                        var p = new Path(path);
-                        p.ext = "webp";
-                        p.toString();
-                    };
+                return if (FileSystem.stat(webpStaticPath).size < FileSystem.stat(staticPath).size) {
+                    var webpPath = newPath(path);
                     hkssprangers.StaticResource.fingerprint(webpPath, hash(webpStaticPath));
                 } else {
                     null;
                 }
             }
+            var webp = createWebp();
             return if (bg != null) macro {
                 var className = ${className};
                 var alt = ${alt};
