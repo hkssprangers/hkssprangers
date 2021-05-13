@@ -34,7 +34,7 @@
     "tailwindcss-cli": "^0.1.2",
     "terser": "^5.7.0",
     "uglifyify": "^5.0.2",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.17.0"
   },
   "dependencies": {
     "aws-sdk": "^2.826.0",
