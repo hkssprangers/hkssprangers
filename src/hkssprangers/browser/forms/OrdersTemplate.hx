@@ -122,7 +122,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                             onClick=${props.onAddClick}
                             disabled=${props.disabled || props.readonly}
                         >
-                            <i class="fas fa-store mr-1"></i>
+                            <i className="fas fa-store mr-1"></i>
                             揀多間同範圍店舖
                         </Button>
                     </div>
