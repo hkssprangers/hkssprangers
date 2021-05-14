@@ -59,11 +59,13 @@ class OrderItemsTemplate extends ReactComponentOf<OrderItemsTemplateProps, Dynam
                 </div>
                 <div>
                     <Button
+                        variant=${Outlined}
                         className="array-item-add"
                         color=${Primary}
                         onClick=${props.onAddClick}
                         disabled=${props.disabled || props.readonly}
                     >
+                        <i className="fas fa-plus mr-1"></i>
                         叫多樣
                     </Button>
                 </div>

@@ -116,11 +116,13 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                 jsx('
                     <div className="my-5">
                         <Button
+                            variant=${Outlined}
                             className="array-item-add"
                             color=${Primary}
                             onClick=${props.onAddClick}
                             disabled=${props.disabled || props.readonly}
                         >
+                            <i class="fas fa-store mr-1"></i>
                             揀多間同範圍店舖
                         </Button>
                     </div>
