@@ -147,9 +147,20 @@ class LaksaStoreMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case NoodleSet:
-                summarizeOrderObject(orderItem.item, def, ["soup", "ingredient", "noodle", "drink"], null, priceInDescription("soup", def));
+                var price = parsePrice(LaksaStoreNoodleSet.description).price;
+                {
+                    orderDetails:
+                        orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + price + "\n" +
+                        orderItem.item.drink,
+                    orderPrice: price,
+                };
             case RiceSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                {
+                    orderDetails:
+                        orderItem.item.main + "\n" +
+                        orderItem.item.drink,
+                    orderPrice: parsePrice(orderItem.item.main).price,
+                };
             case _:
                 {
                     orderDetails: "",
