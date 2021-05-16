@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import tink.core.ext.Promises;
 import hkssprangers.browser.forms.*;
 import tink.core.Error.ErrorCode;
 import js.lib.Promise;
@@ -9,6 +10,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
 import hkssprangers.server.ServerMain.*;
+import telegram_typings.User as TgUser;
 using hkssprangers.server.FastifyTools;
 using StringTools;
 
@@ -18,6 +20,9 @@ class OrderFood extends View {
 
     public var user(get, never):String;
     function get_user() return props.user;
+
+    public var prefill(get, never):OrderFormPrefill;
+    function get_prefill() return props.prefill;
 
     override public function description() return "叫外賣";
     override function canonical() return Path.join(["https://" + host, "order-food"]);
@@ -51,6 +56,7 @@ class OrderFood extends View {
                     className="flex justify-center"
                     data-tg-bot-name=${tgBotName}
                     data-user=${Json.stringify(user)}
+                    data-prefill=${Json.stringify(prefill)}
                 />
             </div>
         ');
@@ -63,13 +69,17 @@ class OrderFood extends View {
                     reply.redirect("/login?redirectTo=" + "/order-food".urlEncode());
                     return Promise.resolve(null);
                 }
-                ServerMain.tgMe
-                    .then(tgMe -> {
-                        return Promise.resolve(reply.sendView(OrderFood, {
-                            tgBotName: tgMe.username,
-                            user: reply.getUser(),
-                        }));
-                    });
+                ServerMain.tgMe.then(tgMe -> {
+                    MySql.db.getPrefill(reply.getUser())
+                        .toJsPromise()
+                        .then(prefill -> {
+                            reply.sendView(OrderFood, {
+                                tgBotName: tgMe.username,
+                                user: reply.getUser(),
+                                prefill: prefill,
+                            });
+                        });
+                });
             });
     }
 

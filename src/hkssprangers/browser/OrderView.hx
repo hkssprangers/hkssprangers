@@ -16,6 +16,7 @@ using DateTools;
 typedef OrderViewProps = react.router.Route.RouteRenderProps & {
     final tgBotName:String;
     final user:LoggedinUser;
+    final prefill:OrderFormPrefill;
 }
 
 typedef OrderViewState = {
@@ -28,6 +29,7 @@ class OrderView extends ReactComponentOf<OrderViewProps, OrderViewState> {
         return jsx('
             <OrderForm
                 user=${props.user}
+                prefill=${props.prefill}
             />
         ');
     }

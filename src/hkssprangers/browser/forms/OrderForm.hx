@@ -21,12 +21,14 @@ import haxe.Json;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.DeliveryTools;
+using hkssprangers.ValueTools;
 using Reflect;
 using Lambda;
 using hxLINQ.LINQ;
 
 typedef OrderFormProps = {
     final user:LoggedinUser;
+    final prefill:OrderFormPrefill;
 }
 typedef OrderFormState = {
     final formData:OrderFormData;
@@ -47,7 +49,16 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     function new(props, context):Void {
         super(props, context);
         state = {
-            formData: {},
+            formData: {
+                backupContactMethod: props.prefill.backupContactMethod,
+                backupContactValue: props.prefill.backupContactValue.emptyStrIfNull(),
+                pickupMethod: props.prefill.pickupMethod,
+                pickupLocation: props.prefill.pickupLocation.emptyStrIfNull(),
+                paymentMethods: switch props.prefill.paymentMethods {
+                    case null: [];
+                    case v: v;
+                },
+            },
             deliveryPreview: null,
             previewOpen: false,
             isSubmitting: false,
