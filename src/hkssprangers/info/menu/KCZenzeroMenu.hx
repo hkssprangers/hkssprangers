@@ -310,13 +310,19 @@ class KCZenzeroMenu {
             case NoodleSet:
                 summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink"], null, (fieldName, value) -> switch fieldName {
                     case "options":
-                        switch (value != null ? value.length : 0) {
+                        var price = switch (value != null ? value.length : 0) {
                             case 0, 1, 2:
                                 (def.description:String).parsePrice().price;
                             case n:
                                 (def.description:String).parsePrice().price + (n - 2) * (def.properties.options.description:String).parsePrice().price;
+                        };
+                        {
+                            price: price,
                         }
-                    case _: 0;
+                    case _: 
+                        {
+                            price: 0.0,
+                        };
                 });
             case PastaSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink"], null, priceInDescription("main", def));

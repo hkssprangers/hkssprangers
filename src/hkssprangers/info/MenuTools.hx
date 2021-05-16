@@ -22,17 +22,21 @@ class MenuTools {
             };
     }
 
-    static public function priceInDescription(fieldName, def) {
-        return (fn, value) -> if (fieldName == fn) {
-            parsePrice(def.description).price;
-        } else {
-            0.0;
-        }
+    static public function priceInDescription(fieldName:String, def:Dynamic):(fieldName:String, def:Dynamic)->{ ?title:String, ?price:Float } {
+        return (fn, value) -> {
+            {
+                price: if (fieldName == fn) {
+                    parsePrice(def.description).price;
+                } else {
+                    null;
+                },
+            }
+        };
     }
 
     inline static final fullWidthSpace = "　";
     inline static final fullWidthColon = "：";
-    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?fieldPrice:(fieldName:String, value:Dynamic)->Float):{
+    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?mapField:(fieldName:String, value:Dynamic)->{ ?title:String, ?price:Float }):{
         orderDetails: String,
         orderPrice: Float,
     } {
@@ -54,11 +58,12 @@ class MenuTools {
                     switch (fieldVal) {
                         case null: //pass
                         case v:
-                            if (fieldPrice != null) switch (fieldPrice(fieldName, fieldVal)) {
-                                case p if (p > 0):
-                                    v += " $" + p;
-                                case _:
-                                    // pass
+                            if (mapField != null) {
+                                var f = mapField(fieldName, fieldVal);
+                                if (f.title != null)
+                                    fieldTitle = f.title;
+                                if (f.price != null && Math.isFinite(f.price))
+                                    v += " $" + f.price;
                             }
                             orderDetails.push('${prefix()}${fieldTitle}${v}');
                             orderPrice += parsePrice(v).price;
@@ -70,18 +75,20 @@ class MenuTools {
                     switch (fieldVal) {
                         case null: //pass
                         case options:
-                            if (fieldPrice != null) switch (fieldPrice(fieldName, fieldVal)) {
-                                case p if (p > 0):
-                                    orderPrice += p;
+                            if (mapField != null) {
+                                var f = mapField(fieldName, fieldVal);
+                                if (f.title != null)
+                                    fieldTitle = f.title;
+                                if (f.price != null && Math.isFinite(f.price)) {
+                                    orderPrice += f.price;
                                     var titlePad = "".rpad(fullWidthSpace, fieldTitle.length);
                                     for (i => opt in options) {
                                         var title = i == 0 ? fieldTitle : titlePad;
                                         orderDetails.push('${prefix()}${title}${opt}');
                                     }
-                                    orderDetails.push('${prefix()}${titlePad}$$${p}');
+                                    orderDetails.push('${prefix()}${titlePad}$$${f.price}');
                                     continue;
-                                case _:
-                                    //pass
+                                }
                             }
                             
                             for (opt in options) {

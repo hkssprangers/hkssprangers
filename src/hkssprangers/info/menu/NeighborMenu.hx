@@ -213,7 +213,7 @@ class NeighborMenu {
             case Set:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink"]);
             case Single:
-                summarizeOrderObject(orderItem.item, def, ["main", "options"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "options"], null, (f, v) -> if (f == "main") { title: "" } else {});
             case Salad:
                 summarizeOrderObject(orderItem.item, def, ["salad", "options"]);
             case Sub:
