@@ -48,17 +48,31 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     
     function new(props, context):Void {
         super(props, context);
+
+        var initFormData:OrderFormData = {};
+        switch (props.prefill.backupContactMethod) {
+            case null: //pass
+            case v: initFormData.backupContactMethod = v;
+        }
+        switch (props.prefill.backupContactValue) {
+            case null: //pass
+            case v: initFormData.backupContactValue = v;
+        }
+        switch (props.prefill.pickupMethod) {
+            case null: //pass
+            case v: initFormData.pickupMethod = v;
+        }
+        switch (props.prefill.pickupLocation) {
+            case null: //pass
+            case v: initFormData.pickupLocation = v;
+        }
+        switch (props.prefill.paymentMethods) {
+            case null: //pass
+            case v: initFormData.paymentMethods = v;
+        }
+
         state = {
-            formData: {
-                backupContactMethod: props.prefill.backupContactMethod,
-                backupContactValue: props.prefill.backupContactValue.emptyStrIfNull(),
-                pickupMethod: props.prefill.pickupMethod,
-                pickupLocation: props.prefill.pickupLocation.emptyStrIfNull(),
-                paymentMethods: switch props.prefill.paymentMethods {
-                    case null: [];
-                    case v: v;
-                },
-            },
+            formData: initFormData,
             deliveryPreview: null,
             previewOpen: false,
             isSubmitting: false,
