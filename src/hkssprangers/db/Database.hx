@@ -2,7 +2,6 @@ package hkssprangers.db;
 
 import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.Shop;
-import haxe.Json;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Tg;
 import hkssprangers.info.PaymentMethod;
@@ -47,7 +46,13 @@ class Database extends tink.sql.Database {
     @:table("twilioMessage")
     final twilioMessage:TwilioMessage;
 
-    public function getPrefill(user:LoggedinUser) {
+    public function getPrefill(user:LoggedinUser):Promise<{
+        ?pickupLocation:String,
+        ?pickupMethod:PickupMethod,
+        ?paymentMethods:Array<PaymentMethod>,
+        ?backupContactMethod:ContactMethod,
+        ?backupContactValue:String,
+    }> {
         return (switch user.login {
             case Telegram:
                 delivery.where(d -> !d.deleted && (d.customerPreferredContactMethod == Telegram) && ((user.tg.id == d.customerTgId) || (user.tg.username != null && d.customerTgUsername == user.tg.username)));
@@ -58,37 +63,36 @@ class Database extends tink.sql.Database {
                 { field: d.pickupTimeSlotStart, order: Desc },
             ])
             .first()
-            .next(d -> if (d == null) null else {
-                pickupLocation: d.pickupLocation,
-                pickupMethod: PickupMethod.fromId(d.pickupMethod),
-                paymentMethods: {
-                    var m = [];
-                    if (d.paymeAvailable)
-                        m.push(PayMe);
-                    if (d.fpsAvailable)
-                        m.push(FPS);
-                    m;
-                },
-                backupContactMethod: ContactMethod.fromId(d.customerBackupContactMethod),
-                backupContactValue: switch ContactMethod.fromId(d.customerBackupContactMethod) {
-                    case null: null;
-                    case Telegram: d.customerTgUsername;
-                    case WhatsApp: d.customerWhatsApp;
-                    case Signal: d.customerSignal;
-                    case Telephone: d.customerTel;
-                }
-            })
-            .recover(err -> switch err.code {
-                case NotFound:
+            .flatMap(r -> switch r {
+                case Success(d):
+                    {
+                        pickupLocation: d.pickupLocation,
+                        pickupMethod: PickupMethod.fromId(d.pickupMethod),
+                        paymentMethods: {
+                            var m = [];
+                            if (d.paymeAvailable)
+                                m.push(PayMe);
+                            if (d.fpsAvailable)
+                                m.push(FPS);
+                            m;
+                        },
+                        backupContactMethod: ContactMethod.fromId(d.customerBackupContactMethod),
+                        backupContactValue: switch ContactMethod.fromId(d.customerBackupContactMethod) {
+                            case null: null;
+                            case Telegram: d.customerTgUsername;
+                            case WhatsApp: d.customerWhatsApp;
+                            case Signal: d.customerSignal;
+                            case Telephone: d.customerTel;
+                        }
+                    };
+                case Failure(failure):
                     {
                         pickupLocation: null,
                         pickupMethod: null,
                         paymentMethods: null,
                         backupContactMethod: null,
                         backupContactValue: null,
-                    }
-                case _:
-                    throw err;
+                    };
             });
     }
 
