@@ -1,6 +1,5 @@
 package hkssprangers.db;
 
-import hkssprangers.browser.forms.OrderFormPrefill;
 import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.Shop;
 import haxe.Json;
@@ -48,7 +47,7 @@ class Database extends tink.sql.Database {
     @:table("twilioMessage")
     final twilioMessage:TwilioMessage;
 
-    public function getPrefill(user:LoggedinUser):Promise<OrderFormPrefill> {
+    public function getPrefill(user:LoggedinUser) {
         return (switch user.login {
             case Telegram:
                 delivery.where(d -> !d.deleted && (d.customerPreferredContactMethod == Telegram) && ((user.tg.id == d.customerTgId) || (user.tg.username != null && d.customerTgUsername == user.tg.username)));
