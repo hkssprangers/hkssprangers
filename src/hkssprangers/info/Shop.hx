@@ -335,6 +335,13 @@ enum abstract Shop(String) to String {
                 //pass
         }
 
+        switch [(cast this:Shop), pickupTimeSlot.start.getDatePart()] {
+            case [LaksaStore, "2021-05-18"]:
+                return Unavailable('喇沙女皇壽辰休息一天');
+            case _:
+                //pass
+        }
+
         if (pickupTimeSlot.start.getTimePart() < info.earliestPickupTime)
             return Unavailable('最早 ${info.earliestPickupTime.substr(0, 5)} 時段交收');
 
