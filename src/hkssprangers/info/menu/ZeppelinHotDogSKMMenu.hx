@@ -14,10 +14,10 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
         Single,
     ];
 
-    public function getDefinition():Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
+    public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
         case HotdogSet: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
         case Hotdog: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdog;
-        case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle;
+        case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle(timeSlot);
     }
 }
 
@@ -36,32 +36,45 @@ class ZeppelinHotDogSKMMenu {
         "Coke Zero",
     ];
 
-    static public final ZeppelinHotDogSKMSingle = {
-        title: "小食",
-        type: "string",
-        "enum": [
-            "洋蔥圈(6件) $15",
-            "洋蔥圈(9件) $20",
-            "雞塊(6件) $15",
-            "雞塊(9件) $20",
-            // "植系炸雞塊(4塊) $18",
-            "細薯格 $15",
-            "大薯格 $22",
-            "薯餅 $8",
-            "魚手指(4件) $18",
-            "飛船小食杯(洋蔥圈, 雞塊, 薯格) $26",
-            "粒粒香腸杯 $28",
-            "細薯條 $10",
-            "大薯條 $15",
-            "芝士大薯條 $22",
-            "芝士煙肉薯條 $26",
-            "芝士辣肉醬薯條 $26",
-            "炸魚薯條 $28",
-            "牛油粟米杯 $10",
-            "冰菠蘿 $8",
-            "惹味香辣難 $18",
-        ],
-    };
+    static public function ZeppelinHotDogSKMSingle(timeSlot:TimeSlot) {
+        var sixYearItems = (timeSlot != null && timeSlot.start != null ? switch (timeSlot.start.getDatePart()) {
+            case "2021-05-17":
+                ["⭐六周年驚喜優惠: 十件雞塊 $10"];
+            case "2021-05-18":
+                ["⭐六周年驚喜優惠: 十件洋蔥圈 $10"];
+            case "2021-05-19":
+                ["⭐六周年驚喜優惠: 惹味香辣難 $10"];
+            case _:
+                [];
+        } : []);
+
+        return {
+            title: "小食",
+            type: "string",
+            "enum": sixYearItems.concat([
+                "洋蔥圈(6件) $15",
+                "洋蔥圈(9件) $20",
+                "雞塊(6件) $15",
+                "雞塊(9件) $20",
+                // "植系炸雞塊(4塊) $18",
+                "細薯格 $15",
+                "大薯格 $22",
+                "薯餅 $8",
+                "魚手指(4件) $18",
+                "飛船小食杯(洋蔥圈, 雞塊, 薯格) $26",
+                "粒粒香腸杯 $28",
+                "細薯條 $10",
+                "大薯條 $15",
+                "芝士大薯條 $22",
+                "芝士煙肉薯條 $26",
+                "芝士辣肉醬薯條 $26",
+                "炸魚薯條 $28",
+                "牛油粟米杯 $10",
+                "冰菠蘿 $8",
+                "惹味香辣難 $18",
+            ]),
+        };
+    }
 
     static public final hotdogs:ReadOnlyArray<String> = [
         "火灸芝士辣肉醬熱狗 $42",
@@ -138,7 +151,7 @@ class ZeppelinHotDogSKMMenu {
         ]
     }
 
-    static public function itemsSchema(order:FormOrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
@@ -146,7 +159,7 @@ class ZeppelinHotDogSKMMenu {
                     title: "食物種類",
                     type: "string",
                     oneOf: ZeppelinHotDogSKMItem.all.map(item -> {
-                        title: item.getDefinition().title,
+                        title: item.getDefinition(pickupTimeSlot).title,
                         const: item,
                     }),
                 },
@@ -164,7 +177,7 @@ class ZeppelinHotDogSKMMenu {
                         //pass
                     case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: itemType.getDefinition(),
+                            item: itemType.getDefinition(pickupTimeSlot),
                         });
                         itemSchema.required.push("item");
                 }
@@ -178,11 +191,11 @@ class ZeppelinHotDogSKMMenu {
     static function summarizeItem(orderItem:{
         ?type:ZeppelinHotDogSKMItem,
         ?item:Dynamic,
-    }):{
+    }, pickupTimeSlot:Null<TimeSlot>):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition();
+        var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "extraOptions", "setOption1", "setOption2"], [ZeppelinHotDogSKMHotdogSet.description]);
@@ -209,8 +222,8 @@ class ZeppelinHotDogSKMMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+    static public function summarize(formData:FormOrderData, timeSlot:TimeSlot):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item, timeSlot)));
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,
