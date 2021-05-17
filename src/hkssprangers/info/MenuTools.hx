@@ -9,7 +9,7 @@ class MenuTools {
         item: String,
         price: Float,
     } {
-        var r = ~/^(.*)\s*\+?\$([0-9\.]+)/;
+        var r = ~/^(.*?)\s*\+?\$([0-9\.]+)/;
         return if (!r.match(line))
             {
                 item: line,
