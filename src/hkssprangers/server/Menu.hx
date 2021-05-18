@@ -459,7 +459,7 @@ class Menu extends View {
                 }
             }
         ].map(p -> {
-            renderItemRow(p.item, (p.noodlePrice != null ? "$" + p.noodlePrice : "----") + " / " + (p.lomeinPrice != null ? "$" + p.noodlePrice : "----"));
+            renderItemRow(p.item, (p.noodlePrice != null ? "$" + p.noodlePrice : "----") + " / " + (p.lomeinPrice != null ? "$" + p.lomeinPrice : "----"));
         });
 
         var singleCutoff = Math.ceil(BiuKeeLokYuenSingleDish.enums().length * 0.5);
