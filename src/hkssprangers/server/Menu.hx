@@ -563,17 +563,19 @@ class Menu extends View {
         return jsx('
             <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    ${{
-                        var p = MGYSingleDish.description.parsePrice();
-                        renderItemRow(p.item, "$" + p.price, ["text-xl", "font-bold"].concat(style.headerClasses));
-                    }}
+                    <div className=${headerClasses}>${MGYSingleDish.title}</div>
                     ${renderItems(MGYSingleDish.properties.dish.enums())}
                     <div className=${headerClasses}>${MGYSub.title}</div>
                     ${renderItems(MGYSub.enums())}
                 </div>
                 <div className="md:w-1/2 p-3">
-                    <div className=${headerClasses}>${MGYRice.title}</div>
-                    ${renderItems(MGYRice.properties.rice.enums())}
+                    <div className=${headerClasses}>${MGYSetMeal.title}</div>
+                    <div className="p-3">${MGYSetMeal.description}</div>
+                    ${renderItems(MGYSetMeal.properties.setMeal.enums())}
+                    <div className=${headerClasses}>${MGYFriedFood.title}</div>
+                    ${renderItems(MGYFriedFood.properties.fried.enums())}
+                    <div className=${headerClasses}>${MGYColdNoodle.title}</div>
+                    ${renderItems(MGYColdNoodle.properties.coldNoodle.enums())}
                 </div>
             </div>
         ');
