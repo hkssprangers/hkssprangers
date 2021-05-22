@@ -261,6 +261,17 @@ class Menu extends View {
                     ${renderItems(hotdogSet.properties.main.enums())}
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${KCZenzeroWontonSet.title}</div>
+                    </div>
+                    ${renderItems(KCZenzeroWontonSet.properties.main.enums())}
+                    <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.options.title}</div>
+                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.options.items.enums())}</div>
+                    <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.sub.title}選擇</div>
+                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.sub.enums())}</div>
+                    <div className="font-bold p-3">${KCZenzeroWontonSet.properties.drink.title}選擇</div>
+                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.drink.enums())}</div>
+
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${KCZenzeroLightSet.title}</div>
                         <div className="p-3">$$${MenuTools.parsePrice(KCZenzeroLightSet.description).price}</div>
                     </div>
@@ -270,11 +281,6 @@ class Menu extends View {
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.salad.enums())}</div>
                     <div className="font-bold p-3">${KCZenzeroLightSet.properties.drink.title}選擇</div>
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums())}</div>
-
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroRiceSet.title}</div>
-                    </div>
-                    ${renderItems(KCZenzeroRiceSet.properties.main.enums())}
                 </div>
                 <div className="p-3 md:w-1/2">
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -299,6 +305,11 @@ class Menu extends View {
                     <div className="p-3">${slashes(pastaSet.properties.sauce.enums())}</div>
                     <div className="p-3 font-bold">${pastaSet.properties.noodle.title}選擇</div>
                     <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
+
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${KCZenzeroRiceSet.title}</div>
+                    </div>
+                    ${renderItems(KCZenzeroRiceSet.properties.main.enums())}
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroSingle.title}</div>
