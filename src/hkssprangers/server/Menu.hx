@@ -21,6 +21,7 @@ import hkssprangers.info.menu.MGYMenu.*;
 import hkssprangers.info.menu.FastTasteSSPMenu.*;
 import hkssprangers.info.menu.HanaSoftCreamMenu.*;
 import hkssprangers.info.menu.BlaBlaBlaMenu.*;
+import hkssprangers.info.menu.MyRoomRoomMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -81,6 +82,11 @@ class Menu extends View {
             headerClasses: ["bg-pt2-blue-500"],
             boxClasses: [],
         },
+        MyRoomRoomCluster => {
+            borderClasses: ["border-blue-500"],
+            headerClasses: ["bg-pt2-blue-500"],
+            boxClasses: [],
+        }
     ];
 
     final style:{
@@ -149,6 +155,8 @@ class Menu extends View {
                 renderBlaBlaBla();
             case ZeppelinHotDogSKM:
                 renderZeppelinHotDogSKM();
+            case MyRoomRoom:
+                renderMyRoomRoom();
         }
     }
 
@@ -678,6 +686,41 @@ class Menu extends View {
                     </div>
                 </div>
             </div>
+        ');
+    }
+
+    function renderMyRoomRoom() {
+        var drinks = MyRoomRoomSetDrink.enums();
+        var cut = Math.ceil(drinks.length * 0.5);
+        var drinks1 = drinks.slice(0, cut);
+        var drinks2 = drinks.slice(cut);
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${MyRoomRoomPastaRiceSet.properties.main.title}</div>
+                        ${renderItems(MyRoomRoomPastaRiceSet.properties.main.enums())}
+                        <div className=${headerClasses}>${MyRoomRoomCake.title}</div>
+                        ${renderItems(MyRoomRoomCake.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${MyRoomRoomSnacks.title}</div>
+                        ${renderItems(MyRoomRoomSnacks.enums())}
+                    </div>
+                </div>
+                <div className="p-3">
+                    <div className=${headerClasses}>${MyRoomRoomSetDrink.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(drinks1, true)}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(drinks2, true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
         ');
     }
 

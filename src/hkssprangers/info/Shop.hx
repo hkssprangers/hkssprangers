@@ -21,6 +21,7 @@ enum abstract Shop(String) to String {
     final FastTasteSSP:Shop;
     final BlaBlaBla:Shop;
     final ZeppelinHotDogSKM:Shop;
+    final MyRoomRoom:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -37,6 +38,7 @@ enum abstract Shop(String) to String {
         FastTasteSSP,
         BlaBlaBla,
         ZeppelinHotDogSKM,
+        MyRoomRoom,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -318,6 +320,26 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
             }
+        case MyRoomRoom:
+            {
+                id: MyRoomRoom,
+                name: "浮島",
+                address: "深水埗褔榮街57號",
+                courierContact: [
+                    "tel:67731228",
+                ],
+                openDays: [
+                    Monday,
+                    // Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
+            }
     }
 
     public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
@@ -381,6 +403,8 @@ enum abstract Shop(String) to String {
                 TheParkByYearsMenu.itemsSchema(o);
             case ZeppelinHotDogSKM:
                 ZeppelinHotDogSKMMenu.itemsSchema(pickupTimeSlot, o);
+            case MyRoomRoom:
+                MyRoomRoomMenu.itemsSchema(o);
         }
     }
 
@@ -414,6 +438,8 @@ enum abstract Shop(String) to String {
                 YearsHKMenu.summarize(o);
             case ZeppelinHotDogSKM:
                 ZeppelinHotDogSKMMenu.summarize(o, pickupTimeSlot);
+            case MyRoomRoom:
+                MyRoomRoomMenu.summarize(o);
         }
     }
 
@@ -433,6 +459,7 @@ enum abstract Shop(String) to String {
             case FastTasteSSP: FastTasteSSP;
             case BlaBlaBla: BlaBlaBla;
             case ZeppelinHotDogSKM: ZeppelinHotDogSKM;
+            case MyRoomRoom: MyRoomRoom;
             case _: null;
         }
     }
