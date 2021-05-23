@@ -83,8 +83,8 @@ class Menu extends View {
             boxClasses: [],
         },
         MyRoomRoomCluster => {
-            borderClasses: ["border-blue-500"],
-            headerClasses: ["bg-pt2-blue-500"],
+            borderClasses: ["border-gray-700"],
+            headerClasses: ["bg-pt2-gray-700"],
             boxClasses: [],
         }
     ];

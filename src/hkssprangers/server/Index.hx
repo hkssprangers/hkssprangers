@@ -9,6 +9,7 @@ import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.GoogleForms.formUrls;
 import hkssprangers.info.Shop;
+import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
 
 class Index extends View {
@@ -97,7 +98,7 @@ class Index extends View {
                 ${sameAreaNote()}
                 <div className="bg-white mb-3 rounded-xl ">
                     <div className="pt-6 px-6">
-                        <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-red-500"></i> 西九龍中心</h3>
+                        <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-red-500"></i> ${DragonCentreCluster.info().name}</h3>
                     </div>
                     <div className=${rowClasses}>
                         <div className=${blockClasses}>
@@ -152,7 +153,7 @@ class Index extends View {
                 <div className="lg:flex">
                     <div className="lg:w-2/3 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-pink-500"></i> 黃金商場</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-pink-500"></i> ${GoldenCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
@@ -187,14 +188,14 @@ class Index extends View {
                     </div>
                     <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-600"></i> 天悅廣場</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-500"></i> ${SmilingPlazaCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
                                 <a href=${Path.join(["/menu", Neighbor])} className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
                                         ${StaticResource.image("/images/neighbor.jpg", Neighbor.info().name, "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className="text-yellow-600 fas fa-book-open"></i><br />menu</p>
+                                        <p className="absolute align-center-hover text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${Neighbor.info().name}</h4>
                                 </a>
@@ -206,7 +207,7 @@ class Index extends View {
                 <div className="lg:flex">
                     <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-600"></i> 石硤尾街休憩花園</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-600"></i> ${ParkCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
@@ -233,7 +234,7 @@ class Index extends View {
                     </div>
                     <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> 中電</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> ${CLPCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
@@ -260,9 +261,26 @@ class Index extends View {
                     </div>
                 </div>
                 <div className="lg:flex">
-                    <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
+                    <div className="lg:w-1/3 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> 白田</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-gray-700"></i> ${MyRoomRoomCluster.info().name}</h3>
+                        </div>
+                        <div className=${rowClasses}>
+                            <div className=${blockClasses}>
+                                <a href=${Path.join(["/menu", MyRoomRoom])} className=${linkClasses}>
+                                    <div className=${thumbnailDivClasses}>
+                                        ${StaticResource.image("/images/MyRoomRoom.jpg", MyRoomRoom.info().name, "squircle mb-3")}
+                                        <p className="absolute align-center-hover text-lg"><i className=" text-gray-700 fas fa-book-open"></i><br />menu</p>
+                                    </div>
+                                    <h4>${MyRoomRoom.info().name}</h4>
+                                </a>
+                            </div>
+                            <div className="clear-both lg:hidden"></div>
+                        </div>
+                    </div>
+                    <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
+                        <div className="pt-6 px-6">
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> ${PakTinCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
@@ -277,7 +295,7 @@ class Index extends View {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同埸加映消毒用品</h3>
                         </div>

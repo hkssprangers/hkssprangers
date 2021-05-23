@@ -20,8 +20,8 @@ enum abstract Shop(String) to String {
     final MGY:Shop;
     final FastTasteSSP:Shop;
     final BlaBlaBla:Shop;
-    final ZeppelinHotDogSKM:Shop;
     final MyRoomRoom:Shop;
+    final ZeppelinHotDogSKM:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -37,8 +37,8 @@ enum abstract Shop(String) to String {
         MGY,
         FastTasteSSP,
         BlaBlaBla,
-        ZeppelinHotDogSKM,
         MyRoomRoom,
+        ZeppelinHotDogSKM,
     ];
 
     public function info() return switch (cast this:Shop) {
