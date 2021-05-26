@@ -360,6 +360,8 @@ enum abstract Shop(String) to String {
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart()] {
             case [LaksaStore, "2021-05-18"]:
                 return Unavailable('喇沙女皇壽辰休息一天');
+            case [KCZenzero, "2021-05-25" | "2021-05-26"]:
+                return Unavailable('家中有事，休息');
             case _:
                 //pass
         }
