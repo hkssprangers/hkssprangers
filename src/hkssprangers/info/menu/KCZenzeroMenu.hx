@@ -42,12 +42,12 @@ class KCZenzeroMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            "自家沖洛神花冷泡茶" + (price > 0 ? ' (+$$$price)' : ""),
-            "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' (+$$$price)' : ""),
-            "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' (+$$$price)' : ""),
-            "自家沖玄米冷泡茶" + (price > 0 ? ' (+$$$price)' : ""),
-            "自家沖玄米綠茶" + (price > 0 ? ' (+$$$price)' : ""),
-            "自家沖玫瑰百寶茶" + (price > 0 ? ' (+$$$price)' : ""),
+            "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖玫瑰百寶茶" + (price > 0 ? ' +$$$price' : ""),
         ],
     };
 
@@ -367,7 +367,7 @@ class KCZenzeroMenu {
                         }
                     case _: 
                         {
-                            price: 0.0,
+                            price: null,
                         };
                 });
             case PastaSet:
