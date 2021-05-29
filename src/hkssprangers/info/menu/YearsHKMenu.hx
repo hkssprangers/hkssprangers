@@ -66,8 +66,6 @@ class YearsHKMenu {
             "SALTED SUMMER MADNESS (雪碧, 橙汁, 迷迭香) +$58",
             "CREAMY COFFEE LOVER (榛⼦, ⿊糖) +$58",
 
-            "SALTED SUMMER MADNESS (雪碧, 橙汁, 迷迭香) +$58",
-            "CREAMY COFFEE LOVER (榛⼦, ⿊糖) +$58",
             "Lovecraft · FIRE BRINGER (清爽堅果花香 | 5%) +$58",
             "Lovecraft · SPACE ROCK (煙燻麥芽香氣 | 5.5%) +$58",
             "Lovecraft · BLACK WAVE (藍莓麥芽⿊啤 | 8%) +$58",
