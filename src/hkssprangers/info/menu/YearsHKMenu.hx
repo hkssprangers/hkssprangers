@@ -65,6 +65,9 @@ class YearsHKMenu {
 
             "SALTED SUMMER MADNESS (雪碧, 橙汁, 迷迭香) +$58",
             "CREAMY COFFEE LOVER (榛⼦, ⿊糖) +$58",
+
+            "SALTED SUMMER MADNESS (雪碧, 橙汁, 迷迭香) +$58",
+            "CREAMY COFFEE LOVER (榛⼦, ⿊糖) +$58",
             "Lovecraft · FIRE BRINGER (清爽堅果花香 | 5%) +$58",
             "Lovecraft · SPACE ROCK (煙燻麥芽香氣 | 5.5%) +$58",
             "Lovecraft · BLACK WAVE (藍莓麥芽⿊啤 | 8%) +$58",
@@ -84,7 +87,7 @@ class YearsHKMenu {
                 type: "string",
                 "enum": [
                     "日式定食 $88",
-                    "純素沙律碗 $78",
+                    "⽣酮純素沙律碗 $88",
                     "香蒜芫茜意大利粉 $88",
                     "泡菜意⼤利粉 $88",
                     "不可能™⾁醬意⼤利粉 $88",

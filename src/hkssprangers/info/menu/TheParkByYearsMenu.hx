@@ -66,13 +66,12 @@ class TheParkByYearsMenu {
             "藍莓薰衣草梳打 +$28",
             "柚⼦⻘瓜梳打 +$28",
 
+            "GIN & TONIC (N.I.P. Gin, Fever Tree 湯⼒⽔) +$68",
+            "BERRY GIMLET (N.I.P. Gin, 紅桑⼦) +$68",
+
             "DEADMAN · 5000 YEARS (德國⽪爾森 | 5.2% | ⻘瓜) +$58",
             "DEADMAN · SEVEN SEAS (酸⻄柚 IPA | 7% | ⻄柚) +$58",
             "DEADMAN · HOP ROBBER (雙倍 IPA | 5.4% | 松⽊香味) +$58",
-
-            "可樂 +$10",
-            "雪碧 +$10",
-            "梳打水 +$10",
         ],
     };
 
@@ -84,15 +83,14 @@ class TheParkByYearsMenu {
                 type: "string",
                 "enum": [
                     "⾁桂蘋果燕麥碗 (凍) $88",
-                    "泰式香辣意⼤利粉 $88",
-                    "四川擔擔意⼤利粉 $98",
                     "福建炒⽶形意粉 $88",
+                    "四川擔擔意⼤利粉 $98",
                     "⽜油果啤梨春⽇沙律 $108",
                     "⽣酮薑⿈椰菜花扒 $138",
                     "天婦羅⽶漢堡 $118",
                     "不可能芫茜芝⼠漢堡 $138",
                     "麻辣芫茜不可能漢堡 $138",
-                    "⽵炭⿊芝麻班㦸 $148",
+                    "⽵炭⿊芝麻班㦸 $138", // 外賣冇雪糕, 減咗 $10
                 ]
             },
             drink: TheParkByYearsSetDrink,
