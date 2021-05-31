@@ -42,6 +42,8 @@ class KCZenzeroMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
+            "可口可樂" + (price > 0 ? ' +$$0' : ""),
+            "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
             "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
@@ -86,10 +88,7 @@ class KCZenzeroMenu {
                     "意式肉丸熱狗",
                 ]
             },
-            drink: KCZenzeroSetDrink(switch timeSlotType {
-                case Lunch: 0;
-                case Dinner | null: 10;
-            }),
+            drink: KCZenzeroSetDrink(5),
         },
         required: switch timeSlotType {
             case Lunch:
@@ -129,10 +128,7 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(switch timeSlotType {
-                case Lunch: 0;
-                case Dinner | null: 10;
-            }),
+            drink: KCZenzeroSetDrink(5),
         },
         required: switch timeSlotType {
             case Lunch:
@@ -173,10 +169,7 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(switch timeSlotType {
-                case Lunch: 0;
-                case Dinner | null: 10;
-            }),
+            drink: KCZenzeroSetDrink(5),
         },
         required: switch timeSlotType {
             case Lunch:
@@ -220,10 +213,7 @@ class KCZenzeroMenu {
             drink: {
                 title: "跟餐飲品",
                 type: "string",
-                "enum": [
-                    "可口可樂",
-                    "可口可樂 Zero",
-                ],
+                "enum": KCZenzeroSetDrink(5),
             },
         },
         required: ["main", "sub", "drink"],
@@ -297,7 +287,7 @@ class KCZenzeroMenu {
                     "紅酒肉醬翠蛋飯 $48",
                 ]
             },
-            drink: KCZenzeroSetDrink(10),
+            drink: KCZenzeroSetDrink(5),
         },
         required: [
             "main",
