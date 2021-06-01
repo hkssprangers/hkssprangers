@@ -25,6 +25,12 @@ class BlaBlaBlaMenu {
     static public final sweetOpts = ["無糖", "微糖", "少糖", normalSweet, "多糖"];
     static public final honeyOpts = ["無糖不加蜂蜜", "微糖只加蜂蜜", normalSweet];
     static public final iceOpts = ["走冰", "微冰", "少冰", normalIce, "多冰"];
+    static public final addons = [
+        "珍珠 +$5",
+        "仙草 +$5",
+        "芋圓 +$5",
+        "胚芽 +$5",
+    ];
     static public final hotDrinks = [
         { name:"熱蜂蜜普洱珍珠鮮奶茶 $33", sweetOpts: honeyOpts, },
         { name:"熱芋頭鮮奶 $33", sweetOpts: [normalSweet], },
@@ -77,6 +83,15 @@ class BlaBlaBlaMenu {
                 title: "甜度",
                 "default": normalSweet,
             },
+            options: {
+                type: "array",
+                title: "加配料",
+                items: {
+                    type: "string",
+                    "enum": addons,
+                },
+                uniqueItems: true,
+            },
         },
         required: [
             "drink",
@@ -103,6 +118,15 @@ class BlaBlaBlaMenu {
                 title: "冰量",
                 "enum": iceOpts,
                 "default": normalIce,
+            },
+            options: {
+                type: "array",
+                title: "加配料",
+                items: {
+                    type: "string",
+                    "enum": addons,
+                },
+                uniqueItems: true,
             },
         },
         required: [
@@ -170,9 +194,9 @@ class BlaBlaBlaMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case HotDrink:
-                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt"]);
+                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt", "options"]);
             case IceDrink:
-                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt", "iceOpt"]);
+                summarizeOrderObject(orderItem.item, def, ["drink", "sweetOpt", "iceOpt", "options"]);
             case _:
                 {
                     orderDetails: "",
