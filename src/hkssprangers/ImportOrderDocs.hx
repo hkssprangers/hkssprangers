@@ -13,6 +13,7 @@ import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PickupMethod;
 import hkssprangers.info.OrderTools.*;
 import hkssprangers.server.MySql;
+import hkssprangers.db.Database.DeliveryConverter;
 import thx.Decimal;
 using StringTools;
 using Lambda;
@@ -306,10 +307,60 @@ class ImportOrderDocs {
             });
     }
 
+    static function copyRegular(start:LocalDateString, end:LocalDateString):Promise<Noise> {
+        var now = Date.now();
+        return MySql.db.delivery.where(f -> f.deliveryId == 1161).first()
+            .next(sample -> DeliveryConverter.toDelivery(sample, MySql.db))
+            .next(sample -> {
+                var date = start;
+                var deliveries:Array<Delivery> = [];
+                while (date <= end) {
+                    if (!HkHolidays.isRedDay(date.toDate()) && !(Weekday.fromDay(date.toDate().getDay()) == Monday)) {
+                        deliveries.push({
+                            creationTime: now,
+                            deliveryCode: sample.deliveryCode,
+                            couriers: [],
+                            customer: sample.customer,
+                            customerPreferredContactMethod: sample.customerPreferredContactMethod,
+                            customerBackupContactMethod: sample.customerBackupContactMethod,
+                            paymentMethods: sample.paymentMethods,
+                            pickupLocation: sample.pickupLocation,
+                            pickupTimeSlot: {
+                                start: (date.getDatePart() + " " + sample.pickupTimeSlot.start.getTimePart():LocalDateString).toDate(),
+                                end: (date.getDatePart() + " " + sample.pickupTimeSlot.end.getTimePart():LocalDateString).toDate(),
+                            },
+                            pickupMethod: sample.pickupMethod,
+                            deliveryFee: sample.deliveryFee,
+                            customerNote: sample.customerNote,
+                            deliveryId: null,
+                            orders: [],
+                        });
+                    }
+                    date = Date.fromTime(date.toDate().getTime() + DateTools.days(1));
+                }
+                return deliveries;
+            })
+            .next(deliveries -> {
+                MySql.db.insertDeliveries(deliveries);
+            })
+            .next(inserted -> {
+                Sys.println('Inserted ${inserted.length}');
+                return Noise;
+            });
+    }
+
     static function main():Void {
         switch (Sys.args()) {
             case ["calculate", start, end]:
                 calculate(start, end).handle(o -> switch o {
+                    case Success(data):
+                        Sys.exit(0);
+                    case Failure(failure):
+                        Sys.println(failure.message + "\n\n" + failure.exceptionStack);
+                        Sys.exit(1);
+                });
+            case ["regular", start, end]:
+                copyRegular(start, end).handle(o -> switch o {
                     case Success(data):
                         Sys.exit(0);
                     case Failure(failure):
