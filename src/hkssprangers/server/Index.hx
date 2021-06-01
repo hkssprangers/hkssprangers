@@ -313,11 +313,6 @@ class Index extends View {
                         <div className="p-6 text-xl lg:text-4xl font-bold text-center">
                             <h1 className="inline">埗兵</h1>係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
                         </div>
-                        <div>
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScyydoYxadEtvrwgUcplDZjxbHMmV-cCFlKtE0wcwJwb3cl_A/viewform">
-                                ${StaticResource.image("/images/rice-dump-form.jpg", "KOLB x 點心紙 x 埗兵", "w-full")}
-                            </a>
-                        </div>
                         <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
                             <h2>合作餐廳 / 商店</h2>
                         </div>
