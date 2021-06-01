@@ -34,6 +34,14 @@ class BlaBlaBlaMenu {
         { name:"熱冬瓜檸檬 $25", sweetOpts: [normalSweet], },
         { name:"熱桂花青茶 $27", sweetOpts: sweetOpts, },
         { name:"熱百香果綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱蜂蜜柚子綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱西柚綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱玫瑰茉莉綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱烏龍鮮奶茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱茉莉鮮綠奶 $27", sweetOpts: sweetOpts, },
+        { name:"熱精選鮮奶茶 $27", sweetOpts: sweetOpts, },
+        { name:"熱雞蛋布丁鮮奶茶 $30", sweetOpts: sweetOpts, },
+        { name:"熱台式冬瓜茶 $20", sweetOpts: [normalSweet], },
     ];
     static public final iceDrinks = [
         { name:"凍蜂蜜普洱珍珠鮮奶茶 $33", sweetOpts: honeyOpts, },
@@ -44,6 +52,15 @@ class BlaBlaBlaMenu {
         { name:"凍冬瓜檸檬 $25", sweetOpts: [normalSweet], },
         { name:"凍桂花青茶 $27", sweetOpts: sweetOpts, },
         { name:"凍百香果綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"鳳梨冰茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍蜂蜜柚子綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍西柚綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍玫瑰茉莉綠茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍烏龍鮮奶茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍茉莉鮮綠奶 $27", sweetOpts: sweetOpts, },
+        { name:"凍精選鮮奶茶 $27", sweetOpts: sweetOpts, },
+        { name:"凍雞蛋布丁鮮奶茶 $30", sweetOpts: sweetOpts, },
+        { name:"凍台式冬瓜茶 $20", sweetOpts: [normalSweet], },
     ];
 
     static public final BlaBlaBlaHotDrink = {
