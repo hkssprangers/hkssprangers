@@ -71,11 +71,10 @@ class Index extends View {
     ');
 
     static public function orderButton() return jsx('
-        <div className="fixed overflow-hidden bottom-0 right-0 select-none">
-            <div className="p-5 pl-12 pt-12">
-                <div className="absolute pointer-events-none w-20 h-20 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400">&nbsp;</div>
+        <div className="fixed overflow-hidden bottom-0 right-0 select-none z-40">
+            <div className="flex p-5 pl-12 pt-12 relative">
                 <a
-                    className="flex justify-center items-center w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 hover:bg-yellow-1000 no-underline"
+                    className="flex justify-center items-center w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 no-underline z-10"
                     href="/order-food"
                 >
                     <span className="text-black text-center text-sm">
@@ -84,6 +83,7 @@ class Index extends View {
                         立即落單
                     </span>
                 </a>
+                <div className="absolute pointer-events-none w-20 h-20 top-12 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400 z-0">&nbsp;</div>
             </div>
         </div>
     ');
