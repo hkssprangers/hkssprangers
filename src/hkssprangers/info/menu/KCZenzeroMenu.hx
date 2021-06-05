@@ -210,11 +210,7 @@ class KCZenzeroMenu {
                     "意式肉丸",
                 ],
             },
-            drink: {
-                title: "跟餐飲品",
-                type: "string",
-                "enum": KCZenzeroSetDrink(5),
-            },
+            drink: KCZenzeroSetDrink(5),
         },
         required: ["main", "sub", "drink"],
     };
