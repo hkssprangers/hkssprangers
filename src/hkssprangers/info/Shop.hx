@@ -353,6 +353,8 @@ enum abstract Shop(String) to String {
             case ZeppelinHotDogSKM:
                 if (date.getDate() == 21)
                     return Unavailable('逢21號罷工');
+            case MyRoomRoom:
+                return Unavailable('埗兵外賣不日開放');
             case _:
                 //pass
         }
