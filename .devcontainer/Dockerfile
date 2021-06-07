@@ -41,8 +41,8 @@ RUN apt-get update \
         imagemagick \
         webp \
     && echo 'eval "$(direnv hook bash)"' >> /etc/bash.bashrc \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs=12.* \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs=14.* \
     && add-apt-repository ppa:git-core/ppa \
     && apt-get install -y git \
     && apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' \
