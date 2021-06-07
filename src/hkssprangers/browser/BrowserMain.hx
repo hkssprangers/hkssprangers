@@ -40,6 +40,7 @@ class BrowserMain {
                         tgBotName=${div.dataset.tgBotName}
                         user=${Json.parse(div.dataset.user)}
                         prefill=${Json.parse(div.dataset.prefill)}
+                        currentTime=${div.dataset.currentTime}
                     />
                 '), div);
         }

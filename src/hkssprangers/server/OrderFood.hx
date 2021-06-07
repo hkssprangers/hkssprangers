@@ -24,6 +24,9 @@ class OrderFood extends View {
     public var prefill(get, never):OrderFormPrefill;
     function get_prefill() return props.prefill;
 
+    public var currentTime(get, never):LocalDateString;
+    function get_currentTime() return props.currentTime;
+
     override public function description() return "叫外賣";
     override function canonical() return Path.join(["https://" + host, "order-food"]);
     override public function render() {
@@ -57,6 +60,7 @@ class OrderFood extends View {
                     data-tg-bot-name=${tgBotName}
                     data-user=${Json.stringify(user)}
                     data-prefill=${Json.stringify(prefill)}
+                    data-current-time=${currentTime}
                 />
             </div>
         ');
@@ -77,6 +81,7 @@ class OrderFood extends View {
                                 tgBotName: tgMe.username,
                                 user: reply.getUser(),
                                 prefill: prefill,
+                                currentTime: (Date.now():LocalDateString),
                             });
                         });
                 });

@@ -29,6 +29,7 @@ using hxLINQ.LINQ;
 typedef OrderFormProps = {
     final user:LoggedinUser;
     final prefill:OrderFormPrefill;
+    final currentTime:LocalDateString;
 }
 typedef OrderFormState = {
     final formData:OrderFormData;
@@ -44,10 +45,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         right: 5,
     });
 
-    final nextSlots = TimeSlotTools.nextTimeSlots(Date.now());
+    final nextSlots:Array<TimeSlot>;
     
     function new(props, context):Void {
         super(props, context);
+
+        nextSlots = TimeSlotTools.nextTimeSlots(props.currentTime.toDate());
 
         var initFormData:OrderFormData = {};
         switch (props.prefill.backupContactMethod) {
