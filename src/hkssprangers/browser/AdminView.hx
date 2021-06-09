@@ -517,7 +517,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         } else {
             var loggedInAs = if (props.user != null)
-                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank">@${props.user.tg.username}</a></Typography>');
+                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank" rel="noopener">@${props.user.tg.username}</a></Typography>');
             else
                 null;
             jsx('

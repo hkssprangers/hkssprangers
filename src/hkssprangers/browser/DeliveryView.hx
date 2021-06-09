@@ -250,7 +250,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         jsx('<Fragment><i className="fas fa-store mr-1"></i> contact</Fragment>');
                     }
                     jsx('
-                        <a key=${contact} href=${contact} target="_blank" className=${badge() + " bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800 font-bold"}>
+                        <a key=${contact} href=${contact} target="_blank" rel="noopener" className=${badge() + " bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800 font-bold"}>
                             ${label}
                         </a>
                     ');
@@ -286,7 +286,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         o.receipts.mapi((i,r) -> {
                             jsx('
                                 <li key=${r.receiptId}>
-                                    <a className="receipt" href=${r.receiptUrl} target="_blank">
+                                    <a className="receipt" href=${r.receiptUrl} target="_blank" rel="noopener">
                                         <i className="fas fa-receipt"></i> 收據圖片 ${i+1}
                                     </a>
                                 </li>
@@ -376,7 +376,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 null;
             case Telegram:
                 var tgUrl = customer.tg.print();
-                jsx('<a href=${tgUrl} target="_blank">${tgUrl}</a>');
+                jsx('<a href=${tgUrl} target="_blank" rel="noopener">${tgUrl}</a>');
             case WhatsApp:
                 var waUrl = switch (customer) {
                     case { whatsApp: tel} if (tel != null):
@@ -386,12 +386,12 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     case _:
                         null;
                 }
-                jsx('<a href=${waUrl} target="_blank">${waUrl}</a>');
+                jsx('<a href=${waUrl} target="_blank" rel="noopener">${waUrl}</a>');
             case Signal:
                 jsx('<span>Signal:${customer.signal}</span>');
             case Telephone:
                 var url = 'tel:${customer.tel}';
-                jsx('<a href=${url} target="_blank">${url}</a>');
+                jsx('<a href=${url} target="_blank" rel="noopener">${url}</a>');
         }
     }
 
@@ -618,7 +618,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         var wa = if (!state.isEditing) {
             if (d.customer.tel != null) {
                 var waUrl = "https://wa.me/852" + d.customer.tel;
-                jsx('<Typography><a href=${waUrl} target="_blank">${waUrl}</a> ${d.customerPreferredContactMethod == WhatsApp ? " 👈" : ""}</Typography>');
+                jsx('<Typography><a href=${waUrl} target="_blank" rel="noopener">${waUrl}</a> ${d.customerPreferredContactMethod == WhatsApp ? " 👈" : ""}</Typography>');
             } else {
                 null;
             }
@@ -798,7 +798,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         } else {
             var couriers = d.couriers.map(c -> jsx('
                 <Grid item key=${c.tg.username}>
-                    <a className=${props.courierLinkClasses(c)} href=${"https://t.me/" + c.tg.username} target="_blank">
+                    <a className=${props.courierLinkClasses(c)} href=${"https://t.me/" + c.tg.username} target="_blank" rel="noopener">
                         @${c.tg.username}
                     </a>
                 </Grid>

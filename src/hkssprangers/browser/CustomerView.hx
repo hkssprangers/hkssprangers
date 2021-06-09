@@ -479,7 +479,7 @@ class CustomerView extends ReactComponentOf<CustomerViewProps, CustomerViewState
             if (state.delivery.customer.tg.username != null)
                 jsx('
                     <Typography>
-                        Telegram username: <a href=${"https://t.me/" + state.delivery.customer.tg.username} target="_blank">@${state.delivery.customer.tg.username}</a>
+                        Telegram username: <a href=${"https://t.me/" + state.delivery.customer.tg.username} target="_blank" rel="noopener">@${state.delivery.customer.tg.username}</a>
                     </Typography>
                 ');
             else

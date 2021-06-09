@@ -240,11 +240,11 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case null: null;
             case {login: Telegram, tg: tg}:
                 jsx('
-                    <p className="text-gray-500 mb-2"><a href=${"https://t.me/" + tg.username} target="_blank">${"@" + tg.username}</a> 你好！請輸入以下資料，我哋收到後會經 Telegram 聯絡你。</p>
+                    <p className="text-gray-500 mb-2"><a href=${"https://t.me/" + tg.username} target="_blank" rel="noopener">${"@" + tg.username}</a> 你好！請輸入以下資料，我哋收到後會經 Telegram 聯絡你。</p>
                 ');
             case {login: WhatsApp, tel: tel}:
                 jsx('
-                    <p className="text-gray-500 mb-2"><a href=${"https://wa.me/852" + tel} target="_blank">${tel}</a> 你好！請輸入以下資料，我哋收到後會經 WhatsApp 聯絡你。</p>
+                    <p className="text-gray-500 mb-2"><a href=${"https://wa.me/852" + tel} target="_blank" rel="noopener">${tel}</a> 你好！請輸入以下資料，我哋收到後會經 WhatsApp 聯絡你。</p>
                 ');
             case _: null;
         }
