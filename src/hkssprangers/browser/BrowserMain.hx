@@ -5,7 +5,6 @@ import haxe.*;
 import js.html.DivElement;
 import js.jquery.*;
 import js.Browser.*;
-import charleywong.browser.*;
 
 class BrowserMain {
     static public final theme = MuiTheme.createMuiTheme({
