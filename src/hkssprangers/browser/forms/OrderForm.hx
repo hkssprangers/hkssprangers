@@ -155,16 +155,20 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     }
 
     static function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
-        var t = OrderFormSchema.selectedPickupTimeSlot(formData);
-        for (i => o in formData.orders) {
-            if (o.shop != null) {
-                switch o.shop.checkAvailability(t) {
-                    case Available:
-                        //pass
-                    case Unavailable(reason):
-                        errors.orders[i].addError(reason);
+        try {
+            var t = OrderFormSchema.selectedPickupTimeSlot(formData);
+            for (i => o in formData.orders) {
+                if (o.shop != null && t != null && t.start != null && t.end != null) {
+                    switch o.shop.checkAvailability(t) {
+                        case Available:
+                            //pass
+                        case Unavailable(reason):
+                            errors.orders[i].addError(reason);
+                    }
                 }
             }
+        } catch (err) {
+            trace(err);
         }
         return errors;
     }
@@ -214,6 +218,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                 r.text().then(text -> alert(text));
             }
         });
+    }
+
+    function onError(errors:Array<{
+        stack: String,
+    }>) {
+        alert("表格有錯誤/漏填");
     }
 
     override function render():ReactFragment {
@@ -267,7 +277,10 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     formContext=${state.formData}
                     onChange=${onChange}
                     onSubmit=${onSubmit}
+                    onError=${onError}
                     validate=${validate}
+                    noHtml5Validate=${true}
+                    showErrorList=${false}
                     widgets=${{
                         TextWidget: TextWidget,
                         SelectWidget: SelectWidget,
