@@ -13,18 +13,23 @@
 				"args": [
 					"-l"
 				]
-			}
+			},
 		},
 		"terraform.languageServer": {
 			"pathToBinary": "/usr/bin/terraform-ls"
-		}
+		},
+		"remote.portsAttributes": {
+			"6000": {
+				"label": "vshaxe server",
+				"onAutoForward": "ignore"
+			}
+		},
 	},
 	"extensions": [
 		"ms-azuretools.vscode-docker",
 		"nadako.vshaxe",
 		"lix.lix",
-		"hashicorp.terraform",
-		"rubymaniac.vscode-direnv"
+		"hashicorp.terraform"
 	],
 	"remoteUser": "vscode"
 }

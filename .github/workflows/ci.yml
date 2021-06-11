@@ -5,7 +5,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210607221114"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210611120543"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -44,7 +44,7 @@ jobs:
     if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
     concurrency: ${{ github.ref }}
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210607221114"
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210611120543"
     steps:
       - uses: actions/checkout@v2
         with:
