@@ -35,19 +35,22 @@ enum abstract KCZenzeroItem(String) to String {
 
 class KCZenzeroMenu {
     static public final box = "外賣盒 $2";
-    static public function KCZenzeroSetDrink(price:Float) return {
+    static public function KCZenzeroSetDrink(price:Float, freeCans:Bool) return {
         title: "跟餐飲品",
         type: "string",
-        "enum": [
-            "可口可樂" + (price > 0 ? ' +$$0' : ""),
-            "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
+        "enum": (
+            freeCans ? [
+                "可口可樂" + (price > 0 ? ' +$$0' : ""),
+                "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
+            ] : []
+        ).concat([ 
             "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玫瑰百寶茶" + (price > 0 ? ' +$$$price' : ""),
-        ],
+        ]),
     };
 
     static public final KCZenzeroSingle = {
@@ -85,14 +88,9 @@ class KCZenzeroMenu {
                     "意式肉丸熱狗",
                 ]
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroSetDrink(5, false),
         },
-        required: switch timeSlotType {
-            case Lunch:
-                ["main", "drink"];
-            case Dinner | null:
-                ["main"];
-        },
+        required: ["main"],
     }
 
     static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
@@ -125,14 +123,9 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroSetDrink(5, false),
         },
-        required: switch timeSlotType {
-            case Lunch:
-                ["options", "noodle", "drink"];
-            case Dinner | null:
-                ["options", "noodle"];
-        },
+        required: ["options", "noodle"],
     };
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
@@ -166,14 +159,9 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroSetDrink(5, false),
         },
-        required: switch timeSlotType {
-            case Lunch:
-                ["main", "sauce", "noodle", "drink"];
-            case Dinner | null:
-                ["main", "sauce", "noodle"];
-        },
+        required: ["main", "sauce", "noodle"],
     };
 
     static public final KCZenzeroWontonSet = {
@@ -207,9 +195,9 @@ class KCZenzeroMenu {
                     "意式肉丸",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroSetDrink(5, true),
         },
-        required: ["main", "sub", "drink"],
+        required: ["main", "sub"],
     };
 
     static public final KCZenzeroLightSet = {
@@ -232,7 +220,7 @@ class KCZenzeroMenu {
                     "雞串吞拿魚沙律",
                 ],
             },
-            drink: KCZenzeroSetDrink(0),
+            drink: KCZenzeroSetDrink(0, true),
         },
         required: [
             "main",
