@@ -29,7 +29,7 @@
     "nodemon": "^2.0.7",
     "react-router-dom": "^5.2.0",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
-    "serverless": "^2.45.2",
+    "serverless": "^2.46.0",
     "serverless-prune-plugin": "^1.5.0",
     "tailwindcss-cli": "^0.1.2",
     "terser": "^5.7.0",
