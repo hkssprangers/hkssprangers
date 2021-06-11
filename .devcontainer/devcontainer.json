@@ -6,8 +6,15 @@
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
-	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
+	"settings": {
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"args": [
+					"-l"
+				]
+			}
+		},
 		"terraform.languageServer": {
 			"pathToBinary": "/usr/bin/terraform-ls"
 		}
