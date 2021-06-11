@@ -315,11 +315,6 @@ class Menu extends View {
                     <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroRiceSet.title}</div>
-                    </div>
-                    ${renderItems(KCZenzeroRiceSet.properties.main.enums())}
-
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroSingle.title}</div>
                     </div>
                     ${renderItems(KCZenzeroSingle.enums())}

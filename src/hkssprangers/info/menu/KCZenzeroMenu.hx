@@ -10,7 +10,6 @@ enum abstract KCZenzeroItem(String) to String {
     final WontonSet;
     final LightSet;
     final HotpotSet;
-    final RiceSet;
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
@@ -20,7 +19,6 @@ enum abstract KCZenzeroItem(String) to String {
         WontonSet,
         LightSet,
         HotpotSet,
-        RiceSet,
         Single,
     ];
 
@@ -31,7 +29,6 @@ enum abstract KCZenzeroItem(String) to String {
         case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
-        case RiceSet: KCZenzeroMenu.KCZenzeroRiceSet;
         case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
 }
@@ -272,23 +269,6 @@ class KCZenzeroMenu {
             "soup",
         ]
     };
-
-    static public final KCZenzeroRiceSet = {
-        title: "飯類",
-        properties: {
-            main: {
-                title: "飯類",
-                type: "string",
-                "enum": [
-                    "紅酒肉醬翠蛋飯 $48",
-                ]
-            },
-            drink: KCZenzeroSetDrink(5),
-        },
-        required: [
-            "main",
-        ]
-    }
     
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         var timeSlotType = pickupTimeSlot != null ? TimeSlotType.classify(pickupTimeSlot.start) : null;
@@ -364,8 +344,6 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main", def));
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["soup", "options"], null, priceInDescription("soup", def));
-            case RiceSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
