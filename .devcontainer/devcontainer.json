@@ -22,6 +22,10 @@
 			"6000": {
 				"label": "vshaxe server",
 				"onAutoForward": "ignore"
+			},
+			"/workspace/node_modules/ngrok/bin/ngrok": {
+				"label": "ngrok",
+				"onAutoForward": "silent"
 			}
 		},
 	},
