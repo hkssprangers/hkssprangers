@@ -22,6 +22,7 @@ enum abstract Shop(String) to String {
     final BlaBlaBla:Shop;
     final MyRoomRoom:Shop;
     final ZeppelinHotDogSKM:Shop;
+    final ThaiYummy:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -39,6 +40,7 @@ enum abstract Shop(String) to String {
         BlaBlaBla,
         MyRoomRoom,
         ZeppelinHotDogSKM,
+        ThaiYummy,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -340,6 +342,26 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
             }
+        case ThaiYummy:
+            {
+                id: ThaiYummy,
+                name: "泰和味",
+                address: "長沙灣營盤街159-161號金德花園地下1號舖",
+                courierContact: [
+                    "tel:55896591",
+                ],
+                openDays: [
+                    Monday,
+                    // Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "18:30:00",
+                latestPickupTime: "20:30:00",
+            }
     }
 
     public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
@@ -353,7 +375,7 @@ enum abstract Shop(String) to String {
             case ZeppelinHotDogSKM:
                 if (date.getDate() == 21)
                     return Unavailable('逢21號罷工');
-            case MyRoomRoom:
+            case MyRoomRoom | ThaiYummy:
                 return Unavailable('埗兵外賣不日開放');
             case _:
                 //pass
@@ -411,6 +433,8 @@ enum abstract Shop(String) to String {
                 ZeppelinHotDogSKMMenu.itemsSchema(pickupTimeSlot, o);
             case MyRoomRoom:
                 MyRoomRoomMenu.itemsSchema(o);
+            case ThaiYummy:
+                ThaiYummyMenu.itemsSchema(o);
         }
     }
 
@@ -446,6 +470,8 @@ enum abstract Shop(String) to String {
                 ZeppelinHotDogSKMMenu.summarize(o, pickupTimeSlot);
             case MyRoomRoom:
                 MyRoomRoomMenu.summarize(o);
+            case ThaiYummy:
+                ThaiYummyMenu.summarize(o);
         }
     }
 
@@ -466,6 +492,7 @@ enum abstract Shop(String) to String {
             case BlaBlaBla: BlaBlaBla;
             case ZeppelinHotDogSKM: ZeppelinHotDogSKM;
             case MyRoomRoom: MyRoomRoom;
+            case ThaiYummy: ThaiYummy;
             case _: null;
         }
     }

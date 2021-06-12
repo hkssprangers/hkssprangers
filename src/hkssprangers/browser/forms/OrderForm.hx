@@ -132,6 +132,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                             "ui:ObjectFieldTemplate": OrderItemObjectFieldTemplate,
                             item: {
                                 "ui:FieldTemplate": OrderItemTemplate,
+                                "ui:ArrayFieldTemplate": OrderItemArrayFieldTemplate,
                                 options: {
                                     "ui:widget": "checkboxes",
                                 },

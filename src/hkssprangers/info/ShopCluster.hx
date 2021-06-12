@@ -26,6 +26,7 @@ enum abstract ShopCluster(String) {
             case BlaBlaBla: GoldenCluster;
             case ZeppelinHotDogSKM: PakTinCluster;
             case MyRoomRoom: MyRoomRoomCluster;
+            case ThaiYummy: SmilingPlazaCluster;
         }
     }
 

@@ -22,6 +22,7 @@ import hkssprangers.info.menu.FastTasteSSPMenu.*;
 import hkssprangers.info.menu.HanaSoftCreamMenu.*;
 import hkssprangers.info.menu.BlaBlaBlaMenu.*;
 import hkssprangers.info.menu.MyRoomRoomMenu.*;
+import hkssprangers.info.menu.ThaiYummyMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -157,6 +158,8 @@ class Menu extends View {
                 renderZeppelinHotDogSKM();
             case MyRoomRoom:
                 renderMyRoomRoom();
+            case ThaiYummy:
+                renderThaiYummy();
         }
     }
 
@@ -713,6 +716,50 @@ class Menu extends View {
                         <div className="md:w-1/2 md:pl-3">
                             ${renderItems(drinks2, true)}
                         </div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderThaiYummy() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${ThaiYummySnack.title}</div>
+                        ${renderItems(ThaiYummySnack.enums())}
+                        <div className=${headerClasses}>${ThaiYummyGrill.title}</div>
+                        ${renderItems(ThaiYummyGrill.enums())}
+                        <div className=${headerClasses}>${ThaiYummySkewer.title}</div>
+                        ${renderItems(ThaiYummySkewer.items.enums())}
+                        <div className=${headerClasses}>${ThaiYummySalad.title}</div>
+                        ${renderItems(ThaiYummySalad.enums())}
+                        <div className=${headerClasses}>${ThaiYummyFried.title}</div>
+                        ${renderItems(ThaiYummyFried.enums())}
+                        <div className=${headerClasses}>${ThaiYummyVegetable.title}</div>
+                        <div className="font-bold p-3">${ThaiYummyVegetable.properties.style.title}選擇</div>
+                        <div className="p-3">${slashes(ThaiYummyVegetable.properties.style.enums())}</div>
+                        <div className="font-bold p-3">${ThaiYummyVegetable.properties.vege.title}選擇</div>
+                        ${renderItems(ThaiYummyVegetable.properties.vege.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${ThaiYummySeafood.title}</div>
+                        <div className="font-bold p-3">${ThaiYummySeafood.properties.seafood.title}選擇</div>
+                        ${renderItems(ThaiYummySeafood.properties.seafood.enums())}
+                        <div className="font-bold p-3">${ThaiYummySeafood.properties.style.title}選擇</div>
+                        <div className="p-3">${slashes(ThaiYummySeafood.properties.style.enums())}</div>
+                        <div className=${headerClasses}>${ThaiYummySoup.title}</div>
+                        ${renderItems(ThaiYummySoup.properties.soup.enums())}
+                        <div className="p-3">${slashes(ThaiYummySoup.properties.options.items.enums())}</div>
+                        <div className=${headerClasses}>${ThaiYummyNoodleAndRice.title}</div>
+                        ${renderItems(ThaiYummyNoodleAndRice.enums())}
+                        <div className=${headerClasses}>${ThaiYummyDrink.title}</div>
+                        ${renderItems(ThaiYummyDrink.enums())}
+                        <div className=${headerClasses}>${ThaiYummyCustomDrink.title}</div>
+                        <div className="font-bold p-3">${ThaiYummyCustomDrink.description}</div>
+                        ${renderItems(ThaiYummyCustomDrink.properties.drink1.enums())}
                     </div>
                 </div>
             </Fragment>
