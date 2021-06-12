@@ -247,7 +247,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "響鈴、娃娃菜、烏冬 (+$15)",
+                        "響鈴、娃娃菜、烏冬 +$15",
                     ],
                 },
                 uniqueItems: true,
