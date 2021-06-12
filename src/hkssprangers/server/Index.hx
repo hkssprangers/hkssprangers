@@ -151,7 +151,7 @@ class Index extends View {
                     </div>
                 </div>
                 <div className="lg:flex">
-                    <div className="lg:w-2/3 mb-3 bg-white rounded-xl">
+                    <div className="lg:w-3/5 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-pink-500"></i> ${GoldenCluster.info().name}</h3>
                         </div>
@@ -186,7 +186,7 @@ class Index extends View {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="lg:w-2/5 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-500"></i> ${SmilingPlazaCluster.info().name}</h3>
                         </div>
@@ -198,6 +198,16 @@ class Index extends View {
                                         <p className="absolute align-center-hover text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${Neighbor.info().name}</h4>
+                                </a>
+                            </div>
+                            <div className=${blockClasses}>
+                                <a href=${Path.join(["/menu", ThaiYummy])} className=${linkClasses}>
+                                    <div className=${thumbnailDivClasses}>
+                                        ${StaticResource.image("/images/ThaiYummy.jpg", ThaiYummy.info().name, "squircle mb-3")}
+                                        <p className="absolute align-center-hover text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br />menu</p>
+                                    </div>
+                                    <h4>${ThaiYummy.info().name}</h4>
+                                    <p className="text-xs">埗兵外賣不日開放</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
