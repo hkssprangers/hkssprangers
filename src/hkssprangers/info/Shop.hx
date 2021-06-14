@@ -386,7 +386,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('喇沙女皇壽辰休息一天');
             case [KCZenzero, "2021-05-25" | "2021-05-26"]:
                 return Unavailable('家中有事，休息');
-            case [DongDong, "2021-06-14"]:
+            case [DongDong | MGY, "2021-06-14"]:
                 return Unavailable('端午節休息一天');
             case _:
                 //pass
