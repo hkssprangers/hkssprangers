@@ -39,9 +39,28 @@ jobs:
             importGoogleForm.js
       - name: Test
         run: haxe test.hxml
-  deploy:
+  pre-deploy:
     needs: build
     if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
+    concurrency: pre-deploy
+    runs-on: ubuntu-latest
+    container: "hkssprangers/hkssprangers_devcontainer_workspace:20210611120543"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check Terraform state
+        working-directory: ./terraform
+        run: |
+          set -ex
+          terraform init
+          terraform plan -detailed-exitcode
+        env:
+          TF_INPUT: 0
+          TF_IN_AUTOMATION: 1
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-1
+  deploy:
+    needs: pre-deploy
     concurrency: ${{ github.ref }}
     runs-on: ubuntu-latest
     container: "hkssprangers/hkssprangers_devcontainer_workspace:20210611120543"
@@ -57,18 +76,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: artifact
-      - name: Check Terraform state
-        working-directory: ./terraform
-        run: |
-          set -ex
-          terraform init
-          terraform plan -detailed-exitcode
-        env:
-          TF_INPUT: 0
-          TF_IN_AUTOMATION: 1
-          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-southeast-1
       - name: Set Env
         run: |
           set -ex
