@@ -207,7 +207,6 @@ class Index extends View {
                                         <p className="absolute align-center-hover text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${ThaiYummy.info().name}</h4>
-                                    <p className="text-xs">埗兵外賣不日開放</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
