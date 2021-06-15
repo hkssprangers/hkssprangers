@@ -307,7 +307,7 @@ class Index extends View {
                     </div>
                     <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同埸加映消毒用品</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同場加映消毒用品</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
