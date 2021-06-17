@@ -381,13 +381,17 @@ enum abstract Shop(String) to String {
                 //pass
         }
 
-        switch [(cast this:Shop), pickupTimeSlot.start.getDatePart()] {
-            case [LaksaStore, "2021-05-18"]:
+        switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
+            case [LaksaStore, "2021-05-18", _]:
                 return Unavailable('喇沙女皇壽辰休息一天');
-            case [KCZenzero, "2021-05-25" | "2021-05-26"]:
+            case [KCZenzero, "2021-05-25" | "2021-05-26", _]:
                 return Unavailable('家中有事，休息');
-            case [DongDong | MGY, "2021-06-14"]:
+            case [DongDong | MGY, "2021-06-14", _]:
                 return Unavailable('端午節休息一天');
+            case [BlaBlaBla, "2021-06-17", _]:
+                return Unavailable('暫停營業');
+            case [DragonJapaneseCuisine, "2021-06-17", Dinner]:
+                return Unavailable('17/6 早收');
             case _:
                 //pass
         }
