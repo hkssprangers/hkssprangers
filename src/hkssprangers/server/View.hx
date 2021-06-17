@@ -9,6 +9,7 @@ import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
 import comments.CommentString.comment;
 import comments.CommentString.unindent;
+using StringTools;
 
 class View extends ReactComponent {
     function title():String return name;
@@ -32,8 +33,8 @@ class View extends ReactComponent {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '" + id + "');
-            **/
+                gtag('config', '${id}');
+            **/.replace("${id}", id)
         };
         var scriptSrc = 'https://www.googletagmanager.com/gtag/js?id=${id}';
         return jsx('
