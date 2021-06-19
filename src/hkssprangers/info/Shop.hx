@@ -352,7 +352,7 @@ enum abstract Shop(String) to String {
                 ],
                 openDays: [
                     Monday,
-                    // Tuesday,
+                    Tuesday,
                     Wednesday,
                     Thursday,
                     Friday,
