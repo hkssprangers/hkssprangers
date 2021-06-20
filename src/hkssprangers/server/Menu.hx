@@ -265,6 +265,12 @@ class Menu extends View {
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">限定</div>
+                    </div>
+                    <div className="p-3">${KCZenzeroLimitedSpecial.description}</div>
+                    ${renderItems(KCZenzeroLimitedSpecial.properties.special.enums())}
+                    
                     <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${hotdogSet.title}</div>
                         <div className="p-3">${hotdogSet.description}</div>

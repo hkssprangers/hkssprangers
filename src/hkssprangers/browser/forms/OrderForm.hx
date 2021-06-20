@@ -224,6 +224,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     function onError(errors:Array<{
         stack: String,
     }>) {
+        trace(errors);
         alert("表格有錯誤/漏填");
     }
 

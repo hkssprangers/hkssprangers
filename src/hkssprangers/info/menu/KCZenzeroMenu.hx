@@ -4,6 +4,7 @@ import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
 enum abstract KCZenzeroItem(String) to String {
+    final LimitedSpecial;
     final HotdogSet;
     final NoodleSet;
     final PastaSet;
@@ -13,6 +14,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -23,6 +25,7 @@ enum abstract KCZenzeroItem(String) to String {
     ];
 
     public function getDefinition(timeSlotType:TimeSlotType):Dynamic return switch (cast this:KCZenzeroItem) {
+        case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial;
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(timeSlotType);
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(timeSlotType);
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(timeSlotType);
@@ -36,7 +39,7 @@ enum abstract KCZenzeroItem(String) to String {
 class KCZenzeroMenu {
     static public final box = "外賣盒 $2";
     static public function KCZenzeroSetDrink(price:Float, freeCans:Bool) return {
-        title: "跟餐飲品",
+        title: "飲品",
         type: "string",
         "enum": (
             freeCans ? [
@@ -91,6 +94,23 @@ class KCZenzeroMenu {
             drink: KCZenzeroSetDrink(5, false),
         },
         required: ["main"],
+    }
+
+    static public final KCZenzeroLimitedSpecial = {
+        title: "限定：鮑汁蟹飯",
+        description: "6月20日限定。售完即止。請盡早落單預訂。",
+        properties: {
+            special: {
+                title: "限定",
+                type: "string",
+                "enum": [
+                    "鮑汁蟹飯 $55",
+                ],
+                "default": "鮑汁蟹飯 $55"
+            },
+            drink: KCZenzeroSetDrink(10, false),
+        },
+        required: ["special"],
     }
 
     static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
@@ -305,6 +325,18 @@ class KCZenzeroMenu {
     } {
         var def:Dynamic = orderItem.type.getDefinition(timeSlotType);
         return switch (orderItem.type) {
+            case LimitedSpecial:
+                var orderDetails = ["限定：" + orderItem.item.special];
+                var orderPrice = parsePrice(orderItem.item.special).price;
+
+                if (orderItem.item.drink != null) {
+                    orderDetails.push("　　　" + orderItem.item.drink);
+                    orderPrice += parsePrice(orderItem.item.drink).price;
+                }
+                {
+                    orderDetails: orderDetails.join("\n"),
+                    orderPrice: orderPrice,
+                }
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main", def));
             case NoodleSet:
