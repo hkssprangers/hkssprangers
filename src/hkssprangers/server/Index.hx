@@ -341,11 +341,6 @@ class Index extends View {
                         <div className="p-6 text-xl lg:text-4xl font-bold text-center">
                             <h1 className="inline">埗兵</h1>係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
                         </div>
-                        <div>
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScdjGGqtiXDK8N-wIHQyrhTCwPtsXRkC6QUS3nMJ1OByzfA-Q/viewform">
-                                ${StaticResource.image("/images/daan-web-banner.jpg", "Cooking Daan x 埗兵 曲奇團購", "w-full")}
-                            </a>
-                        </div>
                         <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
                             <h2>合作餐廳 / 商店</h2>
                         </div>
