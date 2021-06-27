@@ -1059,6 +1059,19 @@ class DeliveryFee {
                 case MyRoomRoomCluster: Math.NaN;
             }
         },
+        {
+            place: "置豐閣",
+            match: address -> address.contains("置豐閣"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
+                case MyRoomRoomCluster: Math.NaN;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
