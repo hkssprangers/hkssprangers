@@ -57,7 +57,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "telegraf": "^3.38.0",
-    "twilio": "^3.64.0"
+    "twilio": "^3.65.0"
   },
   "private": true
 }
