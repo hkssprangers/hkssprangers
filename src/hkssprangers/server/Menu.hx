@@ -460,7 +460,15 @@ class Menu extends View {
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${DongDongUsualSet.title}</div>
                         <div className="p-3">${DongDongUsualSet.description}</div>
-                        ${renderItems(DongDongUsualSet.properties.main.enums())}
+                        <div className="p-3"><b>${DongDongUsualSet.properties.main.title}選擇</b></div>
+                        <div className="p-3">${slashes(DongDongUsualSet.properties.main.enums())}</div>
+                        <div className="p-3"><b>${DongDongUsualSet.properties.noodle.title}選擇</b></div>
+                        <div className="p-3">${slashes(DongDongUsualSet.properties.noodle.enums())}</div>
+                        <div className="p-3"><b>${DongDongUsualSet.properties.options.title}</b></div>
+                        <div className="p-3">${slashes(DongDongUsualSet.properties.options.items.enums())}</div>
+
+                        <div className=${headerClasses}>${DongDongLunchSet.title}/${DongDongUsualSet.title} ${DongDongLunchDrink.title}</div>
+                        <div className="p-3">${slashes(DongDongLunchDrink.enums())}</div>
                     </div>
                 </div>
                 <div className="md:flex flex-row">
@@ -473,6 +481,9 @@ class Menu extends View {
                         <div className=${headerClasses}>晚餐${DongDongDinnerDish.title}</div>
                         <div className="p-3">${DongDongDinnerDish.description}</div>
                         ${renderItems(DongDongDinnerDish.properties.main.enums())}
+
+                        <div className=${headerClasses}>${DongDongDinnerSet.title}/${DongDongDinnerDish.title} ${DongDongDinnerDrink.title}</div>
+                        <div className="p-3">${slashes(DongDongDinnerDrink.enums())}</div>
                     </div>
                 </div>
             </Fragment>

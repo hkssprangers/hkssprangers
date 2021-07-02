@@ -37,6 +37,30 @@ enum abstract DongDongItem(String) to String {
 
 class DongDongMenu {
     static public final box = "外賣盒 $1";
+
+    static public final DongDongLunchDrink = {
+        title: "跟餐飲品",
+        type: "string",
+        "enum": [
+            "熱奶茶",
+            "熱咖啡",
+            "熱檸茶",
+            "熱檸水",
+            "熱好立克",
+            "熱阿華田",
+            "熱檸蜜 +$4",
+            "凍奶茶 +$2",
+            "凍咖啡 +$2",
+            "凍檸茶 +$2",
+            "凍檸水 +$2",
+            "凍好立克 +$2",
+            "凍阿華田 +$2",
+            "罐裝可樂 +$3",
+            "凍檸蜜 +$4",
+            "檸檬可樂 +$10",
+        ],
+    };
+
     static public final DongDongLunchSet = {
         title: "午餐",
         description: "注意每份會另加" + box,
@@ -62,28 +86,7 @@ class DongDongMenu {
                     "焗白汁芝士海鮮飯 $55",
                 ]
             },
-            drink: {
-                title: "跟餐飲品",
-                type: "string",
-                "enum": [
-                    "熱奶茶",
-                    "熱咖啡",
-                    "熱檸茶",
-                    "熱檸水",
-                    "熱好立克",
-                    "熱阿華田",
-                    "熱檸蜜 +$2",
-                    "凍奶茶 +$2",
-                    "凍咖啡 +$2",
-                    "凍檸茶 +$2",
-                    "凍檸水 +$2",
-                    "凍好立克 +$2",
-                    "凍阿華田 +$2",
-                    "罐裝可樂 +$3",
-                    "凍檸蜜 +$4",
-                    "檸檬可樂 +$8",
-                ],
-            },
+            drink: DongDongLunchDrink,
         },
         required: [
             "main",
@@ -92,44 +95,47 @@ class DongDongMenu {
     };
     static public final DongDongUsualSet = {
         title: "常餐",
-        description: "注意每份會另加" + box,
+        description: "配炒滑蛋及牛油多士。注意每份會另加" + box,
         properties: {
             main: {
-                title: "常餐",
+                title: "款式",
                 type: "string",
                 "enum": [
-                    "沙嗲牛肉麵 配炒滑蛋及牛油多士 $44",
-                    "火腿通粉 配炒滑蛋及牛油多士 $44",
-                    "香茅豬扒 配炒滑蛋及牛油多士 $44",
-                    "香茅雞扒 配炒滑蛋及牛油多士 $44",
-                    "吉烈魚柳伴德國腸 配炒滑蛋及牛油多士 $44",
+                    "沙嗲牛肉 $45",
+                    "雪菜肉絲 $45",
+                    "榨菜肉絲 $45",
+                    "火腿 $45",
+                    "餐肉 $45",
+                    "肉丁 $45",
+                    "腸仔 $45",
+                    "漢堡扒 $45",
                 ]
             },
-            drink: {
-                title: "跟餐飲品",
+            noodle: {
+                title: "麵類",
                 type: "string",
                 "enum": [
-                    "熱奶茶",
-                    "熱咖啡",
-                    "熱檸茶",
-                    "熱檸水",
-                    "熱好立克",
-                    "熱阿華田",
-                    "熱檸蜜 +$2",
-                    "凍奶茶 +$2",
-                    "凍咖啡 +$2",
-                    "凍檸茶 +$2",
-                    "凍檸水 +$2",
-                    "凍好立克 +$2",
-                    "凍阿華田 +$2",
-                    "罐裝可樂 +$3",
-                    "凍檸蜜 +$4",
-                    "檸檬可樂 +$8",
-                ],
+                    "米粉",
+                    "通粉",
+                    "公仔麵",
+                ]
             },
+            options: {
+                type: "array",
+                title: "其他",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "轉茄湯 +$5",
+                    ],
+                },
+                uniqueItems: true,
+            },
+            drink: DongDongLunchDrink,
         },
         required: [
             "main",
+            "noodle",
             "drink",
         ]
     };
@@ -306,7 +312,7 @@ class DongDongMenu {
             case LunchSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
             case UsualSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main", "noodle", "options", "drink"], ["配炒滑蛋及牛油多士", box]);
             case DinnerDish:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box]);
             case DinnerSet:
