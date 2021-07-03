@@ -101,7 +101,7 @@ class PlumWineDIY extends View {
                             <div className=${stepDespClasses}>6. 寫低個入樽日期喺紙，黐喺樽上面。</div>
                         </div>
                         <div className=${stepClasses}>
-                            <div>放喺隂涼地方。大約每個月開少少樽蓋，放一放啲氣，閂返實。三個月至一年後開封飲用。</div>
+                            <div>放喺陰涼地方。大約每個月開少少樽蓋，放一放啲氣，閂返實。三個月至一年後開封飲用。</div>
                         </div>
                     </div>
                 </div>
