@@ -34,8 +34,9 @@ class MenuTools {
         };
     }
 
-    inline static final fullWidthSpace = "　";
-    inline static final fullWidthColon = "：";
+    inline static public final fullWidthSpace = "　";
+    inline static public final fullWidthColon = "：";
+    inline static public final fullWidthDot = "．";
     static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?mapField:(fieldName:String, value:Dynamic)->{ ?title:String, ?price:Float }):{
         orderDetails: String,
         orderPrice: Float,
@@ -43,9 +44,9 @@ class MenuTools {
         var orderDetails = [];
         var orderPrice = 0.0;
         function prefix() return if (orderDetails.length == 0)
-            def.title + fullWidthColon;
+            fullWidthDot + def.title + fullWidthColon;
         else
-            "".rpad(fullWidthSpace, def.title.length + 1);
+            "".rpad(fullWidthSpace, def.title.length + 2);
         for (fieldName in fields) {
             var fieldDef = Reflect.field(def.properties, fieldName);
             var fieldTitle = if (fieldDef.title == def.title)

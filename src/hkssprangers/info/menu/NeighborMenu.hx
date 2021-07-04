@@ -220,7 +220,7 @@ class NeighborMenu {
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
-                            orderDetails: v,
+                            orderDetails: fullWidthDot + v,
                             orderPrice: v.parsePrice().price,
                         }
                     case _:

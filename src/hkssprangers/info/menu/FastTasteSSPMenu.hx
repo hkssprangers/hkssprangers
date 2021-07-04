@@ -477,7 +477,7 @@ class FastTasteSSPMenu {
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
-                            orderDetails: v + "\n" + box,
+                            orderDetails: fullWidthDot + v + "\n" + fullWidthSpace + box,
                             orderPrice: v.parsePrice().price + box.parsePrice().price,
                         }
                     case _:
