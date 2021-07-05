@@ -104,7 +104,7 @@ class ImportOrderDocs {
         var deliverySubsidy = (platformServiceChargeTotal * 0.5) / d.couriers.length;
         for (c in d.couriers) {
             if (c.deliverySubsidy != deliverySubsidy.toFloat()) {
-                throw "deliverySubsidy is not half of platformServiceChargeTotal: \n" + printDelivery();
+                trace("deliverySubsidy is not half of platformServiceChargeTotal: \n" + printDelivery());
             }
         }
     }
