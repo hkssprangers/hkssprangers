@@ -382,6 +382,8 @@ enum abstract Shop(String) to String {
         }
 
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
+            case [_, "2021-07-11", _]:
+                return Unavailable('埗兵有喜 休息一天');
             case [LaksaStore, "2021-05-18", _]:
                 return Unavailable('喇沙女皇壽辰休息一天');
             case [KCZenzero, "2021-05-25" | "2021-05-26", _]:
