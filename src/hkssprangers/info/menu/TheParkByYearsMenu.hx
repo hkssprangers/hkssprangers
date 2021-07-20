@@ -61,13 +61,15 @@ class TheParkByYearsMenu {
             "凍奇異果蘋果菠菜汁 +$36",
             "凍⻄柚鮮橙菠蘿汁 +$36",
 
+            "THE ISLANDER JUICE +$36",
+
             "芫茜檸檬梳打 +$28",
             "鮮薑⻘檸梳打 +$28",
             "藍莓薰衣草梳打 +$28",
             "柚⼦⻘瓜梳打 +$28",
 
-            "GIN & TONIC (N.I.P. Gin, Fever Tree 湯⼒⽔) +$68",
-            "BERRY GIMLET (N.I.P. Gin, 紅桑⼦) +$68",
+            "GIN & TONIC (N.I.P. Gin, Fever Tree 湯⼒⽔) +$78",
+            "BERRY GIMLET (N.I.P. Gin, 紅桑⼦) +$78",
 
             "DEADMAN · 5000 YEARS (德國⽪爾森 | 5.2% | ⻘瓜) +$58",
             "DEADMAN · SEVEN SEAS (酸⻄柚 IPA | 7% | ⻄柚) +$58",
@@ -82,7 +84,7 @@ class TheParkByYearsMenu {
                 title: "主食",
                 type: "string",
                 "enum": [
-                    "⾁桂蘋果燕麥碗 (凍) $88",
+                    "THE ATHLETIC PORRIDGE BOWL $88",
                     "福建炒⽶形意粉 $88",
                     "四川擔擔意⼤利粉 $98",
                     "⽜油果啤梨春⽇沙律 $108",
@@ -109,7 +111,6 @@ class TheParkByYearsMenu {
             "炸薯⽚配秘製蛋⿈醬 $58",
             "椒鹽椰菜花粒 $58",
             "香辣不可能⾁醬薯⽪ $58",
-            "柚⼦海草沙律 $58",
 
             "朱古⼒香蕉冧酒撻 $58",
             "焦糖脆脆檸檬撻 $58",
