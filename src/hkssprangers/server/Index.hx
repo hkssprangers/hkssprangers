@@ -270,25 +270,7 @@ class Index extends View {
                     </div>
                 </div>
                 <div className="lg:flex">
-                    <div className="lg:w-1/3 mb-3 bg-white rounded-xl">
-                        <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-gray-700"></i> ${MyRoomRoomCluster.info().name}</h3>
-                        </div>
-                        <div className=${rowClasses}>
-                            <div className=${blockClasses}>
-                                <a href=${Path.join(["/menu", MyRoomRoom])} className=${linkClasses}>
-                                    <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/MyRoomRoom.jpg", MyRoomRoom.info().name, "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className=" text-gray-700 fas fa-book-open"></i><br />menu</p>
-                                    </div>
-                                    <h4>${MyRoomRoom.info().name}</h4>
-                                    <p className="text-xs">埗兵外賣不日開放</p>
-                                </a>
-                            </div>
-                            <div className="clear-both lg:hidden"></div>
-                        </div>
-                    </div>
-                    <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> ${PakTinCluster.info().name}</h3>
                         </div>
@@ -305,7 +287,7 @@ class Index extends View {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-1/3 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同場加映消毒用品</h3>
                         </div>
@@ -340,11 +322,6 @@ class Index extends View {
                         </div>
                         <div className="p-6 text-xl lg:text-4xl font-bold text-center">
                             <h1 className="inline">埗兵</h1>係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
-                        </div>
-                        <div>
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrnwDIdDt51Sd5ubnUCv8NvBRMJqBDM37wY8GZ5YYCV6XbRg/viewform">
-                                ${StaticResource.image("/images/plum-web-banner.jpg", "埗兵梅酒 DIY SET", "w-full")}
-                            </a>
                         </div>
                         <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
                             <h2>合作餐廳 / 商店</h2>

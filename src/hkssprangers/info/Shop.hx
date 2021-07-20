@@ -38,7 +38,6 @@ enum abstract Shop(String) to String {
         MGY,
         FastTasteSSP,
         BlaBlaBla,
-        MyRoomRoom,
         ZeppelinHotDogSKM,
         ThaiYummy,
     ];
