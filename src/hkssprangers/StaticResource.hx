@@ -1,8 +1,7 @@
 package hkssprangers;
 
 import sys.*;
-import sys.io.File;
-import sys.io.Process;
+import sys.io.*;
 import haxe.io.*;
 import haxe.macro.*;
 #if nodejs
@@ -15,6 +14,7 @@ using Lambda;
 class StaticResource {
     static public final resourcesDir = "static";
 
+    #if (macro || !browser)
     static final hashes = new Map<String,String>();
     static public function hash(path:String):String {
         return switch (hashes[path]) {
@@ -28,6 +28,7 @@ class StaticResource {
                 h;
         }
     }
+    #end
 
     macro static public function R(path:String) {
         if (!path.startsWith("/")) {

@@ -74,7 +74,9 @@ class View extends ReactComponent {
         </Fragment>
     ');
 
-    function script() return null;
+    function script() return jsx('
+        <script src=${R("/browser.bundled.js")}></script>
+    ');
 
     function favicon() return jsx('
         <Fragment>

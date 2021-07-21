@@ -1,3 +1,5 @@
+serviceWorker.hxml
+--next
 browser.hxml
 --next
 server.hxml

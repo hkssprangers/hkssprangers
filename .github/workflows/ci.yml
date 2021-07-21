@@ -20,6 +20,10 @@ jobs:
         env:
           NODE_ENV: production
       - run: haxe processCss.hxml
+      - name: Build serviceWorker.js
+        run: haxe serviceWorker.hxml
+      - name: Minify serviceWorker.js
+        run: npx browserify serviceWorker.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
       - name: Build browser.js
         run: haxe browser.hxml
       - name: Minify browser.js
