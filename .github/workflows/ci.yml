@@ -37,6 +37,7 @@ jobs:
           name: artifact
           path: |
             index.js
+            static/serviceWorker.bundled.js
             static/browser.bundled.js
             static/css
             static/**/*.webp
