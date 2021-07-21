@@ -5,7 +5,6 @@
 --library compiletime
 --library tink_core
 --library thx.core
---library jQueryExtern
 --library react-router-4
 --library jsonwebtoken
 --library hxLINQ

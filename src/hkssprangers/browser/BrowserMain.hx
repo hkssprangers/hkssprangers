@@ -3,7 +3,6 @@ package hkssprangers.browser;
 import mui.core.styles.*;
 import haxe.*;
 import js.html.DivElement;
-import js.jquery.*;
 import js.Browser.*;
 
 class BrowserMain {
@@ -71,6 +70,10 @@ class BrowserMain {
     }
 
     static function main():Void {
-        new JQuery(onReady);
+        if (document.readyState == 'loading') {
+            document.addEventListener('DOMContentLoaded', _ -> onReady());
+        } else {
+            onReady();
+        }
     }
 }
