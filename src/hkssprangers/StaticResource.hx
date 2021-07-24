@@ -160,7 +160,7 @@ class StaticResource {
 
     static public function parseUrl(url:String) {
         var p = new Path(url);
-        var r = ~/^(.+)\.(.{32})$/;
+        var r = ~/^(.+)\.([0-9a-f]{32})$/;
         return if (!r.match(p.file)) {
             url: url,
             hash: null,

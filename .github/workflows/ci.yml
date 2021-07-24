@@ -23,7 +23,7 @@ jobs:
       - name: Build serviceWorker.js
         run: haxe serviceWorker.hxml
       - name: Minify serviceWorker.js
-        run: npx browserify serviceWorker.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
+        run: npx browserify serviceWorker.js --transform [ babelify --global ] -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
       - name: Build browser.js
         run: haxe browser.hxml
       - name: Minify browser.js
