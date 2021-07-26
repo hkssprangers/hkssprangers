@@ -64,7 +64,7 @@ class Index extends View {
                 </lord-icon>
                 <div className="flex-grow md:ml-3">
                     <p className="text-lg font-bold">狂賀張家朗勇奪奧運金牌！</p>
-                    <p>7月26日所有單運費自動減 $$5！</p>
+                    <p>7月27日所有單運費自動減 $$5！</p>
                 </div>
             </div>
         </div>
