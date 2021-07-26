@@ -56,15 +56,15 @@ class Index extends View {
         <div className="bg-yellow-400 text-center md:text-left px-2">
             <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
                 <lord-icon
-                    src="https://cdn.lordicon.com//lupuorrc.json"
+                    src="https://cdn.lordicon.com/lupuorrc.json"
                     trigger="loop"
                     colors="primary:#121331,secondary:#ffffff"
                     stroke="70"
                     style=${{ width: 60, height: 60 }}>
                 </lord-icon>
                 <div className="flex-grow md:ml-3">
-                    <p className="text-lg font-bold">埗兵新系統出世啦！</p>
-                    <p><span className="whitespace-nowrap">所有餐廳而家分為唔同區域</span>，<span className="whitespace-nowrap">可以同一張單叫晒鄰近嘅餐廳</span>，<span className="whitespace-nowrap">一次過送俾你！</span></p>
+                    <p className="text-lg font-bold">狂賀張家朗勇奪奧運金牌！</p>
+                    <p>7月26日所有單運費自動減 $$5！</p>
                 </div>
             </div>
         </div>
