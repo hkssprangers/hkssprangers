@@ -112,6 +112,13 @@ class DeliveryTools {
         for (c in d.couriers) {
             c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
             c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (d.pickupTimeSlot.start.is2021GoldenWeek() ? 5 : 0)) / d.couriers.length).roundTo(4).toFloat();
+
+            switch (d.pickupTimeSlot.start.getDatePart()) {
+                case "2021-07-27": // 賀張家朗奪花劍金牌
+                    c.deliverySubsidy += 2.5;
+                case _:
+                    //pass
+            }
         }
     }
 

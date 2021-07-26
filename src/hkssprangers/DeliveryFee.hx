@@ -1,5 +1,6 @@
 package hkssprangers;
 
+import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import Math.*;
@@ -1074,7 +1075,7 @@ class DeliveryFee {
         },
     ];
 
-    static public function decideDeliveryFee(shop:Shop, address:String):Null<Float> {
+    static public function decideDeliveryFee(shop:Shop, address:String, pickupTimeSlot:TimeSlot):Null<Float> {
         var matched:Array<{
             place:String,
             fee:Float,
@@ -1096,10 +1097,15 @@ class DeliveryFee {
         }
 
         var fee = matched[0].fee;
-        if (matched.foreach(h -> h.fee == fee)) {
-            return fee;
+        if (!matched.foreach(h -> h.fee == fee)) {
+            return null;
         }
 
-        return null;
+        switch (pickupTimeSlot.start.getDatePart()) {
+            case "2021-07-27": // 賀張家朗奪花劍金牌
+                fee -= 5;
+        }
+
+        return fee;
     }
 }

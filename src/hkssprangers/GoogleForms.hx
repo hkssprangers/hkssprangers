@@ -267,7 +267,7 @@ class GoogleForms {
         for (order in delivery.orders) {
             OrderTools.setPlatformServiceCharge(order);
         }
-        delivery.deliveryFee = switch (DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation)) {
+        delivery.deliveryFee = switch (DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation, delivery.pickupTimeSlot)) {
             case null: Math.NaN;
             case fee:
                 if (delivery.pickupTimeSlot.start.is2021GoldenWeek())
