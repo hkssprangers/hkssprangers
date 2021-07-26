@@ -284,6 +284,16 @@ class Index extends View {
                                     <h4>${ZeppelinHotDogSKM.info().name}</h4>
                                 </a>
                             </div>
+                            <div className=${blockClasses}>
+                                <a href=${Path.join(["/menu", Toolss])} className=${linkClasses}>
+                                    <div className=${thumbnailDivClasses}>
+                                        ${StaticResource.image("/images/Toolss.jpg", Toolss.info().name, "squircle mb-3")}
+                                        <p className="absolute align-center-hover text-lg"><i className=" text-blue-500 fas fa-book-open"></i><br />menu</p>
+                                    </div>
+                                    <h4>${Toolss.info().name}</h4>
+                                    <p className="text-xs">埗兵外賣不日開放</p>
+                                </a>
+                            </div>
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>

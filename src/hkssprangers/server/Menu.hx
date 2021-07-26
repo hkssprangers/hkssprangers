@@ -24,6 +24,7 @@ import hkssprangers.info.menu.HanaSoftCreamMenu.*;
 import hkssprangers.info.menu.BlaBlaBlaMenu.*;
 import hkssprangers.info.menu.MyRoomRoomMenu.*;
 import hkssprangers.info.menu.ThaiYummyMenu.*;
+import hkssprangers.info.menu.ToolssMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -161,6 +162,8 @@ class Menu extends View {
                 renderMyRoomRoom();
             case ThaiYummy:
                 renderThaiYummy();
+            case Toolss:
+                renderToolss();
         }
     }
 
@@ -788,6 +791,56 @@ class Menu extends View {
                         <div className=${headerClasses}>${ThaiYummyCustomDrink.title}</div>
                         <div className="font-bold p-3">${ThaiYummyCustomDrink.description}</div>
                         ${renderItems(ThaiYummyCustomDrink.properties.drink1.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderToolss() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${ToolssAllDay.title}</div>
+                        <div className="font-bold p-3">${ToolssAllDay.properties.a.title} ${ToolssAllDay.properties.a.description}</div>
+                        <div className="p-3">${slashes(ToolssAllDay.properties.a.enums())}</div>
+                        <div className="font-bold p-3">${ToolssAllDay.properties.b.title} ${ToolssAllDay.properties.b.description}</div>
+                        <div className="p-3">${slashes(ToolssAllDay.properties.b.enums())}</div>
+                        <div className="font-bold p-3">${ToolssAllDay.properties.cOptions.title} ${ToolssAllDay.properties.cOptions.description}</div>
+                        <div className="p-3">${slashes(ToolssAllDay.properties.cOptions.items.enums())}</div>
+                        <div className="font-bold p-3">${ToolssAllDay.properties.dOptions.title} ${ToolssAllDay.properties.dOptions.description}</div>
+                        <div className="p-3">${slashes(ToolssAllDay.properties.dOptions.items.enums())}</div>
+
+                        <div className=${headerClasses}>${ToolssBento.title}</div>
+                        ${renderItems(ToolssBento.enums())}
+
+                        <div className=${headerClasses}>${ToolssPasta.title}</div>
+                        ${renderItems(ToolssPasta.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${ToolssBread.title}</div>
+                        ${renderItems(ToolssBread.enums())}
+
+                        <div className=${headerClasses}>${ToolssSalad.title}</div>
+                        ${renderItems(ToolssSalad.enums())}
+
+                        <div className=${headerClasses}>${ToolssSnack.title}</div>
+                        ${renderItems(ToolssSnack.enums())}
+
+                        <div className=${headerClasses}>${ToolssCake.title}</div>
+                        ${renderItems(ToolssCake.enums())}
+                    </div>
+                </div>
+                <div className="md:flex flex-row">
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${ToolssHotDrink.title}</div>
+                        ${renderItems(ToolssHotDrink.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${ToolssIcedDrink.title}</div>
+                        ${renderItems(ToolssIcedDrink.enums())}
                     </div>
                 </div>
             </Fragment>
