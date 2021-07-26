@@ -797,9 +797,13 @@ class Menu extends View {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         for (shop in Shop.all) {
             app.get("/menu/" + shop, function get(req:Request, reply:Reply):Promise<Dynamic> {
-                return Promise.resolve(reply.sendView(Menu, {
-                    shop: shop,
-                }));
+                return Promise.resolve(
+                    reply
+                        .header("Cache-Control", "public, max-age=300, stale-while-revalidate=21600") // max-age: 5 minutes, stale-while-revalidate: 6 hours
+                        .sendView(Menu, {
+                            shop: shop,
+                        })
+                );
             });
         }
     }

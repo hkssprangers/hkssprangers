@@ -428,9 +428,11 @@ class Index extends View {
     }
 
     static public function get(req:Request, reply:Reply):Promise<Dynamic> {
-        return Promise.resolve(reply.sendView(Index, {
-
-        }));
+        return Promise.resolve(
+            reply
+                .header("Cache-Control", "public, max-age=3600, stale-while-revalidate=21600") // max-age: 1 hour, stale-while-revalidate: 6 hours
+                .sendView(Index, {})
+        );
     }
 
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {

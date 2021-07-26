@@ -35,9 +35,12 @@ class LogIn extends View {
 
     static public function middleware(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
         return ServerMain.tgMe.then(tgBotInfo ->
-            reply.sendView(LogIn, {
-                tgBotName: tgBotInfo.username,
-            }))
+            reply
+                .header("Cache-Control", "public, max-age=3600, stale-while-revalidate=21600") // max-age: 1 hour, stale-while-revalidate: 6 hours
+                .sendView(LogIn, {
+                    tgBotName: tgBotInfo.username,
+                })
+            )
             .catchError(err -> reply.status(500).send(err));
     }
 }
