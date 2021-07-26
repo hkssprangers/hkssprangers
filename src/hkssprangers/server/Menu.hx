@@ -414,13 +414,11 @@ class Menu extends View {
 
     function renderLaksaStore() {
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        var itemPrice = LaksaStoreNoodleSet.description.parsePrice();
         return jsx('
             <Fragment>
                 <div className="p-3">
-                    <div className=${headerClasses}>${{
-                        var p = LaksaStoreNoodleSet.description.parsePrice();
-                        renderItemRow(p.item, "$" + p.price);
-                    }}</div>
+                    ${renderItemRow(itemPrice.item, "$" + itemPrice.price, ["text-xl", "font-bold"].concat(style.headerClasses))}
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             <div className="p-3"><b>${LaksaStoreNoodleSet.properties.soup.title}選擇</b></div>
@@ -803,7 +801,7 @@ class Menu extends View {
             <Fragment>
                 <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${ToolssAllDay.title}</div>
+                        ${renderItemRow(ToolssAllDay.title, ToolssAllDay.description, ["text-xl", "font-bold"].concat(style.headerClasses))}
                         <div className="font-bold p-3">${ToolssAllDay.properties.a.title} ${ToolssAllDay.properties.a.description}</div>
                         <div className="p-3">${slashes(ToolssAllDay.properties.a.enums())}</div>
                         <div className="font-bold p-3">${ToolssAllDay.properties.b.title} ${ToolssAllDay.properties.b.description}</div>
