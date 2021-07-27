@@ -116,15 +116,26 @@ class ToolssMenu {
         title: "便當",
         type: "string",
         "enum": [
-            "鹽燒鯖魚青醬忌廉便當 $" + markup(68),
-            "日式咖哩牛肋肉便當 $" + markup(68),
-            "手打鲜鱿豚肉餅便當 $" + markup(75),
+            // 紙 menu
+            // "鹽燒鯖魚青醬忌廉便當 $" + markup(68),
+            // "日式咖哩牛肋肉便當 $" + markup(68),
+            // "手打鲜鱿豚肉餅便當 $" + markup(75),
+
+            // 手寫牌
+            "日式咖喱唐揚雞便當 $" + markup(68),
+            "手撕雞醉雞翼蕎麥冷麵 $" + markup(88),
+            "手打鮮魷豚肉餅飯 $" + markup(75),
+            "鹽烤鯖魚青醬飯 $" + markup(68),
         ],
     };
     static public final ToolssPasta = {
         title: "意大利麵",
         type: "string",
         "enum": [
+            // 手寫牌
+            "鮮茄蓉辣肉腸意粉 $" + markup(68),
+
+            // 紙 menu
             "忌廉汁煙三文魚意大利麵 $" + markup(98),
             "黑松露忌廉雜菌意大利麵 $" + markup(98),
             "羅勒忌廉蟹肉意大利麵 $" + markup(88),
