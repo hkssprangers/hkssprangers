@@ -109,18 +109,10 @@ class DeliveryTools {
         if (d.couriers == null)
             return;
         var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
+        var discount = Discounts.bestDiscountResult(d);
         for (c in d.couriers) {
             c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
-            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (d.pickupTimeSlot.start.is2021GoldenWeek() ? 5 : 0)) / d.couriers.length).roundTo(4).toFloat();
-
-            switch (d.pickupTimeSlot.start.getDatePart()) {
-                case "2021-07-27": // 賀張家朗奪奧運男子花劍金牌
-                    c.deliverySubsidy += 2.5;
-                case "2021-07-28": // 賀何詩蓓奪奧運女子200米自由泳銀牌
-                    c.deliverySubsidy += 2.5;
-                case _:
-                    //pass
-            }
+            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (discount == null ? 0 : discount.deliverySubsidyAddition)) / d.couriers.length).roundTo(4).toFloat();
         }
     }
 

@@ -1,8 +1,10 @@
 package hkssprangers;
 
+import hkssprangers.info.Delivery;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
+import hkssprangers.info.Discounts;
 import Math.*;
 using Lambda;
 using StringTools;
@@ -1075,16 +1077,16 @@ class DeliveryFee {
         },
     ];
 
-    static public function decideDeliveryFee(shop:Shop, address:String, pickupTimeSlot:TimeSlot):Null<Float> {
+    static public function decideDeliveryFee(delivery:Delivery):Null<Float> {
         var matched:Array<{
             place:String,
             fee:Float,
         }> = [];
 
-        var cluster = ShopCluster.classify(shop);
+        var cluster = ShopCluster.classify(delivery.orders[0].shop);
 
         for (h in heuristics) {
-            if (h.match(address)) {
+            if (h.match(delivery.pickupLocation)) {
                 matched.push({
                     place: h.place,
                     fee: h.deliveryFee(cluster),
@@ -1101,13 +1103,9 @@ class DeliveryFee {
             return null;
         }
 
-        switch (pickupTimeSlot.start.getDatePart()) {
-            case "2021-07-27": // 賀張家朗奪奧運男子花劍金牌
-                fee -= 5;
-            case "2021-07-28": // 賀何詩蓓奪奧運女子200米自由泳銀牌
-                fee -= 5;
-            case _:
-                // pass
+        var discount = Discounts.bestDiscountResult(delivery);
+        if (discount != null) {
+            fee -= discount.deliveryFeeDeduction;
         }
 
         return fee;

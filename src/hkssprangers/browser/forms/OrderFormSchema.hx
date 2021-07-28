@@ -293,7 +293,7 @@ class OrderFormSchema {
                 delivery.customer.tel = formData.backupContactValue;
         }
 
-        delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery.orders[0].shop, delivery.pickupLocation, delivery.pickupTimeSlot);
+        delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery);
 
         return delivery;
     }
