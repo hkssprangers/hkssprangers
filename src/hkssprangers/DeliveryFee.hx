@@ -1102,8 +1102,12 @@ class DeliveryFee {
         }
 
         switch (pickupTimeSlot.start.getDatePart()) {
-            case "2021-07-27": // 賀張家朗奪花劍金牌
+            case "2021-07-27": // 賀張家朗奪奧運男子花劍金牌
                 fee -= 5;
+            case "2021-07-28": // 賀何詩蓓奪奧運女子200米自由泳銀牌
+                fee -= 5;
+            case _:
+                // pass
         }
 
         return fee;

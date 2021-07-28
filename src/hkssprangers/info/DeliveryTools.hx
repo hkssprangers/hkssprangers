@@ -114,7 +114,9 @@ class DeliveryTools {
             c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (d.pickupTimeSlot.start.is2021GoldenWeek() ? 5 : 0)) / d.couriers.length).roundTo(4).toFloat();
 
             switch (d.pickupTimeSlot.start.getDatePart()) {
-                case "2021-07-27": // 賀張家朗奪花劍金牌
+                case "2021-07-27": // 賀張家朗奪奧運男子花劍金牌
+                    c.deliverySubsidy += 2.5;
+                case "2021-07-28": // 賀何詩蓓奪奧運女子200米自由泳銀牌
                     c.deliverySubsidy += 2.5;
                 case _:
                     //pass
