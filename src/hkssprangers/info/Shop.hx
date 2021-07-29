@@ -389,18 +389,6 @@ enum abstract Shop(String) to String {
         var info = info();
         var date = pickupTimeSlot.start.toDate();
         var day = Weekday.fromDay(date.getDay());
-        if (!info.openDays.has(day))
-            return Unavailable('逢星期${day.info().name}休息');
-
-        switch (cast this:Shop) {
-            case ZeppelinHotDogSKM:
-                if (date.getDate() == 21)
-                    return Unavailable('逢21號罷工');
-            case MyRoomRoom:
-                return Unavailable('埗兵外賣不日開放');
-            case _:
-                //pass
-        }
 
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
             case [_, "2021-07-11", _]:
@@ -425,6 +413,23 @@ enum abstract Shop(String) to String {
                 return Unavailable('收早');
             case [LaksaStore, "2021-07-20", _]:
                 return Unavailable('休息一天');
+            case _:
+                //pass
+        }
+
+        switch [(cast this:Shop), info.openDays.has(day), HkHolidays.isRedDay(date)] {
+            case [Toolss, false, false]:
+                return Unavailable('逢星期${day.info().name}休息');
+            case [Toolss, false, true]: // 紅日+例休 -> 開工, 第二日休息
+                //pass
+            case [Toolss, true, _] if (HkHolidays.isRedDay(Date.fromTime(date.getTime() - DateTools.days(1)))):
+                return Unavailable('休息一天');
+            case [_, false, _]:
+                return Unavailable('逢星期${day.info().name}休息');
+            case [ZeppelinHotDogSKM, _, _] if (date.getDate() == 21):
+                return Unavailable('逢21號罷工');
+            case [MyRoomRoom, _, _]:
+                return Unavailable('埗兵外賣不日開放');
             case _:
                 //pass
         }
