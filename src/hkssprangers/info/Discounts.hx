@@ -27,6 +27,14 @@ class Discounts {
                 deliverySubsidyAddition: 2.5,
             }
         },
+        {
+            detail: "賀何詩蓓再奪奧運銀牌，7月30日運費減 $5",
+            isApplicable: delivery -> delivery.pickupTimeSlot.start.getDatePart() == "2021-07-30",
+            apply: delivery -> {
+                deliveryFeeDeduction: 5,
+                deliverySubsidyAddition: 2.5,
+            }
+        },
     ];
 
     static public function bestDiscountResult(delivery:Delivery):Null<DiscountResult> {

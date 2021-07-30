@@ -53,24 +53,24 @@ class Index extends View {
     ');
 
     function banner()
-        return null;
-        // return jsx('
-        //     <div className="bg-yellow-400 text-center md:text-left px-2">
-        //         <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
-        //             <lord-icon
-        //                 src="https://cdn.lordicon.com/lupuorrc.json"
-        //                 trigger="loop"
-        //                 colors="primary:#121331,secondary:#ffffff"
-        //                 stroke="70"
-        //                 style=${{ width: 60, height: 60 }}>
-        //             </lord-icon>
-        //             <div className="flex-grow md:ml-3">
-        //                 <p className="text-lg font-bold">狂賀何詩蓓勇奪奧運女子200米自由泳銀牌🥈</p>
-        //                 <p>7月28日所有單運費自動減 $$5！</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // ');
+        // return null;
+        return jsx('
+            <div className="bg-yellow-400 text-center md:text-left px-2">
+                <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/lupuorrc.json"
+                        trigger="loop"
+                        colors="primary:#121331,secondary:#ffffff"
+                        stroke="70"
+                        style=${{ width: 60, height: 60 }}>
+                    </lord-icon>
+                    <div className="flex-grow md:ml-3">
+                        <p className="text-lg font-bold">狂賀何詩蓓再奪奧運銀牌🥈</p>
+                        <p>7月30日運費自動減 $$5！</p>
+                    </div>
+                </div>
+            </div>
+        ');
 
     static public function orderButton() return jsx('
         <div className="fixed overflow-hidden bottom-0 right-0 select-none z-40">
