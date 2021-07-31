@@ -6,7 +6,7 @@
   "scripts": {
     "tailwind": "tailwindcss-cli build -o static/css/tailwind.css",
     "dts2hx": "dts2hx telegraf twilio @types/js-cookie moment copy-to-clipboard fastify @types/accepts aws-serverless-fastify google-auth-library abort-controller @types/promise-retry ajv node-ical --noLibWrap --output lib/dts2hx",
-    "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration --noLibWrap --output lib/workbox",
+    "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload --noLibWrap --output lib/workbox",
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
@@ -42,6 +42,7 @@
     "workbox-cacheable-response": "^6.1.5",
     "workbox-core": "^6.1.5",
     "workbox-expiration": "^6.1.5",
+    "workbox-navigation-preload": "^6.1.5",
     "workbox-recipes": "^6.1.5",
     "workbox-routing": "^6.1.5",
     "xlsx": "^0.17.0"
