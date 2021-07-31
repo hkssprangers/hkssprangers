@@ -385,7 +385,7 @@ enum abstract Shop(String) to String {
             }
     }
 
-    public function checkAvailability(pickupTimeSlot:TimeSlot):Availability {
+    public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
         var info = info();
         var date = pickupTimeSlot.start.toDate();
         var day = Weekday.fromDay(date.getDay());
@@ -439,6 +439,15 @@ enum abstract Shop(String) to String {
 
         if (pickupTimeSlot.start.getTimePart() > info.latestPickupTime)
             return Unavailable('最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收');
+
+        var hoursToPickup = (pickupTimeSlot.start.toDate().getTime() - currentTime.getTime()) / 3.6e+6;
+        switch (cast this:Shop) {
+            case ThaiYummy:
+                if (hoursToPickup < 1.0)
+                    return Unavailable('食物製作需要最少1小時');
+            case _:
+                //pass
+        }
 
         return Available;
     }

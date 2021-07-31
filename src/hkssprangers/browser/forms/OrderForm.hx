@@ -52,7 +52,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
 
         nextSlots = TimeSlotTools.nextTimeSlots(props.currentTime.toDate());
 
-        var initFormData:OrderFormData = {};
+        var initFormData:OrderFormData = {
+            currentTime: props.currentTime,
+        };
         switch (props.prefill.backupContactMethod) {
             case null: //pass
             case v: initFormData.backupContactMethod = v;
@@ -166,7 +168,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             var t = OrderFormSchema.selectedPickupTimeSlot(formData);
             for (i => o in formData.orders) {
                 if (o.shop != null && t != null && t.start != null && t.end != null) {
-                    switch o.shop.checkAvailability(t) {
+                    switch o.shop.checkAvailability(formData.currentTime.toDate(), t) {
                         case Available:
                             //pass
                         case Unavailable(reason):

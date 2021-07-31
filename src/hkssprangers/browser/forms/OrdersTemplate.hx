@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.LocalDateString;
 import hkssprangers.browser.forms.OrderFormData;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.ShopCluster;
@@ -43,7 +44,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
             var availability:Availability = if (pickupTimeSlot == null) {
                 Available;
             } else {
-                shop.checkAvailability(pickupTimeSlot);
+                shop.checkAvailability(props.formContext.currentTime, pickupTimeSlot);
             }
             var disabledMessage = switch (availability) {
                 case Available:

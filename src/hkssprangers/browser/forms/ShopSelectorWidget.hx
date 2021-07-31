@@ -1,5 +1,6 @@
 package hkssprangers.browser.forms;
 
+import hkssprangers.LocalDateString;
 import hkssprangers.browser.forms.OrderFormData;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Weekday;
@@ -49,13 +50,14 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
             case null: null;
             case str: str.parse();
         };
+        var currentTime = props.formContext.currentTime.toDate();
         if (props.value != null) {
             var shop:Shop = props.value;
             var info = shop.info();
             var availability:Availability = if (pickupTimeSlot == null) {
                 Available;
             } else {
-                shop.checkAvailability(pickupTimeSlot);
+                shop.checkAvailability(currentTime, pickupTimeSlot);
             }
             var disabledMessage = switch (availability) {
                 case Available:
@@ -81,7 +83,7 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                             var availability:Availability = if (pickupTimeSlot == null) {
                                 Available;
                             } else {
-                                shop.checkAvailability(pickupTimeSlot);
+                                shop.checkAvailability(currentTime, pickupTimeSlot);
                             }
                             var disabledMessage = switch (availability) {
                                 case Available:
