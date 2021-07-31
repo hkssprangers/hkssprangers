@@ -293,6 +293,7 @@ class Index extends View {
                                         <p className="absolute align-center-hover text-lg"><i className=" text-blue-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${Toolss.info().name}</h4>
+                                    <p className="text-xs">逢星期一休息</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
