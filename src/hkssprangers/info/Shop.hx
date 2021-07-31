@@ -5,6 +5,7 @@ import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.menu.*;
 using Lambda;
+using DateTools;
 
 enum abstract Shop(String) to String {
     final EightyNine:Shop;
@@ -422,7 +423,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('逢星期${day.info().name}休息');
             case [Toolss, false, true]: // 紅日+例休 -> 開工, 第二日休息
                 //pass
-            case [Toolss, true, _] if (HkHolidays.isRedDay(Date.fromTime(date.getTime() - DateTools.days(1)))):
+            case [Toolss, true, _] if ((!info.openDays.has(Weekday.fromDay(date.delta(-DateTools.days(1)).getDay()))) && HkHolidays.isRedDay(date.delta(-DateTools.days(1)))):
                 return Unavailable('休息一天');
             case [_, false, _]:
                 return Unavailable('逢星期${day.info().name}休息');
