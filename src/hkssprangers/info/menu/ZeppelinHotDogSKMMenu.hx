@@ -43,7 +43,7 @@ class ZeppelinHotDogSKMMenu {
             case "2021-05-18":
                 ["⭐六周年驚喜優惠: 十件洋蔥圈 $10"];
             case "2021-05-19":
-                ["⭐六周年驚喜優惠: 惹味香辣難 $10"];
+                ["⭐六周年驚喜優惠: 惹味香辣雞 $10"];
             case _:
                 [];
         } : []);
@@ -71,7 +71,8 @@ class ZeppelinHotDogSKMMenu {
                 "炸魚薯條 $28",
                 "牛油粟米杯 $10",
                 "冰菠蘿 $8",
-                "惹味香辣難 $18",
+                "惹味香辣雞 (1件) $15",
+                "惹味香辣雞 (2件) $24",
             ]),
         };
     }
@@ -84,6 +85,7 @@ class ZeppelinHotDogSKMMenu {
         "芝味熱狗 $38",
         "澳式風情熱狗 $38",
         "德國酸菜熱狗 $38",
+        "墨西哥勁辣雞堡 $40",
     ];
 
     static public final ZeppelinHotDogSKMHotdogSet = {
