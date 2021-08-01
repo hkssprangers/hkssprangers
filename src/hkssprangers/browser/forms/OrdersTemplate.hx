@@ -28,7 +28,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         background: "#F3F4F6",
     });
 
-    static function DefaultArrayItem(props, order:{?shop:Shop}, pickupTimeSlot:TimeSlot, removable:Bool) {
+    static function DefaultArrayItem(props, order:{?shop:Shop}, currentTime:LocalDateString, pickupTimeSlot:TimeSlot, removable:Bool) {
         var removeBtn = jsx('
             <RemoveButton
                 size="small"
@@ -41,10 +41,10 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         var selectedShop = if (order != null && order.shop != null) {
             var shop:Shop = order.shop;
             var info = shop.info();
-            var availability:Availability = if (pickupTimeSlot == null) {
+            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                 Available;
             } else {
-                shop.checkAvailability(props.formContext.currentTime, pickupTimeSlot);
+                shop.checkAvailability(currentTime.toDate(), pickupTimeSlot);
             }
             var disabledMessage = switch (availability) {
                 case Available:
@@ -82,7 +82,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         var items = if (props.items != null) {
             [
                 for (i => p in props.items)
-                DefaultArrayItem(p, props.formData[i], pickupTimeSlot, props.items.length > 1 || props.formData[i].shop != null)
+                DefaultArrayItem(p, props.formData[i], props.formContext.currentTime, pickupTimeSlot, props.items.length > 1 || props.formData[i].shop != null)
             ];
         } else {
             null;

@@ -166,9 +166,10 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     static function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
         try {
             var t = OrderFormSchema.selectedPickupTimeSlot(formData);
+            var currentTime = formData.currentTime.toDate();
             for (i => o in formData.orders) {
-                if (o.shop != null && t != null && t.start != null && t.end != null) {
-                    switch o.shop.checkAvailability(formData.currentTime.toDate(), t) {
+                if (o.shop != null && t != null && t.start != null && t.end != null && currentTime != null) {
+                    switch o.shop.checkAvailability(currentTime, t) {
                         case Available:
                             //pass
                         case Unavailable(reason):

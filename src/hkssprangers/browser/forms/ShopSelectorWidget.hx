@@ -54,7 +54,7 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
         if (props.value != null) {
             var shop:Shop = props.value;
             var info = shop.info();
-            var availability:Availability = if (pickupTimeSlot == null) {
+            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                 Available;
             } else {
                 shop.checkAvailability(currentTime, pickupTimeSlot);
@@ -80,7 +80,7 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                     .selectMany((group, i) -> {
                         var items = group.linq().select((shop, _) -> {
                             var info = shop.info();
-                            var availability:Availability = if (pickupTimeSlot == null) {
+                            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                                 Available;
                             } else {
                                 shop.checkAvailability(currentTime, pickupTimeSlot);
