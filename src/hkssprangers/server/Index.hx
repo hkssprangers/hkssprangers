@@ -75,7 +75,7 @@ class Index extends View {
     function banner() {
         var title = "KOLB x 點心紙 x 埗兵 餸包湯包預訂";
         var url = "https://docs.google.com/forms/d/e/1FAIpQLSe2mSyw_3VsiK3lFcrT7lv5slIaDQUEdtpomQR8Ah8AqexJiA/viewform";
-        var img = null;// StaticResource.image("/images/daan-web-banner.jpg", title, "w-full");
+        var img = StaticResource.image("/images/kolb3-web-banner.jpg", title, "w-full");
         var className = if (img == null) {
             "flex items-center place-content-center text-center bg-white h-32 text-2xl";
         } else {
