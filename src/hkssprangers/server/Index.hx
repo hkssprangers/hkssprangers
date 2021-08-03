@@ -52,7 +52,7 @@ class Index extends View {
         </div>
     ');
 
-    function banner()
+    function announcement()
         return null;
         // return jsx('
         //     <div className="bg-yellow-400 text-center md:text-left px-2">
@@ -71,6 +71,24 @@ class Index extends View {
         //         </div>
         //     </div>
         // ');
+
+    function banner() {
+        var title = "KOLB x 點心紙 x 埗兵 餸包湯包預訂";
+        var url = "https://docs.google.com/forms/d/e/1FAIpQLSe2mSyw_3VsiK3lFcrT7lv5slIaDQUEdtpomQR8Ah8AqexJiA/viewform";
+        var img = null;// StaticResource.image("/images/daan-web-banner.jpg", title, "w-full");
+        var className = if (img == null) {
+            "flex items-center place-content-center text-center bg-white h-32 text-2xl";
+        } else {
+            "";
+        }
+        return jsx('
+            <div className=${className}>
+                <a href=${url}>
+                    ${img != null ? img : title}
+                </a>
+            </div>
+        ');
+    }
 
     static public function orderButton() return jsx('
         <div className="fixed overflow-hidden bottom-0 right-0 select-none z-40">
@@ -324,7 +342,7 @@ class Index extends View {
     override function bodyContent() {
         return jsx('
             <Fragment>
-                ${banner()}
+                ${announcement()}
                 <main>
                     <div className="p-6 md:mb-32 md:p-0 mx-auto md:w-4/5 max-w-screen-lg">
                         <div className="my-6 text-center">
@@ -335,6 +353,7 @@ class Index extends View {
                         <div className="p-6 text-xl lg:text-4xl font-bold text-center">
                             <h1 className="inline">埗兵</h1>係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
                         </div>
+                        ${banner()}
                         <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
                             <h2>合作餐廳 / 商店</h2>
                         </div>
