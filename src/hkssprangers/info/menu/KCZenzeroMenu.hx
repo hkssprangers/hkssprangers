@@ -14,7 +14,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        // LimitedSpecial,
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -98,18 +98,17 @@ class KCZenzeroMenu {
     }
 
     static public final KCZenzeroLimitedSpecial = {
-        title: "限定：鮑汁蟹飯",
-        description: "6月20日限定。售完即止。請盡早落單預訂。",
+        title: "限定：花膠酸菜魚",
+        description: "秋季限定。售完即止。 ⚠️ 請提前最少3個鐘落單。",
         properties: {
             special: {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    "鮑汁蟹飯 $55",
+                    "花膠酸菜魚 送冰涼粉 $88",
                 ],
-                "default": "鮑汁蟹飯 $55"
-            },
-            drink: KCZenzeroSetDrink(10, false),
+                "default": "花膠酸菜魚 送冰涼粉 $88"
+            }
         },
         required: ["special"],
     }
@@ -251,8 +250,8 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "一人癲雞煲（要早一日預訂）",
-        description: "有半隻春雞，跟發熱包 $68",
+        title: "一人癲雞煲",
+        description: "有半隻春雞，跟發熱包 $68。 ⚠️ 請提前一日預訂。",
         properties: {
             soup: {
                 type: "string",
@@ -327,17 +326,12 @@ class KCZenzeroMenu {
         var def:Dynamic = orderItem.type.getDefinition(timeSlotType);
         return switch (orderItem.type) {
             case LimitedSpecial:
-                var orderDetails = ["限定：" + orderItem.item.special];
+                var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
                 var orderPrice = parsePrice(orderItem.item.special).price;
-
-                if (orderItem.item.drink != null) {
-                    orderDetails.push("　　　" + orderItem.item.drink);
-                    orderPrice += parsePrice(orderItem.item.drink).price;
-                }
                 {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
-                }
+                };
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main", def));
             case NoodleSet:
