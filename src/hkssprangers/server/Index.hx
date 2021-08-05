@@ -64,7 +64,7 @@ class Index extends View {
                         style=${{ width: 60, height: 60 }}>
                     </lord-icon>
                     <div className="flex-grow md:ml-3">
-                        <p className="text-lg font-bold">賀香港乒乓隊女團奪奧運銅牌，另為<span className="whitespace-nowrap">空手道港隊代表</span><span className="whitespace-nowrap">劉慕裳</span><span className="whitespace-nowrap">集氣</span></p>
+                        <p className="text-lg font-bold">賀<span className="whitespace-nowrap">香港乒乓隊女團</span>及<span className="whitespace-nowrap">空手道港隊代表</span><span className="whitespace-nowrap">劉慕裳</span>各奪<span className="whitespace-nowrap">奧運銅牌 🥉🥉</span></p>
                         <p>8月5-6日運費自動減 $$5！</p>
                     </div>
                 </div>

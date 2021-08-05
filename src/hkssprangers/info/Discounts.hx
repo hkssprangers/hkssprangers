@@ -36,7 +36,7 @@ class Discounts {
             }
         },
         {
-            detail: "賀香港乒乓隊女團奪奧運銅牌，另為空手道港隊代表劉慕裳集氣，8月5-6日運費減 $5",
+            detail: "賀香港乒乓隊女團及空手道港隊代表劉慕裳各奪奧運銅牌，8月5-6日運費減 $5",
             isApplicable: delivery -> switch (delivery.pickupTimeSlot.start.getDatePart()) {
                 case "2021-08-05" | "2021-08-06": true;
                 case _: false;
