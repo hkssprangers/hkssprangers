@@ -52,25 +52,25 @@ class Index extends View {
         </div>
     ');
 
-    function announcement()
-        return null;
-        // return jsx('
-        //     <div className="bg-yellow-400 text-center md:text-left px-2">
-        //         <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
-        //             <lord-icon
-        //                 src="https://cdn.lordicon.com/lupuorrc.json"
-        //                 trigger="loop"
-        //                 colors="primary:#121331,secondary:#ffffff"
-        //                 stroke="70"
-        //                 style=${{ width: 60, height: 60 }}>
-        //             </lord-icon>
-        //             <div className="flex-grow md:ml-3">
-        //                 <p className="text-lg font-bold">狂賀何詩蓓再奪奧運銀牌🥈</p>
-        //                 <p>7月30日運費自動減 $$5！</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // ');
+    function announcement() {
+        return jsx('
+            <div className="bg-yellow-400 text-center md:text-left px-2">
+                <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/lupuorrc.json"
+                        trigger="loop"
+                        colors="primary:#121331,secondary:#ffffff"
+                        stroke="70"
+                        style=${{ width: 60, height: 60 }}>
+                    </lord-icon>
+                    <div className="flex-grow md:ml-3">
+                        <p className="text-lg font-bold">賀香港乒乓隊女團奪奧運銅牌，另為<span className="whitespace-nowrap">空手道港隊代表</span><span className="whitespace-nowrap">劉慕裳</span><span className="whitespace-nowrap">集氣</span></p>
+                        <p>8月5-6日運費自動減 $$5！</p>
+                    </div>
+                </div>
+            </div>
+        ');
+    }
 
     function banner() {
         var title = "KOLB x 點心紙 x 埗兵 餸包湯包預訂";
