@@ -53,6 +53,7 @@ class Index extends View {
     ');
 
     function announcement() {
+        return null;
         return jsx('
             <div className="bg-yellow-400 text-center md:text-left px-2">
                 <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
