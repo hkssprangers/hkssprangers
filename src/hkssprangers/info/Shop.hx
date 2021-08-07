@@ -350,7 +350,8 @@ enum abstract Shop(String) to String {
                 name: "泰和味",
                 address: "長沙灣營盤街159-161號金德花園地下1號舖",
                 courierContact: [
-                    "tel:65047678",
+                    // "tel:65047678",
+                    "tel:90371992",
                 ],
                 openDays: [
                     Monday,
