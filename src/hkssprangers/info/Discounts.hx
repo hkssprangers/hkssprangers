@@ -46,6 +46,17 @@ class Discounts {
                 deliverySubsidyAddition: 2.5,
             }
         },
+        {
+            detail: "賀李慧詩奪奧運銅牌，8月8-9日運費減 $5",
+            isApplicable: delivery -> switch (delivery.pickupTimeSlot.start.getDatePart()) {
+                case "2021-08-08" | "2021-08-09": true;
+                case _: false;
+            },
+            apply: delivery -> {
+                deliveryFeeDeduction: 5,
+                deliverySubsidyAddition: 2.5,
+            }
+        },
     ];
 
     static public function bestDiscountResult(delivery:Delivery):Null<DiscountResult> {

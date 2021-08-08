@@ -53,7 +53,6 @@ class Index extends View {
     ');
 
     function announcement() {
-        return null;
         return jsx('
             <div className="bg-yellow-400 text-center md:text-left px-2">
                 <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
@@ -65,8 +64,8 @@ class Index extends View {
                         style=${{ width: 60, height: 60 }}>
                     </lord-icon>
                     <div className="flex-grow md:ml-3">
-                        <p className="text-lg font-bold">賀<span className="whitespace-nowrap">香港乒乓隊女團</span>及<span className="whitespace-nowrap">空手道港隊代表</span><span className="whitespace-nowrap">劉慕裳</span>各奪<span className="whitespace-nowrap">奧運銅牌 🥉🥉</span></p>
-                        <p>8月5-6日運費自動減 $$5！</p>
+                        <p className="text-lg font-bold">狂賀<span className="whitespace-nowrap">李慧詩</span>奪<span className="whitespace-nowrap">奧運銅牌 🥉</span></p>
+                        <p>8月8-9日運費自動減 $$5！</p>
                     </div>
                 </div>
             </div>
