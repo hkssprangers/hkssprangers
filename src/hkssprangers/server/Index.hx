@@ -53,6 +53,7 @@ class Index extends View {
     ');
 
     function announcement() {
+        return null;
         return jsx('
             <div className="bg-yellow-400 text-center md:text-left px-2">
                 <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
@@ -73,6 +74,7 @@ class Index extends View {
     }
 
     function banner() {
+        return null;
         var title = "KOLB x 點心紙 x 埗兵 餸包湯包預訂";
         var url = "https://docs.google.com/forms/d/e/1FAIpQLSe2mSyw_3VsiK3lFcrT7lv5slIaDQUEdtpomQR8Ah8AqexJiA/viewform";
         var img = StaticResource.image("/images/kolb3-web-banner.jpg", title, "w-full");
