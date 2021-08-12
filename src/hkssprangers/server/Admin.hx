@@ -14,6 +14,7 @@ import haxe.Json;
 import js.node.url.URL;
 import js.node.Querystring;
 import jsonwebtoken.Claims;
+import hkssprangers.Token;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 import hkssprangers.info.Shop;
@@ -50,7 +51,7 @@ typedef AdminProps = {
     final fontSize:String;
     final tgBotName:String;
     final user:Null<Courier>;
-    final token:Null<Token>;
+    final token:Null<ShopAdminToken>;
 }
 
 class Admin extends View<AdminProps> {
@@ -63,7 +64,7 @@ class Admin extends View<AdminProps> {
     public var user(get, never):Null<Courier>;
     function get_user() return props.user;
 
-    public var token(get, never):Null<Token>;
+    public var token(get, never):Null<ShopAdminToken>;
     function get_token() return props.token;
 
     override function title():String return if (token == null)
@@ -136,12 +137,12 @@ class Admin extends View<AdminProps> {
             }).toJsPromise();
     }
 
-    static public function setToken(req:Request, reply:Reply):Promise<Null<Token>> {
+    static public function setToken(req:Request, reply:Reply):Promise<Null<ShopAdminToken>> {
         return switch (req.query.token) {
             case null:
                 Promise.resolve(null);
             case token:
-                ServerMain.jwtVerifyToken(token)
+                (ServerMain.jwtVerifyToken(token):tink.core.Promise<ShopAdminToken>)
                     .tryRecover(failure -> {
                         trace(failure.message + "\n\n" + failure.exceptionStack);
                         tink.core.Promise.resolve(null);
@@ -270,7 +271,7 @@ class Admin extends View<AdminProps> {
                         date: date.getDatePart(),
                         time: time,
                         shop: shop,
-                    }:Token));
+                    }:ShopAdminToken));
                     ServerMain.jwtSign(payload).toJsPromise()
                         .then(token -> {
                             reply.type("text");
@@ -342,7 +343,7 @@ class Admin extends View<AdminProps> {
     }
 
     static public function getByToken(req:Request, reply:Reply) {
-        var token = reply.getToken();
+        var token:ShopAdminToken = reply.getToken();
         return MySql.db.getDeliveries(token.date).toJsPromise()
             .then(deliveries -> {
                 reply.send({

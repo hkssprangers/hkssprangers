@@ -4,7 +4,7 @@ import jsonwebtoken.Claims;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Shop;
 
-typedef Token = Claims & {
+typedef ShopAdminToken = Claims & {
     final date:String;
     final time:TimeSlotType;
     final shop:Shop;

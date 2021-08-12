@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import jsonwebtoken.Claims;
 import hkssprangers.info.LoggedinUser;
 import hkssprangers.info.Courier;
 import hkssprangers.info.Tg;
@@ -54,10 +55,10 @@ class FastifyTools {
     static public function setCourier(reply:Reply, courier:Null<Courier>):Void {
         untyped reply.courier = courier;
     }
-    static public function getToken(reply:Reply):Null<Token> {
+    static public function getToken<T:Claims>(reply:Reply):Null<T> {
         return untyped reply.token;
     }
-    static public function setToken(reply:Reply, token:Null<Token>):Void {
+    static public function setToken<T:Claims>(reply:Reply, token:Null<T>):Void {
         untyped reply.token = token;
     }
 }

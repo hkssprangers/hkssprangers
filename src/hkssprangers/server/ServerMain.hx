@@ -65,7 +65,7 @@ class ServerMain {
             payload.iat = Date.now();
         return jwtSigner.sign(payload);
     }
-    static public function jwtVerifyToken(token:String):tink.core.Promise<Token> {
+    static public function jwtVerifyToken<T:Claims>(token:String):tink.core.Promise<T> {
         return if (token == null)
             tink.core.Promise.reject(new Error(ErrorCode.Unauthorized, "no token"));
         else
@@ -450,9 +450,11 @@ class ServerMain {
                                 關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one
                             **/);
                         }
+                        var loginUrl = Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]);
+                        trace(loginUrl);
                         return ctx.reply('你好！請㩒「登入落單」制。', {
                             reply_markup: Markup.inlineKeyboard_([
-                                Markup.loginButton_("登入落單", Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]), {
+                                Markup.loginButton_("登入落單", loginUrl, {
                                     request_write_access: true,
                                 }),
                             ]),
@@ -512,7 +514,7 @@ class ServerMain {
                         }).then(_ -> {
                             Sys.println('https://' + host);
                             Sys.println(url);
-                            host = new URL(url).host;
+                            // host = new URL(url).host;
                             var hook = Path.join([url, tgBotWebHook]);
                             tgBot.telegram.setWebhook(hook)
                                 .then(_ -> tgMe)
