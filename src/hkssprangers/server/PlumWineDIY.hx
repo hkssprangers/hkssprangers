@@ -107,6 +107,9 @@ class PlumWineDIY extends View<PlumWineDIYProps> {
                         <div className=${stepClasses}>
                             <div>放喺陰涼地方。大約每個月開少少樽蓋，放一放啲氣，閂返實。三個月至一年後開封飲用。</div>
                         </div>
+                        <div>
+                            <div>攝影：<a href="https://www.instagram.com/count.my.days/">@count.my.days</a></div>
+                        </div>
                     </div>
                 </div>
             </main>
