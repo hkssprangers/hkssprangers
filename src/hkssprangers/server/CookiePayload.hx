@@ -6,6 +6,6 @@ import jsonwebtoken.Claims;
 typedef CookiePayload = {
     iss:String,
     iat:EpochTimeSeconds,
-	exp:EpochTimeSeconds,
+    exp:EpochTimeSeconds,
     sub:JsonString<LoggedinUser>,
 }

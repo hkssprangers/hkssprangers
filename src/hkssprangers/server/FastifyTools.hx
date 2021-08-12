@@ -36,13 +36,6 @@ class FastifyTools {
     static public function clearCookie(reply:Reply, name:String, options:Dynamic):Reply {
         return (untyped reply.clearCookie)(name, options);
     }
-
-    static public function getUserTg(reply:Reply):Null<Tg> {
-        return untyped reply.tg;
-    }
-    static public function setUserTg(reply:Reply, tg:Null<Tg>):Void {
-        untyped reply.tg = tg;
-    }
     static public function getUser(reply:Reply):Null<LoggedinUser> {
         return untyped reply.loggedinUser;
     }

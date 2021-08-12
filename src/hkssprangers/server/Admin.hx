@@ -110,7 +110,7 @@ class Admin extends View<AdminProps> {
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
     static public function setCourier(req:Request, reply:Reply):Promise<Null<Courier>> {
-        var tg = reply.getUserTg();
+        var tg = reply.getUser().tg;
 
         if (tg == null) {
             return Promise.resolve(null);
@@ -156,7 +156,7 @@ class Admin extends View<AdminProps> {
     }
 
     static public function ensurePermission(req:Request, reply:Reply):Promise<Bool> {
-        return ServerMain.setTg(req, reply)
+        return ServerMain.setUser(req, reply)
             .then(_ -> setCourier(req, reply))
             .then(_ -> setToken(req, reply))
             .then(_ -> {
