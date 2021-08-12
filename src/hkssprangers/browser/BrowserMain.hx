@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import js.html.URLSearchParams;
 import mui.core.styles.*;
 import haxe.*;
 import js.html.DivElement;
@@ -84,6 +85,19 @@ class BrowserMain {
     }
 
     static function main():Void {
+        var p = new URLSearchParams(window.location.search);
+        switch (p.get("auth")) {
+            case null:
+                // pass
+            case auth:
+                JsCookie.value.set("auth", auth, {
+                    secure: true,
+                    sameSite: 'strict',
+                    expires: 1, // days
+                });
+                window.history.replaceState(null, "", window.location.origin + window.location.pathname);
+        }
+
         if (document.readyState == 'loading') {
             document.addEventListener('DOMContentLoaded', _ -> onReady());
         } else {

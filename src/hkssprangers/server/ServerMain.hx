@@ -13,6 +13,7 @@ import jsonwebtoken.crypto.NodeCrypto;
 import js.node.url.URL;
 import haxe.DynamicAccess;
 import js.lib.Promise;
+import node.url.URLSearchParams;
 import haxe.Json;
 import react.*;
 import react.Fragment;
@@ -228,13 +229,15 @@ class ServerMain {
         return jwtSigner.sign(cast payload)
             .toJsPromise()
             .then(signed -> {
+                var p = new URLSearchParams();
+                p.set(authCookieName, signed);
                 reply.setCookie(authCookieName, signed, {
                     secure: true,
                     sameSite: 'strict',
                     expires: expires,
                     httpOnly: true,
                 })
-                .redirect(redirectTo);
+                .redirect(redirectTo + "?" + p);
             });
     }
 

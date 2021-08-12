@@ -13,7 +13,3 @@ typedef ShopAdminToken = Claims & {
 
     final shop:Shop;
 }
-    final date:String;
-    final time:TimeSlotType;
-    final shop:Shop;
-}

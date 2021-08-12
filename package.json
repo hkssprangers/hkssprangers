@@ -29,7 +29,7 @@
     "dts2hx": "^0.15.3",
     "envify": "^4.1.0",
     "https-localhost": "^4.6.5",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^3.0.0",
     "ngrok": "^4.1.0",
     "nodemon": "^2.0.12",
     "react-router-dom": "^5.2.0",

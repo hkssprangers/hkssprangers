@@ -53,7 +53,6 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
 
     function depScript() return jsx('
         <Fragment>
-            <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.js" integrity="sha256-P8jY+MCe6X2cjNSmF4rQvZIanL5VwUUT4MBnOMncjRU=" crossOrigin="anonymous"></script>
         </Fragment>
     ');
 
