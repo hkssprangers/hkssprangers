@@ -12,7 +12,11 @@ import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
 
-class Index extends View {
+typedef IndexProps = {
+
+}
+
+class Index extends View<IndexProps> {
     override public function description() return "深水埗區外賣團隊";
     override function canonical() return "https://" + host;
     override public function render() {

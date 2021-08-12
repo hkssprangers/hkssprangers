@@ -34,7 +34,11 @@ using Reflect;
 using Lambda;
 using hxLINQ.LINQ;
 
-class Menu extends View {
+typedef MenuProps = {
+    final shop:Shop;
+}
+
+class Menu extends View<MenuProps> {
     public var shop(get, never):Shop;
     function get_shop() return props.shop;
 

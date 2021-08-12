@@ -33,7 +33,11 @@ using Reflect;
 using Lambda;
 using hxLINQ.LINQ;
 
-class PlumWineDIY extends View {
+typedef PlumWineDIYProps = {
+
+}
+
+class PlumWineDIY extends View<PlumWineDIYProps> {
     override public function title() return '梅酒 DIY';
     override public function description() return '梅酒 DIY 教學';
     override function canonical() return Path.join(["https://" + host, "plum-wine-diy"]);

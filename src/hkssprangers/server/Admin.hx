@@ -46,7 +46,14 @@ typedef FormOrder = {
     note: Null<String>,
 };
 
-class Admin extends View {
+typedef AdminProps = {
+    final fontSize:String;
+    final tgBotName:String;
+    final user:Null<Courier>;
+    final token:Null<Token>;
+}
+
+class Admin extends View<AdminProps> {
     public var fontSize(get, never):String;
     function get_fontSize() return props.fontSize;
 

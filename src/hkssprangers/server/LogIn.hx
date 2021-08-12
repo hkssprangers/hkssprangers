@@ -9,7 +9,11 @@ using Lambda;
 using StringTools;
 using hkssprangers.server.FastifyTools;
 
-class LogIn extends View {
+typedef LogInProps = {
+    final tgBotName:String;
+}
+
+class LogIn extends View<LogInProps> {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 

@@ -1,6 +1,7 @@
 package hkssprangers.server;
 
 import react.*;
+import react.ReactComponent;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import hkssprangers.StaticResource.R;
@@ -11,7 +12,7 @@ import comments.CommentString.comment;
 import comments.CommentString.unindent;
 using StringTools;
 
-class View extends ReactComponent {
+class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function title():String return name;
 
     function description():Null<String> return null;

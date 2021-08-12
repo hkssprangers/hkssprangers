@@ -14,7 +14,14 @@ import telegram_typings.User as TgUser;
 using hkssprangers.server.FastifyTools;
 using StringTools;
 
-class OrderFood extends View {
+typedef OrderFoodProps = {
+    final tgBotName:String;
+    final user:String;
+    final prefill:OrderFormPrefill;
+    final currentTime:LocalDateString;
+}
+
+class OrderFood extends View<OrderFoodProps> {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
