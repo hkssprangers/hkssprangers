@@ -1,4 +1,4 @@
-package hkssprangers.server;
+package hkssprangers;
 
 import hkssprangers.info.*;
 import jsonwebtoken.Claims;

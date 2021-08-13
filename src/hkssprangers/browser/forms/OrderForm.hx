@@ -1,5 +1,7 @@
 package hkssprangers.browser.forms;
 
+import js.Browser;
+import js.html.URLSearchParams;
 import mui.core.styles.Styles;
 import hkssprangers.info.Delivery;
 import haxe.DynamicAccess;
@@ -209,7 +211,16 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             isSubmitting: true,
         });
 
-        window.fetch("/order-food", {
+        var url = switch (BrowserMain.auth) {
+            case null:
+                "/order-food";
+            case auth:
+                "/order-food?" + new URLSearchParams({
+                    auth: auth,
+                });
+        };
+
+        window.fetch(url, {
             method: "post",
             headers: {
                 'Content-Type': 'application/json'

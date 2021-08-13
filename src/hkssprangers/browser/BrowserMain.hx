@@ -5,6 +5,7 @@ import mui.core.styles.*;
 import haxe.*;
 import js.html.DivElement;
 import js.Browser.*;
+import hkssprangers.CookiePayload;
 import hkssprangers.StaticResource.R;
 
 class BrowserMain {
@@ -84,18 +85,33 @@ class BrowserMain {
         }
     }
 
+    static public var auth(default, null):JsonString<CookiePayload>;
+
     static function main():Void {
         var p = new URLSearchParams(window.location.search);
         switch (p.get("auth")) {
             case null:
                 // pass
             case auth:
-                JsCookie.value.set("auth", auth, {
-                    secure: true,
-                    sameSite: 'strict',
-                    expires: 1, // days
-                });
-                window.history.replaceState(null, "", window.location.origin + window.location.pathname);
+                BrowserMain.auth = cast auth;
+
+                // safe auth in cookie
+                try {
+                    JsCookie.value.set("auth", auth, {
+                        secure: true,
+                        sameSite: 'strict',
+                        expires: 1, // days
+                    });
+                } catch (err) {
+                    console.error(err);
+                }
+
+                // hide auth from address bar and from history to be safe
+                try {
+                    window.history.replaceState(null, "", window.location.origin + window.location.pathname);
+                } catch (err) {
+                    console.error(err);
+                }
         }
 
         if (document.readyState == 'loading') {
