@@ -110,7 +110,12 @@ class Admin extends View<AdminProps> {
     static final hr = "\n--------------------------------------------------------------------------------\n";
 
     static public function setCourier(req:Request, reply:Reply):Promise<Null<Courier>> {
-        var tg = reply.getUser().tg;
+        var tg = switch (reply.getUser()) {
+            case null:
+                null;
+            case user:
+                user.tg;
+        };
 
         if (tg == null) {
             return Promise.resolve(null);
