@@ -178,13 +178,15 @@ class ServerMain {
             .toJsPromise()
             .then(token -> {
                 var payload:CookiePayload = cast token;
+                var p = new URLSearchParams();
+                p.set(authCookieName, jwt);
                 reply.setCookie(authCookieName, jwt, {
                     secure: true,
                     sameSite: 'strict',
                     expires: payload.exp.toDate(),
                     httpOnly: true,
                 })
-                .redirect(redirectTo);
+                .redirect(redirectTo + "?" + p);
             })
             .catchError(err -> {
                 reply.status(400).send('Token failed validation.\n\n' + err);
