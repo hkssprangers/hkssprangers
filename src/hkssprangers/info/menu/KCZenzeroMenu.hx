@@ -100,7 +100,7 @@ class KCZenzeroMenu {
 
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：花膠酸菜魚",
-        description: "秋季限定。售完即止。 ⚠️ 每日1點開始有售。",
+        description: "秋季限定。售完即止。 ⚠️ 請提前一日落單。",
         properties: {
             special: {
                 title: "限定",
