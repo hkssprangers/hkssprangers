@@ -516,7 +516,7 @@ enum abstract Shop(String) to String {
             case Toolss:
                 ToolssMenu.itemsSchema(o);
             case KeiHing:
-                null; //TODO
+                KeiHingMenu.itemsSchema(pickupTimeSlot, o);
         }
     }
 
@@ -557,7 +557,7 @@ enum abstract Shop(String) to String {
             case Toolss:
                 ToolssMenu.summarize(o);
             case KeiHing:
-                null; // TODO
+                KeiHingMenu.summarize(o);
         }
     }
 
