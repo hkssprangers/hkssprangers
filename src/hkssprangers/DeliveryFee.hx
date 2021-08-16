@@ -27,7 +27,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -40,7 +40,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -53,7 +53,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -66,7 +66,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -79,7 +79,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -92,7 +92,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -105,7 +105,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -118,7 +118,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -131,7 +131,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -144,7 +144,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -157,7 +157,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -170,7 +170,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -183,7 +183,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -196,7 +196,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -209,7 +209,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -222,7 +222,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -237,7 +237,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -250,7 +250,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -263,7 +263,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -276,7 +276,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -289,7 +289,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -302,7 +302,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -315,7 +315,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -328,7 +328,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -341,7 +341,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -354,7 +354,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -367,7 +367,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -380,7 +380,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -393,7 +393,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: NaN;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -406,7 +406,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -419,7 +419,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -432,7 +432,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -445,7 +445,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -458,7 +458,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -471,7 +471,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -484,7 +484,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -497,7 +497,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -510,7 +510,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -523,7 +523,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -536,7 +536,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -549,7 +549,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -562,7 +562,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -575,7 +575,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -596,7 +596,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -613,7 +613,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -626,7 +626,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -639,7 +639,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -652,7 +652,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -665,7 +665,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -678,7 +678,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -691,7 +691,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -704,7 +704,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -717,7 +717,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -730,7 +730,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -743,7 +743,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -756,7 +756,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -769,7 +769,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -782,7 +782,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -795,7 +795,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -808,7 +808,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -821,7 +821,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -838,7 +838,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -851,7 +851,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -864,7 +864,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -877,7 +877,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -890,7 +890,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -903,7 +903,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -916,7 +916,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -929,7 +929,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -942,7 +942,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -955,7 +955,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -968,7 +968,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -981,7 +981,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -994,7 +994,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1007,7 +1007,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1020,7 +1020,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1033,7 +1033,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1046,7 +1046,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1059,7 +1059,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1072,7 +1072,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1085,7 +1085,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1098,7 +1098,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
         {
@@ -1111,7 +1111,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case MyRoomRoomCluster: Math.NaN;
+                case TungChauStreetParkCluster: Math.NaN;
             }
         },
     ];

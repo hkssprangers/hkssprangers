@@ -89,7 +89,7 @@ class Menu extends View<MenuProps> {
             headerClasses: ["bg-pt2-blue-500"],
             boxClasses: [],
         },
-        MyRoomRoomCluster => {
+        TungChauStreetParkCluster => {
             borderClasses: ["border-gray-700"],
             headerClasses: ["bg-pt2-gray-700"],
             boxClasses: [],
@@ -168,6 +168,8 @@ class Menu extends View<MenuProps> {
                 renderThaiYummy();
             case Toolss:
                 renderToolss();
+            case KeiHing:
+                null; // TODO;
         }
     }
 
