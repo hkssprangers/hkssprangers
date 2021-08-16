@@ -88,8 +88,10 @@ enum abstract KeiHingItem(String) to String {
 }
 
 class KeiHingMenu {
+    static public final box = "外賣盒 $2";
     static public final KeiHingDrink = {
         title: "跟餐飲品",
+        description: "+$8 可配冷熱飲品",
         type: "string",
         "enum": [
             // TODO to be confirmed
@@ -115,7 +117,7 @@ class KeiHingMenu {
     };
     static public final KeiHingFreeHotDrink = {
         title: "跟餐飲品",
-        description: "熱飲 +$0 | 凍飲 +$2 | 檸樂 檸蜜 檸啡 鮮奶 +4 | 特飲 +$9",
+        description: "奉送熱飲, 凍飲 +$2, 檸樂 檸蜜 檸啡 鮮奶 +4, 特飲 +$9",
         type: "string",
         "enum": [
             // TODO to be confirmed
@@ -133,10 +135,11 @@ class KeiHingMenu {
             "凍檸水 +$2",
             "凍好立克 +$2",
             "凍阿華田 +$2",
-            "凍檸樂 +$4",
-            "凍檸蜜 +$4",
-            "凍檸啡 +$4",
-            "凍鮮奶 +$4",
+            "凍檸樂 +$4", //凍?
+            "凍檸蜜 +$4", //凍?
+            "凍檸啡 +$4", //凍?
+            "凍鮮奶 +$4", //凍?
+            // 特飲?
         ],
     };
     static public final KeiHingRiceAndSoup = {
@@ -145,22 +148,22 @@ class KeiHingMenu {
         items: {
             type: "string",
             "enum": [
-                "白飯及例湯 +$8",
+                "跟白飯及例湯 +$8",
             ],
         },
         uniqueItems: true,
     }
 
     static public final KeiHingChickenLegSet = {
-        title: "雞脾套餐",
+        title: "雞髀套餐",
         description: "送：是日例湯",
         properties: {
             main: {
-                title: "雞脾套餐",
+                title: "雞髀套餐",
                 type: "string",
                 "enum": [
-                    "生炸巨型雞脾飯 $51",
-                    "生炸巨型雞脾意粉 $51",
+                    "生炸巨型雞髀飯 $51",
+                    "生炸巨型雞髀意粉 $51",
                 ],
             },
             sauce: {
@@ -379,11 +382,11 @@ class KeiHingMenu {
             },
             drink: KeiHingFreeHotDrink,
         },
-        required: ["main", "noodle"],
+        required: ["main", "noodle", "drink"],
     };
     static public final KeiHingSiuMeiSet = {
         title: "燒味飯餐",
-        description: "配：是日例湯",
+        description: "六點前供應。配：是日例湯",
         properties: {
             options: {
                 type: "array",
@@ -406,7 +409,7 @@ class KeiHingMenu {
             },
             drink: KeiHingFreeHotDrink,
         },
-        required: ["options"],
+        required: ["options", "drink"],
     };
     static public final KeiHingSnack = {
         title: "⼩食",
@@ -650,9 +653,9 @@ class KeiHingMenu {
 
     static public final KeiHingChickenSet = {
         title: "雞鴨套餐",
-        description: "鮮雞／鹵水鴨半隻／乳鴿＋自選小菜一款。配：例湯＋白飯2碗＋熱飲",
+        description: "配：例湯＋白飯2碗＋熱飲",
         properties: {
-            bird: {
+            main: {
                 title: "雞鴨",
                 type: "string",
                 "enum": [
@@ -673,7 +676,7 @@ class KeiHingMenu {
             },
             drink: KeiHingFreeHotDrink,
         },
-        required: ["main", "vege"],
+        required: ["main", "vege", "drink"],
     };
 
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
@@ -765,7 +768,7 @@ class KeiHingMenu {
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["配：例湯＋白飯"]);
             case ChickenSet:
-                summarizeOrderObject(orderItem.item, def, ["bird", "vege", "drink"], ["配：例湯＋白飯2碗"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "vege", "drink"], ["配：例湯＋白飯2碗"]);
             case _:
                 {
                     orderDetails: "",
@@ -775,7 +778,12 @@ class KeiHingMenu {
     }
 
     static public function summarize(formData:FormOrderData):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+        var summaries = formData.items.map(item -> summarizeItem(cast item));
+        summaries.push({
+            orderDetails: box,
+            orderPrice: box.parsePrice().price,
+        });
+        var s = concatSummaries(summaries);
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,

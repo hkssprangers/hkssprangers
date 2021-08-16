@@ -44,7 +44,7 @@ enum abstract Shop(String) to String {
         ZeppelinHotDogSKM,
         ThaiYummy,
         Toolss,
-        // KeiHing,
+        KeiHing,
     ];
 
     public function info() return switch (cast this:Shop) {

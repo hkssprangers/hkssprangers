@@ -25,6 +25,7 @@ import hkssprangers.info.menu.BlaBlaBlaMenu.*;
 import hkssprangers.info.menu.MyRoomRoomMenu.*;
 import hkssprangers.info.menu.ThaiYummyMenu.*;
 import hkssprangers.info.menu.ToolssMenu.*;
+import hkssprangers.info.menu.KeiHingMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -169,7 +170,7 @@ class Menu extends View<MenuProps> {
             case Toolss:
                 renderToolss();
             case KeiHing:
-                null; // TODO;
+                renderKeiHing();
         }
     }
 
@@ -845,6 +846,87 @@ class Menu extends View<MenuProps> {
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${ToolssIcedDrink.title}</div>
                         ${renderItems(ToolssIcedDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderKeiHing() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${KeiHingNoodleAndRice.title}</div>
+                        ${renderItems(KeiHingNoodleAndRice.properties.main.enums())}
+                        <div className="p-3 text-center">${KeiHingNoodleAndRice.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingChickenLegSet.title}</div>
+                        <div className="p-3 text-gray-500">${KeiHingChickenLegSet.description}</div>
+                        ${renderItems(KeiHingChickenLegSet.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingChickenLegSet.properties.sauce.title}</div>
+                        <div className="p-3">${slashes(KeiHingChickenLegSet.properties.sauce.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingChickenLegSet.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingFriedInstantNoodle.title}</div>
+                        ${renderItems(KeiHingFriedInstantNoodle.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingFriedInstantNoodle.properties.options.title}</div>
+                        <div className="p-3">${slashes(KeiHingFriedInstantNoodle.properties.options.items.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingFriedInstantNoodle.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingCurrySet.title}</div>
+                        ${renderItems(KeiHingCurrySet.properties.main.enums())}
+                        <div className="p-3 text-center">${KeiHingCurrySet.properties.drink.description}</div>
+    
+                        <div className=${headerClasses}>${KeiHingUsualSet.title}</div>
+                        <div className="font-bold p-3">${KeiHingUsualSet.properties.main.title}</div>
+                        <div className="p-3">${slashes(KeiHingUsualSet.properties.main.enums())}</div>
+                        <div className="font-bold p-3">${KeiHingUsualSet.properties.noodle.title}</div>
+                        <div className="p-3">${slashes(KeiHingUsualSet.properties.noodle.enums())}</div>
+                        <div className="font-bold p-3">${KeiHingUsualSet.properties.options.title}</div>
+                        <div className="p-3">${slashes(KeiHingUsualSet.properties.options.items.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingUsualSet.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingSiuMeiSet.title}</div>
+                        <div className="p-3 text-gray-500">${KeiHingSiuMeiSet.description}</div>
+                        <div className="font-bold p-3">${KeiHingSiuMeiSet.properties.options.title}</div>
+                        <div className="p-3">${KeiHingSiuMeiSet.properties.options.description}：${slashes(KeiHingSiuMeiSet.properties.options.items.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingSiuMeiSet.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingSandwich.title}</div>
+                        ${renderItems(KeiHingSandwich.enums())}
+    
+                        <div className=${headerClasses}>${KeiHingSnack.title}</div>
+                        ${renderItems(KeiHingSnack.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${KeiHingChicken.title}</div>
+                        ${renderItems(KeiHingChicken.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingChicken.properties.options.title}</div>
+                        <div className="p-3">${slashes(KeiHingChicken.properties.options.items.enums())}</div>
+
+                        <div className=${headerClasses}>${KeiHingSideDish.title}</div>
+                        ${renderItems(KeiHingSideDish.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingSideDish.properties.options.title}</div>
+                        <div className="p-3">${slashes(KeiHingSideDish.properties.options.items.enums())}</div>
+
+                        <div className=${headerClasses}>${KeiHingPot.title}</div>
+                        ${renderItems(KeiHingPot.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingPot.properties.options.title}</div>
+                        <div className="p-3">${slashes(KeiHingPot.properties.options.items.enums())}</div>
+
+                        <div className=${headerClasses}>${KeiHingDishSet.title}</div>
+                        <div className="p-3 text-gray-500">${KeiHingDishSet.description}</div>
+                        ${renderItems(KeiHingPot.properties.main.enums())}
+                        <div className="p-3 text-center">${KeiHingDishSet.properties.drink.description}</div>
+
+                        <div className=${headerClasses}>${KeiHingChickenSet.title}</div>
+                        <div className="p-3 text-gray-500">${KeiHingChickenSet.description}</div>
+                        ${renderItems(KeiHingChickenSet.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingChickenSet.properties.vege.title}</div>
+                        <div className="p-3">${slashes(KeiHingChickenSet.properties.vege.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingDishSet.properties.drink.description}</div>
                     </div>
                 </div>
             </Fragment>

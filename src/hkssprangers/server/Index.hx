@@ -118,7 +118,7 @@ class Index extends View<IndexProps> {
         var rowClasses          = "px-4 sm:px-6 lg:p-6 flex flex-wrap lg:flex-nowrap";
         var blockClasses        = "w-1/2 lg:flex-1 mx-auto lg:mx-0 overflow-hidden";
         var linkClasses         = "block text-center cursor-pointer rounded-3xl menu text-black py-4 sm:py-6 lg:py-0";
-        var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto px-4 sm:px-6 lg:px-0";
+        var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto px-4 sm:px-6 lg:px-0 lg:max-w-full border border-white";
         return jsx('
             <Fragment>
                 ${sameAreaNote()}
@@ -176,8 +176,8 @@ class Index extends View<IndexProps> {
                         <div className="clear-both lg:hidden"></div>
                     </div>
                 </div>
-                <div className="lg:flex">
-                    <div className="lg:w-3/5 mb-3 bg-white rounded-xl">
+                <div className="lg:grid lg:grid-cols-5 lg:gap-3">
+                    <div className="lg:col-span-3 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-pink-500"></i> ${GoldenCluster.info().name}</h3>
                         </div>
@@ -212,7 +212,7 @@ class Index extends View<IndexProps> {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-2/5 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="lg:col-span-2 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-yellow-500"></i> ${SmilingPlazaCluster.info().name}</h3>
                         </div>
@@ -239,8 +239,8 @@ class Index extends View<IndexProps> {
                         </div>
                     </div>
                 </div>
-                <div className="lg:flex">
-                    <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
+                <div className="lg:grid lg:grid-cols-2 lg:gap-3">
+                    <div className="mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-600"></i> ${ParkCluster.info().name}</h3>
                         </div>
@@ -267,7 +267,7 @@ class Index extends View<IndexProps> {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> ${CLPCluster.info().name}</h3>
                         </div>
@@ -295,8 +295,8 @@ class Index extends View<IndexProps> {
                         </div>
                     </div>
                 </div>
-                <div className="lg:flex">
-                    <div className="lg:w-1/2 mb-3 bg-white rounded-xl">
+                <div className="lg:grid lg:grid-cols-4 lg:gap-3">
+                    <div className="lg:col-span-2 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-blue-500"></i> ${PakTinCluster.info().name}</h3>
                         </div>
@@ -323,9 +323,27 @@ class Index extends View<IndexProps> {
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="lg:w-1/2 mb-3 lg:ml-3 bg-white rounded-xl">
+                    <div className="mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 同場加映消毒用品</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> ${TungChauStreetParkCluster.info().name}</h3>
+                        </div>
+                        <div className=${rowClasses}>
+                            <div className=${blockClasses}>
+                                <a href=${Path.join(["/menu", KeiHing])} className=${linkClasses}>
+                                    <div className=${thumbnailDivClasses}>
+                                        <img alt=${KeiHing.info().name} className="squircle mb-3" />
+                                        <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
+                                    </div>
+                                    <h4>${KeiHing.info().name}</h4>
+                                    <p className="text-xs">埗兵外賣不日開放</p>
+                                </a>
+                            </div>
+                            <div className="clear-both lg:hidden"></div>
+                        </div>
+                    </div>
+                    <div className="mb-3 bg-white rounded-xl">
+                        <div className="pt-6 px-6">
+                            <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 消毒用品</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
