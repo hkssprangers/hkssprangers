@@ -57,20 +57,19 @@ class Index extends View<IndexProps> {
     ');
 
     function announcement() {
-        return null;
+        
         return jsx('
             <div className="bg-yellow-400 text-center md:text-left px-2">
-                <div className="mx-auto md:w-4/5 py-6 md:flex max-w-screen-lg">
+                <div className="mx-auto md:w-4/5 py-6 md:flex md:items-center max-w-screen-lg">
                     <lord-icon
-                        src="https://cdn.lordicon.com/lupuorrc.json"
+                        src="https://cdn.lordicon.com/rjzlnunf.json"
                         trigger="loop"
                         colors="primary:#121331,secondary:#ffffff"
                         stroke="70"
                         style=${{ width: 60, height: 60 }}>
                     </lord-icon>
                     <div className="flex-grow md:ml-3">
-                        <p className="text-lg font-bold">狂賀<span className="whitespace-nowrap">李慧詩</span>奪<span className="whitespace-nowrap">奧運銅牌 🥉</span></p>
-                        <p>8月8-9日運費自動減 $$5！</p>
+                        <p className="text-lg font-bold">把握機會多多幫襯壺說同噹噹，佢哋都係做到8月尾咋🥺經過店舖都同老闆娘傾下計同講聲支持!</p>
                     </div>
                 </div>
             </div>
