@@ -325,14 +325,14 @@ class Index extends View<IndexProps> {
                     </div>
                     <div className="mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> ${TungChauStreetParkCluster.info().name}</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-indigo-500"></i> ${TungChauStreetParkCluster.info().name}</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
                                 <a href=${Path.join(["/menu", KeiHing])} className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
-                                        <img alt=${KeiHing.info().name} className="squircle mb-3" />
-                                        <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
+                                        ${StaticResource.image("/images/keihing.jpg", KeiHing.info().name, "squircle mb-3")}
+                                        <p className="absolute align-center-hover text-lg"><i className="text-indigo-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${KeiHing.info().name}</h4>
                                     <p className="text-xs">埗兵外賣不日開放</p>

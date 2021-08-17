@@ -91,8 +91,8 @@ class Menu extends View<MenuProps> {
             boxClasses: [],
         },
         TungChauStreetParkCluster => {
-            borderClasses: ["border-gray-700"],
-            headerClasses: ["bg-pt2-gray-700"],
+            borderClasses: ["border-indigo-500"],
+            headerClasses: ["bg-pt2-indigo-500"],
             boxClasses: [],
         }
     ];
