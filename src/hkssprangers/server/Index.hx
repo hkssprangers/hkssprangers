@@ -343,14 +343,14 @@ class Index extends View<IndexProps> {
                     </div>
                     <div className="mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
-                            <h3 className="text-lg font-bold"><i className="fas fa-star text-indigo-500"></i> 消毒用品</h3>
+                            <h3 className="text-lg font-bold"><i className="fas fa-star text-grey-500"></i> 消毒用品</h3>
                         </div>
                         <div className=${rowClasses}>
                             <div className=${blockClasses}>
                                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform" className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
                                         ${StaticResource.image("/images/hyginova.jpg", "Hyginova", "squircle mb-3")}
-                                        <p className="absolute align-center-hover text-lg"><i className="text-indigo-500 fas fa-shopping-cart"></i><br />預訂</p>
+                                        <p className="absolute align-center-hover text-lg"><i className="text-grey-500 fas fa-shopping-cart"></i><br />預訂</p>
                                     </div>
                                     <h4>Hyginova</h4>
                                 </a>
