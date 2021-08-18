@@ -39,12 +39,12 @@
     "tailwindcss-cli": "^0.1.2",
     "terser": "^5.7.1",
     "uglifyify": "^5.0.2",
-    "workbox-cacheable-response": "^6.2.2",
-    "workbox-core": "^6.2.2",
-    "workbox-expiration": "^6.2.2",
-    "workbox-navigation-preload": "^6.2.2",
-    "workbox-recipes": "^6.2.2",
-    "workbox-routing": "^6.2.2",
+    "workbox-cacheable-response": "^6.2.4",
+    "workbox-core": "^6.2.4",
+    "workbox-expiration": "^6.2.4",
+    "workbox-navigation-preload": "^6.2.4",
+    "workbox-recipes": "^6.2.4",
+    "workbox-routing": "^6.2.4",
     "xlsx": "^0.17.0"
   },
   "dependencies": {
@@ -68,7 +68,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "telegraf": "^3.38.0",
-    "twilio": "^3.66.1"
+    "twilio": "^3.67.0"
   },
   "private": true
 }
