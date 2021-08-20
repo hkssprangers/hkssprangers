@@ -884,8 +884,6 @@ class Menu extends View<MenuProps> {
                         <div className="p-3">${slashes(KeiHingUsualSet.properties.main.enums())}</div>
                         <div className="font-bold p-3">${KeiHingUsualSet.properties.noodle.title}</div>
                         <div className="p-3">${slashes(KeiHingUsualSet.properties.noodle.enums())}</div>
-                        <div className="font-bold p-3">${KeiHingUsualSet.properties.options.title}</div>
-                        <div className="p-3">${slashes(KeiHingUsualSet.properties.options.items.enums())}</div>
                         <div className="p-3 text-center">${KeiHingUsualSet.properties.drink.description}</div>
 
                         <div className=${headerClasses}>${KeiHingSiuMeiSet.title}</div>

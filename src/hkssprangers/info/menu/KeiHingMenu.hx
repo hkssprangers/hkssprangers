@@ -342,19 +342,19 @@ class KeiHingMenu {
     };
     static public final KeiHingUsualSet = {
         title: "常餐",
-        description: "配：牛油方包＋火腿奄列",
+        description: "配：牛油方包＋火腿奄列＋熱飲",
         properties: {
             main: {
                 title: "配料",
                 type: "string",
                 "enum": [
-                    "沙爹牛肉",
-                    "雪菜肉絲",
-                    "炸菜肉絲",
-                    "香煎猪扒",
-                    "香煎雞扒",
-                    "炸雞中翼",
-                    "五香肉丁 +$2",
+                    "沙爹牛肉 $37",
+                    "雪菜肉絲 $37",
+                    "炸菜肉絲 $37",
+                    "香煎猪扒 $37",
+                    "香煎雞扒 $37",
+                    "炸雞中翼 $37",
+                    "五香肉丁 $39",
                 ],
             },
             noodle: {
@@ -366,19 +366,9 @@ class KeiHingMenu {
                     "通粉",
                     "意粉",
                     "米線",
+                    "出前一丁 +$4",
+                    "福字麵 +$4",
                 ],
-            },
-            options: {
-                type: "array",
-                title: "選項",
-                items: {
-                    type: "string",
-                    "enum": [
-                        "改出前一丁 +$4",
-                        "改福字麵 +$4",
-                    ],
-                },
-                uniqueItems: true,
             },
             drink: KeiHingFreeHotDrink,
         },
@@ -386,12 +376,12 @@ class KeiHingMenu {
     };
     static public final KeiHingSiuMeiSet = {
         title: "燒味飯餐",
-        description: "六點前供應。配：是日例湯",
+        description: "六點前供應。配：飯＋是日例湯＋熱飲",
         properties: {
             options: {
                 type: "array",
                 title: "燒味",
-                description: "任揀兩款",
+                description: "$48 任揀兩款",
                 items: {
                     type: "string",
                     "enum": [
@@ -760,9 +750,18 @@ class KeiHingMenu {
             case FriedInstantNoodle:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], []);
             case UsualSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "noodle", "options", "drink"], ["配：牛油方包＋火腿奄列"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "noodle", "drink"], ["配：牛油方包＋火腿奄列"]);
             case SiuMeiSet:
-                summarizeOrderObject(orderItem.item, def, ["options", "drink"], ["配：是日例湯"]);
+                summarizeOrderObject(orderItem.item, def, ["options", "drink"], ["配：是日例湯"], (fieldName, value) -> switch(fieldName) {
+                    case "options": 
+                        var options:Array<String> = value;
+                        {
+                            title: options.join(", ") + " $48",
+                            price: 48,
+                        }
+                    case _:
+                        null;
+                });
             case Chicken | SideDish | Pot:
                 summarizeOrderObject(orderItem.item, def, ["main", "options"], []);
             case DishSet:
