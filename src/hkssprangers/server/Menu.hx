@@ -916,7 +916,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingDishSet.title}</div>
                         <div className="p-3 text-gray-500">${KeiHingDishSet.description}</div>
-                        ${renderItems(KeiHingPot.properties.main.enums())}
+                        ${renderItems(KeiHingDishSet.properties.main.enums())}
                         <div className="p-3 text-center">${KeiHingDishSet.properties.drink.description}</div>
 
                         <div className=${headerClasses}>${KeiHingChickenSet.title}</div>
@@ -924,7 +924,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(KeiHingChickenSet.properties.main.enums())}
                         <div className="font-bold p-3">${KeiHingChickenSet.properties.vege.title}</div>
                         <div className="p-3">${slashes(KeiHingChickenSet.properties.vege.enums())}</div>
-                        <div className="p-3 text-center">${KeiHingDishSet.properties.drink.description}</div>
+                        <div className="p-3 text-center">${KeiHingChickenSet.properties.drink.description}</div>
                     </div>
                 </div>
             </Fragment>

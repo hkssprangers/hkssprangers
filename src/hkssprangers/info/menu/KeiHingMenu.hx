@@ -593,8 +593,8 @@ class KeiHingMenu {
                     "蒜香雞中翼 $61",
                     "回鍋肉片 $61",
                     "羅漢上素 $61",
-                    "通菜牛肉 $61 (腐乳)",
-                    "通菜牛肉 $61 (蝦醬)",
+                    "通菜牛肉 (腐乳) $61",
+                    "通菜牛肉 (蝦醬) $61",
                     "椒鹽豬扒 $61",
                     "豆豉炆雞 $61",
                     "咕嚕雞球 $61",
@@ -763,11 +763,10 @@ class KeiHingMenu {
                     case "options": 
                         var options:Array<String> = value;
                         {
-                            title: options.join(", ") + " $48",
                             price: 48,
                         }
                     case _:
-                        null;
+                        {};
                 });
             case Chicken | SideDish | Pot:
                 summarizeOrderObject(orderItem.item, def, ["main", "options"], []);
