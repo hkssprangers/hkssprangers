@@ -67,6 +67,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case DragonJapaneseCuisine:
             {
@@ -87,6 +88,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case YearsHK:
             {
@@ -107,6 +109,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case TheParkByYears:
             {
@@ -127,6 +130,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case LaksaStore:
             {
@@ -147,6 +151,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case DongDong:
             {
@@ -167,6 +172,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "18:30:00",
+                isInService: true,
             }
         case BiuKeeLokYuen:
             {
@@ -187,6 +193,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case KCZenzero:
             {
@@ -207,6 +214,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case HanaSoftCream:
             {
@@ -225,6 +233,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case Neighbor:
             {
@@ -245,6 +254,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "13:00:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case MGY:
             {
@@ -265,6 +275,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "18:30:00",
+                isInService: true,
             }
         case FastTasteSSP:
             {
@@ -285,6 +296,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case BlaBlaBla:
             {
@@ -305,6 +317,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case ZeppelinHotDogSKM:
             {
@@ -325,6 +338,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case MyRoomRoom:
             {
@@ -345,6 +359,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: false,
             }
         case ThaiYummy:
             {
@@ -367,6 +382,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "18:30:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case Toolss:
             {
@@ -387,6 +403,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "20:30:00",
+                isInService: true,
             }
         case KeiHing:
             {
@@ -407,6 +424,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "20:30:00",
+                isInService: false,
             }
     }
 
@@ -455,8 +473,6 @@ enum abstract Shop(String) to String {
                 return Unavailable('逢星期${day.info().name}休息');
             case [ZeppelinHotDogSKM, _, _] if (date.getDate() == 21):
                 return Unavailable('逢21號罷工');
-            case [MyRoomRoom | KeiHing, _, _]:
-                return Unavailable('埗兵外賣不日開放');
             case _:
                 //pass
         }

@@ -71,6 +71,13 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
             return null;
         }
         var shops:Array<Shop> = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> option.value);
+
+        switch BrowserMain.deployStage {
+            case dev | master:
+            case production:
+                shops = shops.filter(shop -> shop.info().isInService);
+        }
+
         switch (shops) {
             case []:
                 return null;
