@@ -85,33 +85,28 @@ class BrowserMain {
         }
     }
 
-    static public var auth(default, null):JsonString<CookiePayload>;
+    static public final auth:Null<JsonString<CookiePayload>> = cast new URLSearchParams(window.location.search).get("auth");
+    static public final deployStage:DeployStage = document.currentScript.dataset.deployStage;
 
     static function main():Void {
-        var p = new URLSearchParams(window.location.search);
-        switch (p.get("auth")) {
-            case null:
-                // pass
-            case auth:
-                BrowserMain.auth = cast auth;
+        if (auth != null) {
+            // safe auth in cookie
+            try {
+                JsCookie.value.set("auth", auth, {
+                    secure: true,
+                    sameSite: 'strict',
+                    expires: 1, // days
+                });
+            } catch (err) {
+                console.error(err);
+            }
 
-                // safe auth in cookie
-                try {
-                    JsCookie.value.set("auth", auth, {
-                        secure: true,
-                        sameSite: 'strict',
-                        expires: 1, // days
-                    });
-                } catch (err) {
-                    console.error(err);
-                }
-
-                // hide auth from address bar and from history to be safe
-                try {
-                    window.history.replaceState(null, "", window.location.origin + window.location.pathname);
-                } catch (err) {
-                    console.error(err);
-                }
+            // hide auth from address bar and from history to be safe
+            try {
+                window.history.replaceState(null, "", window.location.origin + window.location.pathname);
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         if (document.readyState == 'loading') {

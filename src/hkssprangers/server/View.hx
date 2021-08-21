@@ -75,7 +75,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     ');
 
     function script() return jsx('
-        <script src=${R("/browser.bundled.js")}></script>
+        <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>
     ');
 
     function favicon() return jsx('
