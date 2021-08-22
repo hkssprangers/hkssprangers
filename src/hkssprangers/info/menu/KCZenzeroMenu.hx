@@ -359,7 +359,7 @@ class KCZenzeroMenu {
             case LightSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main", def));
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["soup", "options"], null, priceInDescription("soup", def));
+                summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
