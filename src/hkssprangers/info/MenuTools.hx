@@ -3,6 +3,7 @@ package hkssprangers.info;
 import global.moment.unitoftime._Date;
 import haxe.ds.ReadOnlyArray;
 using StringTools;
+using hkssprangers.MathTools;
 
 class MenuTools {
     static public function parsePrice(line:Null<String>):{
@@ -22,7 +23,7 @@ class MenuTools {
             };
     }
 
-    static public function priceInDescription(fieldName:String, def:Dynamic):(fieldName:String, def:Dynamic)->{ ?title:String, ?price:Float } {
+    static public function priceInDescription(fieldName:String, def:Dynamic):(fieldName:String, def:Dynamic)->{ ?title:String, ?value:String, ?price:Float } {
         return (fn, value) -> {
             {
                 price: if (fieldName == fn) {
@@ -37,16 +38,36 @@ class MenuTools {
     inline static public final fullWidthSpace = "　";
     inline static public final fullWidthColon = "：";
     inline static public final fullWidthDot = "．";
-    static public function summarizeOrderObject(orderItem:Dynamic, def:{title:String, ?description:String, properties:Dynamic}, fields:ReadOnlyArray<String>, ?extra:ReadOnlyArray<String>, ?mapField:(fieldName:String, value:Dynamic)->{ ?title:String, ?price:Float }):{
+    static public function summarizeOrderObject(
+        orderItem:Dynamic,
+        def:{title:String, ?description:String, properties:Dynamic},
+        fields:ReadOnlyArray<String>,
+        ?extra:ReadOnlyArray<String>,
+        ?mapField:(fieldName:String, value:Dynamic)->{ ?title:String, ?value:String, ?price:Float },
+        ?overrideTypeName:String
+    ):{
         orderDetails: String,
         orderPrice: Float,
     } {
         var orderDetails = [];
         var orderPrice = 0.0;
-        function prefix() return if (orderDetails.length == 0)
-            fullWidthDot + def.title + fullWidthColon;
-        else
-            "".rpad(fullWidthSpace, def.title.length + 2);
+        function prefix() return
+            if (overrideTypeName == null) {
+                if (orderDetails.length == 0)
+                    fullWidthDot + def.title + fullWidthColon;
+                else
+                    "".rpad(fullWidthSpace, def.title.length + 2);
+            } else if (overrideTypeName != "") {
+                if (orderDetails.length == 0)
+                    fullWidthDot + overrideTypeName + fullWidthColon;
+                else
+                    "".rpad(fullWidthSpace, overrideTypeName.length + 2);
+            } else {
+                if (orderDetails.length == 0)
+                    fullWidthDot;
+                else
+                    fullWidthSpace;
+            }
         for (fieldName in fields) {
             var fieldDef = Reflect.field(def.properties, fieldName);
             var fieldTitle = if (fieldDef.title == def.title)
@@ -80,21 +101,27 @@ class MenuTools {
                                 var f = mapField(fieldName, fieldVal);
                                 if (f.title != null)
                                     fieldTitle = f.title;
-                                if (f.price != null && Math.isFinite(f.price)) {
-                                    orderPrice += f.price;
-                                    var titlePad = "".rpad(fullWidthSpace, fieldTitle.length);
+                                var hasOverridedPrice = f.price != null && Math.isFinite(f.price);
+                                var price = hasOverridedPrice ? f.price : options.map(opt -> parsePrice(opt).price).sum();
+                                
+                                orderPrice += price;
+                                var titlePad = "".rpad(fullWidthSpace, fieldTitle.length);
+                                if (f.value == null) {
                                     for (i => opt in options) {
                                         var title = i == 0 ? fieldTitle : titlePad;
                                         orderDetails.push('${prefix()}${title}${opt}');
                                     }
-                                    orderDetails.push('${prefix()}${titlePad}$$${f.price}');
-                                    continue;
+                                    if (price != 0 && hasOverridedPrice)
+                                        orderDetails.push('${prefix()}${titlePad}$$${price}');
+                                } else {
+                                    var price = price != 0 && hasOverridedPrice ? " $" + price : "";
+                                    orderDetails.push('${prefix()}${fieldTitle}${f.value}${price}');
                                 }
-                            }
-                            
-                            for (opt in options) {
-                                orderDetails.push('${prefix()}${fieldTitle}${opt}');
-                                orderPrice += parsePrice(opt).price;
+                            } else {
+                                for (opt in options) {
+                                    orderDetails.push('${prefix()}${fieldTitle}${opt}');
+                                    orderPrice += parsePrice(opt).price;
+                                }
                             }
                     }
                 case type:

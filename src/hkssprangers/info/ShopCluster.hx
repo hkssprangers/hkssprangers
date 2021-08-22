@@ -29,6 +29,7 @@ enum abstract ShopCluster(String) {
             case ThaiYummy: SmilingPlazaCluster;
             case Toolss: PakTinCluster;
             case KeiHing: TungChauStreetParkCluster;
+            case PokeGo: ParkCluster;
         }
     }
 

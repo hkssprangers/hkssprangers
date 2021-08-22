@@ -26,6 +26,7 @@ import hkssprangers.info.menu.MyRoomRoomMenu.*;
 import hkssprangers.info.menu.ThaiYummyMenu.*;
 import hkssprangers.info.menu.ToolssMenu.*;
 import hkssprangers.info.menu.KeiHingMenu.*;
+import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -171,6 +172,8 @@ class Menu extends View<MenuProps> {
                 renderToolss();
             case KeiHing:
                 renderKeiHing();
+            case PokeGo:
+                renderPokeGo();
         }
     }
 
@@ -925,6 +928,47 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">${KeiHingChickenSet.properties.vege.title}</div>
                         <div className="p-3">${slashes(KeiHingChickenSet.properties.vege.enums())}</div>
                         <div className="p-3 text-center">${KeiHingChickenSet.properties.drink.description}</div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderPokeGo() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${PokeGoBuildYourOwnBowl.title}</div>
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.main.title}</div>
+                        ${renderItems(PokeGoBuildYourOwnBowl.properties.main.enums())}
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.baseOptions.title}</div>
+                        <div className="p-3 text-gray-500">${PokeGoBuildYourOwnBowl.properties.baseOptions.description}</div>
+                        <div className="p-3">${slashes(PokeGoBuildYourOwnBowl.properties.baseOptions.items.enums())}</div>
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.toppingOptions.title}</div>
+                        <div className="p-3 text-gray-500">${PokeGoBuildYourOwnBowl.properties.toppingOptions.description}</div>
+                        <div className="p-3">${slashes(PokeGoBuildYourOwnBowl.properties.toppingOptions.items.enums())}</div>
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.topupOptions.title}</div>
+                        <div className="p-3">${slashes(PokeGoBuildYourOwnBowl.properties.topupOptions.items.enums())}</div>
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.dressings.title}</div>
+                        <div className="p-3">${slashes(PokeGoBuildYourOwnBowl.properties.dressings.enums())}</div>
+
+                        <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.seasoningOptions.title}</div>
+                        <div className="p-3 text-gray-500">${PokeGoBuildYourOwnBowl.properties.seasoningOptions.description}</div>
+                        <div className="p-3">${slashes(PokeGoBuildYourOwnBowl.properties.seasoningOptions.items.enums())}</div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${PokeGoSnack.title}</div>
+                        ${renderItems(PokeGoSnack.enums())}
+
+                        <div className=${headerClasses}>${PokeGoDrink.title}</div>
+                        ${renderItems(PokeGoDrink.enums())}
                     </div>
                 </div>
             </Fragment>

@@ -149,6 +149,18 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                 dOptions: {
                                     "ui:widget": "checkboxes",
                                 },
+                                baseOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
+                                toppingOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
+                                topupOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
+                                seasoningOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
                             },
                         },
                     }

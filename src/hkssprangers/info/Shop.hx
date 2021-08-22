@@ -26,6 +26,7 @@ enum abstract Shop(String) to String {
     final ThaiYummy:Shop;
     final Toolss:Shop;
     final KeiHing:Shop;
+    final PokeGo:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -45,6 +46,7 @@ enum abstract Shop(String) to String {
         ThaiYummy,
         Toolss,
         KeiHing,
+        PokeGo,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -426,6 +428,27 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: false,
             }
+        case PokeGo:
+            {
+                id: PokeGo,
+                name: "Poke Go",
+                address: "深水埗大南街211號",
+                courierContact: [
+                    "tel:35638137",
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "20:30:00",
+                isInService: false,
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -533,6 +556,8 @@ enum abstract Shop(String) to String {
                 ToolssMenu.itemsSchema(o);
             case KeiHing:
                 KeiHingMenu.itemsSchema(pickupTimeSlot, o);
+            case PokeGo:
+                PokeGoMenu.itemsSchema(o);
         }
     }
 
@@ -574,6 +599,8 @@ enum abstract Shop(String) to String {
                 ToolssMenu.summarize(o);
             case KeiHing:
                 KeiHingMenu.summarize(o);
+            case PokeGo:
+                PokeGoMenu.summarize(o);
         }
     }
 
@@ -597,6 +624,7 @@ enum abstract Shop(String) to String {
             case ThaiYummy: ThaiYummy;
             case Toolss: Toolss;
             case KeiHing: KeiHing;
+            case PokeGo: PokeGo;
             case _: null;
         }
     }

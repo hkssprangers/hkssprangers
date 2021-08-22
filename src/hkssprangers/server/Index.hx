@@ -238,8 +238,8 @@ class Index extends View<IndexProps> {
                         </div>
                     </div>
                 </div>
-                <div className="lg:grid lg:grid-cols-2 lg:gap-3">
-                    <div className="mb-3 bg-white rounded-xl">
+                <div className="lg:grid lg:grid-cols-5 lg:gap-3">
+                    <div className="lg:col-span-3 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-600"></i> ${ParkCluster.info().name}</h3>
                         </div>
@@ -263,10 +263,20 @@ class Index extends View<IndexProps> {
                                     <p className="text-xs">逢星期一休息</p>
                                 </a>
                             </div>
+                            <div className=${blockClasses}>
+                                <a href=${Path.join(["/menu", PokeGo])} className=${linkClasses}>
+                                    <div className=${thumbnailDivClasses}>
+                                        ${StaticResource.image("/images/PokeGo.jpg", PokeGo.info().name, "squircle mb-3")}
+                                        <p className="absolute align-center-hover text-lg"><i className="text-green-600 fas fa-book-open"></i><br />menu</p>
+                                    </div>
+                                    <h4>${PokeGo.info().name}</h4>
+                                    <p className="text-xs">埗兵外賣不日開放</p>
+                                </a>
+                            </div>
                             <div className="clear-both lg:hidden"></div>
                         </div>
                     </div>
-                    <div className="mb-3 bg-white rounded-xl">
+                    <div className="lg:col-span-2 mb-3 bg-white rounded-xl">
                         <div className="pt-6 px-6">
                             <h3 className="text-lg font-bold"><i className="fas fa-map-marker-alt text-green-400"></i> ${CLPCluster.info().name}</h3>
                         </div>
