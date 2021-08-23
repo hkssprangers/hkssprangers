@@ -920,6 +920,9 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">${KeiHingPot.properties.options.title}</div>
                         <div className="p-3">${slashes(KeiHingPot.properties.options.items.enums())}</div>
 
+                        <div className=${headerClasses}>${KeiHingChickenPot.title}</div>
+                        ${renderItems(KeiHingChickenPot.enums())}
+
                         <div className=${headerClasses}>${KeiHingDishSet.title}</div>
                         <div className="p-3 text-gray-500">${KeiHingDishSet.description}</div>
                         ${renderItems(KeiHingDishSet.properties.main.enums())}

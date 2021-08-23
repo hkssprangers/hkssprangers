@@ -20,6 +20,7 @@ enum abstract KeiHingItem(String) to String {
     final Chicken;
     final SideDish;
     final Pot;
+    final ChickenPot;
 
     final DishSet;
     // final FishSet;
@@ -59,6 +60,7 @@ enum abstract KeiHingItem(String) to String {
                 Chicken,
                 SideDish,
                 Pot,
+                ChickenPot,
                 DishSet,
                 // FishSet,
                 // DishFishSet,
@@ -79,6 +81,7 @@ enum abstract KeiHingItem(String) to String {
         case Chicken: KeiHingMenu.KeiHingChicken;
         case SideDish: KeiHingMenu.KeiHingSideDish;
         case Pot: KeiHingMenu.KeiHingPot;
+        case ChickenPot: KeiHingMenu.KeiHingChickenPot;
         case DishSet: KeiHingMenu.KeiHingDishSet;
         // case FishSet: KeiHingMenu.KeiHingFishSet;
         // case DishFishSet: KeiHingMenu.KeiHingDishFishSet;
@@ -143,11 +146,12 @@ class KeiHingMenu {
             "凍檸水 +$2",
             "凍好立克 +$2",
             "凍阿華田 +$2",
-            "凍檸樂 +$4", //凍?
-            "凍檸蜜 +$4", //凍?
-            "凍檸啡 +$4", //凍?
-            "凍鮮奶 +$4", //凍?
-            // 特飲?
+            "凍檸樂 +$4",
+            "凍檸蜜 +$4",
+            "凍檸啡 +$4",
+            "凍鮮奶 +$4",
+            "紅豆冰 +$9",
+            "菠蘿冰 +$9",
         ],
     };
     static public final KeiHingRiceAndSoup = {
@@ -575,6 +579,15 @@ class KeiHingMenu {
         required: ["main"],
     };
 
+    static public final KeiHingChickenPot = {
+        title: "琦興雞煲",
+        type: "string",
+        "enum": [
+            "琦興雞煲 (半隻雞) $192",
+            "琦興雞煲 (一隻雞) $252",
+        ],
+    };
+
     static public final KeiHingDishSet = {
         title: "小菜套餐",
         description: "配：例湯＋白飯＋熱飲",
@@ -738,7 +751,7 @@ class KeiHingMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case Sandwich | Snack:
+            case Sandwich | Snack | ChickenPot:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
