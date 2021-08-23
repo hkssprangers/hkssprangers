@@ -764,6 +764,8 @@ class KeiHingMenu {
                     case "options": 
                         var options:Array<String> = value;
                         {
+                            title: "",
+                            value: options.join(", "),
                             price: 48,
                         }
                     case _:
