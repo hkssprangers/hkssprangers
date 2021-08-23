@@ -2,6 +2,7 @@ package hkssprangers.info.menu;
 
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
+using Lambda;
 
 enum abstract KCZenzeroItem(String) to String {
     final LimitedSpecial;
@@ -383,10 +384,18 @@ class KCZenzeroMenu {
 
     static public function summarize(formData:FormOrderData, timeSlotType:TimeSlotType):OrderSummary {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
-        summaries.push({
-            orderDetails: box,
-            orderPrice: box.parsePrice().price,
-        });
+        // don't charge for boxes if there are only hotpots, which charges for their own boxes already
+        if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
+            case HotpotSet:
+                false;
+            case _:
+                true;
+        })) {
+            summaries.push({
+                orderDetails: box,
+                orderPrice: box.parsePrice().price,
+            });
+        }
         var s = concatSummaries(summaries);
         return {
             orderDetails: s.orderDetails,
