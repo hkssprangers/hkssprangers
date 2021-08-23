@@ -18,6 +18,18 @@ class BrowserMain {
                 main: "#FBBF24",
             },
         },
+        overrides: {
+            MuiSelect: {
+                selectMenu: {
+                    whiteSpace: "normal",
+                },
+            },
+            MuiMenuItem: {
+                root: {
+                    whiteSpace: "normal",
+                },
+            },
+        }
     });
 
     static function render(e:ReactFragment, div:DivElement) {

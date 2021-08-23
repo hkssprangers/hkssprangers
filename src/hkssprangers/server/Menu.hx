@@ -940,6 +940,15 @@ class Menu extends View<MenuProps> {
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${PokeGoSignatureBowl.title}</div>
+
+                        <div className="font-bold p-3">${PokeGoSignatureBowl.properties.main.title}</div>
+                        ${renderItems(PokeGoSignatureBowl.properties.main.oneOf.map(o -> o.title))}
+
+                        <div className="font-bold p-3">${PokeGoSignatureBowl.properties.topupOptions.title}</div>
+                        <div className="p-3">${slashes(PokeGoSignatureBowl.properties.topupOptions.items.enums())}</div>
+
+
                         <div className=${headerClasses}>${PokeGoBuildYourOwnBowl.title}</div>
 
                         <div className="font-bold p-3">${PokeGoBuildYourOwnBowl.properties.main.title}</div>

@@ -4,17 +4,20 @@ import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
 enum abstract PokeGoItem(String) to String {
+    final SignatureBowl;
     final BuildYourOwnBowl;
     final Drink;
     final Snack;
 
     static public final all:ReadOnlyArray<PokeGoItem> = [
+        SignatureBowl,
         BuildYourOwnBowl,
         Drink,
         Snack,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:PokeGoItem) {
+        case SignatureBowl: PokeGoMenu.PokeGoSignatureBowl;
         case BuildYourOwnBowl: PokeGoMenu.PokeGoBuildYourOwnBowl;
         case Drink: PokeGoMenu.PokeGoDrink;
         case Snack: PokeGoMenu.PokeGoSnack;
@@ -51,6 +54,69 @@ class PokeGoMenu {
             "菠椰菠蘿ME $" + markup(48),
             "牛油果奶昔 $" + markup(48),
         ],
+    };
+
+    static public final PokeGoSignatureBowl = {
+        title: "Signature Bowl",
+        properties: {
+            main: {
+                title: "Signature Bowl",
+                type: "string",
+                oneOf: [
+                    {
+                        const: "808 $" + markup(108),
+                        title: "808 (吞拿魚 壽司飯 沙律菜 和式青蔥 枝仁豆 三文魚籽 雜菌香菇 山葵乳酪醬 芝麻 木魚絲) $" + markup(108),
+                    },
+                    {
+                        const: "OHANA $" + markup(98),
+                        title: "OHANA (三文魚 沙律菜 樱桃番茄 温室青瓜 甜粟米 蜜糖芥末醬 芝麻 果仁) $" + markup(98),
+                    },
+                    {
+                        const: "NALU $" + markup(98),
+                        title: "NALU (八爪魚 壽司飯 樱桃番茄 和式青蔥 甜粟米 皇帝蟹棒 辛味蛋黃醬 芝麻 辣椒碎) $" + markup(98),
+                    },
+                    {
+                        const: "SHOYU AHI $" + markup(98),
+                        title: "SHOYU AHI (吞拿魚 壽司飯 芝麻海帶 和式青蔥 紫洋蔥 鰹魚醬油 芝麻 木魚絲) $" + markup(98),
+                    },
+                    {
+                        const: "ONO $" + markup(98),
+                        title: "ONO (三文魚 壽司飯 溫室青瓜 雞蛋絲 皇帝蟹棒 果仁醬 芝麻) $" + markup(98),
+                    },
+                ]
+            },
+            topupOptions: {
+                type: "array",
+                title: "Top-up",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "酸蘿蔔 +$" + markup(8),
+                        "枝仁豆 +$" + markup(8),
+                        "紫洋蔥 +$" + markup(8),
+                        "雞蛋絲 +$" + markup(8),
+                        "溫室青瓜 +$" + markup(8),
+                        "和式青蔥 +$" + markup(8),
+                        "樱桃蕃茄 +$" + markup(8),
+                        "芝麻海帶 +$" + markup(8),
+                        "蟹籽 +$" + markup(8),
+                        "醃酸薑 +$" + markup(8),
+                        "甜粟米 +$" + markup(8),
+                        "麻醬豆腐 +$" + markup(8),
+                        "牛油果 +$" + markup(12),
+                        "雜菌香菇 +$" + markup(12),
+                        "温泉蛋 +$" + markup(12),
+                        "鮮蟹肉 +$" + markup(12),
+                        "三文魚籽 +$" + markup(16),
+                        "蟹棒沙律 +$" + markup(12),
+                    ],
+                },
+                uniqueItems: true,
+            },
+        },
+        required: [
+            "main",
+        ]
     };
 
     static public final PokeGoBuildYourOwnBowl = {
@@ -224,6 +290,20 @@ class PokeGoMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case SignatureBowl:
+                summarizeOrderObject(orderItem.item, def, ["main", "topupOptions"], null, (fieldName, value:Dynamic) -> switch fieldName {
+                    case "main":
+                        {
+                            title: "",
+                        }
+                    case "topupOptions":
+                        var options:Array<String> = value;
+                        {
+                            value: options.join(", "),
+                        };
+                    case _: 
+                        {};
+                }, "");
             case BuildYourOwnBowl:
                 summarizeOrderObject(orderItem.item, def, ["main", "baseOptions", "toppingOptions", "topupOptions", "dressings", "seasoningOptions"], null, (fieldName, value) -> switch fieldName {
                     case "baseOptions", "topupOptions", "seasoningOptions":
