@@ -172,6 +172,16 @@ class Index extends View<IndexProps> {
                                 <h4>${HanaSoftCream.info().name}</h4>
                             </a>
                         </div>
+                        <div className=${blockClasses}>
+                            <a href=${Path.join(["/menu", WoStreet])} className=${linkClasses}>
+                                <div className=${thumbnailDivClasses}>
+                                    ${StaticResource.image("/images/WoStreet.jpg", WoStreet.info().name, "squircle mb-3")}
+                                    <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
+                                </div>
+                                <h4>${WoStreet.info().name}</h4>
+                                <p className="text-xs">埗兵外賣不日開放</p>
+                            </a>
+                        </div>
                         <div className="clear-both lg:hidden"></div>
                     </div>
                 </div>

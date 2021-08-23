@@ -27,6 +27,7 @@ enum abstract Shop(String) to String {
     final Toolss:Shop;
     final KeiHing:Shop;
     final PokeGo:Shop;
+    final WoStreet:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -47,6 +48,7 @@ enum abstract Shop(String) to String {
         Toolss,
         KeiHing,
         PokeGo,
+        WoStreet,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -449,6 +451,27 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: false,
             }
+        case WoStreet:
+            {
+                id: WoStreet,
+                name: "窩Street",
+                address: "西九龍中心6樓蘋果商場6067號舖",
+                courierContact: [
+                    "tel:51868627",
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:00:00",
+                isInService: false,
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -558,6 +581,8 @@ enum abstract Shop(String) to String {
                 KeiHingMenu.itemsSchema(pickupTimeSlot, o);
             case PokeGo:
                 PokeGoMenu.itemsSchema(o);
+            case WoStreet:
+                WoStreetMenu.itemsSchema(o);
         }
     }
 
@@ -601,6 +626,8 @@ enum abstract Shop(String) to String {
                 KeiHingMenu.summarize(o);
             case PokeGo:
                 PokeGoMenu.summarize(o);
+            case WoStreet:
+                WoStreetMenu.summarize(o);
         }
     }
 
@@ -625,6 +652,7 @@ enum abstract Shop(String) to String {
             case Toolss: Toolss;
             case KeiHing: KeiHing;
             case PokeGo: PokeGo;
+            case WoStreet: WoStreet;
             case _: null;
         }
     }

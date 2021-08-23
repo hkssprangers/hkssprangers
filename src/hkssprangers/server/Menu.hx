@@ -27,6 +27,7 @@ import hkssprangers.info.menu.ThaiYummyMenu.*;
 import hkssprangers.info.menu.ToolssMenu.*;
 import hkssprangers.info.menu.KeiHingMenu.*;
 import hkssprangers.info.menu.PokeGoMenu.*;
+import hkssprangers.info.menu.WoStreetMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -174,6 +175,8 @@ class Menu extends View<MenuProps> {
                 renderKeiHing();
             case PokeGo:
                 renderPokeGo();
+            case WoStreet:
+                renderWoStreet();
         }
     }
 
@@ -975,6 +978,28 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${PokeGoDrink.title}</div>
                         ${renderItems(PokeGoDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderWoStreet() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${WoStreetWaffleBurger.title}</div>
+                        ${renderItems(WoStreetWaffleBurger.enums())}
+                        <div className=${headerClasses}>${WoStreetCreamWaffle.title}</div>
+                        ${renderItems(WoStreetCreamWaffle.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${WoStreetJellyCup.title}</div>
+                        ${renderItems(WoStreetJellyCup.enums())}
+                        <div className=${headerClasses}>${WoStreetDrink.title}</div>
+                        ${renderItems(WoStreetDrink.enums())}
                     </div>
                 </div>
             </Fragment>
