@@ -1,6 +1,6 @@
 module "dynamodb_table_terraform" {
   source   = "terraform-aws-modules/dynamodb-table/aws"
-  version  = "~> 0.11"
+  version  = "1.1.0"
 
   name     = "terraform"
   hash_key = "LockID"
