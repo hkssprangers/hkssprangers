@@ -581,11 +581,27 @@ class KeiHingMenu {
 
     static public final KeiHingChickenPot = {
         title: "琦興雞煲",
-        type: "string",
-        "enum": [
-            "琦興雞煲 (半隻雞) $192",
-            "琦興雞煲 (一隻雞) $252",
-        ],
+        properties: {
+            main: {
+                title: "琦興雞煲",
+                type: "string",
+                "enum": [
+                    "琦興雞煲 (半隻雞) $192",
+                    "琦興雞煲 (一隻雞) $252",
+                ],
+            },
+            rice: {
+                title: "跟白飯",
+                type: "string",
+                "enum": [
+                    "一個 $8",
+                    "兩個 $16",
+                    "三個 $24",
+                    "四個 $32",
+                ],
+            }
+        },
+        required: ["main"],
     };
 
     static public final KeiHingDishSet = {
@@ -751,7 +767,7 @@ class KeiHingMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case Sandwich | Snack | ChickenPot:
+            case Sandwich | Snack:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
@@ -786,6 +802,8 @@ class KeiHingMenu {
                 });
             case Chicken | SideDish | Pot:
                 summarizeOrderObject(orderItem.item, def, ["main", "options"], []);
+            case ChickenPot:
+                summarizeOrderObject(orderItem.item, def, ["main", "rice"], []);
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["配：例湯＋白飯"]);
             case ChickenSet:
