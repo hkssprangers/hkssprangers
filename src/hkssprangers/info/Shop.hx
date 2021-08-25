@@ -449,7 +449,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "20:30:00",
-                isInService: false,
+                isInService: true,
             }
         case WoStreet:
             {
