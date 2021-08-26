@@ -53,3 +53,10 @@ resource "cloudflare_record" "google-search-console-verification" {
   value   = "google-site-verification=zQFfIq4Ga3UXepK3AoXpDvKwpKgBFQySpAkTM9N1_Zc"
   type    = "TXT"
 }
+
+resource "cloudflare_record" "github-verify-domain" {
+  zone_id = cloudflare_zone.ssprangers.id
+  name    = "_github-challenge-hkssprangers"
+  value   = "176ad4eb1c"
+  type    = "TXT"
+}
