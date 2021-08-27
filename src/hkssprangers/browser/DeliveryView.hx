@@ -246,6 +246,8 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         jsx('<Fragment><i className="fas fa-phone mr-1"></i> telephone</Fragment>');
                     } else if (contact.startsWith("https://wa.me/")) {
                         jsx('<Fragment><i className="fab fa-whatsapp mr-1"></i> WhatsApp</Fragment>');
+                    } else if (contact.startsWith("https://t.me/")) {
+                        jsx('<Fragment><i className="fab fa-telegram mr-1"></i> Telegram</Fragment>');
                     } else {
                         jsx('<Fragment><i className="fas fa-store mr-1"></i> contact</Fragment>');
                     }
