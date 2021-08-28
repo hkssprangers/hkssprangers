@@ -91,7 +91,6 @@ enum abstract KeiHingItem(String) to String {
 }
 
 class KeiHingMenu {
-    static public final box = "外賣盒 $2";
     static public final KeiHingDrink = {
         title: "跟餐飲品",
         description: "+$8 可配冷熱飲品",
@@ -818,9 +817,10 @@ class KeiHingMenu {
 
     static public function summarize(formData:FormOrderData):OrderSummary {
         var summaries = formData.items.map(item -> summarizeItem(cast item));
+        var boxTotalPrice = formData.items.length * 2;
         summaries.push({
-            orderDetails: box,
-            orderPrice: box.parsePrice().price,
+            orderDetails: "外賣盒 $2 × " + formData.items.length,
+            orderPrice: boxTotalPrice,
         });
         var s = concatSummaries(summaries);
         return {
