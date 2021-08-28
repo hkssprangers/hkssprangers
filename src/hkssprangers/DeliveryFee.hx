@@ -118,7 +118,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -131,7 +131,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -209,12 +209,12 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
             place: "蘇屋邨",
-            match: address -> address.contains("蘇屋邨") || address.contains("李鄭屋村"),
+            match: address -> address.contains("蘇屋邨") || address.contains("蘇屋村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
                 case CLPCluster: 35;
@@ -222,7 +222,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -484,7 +484,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -795,7 +795,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1007,7 +1007,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
