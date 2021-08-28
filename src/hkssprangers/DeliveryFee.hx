@@ -27,7 +27,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -40,7 +40,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -53,7 +53,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -66,7 +66,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -79,7 +79,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -92,7 +92,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -105,12 +105,12 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
-            place: "富昌站",
-            match: address -> address.contains("富昌站") || address.contains("富昌地鐵站") || address.contains("富昌港鐵站"),
+            place: "南昌站",
+            match: address -> address.contains("南昌站") || address.contains("南昌地鐵站") || address.contains("南昌港鐵站"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case CLPCluster: 25;
@@ -144,7 +144,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -157,7 +157,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -170,7 +170,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -183,7 +183,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -196,7 +196,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -237,7 +237,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -250,7 +250,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -263,7 +263,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -276,7 +276,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -289,7 +289,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -302,7 +302,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -315,7 +315,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -328,7 +328,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -341,7 +341,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -354,7 +354,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -367,7 +367,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -380,7 +380,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -392,8 +392,8 @@ class DeliveryFee {
                 case GoldenCluster: 40;
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
-                case PakTinCluster: NaN;
-                case TungChauStreetParkCluster: Math.NaN;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -406,7 +406,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -419,7 +419,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -432,7 +432,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -445,7 +445,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -458,7 +458,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -471,7 +471,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -497,7 +497,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -510,7 +510,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -523,7 +523,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -536,7 +536,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -549,7 +549,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -562,7 +562,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -575,7 +575,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -596,7 +596,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -613,7 +613,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -626,7 +626,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -639,7 +639,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -652,7 +652,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -665,7 +665,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -678,7 +678,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -691,7 +691,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -704,7 +704,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -717,7 +717,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -730,7 +730,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -743,7 +743,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -756,7 +756,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -769,7 +769,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -782,7 +782,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -808,7 +808,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -821,7 +821,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -838,7 +838,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -851,7 +851,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -864,7 +864,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -877,7 +877,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -890,7 +890,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -903,7 +903,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -916,7 +916,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -929,7 +929,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -942,7 +942,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -955,7 +955,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
@@ -968,7 +968,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -981,7 +981,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -994,7 +994,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1020,7 +1020,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -1033,7 +1033,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1046,7 +1046,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1059,7 +1059,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1072,7 +1072,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1085,7 +1085,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
@@ -1098,7 +1098,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 25;
             }
         },
         {
@@ -1111,7 +1111,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 35;
-                case TungChauStreetParkCluster: Math.NaN;
+                case TungChauStreetParkCluster: 35;
             }
         },
     ];
