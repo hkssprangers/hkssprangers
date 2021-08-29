@@ -85,6 +85,7 @@ class OrderFormSchema {
                 pickupMethod: {
                     type: "string",
                     title: "交收方法",
+                    description: "如目的地為唐樓，請選擇「樓下交收」。 個別外賣員可因應情況提供上門交收。",
                     oneOf: [
                         PickupMethod.Door,
                         PickupMethod.HangOutside,
