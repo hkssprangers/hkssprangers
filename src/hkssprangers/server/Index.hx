@@ -179,7 +179,6 @@ class Index extends View<IndexProps> {
                                     <p className="absolute align-center-hover text-lg"><i className="text-red-500 fas fa-book-open"></i><br />menu</p>
                                 </div>
                                 <h4>${WoStreet.info().name}</h4>
-                                <p className="text-xs">埗兵外賣不日開放</p>
                             </a>
                         </div>
                         <div className="clear-both lg:hidden"></div>
