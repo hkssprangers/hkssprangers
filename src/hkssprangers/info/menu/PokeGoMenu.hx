@@ -69,11 +69,11 @@ class PokeGoMenu {
                     },
                     {
                         const: "OHANA $" + markup(98),
-                        title: "OHANA (三文魚 沙律菜 樱桃蕃茄 温室青瓜 甜粟米 蜜糖芥末醬 芝麻 果仁) $" + markup(98),
+                        title: "OHANA (三文魚 沙律菜 櫻桃蕃茄 温室青瓜 甜粟米 蜜糖芥末醬 芝麻 果仁) $" + markup(98),
                     },
                     {
                         const: "NALU $" + markup(98),
-                        title: "NALU (八爪魚 壽司飯 樱桃蕃茄 和式青蔥 甜粟米 皇帝蟹棒 辛味蛋黃醬 芝麻 辣椒碎) $" + markup(98),
+                        title: "NALU (八爪魚 壽司飯 櫻桃蕃茄 和式青蔥 甜粟米 皇帝蟹棒 辛味蛋黃醬 芝麻 辣椒碎) $" + markup(98),
                     },
                     {
                         const: "SHOYU AHI $" + markup(98),
