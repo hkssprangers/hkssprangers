@@ -511,6 +511,8 @@ enum abstract Shop(String) to String {
                 return Unavailable('已結業 😥');
             case [BlaBlaBla, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-29"):
                 return Unavailable('已結業 😥');
+            case [KCZenzero, "2021-08-30", _]:
+                return Unavailable('休息一天');
             case _:
                 //pass
         }
