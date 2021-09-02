@@ -57,7 +57,7 @@ class Index extends View<IndexProps> {
     ');
 
     function announcement() {
-        
+        return null;
         return jsx('
             <div className="bg-yellow-400 text-center md:text-left px-2">
                 <div className="mx-auto md:w-4/5 py-6 md:flex md:items-center max-w-screen-lg">
@@ -211,10 +211,11 @@ class Index extends View<IndexProps> {
                             <div className=${blockClasses}>
                                 <a href=${Path.join(["/menu", BlaBlaBla])} className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/bla.jpg", BlaBlaBla.info().name, "squircle mb-3")}
+                                        ${StaticResource.image("/images/bla.jpg", BlaBlaBla.info().name, "squircle mb-3 opacity-50")}
                                         <p className="absolute align-center-hover text-lg"><i className="text-pink-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
-                                    <h4>${BlaBlaBla.info().name}</h4>
+                                    <h4 className="text-gray-500">${BlaBlaBla.info().name}</h4>
+                                    <p className="text-xs text-gray-500">已結業</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
@@ -301,11 +302,11 @@ class Index extends View<IndexProps> {
                             <div className=${blockClasses}>
                                 <a href=${Path.join(["/menu", DongDong])} className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/dong.jpg", DongDong.info().name, "squircle mb-3")}
+                                        ${StaticResource.image("/images/dong.jpg", DongDong.info().name, "squircle mb-3 opacity-50")}
                                         <p className="absolute align-center-hover text-lg"><i className="text-green-400 fas fa-book-open"></i><br />menu</p>
                                     </div>
-                                    <h4>${DongDong.info().name}</h4>
-                                    <p className="text-xs">逢星期日休息</p>
+                                    <h4 className="text-gray-500">${DongDong.info().name}</h4>
+                                    <p className="text-xs text-gray-500">已結業</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
