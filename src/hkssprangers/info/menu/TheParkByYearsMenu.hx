@@ -40,9 +40,9 @@ class TheParkByYearsMenu {
             "熱黃薑鮮奶 +$24",
             "熱朱古力 +$24",
 
-            "熱玫瑰花茶 +$42",
-            "熱蘋果洛神花茶 +$42",
-            "熱雪梨茶 +$42",
+            "熱玫瑰花茶 +$36",
+            "熱蘋果洛神花茶 +$36",
+            "熱雪梨茶 +$36",
 
             "凍⿊咖啡 +$28",
             "凍泡沫咖啡 +$28",
@@ -74,8 +74,8 @@ class TheParkByYearsMenu {
             "雞尾酒 BERRY GIMLET (N.I.P. Gin, 紅桑⼦) +$78",
 
             "⼿⼯啤 DEADMAN · 5000 YEARS (德國⽪爾森 | 5.2% | ⻘瓜) +$58",
-            "⼿⼯啤 DEADMAN · SEVEN SEAS (酸⻄柚 IPA | 7% | ⻄柚) +$58",
-            "⼿⼯啤 DEADMAN · HOP ROBBER (雙倍 IPA | 5.4% | 松⽊香味) +$58",
+            "⼿⼯啤 DEADMAN · MIRROR MIRROR (APA | 5.4% | 熱帶果, 花香) +$58",
+            "⼿⼯啤 DEADMAN · BLOODY MERRY (French Oak Aged Amber Lager | 5.2% | 焦糖) +$58",
         ],
     };
 
@@ -94,7 +94,6 @@ class TheParkByYearsMenu {
                     "酸忌廉焗雙⾊薯 $128",
                     "照燒茄⼦烤中東包 $128",
                     "不可能芫茜芝⼠漢堡 $138",
-                    "⽵炭⿊芝⿇班㦸 $138", // 外賣冇雪糕, 減咗 $10
                 ]
             },
             drink: TheParkByYearsSetDrink,
