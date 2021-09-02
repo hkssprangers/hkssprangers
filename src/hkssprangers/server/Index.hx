@@ -238,10 +238,11 @@ class Index extends View<IndexProps> {
                             <div className=${blockClasses}>
                                 <a href=${Path.join(["/menu", ThaiYummy])} className=${linkClasses}>
                                     <div className=${thumbnailDivClasses}>
-                                        ${StaticResource.image("/images/ThaiYummy.jpg", ThaiYummy.info().name, "squircle mb-3")}
+                                        ${StaticResource.image("/images/ThaiYummy.jpg", ThaiYummy.info().name, "squircle mb-3 opacity-50")}
                                         <p className="absolute align-center-hover text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br />menu</p>
                                     </div>
                                     <h4>${ThaiYummy.info().name}</h4>
+                                    <p className="text-xs text-gray-500">埗兵外賣暫停</p>
                                 </a>
                             </div>
                             <div className="clear-both lg:hidden"></div>
