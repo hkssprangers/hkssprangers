@@ -949,10 +949,12 @@
   dependencies:
     purgecss "^3.1.3"
 
-"@httptoolkit/httpolyglot@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-1.0.0.tgz#1b06642389303b71681b4c0c2caff8be53d58a10"
-  integrity sha512-OoIbv7pk/xh3Sxqs2nZyi5ZjP9JFLMBXgPmG/911rPf77PJ3tsIHaf22x5zVYcHeu0P7x6jC7QwLYcbJdUbe7w==
+"@httptoolkit/httpolyglot@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-1.0.1.tgz#2ade7c70fecc8473f8f55d95defea99bf444a81b"
+  integrity sha512-wka8aO36+Ldb4d0V7fpKf4gd9netRa1odekK5BQnsJa3BwkKSIqOYlR51ZfoaGjifwx2WBTRQgHgtcc1wY1eEg==
+  dependencies:
+    "@types/node" "^16.7.10"
 
 "@kwsites/file-exists@^1.1.1":
   version "1.1.1"
@@ -1473,10 +1475,10 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
 
-"@types/node@*":
-  version "14.0.27"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
-  integrity sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
+"@types/node@*", "@types/node@^16.7.10":
+  version "16.7.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
+  integrity sha512-S63Dlv4zIPb8x6MMTgDq5WWRJQe56iBEY0O3SOFA9JrRienkOVDXSXBjjJw6HTNQYSE2JI6GMCR6LVbIMHJVvA==
 
 "@types/node@^13.7.0":
   version "13.13.15"
