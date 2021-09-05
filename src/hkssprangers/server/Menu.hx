@@ -622,19 +622,20 @@ class Menu extends View<MenuProps> {
         return jsx('
             <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${MGYSingleDish.title}</div>
-                    ${renderItems(MGYSingleDish.properties.dish.enums())}
-                    <div className=${headerClasses}>${MGYSub.title}</div>
-                    ${renderItems(MGYSub.enums())}
+                    <div className=${headerClasses}>${MGYSideDish.title}</div>
+                    ${renderItems(MGYSideDish.properties.dish.enums())}
+                    <div className=${headerClasses}>${MGYSnack.title}</div>
+                    ${renderItems(MGYSnack.enums())}
+                    <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
+                    ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
+                    <div className=${headerClasses}>${MGYColdNoodles.title}</div>
+                    ${renderItems(MGYColdNoodles.properties.coldNoodles.enums())}
                 </div>
                 <div className="md:w-1/2 p-3">
-                    <div className=${headerClasses}>${MGYSetMeal.title}</div>
-                    <div className="p-3">${MGYSetMeal.description}</div>
-                    ${renderItems(MGYSetMeal.properties.setMeal.enums())}
-                    <div className=${headerClasses}>${MGYFriedFood.title}</div>
-                    ${renderItems(MGYFriedFood.properties.fried.enums())}
-                    <div className=${headerClasses}>${MGYColdNoodle.title}</div>
-                    ${renderItems(MGYColdNoodle.properties.coldNoodle.enums())}
+                    <div className=${headerClasses}>${MGYDelight.title}</div>
+                    ${renderItems(MGYDelight.properties.delight.enums())}
+                    <div className=${headerClasses}>${MGYIcecream.title}</div>
+                    ${renderItems(MGYIcecream.enums())}
                 </div>
             </div>
         ');

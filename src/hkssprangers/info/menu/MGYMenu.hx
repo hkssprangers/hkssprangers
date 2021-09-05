@@ -4,55 +4,64 @@ import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
 enum abstract MGYItem(String) to String {
-    final SingleDish;
-    final SetMeal;
-    final FriedFood;
-    final ColdNoodle;
-    final Sub;
+    final SideDish;
+    final StirFriedNoodlesOrRice;
+    final ColdNoodles;
+    final Snack;
+    final Delight;
+    final Icecream;
 
     static public final all:ReadOnlyArray<MGYItem> = [
-        SingleDish,
-        SetMeal,
-        FriedFood,
-        ColdNoodle,
-        Sub,
+        SideDish,
+        StirFriedNoodlesOrRice,
+        ColdNoodles,
+        Snack,
+        Delight,
+        Icecream,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MGYItem) {
-        case SingleDish: MGYMenu.MGYSingleDish;
-        case SetMeal: MGYMenu.MGYSetMeal;
-        case FriedFood: MGYMenu.MGYFriedFood;
-        case ColdNoodle: MGYMenu.MGYColdNoodle;
-        case Sub: MGYMenu.MGYSub;
+        case SideDish: MGYMenu.MGYSideDish;
+        case StirFriedNoodlesOrRice: MGYMenu.MGYStirFriedNoodlesOrRice;
+        case ColdNoodles: MGYMenu.MGYColdNoodles;
+        case Snack: MGYMenu.MGYSnack;
+        case Delight: MGYMenu.MGYDelight;
+        case Icecream: MGYMenu.MGYIcecream;
     }
 }
 
 class MGYMenu {
-    static public final MGYSingleDish = {
+    static function markup(price:Float):Float {
+        return Math.round(price / 0.85);
+    }
+
+    static public final MGYSideDish = {
         title: "小菜",
         properties: {
             dish: {
                 title: "小菜",
                 type: "string",
                 "enum": [
-                    "豉汁素楊玉 $62",
-                    "咕嚕素芝球 $62",
-                    "泰式西芹花枝片 $62",
-                    "鮮茄燜枝竹 $62",
-                    "白汁粟米蓉金磚豆卜 $62",
-                    "如香茄子 $62",
-                    "欖菜菇絲芸豆 $62",
-                    "瓣醬豆腐 $62",
-                    "香草焗薯角 $62",
-                    "香椿鮮菇燜淮山 $62",
-                    "咖哩薯仔 $62",
-                    "八珍豆腐時蔬 $62",
-                    "豉汁尖椒 $62",
-                    "豉汁菇片炒涼瓜 $62",
-                    "香椿如腐雲耳炒勝瓜 $62",
-                    "黑椒菇角炒脆玉瓜 $62",
-                    "金菇絲燴娃娃菜 $62",
-                    "羅漢齋 $62",
+                    "豉汁素楊玉 $" + markup(58),
+                    "咕嚕素芝球 $" + markup(58),
+                    "泰式西芹花枝丸 $" + markup(58),
+                    "鮮茄燜枝竹 $" + markup(58),
+                    "白汁粟米蓉金磚豆卜 $" + markup(58),
+                    "豪油焗素芝片 $" + markup(58),
+                    "如香茄子 $" + markup(58),
+                    "欖菜菇絲芸豆 $" + markup(62),
+                    "瓣醬豆腐 $" + markup(58),
+                    "香草焗南瓜 $" + markup(58),
+                    "香草焗薯角 $" + markup(58),
+                    "香椿鮮菇燜淮山 $" + markup(62),
+                    "咖喱薯仔 $" + markup(58),
+                    "八珍豆腐扒時菜 $" + markup(58),
+                    "豉汁尖椒 $" + markup(58),
+                    "豉汁菇片炒涼瓜 $" + markup(58),
+                    "香椿如腐雲耳炒勝瓜 $" + markup(58),
+                    "黑椒菇角炒脆玉瓜 $" + markup(58),
+                    "金菇絲燴娃娃菜 $" + markup(58),
+                    "羅漢齋 $" + markup(58),
                 ]
             },
         },
@@ -61,51 +70,17 @@ class MGYMenu {
         ]
     }
 
-    static public final MGYSetMeal = {
-        title: "客飯",
-        description: "客飯配白飯及例湯",
-        properties: {
-            setMeal: {
-                type: "string",
-                title: "客飯",
-                "enum": [
-                    "豉汁素楊玉(客飯) $72",
-                    "咕嚕素芝球(客飯) $72",
-                    "泰式西芹花枝片(客飯) $72",
-                    "鮮茄燜枝竹(客飯) $72",
-                    "白汁粟米蓉金磚豆卜(客飯) $72",
-                    "如香茄子(客飯) $72",
-                    "欖菜菇絲芸豆(客飯) $72",
-                    "瓣醬豆腐(客飯) $72",
-                    "香草焗薯角(客飯) $72",
-                    "香椿鮮菇燜淮山(客飯) $72",
-                    "咖哩薯仔(客飯) $72",
-                    "八珍豆腐時蔬(客飯) $72",
-                    "豉汁尖椒(客飯) $72",
-                    "豉汁菇片炒涼瓜(客飯) $72",
-                    "香椿如腐雲耳炒勝瓜(客飯) $72",
-                    "黑椒菇角炒脆玉瓜(客飯) $72",
-                    "金菇絲燴娃娃菜(客飯) $72",
-                    "羅漢齋(客飯) $72",
-                ],
-            },
-        },
-        required: [
-            "setMeal",
-        ]
-    }
-
-    static public final MGYFriedFood = {
+    static public final MGYStirFriedNoodlesOrRice = {
         title: "炒粉飯",
         properties: {
             fried: {
                 type: "string",
                 title: "炒粉飯",
                 "enum": [
-                    "香椿松子炒飯 $53",
-                    "黃薑瓜粒炒飯 $53",
-                    "黑椒蘑菇意粉 $53",
-                    "羅漢齋烏冬 $53",
+                    "香椿松子炒飯 $" + markup(48),
+                    "黃薑瓜粒炒飯 $" + markup(48),
+                    "黑椒蘑菇意粉 $" + markup(48),
+                    "羅漢齋烏冬 $" + markup(48),
                 ],
             },
         },
@@ -114,36 +89,100 @@ class MGYMenu {
         ]
     };
 
-    static public final MGYColdNoodle = {
+    static public final MGYColdNoodles = {
         title: "日式冷麵",
         properties: {
-            coldNoodle: {
+            coldNoodles: {
                 type: "string",
                 title: "日式冷麵",
                 "enum": [
-                    "蕎麥麵配羽衣甘藍 $70",
-                    "抹茶麵配羽衣甘藍 $70",
+                    "蕎麥麵 配羽衣甘藍 $" + markup(60),
+                    "抹茶麵 配羽衣甘藍 $" + markup(60),
                 ],
             },
         },
         required: [
-            "coldNoodle",
+            "coldNoodles",
         ]
     };
 
-    static public final MGYSub = {
+    static public final MGYSnack = {
         title: "小食",
         type: "string",
         "enum": [
-            "湯餃子(8件) $36",
-            "炸餃子(4件) $24",
-            "薯蛋球(6件) $24",
-            "地瓜卷(6件) $24",
-            "炸薄脆(6件) $24",
-            "炸腐皮卷(4件) $24",
-            "椒鹽豆腐(8件) $24",
-            "白灼羽衣甘藍 $24",
+            "湯餃子(8件) $" + markup(35),
+            "炸餃子(4件) $" + markup(23),
+            "薯蛋球(6件) $" + markup(23),
+            "地瓜卷(6件) $" + markup(23),
+            "炸薄脆(6件) $" + markup(23),
+            "炸饅頭(4件) $" + markup(23),
+            "炸腐皮卷(4件) $" + markup(23),
+            "椒鹽豆腐(8件) $" + markup(23),
+            "白灼羽衣甘藍 $" + markup(23),
         ],
+    };
+
+    static public final MGYIcecream = {
+        title: "Happy Cow Ice cream",
+        type: "string",
+        "enum": [
+            "Chocolate 朱古力 125ml $" + markup(37),
+            "Chocolate 朱古力 475ml $" + markup(85),
+            "Pure coconut 純椰子 125ml $" + markup(37),
+            "Pure coconut 純椰子 475ml $" + markup(85),
+            "Vanilla bean 雲呢拿 125ml $" + markup(37),
+            "Vanilla bean 雲呢拿 475ml $" + markup(85),
+            "Mint chocolate chip 薄荷朱古力 125ml $" + markup(37),
+            "Mint chocolate chip 薄荷朱古力 475ml $" + markup(85),
+            "Salted caramel swirl 岩鹽焦糖旋風 125ml $" + markup(37),
+            "Salted caramel swirl 岩鹽焦糖旋風 475ml $" + markup(85),
+            "Mango 芒果 125ml $" + markup(37),
+            "Mango 芒果 475ml $" + markup(85),
+            "Strawberry 士多啤梨 125ml $" + markup(37),
+            "Strawberry 士多啤梨 475ml $" + markup(85),
+            "Dragon berry 火龍果雜莓 125ml $" + markup(37),
+            "Dragon berry 火龍果雜莓 475ml $" + markup(85),
+            "Green tea 綠茶 125ml $" + markup(37),
+            "Green tea 綠茶 475ml $" + markup(85),
+            "Ying yang seasame 陰陽芝麻 125ml $" + markup(37),
+            "Ying yang seasame 陰陽芝麻 475ml $" + markup(85),
+            "Ginger 薑 125ml $" + markup(37),
+            "Ginger 薑 475ml $" + markup(85),
+            "Banana caramel swirl 香蕉焦糖旋風 125ml $" + markup(37),
+            "Banana caramel swirl 香蕉焦糖旋風 475ml $" + markup(85),
+            "Choc choc Cookie 雙重朱古力曲奇 125ml $" + markup(37),
+            "Choc choc Cookie 雙重朱古力曲奇 475ml $" + markup(85),
+            "Pineapple coconut 菠蘿椰子 125ml $" + markup(37),
+            "Pineapple coconut 菠蘿椰子 475ml $" + markup(85),
+        ],
+    };
+
+    static public final MGYDelight = {
+        title: "滋味輕食",
+        properties: {
+            delight: {
+                type: "string",
+                title: "滋味輕食",
+                "enum": [
+                    "漢堡包 $" + markup(40),
+                    "蓮蓉小籠包 $" + markup(20),
+                    "叉燒包 $" + markup(30),
+                    "豆沙窩餅 $" + markup(30),
+                    "地瓜拉餅 $" + markup(32),
+                    "香椿抓餅 $" + markup(30),
+                    "素大碗 $" + markup(108),
+                    "玉排沙拉 $" + markup(40),
+                    "珠排沙拉 $" + markup(40),
+                    "純菜沙拉 $" + markup(40),
+                    "熱九培根沙拉 $" + markup(40),
+                    "咖喱雜丸 $" + markup(40),
+                    "黑椒排荷葉包 $" + markup(50),                    
+                ],
+            },
+        },
+        required: [
+            "delight",
+        ]
     };
     
     static public function itemsSchema(order:FormOrderData):Dynamic {
@@ -192,19 +231,32 @@ class MGYMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case SingleDish:
+            case SideDish:
                 summarizeOrderObject(orderItem.item, def, ["dish"], []);
-            case SetMeal:
-                summarizeOrderObject(orderItem.item, def, ["setMeal"], []);
-            case FriedFood:
+            case StirFriedNoodlesOrRice:
                 summarizeOrderObject(orderItem.item, def, ["fried"], []);
-            case ColdNoodle:
-                summarizeOrderObject(orderItem.item, def, ["coldNoodle"], []);
-            case Sub:
+            case ColdNoodles:
+                summarizeOrderObject(orderItem.item, def, ["coldNoodles"], []);
+            case Delight:
+                summarizeOrderObject(orderItem.item, def, ["delight"], []);
+            case Snack:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: fullWidthDot + v,
+                            orderPrice: v.parsePrice().price,
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0.0,
+                        }
+                }
+            case Icecream:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: fullWidthDot + MGYIcecream.title + fullWidthColon + "\n" + fullWidthSpace + v,
                             orderPrice: v.parsePrice().price,
                         }
                     case _:

@@ -515,8 +515,6 @@ enum abstract Shop(String) to String {
                 return Unavailable('休息一天');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
-            case [MGY, _, _]:
-                return Unavailable('餐牌更新中');
             case _:
                 //pass
         }
