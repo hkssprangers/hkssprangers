@@ -30,7 +30,7 @@
     "envify": "^4.1.0",
     "https-localhost": "^4.6.5",
     "js-cookie": "^3.0.1",
-    "ngrok": "^4.1.0",
+    "ngrok": "^4.2.2",
     "nodemon": "^2.0.12",
     "react-router-dom": "^5.2.1",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
