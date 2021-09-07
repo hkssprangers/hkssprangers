@@ -53,7 +53,7 @@ class KCZenzeroMenu {
             "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
-            "自家沖玫瑰百寶茶" + (price > 0 ? ' +$$$price' : ""),
+            "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
         ]),
     };
 
