@@ -934,7 +934,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(KeiHingChickenSet.properties.main.enums())}
                         <div className="font-bold p-3">${KeiHingChickenSet.properties.vege.title}</div>
                         <div className="p-3">${slashes(KeiHingChickenSet.properties.vege.enums())}</div>
-                        <div className="p-3 text-center">${KeiHingChickenSet.properties.drink.description}</div>
+                        <div className="p-3 text-center">${KeiHingChickenSet.properties.drink1.description}</div>
                     </div>
                 </div>
             </Fragment>

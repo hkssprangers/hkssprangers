@@ -606,6 +606,46 @@ class KeiHingMenu {
         required: ["main"],
     };
 
+    static public final KeiHingDish = [
+        "京都豬扒",
+        "粟米炸魚柳",
+        "紅燒豆腐",
+        "菜心炒牛肉",
+        "菠蘿生炒骨",
+        "香煎芙蓉蛋",
+        "涼瓜炒肉片",
+        "麻婆豆腐",
+        "蒜香雞中翼",
+        "回鍋肉片",
+        "羅漢上素",
+        "通菜牛肉 (腐乳)",
+        "通菜牛肉 (蝦醬)",
+        "椒鹽豬扒",
+        "豆豉炆雞",
+        "咕嚕雞球",
+        "時菜炒魚鬆",
+        "黃金焗豬扒",
+        "魚香茄子",
+        "蝦仁炒蛋",
+        "酥炸鯪魚球",
+        "越式炒雜菜",
+        "沙爹金菇牛肉",
+        "節瓜蝦米粉絲",
+        "洋蔥豬扒",
+        "七味雞中翼",
+        "菠蘿牛肉",
+        "泰式雞扒",
+        "咸魚雞粒豆腐",
+        "銀芽炒三絲",
+        "冬瓜炆排骨",
+        "涼瓜肉碎煎蛋角",
+        "士多啤梨骨",
+        "西蘭花雞柳",
+        "北菇扒時菜",
+        "涼瓜炆鴨",
+        "金銀蛋時菜",
+    ];
+
     static public final KeiHingDishSet = {
         title: "小菜套餐",
         description: "配：例湯＋白飯＋熱飲",
@@ -613,45 +653,7 @@ class KeiHingMenu {
             main: {
                 title: "小菜",
                 type: "string",
-                "enum": [
-                    "京都豬扒 $61",
-                    "粟米炸魚柳 $61",
-                    "紅燒豆腐 $61",
-                    "菜心炒牛肉 $61",
-                    "菠蘿生炒骨 $61",
-                    "香煎芙蓉蛋 $61",
-                    "涼瓜炒肉片 $61",
-                    "麻婆豆腐 $61",
-                    "蒜香雞中翼 $61",
-                    "回鍋肉片 $61",
-                    "羅漢上素 $61",
-                    "通菜牛肉 (腐乳) $61",
-                    "通菜牛肉 (蝦醬) $61",
-                    "椒鹽豬扒 $61",
-                    "豆豉炆雞 $61",
-                    "咕嚕雞球 $61",
-                    "時菜炒魚鬆 $61",
-                    "黃金焗豬扒 $61",
-                    "魚香茄子 $61",
-                    "蝦仁炒蛋 $61",
-                    "酥炸鯪魚球 $61",
-                    "越式炒雜菜 $61",
-                    "沙爹金菇牛肉 $61",
-                    "節瓜蝦米粉絲 $61",
-                    "洋蔥豬扒 $61",
-                    "七味雞中翼 $61",
-                    "菠蘿牛肉 $61",
-                    "泰式雞扒 $61",
-                    "咸魚雞粒豆腐 $61",
-                    "銀芽炒三絲 $61",
-                    "冬瓜炆排骨 $61",
-                    "涼瓜肉碎煎蛋角 $61",
-                    "士多啤梨骨 $61",
-                    "西蘭花雞柳 $61",
-                    "北菇扒時菜 $61",
-                    "涼瓜炆鴨 $61",
-                    "金銀蛋時菜 $61",
-                ],
+                "enum": KeiHingDish.map(item -> item + " $61"),
             },
             drink: KeiHingFreeHotDrink,
         },
@@ -682,7 +684,7 @@ class KeiHingMenu {
 
     static public final KeiHingChickenSet = {
         title: "雞鴨套餐",
-        description: "配：例湯＋白飯2碗＋熱飲",
+        description: "配：小菜＋例湯＋白飯2碗＋熱飲",
         properties: {
             main: {
                 title: "雞鴨",
@@ -695,17 +697,23 @@ class KeiHingMenu {
                     "乳鴿 $166",
                 ],
             },
-            vege: {
+            dish: {
                 title: "小菜",
+                type: "string",
+                "enum": KeiHingDish,
+            },
+            vege: {
+                title: "送",
                 type: "string",
                 "enum": [
                     "蒜蓉炒時菜",
                     "芝士白汁焗西蘭花",
                 ],
             },
-            drink: KeiHingFreeHotDrink,
+            drink1: KeiHingFreeHotDrink,
+            drink2: KeiHingFreeHotDrink,
         },
-        required: ["main", "vege", "drink"],
+        required: ["main", "dish", "vege", "drink1", "drink2"],
     };
 
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
@@ -809,7 +817,7 @@ class KeiHingMenu {
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["配：例湯＋白飯"]);
             case ChickenSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "vege", "drink"], ["配：例湯＋白飯2碗"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "dish", "vege", "drink1", "drink2"], ["配：例湯＋白飯2碗"]);
             case _:
                 {
                     orderDetails: "",
