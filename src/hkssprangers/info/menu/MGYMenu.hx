@@ -62,6 +62,11 @@ class MGYMenu {
                     "黑椒菇角炒脆玉瓜 $" + markup(58),
                     "金菇絲燴娃娃菜 $" + markup(58),
                     "羅漢齋 $" + markup(58),
+
+                    "XO醬炒菜心苗 $" + markup(38),
+                    "高湯浸菠菜 $" + markup(38),
+                    "咸酸菜炒芽葉 $" + markup(58),
+                    "白灼羽衣甘藍 $" + markup(28),
                 ]
             },
         },
