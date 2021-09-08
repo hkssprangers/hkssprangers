@@ -28,7 +28,7 @@
     "copy-to-clipboard": "^3.3.1",
     "dts2hx": "^0.16.0",
     "envify": "^4.1.0",
-    "https-localhost": "^4.6.5",
+    "https-localhost": "^4.7.0",
     "js-cookie": "^3.0.1",
     "ngrok": "^4.2.2",
     "nodemon": "^2.0.12",
