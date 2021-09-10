@@ -50,7 +50,7 @@ RUN apt-get update \
     && apt-get install -y mariadb-server \
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
     && apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
-    && apt-get install -y terraform=1.0.5 terraform-ls \
+    && apt-get install -y terraform=1.0.6 terraform-ls \
     && echo "complete -C /usr/bin/terraform terraform" >> /etc/bash.bashrc \
     && npm install -g yarn \
     && yarn global add lix --prefix /usr/local \
