@@ -481,40 +481,14 @@ enum abstract Shop(String) to String {
         var day = Weekday.fromDay(date.getDay());
 
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
-            case [_, "2021-07-11", _]:
-                return Unavailable('埗兵有喜 休息一天');
-            case [LaksaStore, "2021-05-18", _]:
-                return Unavailable('喇沙女皇壽辰休息一天');
-            case [KCZenzero, "2021-05-25" | "2021-05-26", _]:
-                return Unavailable('家中有事，休息');
-            case [DongDong | MGY, "2021-06-14", _]:
-                return Unavailable('端午節休息一天');
-            case [BlaBlaBla, "2021-06-17", _]:
-                return Unavailable('暫停營業');
-            case [DragonJapaneseCuisine, "2021-06-17", Dinner]:
-                return Unavailable('17/6 早收');
-            case [LaksaStore, "2021-06-19", _]:
-                return Unavailable('休息一天');
-            case [DongDong, "2021-06-28", _]:
-                return Unavailable('黑雨休息一天');
-            case [ZeppelinHotDogSKM, "2021-07-05", _]:
-                return Unavailable('裝修 休息一天');
-            case [HanaSoftCream, "2021-07-05" | "2021-07-06", Dinner]:
-                return Unavailable('收早');
-            case [LaksaStore, "2021-07-20" | "2021-08-19", _]:
-                return Unavailable('休息一天');
-            case [LaksaStore, "2021-08-02" | "2021-08-03", _]:
-                return Unavailable('身體不適休息一天');
-            case [DongDong, "2021-08-26", _]:
-                return Unavailable('今日 last day, 已無食材 😥');
             case [DongDong, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-26"):
                 return Unavailable('已結業 😥');
             case [BlaBlaBla, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-29"):
                 return Unavailable('已結業 😥');
-            case [KCZenzero, "2021-08-30" | "2021-09-06", _]:
-                return Unavailable('休息一天');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
+            case [LaksaStore, "2021-09-10", Dinner]:
+                return Unavailable('收早');
             case _:
                 //pass
         }
