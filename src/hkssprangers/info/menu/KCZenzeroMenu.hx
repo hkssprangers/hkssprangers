@@ -53,7 +53,7 @@ class KCZenzeroMenu {
             "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
-            "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
+            // "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
         ]),
     };
 
@@ -99,7 +99,7 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "五指毛桃花膠雞煲＄98";
+    static final limitedSpecial = "五指毛桃花膠雞煲 $98";
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
         description: "⚠️ 請提早三小時落單。售完即止。",
@@ -330,6 +330,7 @@ class KCZenzeroMenu {
         return switch (orderItem.type) {
             case LimitedSpecial:
                 var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
+                orderDetails.push(fullWidthSpace + box);
                 var orderPrice = parsePrice(orderItem.item.special).price;
                 {
                     orderDetails: orderDetails.join("\n"),
@@ -387,7 +388,7 @@ class KCZenzeroMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
-            case HotpotSet:
+            case HotpotSet | LimitedSpecial:
                 false;
             case _:
                 true;
