@@ -2,6 +2,7 @@ package hkssprangers.info.menu;
 
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
+using hkssprangers.MathTools;
 using Lambda;
 
 enum abstract KCZenzeroItem(String) to String {
@@ -331,7 +332,7 @@ class KCZenzeroMenu {
             case LimitedSpecial:
                 var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
                 orderDetails.push(fullWidthSpace + box);
-                var orderPrice = parsePrice(orderItem.item.special).price;
+                var orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
                 {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
