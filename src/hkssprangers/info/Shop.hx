@@ -487,7 +487,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('已結業 😥');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
-            case [LaksaStore, "2021-09-13", _]:
+            case [LaksaStore, "2021-09-18", _]:
                 return Unavailable('休息一天');
             case _:
                 //pass
