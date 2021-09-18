@@ -34,6 +34,7 @@ using StringTools;
 using Lambda;
 using hkssprangers.info.DeliveryTools;
 using hkssprangers.server.FastifyTools;
+using hkssprangers.info.TimeSlotTools;
 
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
@@ -350,18 +351,6 @@ class ServerMain {
 
     static public function notifyDeliveryRequestReceived(delivery:Delivery) {
         trace(notifyDeliveryRequestReceived);
-        var deliveryText = delivery.print(switch (delivery.customerPreferredContactMethod) {
-            case WhatsApp:
-                { noLink: true }
-            case _:
-                null;
-        });
-        var msg = comment(unindent, format)/**
-            多謝支持🙇
-            我哋已經收到你嘅訂單：
-            ${deliveryText}
-        **/;
-        trace(msg);
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
@@ -377,9 +366,15 @@ class ServerMain {
                         .toJsPromise()
                         .then(tgm -> tgm.updateData.message.chat.id)
                         .then(chatId -> {
+                            var deliveryText = delivery.print();
                             tgBot.telegram.sendMessage(
                                 chatId,
-                                msg,
+                                comment(unindent, format)/**
+                                    多謝支持🙇
+                                    我哋已經收到你嘅訂單：
+
+                                    ${deliveryText}
+                                **/,
                                 {
                                     disable_web_page_preview: true,
                                 }
@@ -387,10 +382,15 @@ class ServerMain {
                         });
                 });
             case WhatsApp:
+                var deliveryText = delivery.orders.map(o -> o.shop.info().name).join(", ") + " " + delivery.pickupTimeSlot.print();
                 twilio.messages.create({
                     from: "whatsapp:+85264507612",
                     to: 'whatsapp:+852' + delivery.customer.whatsApp,
-                    body: msg,
+                    body: comment(unindent, format)/**
+                        多謝支持🙇
+                        我哋已經收到你嘅訂單：
+                        ${deliveryText}
+                    **/,
                 }).then(msg -> {
                     trace(msg);
                     null;
