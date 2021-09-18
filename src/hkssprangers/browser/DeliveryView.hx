@@ -390,7 +390,8 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 }
                 jsx('<a href=${waUrl} target="_blank" rel="noopener">${waUrl}</a>');
             case Signal:
-                jsx('<span>Signal:${customer.signal}</span>');
+                var signalUrl = 'https://signal.me/#p/+852${customer.signal}';
+                jsx('<a href=${signalUrl} target="_blank" rel="noopener">${signalUrl}</a>');
             case Telephone:
                 var url = 'tel:${customer.tel}';
                 jsx('<a href=${url} target="_blank" rel="noopener">${url}</a>');

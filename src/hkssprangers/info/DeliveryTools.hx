@@ -33,7 +33,10 @@ class DeliveryTools {
                         null;
                 }
             case Signal:
-                'Signal:${customer.signal}';
+                if (!noLink)
+                    'https://signal.me/#p/+852${customer.signal}';
+                else
+                    'Signal:${customer.signal}';
             case Telephone:
                 'tel:${customer.tel}';
         }
