@@ -79,7 +79,7 @@ class Index extends View<IndexProps> {
     function banner() {
         var title = "慳多D x 埗兵 美酒預訂";
         var url = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
-        var img = null;//StaticResource.image("/images/kolb3-web-banner.jpg", title, "w-full");
+        var img = StaticResource.image("/images/wine-web-banner.jpg", title, "w-full");
         var className = if (img == null) {
             "flex items-center place-content-center text-center bg-white h-32 text-2xl";
         } else {
