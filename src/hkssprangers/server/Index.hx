@@ -77,10 +77,9 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        return null;
-        var title = "KOLB x 點心紙 x 埗兵 餸包湯包預訂";
-        var url = "https://docs.google.com/forms/d/e/1FAIpQLSe2mSyw_3VsiK3lFcrT7lv5slIaDQUEdtpomQR8Ah8AqexJiA/viewform";
-        var img = StaticResource.image("/images/kolb3-web-banner.jpg", title, "w-full");
+        var title = "慳多D x 埗兵 美酒預訂";
+        var url = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
+        var img = null;//StaticResource.image("/images/kolb3-web-banner.jpg", title, "w-full");
         var className = if (img == null) {
             "flex items-center place-content-center text-center bg-white h-32 text-2xl";
         } else {
