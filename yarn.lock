@@ -4277,13 +4277,13 @@ fastest-levenshtein@^1.0.12:
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
   integrity sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow==
 
-fastify-accepts@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/fastify-accepts/-/fastify-accepts-2.0.1.tgz#adfff78c700e23eb59c79cc3ab40b45980ae13a7"
-  integrity sha512-L7yOz/NQ4WMd6RP3eDz1bEBDXRT0Xw7ij8cNUhIw5IwDnKxnpPiX8NZd4HU+N28GEK+X5V3OrbRSYXM1upWdDg==
+fastify-accepts@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fastify-accepts/-/fastify-accepts-2.1.0.tgz#4ed30d489f42b1379bf241b0e0a3c6d98b79f324"
+  integrity sha512-1nS8HfPcUsDvvGuuHDvfQBb2F1YJFfx26L77di7ypa0mUduFKZi1cpIpQCs8Kgu30v7yLMzLMH13FHfKk81SAw==
   dependencies:
     accepts "^1.3.5"
-    fastify-plugin "^2.0.0"
+    fastify-plugin "^3.0.0"
 
 fastify-cookie@^5.3.1:
   version "5.3.1"
@@ -4305,13 +4305,6 @@ fastify-formbody@^5.1.0:
   integrity sha512-dLFQ8gMQeLuV45J72svDbrp6CZ3hxsaiK2dd3vzoiCs9wEmCSbbJV+/afQl1cfvf19+NfCIzYVQIg1r4yO4Epw==
   dependencies:
     fastify-plugin "^3.0.0"
-
-fastify-plugin@^2.0.0:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-2.3.4.tgz#b17abdc36a97877d88101fb86ad8a07f2c07de87"
-  integrity sha512-I+Oaj6p9oiRozbam30sh39BiuiqBda7yK2nmSPVwDCfIBlKnT8YB3MY+pRQc2Fcd07bf6KPGklHJaQ2Qu81TYQ==
-  dependencies:
-    semver "^7.3.2"
 
 fastify-plugin@^3.0.0:
   version "3.0.0"
