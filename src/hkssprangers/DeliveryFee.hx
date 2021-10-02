@@ -1140,6 +1140,27 @@ class DeliveryFee {
                 case TungChauStreetParkCluster: 35;
             }
         },
+        {
+            place: "福華街1-31號",
+            match: address -> {
+                var r = ~/福華街\s*([0-9]+)/;
+                r.match(address) && switch (Std.parseInt(r.matched(1))) {
+                    case n if (n >= 1 && n <= 31):
+                        true;
+                    case n:
+                        false;
+                }
+            },
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(delivery:Delivery):Null<Float> {
