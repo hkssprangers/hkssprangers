@@ -677,8 +677,6 @@ class Menu extends View<MenuProps> {
                 <div className="md:w-1/2 p-3">
                     <div className=${headerClasses}>${italian.title}</div>
                     ${renderItems(italian.properties.italian.enums())}
-                    <div className=${headerClasses}>${veg.title}</div>
-                    ${renderItems(veg.properties.veg.enums())}
                     <div className=${headerClasses}>${misc.title}</div>
                     ${renderItems(misc.enums())}
                 </div>

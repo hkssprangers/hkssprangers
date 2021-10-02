@@ -24,7 +24,7 @@ enum abstract FastTasteSSPItem(String) to String {
                 Burger,
                 Italian,
                 Seafood,
-                Veg,
+                // Veg,
                 Salad,
                 Misc,
             ];
@@ -35,7 +35,7 @@ enum abstract FastTasteSSPItem(String) to String {
                 Italian,
                 Seafood,
                 Meat,
-                Veg,
+                // Veg,
                 Salad,
                 Misc,
             ];
