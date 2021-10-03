@@ -272,7 +272,9 @@ class KeiHingMenu {
                     "京都炸醬麵 $31",
                     "原汁牛腩麵 $33",
                     "淨牛腩 $73",
-                    "郊外油菜 $22",
+                    "郊外油菜 (菜心) $22",
+                    "郊外油菜 (生菜) $22",
+                    "郊外油菜 (白菜仔) $22",
                     // 1510 各式淨麵 $22
                 ],
             },
@@ -310,6 +312,7 @@ class KeiHingMenu {
                         "改福字麵 +$5",
                     ],
                 },
+                maxItems: 1,
                 uniqueItems: true,
             },
             drink: KeiHingDrink,
@@ -790,12 +793,14 @@ class KeiHingMenu {
                             orderPrice: 0.0,
                         };
                 }
-            case NoodleAndRice | CurrySet:
+            case NoodleAndRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [], null, "");
+            case CurrySet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], []);
             case ChickenLegSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "drink"], ["送：是日例湯"]);
             case FriedInstantNoodle:
-                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], []);
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], [], null, "");
             case UsualSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "noodle", "drink"], ["配：牛油方包＋火腿奄列"]);
             case SiuMeiSet:
@@ -813,7 +818,7 @@ class KeiHingMenu {
             case Chicken | SideDish | Pot:
                 summarizeOrderObject(orderItem.item, def, ["main", "options"], []);
             case ChickenPot:
-                summarizeOrderObject(orderItem.item, def, ["main", "rice"], []);
+                summarizeOrderObject(orderItem.item, def, ["main", "rice"], [], null, "");
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["配：例湯＋白飯"]);
             case ChickenSet:
