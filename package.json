@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.8",
     "@babel/preset-env": "^7.15.6",
     "@date-io/moment": "1.x",
     "@httptoolkit/httpolyglot": "^1.0.1",
