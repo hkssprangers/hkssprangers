@@ -50,7 +50,7 @@ RUN apt-get update \
     && apt-get install -y mariadb-server \
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
     && apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
-    && apt-get install -y terraform=1.0.6 terraform-ls \
+    && apt-get install -y terraform=1.0.8 terraform-ls \
     && echo "complete -C /usr/bin/terraform terraform" >> /etc/bash.bashrc \
     && npm install -g yarn \
     && yarn global add lix --prefix /usr/local \
@@ -67,9 +67,6 @@ COPY --chown=$USER_UID:$USER_GID direnv.toml /home/$USERNAME/.config/direnv/conf
 RUN cd / \
     && wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.1.1/flyway-commandline-7.1.1-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.1.1/flyway /usr/local/bin \
     && chmod a+x /usr/local/bin/flyway
-
-# Install yq
-RUN wget https://github.com/mikefarah/yq/releases/download/v4.7.0/yq_linux_amd64.tar.gz -O - | tar xz && mv yq_linux_amd64 /usr/bin/yq
 
 ENV YARN_CACHE_FOLDER=/yarn
 RUN mkdir -m 777 "$YARN_CACHE_FOLDER"
