@@ -45,8 +45,8 @@ class ZeppelinHotDogSKMMenu {
     static public final chokOptions = [
         "CHOK CHOK粉 芥末紫菜",
         "CHOK CHOK粉 地道椒鹽",
-        // "CHOK CHOK粉 惹味麻辣",
-        // "CHOK CHOK粉 香甜蕃茄",
+        "CHOK CHOK粉 惹味麻辣",
+        "CHOK CHOK粉 香甜蕃茄",
     ];
 
     static public final ZeppelinHotDogSKMSingle = {
