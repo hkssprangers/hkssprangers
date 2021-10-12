@@ -16,7 +16,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        // LimitedSpecial,
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -58,10 +58,23 @@ class KCZenzeroMenu {
         ]),
     };
 
+    static public final KCZenzeroSetOptions = {
+        type: "array",
+        title: "跟餐加配",
+        items: {
+            type: "string",
+            "enum": [
+                "香煎菠蘿包 $15",
+            ],
+        },
+        uniqueItems: true,
+    };
+
     static public final KCZenzeroSingle = {
         title: "小食",
         type: "string",
         "enum": [
+            "香煎菠蘿包 $20",
             "辣茄醬蝦多士 $30",
             "水牛城雞翼 $30",
             "椒鹽雞翼尖 $25",
@@ -96,14 +109,15 @@ class KCZenzeroMenu {
                 ]
             },
             drink: KCZenzeroSetDrink(5, false),
+            extraOptions: KCZenzeroSetOptions,
         },
         required: ["main"],
     }
 
-    static final limitedSpecial = "川辣螺烏冬 $55";
+    static final limitedSpecial = "我唔想粗炒 (什錦粗炒) $42";
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
-        description: "⚠️ 10月2日限定。請提早落單。售完即止。",
+        description: "⚠️ 請提早落單。售完即止。",
         properties: {
             special: {
                 title: "限定",
@@ -148,6 +162,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, false),
+            extraOptions: KCZenzeroSetOptions,
         },
         required: ["options", "noodle"],
     };
@@ -184,6 +199,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, false),
+            extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sauce", "noodle"],
     };
@@ -220,6 +236,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, true),
+            extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sub"],
     };
@@ -245,6 +262,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(0, true),
+            extraOptions: KCZenzeroSetOptions,
         },
         required: [
             "main",
@@ -331,16 +349,16 @@ class KCZenzeroMenu {
         return switch (orderItem.type) {
             case LimitedSpecial:
                 var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
-                orderDetails.push(fullWidthSpace + box);
+                // orderDetails.push(fullWidthSpace + box);
                 var orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
                 {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
                 };
             case HotdogSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, priceInDescription("main", def));
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], null, priceInDescription("main", def));
             case NoodleSet:
-                summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink"], null, (fieldName, value) -> switch fieldName {
+                summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink", "extraOptions"], null, (fieldName, value) -> switch fieldName {
                     case "options":
                         var price = switch (value != null ? value.length : 0) {
                             case 0, 1, 2:
@@ -357,11 +375,11 @@ class KCZenzeroMenu {
                         };
                 });
             case PastaSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink"], null, priceInDescription("main", def));
+                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink", "extraOptions"], null, priceInDescription("main", def));
             case WontonSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink", "extraOptions"]);
             case LightSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink"], null, priceInDescription("main", def));
+                summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink", "extraOptions"], null, priceInDescription("main", def));
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
             case Single:
@@ -389,7 +407,7 @@ class KCZenzeroMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
-            case HotpotSet | LimitedSpecial:
+            case HotpotSet:
                 false;
             case _:
                 true;
