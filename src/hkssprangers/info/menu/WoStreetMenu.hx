@@ -57,7 +57,7 @@ class WoStreetMenu {
             "巴斯克芝士餅 一件 $28",
             // "巴斯克芝士餅 4\" $128",
             // "巴斯克芝士餅 6\" $160",
-            "真毛巾蛋糕 4.5\" $78",
+            // "真毛巾蛋糕 4.5\" $78",
         ]
     };
     static public final WoStreetDrink = {
