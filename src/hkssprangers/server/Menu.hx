@@ -994,12 +994,12 @@ class Menu extends View<MenuProps> {
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${WoStreetWaffleBurger.title}</div>
                         ${renderItems(WoStreetWaffleBurger.enums())}
-                        <div className=${headerClasses}>${WoStreetCreamWaffle.title}</div>
-                        ${renderItems(WoStreetCreamWaffle.enums())}
+                        <div className=${headerClasses}>${WoStreetClassicWaffle.title}</div>
+                        ${renderItems(WoStreetClassicWaffle.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${WoStreetJellyCup.title}</div>
-                        ${renderItems(WoStreetJellyCup.enums())}
+                        <div className=${headerClasses}>${WoStreetCake.title}</div>
+                        ${renderItems(WoStreetCake.enums())}
                         <div className=${headerClasses}>${WoStreetDrink.title}</div>
                         ${renderItems(WoStreetDrink.enums())}
                     </div>
