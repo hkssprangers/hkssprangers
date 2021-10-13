@@ -46,7 +46,7 @@
     "workbox-navigation-preload": "^6.3.0",
     "workbox-recipes": "^6.3.0",
     "workbox-routing": "^6.3.0",
-    "xlsx": "^0.17.2"
+    "xlsx": "^0.17.3"
   },
   "dependencies": {
     "aws-sdk": "^2.826.0",
