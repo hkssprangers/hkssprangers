@@ -529,7 +529,13 @@ class Menu extends View<MenuProps> {
 
         return jsx('
             <div>
-                <div className="p-3">
+                <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>
+                        <div className="p-3">${BiuKeeLokYuenPot.title}</div>
+                    </div>
+                    ${renderItems(BiuKeeLokYuenPot.enums())}
+                </div>
+                <div className=${["p-3", "border-t-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>
                         <div className="p-3">${BiuKeeLokYuenNoodleSet.title} / ${BiuKeeLokYuenLoMeinSet.title}</div>
                     </div>

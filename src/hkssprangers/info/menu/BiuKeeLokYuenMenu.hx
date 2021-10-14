@@ -8,8 +8,10 @@ enum abstract BiuKeeLokYuenItem(String) to String {
     final NoodleSet;
     final LoMeinSet;
     final SingleDish;
+    final Pot;
 
     static public final all:ReadOnlyArray<BiuKeeLokYuenItem> = [
+        Pot,
         NoodleSet,
         LoMeinSet,
         SingleDish,
@@ -19,6 +21,7 @@ enum abstract BiuKeeLokYuenItem(String) to String {
         case NoodleSet: BiuKeeLokYuenMenu.BiuKeeLokYuenNoodleSet;
         case LoMeinSet: BiuKeeLokYuenMenu.BiuKeeLokYuenLoMeinSet;
         case SingleDish: BiuKeeLokYuenMenu.BiuKeeLokYuenSingleDish;
+        case Pot: BiuKeeLokYuenMenu.BiuKeeLokYuenPot;
     }
 }
 
@@ -185,7 +188,23 @@ class BiuKeeLokYuenMenu {
             "淨雲吞 $38",
         ],
     };
-    
+
+    static public final BiuKeeLokYuenPot = {
+        title: "秋冬牛羊煲",
+        type: "string",
+        "enum": [
+            "秘製古法羊腩煲 例 $342",
+            "秘製古法羊腩煲 大 $400",
+            "秘製古法羊腩煲 特大 $506",
+
+            "標記招牌牛腩煲 例 $310",
+            "標記招牌牛腩煲 大 $400",
+
+            "標記招牌新鮮牛雜煲 例 $310",
+            "標記招牌新鮮牛雜煲 大 $400",
+        ],
+    };
+
     static public function itemsSchema(order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
@@ -236,7 +255,7 @@ class BiuKeeLokYuenMenu {
                 summarizeOrderObject(orderItem.item, def, ["main1", "main2", "noodle", "options", "drink"]);
             case LoMeinSet:
                 summarizeOrderObject(orderItem.item, def, ["main1", "main2", "options", "drink"]);
-            case SingleDish:
+            case SingleDish | Pot:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
