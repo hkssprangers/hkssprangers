@@ -72,6 +72,20 @@ class MGYMenu {
                     "欖菜豆腐 $" + markup(58),
                     "蟠龍如 $" + markup(98),
                     "叉燒炒三絲 $" + markup(62),
+
+                    "糖醋候頭菇 $" + markup(78),
+                    "沙茶柚子皮 $" + markup(68),
+                    "咖喱雜菜 $" + markup(78),
+                    "韓式泡菜年糕 $" + markup(58),
+                    "冰鎮秋葵 $" + markup(38),
+                    "沙拉烤菇 $" + markup(38),
+                    "香煎素玉餃 $" + markup(35),
+                    "漢堡包 $" + markup(40),
+                    "純菜沙拉 $" + markup(50),
+                    "素大碗 $" + markup(108),
+                    "山珍池蓮會 $" + markup(88),
+                    "日式雪裏紅 $" + markup(58)
+
                 ]
             },
         },
