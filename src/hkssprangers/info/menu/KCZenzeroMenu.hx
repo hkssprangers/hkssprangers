@@ -74,7 +74,7 @@ class KCZenzeroMenu {
         title: "小食",
         type: "string",
         "enum": [
-            "香煎菠蘿包 $20",
+            // "香煎菠蘿包 $20",
             "辣茄醬蝦多士 $30",
             "水牛城雞翼 $30",
             "椒鹽雞翼尖 $25",
@@ -109,7 +109,7 @@ class KCZenzeroMenu {
                 ]
             },
             drink: KCZenzeroSetDrink(5, false),
-            extraOptions: KCZenzeroSetOptions,
+            // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main"],
     }
@@ -162,7 +162,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, false),
-            extraOptions: KCZenzeroSetOptions,
+            // extraOptions: KCZenzeroSetOptions,
         },
         required: ["options", "noodle"],
     };
@@ -199,7 +199,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, false),
-            extraOptions: KCZenzeroSetOptions,
+            // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sauce", "noodle"],
     };
@@ -236,7 +236,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(5, true),
-            extraOptions: KCZenzeroSetOptions,
+            // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sub"],
     };
@@ -262,7 +262,7 @@ class KCZenzeroMenu {
                 ],
             },
             drink: KCZenzeroSetDrink(0, true),
-            extraOptions: KCZenzeroSetOptions,
+            // extraOptions: KCZenzeroSetOptions,
         },
         required: [
             "main",
