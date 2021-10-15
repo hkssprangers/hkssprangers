@@ -70,6 +70,11 @@ class MenuTools {
             }
         for (fieldName in fields) {
             var fieldDef = Reflect.field(def.properties, fieldName);
+
+            // just ignore null, which can happen if we comment out a property in the json schema
+            if (fieldDef == null)
+                continue;
+
             var fieldTitle = if (fieldDef.title == def.title)
                 "";
             else
