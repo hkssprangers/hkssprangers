@@ -168,7 +168,7 @@ class BiuKeeLokYuenMenu {
 
     static public final BiuKeeLokYuenSingleDish = {
         title: "淨食牛腩／牛雜／小食",
-        description: "請留意外賣消費最低 $30。限量食品售完即止，外賣員當日會確認食物供應。",
+        description: "限量食品售完即止，外賣員當日會確認食物供應。",
         type: "string",
         "enum": [
             "淨食新鮮牛雜 例 $92",
@@ -191,6 +191,7 @@ class BiuKeeLokYuenMenu {
 
     static public final BiuKeeLokYuenPot = {
         title: "秋冬牛羊煲",
+        description: "附送唐生菜一份",
         type: "string",
         "enum": [
             "秘製古法羊腩煲 例 $342",
@@ -255,7 +256,20 @@ class BiuKeeLokYuenMenu {
                 summarizeOrderObject(orderItem.item, def, ["main1", "main2", "noodle", "options", "drink"]);
             case LoMeinSet:
                 summarizeOrderObject(orderItem.item, def, ["main1", "main2", "options", "drink"]);
-            case SingleDish | Pot:
+            case Pot:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: fullWidthDot + v + "\n" + fullWidthSpace + BiuKeeLokYuenPot.description,
+                            orderPrice: v.parsePrice().price,
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0.0,
+                        }
+                }
+            case SingleDish:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
