@@ -6,15 +6,18 @@ import haxe.ds.ReadOnlyArray;
 enum abstract LaksaStoreItem(String) to String {
     final NoodleSet;
     final RiceSet;
+    final BakKutTeh;
 
     static public final all:ReadOnlyArray<LaksaStoreItem> = [
         NoodleSet,
         RiceSet,
+        BakKutTeh,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:LaksaStoreItem) {
         case NoodleSet: LaksaStoreMenu.LaksaStoreNoodleSet;
         case RiceSet: LaksaStoreMenu.LaksaStoreRiceSet;
+        case BakKutTeh: LaksaStoreMenu.LaksaStoreBakKutTeh;
     }
 }
 
@@ -96,6 +99,25 @@ class LaksaStoreMenu {
             "drink",
         ]
     }
+
+    static public final LaksaStoreBakKutTeh = {
+        title: "肉骨茶",
+        properties: {
+            main: {
+                title: "肉骨茶",
+                type: "string",
+                "enum": [
+                    "暖胃肉骨茶 配飯 $50",
+                    "暖胃肉骨茶 配米線 $50",
+                ]
+            },
+            drink: LaksaStoreSetDrink,
+        },
+        required: [
+            "main",
+            "drink",
+        ]
+    }
     
     static public function itemsSchema(order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
@@ -129,6 +151,10 @@ class LaksaStoreMenu {
                         Object.assign(itemSchema.properties, {
                             item: RiceSet.getDefinition(),
                         });
+                    case BakKutTeh:
+                        Object.assign(itemSchema.properties, {
+                            item: BakKutTeh.getDefinition(),
+                        });
                 }
                 itemSchema;
             }),
@@ -150,15 +176,15 @@ class LaksaStoreMenu {
                 var price = parsePrice(LaksaStoreNoodleSet.description).price;
                 {
                     orderDetails:
-                        orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + price + "\n" +
-                        orderItem.item.drink,
+                        fullWidthDot + orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + price + "\n" +
+                        fullWidthSpace + orderItem.item.drink,
                     orderPrice: price,
                 };
-            case RiceSet:
+            case RiceSet | BakKutTeh:
                 {
                     orderDetails:
-                        orderItem.item.main + "\n" +
-                        orderItem.item.drink,
+                        fullWidthDot + orderItem.item.main + "\n" +
+                        fullWidthSpace + orderItem.item.drink,
                     orderPrice: parsePrice(orderItem.item.main).price,
                 };
             case _:

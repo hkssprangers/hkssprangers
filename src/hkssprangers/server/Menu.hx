@@ -447,13 +447,15 @@ class Menu extends View<MenuProps> {
                         </div>
                     </div>
                 </div>
-                <div className=${["md:border-t-4", "p-3"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${LaksaStoreRiceSet.title}</div>
-                    <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                <div className=${["md:border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className="md:flex flex-row">
+                        <div className=${["md:w-1/2", "p-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className=${headerClasses}>${LaksaStoreRiceSet.title}</div>
                             ${renderItems(LaksaStoreRiceSet.properties.main.enums())}
                         </div>
-                        <div className="md:w-1/2 md:pl-3">
+                        <div className="md:w-1/2 p-3">
+                            <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
+                            ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
                         </div>
                     </div>
                 </div>
