@@ -21,6 +21,7 @@ enum abstract KeiHingItem(String) to String {
     final SideDish;
     final Pot;
     final ChickenPot;
+    final PotRice;
 
     final DishSet;
     // final FishSet;
@@ -50,6 +51,7 @@ enum abstract KeiHingItem(String) to String {
             ];
         case Dinner:
             [
+                PotRice,
                 NoodleAndRice,
                 ChickenLegSet,
                 FriedInstantNoodle,
@@ -82,6 +84,7 @@ enum abstract KeiHingItem(String) to String {
         case SideDish: KeiHingMenu.KeiHingSideDish;
         case Pot: KeiHingMenu.KeiHingPot;
         case ChickenPot: KeiHingMenu.KeiHingChickenPot;
+        case PotRice: KeiHingMenu.KeiHingPotRice;
         case DishSet: KeiHingMenu.KeiHingDishSet;
         // case FishSet: KeiHingMenu.KeiHingFishSet;
         // case DishFishSet: KeiHingMenu.KeiHingDishFishSet;
@@ -609,6 +612,46 @@ class KeiHingMenu {
         required: ["main"],
     };
 
+    static public final KeiHingPotRice = {
+        title: "時令煲仔飯",
+        description: "按煲 $10",
+        properties: {
+            main: {
+                title: "時令煲仔飯",
+                type: "string",
+                "enum": [
+                    "北菇滑雞 $63",
+                    "薑蔥爆牛肉 $63",
+                    "臘味飯 $63",
+                    "油鴨肶飯 $63",
+                    "臘腸排骨 $63",
+                    "臘腸滑雞 $63",
+                    "豉汁魚腩 $63",
+                    "蒜蓉鮮魷 $63",
+                    "薑蔥豆豉鯪魚 $63",
+                    
+                    "啫啫排骨 $73",
+                    "啫啫滑雞 $73",
+                    "薑蔥田雞 $73",
+                    "梅菜扣肉 $73",
+                    
+                    "琦興一品煲仔飯 (乾瑤柱 蠔豉 冬菇 臘腸 臘肉) $95",
+                ],
+            },
+            veg: {
+                title: "加配郊外油菜",
+                type: "string",
+                "enum": [
+                    "菜心 +$10",
+                    "生菜 +$10",
+                    "白菜仔 +$10",
+                ],
+            },
+            drink: KeiHingDrink,
+        },
+        required: ["main"],
+    };
+
     static public final KeiHingDish = [
         "京都豬扒",
         "粟米炸魚柳",
@@ -819,6 +862,8 @@ class KeiHingMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "options"], []);
             case ChickenPot:
                 summarizeOrderObject(orderItem.item, def, ["main", "rice"], [], null, "");
+            case PotRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "veg", "drink"], [KeiHingPotRice.description], null, "煲仔飯");
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], ["配：例湯＋白飯"]);
             case ChickenSet:

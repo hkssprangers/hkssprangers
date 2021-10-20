@@ -871,6 +871,13 @@ class Menu extends View<MenuProps> {
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${KeiHingPotRice.title}</div>
+                        <div className="p-3 text-gray-500">${KeiHingPotRice.description}</div>
+                        ${renderItems(KeiHingPotRice.properties.main.enums())}
+                        <div className="font-bold p-3">${KeiHingPotRice.properties.veg.title}</div>
+                        <div className="p-3">${slashes(KeiHingPotRice.properties.veg.enums())}</div>
+                        <div className="p-3 text-center">${KeiHingPotRice.properties.drink.description}</div>
+
                         <div className=${headerClasses}>${KeiHingNoodleAndRice.title}</div>
                         ${renderItems(KeiHingNoodleAndRice.properties.main.enums())}
                         <div className="p-3 text-center">${KeiHingNoodleAndRice.properties.drink.description}</div>
