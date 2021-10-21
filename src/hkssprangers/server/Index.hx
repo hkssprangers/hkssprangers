@@ -77,9 +77,9 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        var title = "埗兵糧食儲備升級團購";
-        var url = "https://docs.google.com/forms/d/e/1FAIpQLScwFXbpoa9QX0cTIcYSAIobwy7TomPW75kygSYAyK3O1JINeg/viewform";
-        var img = StaticResource.image("/images/kolb4-web-banner.jpg", title, "w-full");
+        var title = "埗兵糧食儲備升級團購encore";
+        var url = "https://docs.google.com/forms/d/e/1FAIpQLSdMgjgT9JnZ29YEN3LQb4FAFxP5OXtF_nvG-EM9n8bGZBRKKg/viewform";
+        var img = StaticResource.image("/images/kolb5-web-banner.jpg", title, "w-full");
         var className = if (img == null) {
             "flex items-center place-content-center text-center bg-white h-32 text-2xl";
         } else {
