@@ -16,7 +16,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        // LimitedSpecial,
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -114,7 +114,7 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "我唔想粗炒 (什錦粗炒) $42";
+    static final limitedSpecial = "玫瑰麻油雞煲+花椒燉雪梨 $98";
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
         description: "⚠️ 請提早落單。售完即止。",
@@ -349,7 +349,7 @@ class KCZenzeroMenu {
         return switch (orderItem.type) {
             case LimitedSpecial:
                 var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
-                // orderDetails.push(fullWidthSpace + box);
+                orderDetails.push(fullWidthSpace + box);
                 var orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
                 {
                     orderDetails: orderDetails.join("\n"),
@@ -407,7 +407,7 @@ class KCZenzeroMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
-            case HotpotSet:
+            case HotpotSet | LimitedSpecial:
                 false;
             case _:
                 true;
