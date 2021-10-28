@@ -77,6 +77,7 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
+        return null;
         var title = "埗兵糧食儲備升級團購encore";
         var url = "https://docs.google.com/forms/d/e/1FAIpQLSdMgjgT9JnZ29YEN3LQb4FAFxP5OXtF_nvG-EM9n8bGZBRKKg/viewform";
         var img = StaticResource.image("/images/kolb5-web-banner.jpg", title, "w-full");
