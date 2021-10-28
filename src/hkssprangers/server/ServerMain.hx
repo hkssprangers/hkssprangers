@@ -350,7 +350,6 @@ class ServerMain {
     }
 
     static public function notifyDeliveryRequestReceived(delivery:Delivery) {
-        trace(notifyDeliveryRequestReceived);
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
