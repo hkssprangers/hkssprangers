@@ -48,6 +48,7 @@ class DeliveryTools {
                 comment(unindent, format)/**
                     多謝支持🙇
                     我哋已經收到你嘅訂單：
+
                     ${deliveryText}
 
                     我哋會安排餐廳預留食材。
