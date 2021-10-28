@@ -985,6 +985,40 @@ class DeliveryFee {
             }
         },
         {
+            place: "香港中心",
+            match: address -> address.contains("香港中心"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "永華西藥行",
+            match: address -> {
+                var r = ~/青山道\s*([0-9]+)/;
+                r.match(address) && switch (Std.parseInt(r.matched(1))) {
+                    case 277:
+                        true;
+                    case n:
+                        false;
+                }
+            },
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 35;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
+        {
             place: "仁順大廈",
             match: address -> address.contains("仁順大廈"),
             deliveryFee: cluster -> switch cluster {
