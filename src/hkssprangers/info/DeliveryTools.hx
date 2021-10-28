@@ -2,6 +2,8 @@ package hkssprangers.info;
 
 import thx.Decimal;
 import hkssprangers.info.Delivery;
+import comments.CommentString.*;
+using hkssprangers.info.DeliveryTools;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotTools;
@@ -11,6 +13,64 @@ using Lambda;
 using StringTools;
 
 class DeliveryTools {
+    static public function contactCustomerTime(delivery:Delivery, now:Date):String {
+        var today = (now:LocalDateString).getDatePart();
+        if (delivery.pickupTimeSlot.start.getDatePart() == today) {
+            return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
+                case Lunch:
+                    if (now.getHours() >= 10)
+                        "15分鐘後";
+                    else
+                        "朝早十點半";
+                case Dinner:
+                    if (now.getHours() >= 17)
+                        "15分鐘後";
+                    else
+                        "下午五點半";
+            }
+        } else {
+            return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
+                case Lunch:
+                    "當日朝早十點半";
+                case Dinner:
+                    "當日下午五點半";
+            }
+        }
+    }
+
+    static public function printReceivedMsg(delivery:Delivery):String {
+        final time = contactCustomerTime(delivery, Date.now());
+        final askMethod = "Facebook";
+        final askLink = "https://m.me/hkssprangers";
+        return switch delivery.customerPreferredContactMethod {
+            case Telegram | Signal:
+                final deliveryText = delivery.print();
+                comment(unindent, format)/**
+                    多謝支持🙇
+                    我哋已經收到你嘅訂單：
+                    ${deliveryText}
+
+                    我哋會安排餐廳預留食材。
+                    大約喺${time}，外賣員會聯絡你確認訂單同收錢。
+                    如果有問題，麻煩你經 ${askMethod} 聯絡返我哋嘅客戶服務員：
+                    ${askLink}
+                **/;
+            case WhatsApp:
+                final deliveryText = delivery.orders.map(o -> o.shop.info().name).join(", ") + " " + delivery.pickupTimeSlot.print();
+                comment(unindent, format)/**
+                    多謝支持🙇
+                    我哋已經收到你嘅訂單：
+                    ${deliveryText}
+
+                    我哋會安排餐廳預留食材。
+                    大約喺${time}，外賣員會聯絡你確認訂單同收錢。
+                    如果有問題，麻煩你經 ${askMethod} 聯絡返我哋嘅客戶服務員：
+                    ${askLink}
+                **/;
+            case m: throw "Cannot print msg for " + m;
+        }
+    }
+
     static function printCustomerContact(customer:Customer, contactMethod:ContactMethod, noLink = false) {
         return switch (contactMethod) {
             case null:

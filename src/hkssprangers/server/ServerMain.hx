@@ -366,15 +366,9 @@ class ServerMain {
                         .toJsPromise()
                         .then(tgm -> tgm.updateData.message.chat.id)
                         .then(chatId -> {
-                            var deliveryText = delivery.print();
                             tgBot.telegram.sendMessage(
                                 chatId,
-                                comment(unindent, format)/**
-                                    多謝支持🙇
-                                    我哋已經收到你嘅訂單：
-
-                                    ${deliveryText}
-                                **/,
+                                delivery.printReceivedMsg(),
                                 {
                                     disable_web_page_preview: true,
                                 }
@@ -382,15 +376,10 @@ class ServerMain {
                         });
                 });
             case WhatsApp:
-                var deliveryText = delivery.orders.map(o -> o.shop.info().name).join(", ") + " " + delivery.pickupTimeSlot.print();
                 twilio.messages.create({
                     from: "whatsapp:+85264507612",
                     to: 'whatsapp:+852' + delivery.customer.whatsApp,
-                    body: comment(unindent, format)/**
-                        多謝支持🙇
-                        我哋已經收到你嘅訂單：
-                        ${deliveryText}
-                    **/,
+                    body: delivery.printReceivedMsg(),
                 }).then(msg -> {
                     trace(msg);
                     null;
