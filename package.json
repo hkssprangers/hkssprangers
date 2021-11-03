@@ -58,7 +58,7 @@
     "fastify-formbody": "^5.1.0",
     "fastify-static": "^4.4.2",
     "fastify-telegraf": "^1.0.1",
-    "google-auth-library": "^7.10.1",
+    "google-auth-library": "^7.10.2",
     "google-spreadsheet": "^3.1.15",
     "image-data-uri": "^2.0.1",
     "image-type": "^4.1.0",
