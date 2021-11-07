@@ -29,7 +29,7 @@
     "envify": "^4.1.0",
     "js-cookie": "^3.0.1",
     "nodemon": "^2.0.14",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.0.1",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
     "serverless": "^2.65.0",
     "serverless-prune-plugin": "^1.6.1",
