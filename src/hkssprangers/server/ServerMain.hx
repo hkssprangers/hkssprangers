@@ -39,6 +39,7 @@ using hkssprangers.info.TimeSlotTools;
 class ServerMain {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
     static public final deployStage:DeployStage = Sys.getEnv("DEPLOY_STAGE");
+    static public var protocal = "https://";
     static public var host = switch (Sys.getEnv("SERVER_HOST")) {
         case null: "127.0.0.1";
         case v: v;
@@ -102,7 +103,7 @@ class ServerMain {
             reply.status(ErrorCode.Unauthorized).send("Wrong Twilio account sid.");
             return Promise.resolve();
         }
-        if (!Twilio.validateRequest(TwilioConfig.authToken, twilioSignature, Path.join(["https://" + host, "twilio"]), reqBody)) {
+        if (!Twilio.validateRequest(TwilioConfig.authToken, twilioSignature, Path.join([protocal + host, "twilio"]), reqBody)) {
             trace("Request validation failed.");
             reply.status(ErrorCode.Unauthorized).send("Request validation failed.");
             return Promise.resolve();
@@ -139,7 +140,7 @@ class ServerMain {
                 jwtSigner.sign(cast payload)
                 .toJsPromise()
                 .then(signed -> {
-                    var link = Path.join(["https://" + host, "jwtAuth?redirectTo=%2Forder-food&jwt=" + signed]);
+                    var link = Path.join([protocal + host, "jwtAuth?redirectTo=%2Forder-food&jwt=" + signed]);
                     var twiml = new MessagingResponse();
                     twiml.message(comment(unindent, format)/**
                         你好！以下登入連結 ${validDays} 日內有效。你可以隨時再同我講「登入落單」拎個新嘅登入連結。
@@ -432,7 +433,7 @@ class ServerMain {
                                 關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one
                             **/);
                         }
-                        var loginUrl = Path.join(["https://" + host, "tgAuth?redirectTo=%2Forder-food"]);
+                        var loginUrl = Path.join([protocal + host, "tgAuth?redirectTo=%2Forder-food"]);
                         trace(loginUrl);
                         return ctx.reply('你好！請㩒「登入落單」制。', {
                             reply_markup: Markup.inlineKeyboard_([
@@ -470,48 +471,32 @@ class ServerMain {
         }
 
         if (isMain) {
-            var ngrok:Dynamic = require("ngrok");
-            // properly shutdown when restarted by nodemon
-            process.once('SIGUSR2', function () {
-                ngrok.kill().then(() -> {
-                    process.kill(process.pid, 'SIGUSR2');
-                });
-            });
             switch (Sys.args()) {
                 case []:
-                    var port = 3000;
-                    var ngrokUrl:Promise<String> = ngrok.connect(port);
-                    var certs:Promise<Dynamic> = require("https-localhost")().getCerts();
-
-                    ngrokUrl.then((url:String) -> {
-                        certs.then(certs -> {
-                            initServer({
-                                serverFactory: (handler, opts) -> {
-                                    require('@httptoolkit/httpolyglot').createServer(certs, handler);
-                                },
-                            });
-                        }).then(a -> {
-                            app = a;
-                            app.listen(port, "0.0.0.0");
-                        }).then(_ -> {
-                            Sys.println('https://' + host);
-                            Sys.println(url);
-                            // host = new URL(url).host;
-                            var hook = Path.join([url, tgBotWebHook]);
+                    initServer()
+                        .then(app -> {
+                            app.listen(80, "0.0.0.0");
+                            ServerMain.protocal = "http://";
+                            Sys.println(protocal + host);
+                            Cloudflared.getHostname("http://cloudflared:44871/metrics");
+                        })
+                        .then(hostname -> {
+                            Sys.println(hostname);
+                            var hook = Path.join([hostname, tgBotWebHook]);
                             tgBot.telegram.setWebhook(hook)
                                 .then(_ -> tgMe)
                                 .then(me -> {
                                     Sys.println('https://t.me/${me.username}');
                                 });
+                        })
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
                         });
-                    }).catchError(err -> {
-                        trace(err);
-                        Sys.exit(1);
-                    });
                 case ["holidays"]:
                     HkHolidays.main();
                 case ["setTgWebhook"]:
-                    var hook = Path.join(["https://" + host, tgBotWebHook]);
+                    var hook = Path.join([protocal + host, tgBotWebHook]);
                     trace(hook);
                     tgBot.telegram.setWebhook(hook);
                 case args:

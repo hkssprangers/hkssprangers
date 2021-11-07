@@ -12,21 +12,27 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_USER=root
       - MYSQL_PASSWORD=devroot
-    ports:
-      - "3000:3000"
-      - "80:3000"
-      - "443:3000"
     user: vscode
     entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity
+    expose:
+      - "80"
   mysql:
     image: mysql:8.0
     environment:
       - TZ=UTC
       - MYSQL_ROOT_PASSWORD=devroot
       - MYSQL_DATABASE=hkssprangers
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
       - ../dev/initdb:/docker-entrypoint-initdb.d
     restart: unless-stopped
+  cloudflared:
+    image: cloudflare/cloudflared:2021.10.5
+    environment:
+      - TUNNEL_METRICS=cloudflared:44871
+      - TUNNEL_TRANSPORT_PROTOCOL=http2
+    command: tunnel --no-autoupdate --url http://workspace:80
+    expose:
+      - "44871"
