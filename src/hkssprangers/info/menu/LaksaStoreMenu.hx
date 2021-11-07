@@ -7,14 +7,17 @@ enum abstract LaksaStoreItem(String) to String {
     final NoodleSet;
     final RiceSet;
     final BakKutTeh;
+    final Hotpot;
 
     static public final all:ReadOnlyArray<LaksaStoreItem> = [
+        Hotpot,
         NoodleSet,
         RiceSet,
         BakKutTeh,
     ];
 
-    public function getDefinition():Dynamic return switch (cast this:LaksaStoreItem) {
+    public function getDefinition(pickupTimeSlot:Null<TimeSlot>):Dynamic return switch (cast this:LaksaStoreItem) {
+        case Hotpot: LaksaStoreMenu.LaksaStoreHotpot(pickupTimeSlot);
         case NoodleSet: LaksaStoreMenu.LaksaStoreNoodleSet;
         case RiceSet: LaksaStoreMenu.LaksaStoreRiceSet;
         case BakKutTeh: LaksaStoreMenu.LaksaStoreBakKutTeh;
@@ -36,6 +39,31 @@ class LaksaStoreMenu {
             "罐裝忌廉",
         ],
     };
+
+    static public function LaksaStoreHotpot(pickupTimeSlot:Null<TimeSlot>) {
+        final now:LocalDateString = Date.now();
+        final earlyOrder = pickupTimeSlot != null && now.getDatePart() < pickupTimeSlot.start.getDatePart();
+        final hotpot = if (earlyOrder) {
+            "喇沙二人火鍋套餐 (提前一天預訂) $268";
+        } else {
+            "喇沙二人火鍋套餐 (即日) $288";
+        }
+        return {
+            title: "喇沙二人火鍋套餐",
+            description: "提前一天預訂 $268，即日落單 $288。\n包括：喇沙湯底 薄切牛肩肉150g 美國肥牛200g 雞件 蜆 越南虎蝦四隻 銀芽 鮮什菌 娃娃菜 咸蛋流心丸 豆腐卜 甜不辣 米粉 油麵",
+            properties: {
+                main: {
+                    title: "喇沙二人火鍋套餐",
+                    type: "string",
+                    "enum": [
+                        hotpot,
+                    ],
+                    "default": hotpot,
+                },
+            },
+            required: ["main"],
+        }
+    }
 
     static public final LaksaStoreNoodleSet = {
         title: "喇沙／冬蔭公",
@@ -119,7 +147,7 @@ class LaksaStoreMenu {
         ]
     }
     
-    static public function itemsSchema(order:FormOrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
@@ -127,7 +155,7 @@ class LaksaStoreMenu {
                     title: "食物種類",
                     type: "string",
                     oneOf: LaksaStoreItem.all.map(item -> {
-                        title: item.getDefinition().title,
+                        title: item.getDefinition(pickupTimeSlot).title,
                         const: item,
                     }),
                 },
@@ -145,15 +173,19 @@ class LaksaStoreMenu {
                         //pass
                     case NoodleSet:
                         Object.assign(itemSchema.properties, {
-                            item: NoodleSet.getDefinition(),
+                            item: NoodleSet.getDefinition(pickupTimeSlot),
                         });
                     case RiceSet:
                         Object.assign(itemSchema.properties, {
-                            item: RiceSet.getDefinition(),
+                            item: RiceSet.getDefinition(pickupTimeSlot),
                         });
                     case BakKutTeh:
                         Object.assign(itemSchema.properties, {
-                            item: BakKutTeh.getDefinition(),
+                            item: BakKutTeh.getDefinition(pickupTimeSlot),
+                        });
+                    case Hotpot:
+                        Object.assign(itemSchema.properties, {
+                            item: Hotpot.getDefinition(pickupTimeSlot),
                         });
                 }
                 itemSchema;
@@ -163,14 +195,17 @@ class LaksaStoreMenu {
         };
     }
 
-    static function summarizeItem(orderItem:{
-        ?type:LaksaStoreItem,
-        ?item:Dynamic,
-    }):{
+    static function summarizeItem(
+        pickupTimeSlot:Null<TimeSlot>,
+        orderItem:{
+            ?type:LaksaStoreItem,
+            ?item:Dynamic,
+        }
+    ):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition();
+        var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
             case NoodleSet:
                 var price = parsePrice(LaksaStoreNoodleSet.description).price;
@@ -187,6 +222,11 @@ class LaksaStoreMenu {
                         fullWidthSpace + orderItem.item.drink,
                     orderPrice: parsePrice(orderItem.item.main).price,
                 };
+            case Hotpot:
+                {
+                    orderDetails: fullWidthDot + orderItem.item.main,
+                    orderPrice: parsePrice(orderItem.item.main).price,
+                };
             case _:
                 {
                     orderDetails: "",
@@ -195,8 +235,11 @@ class LaksaStoreMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+    static public function summarize(
+        pickupTimeSlot:Null<TimeSlot>,
+        formData:FormOrderData
+    ):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(pickupTimeSlot, cast item)));
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,

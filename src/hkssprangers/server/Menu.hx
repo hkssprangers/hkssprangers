@@ -431,6 +431,10 @@ class Menu extends View<MenuProps> {
         return jsx('
             <Fragment>
                 <div className="p-3">
+                    <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
+                    <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
+                </div>
+                <div className=${["p-3", "md:border-t-4"].concat(style.borderClasses).join(" ")}>
                     ${renderItemRow(itemPrice.item, "$" + itemPrice.price, ["text-xl", "font-bold"].concat(style.headerClasses))}
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>

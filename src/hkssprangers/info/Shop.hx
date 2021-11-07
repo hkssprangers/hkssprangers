@@ -535,7 +535,7 @@ enum abstract Shop(String) to String {
             case DragonJapaneseCuisine:
                 DragonJapaneseCuisineMenu.itemsSchema(o);
             case LaksaStore:
-                LaksaStoreMenu.itemsSchema(o);
+                LaksaStoreMenu.itemsSchema(pickupTimeSlot, o);
             case KCZenzero:
                 KCZenzeroMenu.itemsSchema(pickupTimeSlot, o);
             case HanaSoftCream:
@@ -592,7 +592,7 @@ enum abstract Shop(String) to String {
             case KCZenzero:
                 KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start));
             case LaksaStore:
-                LaksaStoreMenu.summarize(o);
+                LaksaStoreMenu.summarize(pickupTimeSlot, o);
             case MGY:
                 MGYMenu.summarize(o);
             case Neighbor:
