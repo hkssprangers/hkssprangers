@@ -19,6 +19,7 @@ using StringTools;
 using Lambda;
 using hkssprangers.MathTools;
 using hkssprangers.ObjectTools;
+using hkssprangers.db.DatabaseTools;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.DeliveryTools;

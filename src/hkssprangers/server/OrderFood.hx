@@ -11,6 +11,7 @@ import haxe.io.Path;
 import haxe.Json;
 import hkssprangers.server.ServerMain.*;
 import telegram_typings.User as TgUser;
+using hkssprangers.db.DatabaseTools;
 using hkssprangers.server.FastifyTools;
 using StringTools;
 

@@ -1,7 +1,7 @@
-# @install: lix --silent download "gh://github.com/andyli/tink_sql#a0087b89c1966fa832f6fbe9872a70c0cd98dfb5" into tink_sql/0.0.0-alpha.0/github/a0087b89c1966fa832f6fbe9872a70c0cd98dfb5
+# @install: lix --silent download "gh://github.com/andyli/tink_sql#bacfa012157e90938dd70bf0cd7556da69fceb90" into tink_sql/0.0.0-alpha.0/github/bacfa012157e90938dd70bf0cd7556da69fceb90
 -lib tink_macro
 -lib tink_spatial
 -lib tink_streams
 -lib tink_url
--cp ${HAXE_LIBCACHE}/tink_sql/0.0.0-alpha.0/github/a0087b89c1966fa832f6fbe9872a70c0cd98dfb5/src
+-cp ${HAXE_LIBCACHE}/tink_sql/0.0.0-alpha.0/github/bacfa012157e90938dd70bf0cd7556da69fceb90/src
 -D tink_sql=0.0.0-alpha.0
