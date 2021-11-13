@@ -605,6 +605,19 @@ class DeliveryFee {
             }
         },
         {
+            place: "曉尚",
+            match: address -> address.contains("曉尚") || address.contains("High Point"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
+        {
             place: "福榮街33-120號",
             match: address -> {
                 var r = ~/福榮街\s*([0-9]+)/;
