@@ -61,7 +61,7 @@ class WoStreetMenu {
         ]
     };
     static public final WoStreetDrink = {
-        title: "Drink",
+        title: "飲品",
         type: "string",
         "enum": [
             "罐裝可樂 $6",

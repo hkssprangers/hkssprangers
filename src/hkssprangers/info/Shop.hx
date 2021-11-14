@@ -469,7 +469,7 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                earliestPickupTime: "12:30:00",
+                earliestPickupTime: "18:00:00",
                 latestPickupTime: "20:00:00",
                 isInService: true,
             }
