@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.16.0",
     "@date-io/moment": "1.x",
     "@material-ui/core": "^4.12.3",
@@ -40,7 +40,7 @@
     "workbox-cacheable-response": "^6.3.0",
     "workbox-core": "^6.3.0",
     "workbox-expiration": "^6.3.0",
-    "workbox-navigation-preload": "^6.3.0",
+    "workbox-navigation-preload": "^6.4.1",
     "workbox-recipes": "^6.3.0",
     "workbox-routing": "^6.3.0",
     "xlsx": "^0.17.4"
