@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.16.0",
     "@date-io/moment": "1.x",
     "@material-ui/core": "^4.12.3",
@@ -52,7 +52,7 @@
     "fastify": "^3.24.0",
     "fastify-accepts": "^2.1.0",
     "fastify-cookie": "^5.3.2",
-    "fastify-formbody": "^5.1.0",
+    "fastify-formbody": "^5.2.0",
     "fastify-static": "^4.5.0",
     "fastify-telegraf": "^1.0.1",
     "google-auth-library": "^7.10.2",
