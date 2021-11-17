@@ -77,12 +77,14 @@ USER $USERNAME
 WORKDIR /workspace
 COPY workspace/.haxerc /workspace/
 RUN lix install haxe "$(jq -r ".version" .haxerc)"
-COPY workspace/package.json workspace/yarn.lock /workspace/
-RUN yarn
-COPY workspace /workspace/
+COPY workspace/*.hxml /workspace/
+COPY workspace/haxe_libraries /workspace/haxe_libraries
 RUN lix download
+COPY workspace/package.json workspace/yarn.lock workspace/gen-externs.sh /workspace/
+RUN yarn
+VOLUME /workspace/node_modules
 RUN yarn dts2hx
-VOLUME /workspace/node_modules /workspace/lib/dts2hx
+VOLUME /workspace/lib/dts2hx
 USER root
 
 # Expose pip installed binaries

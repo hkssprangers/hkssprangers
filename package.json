@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tailwind": "tailwindcss-cli build -o static/css/tailwind.css",
-    "dts2hx": "dts2hx telegraf twilio @types/js-cookie moment copy-to-clipboard fastify @types/accepts aws-serverless-fastify google-auth-library abort-controller @types/promise-retry ajv node-ical --noLibWrap --useSystemHaxe --output lib/dts2hx",
+    "dts2hx": "sh gen-externs.sh",
     "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload --noLibWrap --output lib/workbox",
     "start": "nodemon -L index.js"
   },
