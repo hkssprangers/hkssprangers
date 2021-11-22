@@ -48,9 +48,15 @@ class LaksaStoreMenu {
         } else {
             "喇沙二人火鍋套餐 (即日) $288";
         }
+        final meatOptions = [
+            "薄切牛肩肉150g",
+            "美國肥牛200g",
+            "黑豚肉150g",
+            "腩片200g",
+        ];
         return {
             title: "喇沙二人火鍋套餐",
-            description: "提前一天預訂 $268，即日落單 $288。\n包括：喇沙湯底 薄切牛肩肉150g 美國肥牛200g 雞件 蜆 越南虎蝦四隻 銀芽 鮮什菌 娃娃菜 咸蛋流心丸 豆腐卜 甜不辣 米粉 油麵",
+            description: "提前一天預訂 $268，即日落單 $288。\n包括：喇沙湯底 牛/豚四選二 雞件 蜆 越南虎蝦四隻 銀芽 鮮什菌 娃娃菜 咸蛋流心丸 豆腐卜 甜不辣 米粉 油麵",
             properties: {
                 main: {
                     title: "喇沙二人火鍋套餐",
@@ -60,8 +66,18 @@ class LaksaStoreMenu {
                     ],
                     "default": hotpot,
                 },
+                meat1: {
+                    title: "肉（一）",
+                    type: "string",
+                    "enum": meatOptions,
+                },
+                meat2: {
+                    title: "肉（二）",
+                    type: "string",
+                    "enum": meatOptions,
+                }
             },
-            required: ["main"],
+            required: ["main", "meat1", "meat2"],
         }
     }
 
@@ -224,7 +240,11 @@ class LaksaStoreMenu {
                 };
             case Hotpot:
                 {
-                    orderDetails: fullWidthDot + orderItem.item.main,
+                    orderDetails:
+                        fullWidthDot + orderItem.item.main + "\n" +
+                        fullWidthSpace + "肉（一）：" + orderItem.item.meat1 + "\n" +
+                        fullWidthSpace + "肉（二）：" + orderItem.item.meat2
+                    ,
                     orderPrice: parsePrice(orderItem.item.main).price,
                 };
             case _:
