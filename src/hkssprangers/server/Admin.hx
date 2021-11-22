@@ -137,7 +137,7 @@ class Admin extends View<AdminProps> {
                 if (failure.code == 404) {
                     trace('${tg.username} (${tg.id}) is not one of the couriers.');
                 } else {
-                    trace(failure.message + "\n\n" + failure.exceptionStack);
+                    trace(failure.code + " " + failure.message + "\n\n" + failure.exceptionStack);
                 }
                 tink.core.Promise.resolve(null);
             }).toJsPromise();
