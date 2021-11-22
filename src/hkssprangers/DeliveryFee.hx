@@ -1247,6 +1247,19 @@ class DeliveryFee {
                 case TungChauStreetParkCluster: 35;
             }
         },
+        {
+            place: "星匯居",
+            match: address -> address.contains("星匯居"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 35;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
     ];
 
     static public function decideDeliveryFee(delivery:Delivery):Null<Float> {
