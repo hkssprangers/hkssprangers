@@ -1466,6 +1466,18 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.0.tgz#2ff674e9611b45b528896d820d3d7a812de2f0e4"
   integrity sha512-FyD2meJpDPjyNQejSjvnhpgI/azsQkA4lGbuu5BQZfjvJ9cbRZXzeWL2HceCekW4lixO9JPesIIQkSoLjeJHNQ==
 
+"@splidejs/react-splide@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.6.5.tgz#b03905cddde608a438d1c9f146745708642940bd"
+  integrity sha512-h0jQoD4CeTV5ioiss0n0EKNRd1H30l/rvjyuJJz8WRNFCESr8yDLwIjiwryI4vhGmqt0AajSpR3tj823ulAt+g==
+  dependencies:
+    "@splidejs/splide" "^3.2.0"
+
+"@splidejs/splide@^3.2.0":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.2.1.tgz#f270ee96fb954f2addb38b16de12ae948e80a90c"
+  integrity sha512-P6gBp+JtsG67ZnHWxzA8jGc7rZQ1nls7CDJQkQeexxXdFu+4myouRIzXhooU/uWdQDNEQ4ttgC3F1+T1tgstuw==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"

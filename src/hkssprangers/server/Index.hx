@@ -36,6 +36,9 @@ class Index extends View<IndexProps> {
         return jsx('
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+                <link href=${R("/js/splide/splide.min.css")} rel="stylesheet"/>
+                <script src=${R("/js/splide/splide.min.js")}></script>
+                <script src=${R("/js/splide/banner.js")}></script>
                 ${super.depScript()}
             </Fragment>
         ');
@@ -77,22 +80,23 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        return null;
-        var title = "埗兵糧食儲備升級團購encore";
-        var url = "https://docs.google.com/forms/d/e/1FAIpQLSdMgjgT9JnZ29YEN3LQb4FAFxP5OXtF_nvG-EM9n8bGZBRKKg/viewform";
-        var img = StaticResource.image("/images/kolb5-web-banner.jpg", title, "w-full");
+        // return null;
+        var title = "埗兵團購";
+        var url = "https://docs.google.com/forms/d/e/1FAIpQLSdEA89MJzlOB-xKq3Y0qJsnzSKrweJdUSgNaKb1dsoWDxdMPg/viewform";
+        var img = StaticResource.image("/images/kolb6-web-banner.jpg", title, "");
         var className = if (img == null) {
             "flex items-center place-content-center text-center bg-white h-32 text-2xl";
         } else {
             "";
         }
         return jsx('
-            <div className=${className}>
+        
+        <div className=${className}>
                 <a href=${url}>
                     ${img != null ? img : title}
                 </a>
-            </div>
-        ');
+                </div>
+            ');
     }
 
     static public function orderButton() return jsx('
@@ -112,6 +116,131 @@ class Index extends View<IndexProps> {
             </div>
         </div>
     ');
+
+    static public function howToOrderSection() return jsx('
+
+        <Fragment>
+            <section className="h-12 md:h-16">&nbsp;</section>
+            <section id="sectionHow" className="bg-white">
+
+                <div className="py-12 md:py-16 mx-auto container">
+
+                    <div className="mx-3 mt-6 lg:mx-0 lg:mt-0">
+                    
+                        <div className="md:flex border-b-4 border-black items-end">
+                            <div className="md:w-1/2">
+                            <div className="rounded-full bg-gradient-to-r from-yellow-400 via-red-500 to-yellow-600 flex justify-center p-1 text-center text-md lg:text-lg">
+                                <a className="w-1/3 lg:w-1/4 rounded-full bg-white p-1 md:py-3 md:px-4 mr-4 duration-75 cursor-pointer how-step" data-num="0">登入系統</a>
+                                <a className="w-1/3 lg:w-1/4 rounded-full text-white font-bold p-1 md:py-3 md:px-4 mr-4 duration-75 cursor-pointer how-step" data-num="1">填寫表格</a>
+                                <a className="w-1/3 lg:w-1/4 rounded-full text-white font-bold p-1 md:py-3 md:px-4 duration-75 cursor-pointer how-step" data-num="2">確認訂單</a>
+                            </div>
+                            <div className="p-0 lg:p-16 lg:pt-16 lg:pr-0">
+                                <div className="px-6 py-3 md:p-16 md:h-48 how-desp" data-num="0">
+                                <p>經Telegram / Whatsapp 搵<span className="whitespace-nowrap">埗兵機械人登入系統</span></p>
+                                <ul className="list-disc">
+                                    <li>Whatsapp: 輸入"登入落單"，<span className="whitespace-nowrap">㩒連結登入</span></li>
+                                    <li>Telegram: 輸入"/start"，<span  className="whitespace-nowrap">㩒"登入落單"掣登入</span></li>
+                                </ul>
+                                </div>
+                                <div className="px-6 py-3 md:p-16 md:h-48 how-desp hidden" data-num="1">
+                                <p>選擇送餐時段同食物仲有拎餐方法</p>
+                                <ul className="list-disc">
+                                    <li>一張單可以叫晒鄰近嘅餐廳</li>
+                                    <li>唔限幾多個餐</li>
+                                </ul>
+                                </div>
+                                <div className="px-6 py-3 md:p-16 md:h-48 how-desp hidden" data-num="2">
+                                截單時間一到，埗兵外賣員就會搵你對單同收款，<span className="whitespace-nowrap">之後好快開餐~付款方法有:</span>
+                                <ul className="list-disc">
+                                    <li>Payme</li>
+                                    <li>FPS</li>
+                                </ul>
+                                </div>
+                            </div>
+                            </div>
+                            <div className="md:w-1/2">
+                            <div className="flex justify-center lg:pt-16 how-image" data-num="0">
+                                <img className="w-4/5 rounded-t-lg" src="images/how23.png"/>
+                            </div>
+                            <div className="flex justify-center lg:pt-16 how-image hidden" data-num="1">
+                                <img className="w-4/5 rounded-t-lg" src="images/how35.png"/>
+                            </div>
+                            <div className="flex justify-center lg:pt-16 how-image hidden" data-num="2">
+                                <img className="w-4/5 rounded-t-lg" src="images/how4.png"/>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div className="md:flex md:mx-auto container pt-3 lg:pt-16">
+                            <div className="md:w-1/3 lg:pr-16">
+                            
+                                <div className="text-lg font-bold mb-3"><i className="fas fa-map-marked-alt"></i> 埗兵運費點計?</div>
+                                <p className="mb-3">運費計算:<br/>以店舖同目的地之間嘅步行距離計算，會因應實際情況(如長樓梯)調整。</p>
+                                <div className="mb-3">
+                                    步行15分鐘或以內
+                                    <p className="text-xl lg:text-4xl font-bold poppins">$$25</p>
+                                </div>
+                                <div className="mb-3">
+                                    步行15至20分鐘
+                                    <p className="text-xl lg:text-4xl font-bold poppins">$$35</p>
+                                </div>
+                                <div className="mb-3">
+                                    距離較遠需要車手負責外賣
+                                    <p className="text-xl lg:text-4xl font-bold poppins">$$40</p>
+                                </div>
+                                
+                            </div>
+                            <div className="md:w-2/3">
+                            <div className="flex mb-3">
+                            <div className="p-3 border-t-4 border-b-4 border-r-4 border-yellow-300 flex items-center justify-center">
+                                    <div className="border-yellow-300 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl  lg:text-4xl font-bold poppins transform rotate-12">午</div>
+                                </div>
+                                <div className="flex-1 md:flex border-t-4 border-b-4 border-yellow-300">
+                                    <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-yellow-300 flex items-center">
+                                    <div>
+                                        <i className="far fa-clock"></i> 派送時間
+                                        <p className="text-xl lg:text-4xl font-bold poppins">12:30-14:30</p>
+                                    </div>
+                                    </div>
+                                    <div className="p-3 border-yellow-300 flex items-center">
+                                    <div>
+                                        <i className="fas fa-hourglass-end"></i> 截單時間
+                                        <p className="text-xl lg:text-4xl font-bold poppins">10:00</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div className="flex">
+                                <div className="p-3 border-t-4 border-b-4 border-r-4 border-blue-800 flex items-center justify-center">
+                                    <div className="border-blue-800 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl lg:text-4xl font-bold poppins transform -rotate-12">晚</div>
+                                </div>
+                                <div className="flex-1 md:flex border-t-4 border-b-4 border-blue-800">
+                                    <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-blue-800 flex items-center">
+                                    <div>
+                                        <i className="far fa-clock"></i> 派送時間
+                                        <p className="text-xl lg:text-4xl font-bold poppins">18:30-20:30</p>
+                                    </div>
+                                    </div>
+                                    <div className="p-3 border-yellow-300 flex items-center">
+                                    <div>
+                                        <i className="fas fa-hourglass-end"></i> 截單時間
+                                        <p className="text-xl lg:text-4xl font-bold poppins">19:00</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+        </Fragment>
+    
+        ');
 
     function renderShops() {
         var rowClasses          = "px-4 sm:px-6 lg:p-6 flex flex-wrap lg:flex-nowrap";
@@ -386,115 +515,326 @@ class Index extends View<IndexProps> {
             <Fragment>
                 ${announcement()}
                 <main>
-                    <div className="p-6 md:mb-32 md:p-0 mx-auto md:w-4/5 max-w-screen-lg">
-                        <div className="my-6 text-center">
+                    <div className="p-3 lg:px-0 md:py-6 mx-auto container">
+
+                        <div className="flex items-center">
                             <a href="/">
-                                ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-1/4 lg:w-1/6")}
+                                ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
+                            </a>
+                            <div className="flex-1 pl-3">
+                                <b className="text-lg lg:text-xl">埗兵</b>
+                                <p>為深水埗黃店服務為主嘅外賣平台</p>
+                            </div>
+                            <div className="hidden md:block">
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-black text-white" href="/">立即落單</a>
+                            </div>
+                        </div>
+                    </div>
+                    ${banner()}
+                    <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-50 text-md md:text-lg">
+                        <div className="flex text-center h-12 md:h-16 mx-auto container lg:border-x-4">
+                            <a className="w-1/2 flex items-center justify-center border-r-4 border-black" href="#sectionMap">
+                            <span>合作餐廳&nbsp;<i className="fas fa-utensils"></i></span>
+                            </a>
+                            <a className="w-1/2 flex items-center justify-center" href="#sectionHow">
+                            <span>點叫嘢食&nbsp;<i className="fas fa-clipboard-list"></i></span>
                             </a>
                         </div>
-                        <div className="p-6 text-xl lg:text-4xl font-bold text-center">
-                            <h1 className="inline">埗兵</h1>係為<span className="whitespace-nowrap">深水埗黃店</span>服務為主嘅<span className="whitespace-nowrap">外賣平台</span>
-                        </div>
-                        ${banner()}
-                        <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
-                            <h2>合作餐廳 / 商店</h2>
-                        </div>
-                        ${renderShops()}
-                        <div className="p-6 text-xl text-center lg:text-2xl font-bold bg-curve">
-                            <h2>服務資訊</h2>
-                        </div>
-                        <div className="bg-white rounded-xl p-6">
-                            <div className="lg:flex mb-6 lg:mb-12">
-                                <div className="lg:w-1/3 flex items-center">
-                                    <div>
-                                        <div className="text-lg font-bold mb-3"><i className="fas fa-utensils"></i> 點搵埗兵叫野食？</div>
-                                        <div className="flex mb-3">
-                                            <div className="border-black border-4 rounded-full w-9 h-9 flex items-center justify-center font-bold poppins">1</div>
-                                            <div className="p-2">填表落單</div>
-                                        </div>
-                                        <div className="flex mb-3">
-                                            <div className="border-black border-4 rounded-full w-9 h-9 flex items-center justify-center font-bold poppins">2</div>
-                                            <div className="p-2">外賣員聯絡你</div>
-                                        </div>
-                                        <div className="flex mb-3">
-                                            <div className="border-black border-4 rounded-full w-9 h-9 flex items-center justify-center font-bold poppins">3</div>
-                                            <div className="p-2">向外賣員付款 <span className="highlight">(PayMe / FPS)</span></div>
-                                        </div>
-                                        <div className="flex mb-3">
-                                            <div className="border-black border-4 rounded-full w-9 h-9 flex items-center justify-center font-bold poppins transform -rotate-12">4</div>
-                                            <div className="p-2">好快有得食 <i className="fas fa-glass-cheers"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="lg:w-2/3">
-                                    <div className="flex mb-3">
-                                        <div className="p-3 border-t-4 border-b-4 border-r-4 border-yellow-300 flex items-center justify-center">
-                                            <div className="border-yellow-300 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl  lg:text-4xl font-bold poppins transform rotate-12">午</div>
-                                        </div>
-                                        <div className="flex-1 md:flex border-t-4 border-b-4 border-yellow-300">
-                                            <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-yellow-300 flex items-center">
-                                                <div>
-                                                    <i className="far fa-clock"></i> 派送時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">12:30-14:30</p>
-                                                </div>
-                                            </div>
-                                            <div className="p-3 border-yellow-300 flex items-center">
-                                                <div>
-                                                    <i className="fas fa-hourglass-end"></i> 截單時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">10:00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex">
-                                        <div className="p-3 border-t-4 border-b-4 border-r-4 border-blue-800 flex items-center justify-center">
-                                            <div className="border-blue-800 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl lg:text-4xl font-bold poppins transform -rotate-12">晚</div>
-                                        </div>
-                                        <div className="flex-1 md:flex border-t-4 border-b-4 border-blue-800">
-                                            <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-blue-800 flex items-center">
-                                                <div>
-                                                    <i className="far fa-clock"></i> 派送時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">18:30-20:30</p>
-                                                </div>
-                                            </div>
-                                            <div className="p-3 border-yellow-300 flex items-center">
-                                                <div>
-                                                    <i className="fas fa-hourglass-end"></i> 截單時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">19:00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="lg:flex">
-                                <div className="lg:w-1/3 lg:mr-6 flex">
-                                    <div className="">
-                                        <div className="text-lg font-bold mb-3"><i className="fas fa-map-marked-alt"></i> 埗兵送到邊？點計錢？</div>
-                                        <p className="mb-3">地圖有埗兵主要送餐範圍</p>
-                                        <p className="mb-3">運費計算：<br />以店舖同目的地之間嘅步行距離計算，會因應實際情況(如長樓梯)調整。</p>
-                                        <div className="mb-3">
-                                            步行15分鐘或以內
-                                            <p className="text-xl lg:text-4xl font-bold poppins">$$25</p>
-                                        </div>
-                                        <div className="mb-3">
-                                            步行15至20分鐘
-                                            <p className="text-xl lg:text-4xl font-bold poppins">$$35</p>
-                                        </div>
-                                        <div className="mb-3">
-                                            距離較遠需要步兵搭車或者車手
-                                            <p className="text-xl lg:text-4xl font-bold poppins">$$40</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="lg:w-2/3">
-                                    ${StaticResource.image("/images/map3.jpg", "送餐範圍", "rounded-xl")}
-                                </div>
-                            </div>
-                        </div>
-                        ${orderButton()}
                     </div>
+
+                    <section id="sectionMap" className="bg-slash-black-20">
+                        <div className="py-12 md:py-16 mx-auto container">
+                            <div className="mx-3 lg:mx-0 md:flex border-4 border-black text-center md:text-left">
+                                <div className="container-rest md:w-1/3 md:overflow-y-scroll bg-white">
+                                    <div className="container-rest-caption border-b-4 bg-white border-black px-6 py-3">
+                                    可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
+                                    </div>
+                                    <div className="grid grid-cols-3 md:grid-cols-1">
+                
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-red-500 font-bold">
+                                            <i className="fas fa-map-marker-alt text-red-500"></i>&nbsp;<span>西九龍中心</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">6</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="89.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/89.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">89美食</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="laksa.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/laksa.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">喇沙專門店</h1>
+                                                    <h3 className="text-xs">逢星期三休息</h3>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="yyp.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/yyp.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">營業部</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="tomato.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/tomato.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">蕃廚</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="hana.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/hana.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">HANA SOFT CREAM</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="hana.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/WoStreet.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">窩Street</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-pink-500 font-bold">
+                                            <i className="fas fa-map-marker-alt text-pink-500"></i>&nbsp;<span>黃金商場</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">2</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="bill.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/bill.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-pink-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">標記樂園潮州粉麵菜館</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="fasttaste.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/fasttaste.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Fast Taste SSP</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-yellow-500 font-bold">
+                                            <i className="fas fa-map-marker-alt text-yellow-500"></i>&nbsp;<span>天悅廣場</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">1</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="neighbor.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/neighbor.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Neighbor</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
+                                            <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>石硤尾街休憩花園</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">3</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="park.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/park.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">The Park by Years</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="mgy.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/mgy.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">梅貴緣</h1>
+                                                    <h3 className="text-xs">逢星期一休息</h3>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="PokeGo.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/PokeGo.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Poke Go</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-400 font-bold">
+                                            <i className="fas fa-map-marker-alt text-green-400"></i>&nbsp;<span>中電</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">1</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="years.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/years.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-400 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Years</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-blue-500 font-bold">
+                                            <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>白田</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">2</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="zeppelin.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/zeppelin.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Zeppelin Hot Dog</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="zeppelin.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/Toolss.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">Toolss</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+                                        <div className="hidden md:flex items-center px-6 py-3 bg-pt-indigo-500 font-bold">
+                                            <i className="fas fa-map-marker-alt text-indigo-500"></i>&nbsp;<span>通州街公園</span>
+                                            <span className="flex-1 mx-3">&nbsp;</span>
+                                            <span className="">1</span>
+                                        </div>
+
+                                        <div className="p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link">
+                                            <a href="zeppelin.html" className="cursor-pointer menu">
+                                                <div className="md:flex"> 
+                                                <div className="relative btn-menu w-auto md:w-1/5 my-2 text-center">
+                                                    <img className="squircle" src="images/keihing.jpg"/>
+                                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-indigo-500 fas fa-book-open"></i><br/>menu</p>
+                                                </div>
+                                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                                    <h1 className="text-xs lg:text-lg lg:flex-1">琦興餐廳</h1>
+                                                </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 border-l-4 border-black">
+                                    <div id="map">map</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    ${howToOrderSection()}
+
                 </main>
             </Fragment>
         ');
