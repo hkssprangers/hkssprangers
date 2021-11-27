@@ -880,7 +880,7 @@ class KeiHingMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item));
         var boxTotalPrice = formData.items.length * 2;
         summaries.push({
-            orderDetails: "外賣盒 $2 × " + formData.items.length,
+            orderDetails: "外賣 $2 × " + formData.items.length,
             orderPrice: boxTotalPrice,
         });
         var s = concatSummaries(summaries);
