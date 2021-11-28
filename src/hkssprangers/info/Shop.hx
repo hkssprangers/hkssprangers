@@ -485,6 +485,8 @@ enum abstract Shop(String) to String {
                 return Unavailable('已結業 😥');
             case [BlaBlaBla, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-29"):
                 return Unavailable('已結業 😥');
+            case [DragonJapaneseCuisine, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-12-19"):
+                return Unavailable('已結業 😥');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
