@@ -12,7 +12,7 @@ enum abstract LaksaStoreItem(String) to String {
     static public final all:ReadOnlyArray<LaksaStoreItem> = [
         Hotpot,
         NoodleSet,
-        RiceSet,
+        // RiceSet,
         BakKutTeh,
     ];
 

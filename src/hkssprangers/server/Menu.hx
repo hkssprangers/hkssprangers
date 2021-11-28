@@ -431,8 +431,16 @@ class Menu extends View<MenuProps> {
         return jsx('
             <Fragment>
                 <div className="p-3">
-                    <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
-                    <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
+                    <div className="md:flex flex-row">
+                        <div className=${["md:w-1/2", "p-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
+                            <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
+                        </div>
+                        <div className="md:w-1/2 p-3">
+                            <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
+                            ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
+                        </div>
+                    </div>
                 </div>
                 <div className=${["p-3", "md:border-t-4"].concat(style.borderClasses).join(" ")}>
                     ${renderItemRow(itemPrice.item, "$" + itemPrice.price, ["text-xl", "font-bold"].concat(style.headerClasses))}
@@ -448,18 +456,6 @@ class Menu extends View<MenuProps> {
                             <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.noodle.enums())}</div>
                             <div className="p-3"><b>${LaksaStoreNoodleSet.properties.drink.title}</b></div>
                             <div className="p-3">${slashes(LaksaStoreNoodleSet.properties.drink.enums())}</div>
-                        </div>
-                    </div>
-                </div>
-                <div className=${["md:border-t-4"].concat(style.borderClasses).join(" ")}>
-                    <div className="md:flex flex-row">
-                        <div className=${["md:w-1/2", "p-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            <div className=${headerClasses}>${LaksaStoreRiceSet.title}</div>
-                            ${renderItems(LaksaStoreRiceSet.properties.main.enums())}
-                        </div>
-                        <div className="md:w-1/2 p-3">
-                            <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
-                            ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
                         </div>
                     </div>
                 </div>
