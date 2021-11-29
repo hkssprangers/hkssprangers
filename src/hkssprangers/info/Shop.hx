@@ -490,8 +490,10 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [DragonJapaneseCuisine, "2021-11-22", _]:
+            case [DragonJapaneseCuisine, "2021-12-02" | "2021-12-03", _]:
                 return Unavailable('休息一天');
+            case [DragonJapaneseCuisine, "2021-12-01" | "2021-12-08", Lunch]:
+                return Unavailable('午市休息');
 
             case _:
                 //pass
