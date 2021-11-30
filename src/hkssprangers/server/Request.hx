@@ -2,4 +2,4 @@ package hkssprangers.server;
 
 import fastify.FastifyRequest;
 
-typedef Request = FastifyRequest<Dynamic,Dynamic,Dynamic>;
+typedef Request = FastifyRequest<Dynamic,Dynamic,Dynamic,Dynamic>;
