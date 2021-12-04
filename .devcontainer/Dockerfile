@@ -73,8 +73,9 @@ RUN apt-get update \
 COPY --chown=$USER_UID:$USER_GID direnv.toml /home/$USERNAME/.config/direnv/config.toml
 
 # Install flyway
+ARG FLYWAY_VERSION=8.1.0
 RUN cd / \
-    && wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.1.1/flyway-commandline-7.1.1-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.1.1/flyway /usr/local/bin \
+    && wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-${FLYWAY_VERSION}/flyway /usr/local/bin \
     && chmod a+x /usr/local/bin/flyway
 
 # install skeema
