@@ -1,4 +1,4 @@
--- MariaDB dump 10.19  Distrib 10.5.10-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.13-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: first.cjqctxdxmaiu.ap-southeast-1.rds.amazonaws.com    Database: hkssprangers
 -- ------------------------------------------------------
@@ -42,4 +42,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-14 19:08:43
+-- Dump completed on 2021-12-04 14:07:34
