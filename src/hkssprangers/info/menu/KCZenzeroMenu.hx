@@ -105,7 +105,7 @@ class KCZenzeroMenu {
                     "九龍皇帝熱狗",
                     "妙菇皇后熱狗",
                     "雙魚巨蟹熱狗",
-                    "意式肉丸熱狗",
+                    // "意式肉丸熱狗",
                 ]
             },
             drink: KCZenzeroSetDrink(5, false),
@@ -147,7 +147,7 @@ class KCZenzeroMenu {
                         "煙鴨胸",
                         "蟹棒",
                         "司華力腸",
-                        "意式肉丸",
+                        // "意式肉丸",
                     ],
                 },
                 uniqueItems: true,
@@ -232,7 +232,7 @@ class KCZenzeroMenu {
                 "enum": [
                     "炸雞翼",
                     "薯條",
-                    "意式肉丸",
+                    // "意式肉丸",
                 ],
             },
             drink: KCZenzeroSetDrink(5, true),
