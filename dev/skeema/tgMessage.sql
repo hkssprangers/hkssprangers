@@ -1,5 +1,5 @@
 CREATE TABLE `tgMessage` (
-  `tgMessageId` int NOT NULL AUTO_INCREMENT,
+  `tgMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiverId` int NOT NULL,
   `messageData` json DEFAULT NULL,
   `updateType` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,

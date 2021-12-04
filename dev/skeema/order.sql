@@ -1,5 +1,5 @@
 CREATE TABLE `order` (
-  `orderId` int NOT NULL AUTO_INCREMENT,
+  `orderId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
   `orderCode` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
   `shopId` varchar(50) COLLATE utf8mb4_bin NOT NULL,

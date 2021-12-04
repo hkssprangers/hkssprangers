@@ -1,5 +1,5 @@
 CREATE TABLE `twilioMessage` (
-  `twilioMessageId` int NOT NULL AUTO_INCREMENT,
+  `twilioMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
   `data` json NOT NULL,
   PRIMARY KEY (`twilioMessageId`),

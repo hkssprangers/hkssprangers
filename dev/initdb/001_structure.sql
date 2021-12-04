@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `courier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `courier` (
-  `courierId` int NOT NULL AUTO_INCREMENT,
+  `courierId` int unsigned NOT NULL AUTO_INCREMENT,
   `courierTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `courierTgId` int DEFAULT NULL,
   `paymeAvailable` tinyint(1) NOT NULL,
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `delivery`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `delivery` (
-  `deliveryId` int NOT NULL AUTO_INCREMENT,
+  `deliveryId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
   `deliveryCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `pickupLocation` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -157,7 +157,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
-  `orderId` int NOT NULL AUTO_INCREMENT,
+  `orderId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
   `orderCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `shopId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -179,7 +179,7 @@ DROP TABLE IF EXISTS `receipt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `receipt` (
-  `receiptId` int NOT NULL AUTO_INCREMENT,
+  `receiptId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiptUrl` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `orderId` int DEFAULT NULL,
   `uploaderCourierId` int DEFAULT NULL,
@@ -197,7 +197,7 @@ DROP TABLE IF EXISTS `tgMessage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tgMessage` (
-  `tgMessageId` int NOT NULL AUTO_INCREMENT,
+  `tgMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiverId` int NOT NULL,
   `messageData` json DEFAULT NULL,
   `updateType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `twilioMessage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `twilioMessage` (
-  `twilioMessageId` int NOT NULL AUTO_INCREMENT,
+  `twilioMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
   `data` json NOT NULL,
   PRIMARY KEY (`twilioMessageId`),
@@ -240,4 +240,4 @@ CREATE TABLE `twilioMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-04 14:19:00
+-- Dump completed on 2021-12-04 14:25:41

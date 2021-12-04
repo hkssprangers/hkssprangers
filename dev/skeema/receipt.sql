@@ -1,5 +1,5 @@
 CREATE TABLE `receipt` (
-  `receiptId` int NOT NULL AUTO_INCREMENT,
+  `receiptId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiptUrl` varchar(1024) COLLATE utf8mb4_bin NOT NULL,
   `orderId` int DEFAULT NULL,
   `uploaderCourierId` int DEFAULT NULL,

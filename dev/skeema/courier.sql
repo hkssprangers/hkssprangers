@@ -1,5 +1,5 @@
 CREATE TABLE `courier` (
-  `courierId` int NOT NULL AUTO_INCREMENT,
+  `courierId` int unsigned NOT NULL AUTO_INCREMENT,
   `courierTgUsername` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `courierTgId` int DEFAULT NULL,
   `paymeAvailable` tinyint(1) NOT NULL,
