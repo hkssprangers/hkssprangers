@@ -91,9 +91,7 @@ CREATE TABLE `deliveryCourier` (
   `deliverySubsidy` decimal(12,4) NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`,`courierId`),
-  KEY `deliveryCourier_FK_courier` (`courierId`),
-  CONSTRAINT `deliveryCourier_FK_courier` FOREIGN KEY (`courierId`) REFERENCES `courier` (`courierId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `deliveryCourier_FK_delivery` FOREIGN KEY (`deliveryId`) REFERENCES `delivery` (`deliveryId`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `deliveryCourier_FK_courier` (`courierId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,9 +107,7 @@ CREATE TABLE `deliveryOrder` (
   `orderId` int NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`deliveryId`,`orderId`),
-  KEY `deliveryOrder_FK_order` (`orderId`),
-  CONSTRAINT `deliveryOrder_FK_delivery` FOREIGN KEY (`deliveryId`) REFERENCES `delivery` (`deliveryId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `deliveryOrder_FK_order` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `deliveryOrder_FK_order` (`orderId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -189,9 +185,7 @@ CREATE TABLE `receipt` (
   `uploaderCourierId` int DEFAULT NULL,
   PRIMARY KEY (`receiptId`),
   KEY `receipt_order_FK` (`orderId`),
-  KEY `receipt_courier_FK` (`uploaderCourierId`),
-  CONSTRAINT `receipt_courier_FK` FOREIGN KEY (`uploaderCourierId`) REFERENCES `courier` (`courierId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `receipt_order_FK` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `receipt_courier_FK` (`uploaderCourierId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -246,4 +240,4 @@ CREATE TABLE `twilioMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-04 14:07:33
+-- Dump completed on 2021-12-04 14:19:00
