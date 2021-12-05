@@ -3,7 +3,7 @@ resource "aws_db_instance" "first" {
   engine_version          = "8.0.23"
   instance_class          = "db.t2.micro"
   username                = "ssp"
-  parameter_group_name    = "default.mysql8.0"
+  parameter_group_name    = aws_db_parameter_group.first-mysql80.name
   allocated_storage       = 20
   max_allocated_storage   = 25
   backup_retention_period = 7
@@ -20,4 +20,26 @@ resource "aws_db_instance" "first" {
     "general",
     "slowquery",
   ]
+}
+
+resource "aws_db_parameter_group" "first-mysql80" {
+  name_prefix = "first-mysql80-"
+  family      = "mysql8.0"
+
+  parameter {
+    name         = "gtid-mode"
+    value        = "ON"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name         = "enforce_gtid_consistency"
+    value        = "ON"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "binlog_format"
+    value = "ROW"
+  }
 }
