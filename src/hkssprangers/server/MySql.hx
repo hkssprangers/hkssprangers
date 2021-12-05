@@ -13,6 +13,9 @@ class MySql {
         password: password,
         charset: "utf8mb4",
         timezone: "Z",
+        ssl: cast {
+            rejectUnauthorized: false,
+        }
     });
 
     static public final db = new hkssprangers.db.Database("hkssprangers", MySql.driver);
