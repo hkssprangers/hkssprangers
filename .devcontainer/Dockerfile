@@ -23,6 +23,13 @@ RUN apt-get update \
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
+# https://github.com/docker-library/mysql/blob/master/5.7/Dockerfile.debian
+# apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5 || \
+# apt-key adv --keyserver pgp.mit.edu --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5 || \
+# apt-key adv --keyserver keyserver.pgp.com --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5
+COPY mysql-public-key /tmp/mysql-public-key
+RUN apt-key add /tmp/mysql-public-key
+
 # Configure apt and install packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils dialog 2>&1 \
@@ -52,9 +59,10 @@ RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs=14.* \
     # Install mysql-client
-    && apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' \
-    && add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.ubuntu-tw.org/mirror/mariadb/repo/10.5/ubuntu focal main' \
-    && apt-get install -y mariadb-server \
+    # https://github.com/docker-library/mysql/blob/master/8.0/Dockerfile.debian
+    && echo 'deb http://repo.mysql.com/apt/ubuntu/ focal mysql-8.0' > /etc/apt/sources.list.d/mysql.list \
+    && apt-get update \
+    && apt-get -y install mysql-client=8.0.* \
     # Install terraform
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
     && apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
