@@ -359,7 +359,7 @@ class ServerMain {
                             r.receiverId == (cast tgMe.id:Int)
                             &&
                             // should use `VInt` instead of `VString`, but planetscale complainted syntax error about `RETURNING SIGNED`
-                            Functions.jsonValue(r.updateData, "$.message.from.id", VString) == cast delivery.customer.tg.id
+                            Functions.jsonValue(r.updateData, "$.message.from.id", VString) == '${delivery.customer.tg.id}'
                             &&
                             Functions.jsonValue(r.updateData, "$.message.chat.type", VString) == "private"
                         )
