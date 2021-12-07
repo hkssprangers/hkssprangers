@@ -1,19 +1,27 @@
--- MariaDB dump 10.19  Distrib 10.5.13-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for Linux (x86_64)
 --
--- Host: first.cjqctxdxmaiu.ap-southeast-1.rds.amazonaws.com    Database: hkssprangers
+-- Host: cpkw6ia63be4.ap-southeast-2.psdb.cloud    Database: hkssprangers
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	8.0.23-vitess
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'd33cfc1c-5346-11ec-8cab-8e8d5001cf52:1-3519';
 
 --
 -- Current Database: `hkssprangers`
@@ -21,7 +29,7 @@
 
 /*!40000 DROP DATABASE IF EXISTS `hkssprangers`*/;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `hkssprangers` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `hkssprangers`;
 
 USE `hkssprangers`;
 
@@ -31,7 +39,7 @@ USE `hkssprangers`;
 
 DROP TABLE IF EXISTS `courier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `courier` (
   `courierId` int unsigned NOT NULL AUTO_INCREMENT,
   `courierTgUsername` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -52,7 +60,7 @@ CREATE TABLE `courier` (
 
 DROP TABLE IF EXISTS `delivery`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `delivery` (
   `deliveryId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
@@ -83,7 +91,7 @@ CREATE TABLE `delivery` (
 
 DROP TABLE IF EXISTS `deliveryCourier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `deliveryCourier` (
   `deliveryId` int NOT NULL,
   `courierId` int NOT NULL,
@@ -101,7 +109,7 @@ CREATE TABLE `deliveryCourier` (
 
 DROP TABLE IF EXISTS `deliveryOrder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `deliveryOrder` (
   `deliveryId` int NOT NULL,
   `orderId` int NOT NULL,
@@ -117,7 +125,7 @@ CREATE TABLE `deliveryOrder` (
 
 DROP TABLE IF EXISTS `flyway_schema_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `flyway_schema_history` (
   `installed_rank` int NOT NULL,
   `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
@@ -140,7 +148,7 @@ CREATE TABLE `flyway_schema_history` (
 
 DROP TABLE IF EXISTS `googleFormImport`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `googleFormImport` (
   `importTime` timestamp NOT NULL,
   `spreadsheetId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -155,7 +163,7 @@ CREATE TABLE `googleFormImport` (
 
 DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
   `orderId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
@@ -177,7 +185,7 @@ CREATE TABLE `order` (
 
 DROP TABLE IF EXISTS `receipt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receipt` (
   `receiptId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiptUrl` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -195,7 +203,7 @@ CREATE TABLE `receipt` (
 
 DROP TABLE IF EXISTS `tgMessage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tgMessage` (
   `tgMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `receiverId` int NOT NULL,
@@ -218,7 +226,7 @@ CREATE TABLE `tgMessage` (
 
 DROP TABLE IF EXISTS `twilioMessage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `twilioMessage` (
   `twilioMessageId` int unsigned NOT NULL AUTO_INCREMENT,
   `creationTime` timestamp NOT NULL,
@@ -230,6 +238,7 @@ CREATE TABLE `twilioMessage` (
   KEY `_MessageSid` ((json_value(`data`, _utf8mb4'$.MessageSid' returning char(512))))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -240,4 +249,4 @@ CREATE TABLE `twilioMessage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-04 14:25:41
+-- Dump completed on 2021-12-07 15:13:00
