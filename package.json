@@ -65,7 +65,7 @@
     "promise-retry": "^2.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "telegraf": "^3.38.0",
+    "telegraf": "^4.5.1",
     "twilio": "^3.71.3"
   },
   "private": true
