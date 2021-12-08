@@ -20,7 +20,7 @@ class OrderFormSchema {
             case str: str.parse();
         };
     }
-    static public function getSchema(nextSlots:Array<TimeSlot>, formData:OrderFormData, user:LoggedinUser) {
+    static public function getSchema(formData:OrderFormData, user:LoggedinUser) {
         var pickupTimeSlot = selectedPickupTimeSlot(formData);
         var clusterOptions = switch (formData) {
             case null | { orders: null | [] }:
@@ -73,10 +73,6 @@ class OrderFormSchema {
                 pickupTimeSlot: {
                     type: "string",
                     title: "想幾時收到?",
-                    oneOf: nextSlots.map(s -> {
-                        title: s.print(),
-                        const: Json.stringify(s),
-                    }),
                 },
                 pickupLocation: {
                     type: "string",

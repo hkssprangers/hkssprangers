@@ -3,6 +3,8 @@ package hkssprangers.browser;
 import hkssprangers.browser.forms.*;
 import js.Browser.*;
 import js.lib.Promise;
+import mui.core.*;
+import js.npm.material_ui.Pickers;
 using hkssprangers.info.LoggedinUser;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
@@ -28,11 +30,13 @@ typedef OrderViewState = {
 class OrderView extends ReactComponentOf<OrderViewProps, OrderViewState> {
     override function render() {
         return jsx('
-            <OrderForm
-                user=${props.user}
-                prefill=${props.prefill}
-                currentTime=${props.currentTime}
-            />
+            <MuiPickersUtilsProvider utils=${MomentUtils}>
+                <OrderForm
+                    user=${props.user}
+                    prefill=${props.prefill}
+                    currentTime=${props.currentTime}
+                />
+            </MuiPickersUtilsProvider>
         ');
     }
 }

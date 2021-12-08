@@ -46,13 +46,9 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         top: 5,
         right: 5,
     });
-
-    final nextSlots:Array<TimeSlot>;
     
     function new(props, context):Void {
         super(props, context);
-
-        nextSlots = TimeSlotTools.nextTimeSlots(props.currentTime.toDate());
 
         var initFormData:OrderFormData = {
             currentTime: props.currentTime,
@@ -64,6 +60,10 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         switch (props.prefill.backupContactValue) {
             case null: //pass
             case v: initFormData.backupContactValue = v;
+        }
+        switch (props.prefill.pickupTimeSlot) {
+            case null: //pass
+            case v: initFormData.pickupTimeSlot = v;
         }
         switch (props.prefill.pickupMethod) {
             case null: //pass
@@ -261,7 +261,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     }
 
     override function render():ReactFragment {
-        var schema = OrderFormSchema.getSchema(nextSlots, state.formData, props.user);
+        var schema = OrderFormSchema.getSchema(state.formData, props.user);
         var uiSchema = getUiSchema(state.formData);
 
         function onSubmit(e:{

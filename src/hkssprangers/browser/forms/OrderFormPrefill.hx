@@ -3,6 +3,7 @@ package hkssprangers.browser.forms;
 import hkssprangers.info.*;
 
 typedef OrderFormPrefill = {
+    @:optional final pickupTimeSlot:JsonString<TimeSlot>;
     @:optional final pickupLocation:String;
     @:optional final pickupMethod:PickupMethod;
     @:optional final paymentMethods:Array<PaymentMethod>;

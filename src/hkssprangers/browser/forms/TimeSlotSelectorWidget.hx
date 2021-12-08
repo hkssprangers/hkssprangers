@@ -5,6 +5,7 @@ import hkssprangers.JsonString;
 import hkssprangers.browser.forms.OrderFormData;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.TimeSlot;
+import js.npm.material_ui.Pickers;
 import js.html.Event;
 import mui.core.*;
 import mui.core.styles.Styles;
@@ -38,68 +39,76 @@ typedef TimeSlotSelectorWidgetProps = {
 
 class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProps, Dynamic> {
     static final TextField = Styles.styled(mui.core.TextField)({});
+    static final DatePicker = Styles.styled(js.npm.material_ui.Pickers.DatePicker)({});
 
-    static function processValue(schema:Dynamic, value:Dynamic) {
-        return value;
+    static function processDateChange(date:moment.Moment):JsonString<TimeSlot> {
+        if (date == null)
+            return cast "";
+
+        final date:LocalDateString = (cast date.toDate():Date);
+
+        return {
+            start: date.getDatePart(),
+            end: date.getDatePart(),
+        };
     };
+
+    static function processTimeChange(value:JsonString<TimeSlot>):JsonString<TimeSlot> {
+        return value;
+    }
+
     override function render():ReactFragment {
-        var now = Date.now();
-        var today = (now:LocalDateString).getDatePart();
-        var tmr = (Date.fromTime(now.getTime() + DateTools.days(1)):LocalDateString).getDatePart();
-        var timeSlots:Array<TimeSlot> = props.options.enumOptions.map(o -> o.value.parse());
-        var items = timeSlots.linq()
-            .groupBy(ts -> ts.start.getDatePart())
-            .selectMany((group, i) -> {
-                var items = group.linq().select((timeSlot, _) -> {
-                    var timeSlotStr = TimeSlotTools.print(timeSlot);
-                    jsx('
-                        <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)}>
-                            ${timeSlotStr}
-                        </MenuItem>
-                    ');
-                }).toArray();
-                var header = if (group.key == today) {
-                    "今日";
-                } else if (group.key == tmr) {
-                    "聽日";
-                } else {
-                    group.key;
-                };
-                [
-                    jsx('
-                        <ListSubheader>
-                            <div className="bg-white">
-                                <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
-                                    ${header}
-                                </span>
-                            </div>
-                        </ListSubheader>
-                    ')
-                ].concat(items);
-            })
-            .toArray();
+        final now = Date.now();
+        final today = (now:LocalDateString).getDatePart();
+        final tmr = (Date.fromTime(now.getTime() + DateTools.days(1)):LocalDateString).getDatePart();
+        final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start)
+            .map(timeSlot -> {
+                final timeSlotStr = TimeSlotTools.printTime(timeSlot);
+                jsx('
+                    <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)} disabled=${!timeSlot.enabled}>
+                        ${timeSlotStr}
+                    </MenuItem>
+                ');
+            });
+
         return jsx('
-            <TextField
-                id=${props.id}
-                label=${switch (props.label) {
-                    case null: props.schema.title;
-                    case v: v;
-                }}
-                select
-                value=${props.value == null ? "" : (props.value:String)}
-                required=${props.required}
-                disabled=${props.disabled || props.readonly}
-                autoFocus=${props.autofocus}
-                error=${props.rawErrors != null && props.rawErrors.length > 0}
-                onChange=${(e:Event) -> props.onChange(processValue(props.schema, untyped e.target.value))}
-                onBlur=${(e:Event) -> props.onBlur(props.id, processValue(props.schema, untyped e.target.value))}
-                onFocus=${(e:Event) -> props.onFocus(props.id, processValue(props.schema, untyped e.target.value))}
-                InputLabelProps=${{
-                    shrink: true,
-                }}
-            >
-                ${items}
-            </TextField>
+            <div id=${props.id}>
+                <div className="mb-5">
+                    ${switch (props.label) {
+                        case null: props.schema.title;
+                        case v: v;
+                    }}
+                </div>
+                <div className="mb-5">
+                    <DatePicker
+                        className="w-full"
+                        label="日期"
+                        value=${props.value == null ? "" : props.value.parse().start.getDatePart()}
+                        minDate=${today}
+                        maxDate=${(Date.fromTime(now.getTime() + DateTools.days(14)):LocalDateString).getDatePart()}
+                        format="M 月 D 日"
+                        required=${props.required}
+                        disabled=${props.disabled || props.readonly}
+                        autoOk=${true}
+                        disablePast=${true}
+                        onChange=${date -> props.onChange(processDateChange(date)))}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        className="w-full"
+                        label="時段"
+                        select
+                        disabled=${props.disabled || props.readonly}
+                        onChange=${(e:Event) -> props.onChange(processTimeChange(untyped e.target.value))}
+                        InputLabelProps=${{
+                            shrink: true,
+                        }}
+                    >
+                        ${timeSlots}
+                    </TextField>
+                </div>
+            </div>
         ');
     }
 }

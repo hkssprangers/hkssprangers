@@ -10,10 +10,12 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import haxe.Json;
 import hkssprangers.server.ServerMain.*;
+import hkssprangers.info.TimeSlot;
 import telegram_typings.User as TgUser;
 using hkssprangers.db.DatabaseTools;
 using hkssprangers.server.FastifyTools;
 using StringTools;
+using hkssprangers.ObjectTools;
 
 typedef OrderFoodProps = {
     final tgBotName:String;
@@ -78,10 +80,17 @@ class OrderFood extends View<OrderFoodProps> {
                     MySql.db.getPrefill(reply.getUser())
                         .toJsPromise()
                         .then(prefill -> {
+                            final now = Date.now();
+                            final pickupTimeSlot:JsonString<TimeSlot> = {
+                                start: (now:LocalDateString),
+                                end: (now:LocalDateString),
+                            }
                             reply.sendView(OrderFood, {
                                 tgBotName: tgMe.username,
                                 user: reply.getUser(),
-                                prefill: prefill,
+                                prefill: prefill.merge({
+                                    pickupTimeSlot: pickupTimeSlot,
+                                }),
                                 currentTime: (Date.now():LocalDateString),
                             });
                         });
@@ -104,7 +113,7 @@ class OrderFood extends View<OrderFoodProps> {
 
                 var user = reply.getUser();
                 var formData:OrderFormData = req.body;
-                var schema = OrderFormSchema.getSchema([formData.pickupTimeSlot.parse()], formData, user);
+                var schema = OrderFormSchema.getSchema(formData, user);
 
                 var validate = Ajv.call({
                     removeAdditional: "all",
