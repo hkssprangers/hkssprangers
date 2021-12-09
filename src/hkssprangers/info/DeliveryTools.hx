@@ -13,27 +13,36 @@ using Lambda;
 using StringTools;
 
 class DeliveryTools {
-    static public function contactCustomerTime(delivery:Delivery, now:Date):String {
-        var today = (now:LocalDateString).getDatePart();
-        if (delivery.pickupTimeSlot.start.getDatePart() == today) {
+    static public function contactCustomerTime(delivery:Delivery, now:LocalDateString):String {
+        final today = now.getDatePart();
+        final tmr = now.deltaDays(1).getDatePart();
+        final pickupDate = delivery.pickupTimeSlot.start.getDatePart();
+        if (pickupDate == today) {
             return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
                 case Lunch:
-                    if (now.getHours() >= 10)
+                    if (now.getTimePart() >= "10:15:00")
                         "15分鐘後";
                     else
                         "朝早十點半";
                 case Dinner:
-                    if (now.getHours() >= 17)
+                    if (now.getTimePart() >= "17:15:00")
                         "15分鐘後";
                     else
                         "下午五點半";
             }
-        } else {
+        } else if (pickupDate == tmr) {
             return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
                 case Lunch:
                     "當日朝早十點半";
                 case Dinner:
                     "當日下午五點半";
+            }
+        } else {
+            return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
+                case Lunch:
+                    "24小時內";
+                case Dinner:
+                    "24小時內";
             }
         }
     }
