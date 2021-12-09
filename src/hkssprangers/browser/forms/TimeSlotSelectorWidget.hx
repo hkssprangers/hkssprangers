@@ -60,16 +60,15 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
     override function render():ReactFragment {
         final now = Date.now();
         final today = (now:LocalDateString).getDatePart();
-        final tmr = (Date.fromTime(now.getTime() + DateTools.days(1)):LocalDateString).getDatePart();
-        final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start)
-            .map(timeSlot -> {
-                final timeSlotStr = TimeSlotTools.printTime(timeSlot);
-                jsx('
-                    <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)} disabled=${!timeSlot.enabled}>
-                        ${timeSlotStr}
-                    </MenuItem>
-                ');
-            });
+        final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start);
+        final menuItems = timeSlots.map(timeSlot -> {
+            final timeSlotStr = TimeSlotTools.printTime(timeSlot);
+            jsx('
+                <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)} disabled=${!timeSlot.enabled}>
+                    ${timeSlotStr}
+                </MenuItem>
+            ');
+        });
 
         return jsx('
             <div id=${props.id}>
@@ -82,7 +81,7 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
                 <div className="mb-5">
                     <DatePicker
                         className="w-full"
-                        label="日期"
+                        label="交收日期"
                         value=${props.value == null ? "" : props.value.parse().start.getDatePart()}
                         minDate=${today}
                         maxDate=${(Date.fromTime(now.getTime() + DateTools.days(14)):LocalDateString).getDatePart()}
@@ -97,15 +96,19 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
                 <div>
                     <TextField
                         className="w-full"
-                        label="時段"
+                        label="交收時段"
                         select
+                        required=${props.required}
                         disabled=${props.disabled || props.readonly}
+                        error=${props.rawErrors != null && props.rawErrors.length > 0}
+                        autoFocus=${props.autofocus}
+                        value=${props.value == null ? "" : props.value}
                         onChange=${(e:Event) -> props.onChange(processTimeChange(untyped e.target.value))}
                         InputLabelProps=${{
                             shrink: true,
                         }}
                     >
-                        ${timeSlots}
+                        ${menuItems}
                     </TextField>
                 </div>
             </div>

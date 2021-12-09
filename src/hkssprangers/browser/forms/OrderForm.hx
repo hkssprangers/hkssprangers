@@ -178,6 +178,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     }
 
     static function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
+        // make sure shops are available
         try {
             var t = OrderFormSchema.selectedPickupTimeSlot(formData);
             var currentTime = formData.currentTime.toDate();
@@ -194,6 +195,22 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         } catch (err) {
             trace(err);
         }
+
+        // make sure the timeslot is valid
+        try {
+            final now = Date.now();
+            final today = (now:LocalDateString).getDatePart();
+            final timeSlots = TimeSlotTools.getTimeSlots(formData.pickupTimeSlot.parse().start);
+            switch (timeSlots.find(ts -> haxe.Json.stringify(ts) == formData.pickupTimeSlot)) {
+                case null | { enabled: false }:
+                    errors.pickupTimeSlot.addError("交收時段不正確");
+                case _:
+                    // pass
+            }
+        } catch (err) {
+            trace(err);
+        }
+
         return errors;
     }
 
