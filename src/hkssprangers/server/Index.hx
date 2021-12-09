@@ -435,13 +435,13 @@ class Index extends View<IndexProps> {
                                             <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-yellow-300 flex items-center">
                                                 <div>
                                                     <i className="far fa-clock"></i> 派送時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">12:30-14:30</p>
+                                                    <p className="text-xl lg:text-4xl font-bold poppins">12:30-14:30</p>
                                                 </div>
                                             </div>
                                             <div className="p-3 border-yellow-300 flex items-center">
                                                 <div>
                                                     <i className="fas fa-hourglass-end"></i> 截單時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">10:00</p>
+                                                    <p className="text-xl lg:text-4xl font-bold poppins">12:00</p>
                                                 </div>
                                             </div>
                                         </div>

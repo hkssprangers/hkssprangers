@@ -10,7 +10,7 @@ enum abstract TimeSlotType(String) to String {
                 id: Lunch,
                 name: "午餐",
                 periodName: "午市",
-                cutoffTime: "10:00:00",
+                cutoffTime: "12:00:00",
                 pickupStart: "10:00:00",
                 pickupEnd: "15:00:00",
             }
