@@ -16,7 +16,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        // LimitedSpecial,
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -115,7 +115,8 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "香辣蟹燴飯 $55";
+    static final limitedSpecial = "香辣螺";
+    static final limitedSpecialSeperateBox = false;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
         description: "⚠️ 請提早落單。售完即止。",
@@ -124,9 +125,11 @@ class KCZenzeroMenu {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    limitedSpecial,
+                    "香辣螺意粉 $55",
+                    "香辣螺螺絲粉 $55",
+                    "香辣螺烏冬 $55",
                 ],
-                "default": limitedSpecial
+                // "default": limitedSpecial
             }
         },
         required: ["special"],
@@ -350,7 +353,9 @@ class KCZenzeroMenu {
         return switch (orderItem.type) {
             case LimitedSpecial:
                 var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
-                orderDetails.push(fullWidthSpace + box);
+                if (limitedSpecialSeperateBox) {
+                    orderDetails.push(fullWidthSpace + box);
+                }
                 var orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
                 {
                     orderDetails: orderDetails.join("\n"),
@@ -408,7 +413,9 @@ class KCZenzeroMenu {
         var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
-            case HotpotSet | LimitedSpecial:
+            case HotpotSet:
+                false;
+            case LimitedSpecial if (limitedSpecialSeperateBox):
                 false;
             case _:
                 true;
