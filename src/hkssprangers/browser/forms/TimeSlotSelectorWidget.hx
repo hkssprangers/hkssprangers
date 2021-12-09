@@ -63,9 +63,15 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
         final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start);
         final menuItems = timeSlots.map(timeSlot -> {
             final timeSlotStr = TimeSlotTools.printTime(timeSlot);
+            final disabledMessage = if (timeSlot.enabled)
+                null;
+            else
+                jsx('
+                    <span className="ml-2 text-sm text-red-500">⚠ 已截單</span>
+                ');
             jsx('
                 <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)} disabled=${!timeSlot.enabled}>
-                    ${timeSlotStr}
+                    ${timeSlotStr} ${disabledMessage}
                 </MenuItem>
             ');
         });
