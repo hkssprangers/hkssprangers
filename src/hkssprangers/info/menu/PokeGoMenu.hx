@@ -111,7 +111,7 @@ class PokeGoMenu {
     ];
 
     static public final PokeGoHolidaySetFor4 = {
-        title: "節日四人套餐 $1088",
+        title: "Party 4人餐 $1088",
         description: "最少三日前預訂",
         properties: {
             croissant: {
@@ -153,7 +153,7 @@ class PokeGoMenu {
     }
 
     static public final PokeGoHolidaySetFor8 = {
-        title: "節日八人套餐 $1888",
+        title: "Party 8人餐 $1888",
         description: "最少三日前預訂",
         properties: {
             croissant1: {
