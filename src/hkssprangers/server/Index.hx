@@ -461,7 +461,7 @@ class Index extends View<IndexProps> {
                                             <div className="p-3 border-yellow-300 flex items-center">
                                                 <div>
                                                     <i className="fas fa-hourglass-end"></i> 截單時間
-                                                <p className="text-xl lg:text-4xl font-bold poppins">19:00</p>
+                                                    <p className="text-xl lg:text-4xl font-bold poppins">19:00</p>
                                                 </div>
                                             </div>
                                         </div>
