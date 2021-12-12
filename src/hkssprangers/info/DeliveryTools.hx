@@ -20,10 +20,10 @@ class DeliveryTools {
         if (pickupDate == today) {
             return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
                 case Lunch:
-                    if (now.getTimePart() >= "10:15:00")
+                    if (now.getTimePart() >= "11:15:00")
                         "15分鐘後";
                     else
-                        "朝早十點半";
+                        "朝早十一點半";
                 case Dinner:
                     if (now.getTimePart() >= "17:15:00")
                         "15分鐘後";

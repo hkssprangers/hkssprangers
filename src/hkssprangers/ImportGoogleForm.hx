@@ -50,11 +50,11 @@ class ImportGoogleForm {
             (d.getMonth() + 1) + "月" + d.getDate() + "日 (" + Weekday.fromDay(d.getDay()).info().name + ") " + t.info().periodName
         ];
 
-        var msg = comment(unindent)/**
+        final msg = comment(unindent)/**
             又係時候麻煩各位報一報邊個時段得閒幫手. 
-            截單嘅時候我會照舊開設報到投票, 午市 10:30 晚市 17:15 截止報到投票.
+            會喺開市前一小時開設報到投票 (午市 11:00 晚市 17:00).
             會優先派單俾預早報咗當值嘅外賣員.
-            亦都希望預早報咗當值嘅外賣員會準時出現報到接單 (10:30/17:15), 唔想加罰則, 請自律~ 🙏
+            亦都希望預早報咗當值嘅外賣員會準時出現報到接單 (15分鐘內), 唔想加罰則, 請自律 🙏
         **/;
 
         return tgBot.telegram.sendPoll(chatId, msg, slots.concat(["以上日子全部都唔得/唔肯定"]), {
