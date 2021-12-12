@@ -8,8 +8,12 @@ enum abstract PokeGoItem(String) to String {
     final BuildYourOwnBowl;
     final Drink;
     final Snack;
+    final HolidaySetFor4;
+    final HolidaySetFor8;
 
     static public final all:ReadOnlyArray<PokeGoItem> = [
+        HolidaySetFor4,
+        HolidaySetFor8,
         SignatureBowl,
         BuildYourOwnBowl,
         Drink,
@@ -17,6 +21,8 @@ enum abstract PokeGoItem(String) to String {
     ];
 
     public function getDefinition():Dynamic return switch (cast this:PokeGoItem) {
+        case HolidaySetFor4: PokeGoMenu.PokeGoHolidaySetFor4;
+        case HolidaySetFor8: PokeGoMenu.PokeGoHolidaySetFor8;
         case SignatureBowl: PokeGoMenu.PokeGoSignatureBowl;
         case BuildYourOwnBowl: PokeGoMenu.PokeGoBuildYourOwnBowl;
         case Drink: PokeGoMenu.PokeGoDrink;
@@ -55,6 +61,153 @@ class PokeGoMenu {
             "牛油果奶昔 $" + markup(48),
         ],
     };
+
+    static final HolidaySetCroissants = [
+        "蟹棒沙律",
+        "碎蛋沙律",
+        "火腿芝士",
+    ];
+
+    static final HolidaySetAddons = {
+        title: "加配",
+        type: "array",
+        items: {
+            type: "string",
+            "enum": [
+                "Honolulu牛角酥6件 (3款, 每款2件) $138",
+                "Mini Poke Ball (6款, 每款1件) $228",
+                "新年撈起 (約1磅) $288",
+                "焦糖果仁蛋糕 (6件) $138",
+                "豆乳芝麻蒙布朗 (6件) $138",
+                "夏威夷通粉沙律 (約2磅) $138",
+                "火山炸雞 (約2磅) $188",
+                "黃金蟹卷 (約2磅) $188",
+                "派對和牛串 (約2磅) $228",
+                "蝦蝦霸霸 (約2磅) $188",
+                "脆炸雞翼 (約2磅) $188",
+                "脆甜番薯條 (約2磅) $138",
+                "冷壓鮮橙汁 (475ml) $38",
+                "冷壓蘋果汁 (475ml) $38",
+                "冷壓菠蘿汁 (475ml) $38",
+            ]
+        }
+    }
+
+    static final HolidaySetSnacks = [
+        "火山炸雞 (約2磅)",
+        "脆炸雞翼 (約2磅)",
+        "黃金蟹卷 (約2磅)",
+        "脆甜番薯條 (約2磅)",
+        "蝦蝦霸霸 (約2磅)",
+        "派對和牛串 (約2磅)",
+        "新年撈起 (約1磅)",
+        "夏威夷通粉沙律 (約2磅)",
+    ];
+
+    static final HolidaySetDrinks = [
+        "冷壓鮮橙汁",
+        "冷壓蘋果汁",
+        "冷壓菠蘿汁",
+    ];
+
+    static public final PokeGoHolidaySetFor4 = {
+        title: "節日四人套餐 $1088",
+        description: "最少三日前預訂",
+        properties: {
+            croissant: {
+                title: "Honolulu牛角酥4件",
+                type: "string",
+                "enum": HolidaySetCroissants,
+            },
+            minipokeball: {
+                title: "Mini Poke Ball",
+                type: "string",
+                "enum": ["每款2件，共12件"],
+                "default": "每款2件，共12件",
+            },
+            snack1: {
+                title: "Snack 1",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            snack2: {
+                title: "Snack 2",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            dessert: {
+                title: "Dessert",
+                type: "string",
+                "enum": ["手工蛋糕4件"],
+                "default": "手工蛋糕4件",
+            },
+            drinks: {
+                title: "Drinks",
+                type: "string",
+                "enum": ["冷壓果汁4杯"],
+                "default": "冷壓果汁4杯",
+            },
+            addons: HolidaySetAddons,
+        },
+        required: ["croissant", "minipokeball", "snack1", "snack2", "dessert", "drinks"],
+    }
+
+    static public final PokeGoHolidaySetFor8 = {
+        title: "節日八人套餐 $1888",
+        description: "最少三日前預訂",
+        properties: {
+            croissant1: {
+                title: "Honolulu牛角酥4件 A",
+                type: "string",
+                "enum": HolidaySetCroissants,
+            },
+            croissant2: {
+                title: "Honolulu牛角酥4件 B",
+                type: "string",
+                "enum": HolidaySetCroissants,
+            },
+            minipokeball: {
+                title: "Mini Poke Ball",
+                type: "string",
+                "enum": ["每款4件，共24件"],
+                "default": "每款4件，共24件",
+            },
+            snack1: {
+                title: "Snack 1",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            snack2: {
+                title: "Snack 2",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            snack3: {
+                title: "Snack 3",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            snack4: {
+                title: "Snack 4",
+                type: "string",
+                "enum": HolidaySetSnacks,
+            },
+            dessert: {
+                title: "Dessert",
+                type: "string",
+                "enum": ["手工蛋糕8件"],
+                "default": "手工蛋糕8件",
+            },
+            drinks: {
+                title: "Drinks",
+                type: "string",
+                "enum": ["冷壓果汁8杯"],
+                "default": "冷壓果汁8杯",
+            },
+            addons: HolidaySetAddons,
+        },
+        required: ["croissant1", "croissant2", "minipokeball", "snack1", "snack2", "snack3", "snack4", "dessert", "drinks"],
+    }
 
     static public final PokeGoSignatureBowl = {
         title: "Signature Bowl",
@@ -290,6 +443,10 @@ class PokeGoMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case HolidaySetFor4:
+                summarizeOrderObject(orderItem.item, def, PokeGoHolidaySetFor4.required.concat(["addons"]));
+            case HolidaySetFor8:
+                summarizeOrderObject(orderItem.item, def, PokeGoHolidaySetFor8.required.concat(["addons"]));
             case SignatureBowl:
                 summarizeOrderObject(orderItem.item, def, ["main", "topupOptions"], null, (fieldName, value:Dynamic) -> switch fieldName {
                     case "main":
