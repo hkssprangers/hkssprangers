@@ -484,7 +484,7 @@ class PokeGoMenu {
                         {
                             price: null,
                         };
-                }, "");
+                });
             case Snack | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
