@@ -50,13 +50,13 @@ class MenuTools {
         orderPrice: Float,
     } {
         var orderDetails = [];
-        var orderPrice = 0.0;
+        var orderPrice = parsePrice(def.title).price;
         function prefix() return
             if (overrideTypeName == null) {
                 if (orderDetails.length == 0)
-                    fullWidthDot + def.title + fullWidthColon;
+                    fullWidthDot + def.title + (def.title.length > 10 ? fullWidthColon + "\n" + fullWidthSpace : fullWidthColon);
                 else
-                    "".rpad(fullWidthSpace, def.title.length + 2);
+                    "".rpad(fullWidthSpace, def.title.length > 10 ? 1 : def.title.length + 2);
             } else if (overrideTypeName != "") {
                 if (orderDetails.length == 0)
                     fullWidthDot + overrideTypeName + fullWidthColon;
