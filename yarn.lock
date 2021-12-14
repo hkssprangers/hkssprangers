@@ -1466,6 +1466,18 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.0.tgz#2ff674e9611b45b528896d820d3d7a812de2f0e4"
   integrity sha512-FyD2meJpDPjyNQejSjvnhpgI/azsQkA4lGbuu5BQZfjvJ9cbRZXzeWL2HceCekW4lixO9JPesIIQkSoLjeJHNQ==
 
+"@splidejs/react-splide@^0.6.5":
+  version "0.6.17"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.6.17.tgz#1150a57606533b704f64b8d80d0a53ea691af174"
+  integrity sha512-OTFMUIoYTLYKG2iNjy//7w145YrgIpLw34Sb0ya2LZEJbVjUzkKfd7E1o9RD9d9GyVB0c7sVfxkygTAXyTopKg==
+  dependencies:
+    "@splidejs/splide" "^3.6.9"
+
+"@splidejs/splide@^3.6.9":
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.6.9.tgz#ee9041fb9f9bdc6a8fd06fa47536f76769b252a0"
+  integrity sha512-uQXmn0NUrlOhBCYJ8Qy4ZbCOu/fY7nTkEQUIjoKpuY10UJu1pddHquI/pmMCh/oIjhxDQFVd7TnDMq5m7JDdZA==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -4084,10 +4096,10 @@ fastify-warning@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-warning/-/fastify-warning-0.2.0.tgz#e717776026a4493dc9a2befa44db6d17f618008f"
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
-fastify@^3.24.1:
-  version "3.24.1"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.24.1.tgz#979d34e096f40b7a90e90733efbbdae81623034e"
-  integrity sha512-ZL0V6u37d65tAY8lMwVMFtFvnEeJcG80QBNSdChqCm4i4x+is/38OU14gzJuRXhpenTL+pTJzNcu5Kn1ouzM3Q==
+fastify@^3.25.0:
+  version "3.25.0"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.25.0.tgz#04b682fa738c6468bc36efba9f1e943609502111"
+  integrity sha512-GblpjS7yuJ9jpkz1guHTyzlVQn9NYvGrMkDLtoxctEt7n1d6MSwA9i3p10HjNiY+zVurPf3YdOqXsJmVgAR3cg==
   dependencies:
     "@fastify/ajv-compiler" "^1.0.0"
     abstract-logging "^2.0.0"
