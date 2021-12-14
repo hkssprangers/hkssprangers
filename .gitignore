@@ -7,6 +7,8 @@
 !/static/trackExceptions.js
 !/tailwind.config.js
 /static/css/tailwind.css
+!/static/js/splide/splide.min.js
+!/static/js/splide/banner.js
 *.js.map
 /lib/dts2hx/
 
