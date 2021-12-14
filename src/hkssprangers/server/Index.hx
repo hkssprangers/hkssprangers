@@ -94,7 +94,7 @@ class Index extends View<IndexProps> {
         var url3 = "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform";
         var img3 = StaticResource.image("/images/hyginova.jpg", title3, "");
         var title4 = "標記羊腩煲";
-        var url4 = "/menu/bill";
+        var url4 = "/menu/BiuKeeLokYuen";
         var img4 = StaticResource.image("/images/bill-pot.jpg", title4, "");
         
         
