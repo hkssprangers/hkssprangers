@@ -1,4 +1,3 @@
-console.log("banner splide before");
 window.onload = function() {
   new Splide( '.splide', {
     type: 'loop',
