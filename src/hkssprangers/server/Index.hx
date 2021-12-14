@@ -443,7 +443,7 @@ class Index extends View<IndexProps> {
                         <a href=${Path.join(["/menu", PokeGo])} className=${linkClasses2}>
                             <div className="md:flex"> 
                                 <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/mgy.jpg", PokeGo.info().name, "squircle")}
+                                    ${StaticResource.image("/images/PokeGo.jpg", PokeGo.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
