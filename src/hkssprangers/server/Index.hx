@@ -295,20 +295,6 @@ class Index extends View<IndexProps> {
                     </div>
 
                     <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", DragonJapaneseCuisine])} className=${linkClasses2}>
-                            <div className="md:flex"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/yyp.jpg", DragonJapaneseCuisine.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${DragonJapaneseCuisine.info().name}</h1>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", KCZenzero])} className=${linkClasses2}>
                             <div className="md:flex"> 
                                 <div className=${thumbnailDivClasses2}>

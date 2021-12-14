@@ -18,11 +18,6 @@ const popup1 = new mapboxgl.Popup({ offset: 25 }).setText(
   );
   
   // create the popup
-  const popup3 = new mapboxgl.Popup({ offset: 25 }).setText(
-  '營業部'
-  );
-  
-  // create the popup
   const popup4 = new mapboxgl.Popup({ offset: 25 }).setText(
   '蕃廚'
   );
@@ -93,10 +88,6 @@ const popup1 = new mapboxgl.Popup({ offset: 25 }).setText(
   
   const red2 = new mapboxgl.Marker({ color: 'rgb(239,68,68)' })
   .setLngLat([114.16018510255412,22.331224492274075]).setPopup(popup2)
-  .addTo(map);
-  
-  const red3 = new mapboxgl.Marker({ color: 'rgb(239,68,68)' })
-  .setLngLat([114.16025186047068,22.33114444434112]).setPopup(popup3)
   .addTo(map);
   
   const red4 = new mapboxgl.Marker({ color: 'rgb(239,68,68)' })
