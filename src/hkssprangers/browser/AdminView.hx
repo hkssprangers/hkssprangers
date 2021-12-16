@@ -403,7 +403,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             else
                 "?";
             var badgeColor = switch (count) {
-                case "0", "?": "bg-white";
+                case "0", "?": "bg-gray-100";
                 case _: "bg-green-500 text-white";
             }
             var label = jsx('
@@ -418,7 +418,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     value=${t}
                     control=${jsx('<Radio />')}
                     label=${label}
-                    className=${badge() + " bg-white mx-1 px-2"}
+                    className=${badge() + " bg-gray-100 mx-1 px-2"}
                 />
             ');
         });
