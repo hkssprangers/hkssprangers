@@ -96,6 +96,12 @@ class Index extends View<IndexProps> {
         var title4 = "標記羊腩煲";
         var url4 = "/menu/BiuKeeLokYuen";
         var img4 = StaticResource.image("/images/bill-pot.jpg", title4, "");
+        var title5 = "Poke Go 聖誕新年大餐";
+        var url5 = "/menu/PokeGo";
+        var img5 = StaticResource.image("/images/xmas-pokego.jpg", title5, "");
+        var title6 = "埗兵更新服務時間";
+        var url6 = "/";
+        var img6 = StaticResource.image("/images/newhour.jpg", title6, "");
         
         
         return jsx('
@@ -108,6 +114,8 @@ class Index extends View<IndexProps> {
                         <li className="splide__slide"><a href="${url4}"><div className="pr-1 md:p-3">${img4 != null ? img4 : title4}</div></a></li>
                         <li className="splide__slide"><a href="${url2}"><div className="pr-1 md:p-3">${img2 != null ? img2 : title2}</div></a></li>
                         <li className="splide__slide"><a href="${url3}"><div className="pr-1 md:p-3">${img3 != null ? img3 : title3}</div></a></li>
+                        <li className="splide__slide"><a href="${url5}"><div className="pr-1 md:p-3">${img5 != null ? img5 : title5}</div></a></li>
+                        <li className="splide__slide"><a href="${url6}"><div className="pr-1 md:p-3">${img6 != null ? img6 : title6}</div></a></li>
                     </ul>
                 </div>
             </div>
