@@ -125,7 +125,7 @@ class Menu extends View<MenuProps> {
     override function bodyContent() {
         return jsx('
             <main>
-            <div className="p-3 lg:px-0 md:py-6 mx-auto container">
+            <div className="p-3 md:py-6 mx-auto container">
                     <div className="flex items-center">
                         <a href="/">
                             ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
@@ -134,12 +134,9 @@ class Menu extends View<MenuProps> {
                             <b className="text-lg lg:text-xl">埗兵</b>
                             <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
                         </div>
-                        <div className="hidden md:block">
-                            <a className="py-3 px-6 flex items-center justify-center rounded-md bg-black text-white" href="/order-food">立即落單</a>
-                        </div>
                     </div>
                 </div>
-                <div className="py-12 md:py-16 mx-auto container">
+                <div className="p-3 py-3 md:py-16 mx-auto container">
                     <div className=${["border-l-4", "border-r-4", "border-b-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${["border-t-4", "border-b-4", "font-bold"].concat(style.borderClasses).join(" ")}>
                             <div className="p-3 text-xl md:text-2xl text-center">
@@ -164,7 +161,7 @@ class Menu extends View<MenuProps> {
 
                 <section id="sectionMap" className="bg-slash-black-20">
                     <div className="py-12 md:py-16 mx-auto container">
-                        <div className="mx-3 lg:mx-0 md:flex border-4 border-black text-center md:text-left">
+                        <div className="mx-3 md:flex border-4 border-black text-center md:text-left">
                             <div className="container-rest md:w-1/3 md:overflow-y-scroll bg-white">
                                 <div className="container-rest-caption border-b-4 bg-white border-black px-6 py-3">
                                 可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>

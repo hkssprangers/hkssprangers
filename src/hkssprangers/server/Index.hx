@@ -116,16 +116,33 @@ class Index extends View<IndexProps> {
     }
 
     static public function orderButton() return jsx('
-        <div className="fixed md:hidden bottom-0 z-50 bg-white p-3 w-full">
-            <a className="p-3 flex items-center justify-center rounded-md bg-black text-white" href="/order-food">立即落單</a>
+        <Fragment>
+        <div className="fixed hidden md:block overflow-hidden bottom-0 right-0 select-none z-50">
+            <div className="flex p-5 pl-12 pt-12 relative">
+                <a
+                    className="flex justify-center items-center w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 no-underline z-10"
+                    href="/order-food"
+                >
+                    <span className="text-black text-center text-sm">
+                        ${StaticResource.image("/images/writing.svg", "order", "w-1/2 inline", false)}
+                        <br />
+                        立即落單
+                    </span>
+                </a>
+                <div className="absolute pointer-events-none w-20 h-20 top-12 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400 z-0">&nbsp;</div>
+            </div>
         </div>
+        <div className="fixed md:hidden bottom-0 z-50 bg-white p-3 w-full">
+            <a className="p-3 flex items-center justify-center rounded-md bg-yellow-400 text-black" href="/order-food">立即落單</a>
+        </div>
+        </Fragment>
     ');
 
     static public function howToOrderSection() return jsx('
 
         <Fragment>
             <section className="h-12 md:h-16">&nbsp;</section>
-            <section id="sectionHow" className="bg-white">
+            <section id="sectionHow" className="">
 
                 <div className="py-12 md:py-16 mx-auto container">
 
@@ -524,7 +541,7 @@ class Index extends View<IndexProps> {
                 ${announcement()}
                 <main>
                     ${orderButton()}
-                    <div className="p-3 lg:px-0 md:py-6 mx-auto container">
+                    <div className="p-3 md:py-6 mx-auto container">
 
                         <div className="flex items-center">
                             <a href="/">
@@ -534,13 +551,10 @@ class Index extends View<IndexProps> {
                                 <b className="text-lg lg:text-xl">埗兵</b>
                                 <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
                             </div>
-                            <div className="hidden md:block">
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-black text-white" href="/order-food">立即落單</a>
-                            </div>
                         </div>
                     </div>
                     ${banner()}
-                    <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-50 text-md md:text-lg">
+                    <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-40 text-md md:text-lg">
                         <div className="flex text-center h-12 md:h-16 mx-auto container lg:border-x-4">
                             <a className="w-1/2 flex items-center justify-center border-r-4 border-black" href="#sectionMap">
                             <span>合作餐廳&nbsp;<i className="fas fa-utensils"></i></span>
@@ -553,7 +567,7 @@ class Index extends View<IndexProps> {
 
                     <section id="sectionMap" className="bg-slash-black-20">
                         <div className="py-12 md:py-16 mx-auto container">
-                            <div className="mx-3 lg:mx-0 md:flex border-4 border-black text-center md:text-left">
+                            <div className="mx-3 md:flex border-4 border-black text-center md:text-left">
                                 <div className="container-rest md:w-1/3 md:overflow-y-scroll bg-white">
                                     <div className="container-rest-caption border-b-4 bg-white border-black px-6 py-3">
                                     可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
