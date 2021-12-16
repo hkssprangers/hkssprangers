@@ -288,7 +288,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                         o.receipts.mapi((i,r) -> {
                             jsx('
                                 <li key=${r.receiptId}>
-                                    <a className="receipt" href=${r.receiptUrl} target="_blank" rel="noopener">
+                                    <a className="receipt text-blue-600" href=${r.receiptUrl} target="_blank" rel="noopener">
                                         <i className="fas fa-receipt"></i> 收據圖片 ${i+1}
                                     </a>
                                 </li>
@@ -378,7 +378,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                 null;
             case Telegram:
                 var tgUrl = customer.tg.print();
-                jsx('<a href=${tgUrl} target="_blank" rel="noopener">${tgUrl}</a>');
+                jsx('<a href=${tgUrl} target="_blank" rel="noopener" className="text-blue-600">${tgUrl}</a>');
             case WhatsApp:
                 var waUrl = switch (customer) {
                     case { whatsApp: tel} if (tel != null):
@@ -388,13 +388,13 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     case _:
                         null;
                 }
-                jsx('<a href=${waUrl} target="_blank" rel="noopener">${waUrl}</a>');
+                jsx('<a href=${waUrl} target="_blank" rel="noopener" className="text-blue-600">${waUrl}</a>');
             case Signal:
                 var signalUrl = 'https://signal.me/#p/+852${customer.signal}';
-                jsx('<a href=${signalUrl} target="_blank" rel="noopener">${signalUrl}</a>');
+                jsx('<a href=${signalUrl} target="_blank" rel="noopener" className="text-blue-600">${signalUrl}</a>');
             case Telephone:
                 var url = 'tel:${customer.tel}';
-                jsx('<a href=${url} target="_blank" rel="noopener">${url}</a>');
+                jsx('<a href=${url} target="_blank" rel="noopener" className="text-blue-600">${url}</a>');
         }
     }
 
@@ -621,7 +621,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         var wa = if (!state.isEditing) {
             if (d.customer.tel != null) {
                 var waUrl = "https://wa.me/852" + d.customer.tel;
-                jsx('<Typography><a href=${waUrl} target="_blank" rel="noopener">${waUrl}</a> ${d.customerPreferredContactMethod == WhatsApp ? " 👈" : ""}</Typography>');
+                jsx('<Typography><a href=${waUrl} target="_blank" rel="noopener" className="text-blue-600">${waUrl}</a> ${d.customerPreferredContactMethod == WhatsApp ? " 👈" : ""}</Typography>');
             } else {
                 null;
             }

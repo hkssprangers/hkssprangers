@@ -276,9 +276,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         }
         function courierLinkClasses(c:Courier):String {
             if (props.user != null && props.user.courierId == c.courierId)
-                return 'myDelivery ${badge()} px-2';
+                return 'myDelivery ${badge()} px-2 text-blue-600';
             else
-                return "";
+                return "text-blue-600";
         }
         return jsx('
             <div key=${key} className="mb-3">
@@ -517,7 +517,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         } else {
             var loggedInAs = if (props.user != null)
-                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank" rel="noopener">@${props.user.tg.username}</a></Typography>');
+                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank" rel="noopener" className="text-blue-600">@${props.user.tg.username}</a></Typography>');
             else
                 null;
             jsx('
