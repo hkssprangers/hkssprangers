@@ -125,7 +125,7 @@ class Index extends View<IndexProps> {
 
     static public function orderButton() return jsx('
         <Fragment>
-        <div className="fixed hidden md:block overflow-hidden bottom-0 right-0 select-none z-50">
+        <div className="fixed overflow-hidden bottom-0 right-0 select-none z-50">
             <div className="flex p-5 pl-12 pt-12 relative">
                 <a
                     className="flex justify-center items-center w-20 h-20 md:w-24 md:h-24 rounded-full transform-colors duration-100 ease-in-out bg-yellow-400 no-underline z-10"
@@ -139,9 +139,6 @@ class Index extends View<IndexProps> {
                 </a>
                 <div className="absolute pointer-events-none w-20 h-20 top-12 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400 z-0">&nbsp;</div>
             </div>
-        </div>
-        <div className="fixed md:hidden bottom-0 z-50 bg-white p-3 w-full">
-            <a className="p-3 flex items-center justify-center rounded-md bg-yellow-400 text-black" href="/order-food">立即落單</a>
         </div>
         </Fragment>
     ');
