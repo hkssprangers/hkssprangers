@@ -89,7 +89,7 @@ class Index extends View<IndexProps> {
         var img1 = StaticResource.image("/images/laksa-buk.jpg", title1, "");
         var title2 = "埗兵美酒外賣";
         var url2 = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
-        var img2 = StaticResource.image("/images/wine2021b.jpg", title2, "");
+        var img2 = StaticResource.image("/images/wine2021-xmas.jpg", title2, "");
         var title3 = "埗兵Hyginova團購";
         var url3 = "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform";
         var img3 = StaticResource.image("/images/hyginova.jpg", title3, "");
