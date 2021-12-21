@@ -493,6 +493,9 @@ enum abstract Shop(String) to String {
             case [LaksaStore, "2021-12-19" | "2021-12-21", _]:
                 return Unavailable('休息一天');
 
+            case [EightyNine | Neighbor, "2021-12-21", Dinner]:
+                return Unavailable('收早做冬');
+
             case _:
                 //pass
         }
