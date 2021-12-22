@@ -49,7 +49,7 @@ class TheParkByYearsMenu {
             "熱抹茶燕麥奶 +$24",
             "熱焙茶燕麥奶 +$24",
             "熱⿊芝⿇燕麥奶 +$24",
-            "熱黃薑燕麥奶 +$24",
+            "熱黑糖薑汁燕麥奶 +$24",
             "熱朱古力 +$24",
 
             "凍泰式燕麥奶茶 +$28",
@@ -89,6 +89,7 @@ class TheParkByYearsMenu {
             "雞尾酒 CUBA LIBRE +$78",
             "雞尾酒 SCREWDRIVER +$78",
             "雞尾酒 VODKA LIME +$78",
+            "雞尾酒 STRAWBERRY RED WINE PUNCH +$78",
             
             // ⼿⼯啤酒
             "酉⿁啤酒 ⼤三元 XPA (百香果 · ⽔果香 | 4.4%) +$58",
