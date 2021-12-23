@@ -191,7 +191,7 @@ class BiuKeeLokYuenMenu {
 
     static public final BiuKeeLokYuenPot = {
         title: "秋冬牛羊煲",
-        description: "附送唐生菜一份 (⚠️ 羊腩 12月21日 沽清)",
+        description: "附送唐生菜一份",
         type: "string",
         "enum": [
             "秘製古法羊腩煲 例 $342",
