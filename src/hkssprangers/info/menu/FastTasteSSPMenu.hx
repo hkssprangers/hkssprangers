@@ -179,12 +179,7 @@ class FastTasteSSPMenu {
                         "原味雞翼",
                     ],
                 },
-                drink: FastTasteSSPBurgerSetDrink(switch [timeSlotType, isRedDay] {
-                    case [Lunch, false]: 10;
-                    case [Lunch, true]: 18;
-                    case [Dinner, false]: 18;
-                    case [Dinner, true]: 18;
-                }),
+                drink: FastTasteSSPBurgerSetDrink(18),
             },
             required: [
                 "burger",
@@ -212,7 +207,7 @@ class FastTasteSSPMenu {
                     },
                     uniqueItems: true,
                 },
-                drink: FastTasteSSPDrink(0.5),
+                drink: FastTasteSSPDrink(1),
             },
             required: [
                 "burger",
@@ -236,10 +231,7 @@ class FastTasteSSPMenu {
                         "白酒忌廉汁煮大蜆 $50",
                     ],
                 },
-                drink: FastTasteSSPDrink(switch (timeSlotType) {
-                    case Lunch: 0.5;
-                    case Dinner: 1;
-                }),
+                drink: FastTasteSSPDrink(1),
             },
             required: [
                 "seafood",
@@ -260,10 +252,7 @@ class FastTasteSSPMenu {
                         "德國鹹豬手配酸椰菜及薯條 $138",
                     ],
                 },
-                drink: FastTasteSSPDrink(switch (timeSlotType) {
-                    case Lunch: 0.5;
-                    case Dinner: 1;
-                }),
+                drink: FastTasteSSPDrink(1),
             },
             required: [
                 "meat",
@@ -289,10 +278,7 @@ class FastTasteSSPMenu {
                         "蟹肉南瓜意大利飯 $98",
                     ],
                 },
-                drink: FastTasteSSPDrink(switch (timeSlotType) {
-                    case Lunch: 0.5;
-                    case Dinner: 1;
-                }),
+                drink: FastTasteSSPDrink(1),
             },
             required: [
                 "italian",
