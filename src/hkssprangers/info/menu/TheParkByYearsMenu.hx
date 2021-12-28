@@ -42,7 +42,7 @@ class TheParkByYearsMenu {
             // "髒髒咖啡 +$28" // 只供堂食
             "凍濃縮咖啡湯力 +$28",
             "凍泡沫⿊咖啡 +$28",
-            "美式咖啡梳打 +$28",
+            "凍美式咖啡梳打 +$28",
 
             // 非咖啡
             "熱泰式燕麥奶茶 +$24",
@@ -84,11 +84,10 @@ class TheParkByYearsMenu {
 
             // 雞尾酒
             "雞尾酒 GIN & TONIC +$78",
-            "雞尾酒 GRAPEFRUIT GIN & TONIC +$78",
+            "雞尾酒 VODKA LIME +$78",
             "雞尾酒 CLASSIC MOJITO +$78",
             "雞尾酒 CUBA LIBRE +$78",
             "雞尾酒 SCREWDRIVER +$78",
-            "雞尾酒 VODKA LIME +$78",
             "雞尾酒 STRAWBERRY RED WINE PUNCH +$78",
             
             // ⼿⼯啤酒
@@ -131,7 +130,7 @@ class TheParkByYearsMenu {
         "enum": [
             "炸香芋番薯丸 $48",
             "炸蕃薯條 $58",
-            "柚⼦時令蔬菜⽩蘿蔔漬 $58",
+            "柚子菠菜白蘿蔔漬 $58",
             "⽜油果醬酸忌廉冬陰墨⻄哥脆⽚ $58",
             "印尼加多加多炸香蕉天⾙沙律 $68",
 
