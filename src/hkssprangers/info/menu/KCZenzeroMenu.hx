@@ -260,7 +260,7 @@ class KCZenzeroMenu {
                 title: "沙律",
                 "enum": [
                     "蟹柳吞拿魚沙律",
-                    "雞串吞拿魚沙律",
+                    "煙三文魚沙律",
                 ],
             },
             drink: KCZenzeroSetDrink(0, true),
