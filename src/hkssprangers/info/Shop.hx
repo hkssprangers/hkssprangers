@@ -458,7 +458,7 @@ enum abstract Shop(String) to String {
                 address: "西九龍中心6樓蘋果商場6067號舖",
                 courierContact: [
                     // "tel:51868627",
-                    "https://t.me/kiwiseed",
+                    "https://t.me/dufuhf",
                 ],
                 openDays: [
                     Monday,
