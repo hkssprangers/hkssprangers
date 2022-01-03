@@ -52,7 +52,7 @@
     "css": "^3.0.0",
     "fastify": "^3.25.0",
     "fastify-accepts": "^2.1.0",
-    "fastify-cookie": "^5.4.0",
+    "fastify-cookie": "^5.5.0",
     "fastify-formbody": "^5.2.0",
     "fastify-static": "^4.5.0",
     "fastify-telegraf": "^1.0.1",
