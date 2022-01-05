@@ -102,6 +102,13 @@ class Index extends View<IndexProps> {
         var title6 = "埗兵更新服務時間";
         var url6 = "/";
         var img6 = StaticResource.image("/images/newhour.jpg", title6, "");
+        var title7 = "梅貴緣埗兵埗埗糕昇大行動";
+        var url7 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
+        var img7 = StaticResource.image("/images/mgy-cake-1.jpg", title7, "");
+        var title8 = "梅貴緣埗兵埗埗糕昇大行動";
+        var url8 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
+        var img8 = StaticResource.image("/images/mgy-cake-2.jpg", title8, "");
+        
         
         
         return jsx('
@@ -110,6 +117,8 @@ class Index extends View<IndexProps> {
             <div className="splide">
                 <div className="splide__track">
                     <ul className="splide__list">
+                        <li className="splide__slide"><a href="${url7}"><div className="pr-1 md:p-3">${img7 != null ? img7 : title7}</div></a></li>
+                        <li className="splide__slide"><a href="${url8}"><div className="pr-1 md:p-3">${img8 != null ? img8 : title8}</div></a></li>
                         <li className="splide__slide"><a href="${url1}"><div className="pr-1 md:p-3">${img1 != null ? img1 : title1}</div></a></li>
                         <li className="splide__slide"><a href="${url4}"><div className="pr-1 md:p-3">${img4 != null ? img4 : title4}</div></a></li>
                         <li className="splide__slide"><a href="${url2}"><div className="pr-1 md:p-3">${img2 != null ? img2 : title2}</div></a></li>
