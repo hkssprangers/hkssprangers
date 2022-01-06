@@ -490,13 +490,9 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/toolsshk/posts/2154184704738804
-            case [Toolss, "2021-12-24" | "2021-12-25" | "2021-12-31" | "2022-01-01", _] if (pickupTimeSlot.start.getTimePart() >= "19:00:00"):
-                return Unavailable('收早');
-            case [Toolss, "2021-12-27", _]:
-                return Available;
-            case [Toolss, "2021-12-28", _]:
-                return Unavailable('休息一天');
+            // https://www.facebook.com/BiuKeeLokYuen/posts/293859906096444
+            case [BiuKeeLokYuen, _, Dinner] if (pickupTimeSlot.start.getDatePart() >= "2022-01-07" && pickupTimeSlot.start.getDatePart() <= "2022-01-21"):
+                return Unavailable('晚市暫停');
 
             case _:
                 //pass
