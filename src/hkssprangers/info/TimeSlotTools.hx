@@ -17,15 +17,16 @@ class TimeSlotTools {
     }
 
     static public final regularTimeSlots = [
-        { cutoff: "11:45:00", start: "12:00:00", end: "13:00:00" },
-        { cutoff: "12:00:00", start: "12:30:00", end: "13:30:00" },
+        { cutoff: "11:15:00", start: "12:00:00", end: "13:00:00" },
+        { cutoff: "11:45:00", start: "12:30:00", end: "13:30:00" },
         { cutoff: "12:00:00", start: "13:00:00", end: "14:00:00" },
         { cutoff: "12:00:00", start: "13:30:00", end: "14:30:00" },
 
-        { cutoff: "17:45:00", start: "18:00:00", end: "19:00:00" },
-        { cutoff: "18:15:00", start: "18:30:00", end: "19:30:00" },
-        { cutoff: "18:45:00", start: "19:00:00", end: "20:00:00" },
-        { cutoff: "19:00:00", start: "19:30:00", end: "20:30:00" },
+        { cutoff: "17:15:00", start: "18:00:00", end: "19:00:00" },
+        { cutoff: "17:45:00", start: "18:30:00", end: "19:30:00" },
+        { cutoff: "18:15:00", start: "19:00:00", end: "20:00:00" },
+        { cutoff: "18:45:00", start: "19:30:00", end: "20:30:00" },
+        { cutoff: "19:00:00", start: "19:45:00", end: "20:30:00" },
     ];
 
     static public function getTimeSlots(date:LocalDateString):Array<TimeSlot & { enabled: Bool }> {
