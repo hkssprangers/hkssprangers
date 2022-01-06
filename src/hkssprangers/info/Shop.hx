@@ -562,7 +562,7 @@ enum abstract Shop(String) to String {
             case YearsHK:
                 YearsHKMenu.itemsSchema(o);
             case TheParkByYears:
-                TheParkByYearsMenu.itemsSchema(o);
+                TheParkByYearsMenu.itemsSchema(pickupTimeSlot, o);
             case ZeppelinHotDogSKM:
                 ZeppelinHotDogSKMMenu.itemsSchema(pickupTimeSlot, o);
             case MyRoomRoom:

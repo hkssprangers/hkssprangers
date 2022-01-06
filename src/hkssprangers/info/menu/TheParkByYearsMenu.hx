@@ -5,16 +5,28 @@ import haxe.ds.ReadOnlyArray;
 
 enum abstract TheParkByYearsItem(String) to String {
     final Set;
+    final DinnerSet;
     final Single;
+    final DinnerSingle;
 
-    static public final all:ReadOnlyArray<TheParkByYearsItem> = [
-        Set,
-        Single,
-    ];
+    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<TheParkByYearsItem> return switch timeSlotType {
+        case Lunch:
+            [
+                Set,
+                Single,
+            ];
+        case Dinner:
+            [
+                DinnerSet,
+                DinnerSingle,
+            ];
+    }
 
     public function getDefinition():Dynamic return switch (cast this:TheParkByYearsItem) {
         case Set: TheParkByYearsMenu.TheParkByYearsSet;
+        case DinnerSet: TheParkByYearsMenu.TheParkByYearsDinnerSet;
         case Single: TheParkByYearsMenu.TheParkByYearsSingle;
+        case DinnerSingle: TheParkByYearsMenu.TheParkByYearsDinnerSingle;
     }
 }
 
@@ -98,7 +110,7 @@ class TheParkByYearsMenu {
     };
 
     static public final TheParkByYearsSet = {
-        title: "套餐",
+        title: "午市套餐",
         properties: {
             main: {
                 title: "主食",
@@ -124,8 +136,37 @@ class TheParkByYearsMenu {
         ]
     }
 
+    static public final TheParkByYearsDinnerSet = {
+        title: "晚市套餐",
+        properties: {
+            main: {
+                title: "主食",
+                type: "string",
+                "enum": [
+                    "白酒香辣蒜片乾蕃茄意粉 $88",
+                    "葡汁南瓜意粉 $88",
+                    "香辣泰式意粉 $88",
+                    "不可能™️肉醬意大利粉 $98",
+                    "魚香茄子意大利飯 $98",
+                    "冬陰功意大利飯 $88",
+                    "牛油果紅菜頭蘋果沙律 $98",
+                    "麻辣芝士不可能金磚多士 $128",
+                    "不可能芫茜芝士漢堡 $138",
+                    "節日特別版不可能漢堡 $148",
+                    "生酮日式大阪燒 $148",
+                    "泰式珍珠奶茶班㦸 $148",
+                ]
+            },
+            drink: TheParkByYearsSetDrink,
+        },
+        required: [
+            "main",
+            "drink",
+        ]
+    }
+
     static public final TheParkByYearsSingle = {
-        title: "單叫小食／甜品",
+        title: "午市小食／甜品",
         type: "string",
         "enum": [
             "炸香芋番薯丸 $48",
@@ -139,14 +180,28 @@ class TheParkByYearsMenu {
         ],
     };
 
-    static public function itemsSchema(order:FormOrderData):Dynamic {
+    static public final TheParkByYearsDinnerSingle = {
+        title: "晚市小食／甜品",
+        type: "string",
+        "enum": [
+            "炸香芋番薯丸 $48",
+            "炸蕃薯條 $58",
+            "⽜油果醬酸忌廉冬陰墨⻄哥脆⽚ $58",
+            "本地柚子菠菜白蘿蔔漬 $58",
+
+            "焦糖脆脆檸檬撻 $58",
+            // "朱古⼒香蕉冧酒撻 $58", //未返貨
+        ],
+    };
+
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
                 type: {
                     title: "食物種類",
                     type: "string",
-                    oneOf: TheParkByYearsItem.all.map(item -> {
+                    oneOf: TheParkByYearsItem.all(TimeSlotType.classify(pickupTimeSlot.start)).map(item -> {
                         title: item.getDefinition().title,
                         const: item,
                     }),
@@ -185,9 +240,9 @@ class TheParkByYearsMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case Set:
+            case Set | DinnerSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
-            case Single:
+            case Single | DinnerSingle:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
