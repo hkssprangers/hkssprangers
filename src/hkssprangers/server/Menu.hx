@@ -717,8 +717,6 @@ class Menu extends View<MenuProps> {
                     </div>
                     <div className=${headerClasses}>${seafood.title}</div>
                     ${renderItems(seafood.properties.seafood.enums())}
-                    <div className=${headerClasses}>${meat.title} (晚餐供應)</div>
-                    ${renderItems(meat.properties.meat.enums())}
                     <div className=${headerClasses}>${salad.title}</div>
                     ${renderItems(salad.properties.salad.enums())}
                     <div className=${boxClasses}>
@@ -727,12 +725,23 @@ class Menu extends View<MenuProps> {
                             ${renderItems(salad.properties.options.items.enums(), true)}
                         </div>
                     </div>
-                </div>
-                <div className="md:w-1/2 p-3">
                     <div className=${headerClasses}>${italian.title}</div>
                     ${renderItems(italian.properties.italian.enums())}
                     <div className=${headerClasses}>${misc.title}</div>
                     ${renderItems(misc.enums())}
+                </div>
+                <div className="md:w-1/2 p-3">
+                    <div className=${headerClasses}>${FastTasteSSPDinnerSet.title}</div>
+                    ${renderItems(FastTasteSSPDinnerSet.properties.main.enums())}
+                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.sub.title}選擇</div>
+                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.sub.enums())}</div>
+                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.options.title}選擇</div>
+                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.options.items.enums())}</div>
+                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.drink.title}選擇</div>
+                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.drink.enums())}</div>
+
+                    <div className=${headerClasses}>${meat.title} (晚市供應)</div>
+                    ${renderItems(meat.properties.meat.enums())}
                 </div>
             </div>
         ');

@@ -8,6 +8,7 @@ using hkssprangers.info.TimeSlotTools;
 using Reflect;
 
 enum abstract FastTasteSSPItem(String) to String {
+    final DinnerSet;
     final BurgerSet;
     final Burger;
     final Italian;
@@ -30,6 +31,7 @@ enum abstract FastTasteSSPItem(String) to String {
             ];
         case Dinner:
             [
+                DinnerSet,
                 BurgerSet,
                 Burger,
                 Italian,
@@ -42,6 +44,7 @@ enum abstract FastTasteSSPItem(String) to String {
     }
 
     public function getDefinition(timeSlotType:TimeSlotType, isRedDay:Bool):Dynamic return switch (cast this:FastTasteSSPItem) {
+        case DinnerSet: FastTasteSSPMenu.FastTasteSSPDinnerSet;
         case BurgerSet: FastTasteSSPMenu.FastTasteSSPBurgerSet(timeSlotType, isRedDay);
         case Burger: FastTasteSSPMenu.FastTasteSSPBurger(timeSlotType);
         case Seafood: FastTasteSSPMenu.FastTasteSSPSeafood(timeSlotType);
@@ -214,6 +217,71 @@ class FastTasteSSPMenu {
             ]
         };
     }
+
+    static public final FastTasteSSPDinnerSet = {
+        title: "超值晚市套餐",
+        properties: {
+            main: {
+                type: "string",
+                title: "超值晚市套餐",
+                "enum": [
+                    "A 紐西蘭青口龍蝦汁意粉 $88",
+                    "B 和牛粒雜菜黑松露意大利飯 $98",
+                    "C 招牌公司漢堡配芝士條 $108",
+                    "D 迷迭香原隻燒春雞配薯格 $118",
+                    "E 秘製士多啤梨醬燒豬肋骨配薯條 $138",
+                    "F 德國鹹豬手配薯條 $148",
+                    "G 法式香草烤羊架拼豬扒配薯條 $158",
+                    "H 紐西蘭肉眼扒(10安士)配薯條 $168",
+                ],
+            },
+            sub: {
+                type: "string",
+                title: "跟餐",
+                "enum": [
+                    "是日餐湯",
+                    "是日沙律",
+                ]
+            },
+            options: {
+                type: "array",
+                title: "加配",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "薯條 +$10",
+                        "薯格 +$10",
+                        "洋蔥圈 +$10",
+                        "芝士條(2條) +$10",
+                        "原味雞翼 +$10",
+                    ],
+                },
+                uniqueItems: true,
+            },
+            drink: {
+                title: "跟餐飲品",
+                type: "string",
+                "enum": [
+                    '⾹芒橙汁',
+                    '蘋果汁',
+                    '可樂',
+                    '無糖可樂',
+                    '忌廉',
+                    '雪碧',
+                    '熱柑橘檸檬',
+                    '凍柑橘檸檬',
+                    '熱檸檬⽔',
+                    '熱朱古⼒',
+                ]
+            },
+        },
+        required: [
+            "main",
+            "sub",
+            "drink",
+        ]
+    };
+
     static public function FastTasteSSPSeafood(timeSlotType:TimeSlotType) {
         var title = '海鮮';
         return {
@@ -446,6 +514,8 @@ class FastTasteSSPMenu {
     } {
         var def = orderItem.type.getDefinition(timeSlotType, isRedDay);
         return switch (orderItem.type) {
+            case DinnerSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "sub", "options", "drink"], [box]);
             case BurgerSet:
                 summarizeOrderObject(orderItem.item, def, ["burger", "options", "setItem", "drink"], [box]);
             case Burger:
