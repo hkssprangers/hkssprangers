@@ -838,6 +838,19 @@ class DeliveryFee {
             }
         },
         {
+            place: "薈悅",
+            match: address -> address.contains("薈悅"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 35;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "嘉美中心",
             match: address -> address.contains("嘉美中心"),
             deliveryFee: cluster -> switch cluster {
@@ -1310,6 +1323,45 @@ class DeliveryFee {
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "畢架山",
+            match: address -> address.contains("畢架山"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "曉珀",
+            match: address -> address.contains("曉珀"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 35;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "宏創方",
+            match: address -> address.contains("宏創方") || address.toLowerCase().contains("khora"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 25;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 25;
             }
         },
     ];
