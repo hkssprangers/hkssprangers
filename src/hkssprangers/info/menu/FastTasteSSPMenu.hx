@@ -515,7 +515,12 @@ class FastTasteSSPMenu {
         var def = orderItem.type.getDefinition(timeSlotType, isRedDay);
         return switch (orderItem.type) {
             case DinnerSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "sub", "options", "drink"], [box]);
+                final numBoxes = if (orderItem.item != null && orderItem.item.options != null) {
+                    orderItem.item.options.length + 2;
+                } else {
+                    2;
+                };
+                summarizeOrderObject(orderItem.item, def, ["main", "sub", "options", "drink"], ["外賣盒 $" + numBoxes]);
             case BurgerSet:
                 summarizeOrderObject(orderItem.item, def, ["burger", "options", "setItem", "drink"], [box]);
             case Burger:
