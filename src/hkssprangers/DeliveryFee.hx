@@ -341,7 +341,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 40;
                 case PakTinCluster: 25;
-                case TungChauStreetParkCluster: 35;
+                case TungChauStreetParkCluster: 40;
             }
         },
         {
