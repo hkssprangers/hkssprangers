@@ -498,6 +498,18 @@ enum abstract Shop(String) to String {
             ):
                 return Unavailable('最遲 20:00 時段交收');
 
+            // https://www.facebook.com/toolsshk/posts/2165943436896264
+            case [Toolss, _, _] if (
+                pickupTimeSlot.start.getDatePart() >= "2022-01-10"
+                &&
+                pickupTimeSlot.start.getDatePart() <= "2022-01-24"
+            ):
+                return Unavailable('內部裝修');
+
+            // https://www.facebook.com/permalink.php?story_fbid=448880646930074&id=102717031546439
+            case [KCZenzero, "2022-01-10", _]:
+                return Unavailable('休息一天');
+
             case _:
                 //pass
         }
