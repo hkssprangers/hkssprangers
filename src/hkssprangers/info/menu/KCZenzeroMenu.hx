@@ -143,7 +143,7 @@ class KCZenzeroMenu {
             options: {
                 type: "array",
                 title: "主食",
-                description: "任選兩款，之後每款額外加 $5",
+                description: "任選兩款，之後每款額外加 $8",
                 items: {
                     type: "string",
                     "enum": [
