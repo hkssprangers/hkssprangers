@@ -43,7 +43,7 @@
     "workbox-navigation-preload": "^6.4.2",
     "workbox-recipes": "^6.4.2",
     "workbox-routing": "^6.4.2",
-    "xlsx": "^0.17.4"
+    "xlsx": "^0.17.5"
   },
   "dependencies": {
     "@splidejs/react-splide": "^0.6.5",
