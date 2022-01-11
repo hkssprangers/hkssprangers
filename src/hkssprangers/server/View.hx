@@ -164,7 +164,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function footer() return jsx('
         <footer className="p-6 text-center">
             <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank" rel="noopener" className="underline text-black">Charley</a></p>
-            <p>&copy; 2020-2021 ${name}</p>
+            <p>&copy; 2020-2022 ${name}</p>
             <div className="my-3 flex justify-center">
                 <a className="mx-2" href="https://www.facebook.com/hkssprangers">
                     <i className="text-xl text-black fab fa-facebook-f"></i>
