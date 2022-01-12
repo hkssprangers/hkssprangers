@@ -83,7 +83,6 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        return null;
         var title1 = "喇沙暖胃肉骨茶";
         var url1 = "/menu/LaksaStore";
         var img1 = StaticResource.image("/images/laksa-buk.jpg", title1, "");
@@ -92,23 +91,17 @@ class Index extends View<IndexProps> {
         var url4 = "/menu/BiuKeeLokYuen";
         var img4 = StaticResource.image("/images/bill-pot.jpg", title4, "");
         
-        var title5 = "Poke Go 聖誕新年大餐";
-        var url5 = "/menu/PokeGo";
-        var img5 = StaticResource.image("/images/xmas-pokego.jpg", title5, "");
+        var title5 = "賀年美酒速遞";
+        var url5 = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
+        var img5 = StaticResource.image("/images/wine2022-cny.jpg", title5, "w-100 my-3");
         
-        var title6 = "埗兵更新服務時間";
-        var url6 = "/";
-        var img6 = StaticResource.image("/images/newhour.jpg", title6, "");
+        var title6 = "Hyginova年廿八洗邋遢";
+        var url6 = "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform";
+        var img6 = StaticResource.image("/images/hyginova43.jpg", title6, "w-100 my-3");
         
-        var title7 = "梅貴緣埗兵埗埗糕昇大行動";
+        var title7 = "梅貴緣糕點預訂";
         var url7 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
-        var img7 = StaticResource.image("/images/mgy-cake-1.jpg", title7, "");
-        
-        var title8 = "梅貴緣埗兵埗埗糕昇大行動";
-        var url8 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
-        var img8 = StaticResource.image("/images/mgy-cake-2.jpg", title8, "");
-        
-        
+        var img7 = StaticResource.image("/images/2022-cake-43.jpg", title7, "w-100 my-3");
         
         return jsx('
         
@@ -116,12 +109,36 @@ class Index extends View<IndexProps> {
             <div className="splide">
                 <div className="splide__track">
                     <ul className="splide__list">
-                        <li className="splide__slide"><a href="${url7}"><div className="pr-1 md:p-3">${img7 != null ? img7 : title7}</div></a></li>
-                        <li className="splide__slide"><a href="${url8}"><div className="pr-1 md:p-3">${img8 != null ? img8 : title8}</div></a></li>
-                        <li className="splide__slide"><a href="${url1}"><div className="pr-1 md:p-3">${img1 != null ? img1 : title1}</div></a></li>
-                        <li className="splide__slide"><a href="${url4}"><div className="pr-1 md:p-3">${img4 != null ? img4 : title4}</div></a></li>
-                        <li className="splide__slide"><a href="${url5}"><div className="pr-1 md:p-3">${img5 != null ? img5 : title5}</div></a></li>
-                        <li className="splide__slide"><a href="${url6}"><div className="pr-1 md:p-3">${img6 != null ? img6 : title6}</div></a></li>
+                        <li className="splide__slide">
+                            <div className="p-3">
+                                <div className="flex">
+                                    ${title7}
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
+                                <a href="${url7}">${img7}</a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url7}">立即落單</a>
+                            </div>
+                        </li>
+                        <li className="splide__slide">
+                            <div className="p-3">
+                                <div className="flex">
+                                    ${title6}
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
+                                <a href="${url6}">${img6}</a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url6}">立即落單</a>
+                            </div>
+                        </li>
+                        <li className="splide__slide">
+                            <div className="p-3">
+                                <div className="flex">
+                                    ${title5}
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
+                                <a href="${url5}">${img5}</a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url5}">立即落單</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -561,43 +578,6 @@ class Index extends View<IndexProps> {
                         </div>
                     </div>
                     ${banner()}
-
-                    <div className="p-3 pb-9 lg:px-3 lg:pb-9 mx-auto container">
-                        <div className="grid gap-8 grid-cols-2 md:grid-cols-3">
-                            <div className="">
-                                <div className="flex">
-                                    新年必備
-                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">
-                                ${StaticResource.image("/images/2022-cake-43.jpg", "埗兵", "w-100 my-3")}
-                                </a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">立即落單</a>
-                            </div>
-                        
-                            <div className="hidden md:block">
-                                <div className="flex">
-                                    年廿八好幫手
-                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform">
-                                ${StaticResource.image("/images/hyginova43.jpg", "埗兵", "w-100 my-3")}
-                                </a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform">立即落單</a>
-                            </div>
-
-                            <div className="">
-                                <div className="flex">
-                                    賀年必需酒
-                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform">
-                                ${StaticResource.image("/images/wine2022-cny.jpg", "埗兵", "w-100 my-3")}
-                                </a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform">立即落單</a>
-                            </div>
-                        </div>
-                    </div>
 
                     <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-40 text-md md:text-lg">
                         <div className="flex text-center h-12 md:h-16 mx-auto container lg:border-x-4">
