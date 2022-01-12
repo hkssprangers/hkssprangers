@@ -3,6 +3,7 @@ window.onload = function() {
     type: 'loop',
     autoplay: true,
     interval: 8000,
+    pagination: false,
     perPage: 2,
     perMove: 2,
     padding: {
