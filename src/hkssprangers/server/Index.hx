@@ -143,7 +143,7 @@ class Index extends View<IndexProps> {
                     <span className="text-black text-center text-sm">
                         ${StaticResource.image("/images/writing.svg", "order", "w-1/2 inline", false)}
                         <br />
-                        立即落單
+                        外賣落單
                     </span>
                 </a>
                 <div className="absolute pointer-events-none w-20 h-20 top-12 md:w-24 md:h-24 rounded-full animate-ping opacity-25 bg-yellow-400 z-0">&nbsp;</div>
