@@ -83,7 +83,7 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        // return null;
+        return null;
         var title1 = "喇沙暖胃肉骨茶";
         var url1 = "/menu/LaksaStore";
         var img1 = StaticResource.image("/images/laksa-buk.jpg", title1, "");
@@ -562,24 +562,24 @@ class Index extends View<IndexProps> {
                     </div>
                     ${banner()}
 
-                    <div className="p-3 lg:px-0 lg:pb-16 mx-auto container">
-                        <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+                    <div className="p-3 pb-9 lg:px-3 lg:pb-9 mx-auto container">
+                        <div className="grid gap-8 grid-cols-2 md:grid-cols-3">
                             <div className="">
-                            <div className="flex">
-                                新年必備
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                            </div>
+                                <div className="flex">
+                                    新年必備
+                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
                                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">
                                 ${StaticResource.image("/images/2022-cake-43.jpg", "埗兵", "w-100 my-3")}
                                 </a>
                                 <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">立即落單</a>
                             </div>
                         
-                            <div className="">
-                            <div className="flex">
-                                年廿八好幫手
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                            </div>
+                            <div className="hidden md:block">
+                                <div className="flex">
+                                    年廿八好幫手
+                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
                                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform">
                                 ${StaticResource.image("/images/hyginova43.jpg", "埗兵", "w-100 my-3")}
                                 </a>
@@ -587,10 +587,10 @@ class Index extends View<IndexProps> {
                             </div>
 
                             <div className="">
-                            <div className="flex">
-                                賀年必需酒
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                            </div>
+                                <div className="flex">
+                                    賀年必需酒
+                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
                                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform">
                                 ${StaticResource.image("/images/wine2022-cny.jpg", "埗兵", "w-100 my-3")}
                                 </a>
@@ -605,7 +605,7 @@ class Index extends View<IndexProps> {
                             <span>合作餐廳&nbsp;<i className="fas fa-utensils"></i></span>
                             </a>
                             <a className="w-1/2 flex items-center justify-center" href="#sectionHow">
-                            <span>點叫嘢食&nbsp;<i className="fas fa-clipboard-list"></i></span>
+                            <span>點叫外賣&nbsp;<i className="fas fa-clipboard-list"></i></span>
                             </a>
                         </div>
                     </div>
