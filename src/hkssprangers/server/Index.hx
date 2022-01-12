@@ -87,24 +87,23 @@ class Index extends View<IndexProps> {
         var title1 = "喇沙暖胃肉骨茶";
         var url1 = "/menu/LaksaStore";
         var img1 = StaticResource.image("/images/laksa-buk.jpg", title1, "");
-        var title2 = "埗兵美酒外賣";
-        var url2 = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
-        var img2 = StaticResource.image("/images/wine2021-xmas.jpg", title2, "");
-        var title3 = "埗兵Hyginova團購";
-        var url3 = "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform";
-        var img3 = StaticResource.image("/images/hyginova.jpg", title3, "");
+        
         var title4 = "標記羊腩煲";
         var url4 = "/menu/BiuKeeLokYuen";
         var img4 = StaticResource.image("/images/bill-pot.jpg", title4, "");
+        
         var title5 = "Poke Go 聖誕新年大餐";
         var url5 = "/menu/PokeGo";
         var img5 = StaticResource.image("/images/xmas-pokego.jpg", title5, "");
+        
         var title6 = "埗兵更新服務時間";
         var url6 = "/";
         var img6 = StaticResource.image("/images/newhour.jpg", title6, "");
+        
         var title7 = "梅貴緣埗兵埗埗糕昇大行動";
         var url7 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
         var img7 = StaticResource.image("/images/mgy-cake-1.jpg", title7, "");
+        
         var title8 = "梅貴緣埗兵埗埗糕昇大行動";
         var url8 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
         var img8 = StaticResource.image("/images/mgy-cake-2.jpg", title8, "");
@@ -113,7 +112,7 @@ class Index extends View<IndexProps> {
         
         return jsx('
         
-        <div className="p-3 lg:px-0 lg:pb-16 mx-auto container">
+        <div className="p-3 lg:px-0 lg:pb-6 mx-auto container">
             <div className="splide">
                 <div className="splide__track">
                     <ul className="splide__list">
@@ -121,8 +120,6 @@ class Index extends View<IndexProps> {
                         <li className="splide__slide"><a href="${url8}"><div className="pr-1 md:p-3">${img8 != null ? img8 : title8}</div></a></li>
                         <li className="splide__slide"><a href="${url1}"><div className="pr-1 md:p-3">${img1 != null ? img1 : title1}</div></a></li>
                         <li className="splide__slide"><a href="${url4}"><div className="pr-1 md:p-3">${img4 != null ? img4 : title4}</div></a></li>
-                        <li className="splide__slide"><a href="${url2}"><div className="pr-1 md:p-3">${img2 != null ? img2 : title2}</div></a></li>
-                        <li className="splide__slide"><a href="${url3}"><div className="pr-1 md:p-3">${img3 != null ? img3 : title3}</div></a></li>
                         <li className="splide__slide"><a href="${url5}"><div className="pr-1 md:p-3">${img5 != null ? img5 : title5}</div></a></li>
                         <li className="splide__slide"><a href="${url6}"><div className="pr-1 md:p-3">${img6 != null ? img6 : title6}</div></a></li>
                     </ul>
@@ -278,15 +275,11 @@ class Index extends View<IndexProps> {
         ');
 
     static public function renderShops() {
-        var rowClasses          = "px-4 sm:px-6 lg:p-6 flex flex-wrap lg:flex-nowrap";
-        var blockClasses        = "w-1/2 lg:flex-1 mx-auto lg:mx-0 overflow-hidden";
-        var linkClasses         = "block text-center cursor-pointer rounded-3xl menu text-black py-4 sm:py-6 lg:py-0";
-        var thumbnailDivClasses = "relative btn-menu w-full lg:w-36 mx-auto px-4 sm:px-6 lg:px-0 lg:max-w-full border border-white";
-        
         var blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
         var linkClasses2 = "cursor-pointer menu";
         var thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
         var shopNameClasses = "text-xs lg:text-lg lg:flex-1";
+        
         return jsx('
             <Fragment>
                 <div className="grid grid-cols-3 md:grid-cols-1">
@@ -568,6 +561,44 @@ class Index extends View<IndexProps> {
                         </div>
                     </div>
                     ${banner()}
+
+                    <div className="p-3 lg:px-0 lg:pb-16 mx-auto container">
+                        <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+                            <div className="">
+                            <div className="flex">
+                                新年必備
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                            </div>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">
+                                ${StaticResource.image("/images/2022-cake-43.jpg", "埗兵", "w-100 my-3")}
+                                </a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform">立即落單</a>
+                            </div>
+                        
+                            <div className="">
+                            <div className="flex">
+                                年廿八好幫手
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                            </div>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform">
+                                ${StaticResource.image("/images/hyginova43.jpg", "埗兵", "w-100 my-3")}
+                                </a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform">立即落單</a>
+                            </div>
+
+                            <div className="">
+                            <div className="flex">
+                                賀年必需酒
+                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                            </div>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform">
+                                ${StaticResource.image("/images/wine2022-cny.jpg", "埗兵", "w-100 my-3")}
+                                </a>
+                                <a className="py-3 px-6 flex items-center justify-center rounded-md bg-yellow-500 text-black" href="https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform">立即落單</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-40 text-md md:text-lg">
                         <div className="flex text-center h-12 md:h-16 mx-auto container lg:border-x-4">
                             <a className="w-1/2 flex items-center justify-center border-r-4 border-black" href="#sectionMap">
