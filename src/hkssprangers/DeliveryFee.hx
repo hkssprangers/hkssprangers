@@ -149,7 +149,7 @@ class DeliveryFee {
         },
         {
             place: "港灣豪庭",
-            match: address -> address.contains("港灣豪庭"),
+            match: address -> address.contains("港灣豪庭") || address.contains("港灣豪廷"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case CLPCluster: 35;
