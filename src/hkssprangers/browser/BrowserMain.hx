@@ -48,7 +48,7 @@ class BrowserMain {
                 //pass
             case elm:
                 var div:DivElement = cast elm;
-                ReactDOM.render(jsx('
+                ReactDOM.hydrate(jsx('
                     <IndexSplide />
                 '), div);
         }

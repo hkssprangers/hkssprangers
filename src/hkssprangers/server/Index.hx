@@ -6,6 +6,7 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
+import hkssprangers.browser.*;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.GoogleForms.formUrls;
 import hkssprangers.info.Shop;
@@ -89,9 +90,12 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
+        final indexSplide = {
+            __html: ReactDOMServer.renderToString(jsx('<IndexSplide />'))
+        };
         return jsx('
             <div className="p-3 lg:px-0 lg:pb-6 mx-auto container">
-                <div id="splide"></div>
+                <div id="splide" dangerouslySetInnerHTML=${indexSplide} />
             </div>
         ');
     }
