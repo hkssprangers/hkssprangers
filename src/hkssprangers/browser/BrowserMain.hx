@@ -43,6 +43,16 @@ class BrowserMain {
     }
 
     static function onReady():Void {
+        switch (document.getElementById("splide")) {
+            case null:
+                //pass
+            case elm:
+                var div:DivElement = cast elm;
+                ReactDOM.render(jsx('
+                    <IndexSplide />
+                '), div);
+        }
+    
         switch (document.getElementById("OrderView")) {
             case null:
                 //pass

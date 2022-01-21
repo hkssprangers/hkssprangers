@@ -36,13 +36,19 @@ class Index extends View<IndexProps> {
         return jsx('
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
-                <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
-                <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.js" integrity="sha256-gNlPWtqCLS7IzBt0kvzIeYiog9BBJbAhfFFggKaMab8=" crossOrigin="anonymous"></script>
                 <script src=${R("/js/map/map.js")}></script>
-                <link href=${R("/js/splide/splide.min.css")} rel="stylesheet"/>
-                <script src=${R("/js/splide/splide.min.js")}></script>
-                <script src=${R("/js/splide/banner.js")}></script>
                 ${super.depScript()}
+            </Fragment>
+        ');
+    }
+
+    override function depCss():ReactElement {
+        return jsx('
+            <Fragment>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/css/splide.min.css" integrity="sha256-sB1O2oXn5yaSW1T/92q2mGU86IDhZ0j1Ya8eSv+6QfM=" crossOrigin="anonymous"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.css" integrity="sha256-i2CDQozz0HNO8H7ZwLicf6OI4doKxli9qDvLUNXHUFw=" crossOrigin="anonymous"/>
+                ${super.depCss()}
             </Fragment>
         ');
     }
@@ -83,67 +89,11 @@ class Index extends View<IndexProps> {
     }
 
     function banner() {
-        var title1 = "喇沙暖胃肉骨茶";
-        var url1 = "/menu/LaksaStore";
-        var img1 = StaticResource.image("/images/laksa-buk.jpg", title1, "");
-        
-        var title4 = "標記羊腩煲";
-        var url4 = "/menu/BiuKeeLokYuen";
-        var img4 = StaticResource.image("/images/bill-pot.jpg", title4, "");
-        
-        var title5 = "賀年美酒速遞";
-        var url5 = "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform";
-        var img5 = StaticResource.image("/images/wine2022-cny.jpg", title5, "w-100 my-3");
-        
-        var title6 = "Hyginova年廿八洗邋遢";
-        var url6 = "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform";
-        var img6 = StaticResource.image("/images/hyginova43.jpg", title6, "w-100 my-3");
-        
-        var title7 = "梅貴緣糕點預訂";
-        var url7 = "https://docs.google.com/forms/d/e/1FAIpQLSenLJEbpw4-IDRZdGKQs2wERhYF-jFv0uVxx8WQ-UuVJPlTPQ/viewform";
-        var img7 = StaticResource.image("/images/2022-cake-43.jpg", title7, "w-100 my-3");
-        
         return jsx('
-        
-        <div className="p-3 lg:px-0 lg:pb-6 mx-auto container">
-            <div className="splide">
-                <div className="splide__track">
-                    <ul className="splide__list">
-                        <li className="splide__slide">
-                            <div className="p-3">
-                                <div className="flex">
-                                    ${title7}
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="${url7}">${img7}</a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url7}">立即落單</a>
-                            </div>
-                        </li>
-                        <li className="splide__slide">
-                            <div className="p-3">
-                                <div className="flex">
-                                    ${title6}
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="${url6}">${img6}</a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url6}">立即落單</a>
-                            </div>
-                        </li>
-                        <li className="splide__slide">
-                            <div className="p-3">
-                                <div className="flex">
-                                    ${title5}
-                                <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
-                                </div>
-                                <a href="${url5}">${img5}</a>
-                                <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="${url5}">立即落單</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div className="p-3 lg:px-0 lg:pb-6 mx-auto container">
+                <div id="splide"></div>
             </div>
-        </div>
-            ');
+        ');
     }
 
     static public function orderButton() return jsx('

@@ -1583,17 +1583,17 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.0.tgz#2ff674e9611b45b528896d820d3d7a812de2f0e4"
   integrity sha512-FyD2meJpDPjyNQejSjvnhpgI/azsQkA4lGbuu5BQZfjvJ9cbRZXzeWL2HceCekW4lixO9JPesIIQkSoLjeJHNQ==
 
-"@splidejs/react-splide@^0.6.5":
-  version "0.6.17"
-  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.6.17.tgz#1150a57606533b704f64b8d80d0a53ea691af174"
-  integrity sha512-OTFMUIoYTLYKG2iNjy//7w145YrgIpLw34Sb0ya2LZEJbVjUzkKfd7E1o9RD9d9GyVB0c7sVfxkygTAXyTopKg==
+"@splidejs/react-splide@^0.6.19":
+  version "0.6.19"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.6.19.tgz#19aa7dc2928a7de3fa49563773be11692c4e23f2"
+  integrity sha512-5BKts73wR4H/LlwuVx0pUu1hZowvkCqWhoEhY7ClzVG5eG6YNOVOTbdxQ3GSoTALj6cYv1H7GBndwwIJ4AqpIA==
   dependencies:
-    "@splidejs/splide" "^3.6.9"
+    "@splidejs/splide" "^3.6.11"
 
-"@splidejs/splide@^3.6.9":
-  version "3.6.9"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.6.9.tgz#ee9041fb9f9bdc6a8fd06fa47536f76769b252a0"
-  integrity sha512-uQXmn0NUrlOhBCYJ8Qy4ZbCOu/fY7nTkEQUIjoKpuY10UJu1pddHquI/pmMCh/oIjhxDQFVd7TnDMq5m7JDdZA==
+"@splidejs/splide@^3.6.11":
+  version "3.6.11"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.6.11.tgz#fce225cdbc4665200d5d2206755095c1b430d157"
+  integrity sha512-F7zlbyiBVOhOf7TNZb/pHk32GZHkFcwL7UxvgqBVq705mMI7x09kBroec5b4dcR/K7WYjZSsOImLYwDbrwv8jw==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
