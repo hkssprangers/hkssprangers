@@ -1,10 +1,8 @@
 package hkssprangers.browser;
 
-import splidejs.react_splide.*;
 import mui.core.*;
 import js.Browser.*;
 import js.lib.Promise;
-import haxe.Timer;
 import hkssprangers.StaticResource;
 
 typedef IndexSplideProps = {}
@@ -52,7 +50,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
         }
     }
 
-    static final Splide:Class<ReactComponentOf<SplideProps,{}>> = cast splidejs.react_splide.Splide;
+    static final Splide:Class<ReactComponentOf<splidejs.react_splide.SplideProps,{}>> = cast splidejs.react_splide.Splide;
     static final SplideSlide:Class<ReactComponentOf<{},{}>> = cast splidejs.ReactSplide.SplideSlide;
 
     function new(props) {

@@ -15,6 +15,8 @@ npx dts2hx \
     ajv \
     node-ical \
     axios \
+    @splidejs/splide \
+    @splidejs/react-splide \
     --noLibWrap \
     --useSystemHaxe \
     --output lib/dts2hx
