@@ -50,7 +50,7 @@ class KCZenzeroMenu {
             ] : []
         ).concat([ 
             "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            // "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
