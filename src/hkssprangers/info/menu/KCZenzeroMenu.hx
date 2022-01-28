@@ -118,7 +118,7 @@ class KCZenzeroMenu {
     }
 
     static final limitedSpecial = "蕃茄濃湯包 (免費)";
-    static final limitedSpecialSeperateBox = true;
+    static final limitedSpecialSeperateBox = false;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
         description: "每單限送一份。送完即止。", // "⚠️ 請提早落單。售完即止。每日2點半後供應。",
