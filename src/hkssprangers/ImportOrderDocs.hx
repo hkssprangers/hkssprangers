@@ -353,7 +353,10 @@ class ImportOrderDocs {
     static function main():Void {
         switch (Sys.args()) {
             case ["calculate", start, end]:
-                calculate(start, end).handle(o -> switch o {
+                if (start.length != 10 || end.length != 10)
+                    throw "invalid date format";
+
+                calculate(start + " 00:00:00", end + " 23:59:59").handle(o -> switch o {
                     case Success(data):
                         Sys.exit(0);
                     case Failure(failure):
