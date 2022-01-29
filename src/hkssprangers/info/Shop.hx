@@ -527,6 +527,9 @@ enum abstract Shop(String) to String {
             ):
                 return Unavailable('十五啟市');
 
+            case [Toolss, "2022-01-31"|"2022-02-01"|"2022-02-02"|"2022-02-03", _]:
+                return Unavailable('初四啟市');
+
             case _:
                 //pass
         }
