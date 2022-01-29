@@ -517,6 +517,15 @@ enum abstract Shop(String) to String {
             case [LaksaStore, "2022-02-01"|"2022-02-02"|"2022-02-03"|"2022-02-04", _]:
                 return Unavailable('初五啟市');
 
+            case [WoStreet, "2022-01-29"|"2022-01-30"|"2022-01-31"|"2022-02-01"|"2022-02-02"|"2022-02-03", _]:
+                return Unavailable('初四啟市');
+
+            case [MGY, _, _] if (
+                pickupTimeSlot.start.getDatePart() >= "2022-01-31"
+                &&
+                pickupTimeSlot.start.getDatePart() <= "2022-02-14"
+            ):
+                return Unavailable('十五啟市');
 
             case _:
                 //pass
