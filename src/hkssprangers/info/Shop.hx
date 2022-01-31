@@ -533,6 +533,9 @@ enum abstract Shop(String) to String {
             case [YearsHK | TheParkByYears, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
                 return Unavailable('初四啟市');
 
+            // https://www.facebook.com/598237310338384/posts/1983392715156163/
+            case [FastTasteSSP, "2022-01-31", Dinner]:
+                return Unavailable('是日收早');
             case [FastTasteSSP, "2022-02-01", _]:
                 return Unavailable('初二啟市');
 
