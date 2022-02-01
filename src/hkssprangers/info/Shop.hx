@@ -526,8 +526,9 @@ enum abstract Shop(String) to String {
             case [BiuKeeLokYuen, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
                 return Unavailable('初四啟市');
 
-            case [HanaSoftCream, "2022-02-01", _]:
-                return Unavailable('初二啟市');
+            // https://www.facebook.com/hanasoftcream/posts/4823587111053877
+            case [HanaSoftCream, "2022-02-01", Lunch]:
+                return Unavailable('初一14:00啟市');
 
             // https://www.facebook.com/yearshk/posts/5395317993813735
             case [YearsHK | TheParkByYears, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
