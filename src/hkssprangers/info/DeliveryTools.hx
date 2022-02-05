@@ -181,11 +181,22 @@ class DeliveryTools {
     static public function setCouriersIncome(d:Delivery):Void {
         if (d.couriers == null)
             return;
-        var platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
-        var discount = Discounts.bestDiscountResult(d);
-        for (c in d.couriers) {
-            c.deliveryFee = ((d.deliveryFee:Decimal) / d.couriers.length).roundTo(4).toFloat();
-            c.deliverySubsidy = ((platformServiceChargeTotal * 0.5 + (discount == null ? 0 : discount.deliverySubsidyAddition)) / d.couriers.length).roundTo(4).toFloat();
+        final platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
+        final discount = Discounts.bestDiscountResult(d);
+        final deliverySubsidyTotal:Decimal = (
+            platformServiceChargeTotal
+            - (discount == null ? 0 : discount.deliveryFeeDeduction)
+            - d.deliveryFee * (d.couriers.length - 1)
+        ) * 0.5;
+        final deliverySubsidyEach = Math.max(0.0, (deliverySubsidyTotal / d.couriers.length).roundTo(4).toFloat());
+        for (i => c in d.couriers) {
+            if (i == 0) {
+                c.deliveryFee = d.deliveryFee;
+                c.deliverySubsidy = deliverySubsidyEach;
+            } else {
+                c.deliveryFee = 0.0;
+                c.deliverySubsidy = d.deliveryFee + deliverySubsidyEach;
+            }
         }
     }
 

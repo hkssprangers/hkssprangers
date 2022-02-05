@@ -2,7 +2,6 @@ package hkssprangers.info;
 
 typedef DiscountResult = {
     deliveryFeeDeduction:Float,
-    deliverySubsidyAddition:Float,
 };
 
 class Discounts {
@@ -16,7 +15,6 @@ class Discounts {
             isApplicable: delivery -> delivery.pickupTimeSlot.start.getDatePart() == "2021-07-27",
             apply: delivery -> {
                 deliveryFeeDeduction: 5,
-                deliverySubsidyAddition: 2.5,
             }
         },
         {
@@ -24,7 +22,6 @@ class Discounts {
             isApplicable: delivery -> delivery.pickupTimeSlot.start.getDatePart() == "2021-07-28",
             apply: delivery -> {
                 deliveryFeeDeduction: 5,
-                deliverySubsidyAddition: 2.5,
             }
         },
         {
@@ -32,7 +29,6 @@ class Discounts {
             isApplicable: delivery -> delivery.pickupTimeSlot.start.getDatePart() == "2021-07-30",
             apply: delivery -> {
                 deliveryFeeDeduction: 5,
-                deliverySubsidyAddition: 2.5,
             }
         },
         {
@@ -43,7 +39,6 @@ class Discounts {
             },
             apply: delivery -> {
                 deliveryFeeDeduction: 5,
-                deliverySubsidyAddition: 2.5,
             }
         },
         {
@@ -54,7 +49,6 @@ class Discounts {
             },
             apply: delivery -> {
                 deliveryFeeDeduction: 5,
-                deliverySubsidyAddition: 2.5,
             }
         },
     ];
