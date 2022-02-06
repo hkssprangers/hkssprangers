@@ -309,7 +309,7 @@ deploy:
     COPY --chown=$USER_UID:$USER_GID +style-css/style.css static/css/style.css
     COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
     COPY --chown=$USER_UID:$USER_GID +server/images static/images
-    COPY --chown=$USER_UID:$USER_GID holidays.json .
+    COPY --chown=$USER_UID:$USER_GID serverless.yml holidays.json .
     ARG --required DEPLOY_STAGE
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
