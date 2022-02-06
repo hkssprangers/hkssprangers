@@ -222,7 +222,6 @@ ci-images:
     BUILD +devcontainer \ 
         --IMAGE_CACHE="$DEVCONTAINER_IMAGE_NAME_DEFAULT:$GIT_REF_NAME" \
         --IMAGE_TAG="$GIT_REF_NAME" \
-        --IMAGE_TAG="$GIT_SHA" \
         --GIT_SHA="$GIT_SHA"
 
 tailwind:
