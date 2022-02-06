@@ -318,6 +318,7 @@ deploy:
         && node index.js setTgWebhook
 
 pre-deploy-check:
+    FROM +devcontainer
     COPY terraform terraform
     WORKDIR terraform
     ENV TF_INPUT=0
