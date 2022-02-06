@@ -68,17 +68,16 @@ jobs:
           export TWILIO_SID="$TWILIO_SID"
           export TWILIO_AUTH_TOKEN="$TWILIO_AUTH_TOKEN"
           EOT
-          set -ex
           if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
             echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
-            echo "DEPLOY_STAGE=master" >> .envrc
-            echo "SERVER_HOST=master.ssprangers.com" >> .envrc
-            echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> .envrc
+            echo "export DEPLOY_STAGE=master" >> .envrc
+            echo "export SERVER_HOST=master.ssprangers.com" >> .envrc
+            echo "export TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> .envrc
           elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
             echo "DEPLOY_STAGE=production" >> $GITHUB_ENV
-            echo "DEPLOY_STAGE=production" >> .envrc
-            echo "SERVER_HOST=ssprangers.com" >> .envrc
-            echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> .envrc
+            echo "export DEPLOY_STAGE=production" >> .envrc
+            echo "export SERVER_HOST=ssprangers.com" >> .envrc
+            echo "export TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> .envrc
           fi
         env:
           AWS_DEFAULT_REGION: "ap-southeast-1"
