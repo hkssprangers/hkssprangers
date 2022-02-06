@@ -301,14 +301,15 @@ test:
 
 deploy:
     FROM +devcontainer
-    COPY static static
-    COPY +browser-js/browser.bundled.js static/browser.bundled.js
-    COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    COPY +tailwind/tailwind.css static/css/tailwind.css
-    COPY +style-css/style.css static/css/style.css
-    COPY +server/index.js index.js
-    COPY +server/images static/images
-    COPY holidays.json .
+    USER $USERNAME
+    COPY --chown=$USER_UID:$USER_GID static static
+    COPY --chown=$USER_UID:$USER_GID +browser-js/browser.bundled.js static/browser.bundled.js
+    COPY --chown=$USER_UID:$USER_GID +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
+    COPY --chown=$USER_UID:$USER_GID +tailwind/tailwind.css static/css/tailwind.css
+    COPY --chown=$USER_UID:$USER_GID +style-css/style.css static/css/style.css
+    COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
+    COPY --chown=$USER_UID:$USER_GID +server/images static/images
+    COPY --chown=$USER_UID:$USER_GID holidays.json .
     ARG --required DEPLOY_STAGE
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
