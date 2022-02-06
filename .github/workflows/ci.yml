@@ -1,115 +1,70 @@
 name: CI
 on: ["push", "pull_request"]
+
 env:
   TZ: Asia/Hong_Kong
+  EARTHLY_USE_INLINE_CACHE: "true"
+  EARTHLY_SAVE_INLINE_CACHE: "true"
+  EARTHLY_STRICT: "true"
+  EARTHLY_PUSH: "${{ github.repository_owner == 'hkssprangers' && github.event_name == 'push' }}"
+  FORCE_COLOR: 1
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20220122003641"
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true
-      - name: Copy libs from /workspace
-        run: |
-          cp -r /workspace/node_modules .
-          cp -r /workspace/lib/dts2hx lib/
-      - run: yarn
-      - name: Build tailwind
-        run: yarn tailwind
-        env:
-          NODE_ENV: production
-      - run: haxe processCss.hxml
-      - name: Build serviceWorker.js
-        run: haxe serviceWorker.hxml
-      - name: Minify serviceWorker.js
-        run: npx browserify serviceWorker.js --transform [ babelify --global ] -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
-      - name: Build browser.js
-        run: haxe browser.hxml
-      - name: Minify browser.js
-        run: npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
-      - name: Build server
-        run: haxe server.hxml
-      - name: Build importGoogleForm.js
-        run: haxe importGoogleForm.hxml
-      - uses: actions/upload-artifact@v2
+          submodules: recursive
+      - name: Login to GitHub Container Registry
+        if: success() && env.EARTHLY_PUSH == 'true'
+        uses: docker/login-action@v1
         with:
-          name: artifact
-          path: |
-            index.js
-            static/serviceWorker.bundled.js
-            static/browser.bundled.js
-            static/css
-            static/**/*.webp
-            importGoogleForm.js
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Earthly
+        run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.6/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+      - name: Build devcontainer
+        run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
+      - name: Build
+        run: earthly +server-js
+      - name: Build importGoogleForm
+        run: earthly +importGoogleForm-js
       - name: Test
-        run: haxe test.hxml
-  pre-deploy:
-    needs: build
-    if: success() && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
-    concurrency: pre-deploy
-    runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20220122003641"
-    steps:
-      - uses: actions/checkout@v2
-      - name: Check Terraform state
-        working-directory: ./terraform
+        run: earthly +test
+      - name: Create .envrc
+        if: success() && env.EARTHLY_PUSH == 'true'
         run: |
-          set -ex
-          terraform init
-          terraform plan -detailed-exitcode
+          cat > .envrc <<EOT
+          export AWS_DEFAULT_REGION="ap-southeast-1"
+          export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
+          export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          EOT
+      - name: Pre-deploy check
+        if: success() && env.EARTHLY_PUSH == 'true'
+        run: earthly +pre-deploy-check
         env:
-          TF_INPUT: 0
-          TF_IN_AUTOMATION: 1
-          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-southeast-1
-  deploy:
-    needs: pre-deploy
-    concurrency: ${{ github.ref }}
-    runs-on: ubuntu-latest
-    container: "hkssprangers/hkssprangers_devcontainer_workspace:20220122003641"
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Copy libs from /workspace
+          EARTHLY_SECRET_FILES: .envrc=.envrc
+      - name: Create .envrc
+        if: success() && env.EARTHLY_PUSH == 'true'
         run: |
-          cp -r /workspace/node_modules .
-          cp -r /workspace/lib/dts2hx lib/
-      - run: yarn
-      - uses: actions/download-artifact@v2
-        with:
-          name: artifact
-      - name: Set Env
-        run: |
-          set -ex
-          if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
-            echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
-            echo "SERVER_HOST=master.ssprangers.com" >> $GITHUB_ENV
-            echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> $GITHUB_ENV
-          elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
-            echo "DEPLOY_STAGE=production" >> $GITHUB_ENV
-            echo "SERVER_HOST=ssprangers.com" >> $GITHUB_ENV
-            echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> $GITHUB_ENV
-          fi
-        env:
-          TGBOT_TOKEN_MASTER: ${{ secrets.TGBOT_TOKEN_MASTER }}
-          TGBOT_TOKEN_PRODUCTION: ${{ secrets.TGBOT_TOKEN_PRODUCTION }}
+          cat > .envrc <<EOT
+          export AWS_DEFAULT_REGION="ap-southeast-1"
+          export AWS_ACCESS_KEY_ID="${{ secrets.SLS_AWS_ACCESS_KEY_ID }}"
+          export AWS_SECRET_ACCESS_KEY="${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}"
+          export SERVERLESS_ACCESS_KEY="${{ secrets.SERVERLESS_ACCESS_KEY }}"
+          export MYSQL_HOST="${{ secrets.MYSQL_HOST }}"
+          export MYSQL_USER="${{ secrets.MYSQL_USER }}"
+          export MYSQL_PASSWORD="${{ secrets.MYSQL_PASSWORD }}"
+          export FORM_READER_EMAIL="${{ secrets.FORM_READER_EMAIL }}"
+          export FORM_READER_PRIVATE_KEY="${{ secrets.FORM_READER_PRIVATE_KEY }}"
+          export JWT_SECRET="${{ secrets.JWT_SECRET }}"
+          export TWILIO_SID="${{ secrets.TWILIO_SID }}"
+          export TWILIO_AUTH_TOKEN="${{ secrets.TWILIO_AUTH_TOKEN }}"
+          EOT
       - name: Deploy
-        run: |
-          set -ex
-          npx serverless deploy --stage "${DEPLOY_STAGE}"
-          node index.js setTgWebhook
+        if: success() && env.EARTHLY_PUSH == 'true'
+        run: earthly +deploy
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.SLS_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SLS_AWS_SECRET_ACCESS_KEY }}
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          FORM_READER_EMAIL: ${{ secrets.FORM_READER_EMAIL }}
-          FORM_READER_PRIVATE_KEY: ${{ secrets.FORM_READER_PRIVATE_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          TWILIO_SID: ${{ secrets.TWILIO_SID }}
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          EARTHLY_SECRET_FILES: .envrc=.envrc

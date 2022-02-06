@@ -1,7 +1,7 @@
 version: '3'
 services:
   workspace:
-    image: hkssprangers/hkssprangers_devcontainer_workspace:20220122003641
+    image: ghcr.io/hkssprangers/hkssprangers_devcontainer:master
     init: true
     volumes:
       - /var/run/docker.sock:/var/run/docker-host.sock
@@ -36,3 +36,16 @@ services:
     command: tunnel --no-autoupdate --url http://workspace:80
     expose:
       - "44871"
+  earthly:
+    image: earthly/buildkitd:v0.6.6
+    privileged: true
+    environment:
+      - BUILDKIT_TCP_TRANSPORT_ENABLED=true
+    expose:
+      - 8372
+    volumes:
+      # https://docs.earthly.dev/docs/guides/using-the-earthly-docker-images/buildkit-standalone#earthly_tmp_dir
+      - earthly-tmp:/tmp/earthly:rw
+
+volumes:
+  earthly-tmp:

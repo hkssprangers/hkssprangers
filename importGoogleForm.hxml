@@ -7,7 +7,6 @@
 --library CommentString
 --library format
 --class-path src
---class-path test
 --class-path lib/hxnodelibs
 --class-path lib/dts2hx
 --main hkssprangers.ImportGoogleForm
