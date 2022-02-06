@@ -10,7 +10,8 @@ env:
   FORCE_COLOR: 1
 
 jobs:
-  build:
+  job:
+    concurrency: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
