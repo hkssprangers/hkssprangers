@@ -265,7 +265,7 @@ browser-js:
     RUN npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
     SAVE ARTIFACT static/browser.bundled.js
 
-server-js:
+server:
     FROM +devcontainer
     COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
@@ -307,7 +307,8 @@ deploy:
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
     COPY +tailwind/tailwind.css static/css/tailwind.css
     COPY +style-css/style.css static/css/style.css
-    COPY +server-js/index.js index.js
+    COPY +server/index.js index.js
+    COPY +server/images static/images
     COPY holidays.json .
     ARG --required DEPLOY_STAGE
     RUN --no-cache \

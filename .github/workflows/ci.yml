@@ -28,7 +28,7 @@ jobs:
       - name: Build devcontainer
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
       - name: Build
-        run: earthly +server-js
+        run: earthly +server
       - name: Build importGoogleForm
         run: earthly +importGoogleForm-js
       - name: Test
