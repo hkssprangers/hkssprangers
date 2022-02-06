@@ -68,6 +68,17 @@ jobs:
           export TWILIO_SID="$TWILIO_SID"
           export TWILIO_AUTH_TOKEN="$TWILIO_AUTH_TOKEN"
           EOT
+          if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
+            echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
+            echo "DEPLOY_STAGE=master" >> .envrc
+            echo "SERVER_HOST=master.ssprangers.com" >> .envrc
+            echo "TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> .envrc
+          elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
+            echo "DEPLOY_STAGE=production" >> $GITHUB_ENV
+            echo "DEPLOY_STAGE=production" >> .envrc
+            echo "SERVER_HOST=ssprangers.com" >> .envrc
+            echo "TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> $GITHUB_ENV
+          fi
         env:
           AWS_DEFAULT_REGION: "ap-southeast-1"
           AWS_ACCESS_KEY_ID: "${{ secrets.SLS_AWS_ACCESS_KEY_ID }}"
@@ -83,6 +94,6 @@ jobs:
           TWILIO_AUTH_TOKEN: "${{ secrets.TWILIO_AUTH_TOKEN }}"
       - name: Deploy
         if: success() && env.EARTHLY_PUSH == 'true'
-        run: earthly +deploy
+        run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}"
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
