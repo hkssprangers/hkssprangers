@@ -310,7 +310,7 @@ deploy:
     COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
     COPY --chown=$USER_UID:$USER_GID +server/images static/images
     COPY --chown=$USER_UID:$USER_GID +importGoogleForm-js/importGoogleForm.js importGoogleForm.js
-    COPY --chown=$USER_UID:$USER_GID serverless.yml holidays.json .
+    COPY --chown=$USER_UID:$USER_GID serverless.yml package.json yarn.lock holidays.json .
     ARG --required DEPLOY_STAGE
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
