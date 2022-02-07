@@ -50,7 +50,7 @@
     "aws-sdk": "^2.826.0",
     "aws-serverless-fastify": "https://github.com/andyli/aws-serverless-fastify.git#multiValueHeaders-1.0.28",
     "css": "^3.0.0",
-    "fastify": "^3.27.0",
+    "fastify": "^3.27.1",
     "fastify-accepts": "^2.1.0",
     "fastify-cookie": "^5.5.0",
     "fastify-formbody": "^5.2.0",
