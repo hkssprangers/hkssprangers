@@ -47,7 +47,7 @@ class Index extends View<IndexProps> {
     override function depCss():ReactElement {
         return jsx('
             <Fragment>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/css/splide.min.css" integrity="sha256-sB1O2oXn5yaSW1T/92q2mGU86IDhZ0j1Ya8eSv+6QfM=" crossOrigin="anonymous"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css" integrity="sha256-sB1O2oXn5yaSW1T/92q2mGU86IDhZ0j1Ya8eSv+6QfM=" crossOrigin="anonymous"/>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.css" integrity="sha256-i2CDQozz0HNO8H7ZwLicf6OI4doKxli9qDvLUNXHUFw=" crossOrigin="anonymous"/>
                 ${super.depCss()}
             </Fragment>
