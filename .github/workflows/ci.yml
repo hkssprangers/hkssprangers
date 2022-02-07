@@ -11,7 +11,6 @@ env:
 
 jobs:
   job:
-    concurrency: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +26,7 @@ jobs:
       - name: Setup Earthly
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.6/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Build devcontainer
+        if: success() && github.event_name == 'push'
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
       - name: Build
         run: earthly +server
@@ -48,7 +48,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
       - name: Pre-deploy check
         if: success() && env.EARTHLY_PUSH == 'true'
-        run: earthly +pre-deploy-check
+        run: earthly +pre-deploy-check --TF_LOCK_TIMEOUT=15m
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
       - name: Create .envrc

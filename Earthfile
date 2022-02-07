@@ -317,8 +317,9 @@ pre-deploy-check:
     WORKDIR terraform
     ENV TF_INPUT=0
     ENV TF_IN_AUTOMATION=1
+    ARG TF_LOCK_TIMEOUT=0s
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
         && terraform init \
-        && terraform plan -detailed-exitcode
+        && terraform plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
