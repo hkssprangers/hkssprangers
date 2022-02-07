@@ -70,13 +70,11 @@ jobs:
           EOT
           if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
             echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
-            echo "export DEPLOY_STAGE=master" >> .envrc
-            echo "export SERVER_HOST=master.ssprangers.com" >> .envrc
+            echo "SERVER_HOST=master.ssprangers.com" >> $GITHUB_ENV
             echo "export TGBOT_TOKEN=${TGBOT_TOKEN_MASTER}" >> .envrc
           elif [ "${GITHUB_REF}" = "refs/heads/production" ]; then
             echo "DEPLOY_STAGE=production" >> $GITHUB_ENV
-            echo "export DEPLOY_STAGE=production" >> .envrc
-            echo "export SERVER_HOST=ssprangers.com" >> .envrc
+            echo "SERVER_HOST=ssprangers.com" >> $GITHUB_ENV
             echo "export TGBOT_TOKEN=${TGBOT_TOKEN_PRODUCTION}" >> .envrc
           fi
         env:
@@ -96,6 +94,9 @@ jobs:
           TGBOT_TOKEN_PRODUCTION: "${{ secrets.TGBOT_TOKEN_PRODUCTION }}"
       - name: Deploy
         if: success() && env.EARTHLY_PUSH == 'true'
-        run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}"
+        run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}" --SERVER_HOST="${SERVER_HOST}"
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
+      - name: Post-deploy tests
+        if: success() && env.EARTHLY_PUSH == 'true'
+        run: earthly +post-deploy-test --SERVER_HOST="${SERVER_HOST}"

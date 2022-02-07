@@ -305,6 +305,9 @@ deploy:
     COPY --chown=$USER_UID:$USER_GID +importGoogleForm-js/importGoogleForm.js importGoogleForm.js
     COPY --chown=$USER_UID:$USER_GID serverless.yml package.json yarn.lock holidays.json .
     ARG --required DEPLOY_STAGE
+    ENV DEPLOY_STAGE="$DEPLOY_STAGE"
+    ARG --required SERVER_HOST
+    ENV SERVER_HOST="$SERVER_HOST"
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
@@ -323,3 +326,9 @@ pre-deploy-check:
         . ./.envrc \
         && terraform init \
         && terraform plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
+
+post-deploy-test:
+    RUN --no-cache date +%s | tee timestamp
+    ARG --required SERVER_HOST
+    RUN curl -fsSL "https://$SERVER_HOST?cache_invalidator=$(cat timestamp)" -o /dev/null
+    RUN curl -fsSL "https://$SERVER_HOST/login?cache_invalidator=$(cat timestamp)" -o /dev/null
