@@ -20,6 +20,71 @@ RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
 ARG NODE_VERSION=14
 
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG INSTALL_ZSH="false"
+ARG UPGRADE_PACKAGES="true"
+ARG ENABLE_NONROOT_DOCKER="true"
+ARG USE_MOBY="false"
+COPY .devcontainer/library-scripts/common-debian.sh .devcontainer/library-scripts/docker-debian.sh /tmp/library-scripts/
+RUN apt-get update \
+    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+    && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
+    # Clean up
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+
+# Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
+# to the Docker socket. The script will also execute CMD as needed.
+ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
+CMD [ "sleep", "infinity" ]
+
+COPY .devcontainer/mysql-public-key /tmp/mysql-public-key
+RUN apt-key add /tmp/mysql-public-key
+
+# Configure apt and install packages
+RUN apt-get update \
+    && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
+    && apt-get install -qqy --no-install-recommends \
+        iproute2 \
+        procps \
+        sudo \
+        bash-completion \
+        build-essential \
+        curl \
+        wget \
+        python3 \
+        python3-pip \
+        software-properties-common \
+        libnss3-tools \
+        direnv \
+        tzdata \
+        imagemagick \
+        librsvg2-bin \
+        webp \
+        # install docker engine for using `WITH DOCKER`
+        docker-ce \
+    # install node
+    && curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+    && apt-get install -qqy --no-install-recommends nodejs=${NODE_VERSION}.* \
+    # Install mysql-client
+    # https://github.com/docker-library/mysql/blob/master/8.0/Dockerfile.debian
+    && echo 'deb http://repo.mysql.com/apt/ubuntu/ focal mysql-8.0' > /etc/apt/sources.list.d/mysql.list \
+    && apt-get update \
+    && apt-get -y install mysql-client=8.0.* \
+    #
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g yarn
+RUN yarn global add lix --prefix /usr/local --cache-folder /tmp/yarn; rm -rf /tmp/yarn
+
+# Switch back to dialog for any ad-hoc use of apt-get
+ENV DEBIAN_FRONTEND=
+
+
 devcontainer-library-scripts:
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/common-debian.sh
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/docker-debian.sh
@@ -36,7 +101,6 @@ mysql-public-key:
 # COPY +tfenv/tfenv /tfenv
 # RUN ln -s /tfenv/bin/* /usr/local/bin
 tfenv:
-    FROM +devcontainer-base
     RUN git clone --depth 1 https://github.com/tfutils/tfenv.git /tfenv
     SAVE ARTIFACT /tfenv
 
@@ -62,88 +126,19 @@ terraform:
 # COPY +earthly/earthly /usr/local/bin/
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
-    FROM +devcontainer-base
     ARG --required TARGETARCH
     RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.6/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
-devcontainer-base:
-    # Avoid warnings by switching to noninteractive
-    ENV DEBIAN_FRONTEND=noninteractive
-
-    ARG INSTALL_ZSH="false"
-    ARG UPGRADE_PACKAGES="true"
-    ARG ENABLE_NONROOT_DOCKER="true"
-    ARG USE_MOBY="false"
-    COPY .devcontainer/library-scripts/common-debian.sh .devcontainer/library-scripts/docker-debian.sh /tmp/library-scripts/
-    RUN apt-get update \
-        && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
-        && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
-        # Clean up
-        && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
-
-    # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
-    # to the Docker socket. The script will also execute CMD as needed.
-    ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-    CMD [ "sleep", "infinity" ]
-
-    COPY .devcontainer/mysql-public-key /tmp/mysql-public-key
-    RUN apt-key add /tmp/mysql-public-key
-
-    # Configure apt and install packages
-    RUN apt-get update \
-        && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
-        && apt-get install -qqy --no-install-recommends \
-            iproute2 \
-            procps \
-            sudo \
-            bash-completion \
-            build-essential \
-            curl \
-            wget \
-            python3 \
-            python3-pip \
-            software-properties-common \
-            libnss3-tools \
-            direnv \
-            tzdata \
-            imagemagick \
-            librsvg2-bin \
-            webp \
-            # install docker engine for using `WITH DOCKER`
-            docker-ce \
-        # install node
-        && curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
-        && apt-get install -qqy --no-install-recommends nodejs=${NODE_VERSION}.* \
-        # Install yarn
-        && npm install -g yarn \
-        && yarn global add lix --prefix /usr/local \
-        # Install mysql-client
-        # https://github.com/docker-library/mysql/blob/master/8.0/Dockerfile.debian
-        && echo 'deb http://repo.mysql.com/apt/ubuntu/ focal mysql-8.0' > /etc/apt/sources.list.d/mysql.list \
-        && apt-get update \
-        && apt-get -y install mysql-client=8.0.* \
-        #
-        # Clean up
-        && apt-get autoremove -y \
-        && apt-get clean -y \
-        && rm -rf /var/lib/apt/lists/*
-
-    # Switch back to dialog for any ad-hoc use of apt-get
-    ENV DEBIAN_FRONTEND=
-
 lix-download:
-    FROM +devcontainer-base
     USER $USERNAME
-    WORKDIR /workspace
     COPY haxe_libraries haxe_libraries
     COPY .haxerc .
     RUN lix download
     SAVE ARTIFACT "$HAXESHIM_ROOT"
 
 node-modules-prod:
-    FROM +devcontainer-base
     COPY .haxerc package.json yarn.lock .
     COPY +lix-download/haxe "$HAXESHIM_ROOT"
     RUN yarn --production
@@ -161,8 +156,6 @@ dts2hx-externs:
     SAVE ARTIFACT lib/dts2hx
 
 devcontainer:
-    FROM +devcontainer-base
-
     # tfenv
     COPY +tfenv/tfenv /tfenv
     RUN ln -s /tfenv/bin/* /usr/local/bin/
