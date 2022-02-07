@@ -92,10 +92,10 @@ jobs:
           TGBOT_TOKEN_MASTER: "${{ secrets.TGBOT_TOKEN_MASTER }}"
           TGBOT_TOKEN_PRODUCTION: "${{ secrets.TGBOT_TOKEN_PRODUCTION }}"
       - name: Deploy
-        if: success() && env.EARTHLY_PUSH == 'true'
+        if: success() && env.EARTHLY_PUSH == 'true' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
         run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}" --SERVER_HOST="${SERVER_HOST}"
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
       - name: Post-deploy tests
-        if: success() && env.EARTHLY_PUSH == 'true'
+        if: success() && env.EARTHLY_PUSH == 'true' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
         run: earthly +post-deploy-test --SERVER_HOST="${SERVER_HOST}"
