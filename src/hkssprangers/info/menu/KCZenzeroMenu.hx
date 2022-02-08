@@ -16,7 +16,7 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        // LimitedSpecial,
+        LimitedSpecial,
         HotdogSet,
         NoodleSet,
         PastaSet,
@@ -117,19 +117,22 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "蕃茄濃湯包 (免費)";
-    static final limitedSpecialSeperateBox = false;
+    static final limitedSpecial = "蕃茄濃湯雞煲";
+    static final limitedSpecialSeperateBox = true;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
-        description: "每單限送一份。送完即止。", // "⚠️ 請提早落單。售完即止。每日2點半後供應。",
+        description: "⚠️ 請提早落單。售完即止。",
         properties: {
             special: {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    limitedSpecial,
+                    "蕃茄濃湯雞煲 配飯 $68",
+                    "蕃茄濃湯雞煲 配烏冬 $68",
+                    "惹味辣茄濃湯雞煲 配飯 $68",
+                    "惹味辣茄濃湯雞煲 配烏冬 $68",
                 ],
-                "default": limitedSpecial
+                // "default": limitedSpecial
             }
         },
         required: ["special"],
