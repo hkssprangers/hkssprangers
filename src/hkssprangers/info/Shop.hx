@@ -493,6 +493,10 @@ enum abstract Shop(String) to String {
             case [TheParkByYears, _, _] if (pickupTimeSlot.start.getDatePart() >= "2022-02-05"):
                 return Unavailable('暫停營業');
 
+            // https://www.facebook.com/toolsshk/posts/2189833251173949
+            case [Toolss, "2022-02-08", _]:
+                return Unavailable('休息一天');
+
             /*
                 初一: 2022-02-01
             */
