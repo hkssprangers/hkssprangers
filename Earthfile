@@ -13,8 +13,6 @@ ARG WORKDIR=/workspace
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$WORKDIR"
 WORKDIR "$WORKDIR"
 
-ENV YARN_CACHE_FOLDER=/yarn
-RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$YARN_CACHE_FOLDER"
 ENV HAXESHIM_ROOT=/haxe
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
@@ -80,11 +78,11 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g yarn
-RUN yarn global add lix --prefix /usr/local --cache-folder /tmp/yarn; rm -rf /tmp/yarn
-
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
+
+RUN npm config set prefix /usr/local
+RUN npm install -g lix
 
 SAVE IMAGE --cache-hint
 
@@ -143,22 +141,22 @@ lix-download:
     SAVE IMAGE --cache-hint
 
 node-modules-prod:
-    COPY .haxerc package.json yarn.lock .
+    COPY .haxerc package.json package-lock.json .
     COPY +lix-download/haxe "$HAXESHIM_ROOT"
-    RUN yarn --production
+    RUN npm install --only=production
     SAVE ARTIFACT node_modules
     SAVE IMAGE --cache-hint
 
 node-modules-dev:
     FROM +node-modules-prod
-    RUN yarn
+    RUN npm install
     SAVE ARTIFACT node_modules
     SAVE IMAGE --cache-hint
 
 dts2hx-externs:
     FROM +node-modules-dev
     COPY gen-externs.sh .
-    RUN yarn dts2hx
+    RUN npm run dts2hx
     SAVE ARTIFACT lib/dts2hx
     SAVE IMAGE --cache-hint
 
@@ -230,7 +228,7 @@ tailwind:
     FROM +devcontainer
     COPY package.json tailwind.config.js .
     COPY src src
-    RUN NODE_ENV=production yarn tailwind
+    RUN NODE_ENV=production npm run tailwind
     SAVE ARTIFACT static/css/tailwind.css
 
 style-css:
@@ -313,7 +311,7 @@ deploy:
     COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
     COPY --chown=$USER_UID:$USER_GID +server/images static/images
     COPY --chown=$USER_UID:$USER_GID +importGoogleForm-js/importGoogleForm.js importGoogleForm.js
-    COPY --chown=$USER_UID:$USER_GID serverless.yml package.json yarn.lock holidays.json .
+    COPY --chown=$USER_UID:$USER_GID serverless.yml package.json package-lock.json holidays.json .
     ARG --required DEPLOY_STAGE
     ENV DEPLOY_STAGE="$DEPLOY_STAGE"
     ARG --required SERVER_HOST
