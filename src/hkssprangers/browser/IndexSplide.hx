@@ -11,6 +11,11 @@ typedef IndexSplideState = {}
 class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
     static final items = [
         {
+            title: "埗兵糧食儲備升級團購",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSehTgzukUDpqONaxwiqWWn-14mDeaBHI4U9qpKbg7njk6IJbA/viewform",
+            img: StaticResource.image("/images/dim6-43.jpg", "埗兵糧食儲備升級團購", "w-100 my-3"),
+        },
+        {
             title: "慳多D 美酒速遞",
             url: "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform",
             img: StaticResource.image("/images/wine2022-cny.jpg", "慳多D 美酒速遞", "w-100 my-3"),
@@ -20,11 +25,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             url: "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform",
             img: StaticResource.image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3"),
         },
-        {
-            title: "埗兵糧食儲備升級團購",
-            url: "https://docs.google.com/forms/d/e/1FAIpQLSehTgzukUDpqONaxwiqWWn-14mDeaBHI4U9qpKbg7njk6IJbA/viewform",
-            img: StaticResource.image("/images/dim6-43.jpg", "埗兵糧食儲備升級團購", "w-100 my-3"),
-        }
+        
     ];
 
     static final options = {
