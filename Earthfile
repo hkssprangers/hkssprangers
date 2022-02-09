@@ -212,9 +212,10 @@ devcontainer:
 ci-images:
     ARG --required GIT_REF_NAME
     ARG --required GIT_SHA
-    RUN echo $GIT_REF_NAME | sed 's/[^A-Za-z0-9\-\.]/_/g' | tee image_tag
+    RUN echo "$GIT_REF_NAME" | sed 's/[^A-Za-z0-9\-\.]/_/g' | tee image_tag
+    RUN echo "$DEVCONTAINER_IMAGE_NAME_DEFAULT:$(cat image_tag)" | tee image_cache
     BUILD +devcontainer \ 
-        --IMAGE_CACHE="$DEVCONTAINER_IMAGE_NAME_DEFAULT:$(cat image_tag)" \
+        --IMAGE_CACHE="$(cat image_cache)" \
         --IMAGE_TAG="$(cat image_tag)" \
         --GIT_SHA="$GIT_SHA"
 
