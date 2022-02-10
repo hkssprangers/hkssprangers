@@ -3,9 +3,10 @@ on: ["push", "pull_request"]
 
 env:
   TZ: Asia/Hong_Kong
+  FORCE_COLOR: 1
   EARTHLY_STRICT: "true"
   EARTHLY_PUSH: "${{ github.repository_owner == 'hkssprangers' && github.event_name == 'push' }}"
-  FORCE_COLOR: 1
+  DEPLOY: "${{ github.repository_owner == 'hkssprangers' && github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' ) }}"
 
 jobs:
   job:
@@ -36,7 +37,7 @@ jobs:
       - name: Test
         run: earthly +test
       - name: Create .envrc
-        if: success() && env.EARTHLY_PUSH == 'true'
+        if: success() && env.DEPLOY == 'true'
         run: |
           cat > .envrc <<EOT
           export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
@@ -48,12 +49,12 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
       - name: Pre-deploy check
-        if: success() && env.EARTHLY_PUSH == 'true'
+        if: success() && env.DEPLOY == 'true'
         run: earthly +pre-deploy-check --TF_LOCK_TIMEOUT=15m
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
       - name: Create .envrc
-        if: success() && env.EARTHLY_PUSH == 'true'
+        if: success() && env.DEPLOY == 'true'
         run: |
           tee .envrc <<EOT
           export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
@@ -94,10 +95,10 @@ jobs:
           TGBOT_TOKEN_MASTER: "${{ secrets.TGBOT_TOKEN_MASTER }}"
           TGBOT_TOKEN_PRODUCTION: "${{ secrets.TGBOT_TOKEN_PRODUCTION }}"
       - name: Deploy
-        if: success() && env.EARTHLY_PUSH == 'true' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
+        if: success() && env.DEPLOY == 'true'
         run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}" --SERVER_HOST="${SERVER_HOST}"
         env:
           EARTHLY_SECRET_FILES: .envrc=.envrc
       - name: Post-deploy tests
-        if: success() && env.EARTHLY_PUSH == 'true' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/production' )
+        if: success() && env.DEPLOY == 'true'
         run: earthly +post-deploy-test --SERVER_HOST="${SERVER_HOST}"
