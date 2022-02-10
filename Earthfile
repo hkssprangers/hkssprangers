@@ -39,6 +39,8 @@ RUN apt-get update \
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
+SAVE IMAGE --cache-hint
+
 COPY .devcontainer/mysql-public-key /tmp/mysql-public-key
 RUN apt-key add /tmp/mysql-public-key
 
@@ -84,6 +86,7 @@ RUN yarn global add lix --prefix /usr/local --cache-folder /tmp/yarn; rm -rf /tm
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
 
+SAVE IMAGE --cache-hint
 
 devcontainer-library-scripts:
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/common-debian.sh
@@ -137,23 +140,27 @@ lix-download:
     COPY .haxerc .
     RUN lix download
     SAVE ARTIFACT "$HAXESHIM_ROOT"
+    SAVE IMAGE --cache-hint
 
 node-modules-prod:
     COPY .haxerc package.json yarn.lock .
     COPY +lix-download/haxe "$HAXESHIM_ROOT"
     RUN yarn --production
     SAVE ARTIFACT node_modules
+    SAVE IMAGE --cache-hint
 
 node-modules-dev:
     FROM +node-modules-prod
     RUN yarn
     SAVE ARTIFACT node_modules
+    SAVE IMAGE --cache-hint
 
 dts2hx-externs:
     FROM +node-modules-dev
     COPY gen-externs.sh .
     RUN yarn dts2hx
     SAVE ARTIFACT lib/dts2hx
+    SAVE IMAGE --cache-hint
 
 devcontainer:
     # tfenv
