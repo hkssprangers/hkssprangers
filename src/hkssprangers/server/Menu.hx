@@ -715,45 +715,57 @@ class Menu extends View<MenuProps> {
         var veg = FastTasteSSPVeg();
         var misc = FastTasteSSPMisc();
         return jsx('
-            <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>漢堡</div>
-                    ${renderItems(FastTasteSSPBurgers)}
-                    <div className=${boxClasses}>
-                        <div className="p-3 text-xl rounded-t-xl font-bold">升級配料選擇</div>
-                        <div className="bg-body rounded-b-xl">
-                            ${renderItems(FastTasteSSPBurgerOptions, true)}
-                        </div>
-                    </div>
-                    <div className=${headerClasses}>${seafood.title}</div>
-                    ${renderItems(seafood.properties.seafood.enums())}
-                    <div className=${headerClasses}>${salad.title}</div>
-                    ${renderItems(salad.properties.salad.enums())}
-                    <div className=${boxClasses}>
-                        <div className="p-3 text-xl rounded-t-xl font-bold">${salad.title}${salad.properties.options.title}</div>
-                        <div className="bg-body rounded-b-xl">
-                            ${renderItems(salad.properties.options.items.enums(), true)}
-                        </div>
-                    </div>
-                    <div className=${headerClasses}>${italian.title}</div>
-                    ${renderItems(italian.properties.italian.enums())}
-                    <div className=${headerClasses}>${misc.title}</div>
-                    ${renderItems(misc.enums())}
+            <Fragment>
+                <div className=${["p-3", "border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${FastTasteSSPVSet.title}</div>
+                    <div className="font-bold p-3">${FastTasteSSPVSet.description}</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.appetizerOrSoup1.enums())} (2份)</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main1.enums())}</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main2.enums())}</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main3.enums())}</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.desserts.enums())}</div>
+                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.drink1.enums())} (2份)</div>
                 </div>
-                <div className="md:w-1/2 p-3">
-                    <div className=${headerClasses}>${FastTasteSSPDinnerSet.title}</div>
-                    ${renderItems(FastTasteSSPDinnerSet.properties.main.enums())}
-                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.sub.title}選擇</div>
-                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.sub.enums())}</div>
-                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.options.title}選擇</div>
-                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.options.items.enums())}</div>
-                    <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.drink.title}選擇</div>
-                    <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.drink.enums())}</div>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>漢堡</div>
+                        ${renderItems(FastTasteSSPBurgers)}
+                        <div className=${boxClasses}>
+                            <div className="p-3 text-xl rounded-t-xl font-bold">升級配料選擇</div>
+                            <div className="bg-body rounded-b-xl">
+                                ${renderItems(FastTasteSSPBurgerOptions, true)}
+                            </div>
+                        </div>
+                        <div className=${headerClasses}>${seafood.title}</div>
+                        ${renderItems(seafood.properties.seafood.enums())}
+                        <div className=${headerClasses}>${salad.title}</div>
+                        ${renderItems(salad.properties.salad.enums())}
+                        <div className=${boxClasses}>
+                            <div className="p-3 text-xl rounded-t-xl font-bold">${salad.title}${salad.properties.options.title}</div>
+                            <div className="bg-body rounded-b-xl">
+                                ${renderItems(salad.properties.options.items.enums(), true)}
+                            </div>
+                        </div>
+                        <div className=${headerClasses}>${italian.title}</div>
+                        ${renderItems(italian.properties.italian.enums())}
+                        <div className=${headerClasses}>${misc.title}</div>
+                        ${renderItems(misc.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${FastTasteSSPDinnerSet.title}</div>
+                        ${renderItems(FastTasteSSPDinnerSet.properties.main.enums())}
+                        <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.sub.title}選擇</div>
+                        <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.sub.enums())}</div>
+                        <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.options.title}選擇</div>
+                        <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.options.items.enums())}</div>
+                        <div className="font-bold p-3">${FastTasteSSPDinnerSet.properties.drink.title}選擇</div>
+                        <div className="p-3">${slashes(FastTasteSSPDinnerSet.properties.drink.enums())}</div>
 
-                    <div className=${headerClasses}>${meat.title} (晚市供應)</div>
-                    ${renderItems(meat.properties.meat.enums())}
+                        <div className=${headerClasses}>${meat.title} (晚市供應)</div>
+                        ${renderItems(meat.properties.meat.enums())}
+                    </div>
                 </div>
-            </div>
+            </Fragment>
         ');
     }
 
