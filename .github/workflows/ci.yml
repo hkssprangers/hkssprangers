@@ -3,8 +3,6 @@ on: ["push", "pull_request"]
 
 env:
   TZ: Asia/Hong_Kong
-  EARTHLY_USE_INLINE_CACHE: "true"
-  EARTHLY_SAVE_INLINE_CACHE: "true"
   EARTHLY_STRICT: "true"
   EARTHLY_PUSH: "${{ github.repository_owner == 'hkssprangers' && github.event_name == 'push' }}"
   FORCE_COLOR: 1
