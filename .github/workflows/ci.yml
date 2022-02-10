@@ -31,7 +31,7 @@ jobs:
       - name: Build devcontainer
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
         env:
-          EARTHLY_PUSH: $PUSH
+          EARTHLY_PUSH: ${{ env.PUSH }}
       - name: Build
         run: earthly +server
       - name: Build importGoogleForm
