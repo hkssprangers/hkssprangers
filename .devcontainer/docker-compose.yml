@@ -8,6 +8,8 @@ services:
       - ..:/workspace:cached
     environment:
       - TZ=Asia/Hong_Kong
+      - EARTHLY_BUILDKIT_HOST=tcp://earthly:8372
+      - EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:master
       - DEPLOY_STAGE=dev
       - MYSQL_HOST=mysql
       - MYSQL_USER=root
