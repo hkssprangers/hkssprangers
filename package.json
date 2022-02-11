@@ -69,5 +69,8 @@
     "telegraf": "^3.38.0",
     "twilio": "^3.73.1"
   },
+  "resolutions": {
+    "crc32-stream": "^4.0.2"
+  },
   "private": true
 }
