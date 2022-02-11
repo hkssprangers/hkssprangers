@@ -81,6 +81,7 @@ RUN apt-get update \
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
 
+RUN npm config --global set update-notifier false
 RUN npm config set prefix /usr/local
 RUN npm install -g lix
 
