@@ -18,7 +18,7 @@ RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$YARN_CACHE_FOLDER"
 ENV HAXESHIM_ROOT=/haxe
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
-ARG NODE_VERSION=14
+ARG NODE_VERSION=16
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
