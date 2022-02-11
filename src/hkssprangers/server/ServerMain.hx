@@ -23,7 +23,7 @@ import telegraf.Telegraf;
 import telegraf.Context;
 import telegraf.Extra;
 import telegraf.Markup;
-import telegram_typings.User as TgUser;
+import typegram.User as TgUser;
 import Fastify;
 import fastify.*;
 import js.Node.*;
@@ -423,7 +423,7 @@ class ServerMain {
         });
         tgBot.start(function(ctx:Context):Promise<Dynamic> {
             trace("/start");
-            switch (ctx.chat.type) {
+            switch (untyped ctx.chat.type) {
                 case "private":
                         if (ctx.from.username == null) {
                             return ctx.reply(comment(unindent)/**
@@ -452,7 +452,7 @@ class ServerMain {
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {
-            switch (ctx.chat.type) {
+            switch (untyped ctx.chat.type) {
                 case "private":
                     return ctx.reply(comment(unindent, format)/**
                         唔好意思。我唔係好識「/start」以外嘅嘢...
