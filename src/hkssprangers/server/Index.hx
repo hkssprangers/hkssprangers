@@ -19,7 +19,7 @@ typedef IndexProps = {
 
 class Index extends View<IndexProps> {
     override public function description() return "深水埗區外賣團隊";
-    override function canonical() return "https://" + host;
+    override function canonical() return "https://" + canonicalHost;
     override public function render() {
         return super.render();
     }

@@ -40,7 +40,7 @@ typedef PlumWineDIYProps = {
 class PlumWineDIY extends View<PlumWineDIYProps> {
     override public function title() return '梅酒 DIY';
     override public function description() return '梅酒 DIY 教學';
-    override function canonical() return Path.join(["https://" + host, "plum-wine-diy"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "plum-wine-diy"]);
     override public function render() {
         return super.render();
     }

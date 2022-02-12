@@ -47,7 +47,7 @@ class Menu extends View<MenuProps> {
 
     override public function title() return '${shop.info().name} 埗兵外賣餐牌';
     override public function description() return '${shop.info().name} 埗兵外賣餐牌';
-    override function canonical() return Path.join(["https://" + host, "menu", shop]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "menu", shop]);
     override public function render() {
         return super.render();
     }

@@ -38,7 +38,7 @@ class OrderFood extends View<OrderFoodProps> {
     function get_currentTime() return props.currentTime;
 
     override public function description() return "叫外賣";
-    override function canonical() return Path.join(["https://" + host, "order-food"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "order-food"]);
     override public function render() {
         return super.render();
     }
