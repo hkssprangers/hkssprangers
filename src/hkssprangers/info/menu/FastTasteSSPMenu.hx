@@ -230,7 +230,7 @@ class FastTasteSSPMenu {
 
     static public final FastTasteSSPVSet = {
         title: "情人節套餐",
-        description: "2月13日至2月15日限定。$298",
+        description: "2月13日至2月15日限定。請提早一日預訂。$298",
         properties: {
             appetizerOrSoup1: {
                 type: "string",
