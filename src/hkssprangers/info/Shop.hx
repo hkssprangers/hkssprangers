@@ -31,18 +31,15 @@ enum abstract Shop(String) to String {
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
-        DragonJapaneseCuisine,
         YearsHK,
         TheParkByYears,
         LaksaStore,
-        DongDong,
         BiuKeeLokYuen,
         KCZenzero,
         HanaSoftCream,
         Neighbor,
         MGY,
         FastTasteSSP,
-        BlaBlaBla,
         ZeppelinHotDogSKM,
         ThaiYummy,
         Toolss,
