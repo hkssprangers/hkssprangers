@@ -33,7 +33,7 @@ class DeliveryTools {
         } else if (pickupDate == tmr) {
             return switch TimeSlotType.classify(delivery.pickupTimeSlot.start) {
                 case Lunch:
-                    "當日朝早十點半";
+                    "當日朝早十一點半";
                 case Dinner:
                     "當日下午五點半";
             }
