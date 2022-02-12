@@ -198,17 +198,24 @@ class ServerMain {
 
     static function tgAuth(req:Request, reply:Reply):Promise<Dynamic> {
         // expires 7 day from now
-        var now = Date.now();
-        var expires = Date.fromTime(now.getTime() + DateTools.days(7));
+        final now = Date.now();
+        final expires = Date.fromTime(now.getTime() + DateTools.days(7));
 
-        var redirectTo = switch (req.query.redirectTo:String) {
+        final redirectTo = switch (req.query.redirectTo:String) {
             case null:
                 "/";
             case redirectTo:
                 redirectTo;
         }
 
-        var tg:Dynamic = {
+        if (redirectTo.startsWith("https://")) {
+            final redirectUrl = new URL(redirectTo);
+            if (redirectUrl.host != host) {
+                return Promise.resolve(reply.redirect(Path.join([redirectUrl.origin, "tgAuth?" + new URLSearchParams(req.query)])));
+            }
+        }
+
+        final tg:Dynamic = {
             var tg:DynamicAccess<String> = {};
             for (k => v in (req.query:DynamicAccess<String>))
                 if (k != "redirectTo")
@@ -221,7 +228,7 @@ class ServerMain {
             return Promise.resolve();
         }
 
-        var payload:CookiePayload = {
+        final payload:CookiePayload = {
             iss: jwtIssuer,
             iat: now,
             exp: expires,
@@ -233,7 +240,7 @@ class ServerMain {
         return jwtSigner.sign(cast payload)
             .toJsPromise()
             .then(signed -> {
-                var p = new URLSearchParams();
+                final p = new URLSearchParams();
                 p.set(authCookieName, signed);
                 reply.setCookie(authCookieName, signed, {
                     secure: true,
@@ -434,7 +441,13 @@ class ServerMain {
                                 關於 Telegram username: https://telegram.org/faq#q-what-are-usernames-how-do-i-get-one
                             **/);
                         }
-                        var loginUrl = Path.join([protocal + host, "tgAuth?redirectTo=%2Forder-food"]);
+                        final params = new URLSearchParams();
+                        params.set("redirectTo", Path.join([protocal + host, "order-food"]));
+                        final serverOrigin = switch (host) {
+                            case Constants.canonicalHost: protocal + host;
+                            case _: "https://master.ssprangers.com";
+                        }
+                        final loginUrl = Path.join([serverOrigin, "tgAuth?" + params]);
                         trace(loginUrl);
                         return ctx.reply('你好！請㩒「登入落單」制。', {
                             reply_markup: Markup.inlineKeyboard_([
@@ -483,6 +496,9 @@ class ServerMain {
                         })
                         .then(hostname -> {
                             Sys.println(hostname);
+                            final url = new URL(hostname);
+                            ServerMain.protocal = url.protocol + "//";
+                            ServerMain.host = url.hostname;
                             var hook = Path.join([hostname, tgBotWebHook]);
                             tgBot.telegram.setWebhook(hook)
                                 .then(_ -> tgMe)
