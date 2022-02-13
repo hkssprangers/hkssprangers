@@ -19,7 +19,7 @@ class DeliveryFee {
     static final heuristics:Array<DeliveryFeeHeuristric> = [
         {
             place: "深水埗站",
-            match: address -> address.contains("深水埗站") || address.contains("深水埗地鐵站") || address.contains("深水埗港鐵站"),
+            match: address -> address.contains("深水埗站") || address.contains("深水埗地鐵站") || address.contains("深水埗港鐵站") || address.contains("福華街155號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case CLPCluster: 25;
@@ -1426,6 +1426,19 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "亮賢居",
+            match: address -> address.contains("亮賢居"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 35;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 35;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
                 case TungChauStreetParkCluster: 25;
             }
         },
