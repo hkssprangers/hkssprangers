@@ -179,7 +179,7 @@ class DeliveryTools {
     }
 
     static public function setCouriersIncome(d:Delivery):Void {
-        if (d.couriers == null)
+        if (d.couriers == null || d.couriers.length <= 0)
             return;
         final platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
         final discount = Discounts.bestDiscountResult(d);
