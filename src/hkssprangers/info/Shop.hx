@@ -493,69 +493,12 @@ enum abstract Shop(String) to String {
             case [FastTasteSSP, _, Dinner]:
                 return Unavailable('晚市暫停');
 
-            /*
-                初一: 2022-02-01
-            */
-
-            // https://www.facebook.com/LaksaStore/posts/3115836785341478
-            case [LaksaStore, "2022-02-01"|"2022-02-02"|"2022-02-03"|"2022-02-04", _]:
-                return Unavailable('初五啟市');
-
-            case [WoStreet, "2022-01-29"|"2022-01-30"|"2022-01-31"|"2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
             case [MGY, _, _] if (
                 pickupTimeSlot.start.getDatePart() >= "2022-01-31"
                 &&
                 pickupTimeSlot.start.getDatePart() <= "2022-02-14"
             ):
                 return Unavailable('十五啟市');
-
-            case [Toolss, "2022-01-31"|"2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
-            // https://www.facebook.com/permalink.php?story_fbid=459855735832565&id=102717031546439
-            case [KCZenzero, "2022-01-31"|"2022-02-01", Dinner]:
-                return Unavailable('是日收早');
-
-            case [EightyNine, "2022-01-31", Dinner]:
-                return Unavailable('是日收早');
-            case [EightyNine, "2022-02-01"|"2022-02-02", _]:
-                return Unavailable('初三啟市');
-
-            // https://www.facebook.com/BiuKeeLokYuen/posts/306875758128192
-            case [BiuKeeLokYuen, "2022-01-31", Dinner] if (pickupTimeSlot.start.getTimePart() > "18:00:00"):
-                return Unavailable('是日收早 最遲 18:00 時段交收');
-            case [BiuKeeLokYuen, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
-            // https://www.facebook.com/hanasoftcream/posts/4823587111053877
-            case [HanaSoftCream, "2022-02-01", Lunch]:
-                return Unavailable('初一14:00啟市');
-
-            // https://www.facebook.com/yearshk/posts/5395317993813735
-            case [YearsHK | TheParkByYears, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
-            // https://www.facebook.com/598237310338384/posts/1983392715156163/
-            case [FastTasteSSP, "2022-01-31", Dinner]:
-                return Unavailable('是日收早');
-            case [FastTasteSSP, "2022-02-01", _]:
-                return Unavailable('初二啟市');
-
-            case [Neighbor, "2022-01-31"|"2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
-            case [KeiHing, "2022-01-31", Dinner]:
-                return Unavailable('是日收早');
-            case [KeiHing, "2022-02-01"|"2022-02-02"|"2022-02-03", _]:
-                return Unavailable('初四啟市');
-
-            // https://www.facebook.com/permalink.php?story_fbid=397128795517103&id=105039071392745
-            case [ZeppelinHotDogSKM, "2022-01-31", Dinner]:
-                return Unavailable('是日收早');
-            case [ZeppelinHotDogSKM, "2022-02-01", _]:
-                return Unavailable('初二啟市');
 
             case _:
                 //pass
