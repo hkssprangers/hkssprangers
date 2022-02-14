@@ -456,16 +456,6 @@ class Menu extends View<MenuProps> {
                         ${renderItems(TheParkByYearsSingle.enums())}
                     </div>
                 </div>
-                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${TheParkByYearsDinnerSet.title}${TheParkByYearsDinnerSet.properties.main.title}</div>
-                        ${renderItems(TheParkByYearsDinnerSet.properties.main.enums())}
-                    </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${TheParkByYearsDinnerSingle.title}</div>
-                        ${renderItems(TheParkByYearsDinnerSingle.enums())}
-                    </div>
-                </div>
                 <div className="p-3">
                     <div className=${headerClasses}>${TheParkByYearsSetDrink.title}</div>
                     <div className="md:flex flex-row md:mt-3">

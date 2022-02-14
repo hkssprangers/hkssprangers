@@ -9,18 +9,11 @@ enum abstract TheParkByYearsItem(String) to String {
     final Single;
     final DinnerSingle;
 
-    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<TheParkByYearsItem> return switch timeSlotType {
-        case Lunch:
-            [
-                Set,
-                Single,
-            ];
-        case Dinner:
-            [
-                DinnerSet,
-                DinnerSingle,
-            ];
-    }
+    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<TheParkByYearsItem> return
+        [
+            Set,
+            Single,
+        ];
 
     public function getDefinition():Dynamic return switch (cast this:TheParkByYearsItem) {
         case Set: TheParkByYearsMenu.TheParkByYearsSet;
@@ -110,21 +103,22 @@ class TheParkByYearsMenu {
     };
 
     static public final TheParkByYearsSet = {
-        title: "午市套餐",
+        title: "套餐",
         properties: {
             main: {
                 title: "主食",
                 type: "string",
                 "enum": [
-                    "⽩酒香辣蒜⽚乾蕃茄意粉 $88",
+                    "牛油果紅菜頭蘋果沙律 $98",
+                    "白酒香辣蒜片乾蕃茄意粉 $88",
                     "葡汁南瓜意粉 $88",
+                    "香辣泰式意粉 $88",
                     "不可能™️肉醬意大利粉 $98",
-                    "⽜油果紅菜頭蘋果沙律 $98",
+                    "冬陰功意大利飯 $88",
+                    "魚香茄子意大利飯 $98",
                     "麻辣芝士金磚多士 $118",
-                    "不可能芫茜芝⼠漢堡 $138",
+                    "不可能芫茜芝士漢堡 $138",
                     "節日特別版不可能漢堡 $148",
-                    "⽣酮⽇式⼤阪燒 $148",
-                    "泰式珍珠奶茶班㦸 $148",
                 ]
             },
             drink: TheParkByYearsSetDrink,
@@ -165,7 +159,7 @@ class TheParkByYearsMenu {
     }
 
     static public final TheParkByYearsSingle = {
-        title: "午市小食／甜品",
+        title: "小食／甜品",
         type: "string",
         "enum": [
             "炸香芋番薯丸 $48",
