@@ -9,7 +9,7 @@ enum abstract ShopCluster(String) {
     final PakTinCluster;
     final TungChauStreetParkCluster;
 
-    static public function classify(shop:Shop):ShopCluster {
+    static public function classify(shop:Shop):Null<ShopCluster> {
         return switch shop {
             case EightyNine: DragonCentreCluster;
             case DragonJapaneseCuisine: DragonCentreCluster;
@@ -31,6 +31,7 @@ enum abstract ShopCluster(String) {
             case KeiHing: TungChauStreetParkCluster;
             case PokeGo: ParkCluster;
             case WoStreet: DragonCentreCluster;
+            case AuLawFarm: null;
         }
     }
 

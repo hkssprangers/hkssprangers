@@ -223,6 +223,8 @@ class Menu extends View<MenuProps> {
                 renderPokeGo();
             case WoStreet:
                 renderWoStreet();
+            case AuLawFarm:
+                null;
         }
     }
 

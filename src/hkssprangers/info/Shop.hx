@@ -28,6 +28,7 @@ enum abstract Shop(String) to String {
     final KeiHing:Shop;
     final PokeGo:Shop;
     final WoStreet:Shop;
+    final AuLawFarm:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -46,6 +47,7 @@ enum abstract Shop(String) to String {
         KeiHing,
         PokeGo,
         WoStreet,
+        AuLawFarm,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -470,6 +472,17 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:00:00",
                 isInService: true,
             }
+        case AuLawFarm:
+            {
+                id: AuLawFarm,
+                name: "歐羅有機農場",
+                address: "新界錦田元朗大江埔村",
+                courierContact: [],
+                openDays: [],
+                earliestPickupTime: null,
+                latestPickupTime: null,
+                isInService: false,
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -586,6 +599,8 @@ enum abstract Shop(String) to String {
                 PokeGoMenu.itemsSchema(o);
             case WoStreet:
                 WoStreetMenu.itemsSchema(o);
+            case AuLawFarm:
+                null;
         }
     }
 
@@ -631,6 +646,8 @@ enum abstract Shop(String) to String {
                 PokeGoMenu.summarize(o);
             case WoStreet:
                 WoStreetMenu.summarize(o);
+            case AuLawFarm:
+                null;
         }
     }
 
@@ -656,6 +673,7 @@ enum abstract Shop(String) to String {
             case KeiHing: KeiHing;
             case PokeGo: PokeGo;
             case WoStreet: WoStreet;
+            case AuLawFarm: AuLawFarm;
             case _: null;
         }
     }
