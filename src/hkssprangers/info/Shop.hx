@@ -493,12 +493,9 @@ enum abstract Shop(String) to String {
             case [FastTasteSSP, _, Dinner]:
                 return Unavailable('晚市暫停');
 
-            case [MGY, _, _] if (
-                pickupTimeSlot.start.getDatePart() >= "2022-01-31"
-                &&
-                pickupTimeSlot.start.getDatePart() <= "2022-02-14"
-            ):
-                return Unavailable('十五啟市');
+            // https://www.facebook.com/LaksaStore/posts/3133143530277470
+            case [LaksaStore, _, _]:
+                return Unavailable('傷了腿, 暫定休息一星期');
 
             case _:
                 //pass
