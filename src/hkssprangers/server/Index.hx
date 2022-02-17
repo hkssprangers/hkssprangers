@@ -120,6 +120,10 @@ class Index extends View<IndexProps> {
         </Fragment>
     ');
 
+    static function location(location:String) return jsx('
+        <span className=${TailwindTools.badge() + " mx-0.5 px-1 bg-gray-100 whitespace-nowrap"}>${location}</span>
+    ');
+
     static public function howToOrderSection() return jsx('
 
         <Fragment>
@@ -176,9 +180,15 @@ class Index extends View<IndexProps> {
 
                         <div className="md:flex md:mx-auto container pt-3 lg:pt-16 md:px-3">
                             <div className="md:w-1/3 lg:pr-16">
-                            
-                                <div className="text-lg font-bold mb-3"><i className="fas fa-map-marked-alt"></i> 埗兵運費點計?</div>
-                                <p className="mb-3">運費計算:<br/>以店舖同目的地之間嘅步行距離計算，會因應實際情況(如長樓梯)調整。</p>
+                                <h3 className="text-lg font-bold mb-3"><i className="fas fa-map-marked-alt"></i> 埗兵外賣運費點計?</h3>
+                                <h4 className="font-bold">服務範圍:</h4>
+                                <p className="mb-3">
+                                    以地鐵站位置解釋，${location("深水埗站")}${location("南昌站")}${location("長沙灣站")}${location("石硤尾站")}附近區域都可以送到。
+                                </p>
+                                <h4 className="font-bold">運費計算:</h4>
+                                <p className="mb-3">
+                                    以店舖同目的地之間嘅步行距離計算，會因應實際情況(如長樓梯)調整。
+                                </p>
                                 <div className="mb-3">
                                     步行15分鐘或以內
                                     <p className="text-xl lg:text-4xl font-bold poppins">$$25</p>
