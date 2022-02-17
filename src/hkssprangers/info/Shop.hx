@@ -493,6 +493,9 @@ enum abstract Shop(String) to String {
             case [FastTasteSSP, _, Dinner]:
                 return Unavailable('晚市暫停');
 
+            case [Toolss, _, _]:
+                return Unavailable('餐牌更新中');
+
             // https://www.facebook.com/LaksaStore/posts/3133143530277470
             case [LaksaStore, _, _]:
                 return Unavailable('傷了腿, 暫定休息一星期');
