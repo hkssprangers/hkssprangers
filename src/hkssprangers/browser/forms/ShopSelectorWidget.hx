@@ -46,20 +46,19 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
         return value;
     };
     override function render():ReactFragment {
-        var pickupTimeSlot = switch (props.formContext.pickupTimeSlot) {
+        final pickupTimeSlot = switch (props.formContext.pickupTimeSlot) {
             case null: null;
             case str: str.parse();
         };
-        var currentTime = props.formContext.currentTime.toDate();
+        final currentTime = props.formContext.currentTime.toDate();
         if (props.value != null) {
-            var shop:Shop = props.value;
-            var info = shop.info();
-            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
+            final shop:Shop = props.value;
+            final availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                 Available;
             } else {
                 shop.checkAvailability(currentTime, pickupTimeSlot);
             }
-            var disabledMessage = switch (availability) {
+            final disabledMessage = switch (availability) {
                 case Available:
                     null;
                 case Unavailable(reason):
@@ -70,24 +69,25 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
             // return jsx('<div>🔸 ${info.name}${disabledMessage}</div>');
             return null;
         }
-        var shops:Array<Shop> = props.options.enumOptions.map((option:{ value:Shop, label:String }, i:Int) -> option.value);
-        shops = shops.filter(shop -> shop.info().isInService);
+        final shops:Array<Shop> = props.options.enumOptions
+            .map((option:{ value:Shop, label:String }, i:Int) -> option.value)
+            .filter((shop:Shop) -> shop.info().isInService);
 
         switch (shops) {
             case []:
                 return null;
             case shops:
-                var items = shops.linq()
+                final items = shops.linq()
                     .groupBy(ShopCluster.classify)
                     .selectMany((group, i) -> {
-                        var items = group.linq().select((shop, _) -> {
-                            var info = shop.info();
-                            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
+                        final items = group.linq().select((shop, _) -> {
+                            final info = shop.info();
+                            final availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                                 Available;
                             } else {
                                 shop.checkAvailability(currentTime, pickupTimeSlot);
                             }
-                            var disabledMessage = switch (availability) {
+                            final disabledMessage = switch (availability) {
                                 case Available:
                                     null;
                                 case Unavailable(reason):

@@ -184,6 +184,9 @@ class OrderFormSchema {
                     title: "其他運送備註",
                     description: "留意店鋪/埗兵未必能完全配合, 請見諒",
                 },
+                currentTime: {
+                    type: "string",
+                },
             },
             required: [
                 "pickupTimeSlot",

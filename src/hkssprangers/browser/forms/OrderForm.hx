@@ -89,6 +89,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     function getUiSchema(formData:OrderFormData) {
         var pickupTimeSlot = OrderFormSchema.selectedPickupTimeSlot(formData);
         return {
+            currentTime: { "ui:widget": "hidden" },
             pickupTimeSlot: {
                 "ui:widget": TimeSlotSelectorWidget,
             },
