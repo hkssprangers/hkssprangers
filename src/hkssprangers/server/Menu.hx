@@ -28,6 +28,7 @@ import hkssprangers.info.menu.ToolssMenu.*;
 import hkssprangers.info.menu.KeiHingMenu.*;
 import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.menu.WoStreetMenu.*;
+import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -226,7 +227,7 @@ class Menu extends View<MenuProps> {
             case AuLawFarm:
                 null;
             case Minimal:
-                null;
+                renderMinimal();
         }
     }
 
@@ -1066,6 +1067,59 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${PokeGoDrink.title}</div>
                         ${renderItems(PokeGoDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderMinimal() {
+        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${MinimalSetFor2.description}</div>
+                        <div className="font-bold p-3">${MinimalSetFor2.properties.salad.title}</div>
+                        ${renderItems(MinimalSetFor2.properties.salad.enums())}
+                        <div className="font-bold p-3">主食 (選二)</div>
+                        ${renderItems(MinimalSetFor2.properties.main1.enums(), true)}
+                        <div className="font-bold p-3">飲品 (選二)</div>
+                        <div className="p-3">可選原價 $$36 飲品, 或補差額</div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${MinimalSetFor4.description}</div>
+                        <div className="font-bold p-3">沙律 (選二)</div>
+                        ${renderItems(MinimalSetFor4.properties.salad1.enums())}
+                        <div className="font-bold p-3">主食 (選二)</div>
+                        ${renderItems(MinimalSetFor4.properties.main1.enums(), true)}
+                        <div className="font-bold p-3">${MinimalSetFor4.properties.sousVides.title}</div>
+                        ${renderItems(MinimalSetFor4.properties.sousVides.enums())}
+                        <div className="font-bold p-3">飲品 (選四)</div>
+                        <div className="p-3">可選原價 $$36 飲品, 或補差額</div>
+                    </div>
+                </div>
+                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${MinimalTacos.title}</div>
+                        ${renderItems(MinimalTacos.enums())}
+
+                        <div className=${headerClasses}>${MinimalSalad.title}</div>
+                        ${renderItems(MinimalSalad.enums())}
+                        
+                        <div className=${headerClasses}>${MinimalPasta.title}</div>
+                        ${renderItems(MinimalPasta.enums())}
+
+                        <div className=${headerClasses}>${MinimalSousVide.title}</div>
+                        ${renderItems(MinimalSousVide.enums())}
+
+                        <div className=${headerClasses}>${MinimalDessert.title}</div>
+                        ${renderItems(MinimalDessert.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${MinimalDrinks.title}</div>
+                        ${renderItems(MinimalDrinks.properties.drink.enums())}
+                        <div className="p-3 text-center">${slashes(MinimalDrinks.properties.milkOption.enums())}</div>
                     </div>
                 </div>
             </Fragment>

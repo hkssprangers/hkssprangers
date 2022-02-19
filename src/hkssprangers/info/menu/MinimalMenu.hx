@@ -37,15 +37,19 @@ enum abstract MinimalItem(String) to String {
 }
 
 class MinimalMenu {
+    static function printNamePrice(item:{name:String, price:Int}):String {
+        return item.name + " $" + item.price;
+    }
+
     static final tacos = [
-        { name: "BBQ牛油果素肉醬(v.)", price: 95 },
-        { name: "牛油果雞胸肉配芒果醬", price: 95 },
-        { name: "洋蔥壽喜燒牛肉", price: 98 },
+        { name: "BBQ牛油果素肉醬夾餅(v.)", price: 95 },
+        { name: "牛油果雞胸肉配芒果醬夾餅", price: 95 },
+        { name: "洋蔥壽喜燒牛肉夾餅", price: 98 },
     ];
     static public final MinimalTacos = {
         title: "夾餅",
         type: "string",
-        "enum": tacos.map(v -> v.name + " $" + v.price),
+        "enum": tacos.map(printNamePrice),
     };
 
     static final salads = [
@@ -56,7 +60,7 @@ class MinimalMenu {
     static public final MinimalSalad = {
         title: "沙律",
         type: "string",
-        "enum": salads.map(v -> v.name + " $" + v.price),
+        "enum": salads.map(printNamePrice),
     };
 
     static final pastas = [
@@ -70,16 +74,18 @@ class MinimalMenu {
     static public final MinimalPasta = {
         title: "意粉",
         type: "string",
-        "enum": pastas.map(v -> v.name + " $" + v.price),
+        "enum": pastas.map(printNamePrice),
     };
+
+    static final sousVides = [
+        { name: "慢煮西班牙黑毛豬", price: 138 },
+        { name: "慢者黑安格斯牛肉7oz", price: 158 },
+    ];
 
     static public final MinimalSousVide = {
         title: "慢煮",
         type: "string",
-        "enum": [
-            "慢煮西班牙黑毛豬 $138",
-            "慢者黑安格斯牛肉7oz $158",
-        ],
+        "enum": sousVides.map(printNamePrice),
     };
 
     static final drinks = [
@@ -135,7 +141,7 @@ class MinimalMenu {
             drink: {
                 title: "飲品",
                 type: "string",
-                "enum": drinks.map(v -> v.name + " $" + v.price),
+                "enum": drinks.map(printNamePrice),
             },
             milkOption: {
                 title: "選項",
@@ -163,7 +169,7 @@ class MinimalMenu {
 
     static public final MinimalSetFor2 = {
         title: "二人套餐",
-        description: "$248",
+        description: "二人套餐 $248",
         properties: {
             salad: {
                 title: "沙律",
@@ -197,6 +203,70 @@ class MinimalMenu {
             "main2",
             "drink1",
             "drink2",
+        ]
+    };
+
+    static public final MinimalSetFor4 = {
+        title: "四人套餐",
+        description: "四人套餐 $498",
+        properties: {
+            salad1: {
+                title: "沙律一",
+                type: "string",
+                "enum": salads.map(v -> v.name),
+            },
+            salad2: {
+                title: "沙律二",
+                type: "string",
+                "enum": salads.map(v -> v.name),
+            },
+            main1: {
+                title: "主食一",
+                type: "string",
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+            },
+            main2: {
+                title: "主食二",
+                type: "string",
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+            },
+            sousVides: {
+                title: "慢煮",
+                type: "string",
+                "enum": [sousVides[0].name + " + " + sousVides[1].name],
+                "default": sousVides[0].name + " + " + sousVides[1].name,
+            },
+            drink1: {
+                title: "飲品一",
+                type: "string",
+                "enum": drinks.map(v -> v.name + (v.price <= 36 ? "" : " +$" + (v.price - 36))),
+            },
+            drink2: {
+                title: "飲品二",
+                type: "string",
+                "enum": drinks.map(v -> v.name + (v.price <= 36 ? "" : " +$" + (v.price - 36))),
+            },
+            drink3: {
+                title: "飲品三",
+                type: "string",
+                "enum": drinks.map(v -> v.name + (v.price <= 36 ? "" : " +$" + (v.price - 36))),
+            },
+            drink4: {
+                title: "飲品四",
+                type: "string",
+                "enum": drinks.map(v -> v.name + (v.price <= 36 ? "" : " +$" + (v.price - 36))),
+            },
+        },
+        required: [
+            "salad1",
+            "salad2",
+            "main1",
+            "main2",
+            "sousVides",
+            "drink1",
+            "drink2",
+            "drink3",
+            "drink4",
         ]
     };
     
@@ -246,6 +316,10 @@ class MinimalMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case SetFor2:
+                summarizeOrderObject(orderItem.item, def, MinimalSetFor2.required, [MinimalSetFor2.description]);
+            case SetFor4:
+                summarizeOrderObject(orderItem.item, def, MinimalSetFor4.required, [MinimalSetFor4.description]);
             case Drinks:
                 summarizeOrderObject(orderItem.item, def, ["drink", "milkOption"]);
             case Tacos | Salad | Pasta | SousVide | Dessert:

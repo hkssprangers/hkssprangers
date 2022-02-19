@@ -502,7 +502,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "20:30:00",
-                isInService: false,
+                isInService: true,
             }
     }
 
@@ -620,7 +620,7 @@ enum abstract Shop(String) to String {
             case AuLawFarm:
                 null;
             case Minimal:
-                null;
+                MinimalMenu.itemsSchema(o);
         }
     }
 
@@ -669,7 +669,7 @@ enum abstract Shop(String) to String {
             case AuLawFarm:
                 null;
             case Minimal:
-                null;
+                MinimalMenu.summarize(o);
         }
     }
 
