@@ -225,6 +225,8 @@ class Menu extends View<MenuProps> {
                 renderWoStreet();
             case AuLawFarm:
                 null;
+            case Minimal:
+                null;
         }
     }
 
