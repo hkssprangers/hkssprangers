@@ -490,7 +490,9 @@ enum abstract Shop(String) to String {
                 id: Minimal,
                 name: "Minimal",
                 address: "深水埗鴨寮街121-123號",
-                courierContact: [],
+                courierContact: [
+                    "tel:69713921",
+                ],
                 openDays: [
                     Monday,
                     Tuesday,
