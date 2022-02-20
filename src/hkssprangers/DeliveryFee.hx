@@ -436,6 +436,19 @@ class DeliveryFee {
             }
         },
         {
+            place: "又一村",
+            match: address -> address.contains("又一村"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
             place: "海麗邨",
             match: address -> address.contains("海麗邨"),
             deliveryFee: cluster -> switch cluster {
@@ -1440,6 +1453,19 @@ class DeliveryFee {
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
                 case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "西洋菜北街恒安樓",
+            match: address -> address.contains("恒安樓") && address.contains("西洋菜北街"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 35;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
