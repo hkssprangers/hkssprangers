@@ -509,9 +509,9 @@ enum abstract Shop(String) to String {
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
-        var info = info();
-        var date = pickupTimeSlot.start.toDate();
-        var day = Weekday.fromDay(date.getDay());
+        final info = info();
+        final date = pickupTimeSlot.start.toDate();
+        final day = Weekday.fromDay(date.getDay());
 
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
             case [DongDong, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-26"):
@@ -523,22 +523,13 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [FastTasteSSP, "2022-02-14", _]:
-                return Unavailable('暫停接單');
-
-            case [FastTasteSSP, _, Dinner]:
-                return Unavailable('晚市暫停');
-
-            case [KeiHing, "2022-02-17", _]:
-                return Unavailable('休息一天');
+            // https://www.facebook.com/fasttastehk/posts/1998398380322263
+            case [FastTasteSSP, _, _]:
+                return Unavailable('暫停營業');
 
             // https://www.facebook.com/LaksaStore/posts/3133143530277470
             case [LaksaStore, _, _]:
                 return Unavailable('傷了腿, 暫定休息一星期');
-
-            // https://www.facebook.com/permalink.php?story_fbid=472154921269313&id=102717031546439
-            case [KCZenzero, "2022-02-17", _]:
-                return Unavailable('休息一天');
 
             case _:
                 //pass
