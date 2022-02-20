@@ -1085,7 +1085,7 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">主食 (選二)</div>
                         ${renderItems(MinimalSetFor2.properties.main1.enums(), true)}
                         <div className="font-bold p-3">飲品 (選二)</div>
-                        <div className="p-3">可選原價 $$36 飲品, 或補差額</div>
+                        <div className="p-3">可選任何飲品</div>
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${MinimalSetFor4.description}</div>
@@ -1096,30 +1096,29 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">${MinimalSetFor4.properties.sousVides.title}</div>
                         ${renderItems(MinimalSetFor4.properties.sousVides.enums())}
                         <div className="font-bold p-3">飲品 (選四)</div>
-                        <div className="p-3">可選原價 $$36 飲品, 或補差額</div>
+                        <div className="p-3">可選任何飲品</div>
                     </div>
                 </div>
                 <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${MinimalTacos.title}</div>
-                        ${renderItems(MinimalTacos.enums())}
+                        ${renderItems(MinimalTacos.properties.main.enums())}
 
                         <div className=${headerClasses}>${MinimalSalad.title}</div>
-                        ${renderItems(MinimalSalad.enums())}
+                        ${renderItems(MinimalSalad.properties.main.enums())}
                         
                         <div className=${headerClasses}>${MinimalPasta.title}</div>
-                        ${renderItems(MinimalPasta.enums())}
+                        ${renderItems(MinimalPasta.properties.main.enums())}
 
                         <div className=${headerClasses}>${MinimalSousVide.title}</div>
-                        ${renderItems(MinimalSousVide.enums())}
+                        ${renderItems(MinimalSousVide.properties.main.enums())}
 
                         <div className=${headerClasses}>${MinimalDessert.title}</div>
-                        ${renderItems(MinimalDessert.enums())}
+                        ${renderItems(MinimalDessert.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${MinimalDrinks.title}</div>
                         ${renderItems(MinimalDrinks.properties.drink.enums())}
-                        <div className="p-3 text-center">${slashes(MinimalDrinks.properties.milkOption.enums())}</div>
                     </div>
                 </div>
             </Fragment>
