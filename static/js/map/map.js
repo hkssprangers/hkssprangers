@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlbGxhNzExIiwiYSI6ImNrc3p2OXMzMDJnc2Yyd24xZXZ0ZGt4cGQifQ.Vn6lqChhc0FXjQ_WQWnd-w';
   const map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    style: 'mapbox://styles/onthewings/ckzwgjip4004215oce0zc5ola', // style URL
     center: [114.16025186047068, 22.33114444434112], // starting position [lng, lat]
     zoom: 15 // starting zoom
   });
