@@ -510,8 +510,8 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                earliestPickupTime: "18:00:00",
-                latestPickupTime: "20:00:00",
+                earliestPickupTime: "18:00:00", //開2點
+                latestPickupTime: "18:00:00", //通常6點半就閂
                 isInService: true,
             }
         case AuLawFarm:
