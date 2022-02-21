@@ -126,8 +126,7 @@ class BrowserMain {
         }
     }
 
-    // static final mapboxAccessToken = "pk.eyJ1Ijoib250aGV3aW5ncyIsImEiOiJja3p3ZTBjbW0wNWs3Mm5waDBkbG41YjhrIn0.XOF0xjYbJpIXS--nugUSWg";
-    static final mapboxAccessToken = "pk.eyJ1Ijoic3RlbGxhNzExIiwiYSI6ImNrc3p2OXMzMDJnc2Yyd24xZXZ0ZGt4cGQifQ.Vn6lqChhc0FXjQ_WQWnd-w";
+    static final mapboxAccessToken = "pk.eyJ1Ijoib250aGV3aW5ncyIsImEiOiJja3p3ZTBjbW0wNWs3Mm5waDBkbG41YjhrIn0.XOF0xjYbJpIXS--nugUSWg";
     static function initMap() {
         MapboxGl.accessToken = mapboxAccessToken;
         final map = new mapbox_gl.Map_({
