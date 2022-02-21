@@ -135,6 +135,8 @@ class BrowserMain {
             center: [114.16025186047068, 22.33114444434112], // starting position [lng, lat]
             zoom: 15 // starting zoom
         });
+        map.scrollZoom.disable();
+        map.addControl(new mapbox_gl.NavigationControl());
 
         for (shop in Shop.all) {
             final info = shop.info();
