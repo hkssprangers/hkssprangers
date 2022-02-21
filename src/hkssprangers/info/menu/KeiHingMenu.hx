@@ -51,7 +51,7 @@ enum abstract KeiHingItem(String) to String {
             ];
         case Dinner:
             [
-                PotRice,
+                // PotRice,
                 NoodleAndRice,
                 ChickenLegSet,
                 FriedInstantNoodle,
