@@ -5,10 +5,22 @@ import mui.core.styles.*;
 import haxe.*;
 import js.html.DivElement;
 import js.Browser.*;
+import hkssprangers.info.Shop;
+import hkssprangers.info.ShopCluster;
 import hkssprangers.CookiePayload;
 import hkssprangers.StaticResource.R;
 
 class BrowserMain {
+    static final clusterStyle = [
+        DragonCentreCluster => 'rgb(239,68,68)',
+        CLPCluster => 'rgb(52, 211, 153)',
+        GoldenCluster => 'rgb(236, 72, 153)',
+        SmilingPlazaCluster => 'rgb(245, 158, 11)',
+        ParkCluster => 'rgb(5, 150, 105)',
+        PakTinCluster => 'rgb(59, 130, 246)',
+        TungChauStreetParkCluster => 'rgb(99, 102, 241)'
+    ];
+
     static public final theme = MuiTheme.createMuiTheme({
         typography: {
             fontFamily: "'Noto Sans HK', sans-serif",
@@ -92,6 +104,13 @@ class BrowserMain {
                     />
                 '), div);
         }
+
+        switch (document.getElementById("map")) {
+            case null:
+                //pass
+            case elm:
+                initMap();
+        }
     }
 
     static function initSW() {
@@ -104,6 +123,28 @@ class BrowserMain {
                 .catchError(err -> {
                     console.log('Registration failed with ' + err);
                 });
+        }
+    }
+
+    // static final mapboxAccessToken = "pk.eyJ1Ijoib250aGV3aW5ncyIsImEiOiJja3p3ZTBjbW0wNWs3Mm5waDBkbG41YjhrIn0.XOF0xjYbJpIXS--nugUSWg";
+    static final mapboxAccessToken = "pk.eyJ1Ijoic3RlbGxhNzExIiwiYSI6ImNrc3p2OXMzMDJnc2Yyd24xZXZ0ZGt4cGQifQ.Vn6lqChhc0FXjQ_WQWnd-w";
+    static function initMap() {
+        MapboxGl.accessToken = mapboxAccessToken;
+        final map = new mapbox_gl.Map_({
+            container: 'map', // container ID
+            style: 'mapbox://styles/onthewings/ckzwgjip4004215oce0zc5ola', // style URL
+            center: [114.16025186047068, 22.33114444434112], // starting position [lng, lat]
+            zoom: 15 // starting zoom
+        });
+
+        for (shop in Shop.all) {
+            final info = shop.info();
+            final cluster = ShopCluster.classify(shop);
+            final popup = new mapbox_gl.Popup({ offset: 25 }).setText(info.name);
+            final marker = new mapbox_gl.Marker({ color: clusterStyle[cluster] })
+                .setLngLat([info.lng, info.lat])
+                .setPopup(popup)
+                .addTo(map);
         }
     }
 

@@ -58,6 +58,8 @@ enum abstract Shop(String) to String {
                 id: EightyNine,
                 name: "89美食",
                 address: "西九龍中心8樓美食廣場9號舖",
+                lat: 22.33133,
+                lng: 114.16014,
                 courierContact: [
                     "tel:63899833",
                 ],
@@ -79,6 +81,8 @@ enum abstract Shop(String) to String {
                 id: DragonJapaneseCuisine,
                 name: "營業部",
                 address: "西九龍中心8樓美食廣場8F35舖",
+                lat: null,
+                lng: null,
                 courierContact: [
                     "https://wa.me/85265733617",
                 ],
@@ -100,6 +104,8 @@ enum abstract Shop(String) to String {
                 id: YearsHK,
                 name: "Years",
                 address: "深水埗福華街191-199號福隆大廈1號地舖",
+                lat: 22.3326012,
+                lng: 114.1607882,
                 courierContact: [
                     "tel:63383719",
                 ],
@@ -121,6 +127,8 @@ enum abstract Shop(String) to String {
                 id: TheParkByYears,
                 name: "The Park by Years",
                 address: "深水埗汝州街132號地舖",
+                lat: 22.3280548,
+                lng: 114.1640775,
                 courierContact: [
                     "tel:53364000",
                 ],
@@ -142,6 +150,8 @@ enum abstract Shop(String) to String {
                 id: LaksaStore,
                 name: "喇沙專門店",
                 address: "西九龍中心8樓美食廣場",
+                lat: 22.33132,
+                lng: 114.16017,
                 courierContact: [
                     "tel:51167518",
                 ],
@@ -163,6 +173,8 @@ enum abstract Shop(String) to String {
                 id: DongDong,
                 name: "噹噹茶餐廳",
                 address: "深水埗福華街208號B地下",
+                lat: null,
+                lng: null,
                 courierContact: [
                     "tel:23616691",
                 ],
@@ -184,6 +196,8 @@ enum abstract Shop(String) to String {
                 id: BiuKeeLokYuen,
                 name: "標記樂園潮州粉麵菜館",
                 address: "深水埗福華街149號地舖",
+                lat: 22.3313171,
+                lng: 114.1624664,
                 courierContact: [
                     "tel:90691493",
                 ],
@@ -205,6 +219,8 @@ enum abstract Shop(String) to String {
                 id: KCZenzero,
                 name: "蕃廚",
                 address: "深水埗欽州街37號西九龍中心8樓57號舖",
+                lat: 22.33122,
+                lng: 114.15968,
                 courierContact: [
                     "https://wa.me/85293428231",
                 ],
@@ -226,6 +242,8 @@ enum abstract Shop(String) to String {
                 id: HanaSoftCream,
                 name: "HANA Soft Cream",
                 address: "深水埗欽州街37K西九龍中心6樓628A",
+                lat: 22.3309339,
+                lng: 114.1597422,
                 courierContact: [],
                 openDays: [
                     Monday,
@@ -245,6 +263,8 @@ enum abstract Shop(String) to String {
                 id: Neighbor,
                 name: "Neighbor",
                 address: "長沙灣元州街162-188號天悅廣場地下A8號舖",
+                lat: 22.3351073,
+                lng: 114.1598897,
                 courierContact: [
                     "tel:37020958",
                 ],
@@ -266,6 +286,8 @@ enum abstract Shop(String) to String {
                 id: MGY,
                 name: "梅貴緣",
                 address: "深水埗基隆街188號C舖",
+                lat: 22.3281200,
+                lng: 114.1630828,
                 courierContact: [
                     "tel:90180189",
                 ],
@@ -287,6 +309,8 @@ enum abstract Shop(String) to String {
                 id: FastTasteSSP,
                 name: "Fast Taste (SSP)",
                 address: "深水埗福華街110號地下",
+                lat: 22.3312402,
+                lng: 114.1628927,
                 courierContact: [
                     "tel:61628045",
                 ],
@@ -308,6 +332,8 @@ enum abstract Shop(String) to String {
                 id: BlaBlaBla,
                 name: "壺說",
                 address: "深水埗福華街110號地下",
+                lat: null,
+                lng: null,
                 courierContact: [
                     "tel:91433611",
                 ],
@@ -329,6 +355,8 @@ enum abstract Shop(String) to String {
                 id: ZeppelinHotDogSKM,
                 name: "齊柏林熱狗 (石硤尾)",
                 address: "白田購物中心地下82號鋪",
+                lat: 22.3347417,
+                lng: 114.1673818,
                 courierContact: [
                     "tel:55965529",
                 ],
@@ -350,6 +378,8 @@ enum abstract Shop(String) to String {
                 id: MyRoomRoom,
                 name: "浮島",
                 address: "深水埗褔榮街57號",
+                lat: null,
+                lng: null,
                 courierContact: [
                     "tel:67731228",
                 ],
@@ -371,6 +401,8 @@ enum abstract Shop(String) to String {
                 id: ThaiYummy,
                 name: "泰和味",
                 address: "長沙灣營盤街159-161號金德花園地下1號舖",
+                lat: 22.3356232,
+                lng: 114.1612154,
                 courierContact: [
                     // "tel:65047678",
                     "tel:90371992",
@@ -394,6 +426,8 @@ enum abstract Shop(String) to String {
                 id: Toolss,
                 name: "Toolss",
                 address: "石硤尾偉智街38號福田大廈地下2-3及37號舖",
+                lat: 22.3348939,
+                lng: 114.1666646,
                 courierContact: [
                     "tel:39545135",
                 ],
@@ -415,6 +449,8 @@ enum abstract Shop(String) to String {
                 id: KeiHing,
                 name: "琦興餐廳",
                 address: "深水埗通州街294號地舖",
+                lat: 22.3282303,
+                lng: 114.1581067,
                 courierContact: [
                     "tel:23688896",
                 ],
@@ -436,6 +472,8 @@ enum abstract Shop(String) to String {
                 id: PokeGo,
                 name: "Poke Go",
                 address: "深水埗大南街211號",
+                lat: 22.3275716,
+                lng: 114.1626558,
                 courierContact: [
                     "tel:35638137",
                 ],
@@ -457,6 +495,8 @@ enum abstract Shop(String) to String {
                 id: WoStreet,
                 name: "窩Street",
                 address: "西九龍中心6樓蘋果商場6067號舖",
+                lat: 22.3310294,
+                lng: 114.1595612,
                 courierContact: [
                     // "tel:51868627",
                     "https://t.me/dufuhf",
@@ -479,6 +519,8 @@ enum abstract Shop(String) to String {
                 id: AuLawFarm,
                 name: "歐羅有機農場",
                 address: "新界錦田元朗大江埔村",
+                lat: null,
+                lng: null,
                 courierContact: [],
                 openDays: [],
                 earliestPickupTime: null,
@@ -490,6 +532,8 @@ enum abstract Shop(String) to String {
                 id: Minimal,
                 name: "Minimal",
                 address: "深水埗鴨寮街121-123號",
+                lat: 22.3288335,
+                lng: 114.1636431,
                 courierContact: [
                     "tel:69713921",
                 ],

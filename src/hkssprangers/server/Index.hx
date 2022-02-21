@@ -37,7 +37,6 @@ class Index extends View<IndexProps> {
         return jsx('
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.js" integrity="sha256-gNlPWtqCLS7IzBt0kvzIeYiog9BBJbAhfFFggKaMab8=" crossOrigin="anonymous"></script>
                 <script src=${R("/js/map/map.js")}></script>
                 ${super.depScript()}
             </Fragment>
@@ -48,7 +47,7 @@ class Index extends View<IndexProps> {
         return jsx('
             <Fragment>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css" integrity="sha256-sB1O2oXn5yaSW1T/92q2mGU86IDhZ0j1Ya8eSv+6QfM=" crossOrigin="anonymous"/>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.css" integrity="sha256-i2CDQozz0HNO8H7ZwLicf6OI4doKxli9qDvLUNXHUFw=" crossOrigin="anonymous"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.7.0/dist/mapbox-gl.css" integrity="sha256-i2CDQozz0HNO8H7ZwLicf6OI4doKxli9qDvLUNXHUFw=" crossOrigin="anonymous"/>
                 ${super.depCss()}
             </Fragment>
         ');
