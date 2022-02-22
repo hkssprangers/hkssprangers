@@ -152,7 +152,7 @@ class DatabaseTools {
             f.paymeAvailable.set(d.paymentMethods.has(PayMe)),
             f.fpsAvailable.set(d.paymentMethods.has(FPS)),
             f.customerTgUsername.set(d.customer.tg != null ? d.customer.tg.username : null),
-            f.customerTgId.set(d.customer.tg != null ? d.customer.tg.id : null),
+            f.customerTgId.set(null), // do not save tg id for now, because it can overflow int, should use int64
             f.customerTel.set(d.customer.tel),
             f.customerWhatsApp.set(d.customer.whatsApp),
             f.customerSignal.set(d.customer.signal),
@@ -355,7 +355,7 @@ class DatabaseTools {
                         customerPreferredContactMethod: d.customerPreferredContactMethod,
                         customerBackupContactMethod: d.customerBackupContactMethod,
                         customerTgUsername: d.customer.tg != null ? d.customer.tg.username : null,
-                        customerTgId: d.customer.tg != null ? d.customer.tg.id : null,
+                        customerTgId: null, // do not save tg id for now, because it can overflow int, should use int64
                         customerTel: d.customer.tel,
                         customerWhatsApp: d.customer.whatsApp,
                         customerSignal: d.customer.signal,
