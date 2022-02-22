@@ -266,7 +266,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-red-500 font-bold">
                         <i className="fas fa-map-marker-alt text-red-500"></i>&nbsp;<span>${DragonCentreCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">5</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -343,7 +342,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-pink-500 font-bold">
                         <i className="fas fa-map-marker-alt text-pink-500"></i>&nbsp;<span>${GoldenCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">2</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -377,7 +375,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-yellow-500 font-bold">
                         <i className="fas fa-map-marker-alt text-yellow-500"></i>&nbsp;<span>${SmilingPlazaCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">1</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -397,7 +394,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
                         <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>${ParkCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">3</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -460,7 +456,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-400 font-bold">
                         <i className="fas fa-map-marker-alt text-green-400"></i>&nbsp;<span>${CLPCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">1</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -480,7 +475,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-blue-500 font-bold">
                         <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>${PakTinCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">2</span>
                     </div>
 
                     <div className=${blockClasses2}>
@@ -515,7 +509,6 @@ class Index extends View<IndexProps> {
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-indigo-500 font-bold">
                         <i className="fas fa-map-marker-alt text-indigo-500"></i>&nbsp;<span>${TungChauStreetParkCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
-                        <span className="">1</span>
                     </div>
 
                     <div className=${blockClasses2}>
