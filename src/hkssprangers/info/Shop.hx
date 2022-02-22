@@ -575,6 +575,10 @@ enum abstract Shop(String) to String {
             case [LaksaStore, _, _]:
                 return Unavailable('傷了腿, 暫定休息一星期');
 
+            // https://www.facebook.com/LaksaStore/posts/3133143530277470
+            case [EightyNine, "2022-02-22", _]:
+                return Unavailable('休息一天');
+
             case _:
                 //pass
         }
