@@ -85,6 +85,7 @@ class ZeppelinHotDogSKMMenu {
         "LZ133 德國酸菜熱狗 $40",
         "LZ135 墨西哥勁辣雞堡 $40",
         "LZ136 9件雞 (燒烤汁) $20",
+        "LZ137 燒賣熱狗🌶️ $40",
     ];
 
     static final setDescription = "套餐 +$12";
