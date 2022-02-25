@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-focal
 ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
 ARG MAIN_BRANCH=master
 
-ARG --required TARGETARCH
+ARG TARGETARCH
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -109,7 +109,6 @@ tfenv:
 # Usage:
 # COPY +terraform-ls/terraform-ls /usr/local/bin/
 terraform-ls:
-    ARG --required TARGETARCH
     ARG TERRAFORM_LS_VERSION=0.25.1
     RUN curl -fsSL -o terraform-ls.zip https://github.com/hashicorp/terraform-ls/releases/download/v${TERRAFORM_LS_VERSION}/terraform-ls_${TERRAFORM_LS_VERSION}_linux_${TARGETARCH}.zip \
         && unzip -qq terraform-ls.zip \
@@ -128,7 +127,6 @@ terraform:
 # COPY +earthly/earthly /usr/local/bin/
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
-    ARG --required TARGETARCH
     RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.8/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
@@ -181,7 +179,7 @@ devcontainer:
         && chmod a+x /usr/local/bin/flyway
 
     # install skeema
-    RUN curl -fsSL -o skeema_amd64.deb https://github.com/skeema/skeema/releases/download/v1.6.0/skeema_amd64.deb \
+    RUN curl -fsSL -o skeema_amd64.deb https://github.com/skeema/skeema/releases/download/v1.7.0/skeema_${TARGETARCH}.deb \
         && apt-get install -y ./skeema_amd64.deb \
         && rm ./skeema_amd64.deb
     
