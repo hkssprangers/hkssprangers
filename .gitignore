@@ -32,3 +32,6 @@ node_modules
 /menuResponses.json
 
 .DS_Store
+
+# pscale database dump ...
+pscale_dump_*
