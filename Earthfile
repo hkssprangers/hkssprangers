@@ -129,7 +129,7 @@ terraform:
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
     ARG --required TARGETARCH
-    RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.6/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
+    RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.8/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
@@ -186,7 +186,7 @@ devcontainer:
         && rm ./skeema_amd64.deb
     
     # Install planetscale cli
-    ARG PSCALE_VERSION=0.85.0
+    ARG PSCALE_VERSION=0.89.0
     RUN curl -fsSL https://github.com/planetscale/cli/releases/download/v${PSCALE_VERSION}/pscale_${PSCALE_VERSION}_linux_amd64.deb -o pscale.deb \
         && apt-get -y install --no-install-recommends ./pscale.deb \
         && rm ./pscale.deb
