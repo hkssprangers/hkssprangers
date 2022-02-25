@@ -571,19 +571,12 @@ enum abstract Shop(String) to String {
             case [FastTasteSSP, _, _]:
                 return Unavailable('暫停營業');
 
-            // https://www.facebook.com/LaksaStore/posts/3133143530277470
-            case [LaksaStore, "2022-02-23", _]:
-                return Unavailable('傷了腿 星期四重開');
-
-            case [HanaSoftCream, "2022-02-24", _]:
-                return Unavailable('休息一天');
-
             case [Minimal, _, Dinner]:
                 return Unavailable('晚市暫停');
 
             // https://www.facebook.com/permalink.php?story_fbid=476990397452432&id=102717031546439
-            case [KCZenzero, "2022-02-24", Dinner]:
-                return Unavailable('早收');
+            case [KCZenzero, "2022-02-25", _]:
+                return Unavailable('休息一天');
 
             case _:
                 //pass
