@@ -82,7 +82,7 @@ class MinimalMenu {
         { name: "Baileys朱古力(凍)", price: 46 },
         { name: "特濃朱古力(熱)", price: 48 },
         { name: "蝶豆花柚子梳打(凍)", price: 45 },
-        { name: "雪糕波子汽水(凍)", price: 48 },
+        // { name: "雪糕波子汽水(凍)", price: 48 },
     ];
     
     static final drinksForFood = drinks.map(v -> { name: v.name, price: v.price - 10 });
