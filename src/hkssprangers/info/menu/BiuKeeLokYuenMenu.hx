@@ -282,11 +282,24 @@ class BiuKeeLokYuenMenu {
                             orderPrice: 0.0,
                         }
                 }
-            case SingleDish | Ingredient:
+            case SingleDish:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
                             orderDetails: fullWidthDot + v,
+                            orderPrice: v.parsePrice().price,
+                        }
+                    case _:
+                        {
+                            orderDetails: "",
+                            orderPrice: 0.0,
+                        }
+                }
+            case Ingredient:
+                switch (orderItem.item:Null<String>) {
+                    case v if (Std.isOfType(v, String)):
+                        {
+                            orderDetails: fullWidthDot + BiuKeeLokYuenIngredient.title + fullWidthColon + v,
                             orderPrice: v.parsePrice().price,
                         }
                     case _:
