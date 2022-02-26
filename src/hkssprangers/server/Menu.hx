@@ -627,6 +627,12 @@ class Menu extends View<MenuProps> {
                         </div>
                     </div>
                 </div>
+                <div className=${["p-3", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>
+                        <div className="p-3">${BiuKeeLokYuenIngredient.title}</div>
+                    </div>
+                    ${renderItems(BiuKeeLokYuenIngredient.enums())}
+                </div>
             </div>
         ');
     }

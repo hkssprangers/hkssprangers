@@ -8,6 +8,7 @@ enum abstract BiuKeeLokYuenItem(String) to String {
     final NoodleSet;
     final LoMeinSet;
     final SingleDish;
+    final Ingredient;
     final Pot;
 
     static public final all:ReadOnlyArray<BiuKeeLokYuenItem> = [
@@ -15,12 +16,14 @@ enum abstract BiuKeeLokYuenItem(String) to String {
         NoodleSet,
         LoMeinSet,
         SingleDish,
+        Ingredient,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:BiuKeeLokYuenItem) {
         case NoodleSet: BiuKeeLokYuenMenu.BiuKeeLokYuenNoodleSet;
         case LoMeinSet: BiuKeeLokYuenMenu.BiuKeeLokYuenLoMeinSet;
         case SingleDish: BiuKeeLokYuenMenu.BiuKeeLokYuenSingleDish;
+        case Ingredient: BiuKeeLokYuenMenu.BiuKeeLokYuenIngredient;
         case Pot: BiuKeeLokYuenMenu.BiuKeeLokYuenPot;
     }
 }
@@ -189,6 +192,16 @@ class BiuKeeLokYuenMenu {
         ],
     };
 
+    static public final BiuKeeLokYuenIngredient = {
+        title: "食材",
+        description: "顧客自行料理用。",
+        type: "string",
+        "enum": [
+            "半斤牛丸 $72",
+            "一打雲吞 $53",
+        ],
+    };
+
     static public final BiuKeeLokYuenPot = {
         title: "秋冬牛羊煲",
         description: "附送唐生菜一份",
@@ -269,7 +282,7 @@ class BiuKeeLokYuenMenu {
                             orderPrice: 0.0,
                         }
                 }
-            case SingleDish:
+            case SingleDish | Ingredient:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
