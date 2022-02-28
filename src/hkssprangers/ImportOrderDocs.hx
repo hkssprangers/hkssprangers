@@ -304,6 +304,33 @@ class ImportOrderDocs {
             });
     }
 
+    static function zeroAuLawCharges():Promise<Noise> {
+        return MySql.db.delivery
+            .where(delivery.deliveryId.inArray(
+                MySql.db.deliveryOrder
+                    .rightJoin(MySql.db.order.where(o -> o.shopId == AuLawFarm))
+                    .on((dO, o) -> dO.orderId == o.orderId)
+                    .select((dO, o) -> { deliveryId: dO.deliveryId })
+            ))
+            .all()
+            .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, MySql.db))))
+            .next(ds -> {
+                final dCodes = ds.map(d -> d.pickupTimeSlot.print() + " " + d.deliveryCode);
+                dCodes.sort(Reflect.compare);
+                Sys.println(dCodes.join("\n"));
+
+                for (d in ds) {
+                    for (o in d.orders)
+                        if (o.shop == AuLawFarm)
+                            o.setPlatformServiceCharge();
+                    d.setCouriersIncome();
+                }
+
+                Promise.inSequence(ds.map(d -> MySql.db.saveDelivery(d)));
+            })
+            .next(_ -> Noise);
+    }
+
     static function copyRegular(start:LocalDateString, end:LocalDateString):Promise<Noise> {
         var now = Date.now();
         return MySql.db.delivery.where(f -> f.deliveryId == 1161).first()
@@ -353,6 +380,14 @@ class ImportOrderDocs {
                     throw "invalid date format";
 
                 calculate(start + " 00:00:00", end + " 23:59:59").handle(o -> switch o {
+                    case Success(data):
+                        Sys.exit(0);
+                    case Failure(failure):
+                        Sys.println(failure.message + "\n\n" + failure.exceptionStack);
+                        Sys.exit(1);
+                });
+            case ["zeroAuLawCharges"]:
+                zeroAuLawCharges().handle(o -> switch o {
                     case Success(data):
                         Sys.exit(0);
                     case Failure(failure):
