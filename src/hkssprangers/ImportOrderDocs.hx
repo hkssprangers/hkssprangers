@@ -95,10 +95,6 @@ class ImportOrderDocs {
             if (o.orderDetails == null || o.orderDetails == "") {
                 throw "orderDetails is null: \n" + printDelivery();
             }
-
-            if (o.platformServiceCharge != ((o.orderPrice:Decimal) * 0.15).roundTo(4)) {
-                throw "platformServiceCharge is not 15% of orderPrice: \n" + printDelivery();
-            }
         }
 
         var platformServiceChargeTotal = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();

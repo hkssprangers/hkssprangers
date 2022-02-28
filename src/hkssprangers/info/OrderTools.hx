@@ -61,6 +61,9 @@ class OrderTools {
     }
 
     static public function setPlatformServiceCharge(order:Order):Void {
-        order.platformServiceCharge = (order.orderPrice:Decimal) * 0.15;
+        order.platformServiceCharge = switch (order.shop) {
+            case AuLawFarm: 0;
+            case _: (order.orderPrice:Decimal) * 0.15;
+        }
     }
 }
