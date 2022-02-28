@@ -498,9 +498,23 @@ class Index extends View<IndexProps> {
                                     ${StaticResource.image("/images/Toolss.jpg", Toolss.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${Toolss.info().name}</h1>
                                     <p className="text-xs">逢星期一休息</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div className=${blockClasses2}>
+                        <a href=${Path.join(["/menu", CafeGolden])} className=${linkClasses2}>
+                            <div className="md:flex"> 
+                                <div className=${thumbnailDivClasses2}>
+                                    ${StaticResource.image("/images/ssprangers4-y.png", CafeGolden.info().name, "squircle")}
+                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
+                                </div>
+                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${CafeGolden.info().name}</h1>
                                 </div>
                             </div>
                         </a>

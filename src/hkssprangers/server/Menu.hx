@@ -29,6 +29,7 @@ import hkssprangers.info.menu.KeiHingMenu.*;
 import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.menu.WoStreetMenu.*;
 import hkssprangers.info.menu.MinimalMenu.*;
+import hkssprangers.info.menu.CafeGoldenMenu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -228,6 +229,8 @@ class Menu extends View<MenuProps> {
                 null;
             case Minimal:
                 renderMinimal();
+            case CafeGolden:
+                renderCafeGolden();
         }
     }
 
@@ -1126,6 +1129,45 @@ class Menu extends View<MenuProps> {
                         <div className=${headerClasses}>${MinimalDrinks.title}</div>
                         ${renderItems(MinimalDrinks.properties.drink.enums())}
                     </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderCafeGolden() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final drinks = {
+            final items = CafeGoldenDrink.properties.drink.enums();
+            final cutoff = Math.ceil(items.length * 0.5);
+            [
+                items.slice(0, cutoff),
+                items.slice(cutoff),
+            ];
+        }
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${CafeGoldenMain.title}</div>
+                        ${renderItems(CafeGoldenMain.anyOf.map(v -> v.title))}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${CafeGoldenDessert.title}</div>
+                        ${renderItems(CafeGoldenDessert.enums())}
+                    </div>
+                </div>
+                
+                <div className=${["p-3", "md:border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${CafeGoldenDrink.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(drinks[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(drinks[1])}
+                        </div>
+                    </div>
+                    <div className="p-3 text-gray-500 text-center">${slashes(CafeGoldenDrink.properties.options.items.enums()))}</div>
                 </div>
             </Fragment>
         ');

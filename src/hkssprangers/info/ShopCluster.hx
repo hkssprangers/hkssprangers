@@ -33,6 +33,7 @@ enum abstract ShopCluster(String) {
             case WoStreet: DragonCentreCluster;
             case AuLawFarm: null;
             case Minimal: ParkCluster;
+            case CafeGolden: PakTinCluster;
         }
     }
 

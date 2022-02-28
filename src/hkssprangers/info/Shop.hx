@@ -30,6 +30,7 @@ enum abstract Shop(String) to String {
     final WoStreet:Shop;
     final AuLawFarm:Shop;
     final Minimal:Shop;
+    final CafeGolden:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -49,6 +50,7 @@ enum abstract Shop(String) to String {
         PokeGo,
         WoStreet,
         Minimal,
+        CafeGolden,
         AuLawFarm,
     ];
 
@@ -550,6 +552,29 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: true,
             }
+        case CafeGolden:
+            {
+                id: CafeGolden,
+                name: "琉金穗月",
+                address: "石硤尾賽馬會創意藝術中心L1-05",
+                lat: 22.3348672,
+                lng: 114.1658299,
+                courierContact: [
+                    "tel:24088255",
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "18:00:00",
+                isInService: true,
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -572,6 +597,9 @@ enum abstract Shop(String) to String {
                 return Unavailable('暫停營業');
 
             case [Minimal, _, Dinner]:
+                return Unavailable('晚市暫停');
+
+            case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
             case [WoStreet, _, _]:
@@ -664,6 +692,8 @@ enum abstract Shop(String) to String {
                 null;
             case Minimal:
                 MinimalMenu.itemsSchema(o);
+            case CafeGolden:
+                CafeGoldenMenu.itemsSchema(o);
         }
     }
 
@@ -713,6 +743,8 @@ enum abstract Shop(String) to String {
                 null;
             case Minimal:
                 MinimalMenu.summarize(o);
+            case CafeGolden:
+                CafeGoldenMenu.summarize(o);
         }
     }
 
@@ -740,6 +772,7 @@ enum abstract Shop(String) to String {
             case WoStreet: WoStreet;
             case AuLawFarm: AuLawFarm;
             case Minimal: Minimal;
+            case CafeGolden: CafeGolden;
             case _: null;
         }
     }
