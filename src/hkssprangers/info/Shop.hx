@@ -452,7 +452,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3282303,
                 lng: 114.1581067,
                 courierContact: [
-                    "tel:23688896",
+                    "https://wa.me/85269530591",
                 ],
                 openDays: [
                     Monday,
