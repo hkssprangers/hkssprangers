@@ -720,16 +720,6 @@ class Menu extends View<MenuProps> {
         var misc = FastTasteSSPMisc();
         return jsx('
             <Fragment>
-                <div className=${["p-3", "border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${FastTasteSSPVSet.title}</div>
-                    <div className="font-bold p-3">${FastTasteSSPVSet.description}</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.appetizerOrSoup1.enums())} (2份)</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main1.enums())}</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main2.enums())}</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.main3.enums())}</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.desserts.enums())}</div>
-                    <div className="p-3">${slashes(FastTasteSSPVSet.properties.drink1.enums())} (2份)</div>
-                </div>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>漢堡</div>

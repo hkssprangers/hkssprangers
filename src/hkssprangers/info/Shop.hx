@@ -593,8 +593,8 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/fasttastehk/posts/1998398380322263
-            case [FastTasteSSP, _, _]:
+            // https://www.facebook.com/fasttastehk/posts/2006785006150267
+            case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() <= "2022-03-03"):
                 return Unavailable('暫停營業');
 
             case [Minimal, _, Dinner]:
