@@ -1,18 +1,17 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["cockroachdb"]
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
 }
 
 model courier {
-  courierId         Int     @id @default(autoincrement()) @db.UnsignedInt
+  courierId         BigInt  @id @default(dbgenerated("unique_rowid()"))
   courierTgUsername String  @unique(map: "courier_UN_tgUsername") @db.VarChar(128)
-  courierTgId       Int?    @unique(map: "courier_UN_tgId")
+  courierTgId       String? @unique(map: "courier_UN_tgId") @db.VarChar(128)
   paymeAvailable    Boolean
   fpsAvailable      Boolean
   deleted           Boolean @default(false)
@@ -20,7 +19,7 @@ model courier {
 }
 
 model delivery {
-  deliveryId                     Int      @id @default(autoincrement()) @db.UnsignedInt
+  deliveryId                     BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime                   DateTime @db.Timestamp(0)
   deliveryCode                   String?  @db.VarChar(50)
   pickupLocation                 String   @db.VarChar(1024)
@@ -31,7 +30,7 @@ model delivery {
   paymeAvailable                 Boolean
   fpsAvailable                   Boolean
   customerTgUsername             String?  @db.VarChar(128)
-  customerTgId                   Int?
+  customerTgId                   String?  @db.VarChar(128)
   customerTel                    String?  @db.VarChar(64)
   customerWhatsApp               String?  @db.VarChar(64)
   customerSignal                 String?  @db.VarChar(64)
@@ -79,13 +78,13 @@ model flyway_schema_history {
 model googleFormImport {
   importTime    DateTime @db.Timestamp(0)
   spreadsheetId String   @db.VarChar(100)
-  lastRow       Int      @db.UnsignedInt
+  lastRow       Int
 
   @@id([importTime, spreadsheetId])
 }
 
 model order {
-  orderId               Int      @id @default(autoincrement()) @db.UnsignedInt
+  orderId               BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime          DateTime @db.Timestamp(0)
   orderCode             String?  @db.VarChar(50)
   shopId                String   @db.VarChar(50)
@@ -98,7 +97,7 @@ model order {
 }
 
 model receipt {
-  receiptId         Int    @id @default(autoincrement()) @db.UnsignedInt
+  receiptId         BigInt @id @default(dbgenerated("unique_rowid()"))
   receiptUrl        String @db.VarChar(1024)
   orderId           Int?
   uploaderCourierId Int?
@@ -108,8 +107,8 @@ model receipt {
 }
 
 model tgMessage {
-  tgMessageId Int     @id @default(autoincrement()) @db.UnsignedInt
-  receiverId  Int
+  tgMessageId BigInt  @id @default(dbgenerated("unique_rowid()"))
+  receiverId  String  @db.VarChar(128)
   messageData Json?
   updateType  String? @db.VarChar(50)
   updateData  Json?
@@ -118,7 +117,7 @@ model tgMessage {
 }
 
 model twilioMessage {
-  twilioMessageId Int      @id @default(autoincrement()) @db.UnsignedInt
+  twilioMessageId BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime    DateTime @db.Timestamp(0)
   data            Json
 }
