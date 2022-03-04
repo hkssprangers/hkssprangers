@@ -254,6 +254,19 @@ class DeliveryFee {
             }
         },
         {
+            place: "71-73 Berwick Street",
+            match: address -> ~/(71|72|73)(?:-[0-9]+)? Berwick Street/i.match(address),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "石硤尾邨 (第3期)",
             match: address -> address.contains("美葵樓"),
             deliveryFee: cluster -> switch cluster {
