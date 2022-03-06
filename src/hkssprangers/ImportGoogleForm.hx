@@ -71,7 +71,7 @@ class ImportGoogleForm {
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
         var now = Date.now();
         var curType = TimeSlotType.classify(now);
-        return MySql.db.getDeliveries(now)
+        return CockroachDb.db.getDeliveries(now)
             .next(ds -> ds.filter(d -> TimeSlotType.classify(d.pickupTimeSlot.start) == curType))
             .toJsPromise()
             .then(curDeliveries -> {
@@ -109,7 +109,7 @@ class ImportGoogleForm {
         final spreadsheetId:String;
         final lastRow:Int;
     }>> {
-        return MySql.db.googleFormImport
+        return CockroachDb.db.googleFormImport
             .select({
                 spreadsheetId: googleFormImport.spreadsheetId,
                 lastRow: F.max(googleFormImport.lastRow),
@@ -124,7 +124,7 @@ class ImportGoogleForm {
         return (if (_existingDeliveries.exists(date)) {
             _existingDeliveries[date];
         } else {
-            _existingDeliveries[date] = MySql.db.getDeliveries(Date.fromString(date));
+            _existingDeliveries[date] = CockroachDb.db.getDeliveries(Date.fromString(date));
         }).next(deliveries -> deliveries.filter(d -> d.orders.exists(o -> o.shop == shop) && TimeSlotType.classify(d.pickupTimeSlot.start) == t));
     }
 
@@ -196,8 +196,8 @@ class ImportGoogleForm {
                                     ];
                                     for (dateStr in deliveriesByDate.keys())
                                         deliveriesByDate[dateStr] = deliveries.filter(d -> (d.pickupTimeSlot.start:String).startsWith(dateStr));
-                                    MySql.db.insertDeliveries(deliveries)
-                                        .next(_ -> MySql.db.googleFormImport.insertOne({
+                                    CockroachDb.db.insertDeliveries(deliveries)
+                                        .next(_ -> CockroachDb.db.googleFormImport.insertOne({
                                             importTime: now,
                                             spreadsheetId: GoogleForms.responseSheetId[shop],
                                             lastRow: getDeliveries.lastRow,

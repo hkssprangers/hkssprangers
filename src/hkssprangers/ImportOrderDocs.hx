@@ -207,7 +207,7 @@ class ImportOrderDocs {
     }
 
     static function calculate(start:LocalDateString, end:LocalDateString) {
-        return MySql.db.getDeliveries(start, end)
+        return CockroachDb.db.getDeliveries(start, end)
             .next(deliveries -> {
                 deliveries.iter(validateDelivery);
 
@@ -305,15 +305,15 @@ class ImportOrderDocs {
     }
 
     static function zeroAuLawCharges():Promise<Noise> {
-        return MySql.db.delivery
+        return CockroachDb.db.delivery
             .where(delivery.deliveryId.inArray(
-                MySql.db.deliveryOrder
-                    .rightJoin(MySql.db.order.where(o -> o.shopId == AuLawFarm))
+                CockroachDb.db.deliveryOrder
+                    .rightJoin(CockroachDb.db.order.where(o -> o.shopId == AuLawFarm))
                     .on((dO, o) -> dO.orderId == o.orderId)
                     .select((dO, o) -> { deliveryId: dO.deliveryId })
             ))
             .all()
-            .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, MySql.db))))
+            .next(ds -> Promise.inSequence(ds.map(d -> DeliveryConverter.toDelivery(d, CockroachDb.db))))
             .next(ds -> {
                 final dCodes = ds.map(d -> d.pickupTimeSlot.print() + " " + d.deliveryCode);
                 dCodes.sort(Reflect.compare);
@@ -326,15 +326,15 @@ class ImportOrderDocs {
                     d.setCouriersIncome();
                 }
 
-                Promise.inSequence(ds.map(d -> MySql.db.saveDelivery(d)));
+                Promise.inSequence(ds.map(d -> CockroachDb.db.saveDelivery(d)));
             })
             .next(_ -> Noise);
     }
 
     static function copyRegular(start:LocalDateString, end:LocalDateString):Promise<Noise> {
         var now = Date.now();
-        return MySql.db.delivery.where(f -> f.deliveryId == 1161).first()
-            .next(sample -> DeliveryConverter.toDelivery(sample, MySql.db))
+        return CockroachDb.db.delivery.where(f -> f.deliveryId == 1161).first()
+            .next(sample -> DeliveryConverter.toDelivery(sample, CockroachDb.db))
             .next(sample -> {
                 var date = start;
                 var deliveries:Array<Delivery> = [];
@@ -365,7 +365,7 @@ class ImportOrderDocs {
                 return deliveries;
             })
             .next(deliveries -> {
-                MySql.db.insertDeliveries(deliveries);
+                CockroachDb.db.insertDeliveries(deliveries);
             })
             .next(inserted -> {
                 Sys.println('Inserted ${inserted.length}');

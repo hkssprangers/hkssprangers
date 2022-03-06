@@ -12,7 +12,7 @@ typedef Delivery = {
     final paymeAvailable:Bool;
     final fpsAvailable:Bool;
     final customerTgUsername:Null<VarChar<128>>;
-    final customerTgId:Null<Int>;
+    final customerTgId:Null<VarChar<64>>;
     final customerTel:Null<VarChar<64>>;
     final customerWhatsApp:Null<VarChar<64>>;
     final customerSignal:Null<VarChar<64>>;

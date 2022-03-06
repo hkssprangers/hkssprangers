@@ -1,6 +1,6 @@
 package hkssprangers.info;
 
 typedef Tg = {
-    ?id: Int,
-    ?username: String,
+	?id:String,
+	?username:String,
 }
