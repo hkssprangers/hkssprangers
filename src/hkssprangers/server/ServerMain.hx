@@ -412,7 +412,7 @@ class ServerMain {
             tgMe.then(me ->
                 CockroachDb.db.tgMessage.insertOne({
                     tgMessageId: null,
-                    receiverId: cast me.id,
+                    receiverId: Std.string(me.id),
                     updateType: ctx.updateType,
                     updateData: ctx.update,
                 })
@@ -422,7 +422,7 @@ class ServerMain {
                     })
                     .catchError(err -> {
                         trace("Failed to log tg message to db.\n" + err);
-                        trace(ctx.update);
+                        trace(haxe.Json.stringify(ctx.update));
                         null;
                     })
             )
