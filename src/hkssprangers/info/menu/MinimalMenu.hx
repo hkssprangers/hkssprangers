@@ -272,7 +272,7 @@ class MinimalMenu {
 
     static public final MinimalSetFor4 = {
         title: "四人套餐",
-        description: "四人套餐 $498",
+        description: "四人套餐 $598",
         properties: {
             salad1: {
                 title: "沙律一",
