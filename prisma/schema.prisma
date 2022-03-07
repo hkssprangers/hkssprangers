@@ -20,12 +20,12 @@ model courier {
 
 model delivery {
   deliveryId                     BigInt   @id @default(dbgenerated("unique_rowid()"))
-  creationTime                   DateTime @db.Timestamp(0)
+  creationTime                   DateTime @db.Timestamptz(0)
   deliveryCode                   String?  @db.VarChar(50)
   pickupLocation                 String   @db.VarChar(1024)
   deliveryFee                    Decimal? @db.Decimal(12, 4)
-  pickupTimeSlotStart            DateTime @db.Timestamp(0)
-  pickupTimeSlotEnd              DateTime @db.Timestamp(0)
+  pickupTimeSlotStart            DateTime @db.Timestamptz(0)
+  pickupTimeSlotEnd              DateTime @db.Timestamptz(0)
   pickupMethod                   String   @db.VarChar(64)
   paymeAvailable                 Boolean
   fpsAvailable                   Boolean
@@ -68,7 +68,7 @@ model flyway_schema_history {
   script         String   @db.VarChar(1000)
   checksum       Int?
   installed_by   String   @db.VarChar(100)
-  installed_on   DateTime @default(now()) @db.Timestamp(0)
+  installed_on   DateTime @default(now()) @db.Timestamptz(0)
   execution_time Int
   success        Boolean
 
@@ -76,7 +76,7 @@ model flyway_schema_history {
 }
 
 model googleFormImport {
-  importTime    DateTime @db.Timestamp(0)
+  importTime    DateTime @db.Timestamptz(0)
   spreadsheetId String   @db.VarChar(100)
   lastRow       Int
 
@@ -85,7 +85,7 @@ model googleFormImport {
 
 model order {
   orderId               BigInt   @id @default(dbgenerated("unique_rowid()"))
-  creationTime          DateTime @db.Timestamp(0)
+  creationTime          DateTime @db.Timestamptz(0)
   orderCode             String?  @db.VarChar(50)
   shopId                String   @db.VarChar(50)
   orderDetails          String   @db.VarChar(2048)
@@ -118,6 +118,6 @@ model tgMessage {
 
 model twilioMessage {
   twilioMessageId BigInt   @id @default(dbgenerated("unique_rowid()"))
-  creationTime    DateTime @db.Timestamp(0)
+  creationTime    DateTime @db.Timestamptz(0)
   data            Json
 }
