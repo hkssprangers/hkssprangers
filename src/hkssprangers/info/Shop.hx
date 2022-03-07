@@ -550,7 +550,7 @@ enum abstract Shop(String) to String {
                     Sunday,
                 ],
                 earliestPickupTime: "12:00:00",
-                latestPickupTime: "20:30:00",
+                latestPickupTime: "20:00:00", // 晚上8：00 last order
                 isInService: true,
             }
         case CafeGolden:
@@ -596,9 +596,6 @@ enum abstract Shop(String) to String {
             // https://www.facebook.com/fasttastehk/posts/2006785006150267
             case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() <= "2022-03-03"):
                 return Unavailable('暫停營業');
-
-            case [Minimal, _, Dinner]:
-                return Unavailable('晚市暫停');
 
             // 三月唔開住
             case [CafeGolden, _, _]:
