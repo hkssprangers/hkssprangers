@@ -77,7 +77,7 @@ class OrderFood extends View<OrderFoodProps> {
                     return Promise.resolve(null);
                 }
                 ServerMain.tgMe.then(tgMe -> {
-                    MySql.db.getPrefill(reply.getUser())
+                    CockroachDb.db.getPrefill(reply.getUser())
                         .toJsPromise()
                         .then(prefill -> {
                             final now = Date.now();
@@ -133,9 +133,9 @@ class OrderFood extends View<OrderFoodProps> {
                 }
                 var deliveries = [delivery];
 
-                MySql.db.insertDeliveries(deliveries)
+                CockroachDb.db.insertDeliveries(deliveries)
                     .toJsPromise()
-                    .then(ids -> MySql.db.delivery
+                    .then(ids -> CockroachDb.db.delivery
                         .select({
                             deliveryCode: delivery.deliveryCode,
                         })

@@ -1,0 +1,123 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["cockroachdb"]
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model courier {
+  courierId         BigInt  @id @default(dbgenerated("unique_rowid()"))
+  courierTgUsername String  @unique(map: "courier_UN_tgUsername") @db.VarChar(128)
+  courierTgId       String? @unique(map: "courier_UN_tgId") @db.VarChar(128)
+  paymeAvailable    Boolean
+  fpsAvailable      Boolean
+  deleted           Boolean @default(false)
+  isAdmin           Boolean @default(false)
+}
+
+model delivery {
+  deliveryId                     BigInt   @id @default(dbgenerated("unique_rowid()"))
+  creationTime                   DateTime @db.Timestamptz(0)
+  deliveryCode                   String?  @db.VarChar(50)
+  pickupLocation                 String   @db.VarChar(1024)
+  deliveryFee                    Decimal? @db.Decimal(12, 4)
+  pickupTimeSlotStart            DateTime @db.Timestamptz(0)
+  pickupTimeSlotEnd              DateTime @db.Timestamptz(0)
+  pickupMethod                   String   @db.VarChar(64)
+  paymeAvailable                 Boolean
+  fpsAvailable                   Boolean
+  customerTgUsername             String?  @db.VarChar(128)
+  customerTgId                   String?  @db.VarChar(128)
+  customerTel                    String?  @db.VarChar(64)
+  customerWhatsApp               String?  @db.VarChar(64)
+  customerSignal                 String?  @db.VarChar(64)
+  customerPreferredContactMethod String?  @db.VarChar(64)
+  customerBackupContactMethod    String?  @db.VarChar(64)
+  customerNote                   String?  @db.VarChar(2048)
+  deleted                        Boolean  @default(false)
+}
+
+model deliveryCourier {
+  deliveryId      Int
+  courierId       Int
+  deliveryFee     Decimal @db.Decimal(12, 4)
+  deliverySubsidy Decimal @db.Decimal(12, 4)
+  deleted         Boolean @default(false)
+
+  @@id([deliveryId, courierId])
+  @@index([courierId], map: "deliveryCourier_FK_courier")
+}
+
+model deliveryOrder {
+  deliveryId Int
+  orderId    Int
+  deleted    Boolean @default(false)
+
+  @@id([deliveryId, orderId])
+  @@index([orderId], map: "deliveryOrder_FK_order")
+}
+
+model flyway_schema_history {
+  installed_rank Int      @id
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamptz(0)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "flyway_schema_history_s_idx")
+}
+
+model googleFormImport {
+  importTime    DateTime @db.Timestamptz(0)
+  spreadsheetId String   @db.VarChar(100)
+  lastRow       Int
+
+  @@id([importTime, spreadsheetId])
+}
+
+model order {
+  orderId               BigInt   @id @default(dbgenerated("unique_rowid()"))
+  creationTime          DateTime @db.Timestamptz(0)
+  orderCode             String?  @db.VarChar(50)
+  shopId                String   @db.VarChar(50)
+  orderDetails          String   @db.VarChar(2048)
+  orderPrice            Decimal  @db.Decimal(12, 4)
+  platformServiceCharge Decimal  @db.Decimal(12, 4)
+  wantTableware         Boolean
+  customerNote          String?  @db.VarChar(2048)
+  deleted               Boolean  @default(false)
+}
+
+model receipt {
+  receiptId         BigInt @id @default(dbgenerated("unique_rowid()"))
+  receiptUrl        String @db.VarChar(1024)
+  orderId           Int?
+  uploaderCourierId Int?
+
+  @@index([uploaderCourierId], map: "receipt_courier_FK")
+  @@index([orderId], map: "receipt_order_FK")
+}
+
+model tgMessage {
+  tgMessageId BigInt  @id @default(dbgenerated("unique_rowid()"))
+  receiverId  String  @db.VarChar(128)
+  messageData Json?
+  updateType  String? @db.VarChar(50)
+  updateData  Json?
+
+  @@index([receiverId], map: "receiverId")
+}
+
+model twilioMessage {
+  twilioMessageId BigInt   @id @default(dbgenerated("unique_rowid()"))
+  creationTime    DateTime @db.Timestamptz(0)
+  data            Json
+}

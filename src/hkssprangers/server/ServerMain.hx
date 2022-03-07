@@ -111,7 +111,7 @@ class ServerMain {
         // trace(haxe.Json.stringify(reqBody, null, "  "));
 
         var promises:Array<Promise<Dynamic>> = [];
-        promises.push(MySql.db.twilioMessage.insertOne({
+        promises.push(CockroachDb.db.twilioMessage.insertOne({
             twilioMessageId: null,
             creationTime: now,
             data: reqBody,
@@ -361,9 +361,9 @@ class ServerMain {
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
-                    MySql.db.tgMessage
+                    CockroachDb.db.tgMessage
                         .where(r ->
-                            r.receiverId == (cast tgMe.id:Int)
+                            r.receiverId == Std.string(tgMe.id)
                             &&
                             // should use `VInt` instead of `VString`, but planetscale complainted syntax error about `RETURNING SIGNED`
                             Functions.jsonValue(r.updateData, "$.message.from.id", VString) == '${delivery.customer.tg.id}'
@@ -410,7 +410,7 @@ class ServerMain {
         });
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
             tgMe.then(me ->
-                MySql.db.tgMessage.insertOne({
+                CockroachDb.db.tgMessage.insertOne({
                     tgMessageId: null,
                     receiverId: cast me.id,
                     updateType: ctx.updateType,

@@ -33,7 +33,8 @@
 		"ms-azuretools.vscode-docker",
 		"nadako.vshaxe",
 		"lix.lix",
-		"hashicorp.terraform"
+		"hashicorp.terraform",
+		"Prisma.prisma",
 	],
 	"remoteUser": "vscode"
 }

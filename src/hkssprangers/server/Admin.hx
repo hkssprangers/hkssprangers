@@ -122,7 +122,7 @@ class Admin extends View<AdminProps> {
             return Promise.resolve(null);
         }
 
-        return MySql.db.courier.where(r -> !r.deleted && (r.courierTgId == tg.id || r.courierTgUsername == tg.username)).first()
+        return CockroachDb.db.courier.where(r -> !r.deleted && (r.courierTgId == tg.id || r.courierTgUsername == tg.username)).first()
             .next(courierData -> {
                 var courier:Courier = {
                     courierId: courierData.courierId,
@@ -203,11 +203,11 @@ class Admin extends View<AdminProps> {
                     Promise.resolve(reply.status(ErrorCode.BadRequest).send("No action.")).then(_ -> null);
                 case "insert":
                     var delivery:Delivery = req.body.delivery;
-                    MySql.db.insertDeliveries([delivery]).toJsPromise()
-                        .then(dids -> MySql.db.delivery
+                    CockroachDb.db.insertDeliveries([delivery]).toJsPromise()
+                        .then(dids -> CockroachDb.db.delivery
                             .where(f -> f.deliveryId == dids[0])
                             .first()
-                            .next(d -> d.toDelivery(MySql.db))
+                            .next(d -> d.toDelivery(CockroachDb.db))
                             .toJsPromise()
                             .then(d -> {
                                 reply.send(d);
@@ -216,11 +216,11 @@ class Admin extends View<AdminProps> {
                         .then(_ -> null);
                 case "update":
                     var delivery:Delivery = req.body.delivery;
-                    MySql.db.saveDelivery(delivery).toJsPromise()
-                        .then(_ -> MySql.db.delivery
+                    CockroachDb.db.saveDelivery(delivery).toJsPromise()
+                        .then(_ -> CockroachDb.db.delivery
                             .where(f -> f.deliveryId == delivery.deliveryId)
                             .first()
-                            .next(d -> d.toDelivery(MySql.db))
+                            .next(d -> d.toDelivery(CockroachDb.db))
                             .toJsPromise()
                             .then(d -> {
                                 reply.send(d);
@@ -229,7 +229,7 @@ class Admin extends View<AdminProps> {
                         .then(_ -> null);
                 case "delete":
                     var delivery:Delivery = req.body.delivery;
-                    MySql.db.deleteDelivery(delivery).toJsPromise()
+                    CockroachDb.db.deleteDelivery(delivery).toJsPromise()
                         .then(_ -> {
                             reply.send("ok");
                         })
@@ -312,7 +312,7 @@ class Admin extends View<AdminProps> {
                 case "upload-done":
                     var fileUrl:String = req.body.fileUrl;
                     var orderId:Int = req.body.orderId;
-                    MySql.db.receipt.insertOne({
+                    CockroachDb.db.receipt.insertOne({
                         receiptId: null,
                         receiptUrl: fileUrl,
                         orderId: orderId,
@@ -350,7 +350,7 @@ class Admin extends View<AdminProps> {
 
     static public function getByToken(req:Request, reply:Reply) {
         var token:ShopAdminToken = reply.getToken();
-        return MySql.db.getDeliveries(token.date).toJsPromise()
+        return CockroachDb.db.getDeliveries(token.date).toJsPromise()
             .then(deliveries -> {
                 reply.send({
                     deliveries: deliveries
@@ -404,7 +404,7 @@ class Admin extends View<AdminProps> {
                             case null: now;
                             case date: Date.fromString(date);
                         }
-                        return MySql.db.getDeliveries(date).toJsPromise()
+                        return CockroachDb.db.getDeliveries(date).toJsPromise()
                             .then(deliveries -> {
                                 var time:TimeSlotType = req.query.time;
                                 if (time != null)
