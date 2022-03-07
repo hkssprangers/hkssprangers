@@ -1,0 +1,17 @@
+export SERVERLESS_ACCESS_KEY=FIXME
+export AWS_ACCESS_KEY_ID=FIXME
+export AWS_SECRET_ACCESS_KEY=FIXME
+export AWS_DEFAULT_REGION=ap-southeast-1
+
+export TGBOT_TOKEN=FIXME
+
+export JWT_SECRET=FIXME
+
+export COCKROACH_HOST=free-tier8.aws-ap-southeast-1.cockroachlabs.cloud
+export COCKROACH_PORT=26257
+export COCKROACH_USER=ssp
+export COCKROACH_PASSWORD=FIXME
+export COCKROACH_DATABASE=rushed-werecat-1336.defaultdb
+
+# For prisma
+export DATABASE_URL="postgresql://${COCKROACH_USER}:${COCKROACH_PASSWORD}@${COCKROACH_HOST}:${COCKROACH_PORT}/${COCKROACH_DATABASE#*.}?sslmode=verify-full&options=--cluster=${COCKROACH_DATABASE%.*}"

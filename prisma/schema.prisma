@@ -1,5 +1,10 @@
-generator client {
-  provider        = "prisma-client-js"
+// generator client {
+//   provider        = "prisma-client-js"
+//   previewFeatures = ["cockroachdb"]
+// }
+
+generator dbml {
+  provider = "prisma-dbml-generator"
   previewFeatures = ["cockroachdb"]
 }
 

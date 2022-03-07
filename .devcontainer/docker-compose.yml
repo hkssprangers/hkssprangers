@@ -11,24 +11,30 @@ services:
       - EARTHLY_BUILDKIT_HOST=tcp://earthly:8372
       - EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:master
       - DEPLOY_STAGE=dev
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=devroot
+      - COCKROACH_HOST=cockroachdb
+      - COCKROACH_PORT=26257
+      - COCKROACH_DATABASE=hkssprangers
+      - COCKROACH_USER=crdb
+      - COCKROACH_PASSWORD=crdb
     user: vscode
     entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity
     expose:
       - "80"
-  mysql:
-    image: mysql:8.0
+  cockroachdb:
+    # We use the unstable image here for easy config with env vars
+    # https://github.com/cockroachdb/cockroach/commit/2862374a4743aece5707ea52d0ac17f6cb10dc7b
+    image: cockroachdb/cockroach-unstable:v22.1.0-alpha.1
     environment:
       - TZ=UTC
-      - MYSQL_ROOT_PASSWORD=devroot
-      - MYSQL_DATABASE=hkssprangers
+      - COCKROACH_DATABASE=hkssprangers
+      - COCKROACH_USER=crdb
+      - COCKROACH_PASSWORD=crdb
     expose:
-      - "3306"
-    volumes:
-      - ../dev/initdb:/docker-entrypoint-initdb.d
+      - "26257"
+    command: start-single-node --insecure
+    # volumes:
+    #   - ../prisma/migrations:/docker-entrypoint-initdb.d
     restart: unless-stopped
   cloudflared:
     image: cloudflare/cloudflared:2021.10.5
