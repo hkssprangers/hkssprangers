@@ -4,7 +4,7 @@
 // }
 
 generator dbml {
-  provider = "prisma-dbml-generator"
+  provider        = "prisma-dbml-generator"
   previewFeatures = ["cockroachdb"]
 }
 
@@ -46,8 +46,8 @@ model delivery {
 }
 
 model deliveryCourier {
-  deliveryId      Int
-  courierId       Int
+  deliveryId      BigInt
+  courierId       BigInt
   deliveryFee     Decimal @db.Decimal(12, 4)
   deliverySubsidy Decimal @db.Decimal(12, 4)
   deleted         Boolean @default(false)
@@ -57,8 +57,8 @@ model deliveryCourier {
 }
 
 model deliveryOrder {
-  deliveryId Int
-  orderId    Int
+  deliveryId BigInt
+  orderId    BigInt
   deleted    Boolean @default(false)
 
   @@id([deliveryId, orderId])
@@ -102,10 +102,10 @@ model order {
 }
 
 model receipt {
-  receiptId         BigInt @id @default(dbgenerated("unique_rowid()"))
-  receiptUrl        String @db.VarChar(1024)
-  orderId           Int?
-  uploaderCourierId Int?
+  receiptId         BigInt  @id @default(dbgenerated("unique_rowid()"))
+  receiptUrl        String  @db.VarChar(1024)
+  orderId           BigInt?
+  uploaderCourierId BigInt?
 
   @@index([uploaderCourierId], map: "receipt_courier_FK")
   @@index([orderId], map: "receipt_order_FK")

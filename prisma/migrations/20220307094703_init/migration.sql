@@ -38,8 +38,8 @@ CREATE TABLE "delivery" (
 
 -- CreateTable
 CREATE TABLE "deliveryCourier" (
-    "deliveryId" INTEGER NOT NULL,
-    "courierId" INTEGER NOT NULL,
+    "deliveryId" BIGINT NOT NULL,
+    "courierId" BIGINT NOT NULL,
     "deliveryFee" DECIMAL(12,4) NOT NULL,
     "deliverySubsidy" DECIMAL(12,4) NOT NULL,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
@@ -49,8 +49,8 @@ CREATE TABLE "deliveryCourier" (
 
 -- CreateTable
 CREATE TABLE "deliveryOrder" (
-    "deliveryId" INTEGER NOT NULL,
-    "orderId" INTEGER NOT NULL,
+    "deliveryId" BIGINT NOT NULL,
+    "orderId" BIGINT NOT NULL,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "deliveryOrder_pkey" PRIMARY KEY ("deliveryId","orderId")
@@ -101,8 +101,8 @@ CREATE TABLE "order" (
 CREATE TABLE "receipt" (
     "receiptId" BIGINT NOT NULL DEFAULT unique_rowid(),
     "receiptUrl" VARCHAR(1024) NOT NULL,
-    "orderId" INTEGER,
-    "uploaderCourierId" INTEGER,
+    "orderId" BIGINT,
+    "uploaderCourierId" BIGINT,
 
     CONSTRAINT "receipt_pkey" PRIMARY KEY ("receiptId")
 );
