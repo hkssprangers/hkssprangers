@@ -1,7 +1,7 @@
 package hkssprangers.db;
 
 typedef Courier = {
-    @:autoIncrement @:primary final courierId:Id<Courier>;
+    @:autoIncrement @:primary final courierId:BigInt;
     @:unique final courierTgUsername:VarChar<128>;
     @:unique final courierTgId:Null<VarChar<128>>;
     final paymeAvailable:Bool;

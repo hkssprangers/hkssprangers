@@ -1,7 +1,7 @@
 package hkssprangers.db;
 
 typedef Order = {
-    @:autoIncrement @:primary final orderId:Id<Order>;
+    @:autoIncrement @:primary final orderId:BigInt;
     final creationTime:Timestamp;
     final orderCode:Null<VarChar<50>>;
     final shopId:VarChar<50>;

@@ -218,7 +218,7 @@ class Admin extends View<AdminProps> {
                     var delivery:Delivery = req.body.delivery;
                     CockroachDb.db.saveDelivery(delivery).toJsPromise()
                         .then(_ -> CockroachDb.db.delivery
-                            .where(f -> f.deliveryId == delivery.deliveryId)
+                            .where(f -> f.deliveryId == delivery.deliveryId.parse())
                             .first()
                             .next(d -> d.toDelivery(CockroachDb.db))
                             .toJsPromise()
@@ -294,7 +294,7 @@ class Admin extends View<AdminProps> {
                         })
                         .then(_ -> null);
                 case "upload-get-signed-url":
-                    var orderId:Int = req.body.orderId;
+                    var orderId:Int64String = req.body.orderId;
                     var contentType:String = req.body.contentType;
                     var fileName:String = req.body.fileName;
                     var ext = Path.extension(fileName);
@@ -311,12 +311,12 @@ class Admin extends View<AdminProps> {
                     }).then(_ -> null);
                 case "upload-done":
                     var fileUrl:String = req.body.fileUrl;
-                    var orderId:Int = req.body.orderId;
+                    var orderId:Int64String = req.body.orderId;
                     CockroachDb.db.receipt.insertOne({
                         receiptId: null,
                         receiptUrl: fileUrl,
-                        orderId: orderId,
-                        uploaderCourierId: user.courierId,
+                        orderId: orderId.parse(),
+                        uploaderCourierId: user.courierId.parse(),
                     }).toJsPromise()
                         .then(_ -> {
                             reply.type("text");
@@ -417,7 +417,7 @@ class Admin extends View<AdminProps> {
                                     reply.send({
                                         deliveries: deliveries.map(d -> {
                                             if (
-                                                d.couriers.exists(c -> c.courierId == user.courierId)
+                                                d.couriers.exists(c -> c.courierId == user.courierId.parse())
                                                 ||
                                                 (
                                                     // today

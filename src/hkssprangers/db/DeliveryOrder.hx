@@ -1,7 +1,7 @@
 package hkssprangers.db;
 
 typedef DeliveryOrder = {
-    final deliveryId:Id<Delivery>;
-    final orderId:Id<Order>;
+    final deliveryId:BigInt;
+    final orderId:BigInt;
     final deleted:Bool;
 }

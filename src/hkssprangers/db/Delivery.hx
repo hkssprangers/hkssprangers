@@ -1,7 +1,7 @@
 package hkssprangers.db;
 
 typedef Delivery = {
-    @:autoIncrement @:primary final deliveryId:Id<Delivery>;
+    @:autoIncrement @:primary final deliveryId:BigInt;
     final deliveryCode:VarChar<50>;
     final creationTime:Timestamp;
     final pickupLocation:VarChar<1024>;

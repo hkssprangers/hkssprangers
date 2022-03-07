@@ -28,6 +28,6 @@ typedef DeliveryMeta = {
 }
 
 typedef Delivery = DeliveryMeta & {
-    ?deliveryId:Int,
+    ?deliveryId:Int64String,
     orders:Array<Order>,
 }

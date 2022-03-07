@@ -1,6 +1,6 @@
 package hkssprangers.server;
 
-import tink.sql.*;
+using StringTools;
 
 class CockroachDb {
     static public final host = Sys.getEnv("COCKROACH_HOST");
@@ -14,9 +14,7 @@ class CockroachDb {
         port: port,
         user: user,
         password: password,
-        ssl: cast {
-            rejectUnauthorized: false,
-        }
+        ssl: host.contains("."), // assume a host without . is local dev database
     });
 
     static public final db = new hkssprangers.db.Database(database, CockroachDb.driver);

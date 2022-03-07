@@ -91,9 +91,9 @@ class DatabaseTools {
             });
     }
 
-    static public function getCouriersOfDelivery(db:Database, deliveryId:Int) {
+    static public function getCouriersOfDelivery(db:Database, deliveryId:Int64String) {
         return db.deliveryCourier
-            .where(r -> r.deliveryId == deliveryId && !r.deleted).all()
+            .where(r -> r.deliveryId == deliveryId.parse() && !r.deleted).all()
             .next(dCouriers -> tink.core.Promise.inSequence(dCouriers.map(
                 dCourier -> db.courier
                     .where(c -> c.courierId == dCourier.courierId).first()
@@ -104,9 +104,9 @@ class DatabaseTools {
             )));
     }
 
-    static public function getOrdersOfDelivery(db:Database, deliveryId:Int) {
+    static public function getOrdersOfDelivery(db:Database, deliveryId:Int64String) {
         return db.deliveryOrder
-            .where(r -> r.deliveryId == deliveryId && !r.deleted)
+            .where(r -> r.deliveryId == deliveryId.parse() && !r.deleted)
             .orderBy(r -> [{
                 field: r.orderId, order: Asc,
             }])
@@ -127,7 +127,7 @@ class DatabaseTools {
             f.wantTableware.set(o.wantTableware),
             f.customerNote.set(o.customerNote),
         ], {
-            where: f -> f.orderId == o.orderId,
+            where: f -> f.orderId == o.orderId.parse(),
             max: 1,
         }).noise();
     }
@@ -136,7 +136,7 @@ class DatabaseTools {
         return db.order.update(f -> [
             f.deleted.set(true),
         ], {
-            where: f -> f.orderId == o.orderId,
+            where: f -> f.orderId == o.orderId.parse(),
             max: 1
         }).noise();
     }
@@ -160,7 +160,7 @@ class DatabaseTools {
             f.customerBackupContactMethod.set(d.customerBackupContactMethod),
             f.customerNote.set(d.customerNote),
         ], {
-            where: f -> f.deliveryId == d.deliveryId,
+            where: f -> f.deliveryId == d.deliveryId.parse(),
             max: 1,
         });
 
@@ -191,7 +191,7 @@ class DatabaseTools {
                     switch (r.newCouriers.find(c -> c.courierId == cur.courierId)) {
                         case null: // removed
                             db.deliveryCourier.delete({
-                                where: f -> f.deliveryId == d.deliveryId && f.courierId == cur.courierId,
+                                where: f -> f.deliveryId == d.deliveryId.parse() && f.courierId == cur.courierId.parse(),
                                 max: 1,
                             }).noise();
                         case newCourier: // maybe updated
@@ -199,7 +199,7 @@ class DatabaseTools {
                                 f.deliveryFee.set(newCourier.deliveryFee),
                                 f.deliverySubsidy.set(newCourier.deliverySubsidy),
                             ], {
-                                where: f -> f.deliveryId == d.deliveryId && f.courierId == cur.courierId,
+                                where: f -> f.deliveryId == d.deliveryId.parse() && f.courierId == cur.courierId.parse(),
                                 max: 1,
                             }).noise();
                     }
@@ -209,8 +209,8 @@ class DatabaseTools {
                     db.deliveryCourier.insertMany([
                         for (c in added)
                         {
-                            deliveryId: d.deliveryId,
-                            courierId: c.courierId,
+                            deliveryId: d.deliveryId.parse(),
+                            courierId: c.courierId.parse(),
                             deliveryFee: c.deliveryFee,
                             deliverySubsidy: c.deliverySubsidy,
                             deleted: false,
@@ -231,7 +231,7 @@ class DatabaseTools {
                         db.deliveryOrder.insertMany([
                             for (oid in oids)
                             {
-                                deliveryId: d.deliveryId,
+                                deliveryId: d.deliveryId.parse(),
                                 orderId: oid,
                                 deleted: false,
                             }
@@ -246,7 +246,7 @@ class DatabaseTools {
                         .filter(cur -> !d.orders.exists(o -> o.orderId == cur.orderId))
                         .map(o ->
                             db.deliveryOrder.delete({
-                                where: f -> f.deliveryId == d.deliveryId && f.orderId == o.orderId,
+                                where: f -> f.deliveryId == d.deliveryId.parse() && f.orderId == o.orderId.parse(),
                                 max: 1,
                             }).next(_ -> deleteOrder(db, o))
                         )
@@ -272,7 +272,7 @@ class DatabaseTools {
                     db.deliveryCourier.update(f -> [
                         f.deleted.set(true),
                     ], {
-                        where: f -> f.deliveryId == d.deliveryId && f.courierId == c.courierId,
+                        where: f -> f.deliveryId == d.deliveryId.parse() && f.courierId == c.courierId.parse(),
                         max: 1,
                     })
                 ))
@@ -282,14 +282,14 @@ class DatabaseTools {
             doDelete: Promise.inSequence(d.orders.map(o -> db.deliveryOrder.update(f -> [
                 f.deleted.set(true),
             ], {
-                where: f -> f.deliveryId == d.deliveryId && f.orderId == o.orderId,
+                where: f -> f.deliveryId == d.deliveryId.parse() && f.orderId == o.orderId.parse(),
                 max: 1,
             }))),
             dcDelete: dcDelete,
         }).next(_ -> db.delivery.update(f -> [
             f.deleted.set(true),
         ], {
-            where: f -> f.deliveryId == d.deliveryId,
+            where: f -> f.deliveryId == d.deliveryId.parse(),
             max: 1,
         })).noise();
     }

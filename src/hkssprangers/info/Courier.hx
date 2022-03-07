@@ -1,7 +1,7 @@
 package hkssprangers.info;
 
 typedef Courier = {
-    ?courierId:Int,
+    ?courierId:Int64String,
     tg:Tg,
     isAdmin:Bool,
 }

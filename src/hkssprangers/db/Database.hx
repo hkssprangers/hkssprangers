@@ -67,7 +67,7 @@ class OrderConverter {
         return db.receipt.where(r -> r.orderId == o.orderId).all()
             .next(receipts -> {
                 {
-                    orderId: o.orderId,
+                    orderId: (o.orderId:Int64String),
                     creationTime: (o.creationTime:LocalDateString),
                     orderCode: o.orderCode,
                     shop: Shop.fromId(o.shopId),
@@ -77,7 +77,7 @@ class OrderConverter {
                     orderPrice: o.orderPrice,
                     platformServiceCharge: o.platformServiceCharge,
                     receipts: receipts.map(r -> {
-                        receiptId: r.receiptId,
+                        receiptId: (r.receiptId:Int64String),
                         receiptUrl: r.receiptUrl,
                     }),
                 };
