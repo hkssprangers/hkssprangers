@@ -294,10 +294,10 @@ class DatabaseTools {
         })).noise();
     }
 
-    static public function insertOrders(db:Database, orders:Array<hkssprangers.info.Order>):Promise<Array<Id<Order>>> {
-        return db.order.insertMany([
+    static public function insertOrders(db:Database, orders:Array<hkssprangers.info.Order>):Promise<Array<Int64>> {
+        return Promise.inSequence([
             for (o in orders)
-            {
+            db.order.insertOne({
                 orderId: null,
                 creationTime: Date.fromString(o.creationTime),
                 orderCode: o.orderCode,
@@ -308,14 +308,11 @@ class DatabaseTools {
                 wantTableware: o.wantTableware,
                 customerNote: o.customerNote,
                 deleted: false,
-            }
-        ]).next(id0 -> {
-            var ids = [for (id in id0...(id0 + orders.length)) (id:Id<Order>)];
-            ids;
-        });
+            })
+        ]);
     }
 
-    static public function insertDeliveries(db:Database, deliveries:Array<hkssprangers.info.Delivery>):Promise<Array<Id<Delivery>>> {
+    static public function insertDeliveries(db:Database, deliveries:Array<hkssprangers.info.Delivery>):Promise<Array<Int64>> {
         return Promise.inSequence(deliveries.map(d -> {
             var orderIds = insertOrders(db, d.orders).mapError(err -> {
                 trace("Failed to write orders:\n" + err);
