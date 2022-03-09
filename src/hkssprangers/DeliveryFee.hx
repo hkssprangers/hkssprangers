@@ -1249,7 +1249,7 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
-                case TungChauStreetParkCluster: 40;
+                case TungChauStreetParkCluster: 35;
             }
         },
         {
