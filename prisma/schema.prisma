@@ -43,6 +43,8 @@ model delivery {
   customerBackupContactMethod    String?  @db.VarChar(64)
   customerNote                   String?  @db.VarChar(2048)
   deleted                        Boolean  @default(false)
+
+  @@index([pickupTimeSlotStart], map: "delivery_pickupTimeSlotStart")
 }
 
 model deliveryCourier {
