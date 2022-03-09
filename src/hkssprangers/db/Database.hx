@@ -45,6 +45,9 @@ interface Def extends tink.sql.DatabaseDefinition {
     @:table("tgMessage")
     final tgMessage:TgMessage;
 
+    @:table("tgPrivateChat")
+    final tgPrivateChat:TgPrivateChat;
+
     @:table("twilioMessage")
     final twilioMessage:TwilioMessage;
 }

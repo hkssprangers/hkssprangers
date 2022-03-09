@@ -106,6 +106,16 @@ model tgMessage {
   @@index([receiverId], map: "receiverId")
 }
 
+model tgPrivateChat {
+  botId          String  @db.VarChar(128)
+  userId         String  @db.VarChar(128)
+  userUsername   String? @db.VarChar(128)
+  chatId         String? @db.VarChar(128)
+  lastUpdateData Json?
+
+  @@id([botId, userId])
+}
+
 model twilioMessage {
   twilioMessageId BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime    DateTime @db.Timestamptz(0)

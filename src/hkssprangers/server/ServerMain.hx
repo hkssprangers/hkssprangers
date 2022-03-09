@@ -361,18 +361,19 @@ class ServerMain {
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
-                    CockroachDb.db.tgMessage
+                    CockroachDb.db.tgPrivateChat
                         .where(r ->
-                            r.receiverId == Std.string(tgMe.id)
+                            r.botId == Std.string(tgMe.id)
                             &&
-                            // should use `VInt` instead of `VString`, but planetscale complainted syntax error about `RETURNING SIGNED`
-                            Functions.jsonValue(r.updateData, "$.message.from.id", VString) == '${delivery.customer.tg.id}'
-                            &&
-                            Functions.jsonValue(r.updateData, "$.message.chat.type", VString) == "private"
+                            r.userId == delivery.customer.tg.id
                         )
                         .first()
                         .toJsPromise()
-                        .then(tgm -> tgm.updateData.message.chat.id)
+                        .then(chat -> chat.chatId)
+                        .catchError(err -> {
+                            trace(err);
+                            delivery.customer.tg.id; // tg private chat's chat id should be the same as the user id
+                        })
                         .then(chatId -> {
                             tgBot.telegram.sendMessage(
                                 chatId,
@@ -410,16 +411,36 @@ class ServerMain {
         });
         tgBot.use((ctx:Context, next:()->Promise<Dynamic>) -> {
             tgMe.then(me ->
-                CockroachDb.db.tgMessage.insertOne({
-                    tgMessageId: null,
-                    receiverId: Std.string(me.id),
-                    updateType: ctx.updateType,
-                    updateData: ctx.update,
-                })
+                tink.core.Promise.inSequence([
+                    CockroachDb.db.tgMessage.insertOne({
+                        tgMessageId: null,
+                        receiverId: Std.string(me.id),
+                        updateType: ctx.updateType,
+                        updateData: ctx.update,
+                    }).noise(),
+                    try {
+                        final userId = Std.string(ctx.update.message.from.id);
+                        final userUsername = ctx.update.message.from.username;
+                        final chatId = Std.string(ctx.update.message.chat.id);
+                        CockroachDb.db.tgPrivateChat.insertOne({
+                            botId: Std.string(me.id),
+                            userId: userId,
+                            userUsername: userUsername,
+                            chatId: chatId,
+                            lastUpdateData: ctx.update,
+                        }, {
+                            update: u -> [
+                                u.userUsername.set(Functions.values(u.userUsername)),
+                                u.chatId.set(Functions.values(u.chatId)),
+                                u.lastUpdateData.set(Functions.values(u.lastUpdateData)),
+                            ]
+                        }).noise();
+                    } catch (err) {
+                        trace(err);
+                        tink.core.Promise.NOISE;
+                    }
+                ])
                     .toJsPromise()
-                    .then(v -> {
-                        null;
-                    })
                     .catchError(err -> {
                         trace("Failed to log tg message to db.\n" + err);
                         trace(haxe.Json.stringify(ctx.update));
