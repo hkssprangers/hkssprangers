@@ -419,6 +419,8 @@ class ServerMain {
                         updateData: ctx.update,
                     }).noise(),
                     try {
+                        if (ctx.update.message.chat.type != "private")
+                            throw "not private chat";
                         final userId = Std.string(ctx.update.message.from.id);
                         final userUsername = ctx.update.message.from.username;
                         final chatId = Std.string(ctx.update.message.chat.id);
@@ -436,7 +438,6 @@ class ServerMain {
                             ]
                         }).noise();
                     } catch (err) {
-                        trace(err);
                         tink.core.Promise.NOISE;
                     }
                 ])
