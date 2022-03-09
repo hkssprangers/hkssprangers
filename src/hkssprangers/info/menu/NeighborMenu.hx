@@ -36,7 +36,7 @@ class NeighborMenu {
             "忌廉 +$22",
             "Lemon+C +$22",
             "Snapple 桃茶 +$33",
-            "Snapple 檸檬茶 +$33",
+            // "Snapple 檸檬茶 +$33",
             "棉花糖熱朱古力 +$40",
             "凍朱古力 +$40",
             "1664 Blanc +$40",
