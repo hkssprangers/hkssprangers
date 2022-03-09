@@ -65,21 +65,6 @@ model deliveryOrder {
   @@index([orderId], map: "deliveryOrder_FK_order")
 }
 
-model flyway_schema_history {
-  installed_rank Int      @id
-  version        String?  @db.VarChar(50)
-  description    String   @db.VarChar(200)
-  type           String   @db.VarChar(20)
-  script         String   @db.VarChar(1000)
-  checksum       Int?
-  installed_by   String   @db.VarChar(100)
-  installed_on   DateTime @default(now()) @db.Timestamptz(0)
-  execution_time Int
-  success        Boolean
-
-  @@index([success], map: "flyway_schema_history_s_idx")
-}
-
 model googleFormImport {
   importTime    DateTime @db.Timestamptz(0)
   spreadsheetId String   @db.VarChar(100)
