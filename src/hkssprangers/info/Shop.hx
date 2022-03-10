@@ -604,9 +604,6 @@ enum abstract Shop(String) to String {
             case [WoStreet, _, _]:
                 return Unavailable('暫停營業');
 
-            case [KCZenzero, _, _]:
-                return Unavailable('暫停營業');
-
             case _:
                 //pass
         }
