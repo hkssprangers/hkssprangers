@@ -16,7 +16,7 @@
 			},
 		},
 		"terraform.languageServer": {
-			"pathToBinary": "/usr/bin/terraform-ls"
+			"pathToBinary": "/usr/local/bin/terraform-ls"
 		},
 		"remote.portsAttributes": {
 			"6000": {
