@@ -72,7 +72,12 @@ RUN apt-get update \
     && echo 'deb http://repo.mysql.com/apt/ubuntu/ focal mysql-8.0' > /etc/apt/sources.list.d/mysql.list \
     && apt-get update \
     && apt-get -y install mysql-client=8.0.* \
-    #
+    # Install postgresql-client
+    # https://www.postgresql.org/download/linux/ubuntu/
+    && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
+    && apt-get update \
+    && apt-get -y install postgresql-client-13 \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
@@ -328,7 +333,7 @@ deploy:
         && npx serverless deploy --stage "${DEPLOY_STAGE}" \
         && node index.js setTgWebhook
 
-pre-deploy-check:
+check-terraform:
     FROM +devcontainer
     COPY terraform terraform
     WORKDIR terraform
@@ -341,8 +346,27 @@ pre-deploy-check:
         && terraform init \
         && terraform plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
 
+check-database-schema:
+    FROM +devcontainer
+    COPY dev/initdb/schema.sql committed.sql
+    COPY +db-dump-schema/schema.sql live.sql
+    RUN diff committed.sql live.sql
+
+pre-deploy-check:
+    ARG TF_LOCK_TIMEOUT=0s
+    BUILD +check-terraform --TF_LOCK_TIMEOUT="$TF_LOCK_TIMEOUT"
+    BUILD +check-database-schema
+
 post-deploy-test:
     RUN --no-cache date +%s | tee timestamp
     ARG --required SERVER_HOST
     RUN curl -fsSL "https://$SERVER_HOST?cache_invalidator=$(cat timestamp)" -o /dev/null
     RUN curl -fsSL "https://$SERVER_HOST/login?cache_invalidator=$(cat timestamp)" -o /dev/null
+
+db-dump-schema:
+    FROM +devcontainer
+    RUN --no-cache \
+        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        . ./.envrc \
+        && psql -d "$DATABASE_URL" -c "SHOW CREATE ALL TABLES" -q -A -t -o schema.sql
+    SAVE ARTIFACT --keep-ts schema.sql AS LOCAL dev/initdb/schema.sql
