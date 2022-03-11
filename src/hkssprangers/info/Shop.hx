@@ -597,9 +597,8 @@ enum abstract Shop(String) to String {
             case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() <= "2022-03-03"):
                 return Unavailable('暫停營業');
 
-            // 三月唔開住
-            case [CafeGolden, _, _]:
-                return Unavailable('暫停營業');
+            case [CafeGolden, _, Dinner]:
+                return Unavailable('晚市暫停');
 
             case [WoStreet, _, _]:
                 return Unavailable('暫停營業');
