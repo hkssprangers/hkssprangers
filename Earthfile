@@ -131,6 +131,11 @@ earthly:
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
+dbmate:
+    RUN curl -fsSL "https://github.com/amacneil/dbmate/releases/download/v1.14.0/dbmate-linux-${TARGETARCH}" -o /usr/local/bin/dbmate \
+        && chmod +x /usr/local/bin/dbmate
+    SAVE ARTIFACT /usr/local/bin/dbmate
+
 lix-download:
     USER $USERNAME
     COPY haxe_libraries haxe_libraries
@@ -188,6 +193,8 @@ devcontainer:
     RUN curl -fsSL https://github.com/planetscale/cli/releases/download/v${PSCALE_VERSION}/pscale_${PSCALE_VERSION}_linux_amd64.deb -o pscale.deb \
         && apt-get -y install --no-install-recommends ./pscale.deb \
         && rm ./pscale.deb
+
+    COPY +dbmate/dbmate /usr/local/bin/
 
     USER $USERNAME
 
