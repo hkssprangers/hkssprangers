@@ -14,7 +14,7 @@ enum abstract MGYItem(String) to String {
     static public final all:ReadOnlyArray<MGYItem> = [
         SideDish,
         StirFriedNoodlesOrRice,
-        ColdNoodles,
+        // ColdNoodles,
         Snack,
         Delight,
         Icecream,
@@ -66,21 +66,21 @@ class MGYMenu {
                     "XO醬炒菜心苗 $" + markup(38),
                     "高湯浸菠菜 $" + markup(38),
                     "咸酸菜炒芽葉 $" + markup(58),
-                    "白灼羽衣甘藍 $" + markup(28),
+                    // "白灼羽衣甘藍 $" + markup(28),
 
                     "七彩孜然排骨 $" + markup(58),
                     "欖菜豆腐 $" + markup(58),
                     "蟠龍如 $" + markup(98),
-                    "叉燒炒三絲 $" + markup(62),
+                    // "叉燒炒三絲 $" + markup(62),
 
                     "糖醋候頭菇 $" + markup(78),
-                    "沙茶柚子皮 $" + markup(68),
+                    // "沙茶柚子皮 $" + markup(68),
                     "咖喱雜菜 $" + markup(78),
                     "韓式泡菜年糕 $" + markup(58),
                     "冰鎮秋葵 $" + markup(38),
                     "沙拉燒烤菇 $" + markup(38),
                     "香煎素玉餃 $" + markup(35),
-                    "純菜沙拉 $" + markup(50),
+                    // "純菜沙拉 $" + markup(50),
                     "素大碗 $" + markup(108),
                     "山珍池蓮會 $" + markup(88),
                     "日式雪裏紅 $" + markup(58)
@@ -141,7 +141,7 @@ class MGYMenu {
             "炸饅頭(4件) $" + markup(23),
             "炸腐皮卷(4件) $" + markup(23),
             "椒鹽豆腐(8件) $" + markup(23),
-            "白灼羽衣甘藍 $" + markup(23),
+            // "白灼羽衣甘藍 $" + markup(23),
         ],
     };
 
@@ -187,7 +187,7 @@ class MGYMenu {
                 type: "string",
                 title: "滋味輕食",
                 "enum": [
-                    "漢堡包 $" + markup(40),
+                    // "漢堡包 $" + markup(40),
                     "蓮蓉小籠包 $" + markup(20),
                     "叉燒包 $" + markup(30),
                     "豆沙窩餅 $" + markup(30),
@@ -195,7 +195,7 @@ class MGYMenu {
                     "香椿抓餅 $" + markup(30),
                     "玉排沙拉 $" + markup(40),
                     "珠排沙拉 $" + markup(40),
-                    "純菜沙拉 $" + markup(40),
+                    // "純菜沙拉 $" + markup(40),
                     "熱九培根沙拉 $" + markup(40),
                     "咖喱雜丸 $" + markup(40),
                     "黑椒排荷葉包 $" + markup(50),                    
