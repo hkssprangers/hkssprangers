@@ -149,7 +149,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "牛舌片",
+                        // "牛舌片",
                         "雞扒",
                         "煙鴨胸",
                         // "蟹棒",
@@ -185,7 +185,7 @@ class KCZenzeroMenu {
                     "芝士流心漢堡",
                     // "炸芝士海鮮條",
                     "香草雞扒",
-                    "牛舌片",
+                    // "牛舌片",
                 ],
             },
             sauce: {
