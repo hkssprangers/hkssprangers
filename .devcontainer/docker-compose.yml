@@ -13,7 +13,7 @@ services:
       - DEPLOY_STAGE=dev
       - COCKROACH_HOST=cockroachdb
       - COCKROACH_PORT=26257
-      - COCKROACH_DATABASE=hkssprangers
+      - COCKROACH_DATABASE=defaultdb
       - COCKROACH_USER=crdb
       - COCKROACH_PASSWORD=crdb
       - DATABASE_URL=postgresql://crdb:crdb@cockroachdb:26257/hkssprangers?sslmode=disable
@@ -28,14 +28,14 @@ services:
     image: cockroachdb/cockroach-unstable:v22.1.0-alpha.1
     environment:
       - TZ=UTC
-      - COCKROACH_DATABASE=hkssprangers
+      - COCKROACH_DATABASE=defaultdb
       - COCKROACH_USER=crdb
       - COCKROACH_PASSWORD=crdb
     expose:
       - "26257"
     command: start-single-node --insecure
-    # volumes:
-    #   - ../prisma/migrations:/docker-entrypoint-initdb.d
+    volumes:
+      - ../dev/initdb:/docker-entrypoint-initdb.d
     restart: unless-stopped
   cloudflared:
     image: cloudflare/cloudflared:2021.10.5
