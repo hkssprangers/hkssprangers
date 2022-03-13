@@ -595,7 +595,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('埗兵外賣暫停');
 
             // https://www.facebook.com/permalink.php?story_fbid=487920659692739&id=102717031546439
-            case [KCZenzero, "2022-03-13", _]:
+            case [KCZenzero, "2022-03-14", _]:
                 return Unavailable('休息一天');
 
             case [CafeGolden, _, Dinner]:
