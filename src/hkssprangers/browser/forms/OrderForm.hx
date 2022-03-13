@@ -34,6 +34,7 @@ typedef OrderFormProps = {
     final currentTime:LocalDateString;
 }
 typedef OrderFormState = {
+    final schema:Dynamic;
     final formData:OrderFormData;
     final deliveryPreview:Delivery;
     final previewOpen:Bool;
@@ -50,8 +51,19 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     function new(props, context):Void {
         super(props, context);
 
-        var initFormData:OrderFormData = {
+        state = {
+            schema: null,
+            formData: null,
+            deliveryPreview: null,
+            previewOpen: false,
+            isSubmitting: false,
+        };
+    }
+
+    override function componentDidMount() {
+        final initFormData:OrderFormData = {
             currentTime: props.currentTime,
+            orders: [],
         };
         switch (props.prefill.backupContactMethod) {
             case null: //pass
@@ -77,17 +89,28 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case null: //pass
             case v: initFormData.paymentMethods = v;
         }
+        setFormData(initFormData);
+    }
 
-        state = {
-            formData: initFormData,
-            deliveryPreview: null,
-            previewOpen: false,
-            isSubmitting: false,
-        };
+    function setFormData(formData:OrderFormData) {
+        setState({
+            formData: formData,
+        }, () -> {
+            OrderFormSchema.getSchema(formData, props.user)
+                .then(schema -> {
+                    if (formData == state.formData) {
+                        setState({
+                            schema: schema,
+                            formData: formData,
+                        });
+                    } else {
+                        // outdated, probably there is a new setFormData() running
+                    }
+                });
+        });
     }
 
     function getUiSchema(formData:OrderFormData) {
-        var pickupTimeSlot = OrderFormSchema.selectedPickupTimeSlot(formData);
         return {
             currentTime: { "ui:widget": "hidden" },
             pickupTimeSlot: {
@@ -184,8 +207,8 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
     static function validate(formData:OrderFormData, errors:Dynamic):Dynamic {
         // make sure shops are available
         try {
-            var t = OrderFormSchema.selectedPickupTimeSlot(formData);
-            var currentTime = formData.currentTime.toDate();
+            final t = OrderFormSchema.selectedPickupTimeSlot(formData);
+            final currentTime = formData.currentTime.toDate();
             for (i => o in formData.orders) {
                 if (o.shop != null && t != null && t.start != null && t.end != null && currentTime != null) {
                     switch o.shop.checkAvailability(currentTime, t) {
@@ -202,8 +225,6 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
 
         // make sure the timeslot is valid
         try {
-            final now = Date.now();
-            final today = (now:LocalDateString).getDatePart();
             final timeSlots = TimeSlotTools.getTimeSlots(formData.pickupTimeSlot.parse().start);
             switch (timeSlots.find(ts -> haxe.Json.stringify(ts) == formData.pickupTimeSlot)) {
                 case null | { enabled: false }:
@@ -228,9 +249,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         uiSchema:Dynamic,
         ?status:String,
     }) {
-        setState({
-            formData: e.formData,
-        });
+        setFormData(e.formData);
     }
 
     function closePreview() {
@@ -281,27 +300,28 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         alert("表格有錯誤/漏填");
     }
 
-    override function render():ReactFragment {
-        var schema = OrderFormSchema.getSchema(state.formData, props.user);
-        var uiSchema = getUiSchema(state.formData);
-
-        function onSubmit(e:{
-            formData:OrderFormData,
-        }, _) {
-            var validate = Ajv.call({
-                removeAdditional: "all",
-            }).compile(schema);
-            var isValid:Bool = validate.call(e.formData);
-            if (isValid) {
-                setState({
-                    formData: e.formData,
-                    deliveryPreview: OrderFormSchema.formDataToDelivery(e.formData, props.user),
-                    previewOpen: true,
+    function onSubmit(e:{
+        formData:OrderFormData,
+    }, _) {
+        final validate = Ajv.call({
+            removeAdditional: "all",
+        }).compile(state.schema);
+        final isValid:Bool = validate.call(e.formData);
+        if (isValid) {
+            // trace(isValid);
+            OrderFormSchema.formDataToDelivery(e.formData, props.user)
+                .then(deliveryPreview -> {
+                    setState({
+                        formData: e.formData,
+                        deliveryPreview: deliveryPreview,
+                        previewOpen: true,
+                    });
                 });
-            }
         }
+    }
 
-        var contact = switch (props.user) {
+    override function render():ReactFragment {
+        final contact = switch (props.user) {
             case null: null;
             case {login: Telegram, tg: tg}:
                 jsx('
@@ -314,19 +334,17 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
             case _: null;
         }
 
-        return jsx('
-            <div className="container max-w-screen-md mx-4 p-4">
-                <h1 className="text-center text-xl mb-2">
-                    埗兵外賣表格
-                </h1>
-                ${contact}
-                <p className="text-sm text-gray-500">*必填項目</p>
+        final form = if (state.schema == null) {
+            jsx('<div>Loading</div>');
+        } else {
+            final uiSchema = getUiSchema(state.formData);
+            jsx('
                 <Form
                     key=${Json.stringify({
-                        schema: schema,
+                        schema: state.schema,
                         uiSchema: uiSchema,
                     })}
-                    schema=${schema}
+                    schema=${state.schema}
                     uiSchema=${uiSchema}
                     formData=${state.formData}
                     formContext=${state.formData}
@@ -347,6 +365,17 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                         </Button>
                     </div>
                 </Form>
+            ');
+        }
+
+        return jsx('
+            <div className="container max-w-screen-md mx-4 p-4">
+                <h1 className="text-center text-xl mb-2">
+                    埗兵外賣表格
+                </h1>
+                ${contact}
+                <p className="text-sm text-gray-500">*必填項目</p>
+                ${form}
                 <Dialog
                     open=${state.previewOpen}
                     onClose=${closePreview}

@@ -4,6 +4,7 @@ import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.menu.*;
+import js.lib.Promise;
 using Lambda;
 using DateTools;
 
@@ -640,105 +641,121 @@ enum abstract Shop(String) to String {
         return Available;
     }
 
-    public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, o:FormOrderData):Dynamic {
+    // static public function allItemsSchema(pickupTimeSlot:Null<TimeSlot>, o:FormOrderData):Promise<DynamicAccess<Dynamic>> {
+    //     final schemas:Promise<Array<{
+    //         shop:Shop,
+    //         items:Dynamic,
+    //     }>> = cast Promise.all(Shop.all.map(shop -> {
+    //         shop:shop,
+    //         items: shop.itemsSchema(pickupTimeSlot, o)
+    //     }));
+    //     return schemas.then(schemas -> {
+    //         final all:DynamicAccess<Dynamic> = {};
+    //         for (s in schemas)
+    //             all[s.shop] = s.items;
+    //         all;
+    //     });
+    // }
+
+    public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, o:FormOrderData):Promise<Dynamic> {
         return switch (cast this:Shop) {
             case EightyNine:
-                EightyNineMenu.itemsSchema();
+                Promise.resolve(EightyNineMenu.itemsSchema());
             case DragonJapaneseCuisine:
-                DragonJapaneseCuisineMenu.itemsSchema(o);
+                Promise.resolve(DragonJapaneseCuisineMenu.itemsSchema(o));
             case LaksaStore:
-                LaksaStoreMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(LaksaStoreMenu.itemsSchema(pickupTimeSlot, o));
             case KCZenzero:
-                KCZenzeroMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(KCZenzeroMenu.itemsSchema(pickupTimeSlot, o));
             case HanaSoftCream:
-                HanaSoftCreamMenu.itemsSchema();
+                Promise.resolve(HanaSoftCreamMenu.itemsSchema());
             case DongDong:
-                DongDongMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(DongDongMenu.itemsSchema(pickupTimeSlot, o));
             case FastTasteSSP:
-                FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(FastTasteSSPMenu.itemsSchema(pickupTimeSlot, o));
             case BiuKeeLokYuen:
-                BiuKeeLokYuenMenu.itemsSchema(o);
+                Promise.resolve(BiuKeeLokYuenMenu.itemsSchema(o));
             case BlaBlaBla:
-                BlaBlaBlaMenu.itemsSchema(o);
+                Promise.resolve(BlaBlaBlaMenu.itemsSchema(o));
             case Neighbor:
-                NeighborMenu.itemsSchema(o);
+                Promise.resolve(NeighborMenu.itemsSchema(o));
             case MGY:
-                MGYMenu.itemsSchema(o);
+                Promise.resolve(MGYMenu.itemsSchema(o));
             case YearsHK:
-                YearsHKMenu.itemsSchema(o);
+                Promise.resolve(YearsHKMenu.itemsSchema(o));
             case TheParkByYears:
-                TheParkByYearsMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(TheParkByYearsMenu.itemsSchema(pickupTimeSlot, o));
             case ZeppelinHotDogSKM:
-                ZeppelinHotDogSKMMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(ZeppelinHotDogSKMMenu.itemsSchema(pickupTimeSlot, o));
             case MyRoomRoom:
-                MyRoomRoomMenu.itemsSchema(o);
+                Promise.resolve(MyRoomRoomMenu.itemsSchema(o));
             case ThaiYummy:
-                ThaiYummyMenu.itemsSchema(o);
+                Promise.resolve(ThaiYummyMenu.itemsSchema(o));
             case Toolss:
-                ToolssMenu.itemsSchema(o);
+                Promise.resolve(ToolssMenu.itemsSchema(o));
             case KeiHing:
-                KeiHingMenu.itemsSchema(pickupTimeSlot, o);
+                Promise.resolve(KeiHingMenu.itemsSchema(pickupTimeSlot, o));
             case PokeGo:
-                PokeGoMenu.itemsSchema(o);
+                Promise.resolve(PokeGoMenu.itemsSchema(o));
             case WoStreet:
-                WoStreetMenu.itemsSchema(o);
+                Promise.resolve(WoStreetMenu.itemsSchema(o));
             case AuLawFarm:
-                null;
+                Promise.resolve(null);
             case Minimal:
-                MinimalMenu.itemsSchema(o);
+                Promise.resolve(MinimalMenu.itemsSchema(o));
             case CafeGolden:
-                CafeGoldenMenu.itemsSchema(o);
+                Promise.resolve(CafeGoldenMenu.itemsSchema(o));
         }
     }
 
-    public function summarize(pickupTimeSlot:TimeSlot, o:FormOrderData):OrderSummary {
+    public function summarize(pickupTimeSlot:TimeSlot, o:FormOrderData):Promise<OrderSummary> {
         return switch (cast this:Shop) {
             case BiuKeeLokYuen:
-                BiuKeeLokYuenMenu.summarize(o);
+                Promise.resolve(BiuKeeLokYuenMenu.summarize(o));
             case BlaBlaBla:
-                BlaBlaBlaMenu.summarize(o);
+                Promise.resolve(BlaBlaBlaMenu.summarize(o));
             case DongDong:
-                DongDongMenu.summarize(o);
+                Promise.resolve(DongDongMenu.summarize(o));
             case DragonJapaneseCuisine:
-                DragonJapaneseCuisineMenu.summarize(o);
+                Promise.resolve(DragonJapaneseCuisineMenu.summarize(o));
             case EightyNine:
-                EightyNineMenu.summarize(o);
+                Promise.resolve(EightyNineMenu.summarize(o));
             case FastTasteSSP:
-                FastTasteSSPMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start), HkHolidays.isRedDay(pickupTimeSlot.start));
+                Promise.resolve(FastTasteSSPMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start), HkHolidays.isRedDay(pickupTimeSlot.start)));
             case HanaSoftCream:
-                HanaSoftCreamMenu.summarize(o);
+                Promise.resolve(HanaSoftCreamMenu.summarize(o));
             case KCZenzero:
-                KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start));
+                Promise.resolve(KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start)));
             case LaksaStore:
-                LaksaStoreMenu.summarize(pickupTimeSlot, o);
+                Promise.resolve(LaksaStoreMenu.summarize(pickupTimeSlot, o));
             case MGY:
-                MGYMenu.summarize(o);
+                Promise.resolve(MGYMenu.summarize(o));
             case Neighbor:
-                NeighborMenu.summarize(o);
+                Promise.resolve(NeighborMenu.summarize(o));
             case TheParkByYears:
-                TheParkByYearsMenu.summarize(o);
+                Promise.resolve(TheParkByYearsMenu.summarize(o));
             case YearsHK:
-                YearsHKMenu.summarize(o);
+                Promise.resolve(YearsHKMenu.summarize(o));
             case ZeppelinHotDogSKM:
-                ZeppelinHotDogSKMMenu.summarize(o, pickupTimeSlot);
+                Promise.resolve(ZeppelinHotDogSKMMenu.summarize(o, pickupTimeSlot));
             case MyRoomRoom:
-                MyRoomRoomMenu.summarize(o);
+                Promise.resolve(MyRoomRoomMenu.summarize(o));
             case ThaiYummy:
-                ThaiYummyMenu.summarize(o);
+                Promise.resolve(ThaiYummyMenu.summarize(o));
             case Toolss:
-                ToolssMenu.summarize(o);
+                Promise.resolve(ToolssMenu.summarize(o));
             case KeiHing:
-                KeiHingMenu.summarize(o);
+                Promise.resolve(KeiHingMenu.summarize(o));
             case PokeGo:
-                PokeGoMenu.summarize(o);
+                Promise.resolve(PokeGoMenu.summarize(o));
             case WoStreet:
-                WoStreetMenu.summarize(o);
+                Promise.resolve(WoStreetMenu.summarize(o));
             case AuLawFarm:
-                null;
+                Promise.resolve(null);
             case Minimal:
-                MinimalMenu.summarize(o);
+                Promise.resolve(MinimalMenu.summarize(o));
             case CafeGolden:
-                CafeGoldenMenu.summarize(o);
+                Promise.resolve(CafeGoldenMenu.summarize(o));
         }
     }
 

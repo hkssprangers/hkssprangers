@@ -2,6 +2,7 @@ package hkssprangers.browser.forms;
 
 import thx.Decimal;
 import js.lib.Object;
+import js.lib.Promise;
 import hkssprangers.info.ContactMethod;
 import haxe.ds.ReadOnlyArray;
 import haxe.Json;
@@ -20,13 +21,13 @@ class OrderFormSchema {
             case str: str.parse();
         };
     }
-    static public function getSchema(formData:OrderFormData, user:LoggedinUser) {
-        var pickupTimeSlot = selectedPickupTimeSlot(formData);
-        var clusterOptions = switch (formData) {
+    static public function getSchema(formData:OrderFormData, user:LoggedinUser):Promise<Dynamic> {
+        final pickupTimeSlot = selectedPickupTimeSlot(formData);
+        final clusterOptions = switch (formData) {
             case null | { orders: null | [] }:
                 Shop.all;
             case { orders: _.linq().select((o, _) -> o.shop).first(s -> s != null) => shop } if (shop != null):
-                var cluster = ShopCluster.classify(shop);
+                final cluster = ShopCluster.classify(shop);
                 Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
             case _:
                 Shop.all;
@@ -62,12 +63,37 @@ class OrderFormSchema {
             title: '食物備註',
             description: '留意 ${shop.info().name} 未必能完全配合, 請見諒',
         };
-        var wantTableware = {
+        final wantTableware = {
             type: "boolean",
             title: '要餐具/飲管?',
             "default": false,
         }
-        var schema = {
+
+        final itemsSchema:Promise<Dynamic> = formData.orders == null || formData.orders.length == 0 ? Promise.resolve(orderSchema(clusterOptions)) : {
+            Promise.all(
+                formData.orders.linq().select((o, i) -> {
+                    final orderSchema = orderSchema(o.shop != null ? [o.shop] : clusterOptions.filter(s -> !formData.orders.exists(_o -> _o.shop == s)));
+                    (switch (o.shop) {
+                        case null:
+                            Promise.resolve(orderSchema);
+                        case shop:
+                            shop
+                                .itemsSchema(pickupTimeSlot, o)
+                                .then(items -> {
+                                    Object.assign(orderSchema.properties, {
+                                        items: items,
+                                        wantTableware: wantTableware,
+                                        customerNote: customerNote(o.shop),
+                                    });
+                                    orderSchema.required.push("items");
+                                    orderSchema.required.push("wantTableware");
+                                    orderSchema;
+                                });
+                    });
+                }).toArray()
+            );
+        };
+        return itemsSchema.then(itemsSchema -> {
             type: "object",
             properties: {
                 pickupTimeSlot: {
@@ -103,13 +129,13 @@ class OrderFormSchema {
                     }),
                 },
                 backupContactValue: (switch (formData.backupContactMethod){
-                    case Telegram: 
+                    case Telegram:
                         {
                             type: "string",
                             title: "後備聯絡 " + Telegram.info().name,
                             pattern: "[A-Za-z0-9_]{5,}",
                         }
-                    case WhatsApp: 
+                    case WhatsApp:
                         {
                             type: "string",
                             title: "後備聯絡 " + WhatsApp.info().name,
@@ -117,7 +143,7 @@ class OrderFormSchema {
                             minLength: 8,
                             maxLength: 8,
                         }
-                    case Signal: 
+                    case Signal:
                         {
                             type: "string",
                             title: "後備聯絡 " + Signal.info().name,
@@ -125,7 +151,7 @@ class OrderFormSchema {
                             minLength: 8,
                             maxLength: 8,
                         }
-                    case Telephone: 
+                    case Telephone:
                         {
                             type: "string",
                             title: "後備聯絡" + Telephone.info().name,
@@ -133,7 +159,7 @@ class OrderFormSchema {
                             minLength: 8,
                             maxLength: 8,
                         }
-                    case _: 
+                    case _:
                         {
                             type: "null",
                             title: "後備聯絡",
@@ -141,24 +167,7 @@ class OrderFormSchema {
                 }:Dynamic),
                 orders: {
                     type: "array",
-                    items: (formData.orders == null || formData.orders.length == 0 ? orderSchema(clusterOptions) : {
-                        formData.orders.linq().select((o, i) -> {
-                            var orderSchema = orderSchema(o.shop != null ? [o.shop] : clusterOptions.filter(s -> !formData.orders.exists(_o -> _o.shop == s)));
-                            switch (o.shop) {
-                                case null:
-                                    //pass
-                                case shop:
-                                    Object.assign(orderSchema.properties, {
-                                        items: shop.itemsSchema(pickupTimeSlot, o),
-                                        wantTableware: wantTableware,
-                                        customerNote: customerNote(o.shop),
-                                    });
-                                    orderSchema.required.push("items");
-                                    orderSchema.required.push("wantTableware");
-                            }
-                            orderSchema;
-                        }).toArray();
-                    }:Dynamic),
+                    items: itemsSchema,
                     additionalItems: orderSchema(clusterOptions),
                     minItems: 1,
                 },
@@ -198,103 +207,112 @@ class OrderFormSchema {
                 case null: [];
                 case _: ["backupContactValue"];
             }),
-        };
-        return schema;
+        });
     }
 
-    static public function formDataToDelivery(formData:OrderFormData, user:LoggedinUser):Delivery {
-        var orders:Array<Order> = switch (formData) {
+    static public function formDataToDelivery(formData:OrderFormData, user:LoggedinUser):Promise<Delivery> {
+        final orders:Promise<Array<Order>> = switch (formData) {
             case {
                 orders: orders,
                 pickupTimeSlot: pickupTimeSlot,
             }
             if (orders != null && pickupTimeSlot != null):
-                var summaries = [
+                final summaries:Promise<Array<{
+                    shop:Shop,
+                    summary:OrderSummary,
+                }>> = cast Promise.all([
                     for (d in orders)
                     if (d.shop != null && d.items != null)
-                    d.shop => d.shop.summarize(pickupTimeSlot.parse(), d)
-                ];
-                [
-                    for (shop => summary in summaries)
-                    if (summary != null)
-                    {
-                        orderId: null,
-                        creationTime: null,
-                        orderCode: null,
-                        shop: shop,
-                        wantTableware: summary.wantTableware,
-                        customerNote: summary.customerNote,
-                        orderDetails: summary.orderDetails,
-                        orderPrice: summary.orderPrice,
-                        platformServiceCharge: 0,
-                        receipts: [],
-                    }
-                ];
+                    d.shop.summarize(pickupTimeSlot.parse(), d)
+                        .then(summary -> {
+                            shop: d.shop,
+                            summary: summary,
+                        })
+                ]);
+                summaries.then(summaries ->
+                    [
+                        for (shop => summary in [for (s in summaries) s.shop => s.summary])
+                        if (summary != null)
+                        {
+                            orderId: null,
+                            creationTime: null,
+                            orderCode: null,
+                            shop: shop,
+                            wantTableware: summary.wantTableware,
+                            customerNote: summary.customerNote,
+                            orderDetails: summary.orderDetails,
+                            orderPrice: summary.orderPrice,
+                            platformServiceCharge: 0.0,
+                            receipts: [],
+                        }
+                    ]
+                );
             case _:
-                [];
+                Promise.resolve([]);
         }
 
-        for (o in orders)
-            OrderTools.setPlatformServiceCharge(o);
+        return orders.then(orders -> {
+            for (o in orders)
+                OrderTools.setPlatformServiceCharge(o);
+            final delivery:Delivery = {
+                creationTime: null,
+                deliveryCode: "訂單預覽",
+                couriers: null,
+                customer: {
+                    tg: null,
+                    tel:null,
+                    whatsApp: null,
+                    signal: null,
+                },
+                customerPreferredContactMethod: null,
+                customerBackupContactMethod: null,
+                paymentMethods: formData.paymentMethods,
+                pickupLocation: formData.pickupLocation,
+                pickupTimeSlot: switch (formData.pickupTimeSlot) {
+                    case null: null;
+                    case str: str.parse();
+                },
+                pickupMethod: formData.pickupMethod,
+                deliveryFee: null,
+                customerNote: formData.customerNote,
+                deliveryId: null,
+                orders: orders
+            };
 
-        var delivery:Delivery = {
-            creationTime: null,
-            deliveryCode: "訂單預覽",
-            couriers: null,
-            customer: {
-                tg: null,
-                tel:null,
-                whatsApp: null,
-                signal: null,
-            },
-            customerPreferredContactMethod: null,
-            customerBackupContactMethod: null,
-            paymentMethods: formData.paymentMethods,
-            pickupLocation: formData.pickupLocation,
-            pickupTimeSlot: switch (formData.pickupTimeSlot) {
+            switch (user) {
                 case null: null;
-                case str: str.parse();
-            },
-            pickupMethod: formData.pickupMethod,
-            deliveryFee: null,
-            customerNote: formData.customerNote,
-            deliveryId: null,
-            orders: orders
-        };
+                case {login: Telegram, tg: tg}:
+                    delivery.customerPreferredContactMethod = Telegram;
+                    delivery.customer.tg = tg;
+                case {login: WhatsApp, tel: tel}:
+                    delivery.customerPreferredContactMethod = WhatsApp;
+                    delivery.customer.whatsApp = tel;
+                case _:
+                    throw "Unknown login: " + user;
+            }
 
-        switch (user) {
-            case null: null;
-            case {login: Telegram, tg: tg}:
-                delivery.customerPreferredContactMethod = Telegram;
-                delivery.customer.tg = tg;
-            case {login: WhatsApp, tel: tel}:
-                delivery.customerPreferredContactMethod = WhatsApp;
-                delivery.customer.whatsApp = tel;
-            case _:
-                throw "Unknown login: " + user;
-        }
+            switch formData.backupContactMethod {
+                case null:
+                    // pass
+                case Telegram:
+                    delivery.customerBackupContactMethod = Telegram;
+                    delivery.customer.tg = {
+                        username: formData.backupContactValue,
+                    }
+                case WhatsApp:
+                    delivery.customerBackupContactMethod = WhatsApp;
+                    delivery.customer.whatsApp = formData.backupContactValue;
+                case Signal:
+                    delivery.customerBackupContactMethod = Signal;
+                    delivery.customer.signal = formData.backupContactValue;
+                case Telephone:
+                    delivery.customerBackupContactMethod = Telephone;
+                    delivery.customer.tel = formData.backupContactValue;
+            }
 
-        switch formData.backupContactMethod {
-            case null:
-                // pass
-            case Telegram:
-                delivery.customerBackupContactMethod = Telegram;
-                delivery.customer.tg = {
-                    username: formData.backupContactValue,
-                }
-            case WhatsApp:
-                delivery.customerBackupContactMethod = WhatsApp;
-                delivery.customer.whatsApp = formData.backupContactValue;
-            case Signal:
-                delivery.customerBackupContactMethod = Signal;
-                delivery.customer.signal = formData.backupContactValue;
-            case Telephone:
-                delivery.customerBackupContactMethod = Telephone;
-                delivery.customer.tel = formData.backupContactValue;
-        }
+            delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery);
 
-        delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery);
-
-        return delivery;
+            return delivery;
+        });
     }
 }

@@ -111,43 +111,47 @@ class OrderFood extends View<OrderFoodProps> {
                     return Promise.resolve(null);
                 }
 
-                var user = reply.getUser();
-                var formData:OrderFormData = req.body;
-                var schema = OrderFormSchema.getSchema(formData, user);
+                final user = reply.getUser();
+                final formData:OrderFormData = req.body;
+                return OrderFormSchema.getSchema(formData, user)
+                    .then(schema -> {
+                        final validate = Ajv.call({
+                            removeAdditional: "all",
+                        }).compile(schema);
+                        final isValid:Bool = validate.call(formData);
+                        if (!isValid) {
+                            reply.status(ErrorCode.BadRequest).send(validate.errors.map(err -> err.message).join("\n"));
+                            return Promise.resolve(null);
+                        }
 
-                var validate = Ajv.call({
-                    removeAdditional: "all",
-                }).compile(schema);
-                var isValid:Bool = validate.call(formData);
-                if (!isValid) {
-                    reply.status(ErrorCode.BadRequest).send(validate.errors.map(err -> err.message).join("\n"));
-                    return Promise.resolve(null);
-                }
+                        final now = Date.now();
+                        return OrderFormSchema
+                            .formDataToDelivery(formData, user)
+                            .then(delivery -> {
+                                delivery.creationTime = now;
+                                delivery.deliveryCode = null;
+                                for (o in delivery.orders) {
+                                    o.creationTime = now;
+                                }
+                                final deliveries = [delivery];
 
-                var now = Date.now();
-                var delivery = OrderFormSchema.formDataToDelivery(formData, user);
-                delivery.creationTime = now;
-                delivery.deliveryCode = null;
-                for (o in delivery.orders) {
-                    o.creationTime = now;
-                }
-                var deliveries = [delivery];
-
-                CockroachDb.db.insertDeliveries(deliveries)
-                    .toJsPromise()
-                    .then(ids -> CockroachDb.db.delivery
-                        .select({
-                            deliveryCode: delivery.deliveryCode,
-                        })
-                        .where(f -> f.deliveryId == ids[0]).first()
-                        .toJsPromise()
-                    )
-                    .then(result -> {
-                        delivery.deliveryCode = result.deliveryCode;
-                        TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage);
-                    })
-                    .then(_ -> ServerMain.notifyDeliveryRequestReceived(delivery))
-                    .then(_ -> null);
+                                CockroachDb.db.insertDeliveries(deliveries)
+                                    .toJsPromise()
+                                    .then(ids -> CockroachDb.db.delivery
+                                        .select({
+                                            deliveryCode: delivery.deliveryCode,
+                                        })
+                                        .where(f -> f.deliveryId == ids[0]).first()
+                                        .toJsPromise()
+                                    )
+                                    .then(result -> {
+                                        delivery.deliveryCode = result.deliveryCode;
+                                        TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage);
+                                    })
+                                    .then(_ -> ServerMain.notifyDeliveryRequestReceived(delivery))
+                                    .then(_ -> null);
+                            });
+                    });
             });
     }
 
