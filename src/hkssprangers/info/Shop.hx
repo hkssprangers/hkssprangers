@@ -594,9 +594,9 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/fasttastehk/posts/2006785006150267
-            case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() <= "2022-03-03"):
-                return Unavailable('暫停營業');
+            // https://www.facebook.com/permalink.php?story_fbid=487920659692739&id=102717031546439
+            case [KCZenzero, "2022-03-13", _]:
+                return Unavailable('休息一天');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
