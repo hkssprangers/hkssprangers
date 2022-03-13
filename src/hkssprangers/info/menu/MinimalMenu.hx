@@ -136,7 +136,7 @@ class MinimalMenu {
     };
 
     static final pastas = [
-        { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 95 },
+        // { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 95 },
         { name: "松露朱古力燴牛肉醬扁意粉(h.)", price: 115 },
         { name: "辣茄汁煙豬面肉貓耳朵粉(h.)", price: 95 },
         { name: "牛肝菌貓耳朵粉(v.)", price: 95 },
@@ -233,7 +233,7 @@ class MinimalMenu {
 
     static public final MinimalSetFor2 = {
         title: "二人套餐",
-        description: "二人套餐 $248",
+        description: "二人套餐 $288",
         properties: {
             salad: {
                 title: "沙律",
