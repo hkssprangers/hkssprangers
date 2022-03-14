@@ -16,7 +16,7 @@ services:
       - COCKROACH_DATABASE=defaultdb
       - COCKROACH_USER=crdb
       - COCKROACH_PASSWORD=crdb
-      - DATABASE_URL=postgresql://crdb:crdb@cockroachdb:26257/hkssprangers?sslmode=disable
+      - DATABASE_URL=postgresql://crdb:crdb@cockroachdb:26257/defaultdb?sslmode=disable
     user: vscode
     entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity
