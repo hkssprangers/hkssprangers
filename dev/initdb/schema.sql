@@ -110,3 +110,15 @@ CREATE TABLE public."twilioMessage" (
 	CONSTRAINT "twilioMessage_pkey" PRIMARY KEY ("twilioMessageId" ASC),
 	FAMILY "primary" ("twilioMessageId", "creationTime", data)
 );
+CREATE TABLE public._prisma_migrations (
+	id VARCHAR(36) NOT NULL,
+	checksum VARCHAR(64) NOT NULL,
+	finished_at TIMESTAMPTZ NULL,
+	migration_name VARCHAR(255) NOT NULL,
+	logs STRING NULL,
+	rolled_back_at TIMESTAMPTZ NULL,
+	started_at TIMESTAMPTZ NOT NULL DEFAULT now():::TIMESTAMPTZ,
+	applied_steps_count INT4 NOT NULL DEFAULT 0:::INT8,
+	CONSTRAINT "primary" PRIMARY KEY (id ASC),
+	FAMILY "primary" (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count)
+);
