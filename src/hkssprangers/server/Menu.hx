@@ -104,19 +104,19 @@ class Menu extends View<MenuProps> {
             borderClasses: ["border-green-600"],
             headerClasses: ["bg-pt2-green-600"],
             boxClasses: [],
-            textClasses: ["text-red-500"]
+            textClasses: ["text-green-600"]
         },
         PakTinCluster => {
             borderClasses: ["border-blue-500"],
             headerClasses: ["bg-pt2-blue-500"],
             boxClasses: [],
-            textClasses: ["text-red-500"]
+            textClasses: ["text-blue-500"]
         },
         TungChauStreetParkCluster => {
             borderClasses: ["border-indigo-500"],
             headerClasses: ["bg-pt2-indigo-500"],
             boxClasses: [],
-            textClasses: ["text-red-500"]
+            textClasses: ["text-indigo-500"]
         }
     ];
 
