@@ -103,8 +103,8 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
                 isInService: true,
-                facebook: null,
-                instagram: null
+                facebook: "https://www.facebook.com/DragonJapaneseCuisine/",
+                instagram: "https://www.instagram.com/ramen_department/"
             }
         case YearsHK:
             {
@@ -203,7 +203,7 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:00:00",
                 latestPickupTime: "18:30:00",
                 isInService: true,
-                facebook: null,
+                facebook: "https://www.facebook.com/502547383451978",
                 instagram: null,
             }
         case BiuKeeLokYuen:
@@ -351,8 +351,8 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
                 isInService: true,
-                facebook: "https://www.facebook.com/MGYVEG",
-                instagram: "https://www.instagram.com/mgyvegan/",
+                facebook: "https://www.facebook.com/fasttastehk",
+                instagram: "https://www.instagram.com/fasttaste/",
             }
         case BlaBlaBla:
             {
@@ -426,8 +426,8 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
                 isInService: false,
-                facebook: null,
-                instagram: null,
+                facebook: "https://www.facebook.com/myroomroom",
+                instagram: "https://www.instagram.com/myroomroom/",
             }
         case ThaiYummy:
             {
@@ -453,7 +453,7 @@ enum abstract Shop(String) to String {
                 earliestPickupTime: "18:30:00",
                 latestPickupTime: "20:30:00",
                 isInService: true,
-                facebook: null,
+                facebook: "https://www.facebook.com/thaiyummyshop/",
                 instagram: null,
             }
         case Toolss:
@@ -596,7 +596,7 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:00:00", // 晚上8：00 last order
                 isInService: true,
                 facebook: "https://www.facebook.com/minimalcafehk/",
-                instagram: "https://instagram.com/p/CLLNM9KBYjL/",
+                instagram: "https://www.instagram.com/minimal_cafehk/",
             }
         case CafeGolden:
             {
