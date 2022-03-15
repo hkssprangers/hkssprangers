@@ -341,7 +341,7 @@ class Menu extends View<MenuProps> {
                         <div className="p-3 text-xl rounded-t-xl font-bold">
                             ${DragonJapaneseCuisineRamenSet.properties.options.title}
                         </div>
-                        <div className="bg-body rounded-b-xl">
+                        <div className="bg-white rounded-b-xl">
                             ${renderItems(DragonJapaneseCuisineRamenSet.properties.options.items.enums(), true)}
                         </div>
                     </div>
@@ -644,7 +644,7 @@ class Menu extends View<MenuProps> {
                             ${renderItems(BiuKeeLokYuenNoodleSet.properties.options.items.enums(), true)}
                             <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
                                 <div className="p-3 text-xl rounded-t-xl font-bold">${BiuKeeLokYuenNoodleSet.properties.main2.title}</div>
-                                <div className="bg-body rounded-b-xl">
+                                <div className="bg-white rounded-b-xl">
                                     ${renderItems(BiuKeeLokYuenNoodleSet.properties.main2.enums(), true)}
                                 </div>
                             </div>
@@ -686,7 +686,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(NeighborSalad.properties.salad.enums())}
                         <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
                             <div className="p-3 text-xl bg-slash rounded-t-xl font-bold">升級配料選擇</div>
-                            <div className="bg-body rounded-b-xl">
+                            <div className="bg-white rounded-b-xl">
                                 <div className="p-3 font-bold">漢堡 / 熱狗 / 沙律 適用</div>
                                 ${renderItems(NeighborOpts, true)}
                             </div>
@@ -760,7 +760,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(FastTasteSSPBurgers)}
                         <div className=${boxClasses}>
                             <div className="p-3 text-xl rounded-t-xl font-bold">升級配料選擇</div>
-                            <div className="bg-body rounded-b-xl">
+                            <div className="bg-white rounded-b-xl">
                                 ${renderItems(FastTasteSSPBurgerOptions, true)}
                             </div>
                         </div>
@@ -770,7 +770,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(salad.properties.salad.enums())}
                         <div className=${boxClasses}>
                             <div className="p-3 text-xl rounded-t-xl font-bold">${salad.title}${salad.properties.options.title}</div>
-                            <div className="bg-body rounded-b-xl">
+                            <div className="bg-white rounded-b-xl">
                                 ${renderItems(salad.properties.options.items.enums(), true)}
                             </div>
                         </div>
