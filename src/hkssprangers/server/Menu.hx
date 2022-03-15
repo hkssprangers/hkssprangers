@@ -80,36 +80,43 @@ class Menu extends View<MenuProps> {
             borderClasses: ["border-red-500"],
             headerClasses: ["bg-pt2-red-500"],
             boxClasses: ["bg-slash-red-500"],
+            textClasses: ["text-red-500"]
         },
         CLPCluster => {
             borderClasses: ["border-green-400"],
             headerClasses: ["bg-pt2-green-400"],
             boxClasses: [],
+            textClasses: ["text-green-500"]
         },
         GoldenCluster => {
             borderClasses: ["border-pink-500"],
             headerClasses: ["bg-pt2-pink-500"],
             boxClasses: ["bg-slash-pink-500"],
+            textClasses: ["text-pink-500"]
         },
         SmilingPlazaCluster => {
             borderClasses: ["border-yellow-500"],
             headerClasses: ["bg-pt2-yellow-500"],
             boxClasses: ["bg-slash-yellow-500"],
+            textClasses: ["text-yellow-500"]
         },
         ParkCluster => {
             borderClasses: ["border-green-600"],
             headerClasses: ["bg-pt2-green-600"],
             boxClasses: [],
+            textClasses: ["text-red-500"]
         },
         PakTinCluster => {
             borderClasses: ["border-blue-500"],
             headerClasses: ["bg-pt2-blue-500"],
             boxClasses: [],
+            textClasses: ["text-red-500"]
         },
         TungChauStreetParkCluster => {
             borderClasses: ["border-indigo-500"],
             headerClasses: ["bg-pt2-indigo-500"],
             boxClasses: [],
+            textClasses: ["text-red-500"]
         }
     ];
 
@@ -117,6 +124,7 @@ class Menu extends View<MenuProps> {
         borderClasses:Array<String>,
         headerClasses:Array<String>,
         boxClasses:Array<String>,
+        textClasses:Array<String>,
     };
     
     function new(props, context) {
@@ -127,27 +135,36 @@ class Menu extends View<MenuProps> {
     override function bodyContent() {
         return jsx('
             <main>
-            <div className="p-3 md:py-6 mx-auto container">
-                    <div className="flex items-center">
-                        <a href="/">
-                            ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
-                        </a>
-                        <div className="flex-1 pl-3">
-                            <b className="text-lg lg:text-xl">埗兵</b>
-                            <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="p-3 py-3 md:py-16 mx-auto container">
-                    <div className=${["border-l-4", "border-r-4", "border-b-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${["border-t-4", "border-b-4", "font-bold"].concat(style.borderClasses).join(" ")}>
-                            <div className="p-3 text-xl md:text-2xl text-center">
-                                <h1>
-                                    <span className="whitespace-nowrap">${shop.info().name}</span> <span className="whitespace-nowrap">埗兵外賣餐牌</span>
-                                </h1>
+                <div className="bg-gray-50">
+                    <div className="p-3 md:py-6 mx-auto container">
+                        <div className="flex items-center">
+                            <a href="/">
+                                ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
+                            </a>
+                            <div className="flex-1 pl-3">
+                                <b className="text-lg lg:text-xl">埗兵</b>
+                                <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
                             </div>
                         </div>
-                        ${renderContent()}
+                    </div>
+                    <div className="p-3 py-3 md:py-16 mx-auto container">
+                        <div className="lg:flex">
+                            <div className="lg:w-1/3 lg:pr-16">
+                                <div className="flex items-center">
+                                    <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
+                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                </div>
+                                <h1 className="mb-3 text-xl md:text-2xl">
+                                    <span className="whitespace-nowrap">${shop.info().name}</span>
+                                </h1>
+                                <div className="mb-3 text-xs">
+                                    ${renderSocialHandle()}
+                                </div>
+                            </div>
+                            <div className="lg:w-2/3 bg-white">
+                                ${renderContent()}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-50 text-md md:text-lg">
@@ -181,6 +198,21 @@ class Menu extends View<MenuProps> {
                 ${Index.orderButton()}
             </main>
         ');
+    };
+
+    function renderSocialHandle() {
+        if (shop.info().instagram != null)
+            return jsx('
+            <Fragment>
+                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href=${shop.info().facebook}>Facebook</a>
+                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href="${shop.info().instagram}">Instagram</a>
+            </Fragment>
+        ')
+        else return jsx('
+            <Fragment>
+                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href=${shop.info().facebook}>Facebook</a>
+            </Fragment>
+            ');
     }
 
     function renderContent() {
@@ -278,18 +310,20 @@ class Menu extends View<MenuProps> {
     function renderEightyNine() {
         return jsx('
             <div className="p-3">
+                
                 <div className=${["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                ${EightyNineSet.title}: ${EightyNineSet.description}
+                    ${EightyNineSet.title}: ${EightyNineSet.description}
                 </div>
+                    
                 <div className="md:flex flex-row md:mt-3">
-                    <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
-                        ${renderItems(EightyNineSet.properties.main.enums())}
-                    </div>
-                    <div className="md:w-1/2 md:ml-3">
-                        <div className="p-3"><b>${EightyNineSet.properties.sub.title}</b></div>
-                        ${renderItems(EightyNineSet.properties.sub.enums())}
-                    </div>
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
+                            ${renderItems(EightyNineSet.properties.main.enums())}
+                        </div>
+                        <div className="md:w-1/2 md:ml-3">
+                            <div className="p-3"><b>${EightyNineSet.properties.sub.title}</b></div>
+                            ${renderItems(EightyNineSet.properties.sub.enums())}
+                        </div>
                 </div>
             </div>
         ');
