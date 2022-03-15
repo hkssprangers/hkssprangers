@@ -154,6 +154,7 @@ class Menu extends View<MenuProps> {
                                     <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
                                     <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
                                 </div>
+                                ${renderShopImage()}
                                 <h1 className="mb-3 text-xl md:text-2xl">
                                     <span className="whitespace-nowrap">${shop.info().name}</span>
                                 </h1>
@@ -199,6 +200,66 @@ class Menu extends View<MenuProps> {
             </main>
         ');
     };
+
+    function renderShopImage() {
+
+        var backgroundUrl = "/images/89.jpg";
+
+        switch shop {
+            case EightyNine:
+                backgroundUrl = "/images/89.jpg";
+            case DragonJapaneseCuisine:
+                backgroundUrl = "/images/yyp.jpg";
+            case YearsHK:
+                backgroundUrl = "/images/years.jpg";
+            case TheParkByYears:
+                backgroundUrl = "/images/park.jpg";
+            case LaksaStore:
+                backgroundUrl = "/images/laksa.jpg";
+            case DongDong:
+                backgroundUrl = "/images/dong.jpg";
+            case BiuKeeLokYuen:
+                backgroundUrl = "/images/bill.jpg";
+            case KCZenzero:
+                backgroundUrl = "/images/tomato.jpg";
+            case HanaSoftCream:
+                backgroundUrl = "/images/hana.jpg";
+            case Neighbor:
+                backgroundUrl = "/images/neighbor.jpg";
+            case MGY:
+                backgroundUrl = "/images/mgy.jpg";
+            case FastTasteSSP:
+                backgroundUrl = "/images/fasttaste.jpg";
+            case BlaBlaBla:
+                backgroundUrl = "/images/bla.jpg";
+            case ZeppelinHotDogSKM:
+                backgroundUrl = "/images/zeppelin.jpg";
+            case MyRoomRoom:
+                backgroundUrl = "/images/MyRoomRoom.jpg";
+            case ThaiYummy:
+                backgroundUrl = "/images/ThaiYummy.jpg";
+            case Toolss:
+                backgroundUrl = "/images/Toolss.jpg";
+            case KeiHing:
+                backgroundUrl = "/images/keihing.jpg";
+            case PokeGo:
+                backgroundUrl = "/images/PokeGo.jpg";
+            case WoStreet:
+                backgroundUrl = "/images/WoStreet.jpg";
+            case AuLawFarm:
+                backgroundUrl = "";
+            case Minimal:
+                backgroundUrl = "/images/minimal.jpg";
+            case CafeGolden:
+                backgroundUrl = "/images/CafeGolden.jpeg";
+        }
+
+        return jsx ('
+                    <Fragment>
+                        <div className="rounded-md bg-cover h-64 my-3" style={{backgroundImage: "url("+ backgroundUrl +")"}}>&nbsp;</div>
+                    </Fragment>
+                ');
+    }
 
     function renderSocialHandle() {
         if (shop.info().instagram != null)
