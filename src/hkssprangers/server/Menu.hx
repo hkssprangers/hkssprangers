@@ -454,7 +454,7 @@ class Menu extends View<MenuProps> {
                     ${renderItems(hotdogSet.properties.main.enums())}
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroWontonSet.title}</div>
+                        <div className="p-3">${KCZenzeroWontonSet.title} (缺貨)</div>
                     </div>
                     ${renderItems(KCZenzeroWontonSet.properties.main.enums())}
                     <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.options.title}</div>

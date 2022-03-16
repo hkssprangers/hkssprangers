@@ -20,7 +20,7 @@ enum abstract KCZenzeroItem(String) to String {
         HotdogSet,
         NoodleSet,
         PastaSet,
-        WontonSet,
+        // WontonSet,
         LightSet,
         // HotpotSet, //not in /menu/KCZenzero
         Single,
