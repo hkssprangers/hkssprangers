@@ -79,7 +79,10 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: true,
                 facebook: "https://www.facebook.com/89food89",
-                instagram: null
+                instagram: null,
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "招牌口水雞"
             }
         case DragonJapaneseCuisine:
             {
@@ -104,7 +107,10 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: true,
                 facebook: "https://www.facebook.com/DragonJapaneseCuisine/",
-                instagram: "https://www.instagram.com/ramen_department/"
+                instagram: "https://www.instagram.com/ramen_department/",
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case YearsHK:
             {
@@ -130,6 +136,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/yearshk",
                 instagram: "https://www.instagram.com/years.hk/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "⽇式咖喱吉列豬扒意⼤利飯"
             }
         case TheParkByYears:
             {
@@ -155,6 +164,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/yearshk",
                 instagram: "https://www.instagram.com/years.hk/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "白酒香辣蒜片乾蕃茄意粉"
             }
         case LaksaStore:
             {
@@ -180,6 +192,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/LaksaStore",
                 instagram: "https://www.instagram.com/dc_laksastore/",
+                availablity: "提供午餐及晚餐",
+                restDay: "逢星期三休息",
+                recommendation: "喇沙雞扒油麵 / 喇沙牛舌油麵"
             }
         case DongDong:
             {
@@ -205,6 +220,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/502547383451978",
                 instagram: null,
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case BiuKeeLokYuen:
             {
@@ -230,6 +248,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/BiuKeeLokYuen",
                 instagram: null,
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "秘製新鮮牛腩 / 彈牙牛丸"
             }
         case KCZenzero:
             {
@@ -255,6 +276,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/%E8%95%83%E5%BB%9A-KC-Zenzero-102717031546439",
                 instagram: "https://www.instagram.com/kc_zenzero0530/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "九龍皇帝熱狗"
             }
         case HanaSoftCream:
             {
@@ -278,6 +302,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/hanasoftcream",
                 instagram: "https://www.instagram.com/hanasoftcream/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "北海道8.0牛奶雪糕"
             }
         case Neighbor:
             {
@@ -303,6 +330,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/Neighbor-141971742913793",
                 instagram: "https://www.instagram.com/neighbor_csw/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "美式牛肉漢堡 / 椰漿脆雞翼"
             }
         case MGY:
             {
@@ -328,6 +358,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/MGYVEG",
                 instagram: "https://www.instagram.com/mgyvegan/",
+                availablity: "提供午餐及晚餐",
+                restDay: "逢星期一休息",
+                recommendation: "羅漢齋烏冬"
             }
         case FastTasteSSP:
             {
@@ -353,6 +386,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/fasttastehk",
                 instagram: "https://www.instagram.com/fasttaste/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "經典牛魔堡 / 德國鹹豬手"
             }
         case BlaBlaBla:
             {
@@ -378,6 +414,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/blablablatea/",
                 instagram: "https://www.instagram.com/blablabla_tea",
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case ZeppelinHotDogSKM:
             {
@@ -403,6 +442,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/Zeppelin-Hot-Dog-SKM-105039071392745",
                 instagram: "https://www.instagram.com/zeppelinhotdogskm",
+                availablity: "提供午餐及晚餐",
+                restDay: "逢21號休息",
+                recommendation: "火炙芝士辣肉醬熱狗"
             }
         case MyRoomRoom:
             {
@@ -428,6 +470,9 @@ enum abstract Shop(String) to String {
                 isInService: false,
                 facebook: "https://www.facebook.com/myroomroom",
                 instagram: "https://www.instagram.com/myroomroom/",
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case ThaiYummy:
             {
@@ -455,6 +500,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/thaiyummyshop/",
                 instagram: null,
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case Toolss:
             {
@@ -480,6 +528,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/toolsshk",
                 instagram: "https://www.instagram.com/toolsshk/",
+                availablity: "提供午餐及晚餐",
+                restDay: "逢星期一休息",
+                recommendation: "日式咖喱牛肋肉飯"
             }
         case KeiHing:
             {
@@ -505,7 +556,10 @@ enum abstract Shop(String) to String {
                 latestPickupTime: "20:30:00",
                 isInService: true,
                 facebook: "https://www.facebook.com/%E7%90%A6%E8%88%88%E9%A4%90%E5%BB%B3-277683322927183",
-                instagram: null
+                instagram: null,
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "薑蔥霸王雞 / 琦興雞煲 / 鍋塌豆腐"
             }
         case PokeGo:
             {
@@ -531,6 +585,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/PokeGo_hk-103422998663025",
                 instagram: "https://www.instagram.com/poke.go_hk/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "Signature Bowl 808"
             }
         case WoStreet:
             {
@@ -557,6 +614,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
+                availablity: "暫停營業",
+                restDay: null,
+                recommendation: "照燒雞扒窩堡"
             }
         case AuLawFarm:
             {
@@ -572,6 +632,9 @@ enum abstract Shop(String) to String {
                 isInService: false,
                 facebook: "https://www.facebook.com/aulawfarm",
                 instagram: "https://www.instagram.com/aulawfarm/",
+                availablity: null,
+                restDay: null,
+                recommendation: null
             }
         case Minimal:
             {
@@ -597,6 +660,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/minimalcafehk/",
                 instagram: "https://www.instagram.com/minimal_cafehk/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: "牛肝菌貓耳朵粉 / 慢煮黑安格斯牛肉 / 蘋果酥盒"
             }
         case CafeGolden:
             {
@@ -622,6 +688,9 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/%E7%90%89%E9%87%91%E7%A9%97%E6%9C%88-Cafe-Golden-191971954164436",
                 instagram: "https://www.instagram.com/cafegoldenhk/",
+                availablity: "提供午餐",
+                restDay: null,
+                recommendation: "明太子魷魚蟹棒意大利麵"
             }
     }
 

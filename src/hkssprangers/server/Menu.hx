@@ -149,21 +149,38 @@ class Menu extends View<MenuProps> {
                     </div>
                     <div className="p-3 py-3 md:py-16 mx-auto container">
                         <div className="lg:flex">
-                            <div className="lg:w-1/3 lg:pr-16">
-                                <div className="flex items-center">
+                            <div className="lg:w-1/3 lg:pr-12">
+                                <div className="flex items-center mb-3">
                                     <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
                                     <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
                                 </div>
                                 ${renderShopImage()}
-                                <h1 className="mb-3 text-xl md:text-2xl">
-                                    <span className="whitespace-nowrap">${shop.info().name}</span>
-                                </h1>
-                                <div className="mb-3 text-xs">
-                                    ${renderSocialHandle()}
+                                <div className="rounded-b-md bg-white p-3 mb-3 lg:mb-0">
+                                    <h1 className="mb-1 text-xl md:text-2xl">
+                                        <b className="whitespace-nowrap">${shop.info().name}</b>
+                                    </h1>
+                                    ${renderAvailabiltyRest()}
+                                    <div className="mb-1 text-xs text-gray-400">
+                                        埗兵推介
+                                    </div>
+                                    <div className="mb-3">
+                                        ${shop.info().recommendation}
+                                    </div>
+                                    <div className="mb-1 text-xs text-gray-400">
+                                        更多連結
+                                    </div>
+                                    <div className="mb-3 text-xs">
+                                        ${renderSocialHandle()}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="lg:w-2/3 bg-white">
-                                ${renderContent()}
+                            <div className="lg:w-2/3">
+                                <div className="bg-white">
+                                    ${renderContent()}
+                                </div>
+                                <div className="p-3 text-center text-xs text-gray-400">
+                                    以上餐牌只適用於埗兵外賣
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -255,10 +272,24 @@ class Menu extends View<MenuProps> {
         }
 
         return jsx ('
-                    <Fragment>
-                        <div className="rounded-md bg-cover h-64 my-3" style={{backgroundImage: "url("+ backgroundUrl +")"}}>&nbsp;</div>
-                    </Fragment>
-                ');
+            <Fragment>
+                <div className="rounded-t-md bg-cover bg-center h-64" style={{backgroundImage: "url("+ backgroundUrl +")"}}>&nbsp;</div>
+            </Fragment>
+        ');
+    }
+
+    function renderAvailabiltyRest() {
+        if (shop.info().restDay != null)
+            return jsx('
+            <Fragment>
+                <div className="mb-3">${shop.info().availablity}<br/>${shop.info().restDay}</div>
+            </Fragment>
+        ')
+        else return jsx('
+            <Fragment>
+                <div className="mb-3">${shop.info().availablity}</div>
+            </Fragment>
+            ');
     }
 
     function renderSocialHandle() {
