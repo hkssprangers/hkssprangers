@@ -35,7 +35,7 @@
     "prisma-dbml-generator": "^0.8.3",
     "react-router-dom": "^5.3.0",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
-    "serverless": "^3.7.5",
+    "serverless": "^3.7.7",
     "serverless-prune-plugin": "^2.0.1",
     "tailwindcss": "^2.2.19",
     "tailwindcss-cli": "^0.1.2",
