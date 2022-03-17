@@ -133,6 +133,21 @@ class Menu extends View<MenuProps> {
     }
 
     override function bodyContent() {
+        final recommendation = switch (shop.info().recommendation) {
+            case null:
+                null;
+            case v:
+                jsx('
+                    <Fragment>
+                        <div className="mb-1 text-xs text-gray-400">
+                            埗兵推介
+                        </div>
+                        <div className="mb-3">
+                            ${v}
+                        </div>
+                    </Fragment>
+                ');
+        }
         return jsx('
             <main>
                 <div className="bg-gray-50">
@@ -160,12 +175,7 @@ class Menu extends View<MenuProps> {
                                         <b className="whitespace-nowrap">${shop.info().name}</b>
                                     </h1>
                                     ${renderAvailabiltyRest()}
-                                    <div className="mb-1 text-xs text-gray-400">
-                                        埗兵推介
-                                    </div>
-                                    <div className="mb-3">
-                                        ${shop.info().recommendation}
-                                    </div>
+                                    ${recommendation}
                                     <div className="mb-1 text-xs text-gray-400">
                                         更多連結
                                     </div>
