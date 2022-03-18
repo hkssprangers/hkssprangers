@@ -30,6 +30,7 @@ import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.menu.WoStreetMenu.*;
 import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.menu.CafeGoldenMenu.*;
+import hkssprangers.info.menu.BlackWindowMenu;
 import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
@@ -42,6 +43,7 @@ using hxLINQ.LINQ;
 
 typedef MenuProps = {
     final shop:Shop;
+    final definitions:Dynamic;
 }
 
 class Menu extends View<MenuProps> {
@@ -281,7 +283,7 @@ class Menu extends View<MenuProps> {
             case CafeGolden:
                 backgroundUrl = "/images/CafeGolden.jpeg";
             case BlackWindow:
-                backgroundUrl = "";
+                backgroundUrl = "/images/BlackWindow.jpg";
         }
 
         return jsx ('
@@ -369,8 +371,7 @@ class Menu extends View<MenuProps> {
             case CafeGolden:
                 renderCafeGolden();
             case BlackWindow:
-                null;
-                // renderBlackWindow();
+                renderBlackWindow();
         }
     }
 
@@ -1305,6 +1306,73 @@ class Menu extends View<MenuProps> {
         ');
     }
 
+    function renderBlackWindow() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final today = (Date.now():LocalDateString).getDatePart();
+        final menu:DynamicAccess<Dynamic> = props.definitions;
+        // trace(menu);
+
+        // function printItemMayWithMain(item:{name:String, price:Float, withMainPrice:Float}) {
+        //     return renderItemRow(item.name, "$" + item.price + " 跟主食+$" + item.withMainPrice);
+        // }
+        // function printItemMayWithSet(item:{name:String, price:Float, setPrice:Float}) {
+        //     return renderItemRow(item.name, "$" + item.price + " 跟餐+$" + item.setPrice);
+        // }
+
+        return jsx('
+            <Fragment>
+                <div className=${["flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
+                        <div className="p-3 text-xl font-bold">${today} 餐牌 (每日更新)</div>
+                    </div>
+                    <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${BlackWindowItem.Set.getTitle()}</div>
+                        <div className="p-3">
+                            主食加$$35 跟湯、一款小食
+                        </div>
+                    </div>
+                </div>
+
+                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${BlackWindowItem.Soup.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Soup] == null ? ["無"] : menu[BlackWindowItem.Soup].enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${BlackWindowItem.Snack.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Snack] == null ? ["無"] : menu[BlackWindowItem.Snack].enums())}
+                    </div>
+                </div>
+
+                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${BlackWindowItem.Main.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Main] == null ? ["無"] : menu[BlackWindowItem.Main].properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${BlackWindowItem.Dessert.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Dessert] == null ? ["無"] : menu[BlackWindowItem.Dessert].enums())}
+                    </div>
+                </div>
+
+                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${BlackWindowItem.Drink.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Drink] == null ? ["無"] : menu[BlackWindowItem.Drink].enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${BlackWindowItem.Coffee.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Coffee] == null ? ["無"] : menu[BlackWindowItem.Coffee].enums())}
+                        <div className=${headerClasses}>${BlackWindowItem.Beer.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Beer] == null ? ["無"] : menu[BlackWindowItem.Beer].enums())}
+                        <div className=${headerClasses}>${BlackWindowItem.Cocktail.getTitle()}</div>
+                        ${renderItems(menu[BlackWindowItem.Cocktail] == null ? ["無"] : menu[BlackWindowItem.Cocktail].enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
     function renderWoStreet() {
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
         return jsx('
@@ -1330,13 +1398,21 @@ class Menu extends View<MenuProps> {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         for (shop in Shop.all) {
             app.get("/menu/" + shop, function get(req:Request, reply:Reply):Promise<Dynamic> {
-                return Promise.resolve(
+                final date:LocalDateString = Date.now();
+                final definitions:Promise<Dynamic> = switch shop {
+                    case BlackWindow:
+                        BlackWindowMenu.getDefinitions(date);
+                    case _:
+                        Promise.resolve(null);
+                }
+                return definitions.then(definitions -> {
                     reply
                         .header("Cache-Control", "public, max-age=300, stale-while-revalidate=21600") // max-age: 5 minutes, stale-while-revalidate: 6 hours
                         .sendView(Menu, {
                             shop: shop,
-                        })
-                );
+                            definitions: definitions,
+                        });
+                });
             });
             app.get('/menu/${shop}_:date(^\\d{4}-\\d{2}-\\d{2}).json', function get(req:Request, reply:Reply):Promise<Dynamic> {
                 final date:LocalDateString = req.params.date + " 00:00:00";
