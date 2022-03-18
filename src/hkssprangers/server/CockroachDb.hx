@@ -9,7 +9,8 @@ class CockroachDb {
     static public final password = Sys.getEnv("COCKROACH_PASSWORD");
     static public final database = Sys.getEnv("COCKROACH_DATABASE");
 
-    static public final driver = new tink.sql.drivers.node.CockroachDb({
+    static public var driver(get, null):tink.sql.drivers.node.CockroachDb;
+    static function get_driver() return driver != null ? driver : driver = new tink.sql.drivers.node.CockroachDb({
         host: host,
         port: port,
         user: user,
@@ -17,5 +18,6 @@ class CockroachDb {
         ssl: host.contains("."), // assume a host without . is local dev database
     });
 
-    static public final db = new hkssprangers.db.Database(database, CockroachDb.driver);
+    static public var db(get, null):hkssprangers.db.Database;
+    static function get_db() return db != null ? db : db = new hkssprangers.db.Database(database, CockroachDb.driver);
 }
