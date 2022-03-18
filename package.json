@@ -58,7 +58,7 @@
     "fastify-accepts": "^2.1.0",
     "fastify-cookie": "^5.6.0",
     "fastify-formbody": "^5.2.0",
-    "fastify-static": "^4.5.0",
+    "fastify-static": "^4.6.1",
     "fastify-telegraf": "1.0.1",
     "google-auth-library": "^7.14.0",
     "google-spreadsheet": "^3.2.0",
