@@ -1,8 +1,6 @@
 package hkssprangers.server;
 
 import twilio.lib.twiml.MessagingResponse;
-import sys.io.File;
-import sys.FileSystem;
 import tink.sql.Expr.Functions;
 import haxe.crypto.Sha256;
 import tink.core.Error;
@@ -29,6 +27,8 @@ import fastify.*;
 import js.Node.*;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
+import hkssprangers.info.Shop;
+import hkssprangers.info.menu.*;
 import comments.CommentString.*;
 using StringTools;
 using Lambda;
@@ -398,6 +398,34 @@ class ServerMain {
         }
     }
 
+    static function blackWindowSetMenu(ctx:Context):Promise<Dynamic> {
+        final msg:String = ctx.message.text;
+        final lines = msg.split("\n");
+        final dateParser = ~/[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+        if (!dateParser.match(lines[0])) {
+            return Promise.resolve(ctx.reply('喺第一行 /setmenu 後面搵唔到日期 (YYYY-MM-DD)'));
+        }
+        final dateStart:LocalDateString = dateParser.matched(0) + " 00:00:00";
+        final dateEnd:LocalDateString = dateParser.matched(0) + " 23:59:59";
+        final menu = try {
+            BlackWindowMenu.parseMenu(lines.slice(1).join("\n"));
+        } catch (err) {
+            return Promise.resolve(ctx.reply(Std.string(err)));
+        }
+        return CockroachDb.db.menuItem
+            .insertOne({
+                menuItemId: null,
+                creationTime: Date.now(),
+                startTime: dateStart,
+                endTime: dateEnd,
+                shopId: BlackWindow,
+                items: menu,
+                deleted: false,
+            })
+            .toJsPromise()
+            .then(_ -> ctx.reply('成功設定 ${dateStart.getDatePart()} 嘅餐牌'));
+    }
+
     static function main() {
         tgBot = new Telegraf(TelegramConfig.tgBotToken);
         tgBot.catch_((err, ctx:Context) -> {
@@ -484,6 +512,17 @@ class ServerMain {
                         });
                 case _:
                     return Promise.resolve(null);
+            }
+        });
+        tgBot.command("setmenu", (ctx:Context) -> {
+            switch (Std.string(ctx.message.chat.id)) {
+                case TelegramConfig.blackWindowGroupChatId:
+                    blackWindowSetMenu(ctx);
+                case _:
+                    // blackWindowSetMenu(ctx);
+                    ctx.reply(comment(unindent, format)/**
+                        「/setmenu」唔可以喺度用。
+                    **/);
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {

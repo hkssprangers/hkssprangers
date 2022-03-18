@@ -1348,7 +1348,7 @@ class Menu extends View<MenuProps> {
                 }
                 return definitions.then(definitions -> {
                     reply
-                        .header("Cache-Control", "public, max-age=300, stale-while-revalidate=3600") // max-age: 5 minutes, stale-while-revalidate: 1 hours
+                        .header("Cache-Control", "public, max-age=60, stale-while-revalidate=300") // max-age: 1 minute, stale-while-revalidate: 5 minutes
                         .send({
                             shop: shop,
                             date: date,

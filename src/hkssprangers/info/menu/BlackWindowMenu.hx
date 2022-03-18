@@ -230,6 +230,7 @@ class BlackWindowMenu {
         final date = date.toDate();
         return hkssprangers.server.CockroachDb.db.menuItem
             .where(r -> r.shopId == BlackWindow && r.startTime <= date && r.endTime >= date && !r.deleted)
+            .orderBy(f -> [{ field: f.creationTime, order: Desc }])
             .first()
             .toJsPromise()
             .catchError(err -> null)
