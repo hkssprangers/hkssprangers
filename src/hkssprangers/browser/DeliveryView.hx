@@ -237,22 +237,22 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
-            var shopContact = if ((switch (props.viewMode) {
+            final shopContact = if ((switch (props.viewMode) {
                 case AdminView | AssignedCourierView | CourierView: true;
                 case CustomerView | ShopView: false;
             }) && o.orderDetails != null) {
                 o.shop.info().courierContact.map(contact -> {
-                    var label = if (contact.startsWith("tel:")) {
-                        jsx('<Fragment><i className="fas fa-phone mr-1"></i> telephone</Fragment>');
-                    } else if (contact.startsWith("https://wa.me/")) {
-                        jsx('<Fragment><i className="fab fa-whatsapp mr-1"></i> WhatsApp</Fragment>');
-                    } else if (contact.startsWith("https://t.me/")) {
-                        jsx('<Fragment><i className="fab fa-telegram mr-1"></i> Telegram</Fragment>');
+                    final label = if (contact.url.startsWith("tel:")) {
+                        jsx('<Fragment><i className="fas fa-phone text-bold mr-1"></i> ${contact.name}</Fragment>');
+                    } else if (contact.url.startsWith("https://wa.me/")) {
+                        jsx('<Fragment><i className="fab fa-whatsapp text-bold mr-1"></i> ${contact.name}</Fragment>');
+                    } else if (contact.url.startsWith("https://t.me/")) {
+                        jsx('<Fragment><i className="fab fa-telegram text-bold mr-1"></i> ${contact.name}</Fragment>');
                     } else {
-                        jsx('<Fragment><i className="fas fa-store mr-1"></i> contact</Fragment>');
+                        jsx('<Fragment><i className="fas fa-store text-bold mr-1"></i> ${contact.name}</Fragment>');
                     }
                     jsx('
-                        <a key=${contact} href=${contact} target="_blank" rel="noopener" className=${badge() + " bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800 font-bold"}>
+                        <a key=${contact.url} href=${contact.url} target="_blank" rel="noopener" className=${badge() + " bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800"}>
                             ${label}
                         </a>
                     ');

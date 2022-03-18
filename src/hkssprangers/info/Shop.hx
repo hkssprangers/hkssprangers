@@ -64,7 +64,7 @@ enum abstract Shop(String) to String {
                 lat: 22.33133,
                 lng: 114.16014,
                 courierContact: [
-                    "tel:63899833",
+                    { name: "店舖電話", url: "tel:63899833" },
                 ],
                 openDays: [
                     Monday,
@@ -92,7 +92,7 @@ enum abstract Shop(String) to String {
                 lat: null,
                 lng: null,
                 courierContact: [
-                    "https://wa.me/85265733617",
+                    { name: "店舖WhatsApp", url: "https://wa.me/85265733617" },
                 ],
                 openDays: [
                     Monday,
@@ -120,7 +120,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3326012,
                 lng: 114.1607882,
                 courierContact: [
-                    "tel:63383719",
+                    { name: "店舖電話", url: "tel:63383719" },
                 ],
                 openDays: [
                     Monday,
@@ -148,7 +148,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3280548,
                 lng: 114.1640775,
                 courierContact: [
-                    "tel:53364000",
+                    { name: "店舖電話", url: "tel:53364000" },
                 ],
                 openDays: [
                     Monday,
@@ -176,7 +176,7 @@ enum abstract Shop(String) to String {
                 lat: 22.33132,
                 lng: 114.16017,
                 courierContact: [
-                    "tel:51167518",
+                    { name: "店舖電話", url: "tel:51167518" },
                 ],
                 openDays: [
                     Monday,
@@ -204,7 +204,7 @@ enum abstract Shop(String) to String {
                 lat: null,
                 lng: null,
                 courierContact: [
-                    "tel:23616691",
+                    { name: "店舖電話", url: "tel:23616691" },
                 ],
                 openDays: [
                     Monday,
@@ -232,7 +232,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3313171,
                 lng: 114.1624664,
                 courierContact: [
-                    "tel:90691493",
+                    { name: "店舖電話", url: "tel:90691493" },
                 ],
                 openDays: [
                     Monday,
@@ -260,7 +260,7 @@ enum abstract Shop(String) to String {
                 lat: 22.33122,
                 lng: 114.15968,
                 courierContact: [
-                    "https://wa.me/85293428231",
+                    { name: "店舖WhatsApp", url: "https://wa.me/85293428231" },
                 ],
                 openDays: [
                     Monday,
@@ -314,7 +314,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3351073,
                 lng: 114.1598897,
                 courierContact: [
-                    "tel:37020958",
+                    { name: "店舖電話", url: "tel:37020958" },
                 ],
                 openDays: [
                     Monday,
@@ -342,7 +342,8 @@ enum abstract Shop(String) to String {
                 lat: 22.3281200,
                 lng: 114.1630828,
                 courierContact: [
-                    "tel:90180189",
+                    { name: "店舖電話", url: "tel:26606988" },
+                    { name: "梅姐電話", url: "tel:90180189" },
                 ],
                 openDays: [
                     // Monday,
@@ -370,7 +371,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3312402,
                 lng: 114.1628927,
                 courierContact: [
-                    "tel:61628045",
+                    { name: "店舖電話", url: "tel:61628045" },
                 ],
                 openDays: [
                     Monday,
@@ -398,7 +399,7 @@ enum abstract Shop(String) to String {
                 lat: null,
                 lng: null,
                 courierContact: [
-                    "tel:91433611",
+                    { name: "店舖電話", url: "tel:91433611" },
                 ],
                 openDays: [
                     Monday,
@@ -426,7 +427,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3347417,
                 lng: 114.1673818,
                 courierContact: [
-                    "tel:55965529",
+                    { name: "店舖電話", url: "tel:55965529" },
                 ],
                 openDays: [
                     Monday,
@@ -454,7 +455,7 @@ enum abstract Shop(String) to String {
                 lat: null,
                 lng: null,
                 courierContact: [
-                    "tel:67731228",
+                    { name: "店舖電話", url: "tel:67731228" },
                 ],
                 openDays: [
                     Monday,
@@ -483,7 +484,7 @@ enum abstract Shop(String) to String {
                 lng: 114.1612154,
                 courierContact: [
                     // "tel:65047678",
-                    "tel:90371992",
+                    { name: "店舖電話", url: "tel:90371992" },
                     // "tel:90847852"
                 ],
                 openDays: [
@@ -512,7 +513,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3348939,
                 lng: 114.1666646,
                 courierContact: [
-                    "tel:39545135",
+                    { name: "店舖電話", url: "tel:39545135" },
                 ],
                 openDays: [
                     // Monday,
@@ -540,8 +541,8 @@ enum abstract Shop(String) to String {
                 lat: 22.3282303,
                 lng: 114.1581067,
                 courierContact: [
-                    "https://wa.me/85269530591",
-                    "tel:23688896",
+                    { name: "店舖WhatsApp", url: "https://wa.me/85269530591" },
+                    { name: "店舖電話", url: "tel:23688896" },
                 ],
                 openDays: [
                     Monday,
@@ -569,7 +570,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3275716,
                 lng: 114.1626558,
                 courierContact: [
-                    "tel:35638137",
+                    { name: "店舖電話", url: "tel:35638137" },
                 ],
                 openDays: [
                     Monday,
@@ -598,7 +599,7 @@ enum abstract Shop(String) to String {
                 lng: 114.1595612,
                 courierContact: [
                     // "tel:51868627",
-                    "https://t.me/dufuhf",
+                    { name: "店員Telegram", url: "https://t.me/dufuhf" },
                 ],
                 openDays: [
                     Monday,
@@ -644,7 +645,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3288335,
                 lng: 114.1636431,
                 courierContact: [
-                    "tel:69713921",
+                    { name: "店員電話", url: "tel:69713921" },
                 ],
                 openDays: [
                     Monday,
@@ -672,7 +673,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3348672,
                 lng: 114.1658299,
                 courierContact: [
-                    "tel:24088255",
+                    { name: "店舖電話", url: "tel:24088255" },
                 ],
                 openDays: [
                     Monday,
