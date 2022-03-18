@@ -32,6 +32,7 @@ enum abstract Shop(String) to String {
     final AuLawFarm:Shop;
     final Minimal:Shop;
     final CafeGolden:Shop;
+    final BlackWindow:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -53,6 +54,7 @@ enum abstract Shop(String) to String {
         Minimal,
         CafeGolden,
         AuLawFarm,
+        BlackWindow,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -693,6 +695,34 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: "明太子魷魚蟹棒意大利麵"
             }
+        case BlackWindow:
+            {
+                id: BlackWindow,
+                name: "黑窗里",
+                address: "深水埗大埔道83號",
+                lat: 22.3323587,
+                lng: 114.1640008,
+                courierContact: [
+                    { name: "店舖WhatsApp", url: "https://wa.me/85297478914" },
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    // Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "13:00:00",
+                latestPickupTime: "20:30:00",
+                isInService: true,
+                facebook: "https://www.facebook.com/openblackwindow",
+                instagram: "https://www.instagram.com/blackwindow___/",
+                availablity: "提供午餐及晚餐",
+                restDay: "逢星期三休息",
+                recommendation: null
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -821,6 +851,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(MinimalMenu.itemsSchema(o));
             case CafeGolden:
                 Promise.resolve(CafeGoldenMenu.itemsSchema(o));
+            case BlackWindow:
+                BlackWindowMenu.itemsSchema(pickupTimeSlot, o);
         }
     }
 
@@ -872,6 +904,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(MinimalMenu.summarize(o));
             case CafeGolden:
                 Promise.resolve(CafeGoldenMenu.summarize(o));
+            case BlackWindow:
+                BlackWindowMenu.summarize(o, pickupTimeSlot);
         }
     }
 
@@ -900,6 +934,7 @@ enum abstract Shop(String) to String {
             case AuLawFarm: AuLawFarm;
             case Minimal: Minimal;
             case CafeGolden: CafeGolden;
+            case BlackWindow: BlackWindow;
             case _: null;
         }
     }

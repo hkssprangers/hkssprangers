@@ -1,0 +1,346 @@
+package hkssprangers.info.menu;
+
+import js.lib.Promise;
+import js.lib.Object;
+import haxe.ds.ReadOnlyArray;
+import hkssprangers.info.Shop;
+
+typedef BlackWindowItems = {
+    Soup:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+            ?setPrice:Float,
+        }>
+    },
+    Snack:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+            ?setPrice:Float,
+        }>
+    },
+    Main:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+        }>
+    },
+    Dessert:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+        }>
+    },
+    Drink:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+            ?withMainPrice:Float,
+        }>
+    },
+    Coffee:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+        }>
+    },
+    Beer:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+        }>
+    },
+    Cocktail:{
+        ?description: String,
+        items: Array<{
+            name:String,
+            price:Float,
+        }>,
+    }
+};
+
+enum abstract BlackWindowItem(String) to String {
+    final Set;
+    final Soup;
+    final Snack;
+    final Main;
+    final Dessert;
+    final Drink;
+    final Coffee;
+    final Beer;
+    final Cocktail;
+
+    static public function all(timeSlot:TimeSlot):Promise<ReadOnlyArray<BlackWindowItem>>
+        return BlackWindowMenu.getDefinitions(timeSlot.start).then(defs -> cast defs.fields());
+
+    public function getTitle():String return switch (cast this:BlackWindowItem) {
+        case Set: "套餐";
+        case Soup: "湯";
+        case Snack: "小食";
+        case Main: "主食";
+        case Dessert: "甜品";
+        case Drink: "飲品";
+        case Coffee: "咖啡";
+        case Beer: "啤酒";
+        case Cocktail: "Cocktails";
+    }
+
+    public function getDefinition(timeSlot:TimeSlot):Promise<Null<Dynamic>>
+        return BlackWindowMenu.getDefinitions(timeSlot.start)
+            .then(defs -> if (defs != null) defs[this] else null);
+}
+
+class BlackWindowMenu {
+    #if (!browser)
+    static function getItems(date:LocalDateString):Promise<BlackWindowItems> {
+        final date = date.toDate();
+        return hkssprangers.server.CockroachDb.db.menuItem
+            .where(r -> r.shopId == BlackWindow && r.startTime <= date && r.endTime >= date && !r.deleted)
+            .first()
+            .toJsPromise()
+            .catchError(err -> null)
+            .then(r -> r != null ? cast r.items : null);
+    }
+
+    static function toDef(items:Null<BlackWindowItems>):Dynamic {
+        if (items == null)
+            return null;
+
+        final defs:DynamicAccess<Dynamic> = {};
+        for (type in [Set, Soup, Snack, Main, Dessert, Drink, Coffee, Beer, Cocktail]) {
+            try {
+                final def:Dynamic = switch (type) {
+                    case Set:
+                        {
+                            title: Set.getTitle(),
+                            description: "跟一款湯、一款小食",
+                            properties: {
+                                main: {
+                                    title: Set.getTitle(),
+                                    type: "string",
+                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + 35)),
+                                },
+                                soup: {
+                                    title: Soup.getTitle(),
+                                    type: "string",
+                                    "enum": items.Soup.items.map(v ->  v.name + switch v {
+                                        case {setPrice: v} if (v != null): " +$" + v;
+                                        case _: "";
+                                    }),
+                                },
+                                snack: {
+                                    title: Snack.getTitle(),
+                                    type: "string",
+                                    "enum": items.Snack.items.map(v ->  v.name + switch v {
+                                        case {setPrice: v} if (v != null): " +$" + v;
+                                        case _: "";
+                                    }),
+                                },
+                                drink: {
+                                    title: "跟飲品",
+                                    type: "string",
+                                    "enum": items.Drink.items.map(v ->  v.name + " $" + switch v {
+                                        case {withMainPrice: v} if (v != null): v;
+                                        case {price: v}: v;
+                                    }),
+                                },
+                            },
+                            required: ["main", "soup", "snack"],
+                        }
+                    case Main:
+                        {
+                            title: Main.getTitle(),
+                            description: items.Main.description,
+                            properties: {
+                                main: {
+                                    title: Main.getTitle(),
+                                    type: "string",
+                                    "enum": items.Main.items.map(printNamePrice),
+                                },
+                                drink: {
+                                    title: "跟飲品",
+                                    type: "string",
+                                    "enum": items.Drink.items.map(v ->  v.name + " $" + switch v {
+                                        case {withMainPrice: v} if (v != null): v;
+                                        case {price: v}: v;
+                                    }),
+                                },
+                            },
+                            required: ["main"],
+                        };
+                    case _:
+                        {
+                            title: type.getTitle(),
+                            description: items.field(type).description,
+                            type: "string",
+                            "enum": items.field(type).items.map(printNamePrice),
+                        };
+                }
+                defs[type] = def;
+            } catch (err) {
+                continue;
+            }
+        }
+        return defs;
+    }
+    #end
+
+    static final definitions:Map<LocalDateString, {lastUpdate:Date, def:Dynamic}> = [];
+    static public function getDefinitions(date:LocalDateString):Promise<DynamicAccess<Dynamic>> {
+        final cachedDef = switch (definitions[date]) {
+            case null:
+                null;
+            case {lastUpdate:lastUpdate, def:def} if (Date.now().getTime() - lastUpdate.getTime() <= DateTools.minutes(1)):
+                def;
+            case _:
+                null;
+        }
+        if (cachedDef != null) {
+            return Promise.resolve(cachedDef);
+        }
+        #if (!browser)
+        return getItems(date)
+            .then(toDef)
+            .then(def -> {
+                definitions[date] = {
+                    lastUpdate: Date.now(),
+                    def: def,
+                };
+                def;
+            });
+        #else
+        return js.Browser.window.fetch('/menu/${BlackWindow}_${date.getDatePart()}.json')
+            .then(r -> if (r.ok) r.json() else throw r.status)
+            .then(r -> {
+                definitions[date] = {
+                    lastUpdate: Date.now(),
+                    def: r.definitions,
+                };
+                r.definitions;
+            });
+        #end
+    }
+
+    static function printNamePrice(item:{name:String, price:Float}):String {
+        return item.name + " $" + item.price;
+    }
+
+    static public function itemsSchema(timeSlot:TimeSlot, order:FormOrderData):Promise<Dynamic> {
+        function itemSchema():Promise<Dynamic>
+            return BlackWindowMenu.getDefinitions(timeSlot.start)
+                .then(defs -> {
+                    final def:Dynamic = if (defs == null) {
+                        title: "⚠️ 未有餐牌資料",
+                        type: "string",
+                        "enum": [],
+                    } else {
+                        type: "object",
+                        properties: {
+                            type: {
+                                title: "食物種類",
+                                type: "string",
+                                oneOf: [for (item => def in defs) {
+                                    title: def.title,
+                                    const: item,
+                                }],
+                            },
+                        },
+                        required: [
+                            "type",
+                        ],
+                    }
+                    def;
+            });
+        final items:Promise<Dynamic> = order.items == null || order.items.length == 0 ? itemSchema() : Promise.all(order.items.map(item -> {
+            if (item != null && item.type != null) {
+                itemSchema().then(itemSchema -> {
+                    (cast item.type:BlackWindowItem).getDefinition(timeSlot)
+                        .then(def -> {
+                            if (def != null) {
+                                Object.assign(itemSchema.properties, {
+                                    item: def,
+                                });
+                                itemSchema.required.push("item");
+                            }
+                            itemSchema;
+                        });
+                });
+            } else {
+                itemSchema();
+            }
+        }));
+        return itemSchema().then(itemSchema -> {
+            items.then(items -> {
+                type: "array",
+                items: items,
+                additionalItems: itemSchema,
+                minItems: 1,
+            });
+        });
+    }
+
+    static function summarizeItem(orderItem:{
+        ?type:BlackWindowItem,
+        ?item:Dynamic,
+    }, timeSlot:TimeSlot):Promise<{
+        orderDetails:String,
+        orderPrice:Float,
+    }> {
+        return orderItem.type.getDefinition(timeSlot).then(def -> {
+            // trace(orderItem);
+            // trace(def);
+            if (def == null) {
+                {
+                    orderDetails: "",
+                    orderPrice: 0.0,
+                }
+            } else switch (orderItem.type) {
+                case Set:
+                    summarizeOrderObject(orderItem.item, def, ["main", "soup", "snack", "drink"]);
+                case Main:
+                    summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                case Soup | Snack | Dessert | Drink:
+                    switch (orderItem.item:Null<String>) {
+                        case v if (Std.isOfType(v, String)):
+                            {
+                                orderDetails: fullWidthDot + v,
+                                orderPrice: v.parsePrice().price,
+                            }
+                        case _:
+                            {
+                                orderDetails: "",
+                                orderPrice: 0.0,
+                            }
+                    }
+                case _:
+                    {
+                        orderDetails: "",
+                        orderPrice: 0.0,
+                    }
+            }
+        });
+    }
+
+    static public function summarize(formData:FormOrderData, timeSlot:TimeSlot):Promise<OrderSummary> {
+        return Promise.all(formData.items.map(item -> summarizeItem(cast item, timeSlot)))
+            // .then(s -> {
+            //     trace(s);
+            //     s;
+            // })
+            .then(concatSummaries)
+            .then(s -> {
+                orderDetails: s.orderDetails,
+                orderPrice: s.orderPrice,
+                wantTableware: formData.wantTableware,
+                customerNote: formData.customerNote,
+            });
+    }
+}

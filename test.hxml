@@ -1,11 +1,17 @@
 --library compiletime
 --library tink_core
+--library tink_core_ext
+--library tink_sql
+--library thx.core
 --library utest
 --library hxnodejs
+--library CommentString
+--library format
 --class-path src
 --class-path test
 --class-path lib/hxnodelibs
 --class-path lib/dts2hx
+--define no-deprecation-warnings
 --main Test
 --js test.js
 --cmd node test.js

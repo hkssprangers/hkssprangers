@@ -151,16 +151,18 @@ class MenuTools {
         orderDetails: String,
         orderPrice: Float,
     } {
-        var orderDetails = [];
+        final orderDetails = [];
         var orderPrice = 0.0;
         for (o in summaries) {
             orderDetails.push(o.orderDetails);
             orderPrice += o.orderPrice;
         }
-        return {
+        final summary = {
             orderDetails: orderDetails.join("\n"),
             orderPrice: orderPrice,
         };
+        // trace(summary);
+        return summary;
     }
 
     inline static public function enums(obj:Dynamic):Array<String> return Reflect.field(obj, "enum");

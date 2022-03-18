@@ -30,6 +30,7 @@ import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.menu.WoStreetMenu.*;
 import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.menu.CafeGoldenMenu.*;
+import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
@@ -279,6 +280,8 @@ class Menu extends View<MenuProps> {
                 backgroundUrl = "/images/minimal.jpg";
             case CafeGolden:
                 backgroundUrl = "/images/CafeGolden.jpeg";
+            case BlackWindow:
+                backgroundUrl = "";
         }
 
         return jsx ('
@@ -365,6 +368,9 @@ class Menu extends View<MenuProps> {
                 renderMinimal();
             case CafeGolden:
                 renderCafeGolden();
+            case BlackWindow:
+                null;
+                // renderBlackWindow();
         }
     }
 
@@ -1331,6 +1337,24 @@ class Menu extends View<MenuProps> {
                             shop: shop,
                         })
                 );
+            });
+            app.get('/menu/${shop}_:date(^\\d{4}-\\d{2}-\\d{2}).json', function get(req:Request, reply:Reply):Promise<Dynamic> {
+                final date:LocalDateString = req.params.date + " 00:00:00";
+                final definitions = switch shop {
+                    case BlackWindow:
+                        BlackWindowMenu.getDefinitions(date);
+                    case _:
+                        Promise.resolve(null);
+                }
+                return definitions.then(definitions -> {
+                    reply
+                        .header("Cache-Control", "public, max-age=300, stale-while-revalidate=3600") // max-age: 5 minutes, stale-while-revalidate: 1 hours
+                        .send({
+                            shop: shop,
+                            date: date,
+                            definitions: definitions,
+                        });
+                });
             });
         }
     }

@@ -101,10 +101,10 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                     if (formData == state.formData) {
                         setState({
                             schema: schema,
-                            formData: formData,
                         });
                     } else {
                         // outdated, probably there is a new setFormData() running
+                        trace("outdated schema");
                     }
                 });
         });
@@ -308,7 +308,6 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         }).compile(state.schema);
         final isValid:Bool = validate.call(e.formData);
         if (isValid) {
-            // trace(isValid);
             OrderFormSchema.formDataToDelivery(e.formData, props.user)
                 .then(deliveryPreview -> {
                     setState({
