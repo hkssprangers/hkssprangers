@@ -4,9 +4,12 @@ import js.lib.Promise;
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.Shop;
+using StringTools;
+using Reflect;
+using Lambda;
 
 typedef BlackWindowItems = {
-    Soup:{
+    ?Soup:{
         ?description: String,
         items: Array<{
             name:String,
@@ -14,7 +17,7 @@ typedef BlackWindowItems = {
             ?setPrice:Float,
         }>
     },
-    Snack:{
+    ?Snack:{
         ?description: String,
         items: Array<{
             name:String,
@@ -22,21 +25,21 @@ typedef BlackWindowItems = {
             ?setPrice:Float,
         }>
     },
-    Main:{
+    ?Main:{
         ?description: String,
         items: Array<{
             name:String,
             price:Float,
         }>
     },
-    Dessert:{
+    ?Dessert:{
         ?description: String,
         items: Array<{
             name:String,
             price:Float,
         }>
     },
-    Drink:{
+    ?Drink:{
         ?description: String,
         items: Array<{
             name:String,
@@ -44,21 +47,21 @@ typedef BlackWindowItems = {
             ?withMainPrice:Float,
         }>
     },
-    Coffee:{
+    ?Coffee:{
         ?description: String,
         items: Array<{
             name:String,
             price:Float,
         }>
     },
-    Beer:{
+    ?Beer:{
         ?description: String,
         items: Array<{
             name:String,
             price:Float,
         }>
     },
-    Cocktail:{
+    ?Cocktail:{
         ?description: String,
         items: Array<{
             name:String,
@@ -100,6 +103,129 @@ enum abstract BlackWindowItem(String) to String {
 
 class BlackWindowMenu {
     #if (!browser)
+    static function parseSetItem(itemLine:String) {
+        final parseSetItem = ~/^(.+?)\s*\$([0-9]+)(?:\s*跟餐\+?\$([0-9]+))?$/;
+        if (!parseSetItem.match(itemLine)) {
+            throw "格式有問題：" + itemLine;
+        }
+        if (itemLine.indexOf("/") != -1 || itemLine.indexOf("／") != -1 ) {
+            throw "項目中唔應該有 '/' 字。如果有選項，請分開多個項目。例如 'Black [熱$34／凍$36]' 可以改成 'Black [熱] $34' 同 'Black [凍] $36'。";
+        }
+        return {
+            name: parseSetItem.matched(1),
+            price: Std.parseFloat(parseSetItem.matched(2)),
+            setPrice: switch parseSetItem.matched(3) {
+                case null: null;
+                case v: Std.parseFloat(v);
+            },
+        };
+    }
+    static function parseWithMainItem(itemLine:String) {
+        final parser = ~/^(.+?)\s*\$([0-9]+)(?:\s*跟主食\+?\$([0-9]+))?$/;
+        if (!parser.match(itemLine)) {
+            throw "格式有問題：" + itemLine;
+        }
+        if (itemLine.indexOf("/") != -1 || itemLine.indexOf("／") != -1 ) {
+            throw "項目中唔應該有 '/' 字。如果有選項，請分開多個項目。例如 'Black [熱$34／凍$36]' 可以改成 'Black [熱] $34' 同 'Black [凍] $36'。";
+        }
+        return {
+            name: parser.matched(1),
+            price: Std.parseFloat(parser.matched(2)),
+            withMainPrice: switch parser.matched(3) {
+                case null: null;
+                case v: Std.parseFloat(v);
+            },
+        };
+    }
+    static public function parseMenu(menu:String):BlackWindowItems {
+        final items:BlackWindowItems = {}
+        var type:BlackWindowItem = null;
+        final parseItemLine = ~/^\s*-\s*(.+)$/;
+        for (line in menu.split("\n").map(StringTools.trim)) {
+            if (line == "")
+                continue;
+            if (parseItemLine.match(line)) {
+                if (type == null)
+                    throw "唔知係咩類別嘅項目：" + line;
+                final itemLine = parseItemLine.matched(1);
+                switch type {
+                    case Set:
+                        throw "Set 唔會有項目";
+                    case Soup:
+                        items.Soup.items.push(parseSetItem(itemLine));
+                    case Snack:
+                        items.Snack.items.push(parseSetItem(itemLine));
+                    case Main:
+                        items.Main.items.push(parseSetItem(itemLine));
+                    case Dessert:
+                        items.Dessert.items.push(parseSetItem(itemLine));
+                    case Drink:
+                        items.Drink.items.push(parseWithMainItem(itemLine));
+                    case Coffee:
+                        items.Coffee.items.push(parseWithMainItem(itemLine));
+                    case Beer:
+                        items.Beer.items.push(parseWithMainItem(itemLine));
+                    case Cocktail:
+                        items.Cocktail.items.push(parseWithMainItem(itemLine));
+                }
+            } else {
+                final parseTitleLine = ~/^(.+?)(?:[\[［](.+)[\]］])?$/;
+                if (!parseTitleLine.match(line))
+                    throw "類別格式有問題：" + line;
+                final titleStr = parseTitleLine.matched(1);
+                final descriptionStr = parseTitleLine.matched(2);
+                type = [Soup, Snack, Main, Dessert, Drink, Coffee, Beer, Cocktail].find(v -> titleStr == v.getTitle());
+                if (type == null)
+                    throw "冇嘅個類別：" + titleStr;
+                switch (type) {
+                    case Set:
+                        throw "Set 唔會有項目";
+                    case Soup:
+                        items.Soup = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Snack:
+                        items.Snack = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Main:
+                        items.Main = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Dessert:
+                        items.Dessert = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Drink:
+                        items.Drink = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Coffee:
+                        items.Coffee = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Beer:
+                        items.Beer = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                    case Cocktail:
+                        items.Cocktail = {
+                            description: descriptionStr,
+                            items: [],
+                        }
+                }
+            }
+        }
+        return items;
+    }
+
     static function getItems(date:LocalDateString):Promise<BlackWindowItems> {
         final date = date.toDate();
         return hkssprangers.server.CockroachDb.db.menuItem
