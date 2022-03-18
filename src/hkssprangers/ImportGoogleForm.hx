@@ -24,7 +24,7 @@ using hkssprangers.info.TimeSlotTools;
 class ImportGoogleForm {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
 
-    static function sendDutyPoll(chatId:Float) {
+    static function sendDutyPoll(chatId:String) {
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
         var now = Date.now();
         var nextDays = switch (Weekday.fromDay(now.getDay())) {
@@ -68,7 +68,7 @@ class ImportGoogleForm {
             .then(_ -> null);
     }
 
-    static function sendAttendancePoll(chatId:Float) {
+    static function sendAttendancePoll(chatId:String) {
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
         var now = Date.now();
         var curType = TimeSlotType.classify(now);
