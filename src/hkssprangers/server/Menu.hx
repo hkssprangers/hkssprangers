@@ -43,6 +43,7 @@ using hxLINQ.LINQ;
 
 typedef MenuProps = {
     final shop:Shop;
+    final date:LocalDateString;
     final definitions:Dynamic;
 }
 
@@ -1308,8 +1309,20 @@ class Menu extends View<MenuProps> {
 
     function renderBlackWindow() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        final today = (Date.now():LocalDateString).getDatePart();
+        final date = props.date.getDatePart();
         final menu:DynamicAccess<Dynamic> = props.definitions;
+        if (menu == null) {
+            return jsx('
+                <Fragment>
+                    <div className=${["flex-row"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
+                            <div className="p-3 text-xl font-bold">${date} 餐牌 (每日更新)</div>
+                            <div className="p-3">未有</div>
+                        </div>
+                    </div>
+                </Fragment>
+            ');
+        }
         // trace(menu);
 
         // function printItemMayWithMain(item:{name:String, price:Float, withMainPrice:Float}) {
@@ -1323,7 +1336,7 @@ class Menu extends View<MenuProps> {
             <Fragment>
                 <div className=${["flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
-                        <div className="p-3 text-xl font-bold">${today} 餐牌 (每日更新)</div>
+                        <div className="p-3 text-xl font-bold">${date} 餐牌 (每日更新)</div>
                     </div>
                     <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Set.getTitle()}</div>
@@ -1398,7 +1411,14 @@ class Menu extends View<MenuProps> {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         for (shop in Shop.all) {
             app.get("/menu/" + shop, function get(req:Request, reply:Reply):Promise<Dynamic> {
-                final date:LocalDateString = Date.now();
+                final date:LocalDateString = switch (req.query.date) {
+                    case null:
+                        Date.now();
+                    case date if (~/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.match(date)):
+                        Date.fromString(date + " 00:00:00");
+                    case date:
+                        throw "Invalid date: " + date;
+                }
                 final definitions:Promise<Dynamic> = switch shop {
                     case BlackWindow:
                         BlackWindowMenu.getDefinitions(date);
@@ -1407,9 +1427,10 @@ class Menu extends View<MenuProps> {
                 }
                 return definitions.then(definitions -> {
                     reply
-                        .header("Cache-Control", "public, max-age=300, stale-while-revalidate=21600") // max-age: 5 minutes, stale-while-revalidate: 6 hours
+                        .header("Cache-Control", "public, max-age=60, stale-while-revalidate=300") // max-age: 1 minute, stale-while-revalidate: 5 minutes
                         .sendView(Menu, {
                             shop: shop,
+                            date: date,
                             definitions: definitions,
                         });
                 });

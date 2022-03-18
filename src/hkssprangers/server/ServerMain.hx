@@ -423,7 +423,17 @@ class ServerMain {
                 deleted: false,
             })
             .toJsPromise()
-            .then(_ -> ctx.reply('成功設定 ${dateStart.getDatePart()} 嘅餐牌'));
+            .then(_ -> ctx.reply(
+                comment(unindent, format)/**
+                    成功設定 ${dateStart.getDatePart()} 嘅餐牌。
+                    網頁緩存關系，可能五分鐘後先會喺網頁見到最新資料。
+
+                    ${Path.join([protocal + host, "menu", BlackWindow]) + "?date=" + dateStart.getDatePart()}
+                **/,
+                {
+                    disable_web_page_preview: true,
+                }
+            ));
     }
 
     static function main() {
