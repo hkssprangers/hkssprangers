@@ -49,6 +49,22 @@ class TestBlackWindow extends utest.Test {
         });
     }
 
+    function testInvalidItemFormat() {
+        Assert.raises(() -> {
+            final menu = BlackWindowMenu.parseMenu(comment(unindent)/**
+                小食
+                - DD1 $25
+                - DD2 $30 +$5
+            **/);
+        });
+        Assert.raises(() -> {
+            final menu = BlackWindowMenu.parseMenu(comment(unindent)/**
+                小食
+                - DD2 $30 餐+$5
+            **/);
+        });
+    }
+
     function testAll() {
         final menu = BlackWindowMenu.parseMenu(comment(unindent)/**
             湯
