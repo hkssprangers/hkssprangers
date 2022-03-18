@@ -122,3 +122,15 @@ CREATE TABLE public._prisma_migrations (
 	CONSTRAINT "primary" PRIMARY KEY (id ASC),
 	FAMILY "primary" (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count)
 );
+CREATE TABLE public."menuItem" (
+	"menuItemId" INT8 NOT NULL DEFAULT unique_rowid(),
+	"creationTime" TIMESTAMPTZ(0) NOT NULL,
+	"startTime" TIMESTAMPTZ(0) NOT NULL,
+	"endTime" TIMESTAMPTZ(0) NOT NULL,
+	"shopId" VARCHAR(50) NOT NULL,
+	items JSONB NOT NULL,
+	deleted BOOL NOT NULL DEFAULT false,
+	CONSTRAINT "menuItem_pkey" PRIMARY KEY ("menuItemId" ASC),
+	INDEX "menuItem_shop_time" ("shopId" ASC, "startTime" ASC, "endTime" ASC),
+	FAMILY "primary" ("menuItemId", "creationTime", "startTime", "endTime", "shopId", items, deleted)
+);

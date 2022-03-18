@@ -24,6 +24,9 @@ interface Def extends tink.sql.DatabaseDefinition {
     @:table("courier")
     final courier:Courier;
 
+    @:table("menuItem")
+    final menuItem:MenuItem;
+
     @:table("delivery")
     final delivery:Delivery;
 

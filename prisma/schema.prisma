@@ -123,3 +123,15 @@ model twilioMessage {
   creationTime    DateTime @db.Timestamptz(0)
   data            Json
 }
+
+model menuItem {
+  menuItemId   BigInt   @id @default(dbgenerated("unique_rowid()"))
+  creationTime DateTime @db.Timestamptz(0)
+  startTime    DateTime @db.Timestamptz(0)
+  endTime      DateTime @db.Timestamptz(0)
+  shopId       String   @db.VarChar(50)
+  items        Json
+  deleted      Boolean  @default(false)
+
+  @@index([shopId, startTime, endTime], map: "menuItem_shop_time")
+}

@@ -14,4 +14,4 @@ export COCKROACH_PASSWORD=FIXME
 export COCKROACH_DATABASE=rushed-werecat-1336.defaultdb
 
 # For prisma
-export DATABASE_URL="postgresql://${COCKROACH_USER}:${COCKROACH_PASSWORD}@${COCKROACH_HOST}:${COCKROACH_PORT}/${COCKROACH_DATABASE#*.}?sslmode=verify-full&options=--cluster=${COCKROACH_DATABASE%.*}"
+export DATABASE_URL="postgresql://${COCKROACH_USER}:${COCKROACH_PASSWORD}@${COCKROACH_HOST}:${COCKROACH_PORT}/${COCKROACH_DATABASE#*.}?sslmode=require&options=--cluster%3D${COCKROACH_DATABASE%.*}"
