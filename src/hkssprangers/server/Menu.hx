@@ -137,10 +137,25 @@ class Menu extends View<MenuProps> {
     }
 
     override function bodyContent() {
-        final recommendation = switch (shop.info().recommendation) {
-            case null:
+        final recommendation = switch (shop.info()) {
+            case { id: BlackWindow }:
+                jsx('
+                    <Fragment>
+                        <div className="mb-1 text-xs text-gray-400">
+                            餐廳自介
+                        </div>
+                        <div className="mb-3">
+                            <p className="mb-1.5">
+                                群體共同經營空間：<br/>
+                                素食| Infoshop | 圖書漫畫| 音樂 | 放映 | 版畫
+                            </p>
+                            <p>歡迎過嚟吹水睇書</p>
+                        </div>
+                    </Fragment>
+                ');
+            case { recommendation: null }:
                 null;
-            case v:
+            case { recommendation: v }:
                 jsx('
                     <Fragment>
                         <div className="mb-1 text-xs text-gray-400">
