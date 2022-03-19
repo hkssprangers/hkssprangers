@@ -188,6 +188,12 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
                                 seasoningOptions: {
                                     "ui:widget": "checkboxes",
                                 },
+                                meatOrSeafoodOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
+                                vegOptions: {
+                                    "ui:widget": "checkboxes",
+                                },
                             },
                         },
                     }

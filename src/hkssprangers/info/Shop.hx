@@ -884,7 +884,7 @@ enum abstract Shop(String) to String {
             case BlackWindow:
                 BlackWindowMenu.itemsSchema(pickupTimeSlot, o);
             case LonelyPaisley:
-                null;
+                Promise.resolve(LonelyPaisleyMenu.itemsSchema(pickupTimeSlot, o));
         }
     }
 
@@ -939,7 +939,7 @@ enum abstract Shop(String) to String {
             case BlackWindow:
                 BlackWindowMenu.summarize(o, pickupTimeSlot);
             case LonelyPaisley:
-                null;
+                Promise.resolve(LonelyPaisleyMenu.summarize(o));
         }
     }
 

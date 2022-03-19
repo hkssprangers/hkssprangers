@@ -6,12 +6,13 @@ import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.TimeSlot;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
+using Lambda;
 
 enum abstract LonelyPaisleyItem(String) to String {
     final MakeYourOwnChoiceSet;
     final LunchSet;
-    final Brunch;
-    final Salad;
+    // final Brunch;
+    // final Salad;
     final Snacks;
     final Dessert;
     final PastaRice;
@@ -27,8 +28,8 @@ enum abstract LonelyPaisleyItem(String) to String {
                 [
                     MakeYourOwnChoiceSet,
                     LunchSet,
-                    Brunch,
-                    Salad,
+                    // Brunch,
+                    // Salad,
                     Snacks,
                     Dessert,
                     PastaRice,
@@ -37,9 +38,8 @@ enum abstract LonelyPaisleyItem(String) to String {
                 ];
             case [_, Lunch]:
                 [
-                    MakeYourOwnChoiceSet,
-                    Brunch,
-                    Salad,
+                    // Brunch,
+                    // Salad,
                     Snacks,
                     Dessert,
                     PastaRice,
@@ -49,21 +49,24 @@ enum abstract LonelyPaisleyItem(String) to String {
             case [_, Dinner]:
                 [
                     MakeYourOwnChoiceSet,
-                    Salad,
+                    // Salad,
                     Snacks,
                     Dessert,
                     PastaRice,
                     Main,
                     Drink,
                 ];
+            case [weekday, timeSlotType]:
+                trace(weekday + " " + timeSlotType);
+                [];
         }
     }
 
-    public function getDefinition(timeSlotType:TimeSlotType, isRedDay:Bool):Dynamic return switch (cast this:LonelyPaisleyItem) {
+    public function getDefinition():Dynamic return switch (cast this:LonelyPaisleyItem) {
         case MakeYourOwnChoiceSet: LonelyPaisleyMenu.LonelyPaisleyMakeYourOwnChoiceSet;
         case LunchSet: LonelyPaisleyMenu.LonelyPaisleyLunchSet;
-        case Brunch: LonelyPaisleyMenu.LonelyPaisleyBrunch;
-        case Salad: LonelyPaisleyMenu.LonelyPaisleySalad;
+        // case Brunch: LonelyPaisleyMenu.LonelyPaisleyBrunch;
+        // case Salad: LonelyPaisleyMenu.LonelyPaisleySalad;
         case Snacks: LonelyPaisleyMenu.LonelyPaisleySnacks;
         case Dessert: LonelyPaisleyMenu.LonelyPaisleyDessert;
         case PastaRice: LonelyPaisleyMenu.LonelyPaisleyPastaRice;
@@ -73,510 +76,600 @@ enum abstract LonelyPaisleyItem(String) to String {
 }
 
 class LonelyPaisleyMenu {
-    static public function LonelyPaisleyBurgerSetDrink(basePrice:Float) return {
-        title: "跟餐飲品",
-        type: "string",
-        "enum": [
-            '凍柑橘檸檬 +$$${0 + basePrice}',
-            '凍香芒橙汁 +$$${0 + basePrice}',
-            '熱檸檬⽔ +$$${0 + basePrice}',
-            '熱柑橘檸檬 +$$${0 + basePrice}',
-            '熱朱古⼒ +$$${0 + basePrice}',
-            '可樂 +$$${0 + basePrice}',
-            '無糖可樂 +$$${0 + basePrice}',
-            '忌廉 +$$${0 + basePrice}',
-            '雪碧 +$$${0 + basePrice}',
-            '凍朱古⼒ +$$${9 + basePrice}',
-            '熱即磨咖啡 +$$${10 + basePrice}',
-            '凍即磨咖啡 +$$${13 + basePrice}',
-            '凍蘋果汁 +$$${8 + basePrice}',
-            '凍檸檬⽔ +$$${9 + basePrice}',
-            '凍鮮檸利賓納 +$$${9 + basePrice}',
-            '凍檸檬紅茶 +$$${9 + basePrice}',
-            '凍青檸梳打 +$$${13 + basePrice}',
-            '凍雜果賓治 +$$${13 + basePrice}',
-        ],
-    };
-    static public function LonelyPaisleyVegSetDrink() return {
-        title: "跟餐飲品",
-        type: "string",
-        "enum": [
-            '熱檸檬⽔ +$0',
-            '熱朱古⼒ +$0',
-            '熱柑橘檸檬 +$0',
-            '凍柑橘檸檬 +$0',
-            '凍香芒橙汁 +$0',
-            '凍蘋果汁 +$0',
-            '可樂 +$0',
-            '無糖可樂 +$0',
-            '忌廉 +$0',
-            '雪碧 +$0',
-            '凍朱古⼒ +$9',
-            '熱即磨咖啡 +$10',
-            '凍即磨咖啡 +$13',
-            '凍檸檬⽔ +$9',
-            '凍鮮檸利賓納 +$9',
-            '凍檸檬紅茶 +$9',
-            '凍青檸梳打 +$13',
-            '凍雜果賓治 +$13',
-        ],
-    };
-    static public function LonelyPaisleyDrink(priceScale:Float) return {
-        title: "跟餐飲品",
-        type: "string",
-        "enum": [
-            '可樂 +$$${10 * priceScale}',
-            '無糖可樂 +$$${10 * priceScale}',
-            '忌廉 +$$${10 * priceScale}',
-            '雪碧 +$$${10 * priceScale}',
-            '凍香芒橙汁 +$$${16 * priceScale}',
-            '凍蘋果汁 +$$${16 * priceScale}',
-            '熱柑橘檸檬 +$$${16 * priceScale}',
-            '凍柑橘檸檬 +$$${16 * priceScale}',
-            '熱檸檬⽔ +$$${16 * priceScale}',
-            '凍檸檬⽔ +$$${18 * priceScale}',
-            '熱朱古⼒ +$$${16 * priceScale}',
-            '凍朱古⼒ +$$${18 * priceScale}',
-            '熱即磨咖啡 +$$${20 * priceScale}',
-            '凍即磨咖啡 +$$${26 * priceScale}',
-            '凍鮮檸利賓納 +$$${18 * priceScale}',
-            '凍檸檬紅茶 +$$${18 * priceScale}',
-            '凍青檸梳打 +$$${26 * priceScale}',
-            '凍雜果賓治 +$$${26 * priceScale}',
-        ],
-    };
-    static public final LonelyPaisleyBurgers:ReadOnlyArray<String> = [
-        "經典牛魔堡 $57",
-        "公司漢堡 $99",
-        "極上和牛堡 $85",
-        "焦糖鵝肝牛肉漢堡 $99",
-        "橫行脆蟹堡 $78",
-        "芝士雙菇漢堡 $52",
-        "菠蘿炸雞堡 $55",
-        "深海鱈魚堡 $57",
-    ];
-    static public final LonelyPaisleyBurgerOptions:ReadOnlyArray<String> = [
-        "自制牛漢堡 +$30",
-        "菠特菇 +$15",
-        "菠蘿 +$8",
-        "煙肉 +$8",
-        "煎蛋 +$8",
-        "烤洋蔥 +$8",
-        "生洋蔥碎 +$8",
-        "車打芝士 +$8",
-        "酸瓜 +$8",
-    ];
-    static public function LonelyPaisleyBurgerSet(timeSlotType:TimeSlotType, isRedDay:Bool) {
-        var title = '漢堡套餐';
-        return {
-            title: title,
-            properties: {
-                burger: {
-                    type: "string",
-                    title: title,
-                    "enum": LonelyPaisleyBurgers,
-                },
-                options: {
-                    type: "array",
-                    title: "加配料",
-                    items: {
-                        type: "string",
-                        "enum": LonelyPaisleyBurgerOptions,
-                    },
-                    uniqueItems: true,
-                },
-                setItem: {
-                    type: "string",
-                    title: "跟餐小食",
-                    "enum": [
-                        "薯條",
-                        "薯格",
-                        // "蕃薯條",
-                        "洋蔥圈",
-                        "芝⼠條",
-                        "原味雞翼",
-                    ],
-                },
-                drink: LonelyPaisleyBurgerSetDrink(18),
-            },
-            required: [
-                "burger",
-                "setItem",
-                "drink",
-            ]
-        };
-    }
-    static public function LonelyPaisleyBurger(timeSlotType:TimeSlotType) {
-        var title = '單叫漢堡';
-        return {
-            title: title,
-            properties: {
-                burger: {
-                    type: "string",
-                    title: "漢堡",
-                    "enum": LonelyPaisleyBurgers,
-                },
-                options: {
-                    type: "array",
-                    title: "加配料",
-                    items: {
-                        type: "string",
-                        "enum": LonelyPaisleyBurgerOptions,
-                    },
-                    uniqueItems: true,
-                },
-                drink: LonelyPaisleyDrink(1),
-            },
-            required: [
-                "burger",
-            ]
-        };
-    }
-
-    static public final LonelyPaisleyVSet = {
-        title: "情人節套餐",
-        description: "2月13日至2月15日限定。請提早一日預訂。$298",
-        properties: {
-            appetizerOrSoup1: {
-                type: "string",
-                title: "前菜或湯（一）",
-                "enum": [
-                    "凱撒沙律",
-                    "黑松露忌廉蘑菇湯",
-                ],
-            },
-            appetizerOrSoup2: {
-                type: "string",
-                title: "前菜或湯（二）",
-                "enum": [
-                    "凱撒沙律",
-                    "黑松露忌廉蘑菇湯",
-                ],
-            },
-            main1: {
-                type: "string",
-                title: "主菜（一）",
-                "enum": [
-                    "白酒煮青口拼大蜆",
-                    "脆炸芝士條拼洋蔥圈",
-                ],
-            },
-            main2: {
-                type: "string",
-                title: "主菜（二）",
-                "enum": [
-                    "鮮茄海鮮意粉",
-                    "卡邦尼意粉",
-                ],
-            },
-            main3: {
-                type: "string",
-                title: "主菜（三）",
-                "enum": [
-                    "德國鹹豬手",
-                    "香草燒春雞",
-                    "香草燒羊架拼豬扒",
-                    "公司漢堡",
-                ],
-            },
-            desserts: {
-                type: "string",
-                title: "甜品",
-                "enum": [
-                    "法式焦糖燉蛋(2份)",
-                ],
-                "default": "法式焦糖燉蛋(2份)",
-            },
-            drink1: {
-                title: "飲品（一）",
-                type: "string",
-                "enum": [
-                    '蘋果汁',
-                    '香芒橙汁',
-                    '凍柑橘檸檬',
-                    '可樂',
-                    '無糖可樂',
-                    '忌廉',
-                    '雪碧',
-                ]
-            },
-            drink2: {
-                title: "飲品（二）",
-                type: "string",
-                "enum": [
-                    '蘋果汁',
-                    '香芒橙汁',
-                    '凍柑橘檸檬',
-                    '可樂',
-                    '無糖可樂',
-                    '忌廉',
-                    '雪碧',
-                ]
-            },
+    static final coffees = [
+        {
+            name: "ESPRESSO (HOT)",
+            description: null,
+            price: 33,
         },
-        required: [
-            "appetizerOrSoup1",
-            "appetizerOrSoup2",
-            "main1",
-            "main2",
-            "main3",
-            "desserts",
-            "drink1",
-            "drink2",
-        ]
-    };
+        {
+            name: "LONG BLACK (HOT)",
+            description: null,
+            price: 33,
+        },
+        {
+            name: "AMERICANO (HOT)",
+            description: null,
+            price: 33,
+        },
+        {
+            name: "AMERICANO (COLD)",
+            description: null,
+            price: 39,
+        },
+        {
+            name: "WHITE (HOT)",
+            description: null,
+            price: 40,
+        },
+        {
+            name: "WHITE (COLD)",
+            description: null,
+            price: 46,
+        },
+        {
+            name: "PICCOLO (HOT)",
+            description: null,
+            price: 38,
+        },
+        {
+            name: "DIRTY (COLD)",
+            description: null,
+            price: 44,
+        },
+        {
+            name: "MOCHA (HOT)",
+            description: null,
+            price: 44,
+        },
+        {
+            name: "MOCHA (COLD)",
+            description: null,
+            price: 50,
+        },
+        {
+            name: "BLACK SUGAR ROSE LATTE (HOT)",
+            description: null,
+            price: 44,
+        },
+        {
+            name: "TONIC COFFEE (COLD)",
+            description: null,
+            price: 58,
+        },
+        {
+            name: "GINGER ALE COFFEE (COLD)",
+            description: null,
+            price: 58,
+        },
+        // {
+        //     name: "TRADITIONAL VIETNAMESE FILITERED COFFEE SET",
+        //     description: "served with condensed milk, ice and tea",
+        //     price: 68,
+        // },
+    ];
+    static final milks = [
+        {
+            name: "CHOCOLATE (HOT)",
+            description: null,
+            price: 44,
+        },
+        {
+            name: "CHOCOLATE (COLD)",
+            description: null,
+            price: 50,
+        },
+        {
+            name: "MATCHA (HOT)",
+            description: null,
+            price: 46,
+        },
+        {
+            name: "MATCHA (COLD)",
+            description: null,
+            price: 52,
+        },
+        {
+            name: "HONG KONG REAL GINGER CACAO",
+            description: "local organic ginger mixed with raw cacao by Very Ginger HK",
+            price: 48,
+        },
+    ];
+    static final teas = [
+        // {
+        //     name: "SPANISH DESSERT TEA (CAFFEINE-FREE)",
+        //     description: "rooibos / chocolate / raspberry / rose petals / cornflower flower",
+        //     price: 68,
+        // },
+        // {
+        //     name: "ALHAMBRA’S LOVE",
+        //     description: "green tea / black tea / hibiscus / mallow / roses",
+        //     price: 68,
+        // },
+        // {
+        //     name: "NIGHT, ISTANBUL",
+        //     description: "tropical fruit mix / cinnamon / pink rose bud / ginger / hibiscus / camomile / calendula",
+        //     price: 88,
+        // },
+    ];
+    static final mocktails = [
+        // {
+        //     name: "BLUE LAGOON",
+        //     description: "blue curacao / lemonade / grapefruit juice / icing rim",
+        //     price: 58,
+        // },
+        // {
+        //     name: "REMEMBER ME",
+        //     description: "pineapple / lime / lemon / honey / jalapeno",
+        //     price: 68,
+        // },
+        {
+            name: "SALEP (HOT)",
+            description: "(TURKISH TRADITIONAL DRINK) salep / milk / cinnamon / pistachio",
+            price: 68,
+        },
+        {
+            name: "TOKHM-E SHARBATI",
+            description: "(IRANIAN TRADITIONAL DRINK) basil seed / lime / rose water / mint",
+            price: 58,
+        },
+        // {
+        //     name: "DOOGH",
+        //     description: "(AFGHANISTAN TRADITIONAL DRINK) yogurt / mint / cucumber / nutmeg / salt / honey",
+        //     price: 58,
+        // },
+    ];
+    static final otherDrinks = [
+        {
+            name: "LITHUANIAN KVAS",
+            description: "rye ale",
+            price: 48,
+        },
+        {
+            name: "TURKISH POMEGRANATE SPARKLING",
+            description: null,
+            price: 28,
+        },
+    ];
+    static final craftBeers = [
+        {
+            name: "TWILIGHT (H.K.LOVECRAFT)",
+            description: "style: Salted Caramel Lager / abv: 5% / ibu: 18 | salty, sweetness, caramel",
+            price: 78,
+        },
+        {
+            name: "CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
+            description: "style: IPL / abv: 5.5% / ibu: 35 | light, clean, lychee, pineapple",
+            price: 78,
+        },
+        {
+            name: "SPACE ROCK (H.K. LOVECRAFT)",
+            description: "style: Rauchbier / abv: 5.5% / ibu: 23 | smoky, caramel, rich maltiness",
+            price: 68,
+        },
+        {
+            name: "MOTHER GOAT (H.K.LOVECRAFT)",
+            description: "style: Doppelbock / abv: 8% / ibu: 25 | rich, honey, peppery",
+            price: 78,
+        },
+        {
+            name: "OLD BLOOD (H.K.LOVECRAFT)",
+            description: "style: Dunkel(Dark lager) / abv: 5% / ibu: 25 | roasty, toffee, malty bitterness",
+            price: 78,
+        },
+        {
+            name: "IT’S MANUKA (TAI WAI BEER 大圍啤)",
+            description: "style: Tea Ale / abv: 5% ibu: 20 | strawberry, honey, tea, light",
+            price: 68,
+        },
+        {
+            name: "JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
+            description: "style: Tea Ale / abv: 3.9% ibu: 21.8 | jasmine, passion fruit, tea, light",
+            price: 68,
+        },
+        {
+            name: "CHAMOMILE (TAI WAI BEER 大圍啤)",
+            description: "style: Tea Ale / abv: 5.1% ibu: 22.9 | chamomile, tea, light",
+            price: 68,
+        },
+        // {
+        //     name: "MIRROR MIRROR (DEADMAN)",
+        //     description: "style: APA / abv: 5.4% / ibu: 30 | refreshing, citrus, floral, tropical fruit",
+        //     price: 68,
+        // },
+        {
+            name: "DUCHESS NIGHT OUT (DEADMAN)",
+            description: "style: Flanders - Inspired Sour Red Ale / abv: 6% / ibu: 9 | oaky, cherry, berries, dark fruit",
+            price: 68,
+        },
+        {
+            name: "RAINBOW SHERBET SOUR (GWEI-LO)",
+            description: "style: Sour / abv: 6% ibu: 10 | raspberry puree, lemon zest, satisfying body",
+            price: 78,
+        },
+        {
+            name: "CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
+            description: "style: Pastry sour / abv: 7.5% ibu: 0 | pastry, sour, pineapple",
+            price: 78,
+        },
+        {
+            name: "CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
+            description: "style: IPA - Milkshake / abv: 6% / ibu: 0 | chocolate, coconut, creamy",
+            price: 88,
+        },
+        {
+            name: "MANGO TANGO FRUITED SOUR (DEEP CREEK)",
+            description: "style: Fruited Sour / abv: 5% ibu: o | mango, sour, refreshing",
+            price: 88,
+        },
+        {
+            name: "DRAFT (EFES - TURKEY)",
+            description: "style: Lager / abv: 5% / ibu: n/a | woody, maltiness, light",
+            price: 48,
+        },
+    ];
+    static final brunches = [
+        // {
+        //     name: "土耳其早餐．附土耳其茶",
+        //     description: "3 types of cheese / jam / acuka / cream / honey / simit / egg with sausage / tomato / cucumber / Turkish tea",
+        //     price: 148,
+        // },
+        // {
+        //     name: "土耳其早餐．附土耳其茶 + extra Simit",
+        //     description: "3 types of cheese / jam / acuka / cream / honey / simit / egg with sausage / tomato / cucumber / Turkish tea",
+        //     price: 148 + 38,
+        // },
+        // {
+        //     name: "挪威煙三文魚班尼迪蛋",
+        //     description: "2 poached Japanese eggs / smoked-salmon / bread / garden green / avocado sauce",
+        //     price: 88,
+        // },
+        // {
+        //     name: "美式早餐",
+        //     description: "avocado / sausage / scramble Japanese egg / portobello mushroom / muffin / garden green",
+        //     price: 108,
+        // },
+        // {
+        //     name: "美式早餐 + Smoked salmon",
+        //     description: "avocado / sausage / scramble Japanese egg / portobello mushroom / muffin / garden green / smoked salmon",
+        //     price: 108 + 20,
+        // },
+    ];
+    static final snacks = [
+        {
+            name: "玫瑰蜜糖雞翼",
+            description: null,
+            price: 68,
+        },
+        // {
+        //     name: "印度脆球配虎蝦冬陰公",
+        //     description: null,
+        //     price: 88,
+        // },
+        {
+            name: "墨西哥三重芝士雞肉餡餅配自家制四川麻辣醬",
+            description: null,
+            price: 88,
+        },
+        {
+            name: "土耳其烤雞肉卷",
+            description: null,
+            price: 78,
+        },
+        {
+            name: "墨西哥玉米片配自家制牛油果醬",
+            description: null,
+            price: 48,
+        },
+        {
+            name: "台式芝士肉鬆雞蛋餅配台式醬油",
+            description: null,
+            price: 58,
+        },
+        {
+            name: "炸粗薯條配自家制黑蒜醬",
+            description: null,
+            price: 58,
+        },
+        {
+            name: "印度薄餅",
+            description: null,
+            price: 20,
+        },
+        {
+            name: "印度薄餅+黑蒜醬",
+            description: null,
+            price: 20 + 10,
+        },
+    ];
+    static final desserts = [
+        {
+            name: "土耳其開心果千層酥 (2ps)",
+            description: null,
+            price: 58,
+        },
+        {
+            name: "熱情果芒果芝士蛋糕",
+            description: null,
+            price: 48,
+        },
+        {
+            name: "日本柚子芝士蛋糕",
+            description: null,
+            price: 48,
+        },
+    ];
+    static final pastasRices = [
+        // {
+        //     name: "意大利傳統卡邦尼意粉",
+        //     description: null,
+        //     price: 108,
+        // },
+        {
+            name: "阿根廷香辣青醬虎蝦海鮮扁意粉",
+            description: null,
+            price: 148,
+        },
+        {
+            name: "本地手工煙燻啤酒煮牛肋條燴飯",
+            description: null,
+            price: 148,
+        },
+        {
+            name: "馬來西亞藍花飯 配素菜、素森巴醬",
+            description: null,
+            price: 128,
+        },
+        {
+            name: "泰式青咖哩素菜",
+            description: null,
+            price: 88,
+        },
+    ];
+    static final mains = [
+        {
+            name: "伊朗香草燉羊",
+            description: null,
+            price: 168,
+        },
+        {
+            name: "格魯吉亞蒜香牛油雞扒",
+            description: null,
+            price: 148,
+        },
+        {
+            name: "地中海白酒藍青口",
+            description: null,
+            price: 148,
+        },
+        {
+            name: "異國香腸拼盤配雜菌翠玉瓜",
+            description: null,
+            price: 108,
+        },
+    ];
 
-    static public final LonelyPaisleyDinnerSet = {
-        title: "超值晚市套餐",
+    static function printNamePrice(item:{name:String, price:Int}):String {
+        return item.name + " $" + item.price;
+    }
+
+    static function printHalfPrice(item:{ name:String, price:Int }):String {
+        return item.name + " +$" + (item.price * 0.5);
+    }
+
+    static public final LonelyPaisleyMakeYourOwnChoiceSet = {
+        title: "香港人有得揀套餐",
         properties: {
-            main: {
+            riceOrPasta: {
                 type: "string",
-                title: "超值晚市套餐",
+                title: "飯／意粉",
                 "enum": [
-                    "A 紐西蘭青口龍蝦汁意粉 $88",
-                    "B 和牛粒雜菜黑松露意大利飯 $98",
-                    "C 招牌公司漢堡配芝士條 $108",
-                    "D 迷迭香原隻燒春雞配薯格 $118",
-                    "E 秘製士多啤梨醬燒豬肋骨配薯條 $138",
-                    "F 德國鹹豬手配薯條 $148",
-                    "G 法式香草烤羊架拼豬扒配薯條 $158",
-                    "H 紐西蘭肉眼扒(10安士)配薯條 $168",
+                    "椰汁藍花飯 $68",
+                    "扁意粉 $68",
+                    "圓意粉 $68",
                 ],
             },
-            sub: {
-                type: "string",
-                title: "跟餐",
-                "enum": [
-                    "是日餐湯",
-                    "是日沙律",
-                ]
-            },
-            options: {
+            meatOrSeafoodOptions: {
                 type: "array",
-                title: "加配",
+                description: "選一。額外一款+$15。",
+                title: "肉類／海鮮",
                 items: {
                     type: "string",
                     "enum": [
-                        "薯條 +$10",
-                        "薯格 +$10",
-                        "洋蔥圈 +$10",
-                        "芝士條(2條) +$10",
-                        "原味雞翼 +$10",
+                        "雞肉",
+                        "肥牛",
+                        "豬腩片",
+                        "魷魚",
+                        "蟹肉",
+                        "海蝦",
                     ],
                 },
                 uniqueItems: true,
+                minItems: 1,
+            },
+            vegOptions: {
+                type: "array",
+                description: "選一。額外一款+$8。",
+                title: "素菜",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "洋蔥",
+                        "雜菌",
+                        "椰菜",
+                        "粟米仔",
+                        "彩椒",
+                        "意瓜",
+                        "蘆筍",
+                        "車厘茄",
+                    ],
+                },
+                uniqueItems: true,
+                minItems: 1,
+            },
+            sauce: {
+                type: "string",
+                title: "醬汁",
+                "enum": [
+                    "自家製蕃茄汁",
+                    "自家製麻辣汁",
+                    "忌廉白汁",
+                    "<泰國> 青咖喱",
+                    "<泰國> 冬陰功",
+                    "<韓國> 辣椒醬",
+                    "<阿根廷> 自家製香辣青醬",
+                    "<馬來西亞> 森巴醬",
+                ],
             },
             drink: {
-                title: "跟餐飲品",
                 type: "string",
+                title: "飲品",
                 "enum": [
-                    '香芒橙汁',
-                    '蘋果汁',
-                    '可樂',
-                    '無糖可樂',
-                    '忌廉',
-                    '雪碧',
-                    '熱柑橘檸檬',
-                    '凍柑橘檸檬',
-                    '熱檸檬⽔',
-                    '熱朱古⼒',
+                    "土耳其茶 +$0",
+
+                    // +$8 汽水
+                    '可樂 +$8',
+                    '雪碧 +$8',
                 ]
+                    // 半價 餐牌非酒精飲品
+                    .concat(coffees.map(printHalfPrice))
+                    .concat(milks.map(printHalfPrice))
+                    .concat(teas.map(printHalfPrice))
+                    .concat(mocktails.map(printHalfPrice))
+                    .concat(otherDrinks.map(printHalfPrice))
+                ,
             },
         },
         required: [
-            "main",
-            "sub",
+            "riceOrPasta",
+            "meatOrSeafoodOptions",
+            "vegOptions",
+            "sauce",
             "drink",
-        ]
+        ],
+    }
+
+    static public final LonelyPaisleyLunchSet = {
+        title: "午市套餐",
+        properties: {
+            starter: {
+                type: "string",
+                title: "頭盤",
+                "enum": [
+                    "希臘哈洛米芝士沙律",
+                ],
+                "default": "希臘哈洛米芝士沙律",
+            },
+            main: {
+                type: "string",
+                title: "主菜",
+                "enum": [
+                    "土耳其雞肉卷 $78",
+                    "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬 $88",
+                    "泰式青咖哩素菜 $88",
+                    "番茄雞肉意粉 $88",
+                    "雞翼、香腸、溫泉蛋配藍花飯、秘制醬油 $88",
+                    "意大利傳統卡邦尼意粉 $108",
+                    "異國香腸拼盤配雜菌翠玉瓜 $108",
+                    "馬來西亞藍花飯配素菜、本地素森巴醬 $128",
+                    "本地手工煙燻䏜酒煮牛肋條䱀飯 $148",
+                    "阿根廷香辣青醬虎蝦海鮮扁意粉 $148",
+                    "格魯吉亞蒜香牛油雞䓻 $148",
+                    "地中海白酒藍青口 $148",
+                ],
+            },
+            drink: {
+                type: "string",
+                title: "飲品",
+                "enum": [
+                    "美式咖啡 +$0",
+                    "土耳其茶 +$0",
+                    '可樂 +$0',
+                    '雪碧 +$0',
+                    '蘇打水 +$0',
+                ]
+                    // 半價 非酒精飲品
+                    .concat(coffees.map(printHalfPrice))
+                    .concat(milks.map(printHalfPrice))
+                    .concat(teas.map(printHalfPrice))
+                    .concat(mocktails.map(printHalfPrice))
+                    .concat(otherDrinks.map(printHalfPrice))
+                ,
+            },
+            dessert: {
+                type: "string",
+                title: "甜品",
+                "enum": [
+                    "土耳其開心果千層酥（一件） +$25",
+                    // "是日芝士蛋糕 +$30",
+                ],
+            },
+        },
+        required: [
+            "starter",
+            "main",
+            "drink",
+        ],
+    }
+
+    static public final LonelyPaisleyBrunch = {
+        title: "Brunch",
+        type: "string",
+        "enum": brunches.map(printNamePrice),
     };
 
-    static public function LonelyPaisleySeafood(timeSlotType:TimeSlotType) {
-        var title = '海鮮';
-        return {
-            title: title,
-            properties: {
-                seafood: {
-                    title: title,
-                    type: "string",
-                    "enum": [
-                        "炸魚薯條 $70",
-                        "酥炸魷魚鬚 $45",
-                        "脆炸軟殼蟹 $48",
-                        "炸海鮮拼盤(軟殼蟹，魷魚鬚，大蝦，鱈魚柳) $98",
-                        "香辣茄蓉煮青口 $50",
-                        "白酒忌廉汁煮大蜆 $50",
-                    ],
-                },
-                drink: LonelyPaisleyDrink(1),
-            },
-            required: [
-                "seafood",
-            ]
-        };
-    }
-    static public function LonelyPaisleyMeat(timeSlotType:TimeSlotType) {
-        return {
-            title: "肉類",
-            properties: {
-                meat: {
-                    type: "string",
-                    title: "肉類",
-                    "enum": [
-                        "紐西蘭肉眼(10安士)配薯條 $158",
-                        "(自制)鮮士多啤梨汁燒豬仔骨配薯條 $128",
-                        "烤紐西蘭羊架配薯條 $148",
-                        "德國鹹豬手配酸椰菜及薯條 $138",
-                    ],
-                },
-                drink: LonelyPaisleyDrink(1),
-            },
-            required: [
-                "meat",
-            ]
-        };
-    }
-    static public function LonelyPaisleyItalian(timeSlotType:TimeSlotType) {
-        var title = '意大利麵／意大利飯';
-        return {
-            title: title,
-            properties: {
-                italian: {
-                    type: "string",
-                    title: title,
-                    "enum": [
-                        "意式鮮茄海鮮墨魚麵 $78",
-                        "卡邦尼意大利麵 $62",
-                        "拿破崙肉醬意大利麵 $68",
-                        "蒜香大蜆意大利麵 $68",
-                        "鵝肝牛柳粒黑松露意大利飯 $108",
-                        "煙三文魚意大利飯 $82",
-                        "海鮮龍蝦汁意大利飯 $98",
-                        "蟹肉南瓜意大利飯 $98",
-                    ],
-                },
-                drink: LonelyPaisleyDrink(1),
-            },
-            required: [
-                "italian",
-            ]
-        };
-    }
-    static public function LonelyPaisleyVeg() {
-        return {
-            title: "素食精選",
-            properties: {
-                veg: {
-                    type: "string",
-                    title: "素食精選",
-                    "enum": [
-                        "素牛扒漢堡配薯條 (漢堡配芥末蜜糖汁) $55",
-                        "素牛扒漢堡配薯條 (漢堡配黑醋汁) $55",
-                        "素雞扒菠蘿漢堡配薯條 (漢堡配芥末蜜糖汁) $55",
-                        "素雞扒菠蘿漢堡配薯條 (漢堡配黑醋汁) $55",
-                        "巨菇芝士漢堡配薯條 $55",
-                        "素卡邦尼意粉 $56",
-                        "黑松露什菜意粉 $56",
-                        "素肉醬意粉 $56",
-                        "素蝦南瓜蓉意大利飯 $65",
-                        "黑松露什菜意大利飯 $65",
-                        "Veggie ALL DAY 全日餐 (素牛扒) $75",
-                        "Veggie ALL DAY 全日餐 (素雞扒) $75",
-                    ],
-                },
-                options: {
-                    type: "array",
-                    title: "加配",
-                    items: {
-                        type: "string",
-                        "enum": [
-                            "沙律 +$10",
-                            "餐湯 +$10",
-                            "薯條 +$10",
-                            "薯格 +$10",
-                            // "蕃薯條 +$10",
-                            "洋蔥圈 +$10",
-                            "芝⼠條(2條) +$10",
-                        ],
-                    },
-                    maxItems: 1,
-                    uniqueItems: true,
-                },
-                drink: LonelyPaisleyVegSetDrink(),
-            },
-            required: [
-                "veg",
-                "drink",
-            ]
-        };
-    }
-    static public function LonelyPaisleySalad() {
-        return {
-            title: "沙律",
-            properties: {
-                salad: {
-                    type: "string",
-                    title: "沙律",
-                    "enum": [
-                        "田園沙律(芝麻汁) $35",
-                        "田園沙律(黑醋汁) $35",
-                        "凱撒沙律 $35",
-                    ],
-                },
-                options: {
-                    type: "array",
-                    title: "加配料",
-                    items: {
-                        type: "string",
-                        "enum": [
-                            "煙三文魚 +$15",
-                            "烤雞 +$15",
-                            "鮮蝦 +$15",
-                        ],
-                    },
-                    uniqueItems: true,
-                },
-            },
-            required: [
-                "salad",
-            ]
-        };
-    }
-    static public function LonelyPaisleyMisc() {
-        return {
-            title: "自制湯類／配菜／甜品",
-            type: "string",
-            "enum": [
-                "黑松露忌廉磨菇湯 $30",
-                "龍蝦湯 $35",
-                "薯條 $28",
-                "薯格 $28",
-                "芝士條(4條) $32",
-                // "蕃薯條 $32",
-                "洋蔥圈 $32",
-                "原味雞翼(5隻) $40",
-                "墨西哥煙辣椒雞翼(5隻) $45",
-                "小食拼盤(薯條，薯格，芝士條，洋蔥圈) $70",
-            ],
-        };
-    }
+    static public final LonelyPaisleySnacks = {
+        title: "Snacks",
+        type: "string",
+        "enum": snacks.map(printNamePrice),
+    };
+
+    static public final LonelyPaisleyDessert = {
+        title: "Dessert",
+        type: "string",
+        "enum": desserts.map(printNamePrice),
+    };
+
+    static public final LonelyPaisleyPastaRice = {
+        title: "Pasta/Rice",
+        type: "string",
+        "enum": pastasRices.map(printNamePrice),
+    };
+
+    static public final LonelyPaisleyMain = {
+        title: "Main",
+        type: "string",
+        "enum": mains.map(printNamePrice),
+    };
+
+    static public final LonelyPaisleyDrink = {
+        title: "Drinks",
+        type: "string",
+        "enum": []
+            .concat(coffees.map(printNamePrice))
+            .concat(milks.map(printNamePrice))
+            .concat(teas.map(printNamePrice))
+            .concat(mocktails.map(printNamePrice))
+            .concat(otherDrinks.map(printNamePrice))
+            .concat(craftBeers.map(printNamePrice))
+        ,
+    };
 
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
-        return if (pickupTimeSlot == null) {
+        return if (pickupTimeSlot == null || pickupTimeSlot.start == null) {
             type: "array",
             items: {
                 type: "object",
             }
         } else {
-            var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
-            var isRedDay = HkHolidays.isRedDay(pickupTimeSlot.start.toDate());
-            var itemDefs = [
+            final itemDefs = [
                 for (item in LonelyPaisleyItem.all(pickupTimeSlot))
-                item => item.getDefinition(timeSlotType, isRedDay)
+                item => item.getDefinition()
             ];
             function itemSchema():Dynamic return {
                 type: "object",
                 properties: {
-                    type: {
+                    type: itemDefs.count() > 0 ? {
                         title: "食物種類",
                         type: "string",
                         oneOf: [
@@ -586,6 +679,10 @@ class LonelyPaisleyMenu {
                                 const: item,
                             }
                         ],
+                    } : {
+                        title: "⚠️ 請移除",
+                        type: "string",
+                        "enum": [],
                     },
                 },
                 required: [
@@ -616,41 +713,49 @@ class LonelyPaisleyMenu {
     static function summarizeItem(orderItem:{
         ?type:LonelyPaisleyItem,
         ?item:Dynamic,
-    }, timeSlotType:TimeSlotType, isRedDay:Bool):{
+    }):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition(timeSlotType, isRedDay);
+        final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case VSet:
-                summarizeOrderObject(orderItem.item, def, LonelyPaisleyVSet.required, ["$298"]);
-            case DinnerSet:
-                final numBoxes = if (orderItem.item != null && orderItem.item.options != null) {
-                    orderItem.item.options.length + 2;
-                } else {
-                    2;
-                };
-                summarizeOrderObject(orderItem.item, def, ["main", "sub", "options", "drink"], ["外賣盒 $" + numBoxes]);
-            case BurgerSet:
-                summarizeOrderObject(orderItem.item, def, ["burger", "options", "setItem", "drink"], [box]);
-            case Burger:
-                summarizeOrderObject(orderItem.item, def, ["burger", "options", "drink"], [box]);
-            case Italian:
-                summarizeOrderObject(orderItem.item, def, ["italian", "drink"], [box]);
-            case Seafood:
-                summarizeOrderObject(orderItem.item, def, ["seafood", "drink"], [box]);
-            case Meat:
-                summarizeOrderObject(orderItem.item, def, ["meat", "drink"], [box]);
-            case Veg:
-                summarizeOrderObject(orderItem.item, def, ["veg", "options", "drink"], if (orderItem.item != null && orderItem.item.options != null) [for (_ in 0...orderItem.item.options.length + 1) box] else [box]);
-            case Salad:
-                summarizeOrderObject(orderItem.item, def, ["salad", "options"], [box]);
-            case Misc:
+            case MakeYourOwnChoiceSet:
+                summarizeOrderObject(orderItem.item, def, ["riceOrPasta","meatOrSeafoodOptions","vegOptions","sauce","drink"], null, (fieldName, value) -> switch fieldName {
+                    case "meatOrSeafoodOptions":
+                        final price = switch (value != null ? value.length : 0) {
+                            case 0, 1:
+                                0;
+                            case n:
+                                (n - 1) * 15;
+                        };
+                        {
+                            value: value != null ? value.join(",") : "",
+                            price: price,
+                        }
+                    case "vegOptions":
+                        final price = switch (value != null ? value.length : 0) {
+                            case 0, 1:
+                                0;
+                            case n:
+                                (n - 1) * 8;
+                        };
+                        {
+                            value: value != null ? value.join(",") : "",
+                            price: price,
+                        }
+                    case _: 
+                        {
+                            price: null,
+                        };
+                });
+            case LunchSet:
+                summarizeOrderObject(orderItem.item, def, ["starter","main","drink","dessert"]);
+            case Snacks | Dessert | PastaRice | Main | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
-                            orderDetails: fullWidthDot + v + "\n" + fullWidthSpace + box,
-                            orderPrice: v.parsePrice().price + box.parsePrice().price,
+                            orderDetails: fullWidthDot + v,
+                            orderPrice: v.parsePrice().price,
                         }
                     case _:
                         {
@@ -666,8 +771,8 @@ class LonelyPaisleyMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData, timeSlotType:TimeSlotType, isRedDay:Bool):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item, timeSlotType, isRedDay)));
+    static public function summarize(formData:FormOrderData):OrderSummary {
+        final s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,

@@ -13,8 +13,10 @@ class OrderItemObjectFieldTemplate extends ReactComponentOf<OrderItemObjectField
         if (props.formData == null || props.formData.type == null)
             return false;
 
-        var type:String = props.formData.type;
-        var typeOptions:Array<{const:String}> = props.schema.properties.type.oneOf;
+        final type:String = props.formData.type;
+        final typeOptions:Array<{const:String}> = props.schema.properties.type.oneOf;
+        if (typeOptions == null)
+            return false;
         return typeOptions.exists(opt -> opt.const == type);
     }
 

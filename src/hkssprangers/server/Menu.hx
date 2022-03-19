@@ -31,6 +31,7 @@ import hkssprangers.info.menu.WoStreetMenu.*;
 import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.menu.CafeGoldenMenu.*;
 import hkssprangers.info.menu.BlackWindowMenu;
+import hkssprangers.info.menu.LonelyPaisleyMenu.*;
 import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
