@@ -10,8 +10,9 @@ class TestBlackWindow extends utest.Test {
             湯
             - 西蘭花福花果仁湯 v $20
             - expensive 西蘭花福花果仁湯* v $30 跟餐+$5
+            - 123 $30，跟餐+$5
         **/);
-        Assert.equals(2, menu.Soup.items.length);
+        Assert.equals(3, menu.Soup.items.length);
 
         Assert.equals("西蘭花福花果仁湯 v", menu.Soup.items[0].name);
         Assert.equals(20, menu.Soup.items[0].price);
@@ -20,6 +21,10 @@ class TestBlackWindow extends utest.Test {
         Assert.equals("expensive 西蘭花福花果仁湯* v", menu.Soup.items[1].name);
         Assert.equals(30, menu.Soup.items[1].price);
         Assert.equals(5, menu.Soup.items[1].setPrice);
+
+        Assert.equals("123", menu.Soup.items[2].name);
+        Assert.equals(30, menu.Soup.items[2].price);
+        Assert.equals(5, menu.Soup.items[2].setPrice);
     }
 
     function testTypeDescription() {
