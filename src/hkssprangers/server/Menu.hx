@@ -233,64 +233,60 @@ class Menu extends View<MenuProps> {
     };
 
     function renderShopImage() {
-
-        var backgroundUrl = "/images/89.jpg";
-
-        switch shop {
+        final styles = "object-cover";
+        final image = switch shop {
             case EightyNine:
-                backgroundUrl = "/images/89.jpg";
+                StaticResource.image("/images/89.jpg", shop.info().name, styles, true);
             case DragonJapaneseCuisine:
-                backgroundUrl = "/images/yyp.jpg";
+                StaticResource.image("/images/yyp.jpg", shop.info().name, styles, true);
             case YearsHK:
-                backgroundUrl = "/images/years.jpg";
+                StaticResource.image("/images/years.jpg", shop.info().name, styles, true);
             case TheParkByYears:
-                backgroundUrl = "/images/park.jpg";
+                StaticResource.image("/images/park.jpg", shop.info().name, styles, true);
             case LaksaStore:
-                backgroundUrl = "/images/laksa.jpg";
+                StaticResource.image("/images/laksa.jpg", shop.info().name, styles, true);
             case DongDong:
-                backgroundUrl = "/images/dong.jpg";
+                StaticResource.image("/images/dong.jpg", shop.info().name, styles, true);
             case BiuKeeLokYuen:
-                backgroundUrl = "/images/bill.jpg";
+                StaticResource.image("/images/bill.jpg", shop.info().name, styles, true);
             case KCZenzero:
-                backgroundUrl = "/images/tomato.jpg";
+                StaticResource.image("/images/tomato.jpg", shop.info().name, styles, true);
             case HanaSoftCream:
-                backgroundUrl = "/images/hana.jpg";
+                StaticResource.image("/images/hana.jpg", shop.info().name, styles, true);
             case Neighbor:
-                backgroundUrl = "/images/neighbor.jpg";
+                StaticResource.image("/images/neighbor.jpg", shop.info().name, styles, true);
             case MGY:
-                backgroundUrl = "/images/mgy.jpg";
+                StaticResource.image("/images/mgy.jpg", shop.info().name, styles, true);
             case FastTasteSSP:
-                backgroundUrl = "/images/fasttaste.jpg";
+                StaticResource.image("/images/fasttaste.jpg", shop.info().name, styles, true);
             case BlaBlaBla:
-                backgroundUrl = "/images/bla.jpg";
+                StaticResource.image("/images/bla.jpg", shop.info().name, styles, true);
             case ZeppelinHotDogSKM:
-                backgroundUrl = "/images/zeppelin.jpg";
+                StaticResource.image("/images/zeppelin.jpg", shop.info().name, styles, true);
             case MyRoomRoom:
-                backgroundUrl = "/images/MyRoomRoom.jpg";
+                StaticResource.image("/images/MyRoomRoom.jpg", shop.info().name, styles, true);
             case ThaiYummy:
-                backgroundUrl = "/images/ThaiYummy.jpg";
+                StaticResource.image("/images/ThaiYummy.jpg", shop.info().name, styles, true);
             case Toolss:
-                backgroundUrl = "/images/Toolss.jpg";
+                StaticResource.image("/images/Toolss.jpg", shop.info().name, styles, true);
             case KeiHing:
-                backgroundUrl = "/images/keihing.jpg";
+                StaticResource.image("/images/keihing.jpg", shop.info().name, styles, true);
             case PokeGo:
-                backgroundUrl = "/images/PokeGo.jpg";
+                StaticResource.image("/images/PokeGo.jpg", shop.info().name, styles, true);
             case WoStreet:
-                backgroundUrl = "/images/WoStreet.jpg";
+                StaticResource.image("/images/WoStreet.jpg", shop.info().name, styles, true);
             case AuLawFarm:
-                backgroundUrl = "";
+                null;
             case Minimal:
-                backgroundUrl = "/images/minimal.jpg";
+                StaticResource.image("/images/minimal.jpg", shop.info().name, styles, true);
             case CafeGolden:
-                backgroundUrl = "/images/CafeGolden.jpeg";
+                StaticResource.image("/images/CafeGolden.jpeg", shop.info().name, styles, true);
             case BlackWindow:
-                backgroundUrl = "/images/BlackWindow.jpg";
+                StaticResource.image("/images/BlackWindow.jpg", shop.info().name, styles, true);
         }
 
-        return jsx ('
-            <Fragment>
-                <div className="rounded-t-md bg-cover bg-center h-64" style={{backgroundImage: "url("+ backgroundUrl +")"}}>&nbsp;</div>
-            </Fragment>
+        return jsx('
+            <div className="rounded-t-md bg-cover bg-center h-64 overflow-hidden">${image}</div>
         ');
     }
 
