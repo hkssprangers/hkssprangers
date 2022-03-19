@@ -1337,6 +1337,10 @@ class Menu extends View<MenuProps> {
                 <div className=${["flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
                         <div className="p-3 text-xl font-bold">${date} 餐牌 (每日更新)</div>
+                        <div className="p-3">
+                            <p><span className="pr-3">v=vegan</span><span>五=五辛</span></p>
+                            <p>咖啡只使用燕麥奶</p>
+                        </div>
                     </div>
                     <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Set.getTitle()}</div>
@@ -1357,7 +1361,7 @@ class Menu extends View<MenuProps> {
                     </div>
                 </div>
 
-                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Main.getTitle()}</div>
                         ${renderItems(menu[BlackWindowItem.Main] == null ? ["無"] : menu[BlackWindowItem.Main].properties.main.enums())}
@@ -1368,7 +1372,7 @@ class Menu extends View<MenuProps> {
                     </div>
                 </div>
 
-                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Drink.getTitle()}</div>
                         ${renderItems(menu[BlackWindowItem.Drink] == null ? ["無"] : menu[BlackWindowItem.Drink].enums())}
