@@ -77,16 +77,16 @@ enum abstract LonelyPaisleyItem(String) to String {
 
 class LonelyPaisleyMenu {
     static final coffees = [
-        {
-            name: "ESPRESSO (HOT)",
-            description: null,
-            price: 33,
-        },
-        {
-            name: "LONG BLACK (HOT)",
-            description: null,
-            price: 33,
-        },
+        // {
+        //     name: "ESPRESSO (HOT)",
+        //     description: null,
+        //     price: 33,
+        // },
+        // {
+        //     name: "LONG BLACK (HOT)",
+        //     description: null,
+        //     price: 33,
+        // },
         {
             name: "AMERICANO (HOT)",
             description: null,
@@ -107,16 +107,16 @@ class LonelyPaisleyMenu {
             description: null,
             price: 46,
         },
-        {
-            name: "PICCOLO (HOT)",
-            description: null,
-            price: 38,
-        },
-        {
-            name: "DIRTY (COLD)",
-            description: null,
-            price: 44,
-        },
+        // {
+        //     name: "PICCOLO (HOT)",
+        //     description: null,
+        //     price: 38,
+        // },
+        // {
+        //     name: "DIRTY (COLD)",
+        //     description: null,
+        //     price: 44,
+        // },
         {
             name: "MOCHA (HOT)",
             description: null,
@@ -232,76 +232,76 @@ class LonelyPaisleyMenu {
         },
     ];
     static final craftBeers = [
-        {
-            name: "TWILIGHT (H.K.LOVECRAFT)",
-            description: "style: Salted Caramel Lager / abv: 5% / ibu: 18 | salty, sweetness, caramel",
-            price: 78,
-        },
-        {
-            name: "CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
-            description: "style: IPL / abv: 5.5% / ibu: 35 | light, clean, lychee, pineapple",
-            price: 78,
-        },
-        {
-            name: "SPACE ROCK (H.K. LOVECRAFT)",
-            description: "style: Rauchbier / abv: 5.5% / ibu: 23 | smoky, caramel, rich maltiness",
-            price: 68,
-        },
-        {
-            name: "MOTHER GOAT (H.K.LOVECRAFT)",
-            description: "style: Doppelbock / abv: 8% / ibu: 25 | rich, honey, peppery",
-            price: 78,
-        },
-        {
-            name: "OLD BLOOD (H.K.LOVECRAFT)",
-            description: "style: Dunkel(Dark lager) / abv: 5% / ibu: 25 | roasty, toffee, malty bitterness",
-            price: 78,
-        },
-        {
-            name: "IT’S MANUKA (TAI WAI BEER 大圍啤)",
-            description: "style: Tea Ale / abv: 5% ibu: 20 | strawberry, honey, tea, light",
-            price: 68,
-        },
-        {
-            name: "JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
-            description: "style: Tea Ale / abv: 3.9% ibu: 21.8 | jasmine, passion fruit, tea, light",
-            price: 68,
-        },
-        {
-            name: "CHAMOMILE (TAI WAI BEER 大圍啤)",
-            description: "style: Tea Ale / abv: 5.1% ibu: 22.9 | chamomile, tea, light",
-            price: 68,
-        },
+        // {
+        //     name: "TWILIGHT (H.K.LOVECRAFT)",
+        //     description: "style: Salted Caramel Lager / abv: 5% / ibu: 18 | salty, sweetness, caramel",
+        //     price: 78,
+        // },
+        // {
+        //     name: "CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
+        //     description: "style: IPL / abv: 5.5% / ibu: 35 | light, clean, lychee, pineapple",
+        //     price: 78,
+        // },
+        // {
+        //     name: "SPACE ROCK (H.K. LOVECRAFT)",
+        //     description: "style: Rauchbier / abv: 5.5% / ibu: 23 | smoky, caramel, rich maltiness",
+        //     price: 68,
+        // },
+        // {
+        //     name: "MOTHER GOAT (H.K.LOVECRAFT)",
+        //     description: "style: Doppelbock / abv: 8% / ibu: 25 | rich, honey, peppery",
+        //     price: 78,
+        // },
+        // {
+        //     name: "OLD BLOOD (H.K.LOVECRAFT)",
+        //     description: "style: Dunkel(Dark lager) / abv: 5% / ibu: 25 | roasty, toffee, malty bitterness",
+        //     price: 78,
+        // },
+        // {
+        //     name: "IT’S MANUKA (TAI WAI BEER 大圍啤)",
+        //     description: "style: Tea Ale / abv: 5% ibu: 20 | strawberry, honey, tea, light",
+        //     price: 68,
+        // },
+        // {
+        //     name: "JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
+        //     description: "style: Tea Ale / abv: 3.9% ibu: 21.8 | jasmine, passion fruit, tea, light",
+        //     price: 68,
+        // },
+        // {
+        //     name: "CHAMOMILE (TAI WAI BEER 大圍啤)",
+        //     description: "style: Tea Ale / abv: 5.1% ibu: 22.9 | chamomile, tea, light",
+        //     price: 68,
+        // },
         // {
         //     name: "MIRROR MIRROR (DEADMAN)",
         //     description: "style: APA / abv: 5.4% / ibu: 30 | refreshing, citrus, floral, tropical fruit",
         //     price: 68,
         // },
-        {
-            name: "DUCHESS NIGHT OUT (DEADMAN)",
-            description: "style: Flanders - Inspired Sour Red Ale / abv: 6% / ibu: 9 | oaky, cherry, berries, dark fruit",
-            price: 68,
-        },
-        {
-            name: "RAINBOW SHERBET SOUR (GWEI-LO)",
-            description: "style: Sour / abv: 6% ibu: 10 | raspberry puree, lemon zest, satisfying body",
-            price: 78,
-        },
-        {
-            name: "CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
-            description: "style: Pastry sour / abv: 7.5% ibu: 0 | pastry, sour, pineapple",
-            price: 78,
-        },
-        {
-            name: "CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
-            description: "style: IPA - Milkshake / abv: 6% / ibu: 0 | chocolate, coconut, creamy",
-            price: 88,
-        },
-        {
-            name: "MANGO TANGO FRUITED SOUR (DEEP CREEK)",
-            description: "style: Fruited Sour / abv: 5% ibu: o | mango, sour, refreshing",
-            price: 88,
-        },
+        // {
+        //     name: "DUCHESS NIGHT OUT (DEADMAN)",
+        //     description: "style: Flanders - Inspired Sour Red Ale / abv: 6% / ibu: 9 | oaky, cherry, berries, dark fruit",
+        //     price: 68,
+        // },
+        // {
+        //     name: "RAINBOW SHERBET SOUR (GWEI-LO)",
+        //     description: "style: Sour / abv: 6% ibu: 10 | raspberry puree, lemon zest, satisfying body",
+        //     price: 78,
+        // },
+        // {
+        //     name: "CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
+        //     description: "style: Pastry sour / abv: 7.5% ibu: 0 | pastry, sour, pineapple",
+        //     price: 78,
+        // },
+        // {
+        //     name: "CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
+        //     description: "style: IPA - Milkshake / abv: 6% / ibu: 0 | chocolate, coconut, creamy",
+        //     price: 88,
+        // },
+        // {
+        //     name: "MANGO TANGO FRUITED SOUR (DEEP CREEK)",
+        //     description: "style: Fruited Sour / abv: 5% ibu: o | mango, sour, refreshing",
+        //     price: 88,
+        // },
         {
             name: "DRAFT (EFES - TURKEY)",
             description: "style: Lager / abv: 5% / ibu: n/a | woody, maltiness, light",
@@ -525,18 +525,20 @@ class LonelyPaisleyMenu {
                 type: "string",
                 title: "飲品",
                 "enum": [
-                    "土耳其茶 +$0",
+                    "土耳其茶(熱) +$0",
+                    "蘋果茶(熱) +$0",
+                    "蘋果茶(凍) +$0",
 
                     // +$8 汽水
-                    '可樂 +$8',
-                    '雪碧 +$8',
+                    // '可樂 +$8',
+                    // '雪碧 +$8',
                 ]
                     // 半價 餐牌非酒精飲品
-                    .concat(coffees.map(printHalfPrice))
-                    .concat(milks.map(printHalfPrice))
-                    .concat(teas.map(printHalfPrice))
-                    .concat(mocktails.map(printHalfPrice))
-                    .concat(otherDrinks.map(printHalfPrice))
+                    // .concat(coffees.map(printHalfPrice))
+                    // .concat(milks.map(printHalfPrice))
+                    // .concat(teas.map(printHalfPrice))
+                    // .concat(mocktails.map(printHalfPrice))
+                    // .concat(otherDrinks.map(printHalfPrice))
                 ,
             },
         },
@@ -569,7 +571,7 @@ class LonelyPaisleyMenu {
                     "泰式青咖哩素菜 $88",
                     "番茄雞肉意粉 $88",
                     "雞翼、香腸、溫泉蛋配藍花飯、秘制醬油 $88",
-                    "意大利傳統卡邦尼意粉 $108",
+                    // "意大利傳統卡邦尼意粉 $108",
                     "異國香腸拼盤配雜菌翠玉瓜 $108",
                     "馬來西亞藍花飯配素菜、本地素森巴醬 $128",
                     "本地手工煙燻䏜酒煮牛肋條䱀飯 $148",
@@ -584,16 +586,18 @@ class LonelyPaisleyMenu {
                 "enum": [
                     "美式咖啡 +$0",
                     "土耳其茶 +$0",
+                    "蘋果茶(熱) +$0",
+                    "蘋果茶(凍) +$0",
                     '可樂 +$0',
                     '雪碧 +$0',
                     '蘇打水 +$0',
                 ]
                     // 半價 非酒精飲品
-                    .concat(coffees.map(printHalfPrice))
-                    .concat(milks.map(printHalfPrice))
-                    .concat(teas.map(printHalfPrice))
-                    .concat(mocktails.map(printHalfPrice))
-                    .concat(otherDrinks.map(printHalfPrice))
+                    // .concat(coffees.map(printHalfPrice))
+                    // .concat(milks.map(printHalfPrice))
+                    // .concat(teas.map(printHalfPrice))
+                    // .concat(mocktails.map(printHalfPrice))
+                    // .concat(otherDrinks.map(printHalfPrice))
                 ,
             },
             dessert: {
