@@ -35,6 +35,7 @@ enum abstract ShopCluster(String) {
             case Minimal: ParkCluster;
             case CafeGolden: PakTinCluster;
             case BlackWindow: GoldenCluster;
+            case LonelyPaisley: CLPCluster;
         }
     }
 
