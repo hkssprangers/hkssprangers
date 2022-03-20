@@ -35,7 +35,7 @@ class TimeSlotTools {
         return regularTimeSlots
             .map(slot -> {
                 enabled: switch [dateStr, slot.start] {
-                    case ["2022-03-13", "18:00:00"]: false;
+                    case ["2022-03-20", "18:00:00" | "18:30:00"]: false;
                     case _: (dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow;
                 },
                 start: (dateStr + " " + slot.start:LocalDateString),
