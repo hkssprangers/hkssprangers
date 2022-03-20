@@ -225,7 +225,7 @@ enum abstract Shop(String) to String {
                 facebook: "https://www.facebook.com/502547383451978",
                 instagram: null,
                 availablity: null,
-                restDay: null,
+                restDay: "逢星期日休息",
                 recommendation: null
             }
         case BiuKeeLokYuen:
@@ -448,7 +448,7 @@ enum abstract Shop(String) to String {
                 facebook: "https://www.facebook.com/Zeppelin-Hot-Dog-SKM-105039071392745",
                 instagram: "https://www.instagram.com/zeppelinhotdogskm",
                 availablity: "提供午餐及晚餐",
-                restDay: "逢21號休息",
+                restDay: "逢21號罷工",
                 recommendation: "火炙芝士辣肉醬熱狗"
             }
         case MyRoomRoom:
@@ -476,7 +476,7 @@ enum abstract Shop(String) to String {
                 facebook: "https://www.facebook.com/myroomroom",
                 instagram: "https://www.instagram.com/myroomroom/",
                 availablity: null,
-                restDay: null,
+                restDay: "逢星期二休息",
                 recommendation: null
             }
         case ThaiYummy:

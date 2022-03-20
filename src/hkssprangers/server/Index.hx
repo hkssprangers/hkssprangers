@@ -254,6 +254,17 @@ class Index extends View<IndexProps> {
     
         ');
 
+    static function restDay(shop:Shop) {
+        return switch (shop.info().restDay) {
+            case null:
+                null;
+            case restDay:
+                jsx('
+                    <p className="text-xs">${restDay}</p>
+                ');
+        };
+    }
+
     static public function renderShops() {
         var blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
         var linkClasses2 = "cursor-pointer menu";
@@ -277,6 +288,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${EightyNine.info().name}</h1>
+                                    ${restDay(EightyNine)}
                                 </div>
                             </div>
                         </a>
@@ -291,7 +303,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${LaksaStore.info().name}</h1>
-                                    <p className="text-xs">逢星期三休息</p>
+                                    ${restDay(LaksaStore)}
                                 </div>
                             </div>
                         </a>
@@ -306,6 +318,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${KCZenzero.info().name}</h1>
+                                    ${restDay(KCZenzero)}
                                 </div>
                             </div>
                         </a>
@@ -320,6 +333,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${HanaSoftCream.info().name}</h1>
+                                    ${restDay(HanaSoftCream)}
                                 </div>
                             </div>
                         </a>
@@ -334,6 +348,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${WoStreet.info().name}</h1>
+                                    ${restDay(WoStreet)}
                                 </div>
                             </div>
                         </a>
@@ -353,6 +368,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-pink-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BiuKeeLokYuen.info().name}</h1>
+                                    ${restDay(BiuKeeLokYuen)}
                                 </div>
                             </div>
                         </a>
@@ -367,6 +383,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-pink-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${FastTasteSSP.info().name}</h1>
+                                    ${restDay(FastTasteSSP)}
                                 </div>
                             </div>
                         </a>
@@ -381,6 +398,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BlackWindow.info().name}</h1>
+                                    ${restDay(BlackWindow)}
                                 </div>
                             </div>
                         </a>
@@ -400,6 +418,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-yellow-500 fas fa-circle"></i> ${Neighbor.info().name}</h1>
+                                    ${restDay(Neighbor)}
                                 </div>
                             </div>
                         </a>
@@ -419,6 +438,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${TheParkByYears.info().name}</h1>
+                                    ${restDay(TheParkByYears)}
                                 </div>
                             </div>
                         </a>
@@ -433,7 +453,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${MGY.info().name}</h1>
-                                    <p className="text-xs">逢星期一休息</p>
+                                    ${restDay(MGY)}
                                 </div>
                             </div>
                         </a>
@@ -448,6 +468,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${PokeGo.info().name}</h1>
+                                    ${restDay(PokeGo)}
                                 </div>
                             </div>
                         </a>
@@ -462,6 +483,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${Minimal.info().name}</h1>
+                                    ${restDay(Minimal)}
                                 </div>
                             </div>
                         </a>
@@ -481,6 +503,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-400 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${YearsHK.info().name}</h1>
+                                    ${restDay(YearsHK)}
                                 </div>
                             </div>
                         </a>
@@ -495,6 +518,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${LonelyPaisley.info().name}</h1>
+                                    ${restDay(LonelyPaisley)}
                                 </div>
                             </div>
                         </a>
@@ -514,6 +538,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${ZeppelinHotDogSKM.info().name}</h1>
+                                    ${restDay(ZeppelinHotDogSKM)}
                                 </div>
                             </div>
                         </a>
@@ -528,7 +553,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${Toolss.info().name}</h1>
-                                    <p className="text-xs">逢星期一休息</p>
+                                    ${restDay(Toolss)}
                                 </div>
                             </div>
                         </a>
@@ -543,6 +568,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${CafeGolden.info().name}</h1>
+                                    ${restDay(CafeGolden)}
                                 </div>
                             </div>
                         </a>
@@ -562,6 +588,7 @@ class Index extends View<IndexProps> {
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-indigo-500 fas fa-circle"></i> ${KeiHing.info().name}</h1>
+                                    ${restDay(KeiHing)}
                                 </div>
                             </div>
                         </a>
