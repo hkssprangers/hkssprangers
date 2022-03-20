@@ -127,7 +127,7 @@ class KCZenzeroMenu {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    "limitedSpecial",
+                    limitedSpecial,
                 ],
                 "default": limitedSpecial
             }
