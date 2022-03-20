@@ -54,9 +54,9 @@ enum abstract Shop(String) to String {
         WoStreet,
         Minimal,
         CafeGolden,
-        AuLawFarm,
         BlackWindow,
         LonelyPaisley,
+        AuLawFarm,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -779,6 +779,9 @@ enum abstract Shop(String) to String {
 
             case [WoStreet, _, _]:
                 return Unavailable('暫停營業');
+
+            case [LonelyPaisley, _, _]:
+                return Unavailable('埗兵外賣不日開放');
 
             case _:
                 //pass

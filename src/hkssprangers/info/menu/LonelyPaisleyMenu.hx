@@ -471,7 +471,7 @@ class LonelyPaisleyMenu {
             },
             meatOrSeafoodOptions: {
                 type: "array",
-                description: "選一。額外一款+$15。",
+                description: "選一，額外一款+$15",
                 title: "肉類／海鮮",
                 items: {
                     type: "string",
@@ -489,7 +489,7 @@ class LonelyPaisleyMenu {
             },
             vegOptions: {
                 type: "array",
-                description: "選一。額外一款+$8。",
+                description: "選一，額外一款+$8",
                 title: "素菜",
                 items: {
                     type: "string",

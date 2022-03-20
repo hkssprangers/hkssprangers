@@ -388,7 +388,7 @@ class Menu extends View<MenuProps> {
             case BlackWindow:
                 renderBlackWindow();
             case LonelyPaisley:
-                null;
+                renderLonelyPaisley();
         }
     }
 
@@ -599,6 +599,77 @@ class Menu extends View<MenuProps> {
                         </div>
                         <div className="md:w-1/2 md:pl-3">
                             ${renderItems(drinks2, true)}
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderLonelyPaisley() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final drinks = {
+            final items = LonelyPaisleyDrink.enums();
+            final cutoff = Math.ceil(items.length * 0.5);
+            [
+                items.slice(0, cutoff),
+                items.slice(cutoff),
+            ];
+        }
+        return jsx('
+            <Fragment>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                            <div className="p-3">${LonelyPaisleyMakeYourOwnChoiceSet.title} (星期一至五全日，六日晚市)</div>
+                        </div>
+                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.riceOrPasta.title}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.riceOrPasta.enums())}</div>
+                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.title} (${LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.description})</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.items.enums())}</div>
+                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.title} (${LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.description})</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.items.enums())}</div>
+                        <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.title} (選一)</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.enums())}</div>
+                        <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.title}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.enums())}</div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                            <div className="p-3">${LonelyPaisleyLunchSet.title} (星期一至五)</div>
+                        </div>
+                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.starter.title}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.starter.enums())}</div>
+                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.main.title}</div>
+                        ${renderItems(LonelyPaisleyLunchSet.properties.main.enums())}
+                        <div className="font-bold p-3">${LonelyPaisleyLunchSet.properties.drink.title}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.drink.enums())}</div>
+                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.dessert.title}</div>
+                        ${renderItems(LonelyPaisleyLunchSet.properties.dessert.enums(), true)}
+                    </div>
+                </div>
+                <div className="md:flex flex-row">
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${LonelyPaisleySnacks.title}</div>
+                        ${renderItems(LonelyPaisleySnacks.enums())}
+                        <div className=${headerClasses}>${LonelyPaisleyDessert.title}</div>
+                        ${renderItems(LonelyPaisleyDessert.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${LonelyPaisleyPastaRice.title}</div>
+                        ${renderItems(LonelyPaisleyPastaRice.enums())}
+                        <div className=${headerClasses}>${LonelyPaisleyMain.title}</div>
+                        ${renderItems(LonelyPaisleyMain.enums())}
+                    </div>
+                </div>
+                <div className=${["p-3", "md:border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${LonelyPaisleyDrink.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(drinks[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(drinks[1])}
                         </div>
                     </div>
                 </div>
