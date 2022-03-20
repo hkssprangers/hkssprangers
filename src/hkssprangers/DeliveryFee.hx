@@ -45,7 +45,7 @@ class DeliveryFee {
         },
         {
             place: "石硤尾站",
-            match: address -> address.contains("石硤尾站") || address.contains("石硤尾地鐵站") || address.contains("石硤尾港鐵站"),
+            match: address -> address.contains("石硤尾站") || address.contains("石硤尾地鐵站") || address.contains("石硤尾港鐵站") || address.contains("銘賢書院"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
                 case CLPCluster: 35;
@@ -1569,6 +1569,19 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "大南街104號",
+            match: address -> address.contains("大南街104號"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case CLPCluster: 35;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 35;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
                 case TungChauStreetParkCluster: 25;
             }
         },
