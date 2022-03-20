@@ -1443,7 +1443,7 @@ class Menu extends View<MenuProps> {
                     <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Set.getTitle()}</div>
                         <div className="p-3">
-                            主食加$$35 跟湯、一款小食
+                            主食加$$${BlackWindowMenu.mainToSetCharge} 跟湯、一款小食
                         </div>
                     </div>
                 </div>

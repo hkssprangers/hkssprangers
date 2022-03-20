@@ -102,6 +102,8 @@ enum abstract BlackWindowItem(String) to String {
 }
 
 class BlackWindowMenu {
+    static public final mainToSetCharge = 42;
+
     #if (!browser)
     static function parseSetItem(itemLine:String) {
         final parseSetItem = ~/^([^\$]+?)\s*\$([0-9]+)(?:[\s,，]*跟餐\+?\$([0-9]+))?$/;
@@ -253,7 +255,7 @@ class BlackWindowMenu {
                                 main: {
                                     title: Set.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + 35)),
+                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + mainToSetCharge)),
                                 },
                                 soup: {
                                     title: Soup.getTitle(),
