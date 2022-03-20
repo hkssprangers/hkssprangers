@@ -533,9 +533,9 @@ class LonelyPaisleyMenu {
                     // '可樂 +$8',
                     // '雪碧 +$8',
                 ]
-                    // 半價 餐牌非酒精飲品
-                    // .concat(coffees.map(printHalfPrice))
-                    // .concat(milks.map(printHalfPrice))
+                    // 咖啡/奶類飲品半價
+                    .concat(coffees.map(printHalfPrice))
+                    .concat(milks.map(printHalfPrice))
                     // .concat(teas.map(printHalfPrice))
                     // .concat(mocktails.map(printHalfPrice))
                     // .concat(otherDrinks.map(printHalfPrice))
@@ -592,9 +592,9 @@ class LonelyPaisleyMenu {
                     '雪碧 +$0',
                     '蘇打水 +$0',
                 ]
-                    // 半價 非酒精飲品
-                    // .concat(coffees.map(printHalfPrice))
-                    // .concat(milks.map(printHalfPrice))
+                    // 咖啡/奶類飲品半價
+                    .concat(coffees.map(printHalfPrice))
+                    .concat(milks.map(printHalfPrice))
                     // .concat(teas.map(printHalfPrice))
                     // .concat(mocktails.map(printHalfPrice))
                     // .concat(otherDrinks.map(printHalfPrice))

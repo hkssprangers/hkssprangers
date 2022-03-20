@@ -40,6 +40,7 @@ using hkssprangers.info.MenuTools;
 using hkssprangers.ValueTools;
 using Reflect;
 using Lambda;
+using StringTools;
 using hxLINQ.LINQ;
 
 typedef MenuProps = {
@@ -642,7 +643,7 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.title} (選一)</div>
                         <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.enums())}</div>
                         <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.enums())}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.enums().filter(v -> v.endsWith(" +$0")).concat(["咖啡和奶類飲品半價"]))}</div>
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -653,7 +654,7 @@ class Menu extends View<MenuProps> {
                         <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.main.title}</div>
                         ${renderItems(LonelyPaisleyLunchSet.properties.main.enums())}
                         <div className="font-bold p-3">${LonelyPaisleyLunchSet.properties.drink.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.drink.enums())}</div>
+                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.drink.enums().filter(v -> v.endsWith(" +$0")).concat(["咖啡和奶類飲品半價"]))}</div>
                         <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.dessert.title}</div>
                         ${renderItems(LonelyPaisleyLunchSet.properties.dessert.enums(), true)}
                     </div>
