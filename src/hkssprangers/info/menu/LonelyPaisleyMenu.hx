@@ -233,77 +233,77 @@ class LonelyPaisleyMenu {
     ];
     static final craftBeers = [
         // {
-        //     name: "TWILIGHT (H.K.LOVECRAFT)",
+        //     name: "啤酒 - TWILIGHT (H.K.LOVECRAFT)",
         //     description: "style: Salted Caramel Lager / abv: 5% / ibu: 18 | salty, sweetness, caramel",
         //     price: 78,
         // },
         // {
-        //     name: "CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
+        //     name: "啤酒 - CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
         //     description: "style: IPL / abv: 5.5% / ibu: 35 | light, clean, lychee, pineapple",
         //     price: 78,
         // },
         // {
-        //     name: "SPACE ROCK (H.K. LOVECRAFT)",
+        //     name: "啤酒 - SPACE ROCK (H.K. LOVECRAFT)",
         //     description: "style: Rauchbier / abv: 5.5% / ibu: 23 | smoky, caramel, rich maltiness",
         //     price: 68,
         // },
         // {
-        //     name: "MOTHER GOAT (H.K.LOVECRAFT)",
+        //     name: "啤酒 - MOTHER GOAT (H.K.LOVECRAFT)",
         //     description: "style: Doppelbock / abv: 8% / ibu: 25 | rich, honey, peppery",
         //     price: 78,
         // },
         // {
-        //     name: "OLD BLOOD (H.K.LOVECRAFT)",
+        //     name: "啤酒 - OLD BLOOD (H.K.LOVECRAFT)",
         //     description: "style: Dunkel(Dark lager) / abv: 5% / ibu: 25 | roasty, toffee, malty bitterness",
         //     price: 78,
         // },
         // {
-        //     name: "IT’S MANUKA (TAI WAI BEER 大圍啤)",
+        //     name: "啤酒 - IT’S MANUKA (TAI WAI BEER 大圍啤)",
         //     description: "style: Tea Ale / abv: 5% ibu: 20 | strawberry, honey, tea, light",
         //     price: 68,
         // },
         // {
-        //     name: "JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
+        //     name: "啤酒 - JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
         //     description: "style: Tea Ale / abv: 3.9% ibu: 21.8 | jasmine, passion fruit, tea, light",
         //     price: 68,
         // },
         // {
-        //     name: "CHAMOMILE (TAI WAI BEER 大圍啤)",
+        //     name: "啤酒 - CHAMOMILE (TAI WAI BEER 大圍啤)",
         //     description: "style: Tea Ale / abv: 5.1% ibu: 22.9 | chamomile, tea, light",
         //     price: 68,
         // },
         // {
-        //     name: "MIRROR MIRROR (DEADMAN)",
+        //     name: "啤酒 - MIRROR MIRROR (DEADMAN)",
         //     description: "style: APA / abv: 5.4% / ibu: 30 | refreshing, citrus, floral, tropical fruit",
         //     price: 68,
         // },
         // {
-        //     name: "DUCHESS NIGHT OUT (DEADMAN)",
+        //     name: "啤酒 - DUCHESS NIGHT OUT (DEADMAN)",
         //     description: "style: Flanders - Inspired Sour Red Ale / abv: 6% / ibu: 9 | oaky, cherry, berries, dark fruit",
         //     price: 68,
         // },
         // {
-        //     name: "RAINBOW SHERBET SOUR (GWEI-LO)",
+        //     name: "啤酒 - RAINBOW SHERBET SOUR (GWEI-LO)",
         //     description: "style: Sour / abv: 6% ibu: 10 | raspberry puree, lemon zest, satisfying body",
         //     price: 78,
         // },
         // {
-        //     name: "CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
+        //     name: "啤酒 - CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
         //     description: "style: Pastry sour / abv: 7.5% ibu: 0 | pastry, sour, pineapple",
         //     price: 78,
         // },
         // {
-        //     name: "CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
+        //     name: "啤酒 - CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
         //     description: "style: IPA - Milkshake / abv: 6% / ibu: 0 | chocolate, coconut, creamy",
         //     price: 88,
         // },
         // {
-        //     name: "MANGO TANGO FRUITED SOUR (DEEP CREEK)",
+        //     name: "啤酒 - MANGO TANGO FRUITED SOUR (DEEP CREEK)",
         //     description: "style: Fruited Sour / abv: 5% ibu: o | mango, sour, refreshing",
         //     price: 88,
         // },
         {
-            name: "DRAFT (EFES - TURKEY)",
+            name: "啤酒 - DRAFT (EFES - TURKEY)",
             description: "style: Lager / abv: 5% / ibu: n/a | woody, maltiness, light",
             price: 48,
         },
