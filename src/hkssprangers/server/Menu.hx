@@ -25,6 +25,7 @@ import hkssprangers.info.menu.BlaBlaBlaMenu.*;
 import hkssprangers.info.menu.MyRoomRoomMenu.*;
 import hkssprangers.info.menu.ThaiYummyMenu.*;
 import hkssprangers.info.menu.ToolssMenu.*;
+import hkssprangers.info.menu.KeiHingMenu;
 import hkssprangers.info.menu.KeiHingMenu.*;
 import hkssprangers.info.menu.PokeGoMenu.*;
 import hkssprangers.info.menu.WoStreetMenu.*;
@@ -1179,17 +1180,26 @@ class Menu extends View<MenuProps> {
     }
 
     function renderKeiHing() {
-        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final potRice = if (KeiHingItem.all(Dinner).has(PotRice)) {
+            jsx('
+                <Fragment>
+                    <div className=${headerClasses}>${KeiHingPotRice.title}</div>
+                    <div className="p-3 text-gray-500">${KeiHingPotRice.description}</div>
+                    ${renderItems(KeiHingPotRice.properties.main.enums())}
+                    <div className="font-bold p-3">${KeiHingPotRice.properties.veg.title}</div>
+                    <div className="p-3">${slashes(KeiHingPotRice.properties.veg.enums())}</div>
+                    <div className="p-3 text-center">${KeiHingPotRice.properties.drink.description}</div>
+                </Fragment>
+            ');
+        } else {
+            null;
+        }
         return jsx('
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${KeiHingPotRice.title}</div>
-                        <div className="p-3 text-gray-500">${KeiHingPotRice.description}</div>
-                        ${renderItems(KeiHingPotRice.properties.main.enums())}
-                        <div className="font-bold p-3">${KeiHingPotRice.properties.veg.title}</div>
-                        <div className="p-3">${slashes(KeiHingPotRice.properties.veg.enums())}</div>
-                        <div className="p-3 text-center">${KeiHingPotRice.properties.drink.description}</div>
+                        ${potRice}
 
                         <div className=${headerClasses}>${KeiHingNoodleAndRice.title}</div>
                         ${renderItems(KeiHingNoodleAndRice.properties.main.enums())}
