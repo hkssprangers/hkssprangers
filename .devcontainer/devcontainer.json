@@ -32,7 +32,6 @@
 	"extensions": [
 		"ms-azuretools.vscode-docker",
 		"nadako.vshaxe",
-		"lix.lix",
 		"hashicorp.terraform",
 		"Prisma.prisma",
 	],
