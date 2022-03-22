@@ -370,6 +370,10 @@ class BlackWindowMenu {
                         title: "⚠️ 未有餐牌資料",
                         type: "string",
                         "enum": [],
+                    } else if (defs.fields().length == 0) {
+                        title: "⚠️ 冇食物供應",
+                        type: "string",
+                        "enum": [],
                     } else {
                         type: "object",
                         properties: {
