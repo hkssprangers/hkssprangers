@@ -29,7 +29,7 @@
     "dts2hx": "^0.18.1",
     "envify": "^4.1.0",
     "js-cookie": "^3.0.1",
-    "mapbox-gl": "^2.7.0",
+    "mapbox-gl": "^2.7.1",
     "nodemon": "^2.0.15",
     "prisma": "^3.11.0",
     "prisma-dbml-generator": "^0.8.3",
