@@ -113,7 +113,7 @@ class MinimalMenu {
 
     static final salads = [
         { name: "藜麥煙三文魚沙律", price: 72 },
-        { name: "流心水牛芝士蕃茄沙律(v.)", price: 92 },
+        // { name: "流心水牛芝士蕃茄沙律(v.)", price: 92 },
     ];
 
     static public final MinimalSalad = {
