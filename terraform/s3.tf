@@ -75,3 +75,11 @@ module "s3_bucket_logs" {
   }
   EOF
 }
+
+module "s3_bucket_dbbackup" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "2.15.0"
+
+  bucket = "hkssprangers-dbbackup"
+  acl    = "private"
+}
