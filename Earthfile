@@ -298,7 +298,7 @@ server:
     COPY +tailwind/tailwind.css static/css/tailwind.css
     COPY +style-css/style.css static/css/style.css
     COPY src src
-    COPY .haxerc server.hxml babel.config.json holidays.json .
+    COPY .haxerc server.hxml babel.config.json holidays.json package-lock.json .
     RUN haxe server.hxml
     SAVE ARTIFACT index.js
     SAVE ARTIFACT static/images
