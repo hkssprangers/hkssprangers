@@ -141,6 +141,14 @@ dbmate:
         && chmod +x /usr/local/bin/dbmate
     SAVE ARTIFACT /usr/local/bin/dbmate
 
+# Usage:
+# RUN /aws/install
+awscli:
+    RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "/tmp/awscliv2.zip" \
+        && unzip -qq /tmp/awscliv2.zip -d / \
+        && rm /tmp/awscliv2.zip
+    SAVE ARTIFACT /aws
+
 lix-download:
     USER $USERNAME
     COPY haxe_libraries haxe_libraries
@@ -192,6 +200,10 @@ devcontainer:
     RUN curl -fsSL -o skeema_amd64.deb https://github.com/skeema/skeema/releases/download/v1.7.0/skeema_${TARGETARCH}.deb \
         && apt-get install -y ./skeema_amd64.deb \
         && rm ./skeema_amd64.deb
+
+    # AWS cli
+    COPY +awscli/aws /aws
+    RUN /aws/install
     
     # Install planetscale cli
     ARG PSCALE_VERSION=0.89.0
