@@ -50,3 +50,5 @@ jobs:
           COCKROACH_DATABASE: "${{ secrets.COCKROACH_DATABASE }}"
       - name: Backup
         run: earthly +db-backup
+        env:
+          EARTHLY_SECRET_FILES: .envrc=.envrc
