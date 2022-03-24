@@ -393,7 +393,7 @@ class Index extends View<IndexProps> {
                         <a href=${Path.join(["/menu", BlackWindow])} className=${linkClasses2}>
                             <div className="md:flex"> 
                                 <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/BlackWindow.jpg", BlackWindow.info().name, "squircle")}
+                                    ${StaticResource.image("/images/BlackWindow2-sq.jpg", BlackWindow.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
                                 <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
