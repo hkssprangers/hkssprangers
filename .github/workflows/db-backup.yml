@@ -1,0 +1,52 @@
+name: DB-backup
+on:
+  schedule:
+    # HKT 00:00
+    - cron: '0 16 * * *'
+
+env:
+  TZ: Asia/Hong_Kong
+  FORCE_COLOR: 1
+  EARTHLY_REMOTE_CACHE: ghcr.io/hkssprangers/hkssprangers_cache:master
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Earthly
+        run: "sudo /bin/sh -c 'curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.10/earthly-linux-amd64 -o /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+      - name: Create .envrc
+        run: |
+          cat > .envrc <<EOT
+          export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
+          export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+          export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
+          export COCKROACH_HOST="$COCKROACH_HOST"
+          export COCKROACH_PORT="$COCKROACH_PORT"
+          export COCKROACH_USER="$COCKROACH_USER"
+          export COCKROACH_PASSWORD="$COCKROACH_PASSWORD"
+          export COCKROACH_DATABASE="$COCKROACH_DATABASE"
+          export DATABASE_URL="postgresql://${COCKROACH_USER}:${COCKROACH_PASSWORD}@${COCKROACH_HOST}:${COCKROACH_PORT}/${COCKROACH_DATABASE#*.}?sslmode=require&options=--cluster%3d${COCKROACH_DATABASE%.*}"
+          EOT
+        env:
+          AWS_DEFAULT_REGION: ap-southeast-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          COCKROACH_HOST: "${{ secrets.COCKROACH_HOST }}"
+          COCKROACH_PORT: "${{ secrets.COCKROACH_PORT }}"
+          COCKROACH_USER: "${{ secrets.COCKROACH_USER }}"
+          COCKROACH_PASSWORD: "${{ secrets.COCKROACH_PASSWORD }}"
+          COCKROACH_DATABASE: "${{ secrets.COCKROACH_DATABASE }}"
+      - name: Backup
+        run: earthly +db-backup

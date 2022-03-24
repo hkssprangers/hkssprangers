@@ -382,3 +382,12 @@ db-dump-schema:
         . ./.envrc \
         && psql -d "$DATABASE_URL" -c "SHOW CREATE ALL TABLES" -q -A -t -o schema.sql
     SAVE ARTIFACT --keep-ts schema.sql AS LOCAL dev/initdb/schema.sql
+
+db-backup:
+    FROM +devcontainer
+    ARG S3_BUCKET=hkssprangers-dbbackup
+    ARG S3_PATH=dbbackup
+    RUN --no-cache \
+        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        . ./.envrc \
+        && psql -d "$DATABASE_URL" -c "BACKUP INTO 's3://${S3_BUCKET}/${S3_PATH}?AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}&AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' AS OF SYSTEM TIME '-10s';"
