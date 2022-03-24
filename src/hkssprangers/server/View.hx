@@ -4,6 +4,7 @@ import react.*;
 import react.ReactComponent;
 import react.Fragment;
 import react.ReactMacro.jsx;
+import hkssprangers.NodeModules;
 import hkssprangers.StaticResource.R;
 import haxe.*;
 import haxe.io.Path;
@@ -11,6 +12,7 @@ import hkssprangers.server.ServerMain.*;
 import comments.CommentString.comment;
 import comments.CommentString.unindent;
 using StringTools;
+using Reflect;
 
 class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function title():String return name;
@@ -62,17 +64,31 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
         </Fragment>
     ');
 
-    function css() return jsx('
-        <Fragment>
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;700&display=swap" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossOrigin="anonymous" />
-            <link rel="stylesheet" href=${R("/css/tailwind.css")} />
-            <link rel="stylesheet" href=${R("/css/style.css")} />
-        </Fragment>
-    ');
+    function css() {
+        final tailwind = switch (ServerMain.deployStage) {
+            case master | production:
+                jsx('
+                    <link rel="stylesheet" href=${R("/css/tailwind.css")} />
+                ');
+            case _:
+                final version = NodeModules.lockedVersion("tailwindcss");
+                final url = 'https://cdn.jsdelivr.net/npm/tailwindcss@${version}/dist/tailwind.css';
+                jsx('
+                    <link rel="stylesheet" href=${url} />
+                ');
+        };
+        return jsx('
+            <Fragment>
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;700&display=swap" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossOrigin="anonymous" />
+                ${tailwind}
+                <link rel="stylesheet" href=${R("/css/style.css")} />
+            </Fragment>
+        ');
+    }
 
     function script() return jsx('
         <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>

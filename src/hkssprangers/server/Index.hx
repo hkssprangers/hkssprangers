@@ -6,6 +6,7 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
+import hkssprangers.NodeModules;
 import hkssprangers.browser.*;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.GoogleForms.formUrls;
@@ -44,10 +45,12 @@ class Index extends View<IndexProps> {
     }
 
     override function depCss():ReactElement {
+        final splideCssUrl = 'https://cdn.jsdelivr.net/npm/@splidejs/splide@${NodeModules.lockedVersion("@splidejs/splide")}/dist/css/splide.min.css';
+        final mapboxGlCssUrl = 'https://cdn.jsdelivr.net/npm/mapbox-gl@${NodeModules.lockedVersion("mapbox-gl")}/dist/mapbox-gl.css';
         return jsx('
             <Fragment>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css" integrity="sha256-sB1O2oXn5yaSW1T/92q2mGU86IDhZ0j1Ya8eSv+6QfM=" crossOrigin="anonymous"/>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.7.0/dist/mapbox-gl.css" integrity="sha256-i2CDQozz0HNO8H7ZwLicf6OI4doKxli9qDvLUNXHUFw=" crossOrigin="anonymous"/>
+                <link rel="stylesheet" href=${splideCssUrl} crossOrigin="anonymous"/>
+                <link rel="stylesheet" href=${mapboxGlCssUrl} crossOrigin="anonymous"/>
                 ${super.depCss()}
             </Fragment>
         ');
