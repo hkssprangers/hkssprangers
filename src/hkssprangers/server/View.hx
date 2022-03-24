@@ -74,16 +74,17 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                 final version = NodeModules.lockedVersion("tailwindcss");
                 final url = 'https://cdn.jsdelivr.net/npm/tailwindcss@${version}/dist/tailwind.css';
                 jsx('
-                    <link rel="stylesheet" href=${url} />
+                    <link rel="stylesheet" href=${url} crossOrigin="anonymous" />
                 ');
         };
+        final fontawesomeCssUrl = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@${NodeModules.lockedVersion("@fortawesome/fontawesome-free")}/css/all.min.css';
         return jsx('
             <Fragment>
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;700&display=swap" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossOrigin="anonymous" />
+                <link rel="stylesheet" href=${fontawesomeCssUrl} crossOrigin="anonymous" />
                 ${tailwind}
                 <link rel="stylesheet" href=${R("/css/style.css")} />
             </Fragment>
