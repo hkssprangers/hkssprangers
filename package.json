@@ -60,7 +60,7 @@
     "fastify-formbody": "^5.2.0",
     "fastify-static": "^4.6.1",
     "fastify-telegraf": "1.0.1",
-    "google-auth-library": "^7.14.0",
+    "google-auth-library": "^7.14.1",
     "google-spreadsheet": "^3.2.0",
     "image-data-uri": "^2.0.1",
     "image-type": "^4.1.0",
@@ -72,7 +72,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "telegraf": "^3.38.0",
-    "twilio": "^3.75.1"
+    "twilio": "^3.76.0"
   },
   "resolutions": {
     "crc32-stream": "^4.0.2"
