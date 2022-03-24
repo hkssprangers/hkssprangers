@@ -8,6 +8,29 @@ module "s3_bucket_terraform" {
   versioning = {
     enabled = true
   }
+
+  lifecycle_rule = [
+    {
+      id = "terraform"
+      enabled = true
+
+      noncurrent_version_transition = [
+        {
+          days          = 60
+          storage_class = "GLACIER"
+        },
+      ]
+
+      noncurrent_version_expiration = {
+        days = 180
+      }
+    }
+  ]
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 module "s3_bucket_uploads" {
@@ -82,4 +105,27 @@ module "s3_bucket_dbbackup" {
 
   bucket = "hkssprangers-dbbackup"
   acl    = "private"
+
+  lifecycle_rule = [
+    {
+      id = "dbbackup"
+      enabled = true
+
+      transition = [
+        {
+          days          = 60
+          storage_class = "GLACIER"
+        },
+      ]
+
+      expiration = {
+        days = 180
+      }
+    }
+  ]
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
