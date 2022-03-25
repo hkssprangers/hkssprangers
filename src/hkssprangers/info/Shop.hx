@@ -1,5 +1,6 @@
 package hkssprangers.info;
 
+import moment.unitoftime._IsoWeek;
 import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
@@ -770,8 +771,8 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [KCZenzero, "2022-03-23", _]:
-                return Unavailable('休息一天');
+            case [KCZenzero, _, _]:
+                return Unavailable('暫停營業');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
