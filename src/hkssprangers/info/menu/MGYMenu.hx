@@ -7,6 +7,7 @@ enum abstract MGYItem(String) to String {
     final SideDish;
     final StirFriedNoodlesOrRice;
     final ColdNoodles;
+    final Rice;
     final Snack;
     final Delight;
     final Icecream;
@@ -15,6 +16,7 @@ enum abstract MGYItem(String) to String {
         SideDish,
         StirFriedNoodlesOrRice,
         // ColdNoodles,
+        Rice,
         Snack,
         Delight,
         Icecream,
@@ -24,6 +26,7 @@ enum abstract MGYItem(String) to String {
         case SideDish: MGYMenu.MGYSideDish;
         case StirFriedNoodlesOrRice: MGYMenu.MGYStirFriedNoodlesOrRice;
         case ColdNoodles: MGYMenu.MGYColdNoodles;
+        case Rice: MGYMenu.MGYRice;
         case Snack: MGYMenu.MGYSnack;
         case Delight: MGYMenu.MGYDelight;
         case Icecream: MGYMenu.MGYIcecream;
@@ -127,6 +130,16 @@ class MGYMenu {
         required: [
             "coldNoodles",
         ]
+    };
+
+    static final rice = "白飯 $7";
+    static public final MGYRice = {
+        title: "白飯",
+        type: "string",
+        "enum": [
+            rice,
+        ],
+        "default": rice,
     };
 
     static public final MGYSnack = {
@@ -261,7 +274,7 @@ class MGYMenu {
                 summarizeOrderObject(orderItem.item, def, ["coldNoodles"], []);
             case Delight:
                 summarizeOrderObject(orderItem.item, def, ["delight"], []);
-            case Snack:
+            case Snack | Rice:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
