@@ -427,11 +427,11 @@ class LonelyPaisleyMenu {
         },
     ];
     static final mains = [
-        {
-            name: "伊朗香草燉羊",
-            description: null,
-            price: 168,
-        },
+        // {
+        //     name: "伊朗香草燉羊",
+        //     description: null,
+        //     price: 168,
+        // },
         {
             name: "格魯吉亞蒜香牛油雞扒",
             description: null,
