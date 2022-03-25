@@ -777,9 +777,8 @@ enum abstract Shop(String) to String {
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
-            // https://www.facebook.com/BiuKeeLokYuen/posts/339847568164344
-            case [BiuKeeLokYuen, "2022-03-24", _]:
-                return Unavailable('休息一天');
+            case [KeiHing, _, _] if (pickupTimeSlot.start.getDatePart() >= "2022-03-27"):
+                return Unavailable('新外賣餐牌準備中');
 
             case [WoStreet, _, _]:
                 return Unavailable('埗兵外賣暫停');
