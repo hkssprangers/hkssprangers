@@ -1189,7 +1189,6 @@ class Menu extends View<MenuProps> {
                         <p>${KeiHingCartNoodles.description}</p>
                         <p>${KeiHingCartNoodles.properties.drink.description}</p>
                     </div>
-                    <div className="p-3 text-gray-500">${KeiHingCartNoodles.description}</div>
                     <div className="font-bold p-3">${KeiHingCartNoodles.properties.options.title}</div>
                     <div className="p-3">${slashes(KeiHingCartNoodles.properties.options.items.enums())}</div>
                     <div className="font-bold p-3">${KeiHingCartNoodles.properties.noodle.title}</div>
