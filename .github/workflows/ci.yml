@@ -27,7 +27,7 @@ jobs:
       - name: Specify Earthly remote cache
         run: echo "EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:$(echo "$GITHUB_REF_NAME" | sed 's/[^A-Za-z0-9\-\.]/_/g')" >> $GITHUB_ENV
       - name: Setup Earthly
-        run: "sudo /bin/sh -c 'curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.10/earthly-linux-amd64 -o /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+        run: "sudo /bin/sh -c 'curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.12/earthly-linux-amd64 -o /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Build devcontainer
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
         env:
