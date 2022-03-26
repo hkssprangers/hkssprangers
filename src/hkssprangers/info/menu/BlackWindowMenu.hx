@@ -440,7 +440,7 @@ class BlackWindowMenu {
                     summarizeOrderObject(orderItem.item, def, ["main", "soup", "snack", "drink"]);
                 case Main:
                     summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
-                case Soup | Snack | Dessert | Drink:
+                case Soup | Snack | Dessert | Drink | Beer | Coffee | Cocktail:
                     switch (orderItem.item:Null<String>) {
                         case v if (Std.isOfType(v, String)):
                             {
