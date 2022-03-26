@@ -105,7 +105,7 @@ class KeiHingMenu {
     };
     static public final KeiHingAddDrink = {
         title: "跟餐飲品",
-        description: "熱飲+$4, 凍飲+$8, 紅豆奶茶/紅豆咖啡加$12",
+        description: "熱飲+$4, 凍飲+$8, 紅豆奶茶/紅豆咖啡+$12",
         type: "string",
         "enum": [
             "熱奶茶 +$4",
@@ -259,7 +259,9 @@ class KeiHingMenu {
                         "火腿片",
                         "腸仔",
                         "芝士腸",
+                        "紅腸",
                         "蟹柳",
+                        "煙肉",
 
                         "金菇菜",
                         "娃娃菜",
@@ -316,6 +318,8 @@ class KeiHingMenu {
                         "走蔥",
                         "多蔥",
                         "腩汁",
+                        "沙爺汁",
+                        "咖哩汁",
                         "芫茜",
                         "香辣咖哩",
                         "小辣",
