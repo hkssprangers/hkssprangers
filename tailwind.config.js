@@ -5,13 +5,7 @@ module.exports = {
     "./src/hkssprangers/**/*.hx",
   ],
   theme: {
-    extend: {
-      colors: {
-        green: colors.emerald,
-        yellow: colors.amber,
-        purple: colors.violet,
-      }
-    },
+    extend: {},
   },
   plugins: [],
 }
