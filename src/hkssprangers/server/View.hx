@@ -68,14 +68,10 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
         final tailwind = switch (ServerMain.deployStage) {
             case master | production:
                 jsx('
-                    <link rel="stylesheet" href=${R("/css/tailwind.css")} />
+                    <link rel="stylesheet" href=${R("/css/tailwind.css", false)} />
                 ');
             case _:
-                final version = NodeModules.lockedVersion("tailwindcss");
-                final url = 'https://cdn.jsdelivr.net/npm/tailwindcss@${version}/dist/tailwind.css';
-                jsx('
-                    <link rel="stylesheet" href=${url} crossOrigin="anonymous" />
-                ');
+                null;
         };
         final fontawesomeCssUrl = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@${NodeModules.lockedVersion("@fortawesome/fontawesome-free")}/css/all.min.css';
         return jsx('
@@ -91,9 +87,22 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
         ');
     }
 
-    function script() return jsx('
-        <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>
-    ');
+    function script() {
+        final tailwind = switch (ServerMain.deployStage) {
+            case master | production:
+                null;
+            case _:
+                jsx('
+                    <script src="https://cdn.tailwindcss.com"></script>
+                ');
+        };
+        return jsx('
+            <Fragment>
+                ${tailwind}
+                <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>
+            </Fragment>
+        ');
+    }
 
     function favicon() return jsx('
         <Fragment>

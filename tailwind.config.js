@@ -1,13 +1,17 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  purge: [
+  content: [
     "./src/hkssprangers/**/*.hx",
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
+    extend: {
+      colors: {
+        green: colors.emerald,
+        yellow: colors.amber,
+        purple: colors.violet,
+      }
+    },
   },
   plugins: [],
 }

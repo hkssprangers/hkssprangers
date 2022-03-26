@@ -4,7 +4,7 @@
   "description": "A food delivery service in Sham Shui Po, Hong Kong.",
   "main": "index.js",
   "scripts": {
-    "tailwind": "tailwindcss-cli build -o static/css/tailwind.css",
+    "tailwind": "tailwindcss -o static/css/tailwind.css --minify",
     "dts2hx": "sh gen-externs.sh",
     "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload --noLibWrap --output lib/workbox",
     "start": "nodemon -L index.js"
@@ -38,8 +38,7 @@
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
     "serverless": "^3.10.0",
     "serverless-prune-plugin": "^2.0.1",
-    "tailwindcss": "^2.2.19",
-    "tailwindcss-cli": "^0.1.2",
+    "tailwindcss": "^3.0.23",
     "terser": "^5.12.1",
     "uglifyify": "^5.0.2",
     "workbox-cacheable-response": "^6.5.2",

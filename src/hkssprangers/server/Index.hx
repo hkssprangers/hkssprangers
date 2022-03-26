@@ -208,7 +208,7 @@ class Index extends View<IndexProps> {
                             <div className="md:w-2/3">
                             <div className="flex mb-3">
                             <div className="p-3 border-t-4 border-b-4 border-r-4 border-yellow-300 flex items-center justify-center">
-                                    <div className="border-yellow-300 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl  lg:text-4xl font-bold poppins transform rotate-12">午</div>
+                                    <div className="border-yellow-300 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl  lg:text-4xl font-bold poppins rotate-12">午</div>
                                 </div>
                                 <div className="flex-1 md:flex border-t-4 border-b-4 border-yellow-300">
                                     <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-yellow-300 flex items-center">
@@ -228,7 +228,7 @@ class Index extends View<IndexProps> {
 
                                 <div className="flex">
                                 <div className="p-3 border-t-4 border-b-4 border-r-4 border-blue-800 flex items-center justify-center">
-                                    <div className="border-blue-800 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl lg:text-4xl font-bold poppins transform -rotate-12">晚</div>
+                                    <div className="border-blue-800 border-4 rounded-full w-12 h-12 lg:w-24 lg:h-24 flex items-center justify-center text-xl lg:text-4xl font-bold poppins -rotate-12">晚</div>
                                 </div>
                                 <div className="flex-1 md:flex border-t-4 border-b-4 border-blue-800">
                                     <div className="md:w-2/3 p-3 border-b-4 md:border-b-0 md:border-r-4 border-blue-800 flex items-center">
