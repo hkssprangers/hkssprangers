@@ -200,10 +200,9 @@ class Index extends View<IndexProps> {
                                     <p className="text-xl lg:text-4xl font-bold poppins">$$35</p>
                                 </div>
                                 <div className="mb-3">
-                                    距離較遠需要車手負責外賣
+                                    步行15至30分鐘
                                     <p className="text-xl lg:text-4xl font-bold poppins">$$40</p>
                                 </div>
-                                
                             </div>
                             <div className="md:w-2/3">
                             <div className="flex mb-3">
