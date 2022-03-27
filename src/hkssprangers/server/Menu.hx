@@ -251,7 +251,7 @@ class Menu extends View<MenuProps> {
     };
 
     function renderShopImage() {
-        final styles = "object-cover absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2";
+        final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-auto";
         final image = switch shop {
             case EightyNine:
                 StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, styles, true);
