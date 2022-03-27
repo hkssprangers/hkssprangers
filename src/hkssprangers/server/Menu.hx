@@ -254,55 +254,55 @@ class Menu extends View<MenuProps> {
         final styles = "object-cover";
         final image = switch shop {
             case EightyNine:
-                StaticResource.image("/images/89.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, styles, true);
             case DragonJapaneseCuisine:
-                StaticResource.image("/images/yyp.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, true);
             case YearsHK:
-                StaticResource.image("/images/years.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, styles, true);
             case TheParkByYears:
-                StaticResource.image("/images/park.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, true);
             case LaksaStore:
-                StaticResource.image("/images/laksa.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, styles, true);
             case DongDong:
-                StaticResource.image("/images/dong.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, true);
             case BiuKeeLokYuen:
-                StaticResource.image("/images/bill.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, styles, true);
             case KCZenzero:
-                StaticResource.image("/images/tomato.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, styles, true);
             case HanaSoftCream:
-                StaticResource.image("/images/hana.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, true);
             case Neighbor:
-                StaticResource.image("/images/neighbor.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Neighbor/neighbor.jpg", shop.info().name, styles, true);
             case MGY:
-                StaticResource.image("/images/mgy.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/MGY/mgy.jpg", shop.info().name, styles, true);
             case FastTasteSSP:
-                StaticResource.image("/images/fasttaste.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/FastTasteSSP/fasttaste.jpg", shop.info().name, styles, true);
             case BlaBlaBla:
-                StaticResource.image("/images/bla.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, true);
             case ZeppelinHotDogSKM:
-                StaticResource.image("/images/zeppelin.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, styles, true);
             case MyRoomRoom:
-                StaticResource.image("/images/MyRoomRoom.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, true);
             case ThaiYummy:
-                StaticResource.image("/images/ThaiYummy.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/ThaiYummy/ThaiYummy.jpg", shop.info().name, styles, true);
             case Toolss:
-                StaticResource.image("/images/Toolss.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Toolss/Toolss.jpg", shop.info().name, styles, true);
             case KeiHing:
-                StaticResource.image("/images/keihing.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/KeiHing/keihing.jpg", shop.info().name, styles, true);
             case PokeGo:
-                StaticResource.image("/images/PokeGo.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, true);
             case WoStreet:
-                StaticResource.image("/images/WoStreet.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, styles, true);
             case AuLawFarm:
                 null;
             case Minimal:
-                StaticResource.image("/images/minimal.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Minimal/minimal.jpg", shop.info().name, styles, true);
             case CafeGolden:
-                StaticResource.image("/images/CafeGolden.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, styles, true);
             case BlackWindow:
-                StaticResource.image("/images/BlackWindow2.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, true);
             case LonelyPaisley:
-                StaticResource.image("/images/LonelyPaisley.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, true);
         }
 
         return jsx('
@@ -1009,7 +1009,7 @@ class Menu extends View<MenuProps> {
     function renderZeppelinHotDogSKM() {
         return jsx('
             <div className="p-3">
-                ${StaticResource.image("/images/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
+                ${StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
             </div>
         ');
     }
