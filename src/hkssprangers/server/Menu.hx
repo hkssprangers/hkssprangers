@@ -1510,12 +1510,12 @@ class Menu extends View<MenuProps> {
         }
         // trace(menu);
 
-        // function printItemMayWithMain(item:{name:String, price:Float, withMainPrice:Float}) {
-        //     return renderItemRow(item.name, "$" + item.price + " 跟主食+$" + item.withMainPrice);
-        // }
-        // function printItemMayWithSet(item:{name:String, price:Float, setPrice:Float}) {
-        //     return renderItemRow(item.name, "$" + item.price + " 跟餐+$" + item.setPrice);
-        // }
+        function renderOptionalItems(items:Array<String>) {
+            if (items == null || items.length == 0) {
+                return renderItems(["無"]);
+            }
+            return renderItems(items);
+        }
 
         return jsx('
             <Fragment>
@@ -1538,37 +1538,37 @@ class Menu extends View<MenuProps> {
                 <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Soup.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Soup] == null ? ["無"] : menu[BlackWindowItem.Soup].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Soup] == null ? null : menu[BlackWindowItem.Soup].enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${BlackWindowItem.Snack.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Snack] == null ? ["無"] : menu[BlackWindowItem.Snack].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Snack] == null ? null : menu[BlackWindowItem.Snack].enums())}
                     </div>
                 </div>
 
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Main.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Main] == null ? ["無"] : menu[BlackWindowItem.Main].properties.main.enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Main] == null ? null : menu[BlackWindowItem.Main].properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${BlackWindowItem.Dessert.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Dessert] == null ? ["無"] : menu[BlackWindowItem.Dessert].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Dessert] == null ? null : menu[BlackWindowItem.Dessert].enums())}
                     </div>
                 </div>
 
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Drink.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Drink] == null ? ["無"] : menu[BlackWindowItem.Drink].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Drink] == null ? null : menu[BlackWindowItem.Drink].enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${BlackWindowItem.Coffee.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Coffee] == null ? ["無"] : menu[BlackWindowItem.Coffee].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Coffee] == null ? null : menu[BlackWindowItem.Coffee].enums())}
                         <div className=${headerClasses}>${BlackWindowItem.Beer.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Beer] == null ? ["無"] : menu[BlackWindowItem.Beer].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Beer] == null ? null : menu[BlackWindowItem.Beer].enums())}
                         <div className=${headerClasses}>${BlackWindowItem.Cocktail.getTitle()}</div>
-                        ${renderItems(menu[BlackWindowItem.Cocktail] == null ? ["無"] : menu[BlackWindowItem.Cocktail].enums())}
+                        ${renderOptionalItems(menu[BlackWindowItem.Cocktail] == null ? null : menu[BlackWindowItem.Cocktail].enums())}
                     </div>
                 </div>
             </Fragment>
