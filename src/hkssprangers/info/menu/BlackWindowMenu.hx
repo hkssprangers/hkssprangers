@@ -178,7 +178,7 @@ class BlackWindowMenu {
                 final descriptionStr = parseTitleLine.matched(2);
                 type = [Soup, Snack, Main, Dessert, Drink, Coffee, Beer, Cocktail].find(v -> titleStr == v.getTitle());
                 if (type == null)
-                    throw "冇嘅個類別：" + titleStr;
+                    throw "冇呢個類別：" + titleStr;
                 switch (type) {
                     case Set:
                         throw "Set 唔會有項目";
