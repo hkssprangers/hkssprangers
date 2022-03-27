@@ -251,7 +251,7 @@ class Menu extends View<MenuProps> {
     };
 
     function renderShopImage() {
-        final styles = "object-cover";
+        final styles = "object-cover absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2";
         final image = switch shop {
             case EightyNine:
                 StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, styles, true);
@@ -306,7 +306,7 @@ class Menu extends View<MenuProps> {
         }
 
         return jsx('
-            <div className="rounded-t-md bg-cover bg-center h-64 overflow-hidden">${image}</div>
+            <div className="rounded-t-md relative h-64 overflow-hidden">${image}</div>
         ');
     }
 
