@@ -71,11 +71,11 @@ class Menu extends View<MenuProps> {
     ');
 
     override function depScript():ReactElement {
+        final mapboxGlCssUrl = 'https://cdn.jsdelivr.net/npm/mapbox-gl@${NodeModules.lockedVersion("mapbox-gl")}/dist/mapbox-gl.css';
         return jsx('
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
-                <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
-                <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet"/>
+                <link rel="stylesheet" href=${mapboxGlCssUrl} crossOrigin="anonymous"/>
                 <script src=${R("/js/map/map.js")}></script>
                 ${super.depScript()}
             </Fragment>
