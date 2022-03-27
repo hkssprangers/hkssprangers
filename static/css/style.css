@@ -175,56 +175,6 @@ a.myDelivery {
   background-position: bottom;
 }
 
-.ice-cream {
-  background: url(../images/ssp-icecream.png);
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: 25%;
-}
-
-@media(min-width: 768px) {
-  .ice-cream {
-    background: url(../images/ssp-icecream.png);
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    background-size: 22%;
-  }
-}
-
-@media(min-width: 1024px) {
-  .ice-cream {
-    background: url(../images/ssp-icecream.png);
-    background-repeat: no-repeat;
-    background-position: bottom left;
-    background-size: 50%;
-  }
-}
-
-.blabla {
-  background: url(../images/bla.png);
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: 25%;
-}
-
-@media(min-width: 768px) {
-  .blabla {
-    background: url(../images/bla.png);
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    background-size: 22%;
-  }
-}
-
-@media(min-width: 1024px) {
-  .blabla {
-    background: url(../images/bla.png);
-    background-repeat: no-repeat;
-    background-position: bottom left;
-    background-size: 80%;
-  }
-}
-
 .bg-curve {
   background: url(../images/bg-curve.svg);
   background-size: 5%;
