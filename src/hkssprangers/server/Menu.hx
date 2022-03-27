@@ -262,7 +262,7 @@ class Menu extends View<MenuProps> {
             case TheParkByYears:
                 StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, true);
             case LaksaStore:
-                StaticResource.image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/LaksaStore/LaksaStore-cover.jpeg", shop.info().name, styles, true);
             case DongDong:
                 StaticResource.image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, true);
             case BiuKeeLokYuen:
