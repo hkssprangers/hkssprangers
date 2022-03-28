@@ -202,7 +202,7 @@ class KeiHingMenu {
         4 => 30 + 8 * 2,
         5 => 48,
     ];
-    static public final cartNoodlesPriceDescription = '雙餸 $$${cartNoodlesPrice[2]}, 三餸 $$${cartNoodlesPrice[3]}, 四餸 $$${cartNoodlesPrice[4]}, 五餸 $$${cartNoodlesPrice[5]}';
+    static public final cartNoodlesPriceDescription = '雙餸 $$${cartNoodlesPrice[2]}, 三餸 $$${cartNoodlesPrice[3]}, 四餸 $$${cartNoodlesPrice[4]}, 益街坊大胃王五寶麵 $$${cartNoodlesPrice[5]}';
     static public final KeiHingCartNoodles = {
         title: "車仔麵",
         description: cartNoodlesPriceDescription,
@@ -243,7 +243,8 @@ class KeiHingMenu {
 
                         "蠔油冬菇",
                         "鮮蝦雲吞",
-                        "炸雲吞",
+                        "炸醬",
+                        // "炸雲吞",
                         // "腐皮卷",
                         "仿鮑片",
                         "雪菜肉絲",
@@ -285,6 +286,7 @@ class KeiHingMenu {
                         "豆卜",
                         "枝竹",
                         "響鈴卷",
+                        "炸豆腐",
                         "竹笙",
                         "蘿蔔",
                     ],
