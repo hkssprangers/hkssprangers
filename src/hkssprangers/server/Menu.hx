@@ -304,6 +304,8 @@ class Menu extends View<MenuProps> {
                 StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, true);
             case LonelyPaisley:
                 StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, true);
+            case FishFranSSP:
+                null;
         }
 
         return jsx('
@@ -392,6 +394,8 @@ class Menu extends View<MenuProps> {
                 renderBlackWindow();
             case LonelyPaisley:
                 renderLonelyPaisley();
+            case FishFranSSP:
+                null;
         }
     }
 

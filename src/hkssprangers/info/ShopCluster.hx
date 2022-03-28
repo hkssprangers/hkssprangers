@@ -2,6 +2,7 @@ package hkssprangers.info;
 
 enum abstract ShopCluster(String) {
     final DragonCentreCluster;
+    final PeiHoStreetMarketCluster;
     final CLPCluster;
     final GoldenCluster;
     final SmilingPlazaCluster;
@@ -36,6 +37,7 @@ enum abstract ShopCluster(String) {
             case CafeGolden: PakTinCluster;
             case BlackWindow: GoldenCluster;
             case LonelyPaisley: CLPCluster;
+            case FishFranSSP: PeiHoStreetMarketCluster;
         }
     }
 
@@ -74,6 +76,11 @@ enum abstract ShopCluster(String) {
             {
                 id: TungChauStreetParkCluster,
                 name: "通州街公園範圍",
+            }
+        case PeiHoStreetMarketCluster:
+            {
+                id: PeiHoStreetMarketCluster,
+                name: "北河街街市範圍",
             }
     }
 }

@@ -1,6 +1,5 @@
 package hkssprangers.info;
 
-import moment.unitoftime._IsoWeek;
 import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
@@ -35,6 +34,7 @@ enum abstract Shop(String) to String {
     final CafeGolden:Shop;
     final BlackWindow:Shop;
     final LonelyPaisley:Shop;
+    final FishFranSSP:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -44,6 +44,7 @@ enum abstract Shop(String) to String {
         BiuKeeLokYuen,
         KCZenzero,
         HanaSoftCream,
+        FishFranSSP,
         Neighbor,
         MGY,
         FastTasteSSP,
@@ -754,6 +755,34 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: null
             }
+        case FishFranSSP:
+            {
+                id: FishFranSSP,
+                name: "魚鈁(深水埗店)",
+                address: "深水埗欽洲街58號米蘭軒1樓",
+                lat: 22.3306967, 
+                lng: 114.1603114,
+                courierContact: [
+                    { name: "店舖電話", url: "tel:29676768" },
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "20:30:00",
+                isInService: true,
+                facebook: "https://www.facebook.com/fishfranhk",
+                instagram: "https://www.instagram.com/fishfranhk/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: null
+            }
     }
 
     public function checkAvailability(currentTime:Date, pickupTimeSlot:TimeSlot):Availability {
@@ -888,6 +917,8 @@ enum abstract Shop(String) to String {
                 BlackWindowMenu.itemsSchema(pickupTimeSlot, o);
             case LonelyPaisley:
                 Promise.resolve(LonelyPaisleyMenu.itemsSchema(pickupTimeSlot, o));
+            case FishFranSSP:
+                Promise.resolve(FishFranSSPMenu.itemsSchema(pickupTimeSlot, o));
         }
     }
 
@@ -943,6 +974,8 @@ enum abstract Shop(String) to String {
                 BlackWindowMenu.summarize(o, pickupTimeSlot);
             case LonelyPaisley:
                 Promise.resolve(LonelyPaisleyMenu.summarize(o));
+            case FishFranSSP:
+                Promise.resolve(FishFranSSPMenu.summarize(o));
         }
     }
 
@@ -973,6 +1006,7 @@ enum abstract Shop(String) to String {
             case CafeGolden: CafeGolden;
             case BlackWindow: BlackWindow;
             case LonelyPaisley: LonelyPaisley;
+            case FishFranSSP: FishFranSSP;
             case _: null;
         }
     }
