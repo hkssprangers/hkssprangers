@@ -59,8 +59,8 @@ class MinimalMenu {
         { name: "Espresso Tonic(凍)", price: 44 },
         { name: "Dirty(凍)", price: 44 },
 
-        { name: "火龍果乳酪", price: 46 },
-        { name: "芒果乳酪", price: 48 },
+        // { name: "火龍果乳酪", price: 46 },
+        // { name: "芒果乳酪", price: 48 },
 
         { name: "茶包-英式早餐茶", price: 36 },
         // { name: "茶包-伯爵茶", price: 36 },
