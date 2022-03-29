@@ -380,11 +380,11 @@ a.myDelivery {
 }
 
 .bg-coffee-banner {
-  background-image: url('../images/food-waste-recycle/coffee-bg3.png');
+  background-image: url(../images/food-waste-recycle/coffee-bg3.png);
 }
 
 .bg-aulaw {
-  background-image: url('../images/food-waste-recycle/au-law-farm.jpg');
+  background-image: url(../images/food-waste-recycle/au-law-farm.jpg);
 }
 
 .text-shadow {
