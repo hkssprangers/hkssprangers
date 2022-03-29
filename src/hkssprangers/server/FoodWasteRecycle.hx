@@ -71,8 +71,8 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                             </div>
                             <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                                 <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">堆肥</h1>
-                                <p className="mb-3">返到農場，農夫會將咖啡渣同枯枝枯葉逐層咁堆放，經過微生物降解之後，咖啡渣同蛋殼就會釋放出氮、鎂、鈣等豐富嘅營養。</p>
-                                <p className="mb-3">堆肥需放置最少兩個月，降解期間會產生熱能，亦都要定時咁翻土。未夠時間嘅堆肥係會燒傷植物根部又或者令植物缺氧㗎。到堆肥熟成嘅一刻，深水埗咖啡渣就正式回歸到大自然喇。</p>
+                                <p className="mb-3">返到農場，農夫會將咖啡渣同蛋殼，連同枯枝枯葉同新鮮菜葉等，逐層咁堆放，經過微生物降解之後，咖啡渣同蛋殼就會釋放出鉀、氮、鎂、鈣等豐富嘅營養，同時提升土壤有機質，改善泥土質素。</p>
+                                <p className="mb-3">堆肥需放置最少兩個月，降解期間會產生熱能，亦都要定時咁翻堆。未夠時間嘅堆肥係會燒傷植物根部又或者令植物缺氧㗎。到堆肥熟成嘅一刻，深水埗咖啡渣就正式回歸到大自然喇。</p>
                             </div>
                         </div>
                     </div>
