@@ -381,6 +381,13 @@ a.myDelivery {
 
 .bg-coffee-banner {
   background-image: url(../images/food-waste-recycle/coffee-bg3.png);
+  background-size: 200%;
+}
+@media (min-width: 768px) {
+  .bg-coffee-banner {
+    background-image: url(../images/food-waste-recycle/coffee-bg3.png);
+    background-size: contain;
+  }
 }
 
 .bg-aulaw {
