@@ -347,3 +347,46 @@ a.myDelivery {
 .bg-border-black {
   background: linear-gradient(0deg, transparent 0%, transparent 40%, black 40%, black 50%, transparent 50%);
 }
+
+.cup {
+  animation: cupAnimation 1000ms ease forwards;
+}
+
+.cup2 {
+  opacity: 0;
+  animation-delay: 3000ms;
+  animation: cupAnimation 1500ms ease forwards;
+}
+
+.cup3 {
+  opacity: 0;
+  animation-delay: 5000ms;
+  animation: cupAnimation 1800ms ease forwards;
+}
+
+@keyframes cupAnimation{
+  0%{
+    opacity:0;
+    transform: translate(0, -50px);
+  }
+  100%{
+    opacity:1;
+    transform: translate(0, 0px);
+    }
+}
+
+.bg-coffee {
+  background: #e4dccf;
+}
+
+.bg-coffee-banner {
+  background-image: url('../images/food-waste-recycle/coffee-bg3.png');
+}
+
+.bg-aulaw {
+  background-image: url('../images/food-waste-recycle/au-law-farm.jpg');
+}
+
+.text-shadow {
+  text-shadow: 0 0 2px black;
+}
