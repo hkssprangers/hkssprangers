@@ -85,7 +85,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                             <br/><br/><br/><br/>
                             <div className="bg-white bg-opacity-90 rounded">
                                 <div className="relative">
-                                    ${StaticResource.image("/images/food-waste-recycle/hing.jpg", "埗兵", "absolute rounded rounded-full w-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2")}
+                                    ${StaticResource.image("/images/food-waste-recycle/hing.jpg", "埗兵", "absolute rounded-full w-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2")}
                                 </div>
                                 <div className="pt-24 px-6 md:px-12 pb-6 text-opacity-75 text-black">
                                     <h3 className="text-lg lg:text-xl font-bold pb-3 text-opacity-75  tracking-wider">香港歐羅有機農場</h3>
