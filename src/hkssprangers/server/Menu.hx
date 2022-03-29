@@ -495,11 +495,11 @@ class Menu extends View<MenuProps> {
         final noodleSet = KCZenzeroNoodleSet(Lunch);
         final pastaSet = KCZenzeroPastaSet(Lunch);
 
-        final limited = if (KCZenzeroItem.all.has(LimitedSpecial)) {
+        final limited = if (KCZenzeroItem.all(Dinner).has(LimitedSpecial)) {
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">限定</div>
+                        <div className="p-3">限定 (晚市供應)</div>
                     </div>
                     <div className="p-3">${KCZenzeroLimitedSpecial.description}</div>
                     ${renderItems(KCZenzeroLimitedSpecial.properties.special.enums())}
@@ -509,7 +509,7 @@ class Menu extends View<MenuProps> {
             null;
         }
 
-        final wontonSet = if (KCZenzeroItem.all.has(WontonSet)) {
+        final wontonSet = if (KCZenzeroItem.all(Lunch).has(WontonSet)) {
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>

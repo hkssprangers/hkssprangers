@@ -15,16 +15,29 @@ enum abstract KCZenzeroItem(String) to String {
     final HotpotSet;
     final Single;
 
-    static public final all:ReadOnlyArray<KCZenzeroItem> = [
-        LimitedSpecial,
-        HotdogSet,
-        NoodleSet,
-        PastaSet,
-        // WontonSet,
-        LightSet,
-        // HotpotSet, //not in /menu/KCZenzero
-        Single,
-    ];
+    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<KCZenzeroItem> {
+        return switch (timeSlotType) {
+            case Lunch:
+                [
+                    HotdogSet,
+                    NoodleSet,
+                    PastaSet,
+                    // WontonSet,
+                    LightSet,
+                    Single,
+                ];
+            case Dinner:
+                [
+                    LimitedSpecial,
+                    HotdogSet,
+                    NoodleSet,
+                    PastaSet,
+                    // WontonSet,
+                    LightSet,
+                    Single,
+                ];
+        }
+    }
 
     public function getDefinition(timeSlotType:TimeSlotType):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial;
@@ -314,7 +327,7 @@ class KCZenzeroMenu {
                 type: {
                     title: "食物種類",
                     type: "string",
-                    oneOf: KCZenzeroItem.all.map(item -> {
+                    oneOf: KCZenzeroItem.all(timeSlotType).map(item -> {
                         title: item.getDefinition(timeSlotType).title,
                         const: item,
                     }),
