@@ -16,6 +16,14 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
     override public function title() return '埗兵咖啡渣之旅';
     override public function description() return '一步一步，由cafe到農田，將城市同鄉郊，以新嘅循環方式建立連繫';
     override function canonical() return Path.join(["https://" + canonicalHost, "food-waste-recycle"]);
+    override function ogMeta() return jsx('
+        <Fragment>
+            <meta name="twitter:card" content="summary_large_image" />
+            ${super.ogMeta()}
+            <meta property="og:type" content="website" />
+            <meta property="og:image" content=${Path.join(["https://" + canonicalHost, R("/images/food-waste-recycle/banner-coffee.jpg")])} />
+        </Fragment>
+    ');
     override public function render() {
         return super.render();
     }
