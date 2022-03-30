@@ -13,8 +13,8 @@ using Lambda;
 typedef FoodWasteRecycleProps = {}
 
 class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
-    override public function title() return '';
-    override public function description() return '';
+    override public function title() return '埗兵咖啡渣之旅';
+    override public function description() return '一步一步，由cafe到農田，將城市同鄉郊，以新嘅循環方式建立連繫';
     override function canonical() return Path.join(["https://" + canonicalHost, "food-waste-recycle"]);
     override public function render() {
         return super.render();
