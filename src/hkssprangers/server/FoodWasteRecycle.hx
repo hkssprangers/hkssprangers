@@ -123,6 +123,23 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                         </div>
                     </div>
 
+                    <div className="py-12 mx-auto w-4/5 md:flex items-center">
+      
+                        <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
+                            <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">媒體報導</h1>
+                            <p className="mb-3">在計劃開初，埗兵有榮幸接受到記者謝馨怡訪問，佢仲同小編行左一次收渣之路，非常感謝!</p>
+                        </div>
+                        <div className="flex-1">
+                            <a className="rounded border inline-block" href="https://hk.finance.yahoo.com/%E5%92%96%E5%95%A1%E6%B8%A3-%E8%9B%8B%E6%AE%BC-%E8%BE%B2%E5%A4%AB-%E6%9C%AC%E5%9C%B0%E8%BE%B2%E6%A5%AD-213208958.html">
+                            ${StaticResource.image("/images/food-waste-recycle/yahoo-news.png", "埗兵", "rounded-t w-full")}
+                            <div className="p-3 border-t text-opacity-75 text-gray-700">
+                                <h5 className="text-xs">yahoo新聞</h5>
+                                <h3>「埗兵」外賣員義務收集咖啡渣及蛋殼供農夫作肥料：種返菜畀香港人食</h3>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+
                     <div className="py-12 mx-auto w-4/5 md:flex">
                         <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                             <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">特別鳴謝</h1>
