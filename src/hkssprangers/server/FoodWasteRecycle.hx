@@ -24,8 +24,8 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
         return jsx('
             <main>
                 <div className="bg-coffee">
-                    <div className="lg:max-w-screen-2xl mx-auto">
-                        <div className="bg-no-repeat bg-top bg-coffee-banner">
+                    <div className="bg-repeat-x bg-top bg-coffee-banner">
+                        <div className="lg:max-w-screen-2xl mx-auto">
                             <div className="p-3 lg:px-0 md:py-6 mx-auto container">
 
                                 <div className="flex items-center">
@@ -80,8 +80,8 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                     </div>
                 </div>
 
-                <div className="w-full bg-cover bg-fixed bg-aulaw lg:max-w-screen-2xl mx-auto">
-                    <div className="p-6 md:p-12 md:h-screen text-center flex items-center justify-center">
+                <div className="w-full bg-cover bg-fixed bg-aulaw">
+                    <div className="lg:max-w-screen-2xl mx-auto p-6 md:p-12 md:h-screen text-center flex items-center justify-center">
                         <div className="p-6 lg:w-1/2">
                             <p className="text-white text-shadow">有營養嘅堆肥，仲要有農夫細心嘅照顧，<span className="inline-block">先有咁靚嘅菜㗎，</span><span className="inline-block">喺度感謝同我哋合作嘅農場，無佢哋計劃就唔成事。</span></p>
                             <br/><br/><br/><br/>
