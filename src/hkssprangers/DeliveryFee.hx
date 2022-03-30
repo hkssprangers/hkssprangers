@@ -766,6 +766,7 @@ class DeliveryFee {
             match: address -> address.contains("樂年花園"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
                 case CLPCluster: 25;
                 case GoldenCluster: 25;
                 case SmilingPlazaCluster: 25;
