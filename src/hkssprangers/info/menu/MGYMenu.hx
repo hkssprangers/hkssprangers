@@ -19,7 +19,7 @@ enum abstract MGYItem(String) to String {
         Rice,
         Snack,
         Delight,
-        Icecream,
+        // Icecream,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MGYItem) {

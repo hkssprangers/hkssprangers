@@ -18,6 +18,7 @@ import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.menu.DongDongMenu.*;
 import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.menu.NeighborMenu.*;
+import hkssprangers.info.menu.MGYMenu;
 import hkssprangers.info.menu.MGYMenu.*;
 import hkssprangers.info.menu.FastTasteSSPMenu.*;
 import hkssprangers.info.menu.HanaSoftCreamMenu.*;
@@ -929,26 +930,68 @@ class Menu extends View<MenuProps> {
     }
 
     function renderMGY() {
-        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        return jsx('
-            <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${MGYSideDish.title}</div>
-                    ${renderItems(MGYSideDish.properties.dish.enums())}
-                    <div className=${headerClasses}>${MGYSnack.title}</div>
-                    ${renderItems(MGYSnack.enums())}
-                    <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
-                    ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final coldNoodles = if (MGYItem.all.has(ColdNoodles)) {
+            jsx('
+                <Fragment>
                     <div className=${headerClasses}>${MGYColdNoodles.title}</div>
                     ${renderItems(MGYColdNoodles.properties.coldNoodles.enums())}
-                </div>
-                <div className="md:w-1/2 p-3">
-                    <div className=${headerClasses}>${MGYDelight.title}</div>
-                    ${renderItems(MGYDelight.properties.delight.enums())}
+                </Fragment>
+            ');
+        } else {
+            null;
+        }
+        final icecream = if (MGYItem.all.has(Icecream)) {
+            jsx('
+                <Fragment>
                     <div className=${headerClasses}>${MGYIcecream.title}</div>
                     ${renderItems(MGYIcecream.enums())}
+                </Fragment>
+            ');
+        } else {
+            null;
+        }
+        final dish = {
+            final items = {
+                final items = MGYSideDish.properties.dish.enums();
+                final cutoff = Math.ceil(items.length * 0.5);
+                [
+                    items.slice(0, cutoff),
+                    items.slice(cutoff),
+                ];
+            }
+            jsx('
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${MGYSideDish.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items[1])}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            ');
+        }
+        return jsx('
+            <Fragment>
+                ${dish}
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${MGYSnack.title}</div>
+                        ${renderItems(MGYSnack.enums())}
+                        <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
+                        ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
+                        ${coldNoodles}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${MGYDelight.title}</div>
+                        ${renderItems(MGYDelight.properties.delight.enums())}
+                        ${icecream}
+                    </div>
+                </div>
+            </Fragment>
         ');
     }
 
