@@ -1648,7 +1648,11 @@ class Menu extends View<MenuProps> {
                     <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
                         <div className="p-3 text-xl font-bold">${date} 餐牌 (每日更新)</div>
                         <div className="p-3">
-                            <p><span className="pr-3">v=vegan</span><span>五=五辛</span></p>
+                            <p>
+                                <span className="pr-3">v=vegan</span>
+                                <span className="pr-3">五=五辛</span>
+                                <span>*=部分食材為本地作物</span>
+                            </p>
                             <p>咖啡只使用燕麥奶</p>
                         </div>
                     </div>
