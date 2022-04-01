@@ -34,6 +34,7 @@ import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.menu.CafeGoldenMenu.*;
 import hkssprangers.info.menu.BlackWindowMenu;
 import hkssprangers.info.menu.LonelyPaisleyMenu.*;
+import hkssprangers.info.menu.FishFranSSPMenu.*;
 import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
@@ -101,6 +102,12 @@ class Menu extends View<MenuProps> {
             headerClasses: ["bg-pt2-pink-500"],
             boxClasses: ["bg-slash-pink-500"],
             textClasses: ["text-pink-500"]
+        },
+        PeiHoStreetMarketCluster => {
+            borderClasses: ["border-amber-600"],
+            headerClasses: ["bg-pt-amber-600"],
+            boxClasses: [],
+            textClasses: ["text-amber-600"]
         },
         SmilingPlazaCluster => {
             borderClasses: ["border-yellow-500"],
@@ -305,7 +312,7 @@ class Menu extends View<MenuProps> {
             case LonelyPaisley:
                 StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, true);
             case FishFranSSP:
-                null;
+                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, true);
         }
 
         return jsx('
@@ -395,7 +402,7 @@ class Menu extends View<MenuProps> {
             case LonelyPaisley:
                 renderLonelyPaisley();
             case FishFranSSP:
-                null;
+                renderFishFranSSP();
         }
     }
 
@@ -1220,6 +1227,77 @@ class Menu extends View<MenuProps> {
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${ToolssIcedDrink.title}</div>
                         ${renderItems(ToolssIcedDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderFishFranSSP() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
+        final dish = {
+            final items = {
+                final items = FishFranSSPDish.enums();
+                final cutoff = Math.ceil(items.length * 0.5);
+                [
+                    items.slice(0, cutoff),
+                    items.slice(cutoff),
+                ];
+            }
+            jsx('
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${FishFranSSPDish.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items[1])}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
+
+        return jsx('
+            <Fragment>
+                ${dish}
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${FishFranSSPFishPot.title}</div>
+                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.style.title}</div>
+                        <div className="p-3">${slashes(FishFranSSPFishPot.properties.style.enums())}</div>
+                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.main.title}</div>
+                        ${renderItems(FishFranSSPFishPot.properties.main.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPPot.title}</div>
+                        ${renderItems(FishFranSSPPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSpicyPot.title}</div>
+                        ${renderItems(FishFranSSPSpicyPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSoupPot.title}</div>
+                        ${renderItems(FishFranSSPSoupPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSpicyThing.title}</div>
+                        ${renderItems(FishFranSSPSpicyThing.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${FishFranSSPNoodles.title}</div>
+                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.main.title}</div>
+                        ${renderItems(FishFranSSPNoodles.properties.main.enums())}
+                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.noodles.title}</div>
+                        <div className="p-3">${slashes(FishFranSSPNoodles.properties.noodles.enums())}</div>
+
+                        <div className=${headerClasses}>${FishFranSSPRice.title}</div>
+                        ${renderItems(FishFranSSPRice.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPColdDish.title}</div>
+                        ${renderItems(FishFranSSPColdDish.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPDessert.title}</div>
+                        ${renderItems(FishFranSSPDessert.enums())}
                     </div>
                 </div>
             </Fragment>

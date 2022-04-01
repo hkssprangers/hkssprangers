@@ -372,7 +372,7 @@ enum abstract Shop(String) to String {
         case FastTasteSSP:
             {
                 id: FastTasteSSP,
-                name: "Fast Taste (SSP)",
+                name: "Fast Taste",
                 address: "深水埗福華街110號地下",
                 lat: 22.3312402,
                 lng: 114.1628927,
@@ -758,7 +758,7 @@ enum abstract Shop(String) to String {
         case FishFranSSP:
             {
                 id: FishFranSSP,
-                name: "魚鈁(深水埗店)",
+                name: "魚鈁 (深水埗店)",
                 address: "深水埗欽洲街58號米蘭軒1樓",
                 lat: 22.3306967, 
                 lng: 114.1603114,
@@ -811,6 +811,9 @@ enum abstract Shop(String) to String {
 
             case [Toolss, _, _]:
                 return Unavailable('埗兵外賣暫停');
+
+            case [FishFranSSP, _, _]:
+                return Unavailable('埗兵外賣不日開放');
 
             case _:
                 //pass

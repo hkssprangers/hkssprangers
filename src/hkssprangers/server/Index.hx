@@ -406,6 +406,26 @@ class Index extends View<IndexProps> {
                         </a>
                     </div>
 
+                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-amber-600 font-bold">
+                        <i className="fas fa-map-marker-alt text-amber-600"></i>&nbsp;<span>${PeiHoStreetMarketCluster.info().name}</span>
+                        <span className="flex-1 mx-3">&nbsp;</span>
+                    </div>
+
+                    <div className=${blockClasses2}>
+                        <a href=${Path.join(["/menu", FishFranSSP])} className=${linkClasses2}>
+                            <div className="md:flex"> 
+                                <div className=${thumbnailDivClasses2}>
+                                    ${StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", FishFranSSP.info().name, "squircle")}
+                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-amber-600 fas fa-book-open"></i><br/>menu</p>
+                                </div>
+                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-amber-600 fas fa-circle"></i> ${FishFranSSP.info().name}</h1>
+                                    ${restDay(FishFranSSP)}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-yellow-500 font-bold">
                         <i className="fas fa-map-marker-alt text-yellow-500"></i>&nbsp;<span>${SmilingPlazaCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>

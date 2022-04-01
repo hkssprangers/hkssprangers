@@ -13,6 +13,7 @@ import hkssprangers.StaticResource.R;
 class BrowserMain {
     static final clusterStyle = [
         DragonCentreCluster => 'rgb(239,68,68)',
+        PeiHoStreetMarketCluster => 'rgb(217,119,6)',
         CLPCluster => 'rgb(52, 211, 153)',
         GoldenCluster => 'rgb(236, 72, 153)',
         SmilingPlazaCluster => 'rgb(245, 158, 11)',

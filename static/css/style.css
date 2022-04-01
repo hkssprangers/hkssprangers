@@ -280,6 +280,10 @@ a.myDelivery {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAS0lEQVQYV2NkAAFGBgaG/4wMjAz/QRSUDZZhYHjjOWOzyPYMXygXrJbhjceMzSI7MnyhiiE6wByYMrixENPhdoCUwHUj64CxQfYBAFFuGolx5VqAAAAAAElFTkSuQmCC) repeat;
 }
 
+.bg-pt-amber-600 {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAAXNSR0IArs4c6QAAACZJREFUGFdjvFnO9l+98xcjAxoAC2CTxFAJ04ghAdONIoFsJE6jAIA+EAcWbY4HAAAAAElFTkSuQmCC) repeat;
+}
+
 .bg-pt-yellow-500 {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAARklEQVQYV2WNQQ6AMBACh6vrJ43/qp90vWJstzFGbgQGdLbwuqewADMkHkce4dguCVdUwWx1osBOTPOh32WRbXHU34+od26vTxoLpWKbTAAAAABJRU5ErkJggg==) repeat;
 }
