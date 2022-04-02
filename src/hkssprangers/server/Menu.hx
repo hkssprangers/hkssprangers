@@ -16,6 +16,7 @@ import hkssprangers.info.menu.YearsHKMenu.*;
 import hkssprangers.info.menu.TheParkByYearsMenu.*;
 import hkssprangers.info.menu.LaksaStoreMenu.*;
 import hkssprangers.info.menu.DongDongMenu.*;
+import hkssprangers.info.menu.BiuKeeLokYuenMenu;
 import hkssprangers.info.menu.BiuKeeLokYuenMenu.*;
 import hkssprangers.info.menu.NeighborMenu.*;
 import hkssprangers.info.menu.MGYMenu;
@@ -816,9 +817,9 @@ class Menu extends View<MenuProps> {
     }
 
     function renderBiuKeeLokYuen() {
-        var noodles = BiuKeeLokYuenNoodleSet.properties.main1.enums().map(MenuTools.parsePrice);
-        var lomeins = BiuKeeLokYuenLoMeinSet.properties.main1.enums().map(MenuTools.parsePrice);
-        var fused = [
+        final noodles = BiuKeeLokYuenNoodleSet.properties.main1.enums().map(MenuTools.parsePrice);
+        final lomeins = BiuKeeLokYuenLoMeinSet.properties.main1.enums().map(MenuTools.parsePrice);
+        final fused = [
             for (p in noodles)
             {
                 item: p.item,
@@ -832,21 +833,29 @@ class Menu extends View<MenuProps> {
             renderItemRow(p.item, (p.noodlePrice != null ? "$" + p.noodlePrice : "----") + " / " + (p.lomeinPrice != null ? "$" + p.lomeinPrice : "----"));
         });
 
-        var singleCutoff = Math.ceil(BiuKeeLokYuenSingleDish.enums().length * 0.5);
-        var single1 = BiuKeeLokYuenSingleDish.enums().slice(0, singleCutoff);
-        var single2 = BiuKeeLokYuenSingleDish.enums().slice(singleCutoff);
+        final singleCutoff = Math.ceil(BiuKeeLokYuenSingleDish.enums().length * 0.5);
+        final single1 = BiuKeeLokYuenSingleDish.enums().slice(0, singleCutoff);
+        final single2 = BiuKeeLokYuenSingleDish.enums().slice(singleCutoff);
 
-        var headerClasses = ["text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final headerClasses = ["text-xl", "font-bold"].concat(style.headerClasses).join(" ");
 
-        return jsx('
-            <div>
-                <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
+        final pot = if (BiuKeeLokYuenItem.all.has(Pot)) {
+            jsx('
+                <div className=${["p-3", "border-b-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>
                         <div className="p-3">${BiuKeeLokYuenPot.title}</div>
                     </div>
                     ${renderItems(BiuKeeLokYuenPot.enums())}
                 </div>
-                <div className=${["p-3", "border-t-4"].concat(style.borderClasses).join(" ")}>
+            ');
+        } else {
+            null;
+        }
+
+        return jsx('
+            <div>
+                ${pot}
+                <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>
                         <div className="p-3">${BiuKeeLokYuenNoodleSet.title} / ${BiuKeeLokYuenLoMeinSet.title}</div>
                     </div>

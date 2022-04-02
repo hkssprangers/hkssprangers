@@ -12,7 +12,7 @@ enum abstract BiuKeeLokYuenItem(String) to String {
     final Pot;
 
     static public final all:ReadOnlyArray<BiuKeeLokYuenItem> = [
-        Pot,
+        // Pot,
         NoodleSet,
         LoMeinSet,
         SingleDish,
@@ -183,10 +183,10 @@ class BiuKeeLokYuenMenu {
             "淨食秘製牛筋 例 $92",
             "淨食秘製牛筋 大 $130",
             "限量自家製鮮炸魚皮(跟上湯) $25",
-            "唐生菜 $22",
-            // "通菜 $22",
-            // "菜心 $22",
-            // "芥蘭 $22",
+            // "唐生菜 $22",
+            "通菜 $22",
+            "菜心 $22",
+            "芥蘭 $22",
             "淨食潮州紫菜湯 $18",
             "淨雲吞 $38",
             "淨黑椒牛丸 $42",
