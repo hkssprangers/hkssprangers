@@ -431,22 +431,14 @@ class Menu extends View<MenuProps> {
         ');
     }
 
-    static function slashes(items:Array<String>) return items
-        .map(item -> jsx('<span key=${item} className="whitespace-nowrap">${item}</span>'))
-        .fold(
-            function(item:ReactElement, result:ReactElement):ReactElement {
-                return if (result == null) {
-                    item;
-                } else {
-                    jsx('
-                        <Fragment>
-                            ${result} / ${item}
-                        </Fragment>
-                    ');
-                }
-            },
-            null
-        );
+    static function slashes(items:Array<String>)
+        return [
+            for (i => item in items)
+            if (i < items.length - 1)
+                jsx('<Fragment key=${item}><span className="whitespace-nowrap">${item} /</span><span> </span></Fragment>')
+            else
+                jsx('<span key=${item} className="whitespace-nowrap">${item}</span>')
+        ];
 
     function renderEightyNine() {
         return jsx('
