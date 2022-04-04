@@ -109,12 +109,12 @@ class DeliveryConverter {
             },
             customerPreferredContactMethod:
                 if (d.customerPreferredContactMethod != null)
-                    ContactMethod.fromName(d.customerPreferredContactMethod)
+                    ContactMethod.fromId(d.customerPreferredContactMethod)
                 else
                     null,
             customerBackupContactMethod:
                 if (d.customerBackupContactMethod != null)
-                    ContactMethod.fromName(d.customerBackupContactMethod)
+                    ContactMethod.fromId(d.customerBackupContactMethod)
                 else
                     null,
             paymentMethods: {
