@@ -51,19 +51,19 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                                 <p className=" text-opacity-75 text-gray-700">一步一步，<span className="inline-block">由cafe到農田，將城市同鄉郊，</span><span className="inline-block">以新嘅循環方式建立連繫</span></p>
                                 <div className="my-3 md:w-2/3 mx-auto flex">
                                     <div className="w-1/3">
-                                        ${StaticResource.image("/images/food-waste-recycle/c1.png", "埗兵", "cup")}
+                                        ${StaticResource.image("/images/food-waste-recycle/c1.png", "咖啡", "cup")}
                                     </div>
                                     <div className="w-1/3">
-                                        ${StaticResource.image("/images/food-waste-recycle/c2.png", "埗兵", "cup2")}
+                                        ${StaticResource.image("/images/food-waste-recycle/c2.png", "咖啡渣", "cup2")}
                                     </div>
                                     <div className="w-1/3">
-                                        ${StaticResource.image("/images/food-waste-recycle/c3.png", "埗兵", "cup3")}
+                                        ${StaticResource.image("/images/food-waste-recycle/c3.png", "菜苗", "cup3")}
                                     </div>
                                 </div>
                             </div>
                             <div className="py-12 mx-auto w-4/5 md:flex items-center">
                                 <div className="flex-1">
-                                    ${StaticResource.image("/images/food-waste-recycle/01.png", "埗兵", "")}
+                                    ${StaticResource.image("/images/food-waste-recycle/01.png", "步驟01: 收集", "")}
                                 </div>
                                 <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                                     <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">收集</h1>
@@ -76,7 +76,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                             </div>
                             <div className="py-12 mx-auto w-4/5 md:flex items-center flex-row md:flex-row-reverse">
                                 <div className="flex-1">
-                                ${StaticResource.image("/images/food-waste-recycle/02.png", "埗兵", "")}
+                                ${StaticResource.image("/images/food-waste-recycle/02.png", "步驟02: 堆肥", "")}
                                 </div>
                                 <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                                     <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">堆肥</h1>
@@ -95,7 +95,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                             <br/><br/><br/><br/>
                             <div className="bg-white bg-opacity-90 rounded">
                                 <div className="relative">
-                                    ${StaticResource.image("/images/food-waste-recycle/hing.jpg", "埗兵", "absolute rounded-full w-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2")}
+                                    ${StaticResource.image("/images/food-waste-recycle/hing.jpg", "香港歐羅有機農場", "absolute rounded-full w-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2")}
                                 </div>
                                 <div className="pt-24 px-6 md:px-12 pb-6 text-opacity-75 text-black">
                                     <h3 className="text-lg lg:text-xl font-bold pb-3 text-opacity-75  tracking-wider">香港歐羅有機農場</h3>
@@ -114,7 +114,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
 
                     <div className="py-12 mx-auto w-4/5 md:flex">
                         <div className="flex-1">
-                            ${StaticResource.image("/images/food-waste-recycle/04-vege.png", "埗兵", "")}
+                            ${StaticResource.image("/images/food-waste-recycle/04-vege.png", "本地菜", "")}
                         </div>
                         <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                             <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">深水埗區本地菜共購</h1>
@@ -138,8 +138,8 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                             <p className="mb-3">在計劃開初，埗兵有榮幸接受到記者謝馨怡訪問，佢仲同小編行左一次收渣之路，非常感謝!</p>
                         </div>
                         <div className="flex-1">
-                            <a className="rounded border inline-block" href="https://hk.finance.yahoo.com/%E5%92%96%E5%95%A1%E6%B8%A3-%E8%9B%8B%E6%AE%BC-%E8%BE%B2%E5%A4%AB-%E6%9C%AC%E5%9C%B0%E8%BE%B2%E6%A5%AD-213208958.html">
-                            ${StaticResource.image("/images/food-waste-recycle/yahoo-news.png", "埗兵", "rounded-t w-full")}
+                            <a className="rounded border inline-block" href="https://hk.news.yahoo.com/%E5%92%96%E5%95%A1%E6%B8%A3-%E8%9B%8B%E6%AE%BC-%E8%BE%B2%E5%A4%AB-%E6%9C%AC%E5%9C%B0%E8%BE%B2%E6%A5%AD-213208958.html">
+                            ${StaticResource.image("/images/food-waste-recycle/yahoo-news.png", "yahoo新聞 「埗兵」外賣員義務收集咖啡渣及蛋殼供農夫作肥料：種返菜畀香港人食", "rounded-t w-full")}
                             <div className="p-3 border-t text-opacity-75 text-gray-700">
                                 <h5 className="text-xs">yahoo新聞</h5>
                                 <h3>「埗兵」外賣員義務收集咖啡渣及蛋殼供農夫作肥料：種返菜畀香港人食</h3>
