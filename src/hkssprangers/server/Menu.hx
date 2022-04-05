@@ -705,6 +705,9 @@ class Menu extends View<MenuProps> {
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
         return jsx('
             <Fragment>
+                <div className="p-3">
+                    ${TheParkByYearsSet.description}
+                </div>
                 <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${TheParkByYearsSet.title}${TheParkByYearsSet.properties.main.title}</div>

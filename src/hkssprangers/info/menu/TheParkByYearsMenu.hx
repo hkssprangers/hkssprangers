@@ -107,20 +107,23 @@ class TheParkByYearsMenu {
 
     static public final TheParkByYearsSet = {
         title: "套餐",
+        description: "🧄=garlic 🌶️=spicy 🥜=nuts",
         properties: {
             main: {
                 title: "主食",
                 type: "string",
                 "enum": [
-                    "紫薯⽜油果香橙沙律 (可轉⽣酮) $98",
-                    "⽩酒香蒜乾蕃茄意⼤利粉 (可走五辛) $88",
-                    "川味麻辣芫茜意⼤利粉 (可走五辛) $88",
-                    "泰式芒果香辣⾁碎藜麥飯 (可走五辛/走辣) $98",
-                    "夏威夷三⽂⿂芒果蓋飯碗 (暖食, 可轉⽣酮) $108",
-                    "印度菠菜⾖腐咖喱⾓碗 $98",
+                    "紫薯⽜油果香橙沙律 🥜 $98",
+                    "牛油果大啡菇野莓沙律 🥜 (⽣酮) $98",
+                    "⽩酒香蒜乾蕃茄意⼤利粉 🧄 (可走五辛) $88",
+                    "川味麻辣芫茜意⼤利粉 🧄🌶️ $88",
+                    "泰式芒果香辣⾁碎藜麥飯 🌶️ (可走辣) $98",
+                    "夏威夷三⽂⿂芒果蓋飯碗 (暖食) $108",
+                    "夏威夷野莓豆腐沙律碗 (暖食, ⽣酮) $108",
+                    "印度菠菜⾖腐咖喱⾓碗 🧄🌶️🥜 $98",
                     "台式南乳苦瓜千層⽵炭漢堡 (可走辣) $108",
-                    "不可能芫茜芝⼠漢堡 (芫茜可轉沙律菜) $138",
-                    "焦糖燒香蕉不可能全⽇早餐 $148",
+                    "不可能芫茜芝⼠漢堡 🧄 (芫茜可轉沙律菜) $138",
+                    "焦糖燒香蕉不可能全⽇早餐 🧄🥜 $148",
                 ],
             },
             drink: TheParkByYearsSetDrink,
@@ -133,6 +136,7 @@ class TheParkByYearsMenu {
 
     static public final TheParkByYearsDinnerSet = {
         title: "晚市套餐",
+        description: "🧄=garlic 🌶️=spicy 🥜=nuts",
         properties: {
             main: {
                 title: "主食",
@@ -162,15 +166,16 @@ class TheParkByYearsMenu {
 
     static public final TheParkByYearsSingle = {
         title: "小食／甜品",
+        description: "🧄=garlic 🌶️=spicy 🥜=nuts",
         type: "string",
         "enum": [
             "炸香芋番薯丸 $48",
-            "菠菜腰果醬配炸印度脆球 $48",
-            "⽜油果酸忌廉冬陰墨⻄哥脆⽚ $58",
+            "菠菜腰果醬配炸印度脆球 🧄🥜 $48",
+            "⽜油果酸忌廉冬陰墨⻄哥脆⽚ 🧄🌶️ $58",
             "台式甘梅炸蕃薯條 $58",
 
-            "焦糖脆脆檸檬撻 $58",
-            "雲呢拿芝⼠撻 $58",
+            "焦糖脆脆檸檬撻 🥜 $58",
+            "雲呢拿芝⼠撻 🥜 $58",
         ],
     };
 
