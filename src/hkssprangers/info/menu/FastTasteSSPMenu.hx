@@ -23,8 +23,8 @@ enum abstract FastTasteSSPItem(String) to String {
         final types = switch TimeSlotType.classify(timeSlot.start) {
             case Lunch:
                 [
-                    BurgerSet,
-                    Burger,
+                    // BurgerSet,
+                    // Burger,
                     Italian,
                     Seafood,
                     Salad,
@@ -33,8 +33,8 @@ enum abstract FastTasteSSPItem(String) to String {
             case Dinner:
                 [
                     DinnerSet,
-                    BurgerSet,
-                    Burger,
+                    // BurgerSet,
+                    // Burger,
                     Italian,
                     Seafood,
                     Meat,
@@ -330,7 +330,7 @@ class FastTasteSSPMenu {
                 "enum": [
                     "A 紐西蘭青口鮮茄意粉 $88",
                     "B 和牛粒雜菜黑松露意大利飯 $98",
-                    "C 招牌公司漢堡配芝士條 $108",
+                    // "C 招牌公司漢堡配芝士條 $108",
                     "D 迷迭香原隻燒春雞配薯格 $118",
                     "E 秘製士多啤梨醬燒豬肋骨配薯條 $138",
                     "F 德國鹹豬手配薯條 $148",
