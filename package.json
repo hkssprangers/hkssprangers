@@ -52,7 +52,7 @@
     "xlsx": "^0.18.5"
   },
   "dependencies": {
-    "@splidejs/react-splide": "^0.6.20",
+    "@splidejs/react-splide": "^0.7.3",
     "aws-sdk": "^2.826.0",
     "aws-serverless-fastify": "github:andyli/aws-serverless-fastify#multiValueHeaders-1.0.28-lockless",
     "fastify": "^3.28.0",
