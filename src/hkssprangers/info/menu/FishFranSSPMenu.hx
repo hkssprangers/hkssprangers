@@ -64,7 +64,7 @@ class FishFranSSPMenu {
         properties: {
             style: {
                 type: "string",
-                title: "特色",
+                title: "湯底",
                 "enum": [
                     "烏江魚鍋",
                     "鮮茄魚鍋",
@@ -163,7 +163,8 @@ class FishFranSSPMenu {
             item("榨菜炒肉絲", 68),
             item("尖椒炒肉絲", 68),
             item("榨菜炒雞雜", 78),
-            item("清炒蒜茸萵笋絲", 62),
+            item("清炒萵笋絲", 62),
+            item("蒜茸萵笋絲", 62),
             item("清炒土豆絲", 58),
             item("辣子土豆絲", 58),
             item("清炒時蔬", 58),
@@ -248,6 +249,7 @@ class FishFranSSPMenu {
         ],
     };
 
+    static final plainRice = "白飯";
     static public final FishFranSSPRice = {
         title: "飯類",
         type: "string",
@@ -258,6 +260,7 @@ class FishFranSSPMenu {
             item("鮮菇魚片泡飯", 58),
             item("楊州炒飯", 58),
             item("生炒牛肉炒飯", 58),
+            item(plainRice, 10),
         ],
     };
 
