@@ -28,18 +28,23 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
 class ZeppelinHotDogSKMMenu {
     static final SmallFF = "細薯條";
     static final BigFF = "大薯條 +$5";
-    static public final setOptions = [
+    static public final setSnacks = [
         SmallFF,
         BigFF,
         "牛油粟米杯",
         "薯餅",
         "冰菠蘿",
+    ];
+    static public final setDrinks = [
         "可樂",
         "可樂Zero",
         "忌廉",
         "芬達",
         "雪碧",
         "C.C. Lemon",
+        "奶茶 (回憶) +$10",
+        "奶茶 (英女王) +$12",
+        "無糖冷泡茶 +$2",
     ];
 
     static public final chokOptions = [
@@ -53,21 +58,23 @@ class ZeppelinHotDogSKMMenu {
         title: "小食",
         type: "string",
         "enum": chokOptions.map(item -> item + " +$3").concat([
-            "洋蔥圈(6件) $15",
-            "洋蔥圈(9件) $20",
+            "洋蔥圈(6件) $18",
+            "洋蔥圈(9件) $22",
             "魚手指(4件) $20",
-            // "細薯格 $15",
-            // "大薯格 $22",
-            "雞塊(6件) $15",
-            // "飛船小食杯(洋蔥圈, 雞塊, 薯格) $28",
+            "魚手指(6件) $22",
+            // "細薯格 $18",
+            // "大薯格 $24",
+            "香脆雞塊(6件) $15",
+            "香脆雞塊(9件) $20",
+            // "飛船小食杯(洋蔥圈,雞塊,薯格) $30",
             "炸魚薯條 $30",
-            "細薯條 $10",
-            "大薯條 $18",
-            "芝士大薯條 $25",
-            "芝士煙肉薯條 $28",
-            "芝士辣肉醬薯條 $28",
-            "惹味香辣雞 (1件) $15",
-            "惹味香辣雞 (2件) $24",
+            "細薯條 $12",
+            "大薯條 $20",
+            // "芝士大薯條 $25",
+            // "芝士煙肉薯條 $28",
+            // "芝士辣肉醬薯條 $28",
+            "辣雞扒 (1件) $15",
+            "辣雞扒 (2件) $24",
             "薯餅 $8",
             "牛油粟米杯 $10",
             "冰菠蘿 $8",
@@ -75,25 +82,25 @@ class ZeppelinHotDogSKMMenu {
     };
 
     static public final hotdogs:ReadOnlyArray<String> = [
-        "LZ120 火灸芝士辣肉醬熱狗 $42",
-        "LZ123 田園風味熱狗 $34",
-        "LZ124 士林原味熱狗 $32",
+        "LZ120 火灸芝士辣肉醬熱狗🌶️🌶️ $42",
+        "LZ123 田園風味熱狗 $38",
+        "LZ124 士林原味熱狗🌶️ $32",
         "LZ125 美國洋蔥圈熱狗 $36",
         "LZ127 芝味熱狗 $38",
         "LZ129 澳式風情熱狗 $38",
-        "LZ131 紐約辣味熱狗 $38",
+        "LZ131 紐約辣味熱狗🌶️🌶️ $38",
         "LZ133 德國酸菜熱狗 $40",
-        "LZ135 墨西哥勁辣雞堡 $40",
-        "LZ136 9件雞 (燒烤汁) $20",
+        "LZ135 墨西哥勁辣雞堡🌶️🌶️🌶️ $40",
+        "LZ136 香脆雞塊 (9件, 燒烤汁) $20",
         "LZ137 燒賣熱狗🌶️ $40",
     ];
 
-    static final setDescription = "套餐 +$12";
+    static final setDescription = "套餐 +$15";
 
     static function createSet(withFreeChok:Bool) {
         var def =  {
             title: "套餐",
-            description: setDescription + "。要大薯條 (或者兩個細薯條) 送 CHOK CHOK 粉。",
+            description: setDescription + "。要大薯條 送 CHOK CHOK 粉。",
             properties: {
                 main: {
                     title: "主食",
@@ -107,21 +114,22 @@ class ZeppelinHotDogSKMMenu {
                         type: "string",
                         "enum": [
                             "加熱溶芝士 +$10",
-                            "轉未來熱狗腸 +$15",
-                            "轉豬肉香腸 +$0",
+                            "加辣肉醬 +$10",
+                            "轉未來素腸 +$15",
+                            "轉豬肉紐堡腸 +$0",
                         ],
                     },
                     uniqueItems: true,
                 },
                 setOption1: {
-                    title: "跟餐 1",
+                    title: "跟餐小食",
                     type: "string",
-                    "enum": setOptions,
+                    "enum": setSnacks,
                 },
                 setOption2: {
-                    title: "跟餐 2",
+                    title: "跟餐飲品",
                     type: "string",
-                    "enum": setOptions,
+                    "enum": setDrinks,
                 },
             },
             required: [
