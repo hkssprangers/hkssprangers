@@ -56,7 +56,7 @@ enum abstract FishFranSSPItem(String) to String {
 
 class FishFranSSPMenu {
     static function item(name:String, price:Float):String {
-        return name + " $" + Math.round(price * 1.1);
+        return name + " $" + Math.round(price * 1.11);
     }
 
     static public final FishFranSSPFishPot = {
