@@ -260,7 +260,7 @@ class Menu extends View<MenuProps> {
     };
 
     function renderShopImage() {
-        final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-auto";
+        final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover";
         final image = switch shop {
             case EightyNine:
                 StaticResource.image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, true);
@@ -301,11 +301,11 @@ class Menu extends View<MenuProps> {
             case PokeGo:
                 StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, true);
             case WoStreet:
-                StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, true);
             case AuLawFarm:
                 null;
             case Minimal:
-                StaticResource.image("/images/shops/Minimal/minimal.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, true);
             case CafeGolden:
                 StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, styles, true);
             case BlackWindow:
