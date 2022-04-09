@@ -33,10 +33,10 @@ class LaksaStoreMenu {
             "蜂蜜綠茶紙包飲品",
             "柑桔檸檬紙包飲品",
             "支裝水",
-            "罐裝可樂",
-            "罐裝可樂 zero",
-            "罐裝雪碧",
-            "罐裝忌廉",
+            "罐裝可樂 +$2",
+            "罐裝可樂 zero +$2",
+            "罐裝雪碧 +$2",
+            "罐裝忌廉 +$2",
         ],
     };
 
@@ -224,7 +224,7 @@ class LaksaStoreMenu {
         var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
             case NoodleSet:
-                var price = parsePrice(LaksaStoreNoodleSet.description).price;
+                final price = parsePrice(LaksaStoreNoodleSet.description).price + parsePrice(orderItem.item.drink).price;
                 {
                     orderDetails:
                         fullWidthDot + orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + price + "\n" +

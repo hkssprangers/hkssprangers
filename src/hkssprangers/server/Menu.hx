@@ -738,19 +738,17 @@ class Menu extends View<MenuProps> {
         var itemPrice = LaksaStoreNoodleSet.description.parsePrice();
         return jsx('
             <Fragment>
-                <div className="p-3">
-                    <div className="md:flex flex-row">
-                        <div className=${["md:w-1/2", "p-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
-                            <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
-                        </div>
-                        <div className="md:w-1/2 p-3">
-                            <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
-                            ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
-                        </div>
+                <div className=${["md:border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
+                        <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
+                        ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
                     </div>
                 </div>
-                <div className=${["p-3", "md:border-t-4"].concat(style.borderClasses).join(" ")}>
+                <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                     ${renderItemRow(itemPrice.item, "$" + itemPrice.price, ["text-xl", "font-bold"].concat(style.headerClasses))}
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
