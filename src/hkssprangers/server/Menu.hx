@@ -307,7 +307,7 @@ class Menu extends View<MenuProps> {
             case Minimal:
                 StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, true);
             case CafeGolden:
-                StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/CafeGolden/CafeGolden-menu-profile.jpeg", shop.info().name, styles, true);
             case BlackWindow:
                 StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, true);
             case LonelyPaisley:
