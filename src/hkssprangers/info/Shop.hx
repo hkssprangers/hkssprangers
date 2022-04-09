@@ -812,9 +812,6 @@ enum abstract Shop(String) to String {
             case [Toolss, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [FishFranSSP, _, _]:
-                return Unavailable('埗兵外賣不日開放');
-
             case _:
                 //pass
         }
