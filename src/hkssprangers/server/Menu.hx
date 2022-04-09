@@ -263,7 +263,7 @@ class Menu extends View<MenuProps> {
         final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-auto";
         final image = switch shop {
             case EightyNine:
-                StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, true);
             case DragonJapaneseCuisine:
                 StaticResource.image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, true);
             case YearsHK:
@@ -281,15 +281,15 @@ class Menu extends View<MenuProps> {
             case HanaSoftCream:
                 StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, true);
             case Neighbor:
-                StaticResource.image("/images/shops/Neighbor/neighbor.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Neighbor/neighbor-menu-profile.jpeg", shop.info().name, styles, true);
             case MGY:
-                StaticResource.image("/images/shops/MGY/mgy.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/MGY/mgy-menu-profile.jpg", shop.info().name, styles, true);
             case FastTasteSSP:
-                StaticResource.image("/images/shops/FastTasteSSP/fasttaste.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/FastTasteSSP/fasttaste-menu-profile.jpg", shop.info().name, styles, true);
             case BlaBlaBla:
                 StaticResource.image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, true);
             case ZeppelinHotDogSKM:
-                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu-profile.jpg", shop.info().name, styles, true);
             case MyRoomRoom:
                 StaticResource.image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, true);
             case ThaiYummy:
