@@ -148,7 +148,7 @@ class FastTasteSSPMenu {
         "橫行脆蟹堡 $78",
         "芝士雙菇漢堡 $52",
         "菠蘿炸雞堡 $55",
-        "深海鱈魚堡 $57",
+        // "深海鱈魚堡 $57",
     ];
     static public final FastTasteSSPBurgerOptions:ReadOnlyArray<String> = [
         "自制牛漢堡 +$30",
@@ -394,10 +394,10 @@ class FastTasteSSPMenu {
                     title: title,
                     type: "string",
                     "enum": [
-                        "炸魚薯條 $70",
+                        // "炸魚薯條 $70",
                         "酥炸魷魚鬚 $45",
                         "脆炸軟殼蟹 $48",
-                        "炸海鮮拼盤(軟殼蟹，魷魚鬚，大蝦，鱈魚柳) $98",
+                        // "炸海鮮拼盤(軟殼蟹，魷魚鬚，大蝦，鱈魚柳) $98",
                         "香辣茄蓉煮青口 $50",
                         "白酒忌廉汁煮大蜆 $50",
                     ],
