@@ -12,6 +12,7 @@
 --class-path lib/dts2hx
 --main hkssprangers.ImportOrderDocs
 --js importOrderDocs.js
+--dce full
 -D no-deprecation-warnings
 # -D sql_debug
 # --cmd node importOrderDocs.js importDocs
