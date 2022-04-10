@@ -46,11 +46,11 @@ class Index extends View<IndexProps> {
 
     override function depCss():ReactElement {
         final splideCssUrl = 'https://cdn.jsdelivr.net/npm/@splidejs/splide@${NodeModules.lockedVersion("@splidejs/splide")}/dist/css/splide.min.css';
-        final mapboxGlCssUrl = 'https://cdn.jsdelivr.net/npm/mapbox-gl@${NodeModules.lockedVersion("mapbox-gl")}/dist/mapbox-gl.css';
+        final maplibreGlCssUrl = 'https://cdn.jsdelivr.net/npm/maplibre-gl@${NodeModules.lockedVersion("maplibre-gl")}/dist/maplibre-gl.css';
         return jsx('
             <Fragment>
                 <link rel="stylesheet" href=${splideCssUrl} crossOrigin="anonymous"/>
-                <link rel="stylesheet" href=${mapboxGlCssUrl} crossOrigin="anonymous"/>
+                <link rel="stylesheet" href=${maplibreGlCssUrl} crossOrigin="anonymous"/>
                 ${super.depCss()}
             </Fragment>
         ');

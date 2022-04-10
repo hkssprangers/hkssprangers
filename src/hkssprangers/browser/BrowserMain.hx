@@ -127,23 +127,23 @@ class BrowserMain {
         }
     }
 
-    static final mapboxAccessToken = "pk.eyJ1Ijoib250aGV3aW5ncyIsImEiOiJja3p3ZTBjbW0wNWs3Mm5waDBkbG41YjhrIn0.XOF0xjYbJpIXS--nugUSWg";
     static function initMap() {
-        MapboxGl.accessToken = mapboxAccessToken;
-        final map = new mapbox_gl.Map_({
-            container: 'map', // container ID
-            style: 'mapbox://styles/onthewings/ckzwgjip4004215oce0zc5ola', // style URL
-            center: [114.16025186047068, 22.33114444434112], // starting position [lng, lat]
-            zoom: 15 // starting zoom
+        final map = new maplibre_gl.Map_({
+            container: 'map',
+            style: "https://api.maptiler.com/maps/11d65c56-f50f-47c9-a9ba-b4993583d754/style.json?key=Umpy32MVTqGONWziZO5X",
+            center: [114.16025186047068, 22.33114444434112], // [lng, lat]
+            zoom: 15,
         });
         map.scrollZoom.disable();
-        map.addControl(new mapbox_gl.NavigationControl());
+        map.addControl(cast new maplibre_gl.NavigationControl({
+            showZoom: true,
+        }));
 
         for (shop in Shop.all) {
             final info = shop.info();
             final cluster = ShopCluster.classify(shop);
-            final popup = new mapbox_gl.Popup({ offset: 25 }).setText(info.name);
-            final marker = new mapbox_gl.Marker({ color: clusterStyle[cluster] })
+            final popup = new maplibre_gl.Popup({ offset: 25 }).setText(info.name);
+            final marker = new maplibre_gl.Marker({ color: clusterStyle[cluster] })
                 .setLngLat([info.lng, info.lat])
                 .setPopup(popup)
                 .addTo(map);
