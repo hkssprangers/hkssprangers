@@ -13,7 +13,6 @@ import hkssprangers.info.ContactMethod;
 import hkssprangers.info.PickupMethod;
 import hkssprangers.info.OrderTools.*;
 import hkssprangers.server.CockroachDb;
-import hkssprangers.server.MySql;
 import hkssprangers.db.Database.DeliveryConverter;
 import thx.Decimal;
 using StringTools;

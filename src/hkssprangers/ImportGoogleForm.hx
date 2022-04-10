@@ -9,7 +9,6 @@ import telegraf.Telegraf;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.TimeSlotType;
 import haxe.Json;
-import hkssprangers.server.MySql;
 import hkssprangers.server.CockroachDb;
 import tink.CoreApi;
 import tink.core.ext.Promises;

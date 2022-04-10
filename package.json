@@ -66,7 +66,6 @@
     "image-data-uri": "^2.0.1",
     "image-type": "^4.1.0",
     "moment": "^2.29.2",
-    "mysql": "^2.18.1",
     "node-ical": "^0.15.1",
     "pg": "^8.7.3",
     "promise-retry": "^2.0.1",

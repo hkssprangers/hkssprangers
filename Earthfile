@@ -39,9 +39,6 @@ CMD [ "sleep", "infinity" ]
 
 SAVE IMAGE --cache-hint
 
-COPY .devcontainer/mysql-public-key /tmp/mysql-public-key
-RUN apt-key add /tmp/mysql-public-key
-
 # Configure apt and install packages
 RUN apt-get update \
     && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
@@ -67,11 +64,6 @@ RUN apt-get update \
     # install node
     && curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install -qqy --no-install-recommends nodejs=${NODE_VERSION}.* \
-    # Install mysql-client
-    # https://github.com/docker-library/mysql/blob/master/8.0/Dockerfile.debian
-    && echo 'deb http://repo.mysql.com/apt/ubuntu/ focal mysql-8.0' > /etc/apt/sources.list.d/mysql.list \
-    && apt-get update \
-    && apt-get -y install mysql-client=8.0.* \
     # Install postgresql-client
     # https://www.postgresql.org/download/linux/ubuntu/
     && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
@@ -96,13 +88,6 @@ devcontainer-library-scripts:
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/common-debian.sh
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/docker-debian.sh
     SAVE ARTIFACT --keep-ts *.sh AS LOCAL .devcontainer/library-scripts/
-
-# https://github.com/docker-library/mysql/blob/master/8.0/Dockerfile.debian
-mysql-public-key:
-    ARG KEY=859BE8D7C586F538430B19C2467B942D3A79BD29
-    RUN gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$KEY"
-    RUN gpg --batch --armor --export "$KEY" > mysql-public-key
-    SAVE ARTIFACT --keep-ts mysql-public-key AS LOCAL .devcontainer/mysql-public-key
 
 # Usage:
 # COPY +tfenv/tfenv /tfenv
