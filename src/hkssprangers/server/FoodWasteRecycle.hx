@@ -31,21 +31,10 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
     override function bodyContent() {
         return jsx('
             <main>
+                ${View.header()}
                 <div className="bg-coffee">
                     <div className="bg-repeat-x bg-top bg-coffee-banner">
                         <div className="lg:max-w-screen-2xl mx-auto">
-                            <div className="p-3 lg:px-0 md:py-6 mx-auto container">
-
-                                <div className="flex items-center">
-                                <a href="/">
-                                    ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
-                                </a>
-                                <div className="flex-1 pl-3">
-                                    <b className="text-lg lg:text-xl">埗兵</b>
-                                    <p>為深水埗黃店服務為主嘅外賣平台</p>
-                                </div>
-                                </div>
-                            </div>
                             <div className="px-6 py-12 mx-auto lg:max-w-screen-2xl text-center">
                                 <h1 className="text-3xl md:text-6xl text-opacity-75 text-yellow-800 font-bold tracking-widest mb-3">埗兵咖啡渣之旅</h1>
                                 <p className=" text-opacity-75 text-gray-700">一步一步，<span className="inline-block">由cafe到農田，將城市同鄉郊，</span><span className="inline-block">以新嘅循環方式建立連繫</span></p>

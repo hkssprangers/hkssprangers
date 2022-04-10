@@ -626,18 +626,7 @@ class Index extends View<IndexProps> {
                 ${announcement()}
                 <main>
                     ${orderButton()}
-                    <div className="p-3 md:py-6 mx-auto container">
-
-                        <div className="flex items-center">
-                            <a href="/">
-                                ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
-                            </a>
-                            <div className="flex-1 pl-3">
-                                <b className="text-lg lg:text-xl">埗兵</b>
-                                <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
-                            </div>
-                        </div>
-                    </div>
+                    ${View.header()}
                     ${banner()}
 
                     <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-40 text-md md:text-lg">

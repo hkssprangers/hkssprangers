@@ -187,6 +187,20 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
 
     function bodyContent() return null;
 
+    static public function header() return jsx('
+        <div className="p-3 md:py-6 mx-auto container">
+            <div className="flex items-center">
+                <a href="/">
+                    ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
+                </a>
+                <div className="flex-1 pl-3">
+                    <b className="text-lg lg:text-xl">埗兵</b>
+                    <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
+                </div>
+            </div>
+        </div>
+    ');
+
     function footer() return jsx('
         <footer className="p-6 text-center">
             <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank" rel="noopener" className="underline text-black">Charley</a></p>
