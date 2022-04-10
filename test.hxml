@@ -12,6 +12,7 @@
 --class-path lib/hxnodelibs
 --class-path lib/dts2hx
 --define no-deprecation-warnings
+--dce full
 --main Test
 --js test.js
 --cmd node test.js
