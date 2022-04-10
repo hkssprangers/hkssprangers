@@ -191,7 +191,7 @@ class PokeGoMenu {
                     type: "string",
                     "enum": [
                         "壽司飯",
-                        // "珍珠糙飯", // 停止供應至月底
+                        "珍珠糙飯",
                         "沙律菜",
                     ],
                 },
@@ -288,7 +288,7 @@ class PokeGoMenu {
             "麻醬秋葵 $" + markup(38),
             "和風炸雞 $" + markup(68),
             "蟹肉沙律 $" + markup(68),
-            "黃金蟹卷 $" + markup(68),
+            "黃金蝦卷 $" + markup(68),
         ]
     }
 
