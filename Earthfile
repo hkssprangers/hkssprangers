@@ -134,6 +134,42 @@ awscli:
         && rm /tmp/awscliv2.zip
     SAVE ARTIFACT /aws
 
+github-src:
+    ARG --required REPO
+    ARG --required COMMIT
+    ARG DIR=/src
+    WORKDIR $DIR
+    RUN curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" | tar xz --strip-components=1 -C "$DIR"
+    SAVE ARTIFACT "$DIR"
+
+tilemaker:
+    RUN apt-get update -qqy && \
+        apt-get install -qqy --no-install-recommends \
+            build-essential \
+            liblua5.1-0 \
+            liblua5.1-0-dev \
+            libprotobuf-dev \
+            libsqlite3-dev \
+            protobuf-compiler \
+            shapelib \
+            libshp-dev \
+            libboost-program-options-dev \
+            libboost-filesystem-dev \
+            libboost-system-dev \
+            libboost-iostreams-dev \
+            rapidjson-dev \
+            cmake \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+    COPY (+github-src/src --REPO=systemed/tilemaker --COMMIT=763200664db2319079e97cc8134c41deffb41f0d) /tilemaker
+    WORKDIR /tilemaker/build
+    RUN cmake -DTILEMAKER_BUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ ..
+    RUN cmake --build .
+    RUN strip tilemaker
+    RUN ./tilemaker --version
+
 lix-download:
     USER $USERNAME
     COPY haxe_libraries haxe_libraries
