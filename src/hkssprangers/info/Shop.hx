@@ -616,14 +616,14 @@ enum abstract Shop(String) to String {
                     Saturday,
                     Sunday,
                 ],
-                earliestPickupTime: "18:00:00", //開2點
-                latestPickupTime: "18:00:00", //通常6點半就閂
+                earliestPickupTime: "12:30:00", //正式開2點, 但店員可提早返去
+                latestPickupTime: "18:30:00", //通常6點半就閂
                 isInService: true,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
-                availablity: "暫停營業",
+                availablity: null,
                 restDay: null,
-                recommendation: "照燒雞扒窩堡"
+                recommendation: null,
             }
         case AuLawFarm:
             {

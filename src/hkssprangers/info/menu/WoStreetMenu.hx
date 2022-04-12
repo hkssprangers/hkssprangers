@@ -5,20 +5,17 @@ import haxe.ds.ReadOnlyArray;
 using Lambda;
 
 enum abstract WoStreetItem(String) to String {
-    final WaffleBurger;
     final ClassicWaffle;
     final Cake;
     final Drink;
 
     static public final all:ReadOnlyArray<WoStreetItem> = [
-        WaffleBurger,
         ClassicWaffle,
         Cake,
         Drink,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:WoStreetItem) {
-        case WaffleBurger: WoStreetMenu.WoStreetWaffleBurger;
         case ClassicWaffle: WoStreetMenu.WoStreetClassicWaffle;
         case Cake: WoStreetMenu.WoStreetCake;
         case Drink: WoStreetMenu.WoStreetDrink;
@@ -26,54 +23,52 @@ enum abstract WoStreetItem(String) to String {
 }
 
 class WoStreetMenu {
-    static public final WoStreetWaffleBurger = {
-        title: "窩堡",
-        type: "string",
-        "enum": [
-            "照燒雞扒窩堡 (標準) $42",
-            "照燒雞扒窩堡 (珍寶) $65",
-            "豚肉芝士窩堡 (標準) $42",
-            "豚肉芝士窩堡 (珍寶) $65",
-            "厚切午餐肉窩堡 (標準) $42",
-            "厚切午餐肉窩堡 (珍寶) $65",
-        ]
-    };
     static public final WoStreetClassicWaffle = {
-        title: "經典窩夫",
+        title: "窩夫",
         type: "string",
         "enum": [
-            "意大利芝士窩夫 $32",
-            "Oreo濃朱古力窩夫 $32",
-            "宇治抹茶紅豆窩夫 $32",
+            "意大利芝士窩夫 $48",
+            "Oreo濃朱古力窩夫 $48",
+            "濃朱古力雪糕窩夫 $48",
+            "白桃雪糕窩夫 $48",
+            "荔枝雪糕窩夫 $48",
+            "豆腐雪糕窩夫 $48",
+            "薄荷曲奇雪糕窩夫 $48",
+            "菠蘿雪糕窩夫 $48",
+            "百香果雪糕窩夫 $48",
         ]
     };
     static public final WoStreetCake = {
-        title: "手作蛋糕",
+        title: "芝士餅 (6吋切件)",
         type: "string",
         "enum": [
-            "東京第一芝士餅 一件 $28",
-            // "東京第一芝士餅 4\" $128",
-            // "東京第一芝士餅 6\" $160",
-            "巴斯克芝士餅 一件 $28",
-            // "巴斯克芝士餅 4\" $128",
-            // "巴斯克芝士餅 6\" $160",
-            // "真毛巾蛋糕 4.5\" $78",
+            "焦香巴斯克芝士餅 一件 $38", 
+            "東京No1芝士餅 一件 $38",
+            "紐約芝士餅 一件 $38",
+            "藍莓芝士餅 一件 $38",
+            "檸檬芝士餅 一件 $38",
         ]
     };
     static public final WoStreetDrink = {
         title: "飲品",
         type: "string",
         "enum": [
-            "罐裝可樂 $6",
-            "罐裝芬達 $6",
-            "罐裝雪碧 $6",
-            "支裝津路烏龍茶 $10",
+            "濃朱古力雪糕梳打 $38",
+            "白桃雪糕梳打 $38",
+            "荔枝雪糕梳打 $38",
+            "豆腐雪糕梳打 $38",
+            "薄荷曲奇雪糕梳打 $38",
+            "菠蘿雪糕梳打 $38",
+            "百香果雪糕梳打 $38",
+            "冷泡玫瑰花茶 $20",
+            "雜莓果凍梳打特飲 $38",
             "CBD少爺啤 全日愛爾 $40",
             "CBD少爺啤 淡愛爾 $40",
             "CBD少爺啤 DOUBLE $40",
-            "冷泡玫瑰花茶 $20",
-            "肉桂蘋果茶 $25",
-            "雜莓果凍梳打特飲 $38",
+            "支裝津路烏龍茶 $10",
+            "罐裝可樂 $6",
+            "罐裝芬達 $6",
+            "罐裝雪碧 $6",
         ]
     };
 
@@ -123,7 +118,7 @@ class WoStreetMenu {
     } {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case WaffleBurger | ClassicWaffle | Cake | Drink:
+            case ClassicWaffle | Cake | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {

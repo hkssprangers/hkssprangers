@@ -322,17 +322,24 @@ class Menu extends View<MenuProps> {
     }
 
     function renderAvailabiltyRest() {
-        if (shop.info().restDay != null)
-            return jsx('
-            <Fragment>
-                <div className="mb-3">${shop.info().availablity}<br/>${shop.info().restDay}</div>
-            </Fragment>
-        ')
-        else return jsx('
-            <Fragment>
-                <div className="mb-3">${shop.info().availablity}</div>
-            </Fragment>
-            ');
+        return switch (shop.info()) {
+            case {availablity: null, restDay: null}:
+                jsx('
+                    <Fragment></Fragment>
+                ');
+            case {availablity: availablity, restDay: null}:
+                jsx('
+                    <Fragment>
+                        <div className="mb-3">${availablity}</div>
+                    </Fragment>
+                ');
+            case {availablity: availablity, restDay: restDay}:
+                jsx('
+                    <Fragment>
+                        <div className="mb-3">${availablity}<br/>${restDay}</div>
+                    </Fragment>
+                ');
+        }
     }
 
     function renderSocialHandle() {
@@ -1715,14 +1722,12 @@ class Menu extends View<MenuProps> {
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${WoStreetWaffleBurger.title}</div>
-                        ${renderItems(WoStreetWaffleBurger.enums())}
                         <div className=${headerClasses}>${WoStreetClassicWaffle.title}</div>
                         ${renderItems(WoStreetClassicWaffle.enums())}
-                    </div>
-                    <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${WoStreetCake.title}</div>
                         ${renderItems(WoStreetCake.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${WoStreetDrink.title}</div>
                         ${renderItems(WoStreetDrink.enums())}
                     </div>
