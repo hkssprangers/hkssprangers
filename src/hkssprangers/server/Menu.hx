@@ -954,26 +954,6 @@ class Menu extends View<MenuProps> {
 
     function renderMGY() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        final coldNoodles = if (MGYItem.all.has(ColdNoodles)) {
-            jsx('
-                <Fragment>
-                    <div className=${headerClasses}>${MGYColdNoodles.title}</div>
-                    ${renderItems(MGYColdNoodles.properties.coldNoodles.enums())}
-                </Fragment>
-            ');
-        } else {
-            null;
-        }
-        final icecream = if (MGYItem.all.has(Icecream)) {
-            jsx('
-                <Fragment>
-                    <div className=${headerClasses}>${MGYIcecream.title}</div>
-                    ${renderItems(MGYIcecream.enums())}
-                </Fragment>
-            ');
-        } else {
-            null;
-        }
         final dish = {
             final items = {
                 final items = MGYSideDish.properties.dish.enums();
@@ -1006,12 +986,10 @@ class Menu extends View<MenuProps> {
                         ${renderItems(MGYSnack.enums())}
                         <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
                         ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
-                        ${coldNoodles}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${MGYDelight.title}</div>
                         ${renderItems(MGYDelight.properties.delight.enums())}
-                        ${icecream}
                     </div>
                 </div>
             </Fragment>
