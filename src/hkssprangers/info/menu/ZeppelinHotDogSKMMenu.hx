@@ -42,8 +42,8 @@ class ZeppelinHotDogSKMMenu {
         "忌廉",
         "有汽檸檬茶",
         "無糖冷泡茶 +$2",
-        "奶茶 (回憶) +$10",
-        "奶茶 (英女王) +$12",
+        // "奶茶 (回憶) +$10",
+        // "奶茶 (英女王) +$12",
     ];
 
     static public final chokOptions = [
