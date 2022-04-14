@@ -165,7 +165,7 @@ class MinimalMenu {
 
     static final sousVides = [
         { name: "慢煮西班牙黑毛豬", price: 138 },
-        { name: "慢者黑安格斯牛肉7oz", price: 158 },
+        { name: "慢煮黑安格斯牛肉7oz", price: 158 },
     ];
 
     static public final MinimalSousVide = {
