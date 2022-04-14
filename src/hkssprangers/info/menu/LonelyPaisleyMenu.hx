@@ -25,17 +25,19 @@ enum abstract LonelyPaisleyItem(String) to String {
         }
         return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), TimeSlotType.classify(timeSlot.start)] {
             case [Monday | Tuesday | Wednesday | Thursday | Friday, Lunch]:
-                [
-                    MakeYourOwnChoiceSet,
-                    LunchSet,
-                    // Brunch,
-                    // Salad,
-                    Snacks,
-                    Dessert,
-                    PastaRice,
-                    Main,
-                    Drink,
-                ];
+                (HkHolidays.isRedDay(timeSlot.start) ? [] : [MakeYourOwnChoiceSet])
+                .concat(
+                    [
+                        LunchSet,
+                        // Brunch,
+                        // Salad,
+                        Snacks,
+                        Dessert,
+                        PastaRice,
+                        Main,
+                        Drink,
+                    ]
+                );
             case [_, Lunch]:
                 [
                     // Brunch,
