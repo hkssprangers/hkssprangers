@@ -37,7 +37,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
         
     ];
 
-    static final options = {
+    static final options:splidejs.splide.Options = {
         type: 'loop',
         autoplay: true,
         interval: 8000.0,

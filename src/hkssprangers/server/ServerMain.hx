@@ -103,7 +103,7 @@ class ServerMain {
             reply.status(ErrorCode.Unauthorized).send("Wrong Twilio account sid.");
             return Promise.resolve();
         }
-        if (!Twilio.validateRequest(TwilioConfig.authToken, twilioSignature, Path.join([protocal + host, "twilio"]), reqBody)) {
+        if (!Twilio.validateRequest(TwilioConfig.authToken, twilioSignature, Path.join([protocal + host, "twilio"]), cast reqBody)) {
             trace("Request validation failed.");
             reply.status(ErrorCode.Unauthorized).send("Request validation failed.");
             return Promise.resolve();
