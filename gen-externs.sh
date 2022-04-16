@@ -17,7 +17,7 @@ npx dts2hx \
     axios \
     @splidejs/splide \
     @splidejs/react-splide \
-    maplibre-gl gl-matrix \
+    maplibre-gl gl-matrix potpack \
     --noLibWrap \
     --useSystemHaxe \
     --output lib/dts2hx
