@@ -617,7 +617,7 @@ enum abstract Shop(String) to String {
                     Sunday,
                 ],
                 earliestPickupTime: "12:30:00", //正式開2點, 但店員可提早返去
-                latestPickupTime: "18:30:00", //通常6點半就閂
+                latestPickupTime: "18:00:00", //通常6點半就閂
                 isInService: true,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
@@ -812,9 +812,6 @@ enum abstract Shop(String) to String {
             // https://www.instagram.com/p/CcLDFuYvfbz/
             case [KCZenzero, "2022-04-11", _]:
                 return Unavailable('休息一天');
-
-            case [WoStreet, _, _]:
-                return Unavailable('埗兵外賣暫停');
 
             case [Toolss, _, _]:
                 return Unavailable('埗兵外賣暫停');
