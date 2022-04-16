@@ -163,12 +163,13 @@ tilemaker:
         && apt-get autoremove -y \
         && apt-get clean -y \
         && rm -rf /var/lib/apt/lists/*
-    COPY (+github-src/src --REPO=systemed/tilemaker --COMMIT=763200664db2319079e97cc8134c41deffb41f0d) /tilemaker
+    ARG TM_COMMIT=763200664db2319079e97cc8134c41deffb41f0d
+    COPY (+github-src/src --REPO=systemed/tilemaker --COMMIT="$TM_COMMIT") /tilemaker
     WORKDIR /tilemaker/build
     RUN cmake -DTILEMAKER_BUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ ..
     RUN cmake --build .
     RUN strip tilemaker
-    RUN ./tilemaker --version
+    SAVE ARTIFACT tilemaker
 
 lix-download:
     USER $USERNAME
@@ -233,6 +234,8 @@ devcontainer:
         && rm ./pscale.deb
 
     COPY +dbmate/dbmate /usr/local/bin/
+
+    COPY +tilemaker/tilemaker /usr/local/bin/
 
     USER $USERNAME
 
