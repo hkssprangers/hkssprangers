@@ -169,7 +169,27 @@ tilemaker:
     RUN cmake -DTILEMAKER_BUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ ..
     RUN cmake --build .
     RUN strip tilemaker
-    SAVE ARTIFACT tilemaker
+    RUN mv tilemaker /usr/local/bin/
+    WORKDIR /tilemaker
+    SAVE ARTIFACT /usr/local/bin/tilemaker
+
+china.osm.pbf:
+    FROM openmaptiles/openmaptiles-tools:6.1.4
+    RUN download-osm geofabrik china
+    RUN ls -lah
+    SAVE ARTIFACT china-latest.osm.pbf china.osm.pbf
+
+hk.osm.pbf:
+    FROM openmaptiles/openmaptiles-tools:6.1.4
+    RUN download-osm osmfr asia/china/hong_kong
+    RUN ls -lah
+    SAVE ARTIFACT hong_kong-latest.osm.pbf hk.osm.pbf
+
+hk.mbtiles:
+    FROM +tilemaker
+    COPY +hk.osm.pbf/hk.osm.pbf .
+    RUN tilemaker --input hk.osm.pbf --output hk.mbtiles --bbox 22.1193278,114.0028131,22.4393278,114.3228131 --skip-integrity
+    SAVE ARTIFACT hk.mbtiles
 
 lix-download:
     USER $USERNAME
