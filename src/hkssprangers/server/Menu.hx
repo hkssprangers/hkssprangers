@@ -646,21 +646,6 @@ class Menu extends View<MenuProps> {
         return jsx('
             <Fragment>
                 <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                            <div className="p-3">${LonelyPaisleyMakeYourOwnChoiceSet.title} (星期一至五全日，六日晚市)</div>
-                        </div>
-                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.riceOrPasta.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.riceOrPasta.enums())}</div>
-                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.title} (${LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.description})</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.meatOrSeafoodOptions.items.enums())}</div>
-                        <div className="p-3 font-bold">${LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.title} (${LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.description})</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.vegOptions.items.enums())}</div>
-                        <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.title} (選一)</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.sauce.enums())}</div>
-                        <div className="font-bold p-3">${LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyMakeYourOwnChoiceSet.properties.drink.enums().filter(v -> v.endsWith(" +$0")).concat(["咖啡和奶類飲品半價"]))}</div>
-                    </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                             <div className="p-3">${LonelyPaisleyLunchSet.title} (星期一至五)</div>

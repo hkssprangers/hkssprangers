@@ -800,8 +800,8 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [LonelyPaisley, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "18:30:00"):
-                return Unavailable('晚市最早 18:30 時段交收');
+            case [LonelyPaisley, "2022-04-18" | "2022-04-19" | "2022-04-20", Dinner]:
+                return Unavailable('晚市暫停');
 
             case [FastTasteSSP, "2022-04-10", Dinner] if (pickupTimeSlot.start.getTimePart() > "19:00:00"):
                 return Unavailable('收早 最遲 19:00 時段交收');

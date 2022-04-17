@@ -9,7 +9,6 @@ using Reflect;
 using Lambda;
 
 enum abstract LonelyPaisleyItem(String) to String {
-    final MakeYourOwnChoiceSet;
     final LunchSet;
     // final Brunch;
     // final Salad;
@@ -25,19 +24,16 @@ enum abstract LonelyPaisleyItem(String) to String {
         }
         return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), TimeSlotType.classify(timeSlot.start)] {
             case [Monday | Tuesday | Wednesday | Thursday | Friday, Lunch]:
-                (HkHolidays.isRedDay(timeSlot.start) ? [] : [MakeYourOwnChoiceSet])
-                .concat(
-                    [
-                        LunchSet,
-                        // Brunch,
-                        // Salad,
-                        Snacks,
-                        Dessert,
-                        PastaRice,
-                        Main,
-                        Drink,
-                    ]
-                );
+                [
+                    LunchSet,
+                    // Brunch,
+                    // Salad,
+                    Snacks,
+                    Dessert,
+                    PastaRice,
+                    Main,
+                    Drink,
+                ];
             case [_, Lunch]:
                 [
                     // Brunch,
@@ -50,7 +46,6 @@ enum abstract LonelyPaisleyItem(String) to String {
                 ];
             case [_, Dinner]:
                 [
-                    MakeYourOwnChoiceSet,
                     // Salad,
                     Snacks,
                     Dessert,
@@ -65,7 +60,6 @@ enum abstract LonelyPaisleyItem(String) to String {
     }
 
     public function getDefinition():Dynamic return switch (cast this:LonelyPaisleyItem) {
-        case MakeYourOwnChoiceSet: LonelyPaisleyMenu.LonelyPaisleyMakeYourOwnChoiceSet;
         case LunchSet: LonelyPaisleyMenu.LonelyPaisleyLunchSet;
         // case Brunch: LonelyPaisleyMenu.LonelyPaisleyBrunch;
         // case Salad: LonelyPaisleyMenu.LonelyPaisleySalad;
@@ -459,100 +453,6 @@ class LonelyPaisleyMenu {
         return item.name + " +$" + (item.price * 0.5);
     }
 
-    static public final LonelyPaisleyMakeYourOwnChoiceSet = {
-        title: "香港人有得揀套餐",
-        properties: {
-            riceOrPasta: {
-                type: "string",
-                title: "飯／意粉",
-                "enum": [
-                    "椰汁藍花飯 $68",
-                    "扁意粉 $68",
-                    "圓意粉 $68",
-                ],
-            },
-            meatOrSeafoodOptions: {
-                type: "array",
-                description: "選一，額外一款+$15",
-                title: "肉類／海鮮",
-                items: {
-                    type: "string",
-                    "enum": [
-                        "雞肉",
-                        "肥牛",
-                        "豬腩片",
-                        "魷魚",
-                        "蟹肉",
-                        "海蝦",
-                    ],
-                },
-                uniqueItems: true,
-                minItems: 1,
-            },
-            vegOptions: {
-                type: "array",
-                description: "選一，額外一款+$8",
-                title: "素菜",
-                items: {
-                    type: "string",
-                    "enum": [
-                        "洋蔥",
-                        "雜菌",
-                        "椰菜",
-                        "粟米仔",
-                        "彩椒",
-                        "意瓜",
-                        "蘆筍",
-                        "車厘茄",
-                    ],
-                },
-                uniqueItems: true,
-                minItems: 1,
-            },
-            sauce: {
-                type: "string",
-                title: "醬汁",
-                "enum": [
-                    "自家製蕃茄汁",
-                    "自家製麻辣汁",
-                    "忌廉白汁",
-                    "<泰國> 青咖喱",
-                    "<泰國> 冬陰功",
-                    "<韓國> 辣椒醬",
-                    "<阿根廷> 自家製香辣青醬",
-                    "<馬來西亞> 森巴醬",
-                ],
-            },
-            drink: {
-                type: "string",
-                title: "飲品",
-                "enum": [
-                    "土耳其茶(熱) +$0",
-                    "蘋果茶(熱) +$0",
-                    "蘋果茶(凍) +$0",
-
-                    // +$8 汽水
-                    // '可樂 +$8',
-                    // '雪碧 +$8',
-                ]
-                    // 咖啡/奶類飲品半價
-                    .concat(coffees.map(printHalfPrice))
-                    .concat(milks.map(printHalfPrice))
-                    // .concat(teas.map(printHalfPrice))
-                    // .concat(mocktails.map(printHalfPrice))
-                    // .concat(otherDrinks.map(printHalfPrice))
-                ,
-            },
-        },
-        required: [
-            "riceOrPasta",
-            "meatOrSeafoodOptions",
-            "vegOptions",
-            "sauce",
-            "drink",
-        ],
-    }
-
     static public final LonelyPaisleyLunchSet = {
         title: "午市套餐",
         properties: {
@@ -722,35 +622,6 @@ class LonelyPaisleyMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case MakeYourOwnChoiceSet:
-                summarizeOrderObject(orderItem.item, def, ["riceOrPasta","meatOrSeafoodOptions","vegOptions","sauce","drink"], null, (fieldName, value) -> switch fieldName {
-                    case "meatOrSeafoodOptions":
-                        final price = switch (value != null ? value.length : 0) {
-                            case 0, 1:
-                                0;
-                            case n:
-                                (n - 1) * 15;
-                        };
-                        {
-                            value: value != null ? value.join(",") : "",
-                            price: price,
-                        }
-                    case "vegOptions":
-                        final price = switch (value != null ? value.length : 0) {
-                            case 0, 1:
-                                0;
-                            case n:
-                                (n - 1) * 8;
-                        };
-                        {
-                            value: value != null ? value.join(",") : "",
-                            price: price,
-                        }
-                    case _: 
-                        {
-                            price: null,
-                        };
-                });
             case LunchSet:
                 summarizeOrderObject(orderItem.item, def, ["starter","main","drink","dessert"]);
             case Snacks | Dessert | PastaRice | Main | Drink:
