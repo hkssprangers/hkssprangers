@@ -645,19 +645,21 @@ class Menu extends View<MenuProps> {
         }
         return jsx('
             <Fragment>
-                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                            <div className="p-3">${LonelyPaisleyLunchSet.title} (星期一至五)</div>
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${LonelyPaisleyLunchSet.title} (星期一至五)</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.starter.title}</div>
+                            <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.starter.enums())}</div>
+                            <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.main.title}</div>
+                            ${renderItems(LonelyPaisleyLunchSet.properties.main.enums())}
                         </div>
-                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.starter.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.starter.enums())}</div>
-                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.main.title}</div>
-                        ${renderItems(LonelyPaisleyLunchSet.properties.main.enums())}
-                        <div className="font-bold p-3">${LonelyPaisleyLunchSet.properties.drink.title}</div>
-                        <div className="p-3">${slashes(LonelyPaisleyLunchSet.properties.drink.enums().filter(v -> v.endsWith(" +$0")).concat(["咖啡和奶類飲品半價"]))}</div>
-                        <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.dessert.title}</div>
-                        ${renderItems(LonelyPaisleyLunchSet.properties.dessert.enums(), true)}
+                        <div className="md:w-1/2 md:pl-3">
+                            <div className="font-bold p-3">${LonelyPaisleyLunchSet.properties.drink.title}</div>
+                            ${renderItems(LonelyPaisleyLunchSet.properties.drink.enums().filter(v -> v.endsWith(" +$0")).concat(["咖啡和奶類飲品半價"]))}
+                            <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.dessert.title}</div>
+                            ${renderItems(LonelyPaisleyLunchSet.properties.dessert.enums(), true)}
+                        </div>
                     </div>
                 </div>
                 <div className="md:flex flex-row">
