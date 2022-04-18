@@ -235,7 +235,48 @@ ssp.mbtiles:
     COPY +ssp.osm.pbf/ssp.osm.pbf .
     RUN tilemaker --input ssp.osm.pbf --bbox 114.08885,22.2856527,114.2475128,22.4311088 --output ssp.mbtiles
     RUN ls -lah
-    SAVE ARTIFACT ssp.mbtiles
+    SAVE ARTIFACT ssp.mbtiles AS LOCAL .
+
+ssp.mbtiles-server:
+    FROM debian:bullseye
+    RUN apt-get update -qqy && \
+        apt-get install -qqy --no-install-recommends \
+            build-essential \
+            sqlite3 \
+            libsqlite3-dev \
+            ruby \
+            ruby-dev \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+    ARG TM_COMMIT=763200664db2319079e97cc8134c41deffb41f0d
+    COPY (+github-src/src --REPO=systemed/tilemaker --COMMIT="$TM_COMMIT") /tilemaker
+    WORKDIR /tilemaker/server
+    RUN gem install sqlite3 cgi glug rack
+    COPY +ssp.mbtiles/ssp.mbtiles .
+    ENV RACK_ENV=production
+    EXPOSE 8080
+    CMD ["ruby", "server.rb", "ssp.mbtiles"]
+    SAVE IMAGE ssp.mbtiles-server:latest
+
+ssp.mbtiles-serve:
+    LOCALLY
+    WITH DOCKER --load ssp.mbtiles-server:latest=+ssp.mbtiles-server
+        RUN docker run \
+            --rm \
+            -p 8080:8080 \
+            ssp.mbtiles-server:latest
+    END
+
+nginx-serve:
+    LOCALLY
+    WITH DOCKER
+        RUN docker run \
+            --rm \
+            -p 8080:80 \
+            nginx
+    END
 
 lix-download:
     USER $USERNAME

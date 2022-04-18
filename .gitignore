@@ -37,3 +37,7 @@ node_modules
 pscale_dump_*
 
 /prisma/dbml
+
+*.mbtiles
+*.osm
+*.osm.pbf
