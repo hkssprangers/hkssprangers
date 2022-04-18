@@ -34,23 +34,30 @@ class TelegramTools {
         if (deliveries.length <= 0)
             return Promise.resolve(null);
 
-        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
-        var deliveryStrs = deliveries
+        final tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        final deliveryStrs = deliveries
             .map(d ->
                 "📃 " + d.orders.map(o -> o.shop.info().name).join(", ") + "\n " + d.pickupTimeSlot.print()
             )
             .map(str -> StringTools.htmlEscape(str, false));
-        var msg = '啱啱收到 ${deliveries.length} 單';
-        if (deliveries.length > 0) {
-            msg += " ✨\n\n";
-            msg += deliveryStrs.join("\n\n");
-        }
-        return tgBot.telegram.sendMessage(
-            TelegramConfig.groupChatId(stage),
-            msg,
+        final msg = '啱啱收到 ${deliveries.length} 單 ✨\n\n ${deliveryStrs.join("\n\n")}';
+
+        return PromiseRetry.call(
+            function (retry, attempt) {
+                return tgBot.telegram.sendMessage(
+                    TelegramConfig.groupChatId(stage),
+                    msg,
+                    {
+                        parse_mode: "HTML",
+                        disable_web_page_preview: true,
+                    }
+                ).catchError(err -> {
+                    trace(err);
+                    cast retry(err);
+                });
+            },
             {
-                parse_mode: "HTML",
-                disable_web_page_preview: true,
+                retries: 3,
             }
         );
     }

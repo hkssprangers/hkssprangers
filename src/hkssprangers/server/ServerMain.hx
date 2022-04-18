@@ -359,6 +359,8 @@ class ServerMain {
     }
 
     static public function notifyDeliveryRequestReceived(delivery:Delivery) {
+        trace("notifyDeliveryRequestReceived");
+        final msg = delivery.printReceivedMsg();
         switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
@@ -376,24 +378,48 @@ class ServerMain {
                             delivery.customer.tg.id; // tg private chat's chat id should be the same as the user id
                         })
                         .then(chatId -> {
-                            tgBot.telegram.sendMessage(
-                                chatId,
-                                delivery.printReceivedMsg(),
+                            trace("telegram.sendMessage");
+
+                            PromiseRetry.call(
+                                function (retry, attempt) {
+                                    return tgBot.telegram.sendMessage(
+                                        chatId,
+                                        msg,
+                                        {
+                                            disable_web_page_preview: true,
+                                        }
+                                    ).catchError(err -> {
+                                        trace(err);
+                                        cast retry(err);
+                                    });
+                                },
                                 {
-                                    disable_web_page_preview: true,
+                                    retries: 3,
                                 }
                             );
                         });
                 });
             case WhatsApp:
-                twilio.messages.create({
-                    from: "whatsapp:+85264507612",
-                    to: 'whatsapp:+852' + delivery.customer.whatsApp,
-                    body: delivery.printReceivedMsg(),
-                }).then(msg -> {
-                    trace(msg);
-                    null;
-                });
+                trace("twilio.messages.create");
+                PromiseRetry.call(
+                    function (retry, attempt) {
+                        return twilio.messages.create({
+                            from: "whatsapp:+85264507612",
+                            to: 'whatsapp:+852' + delivery.customer.whatsApp,
+                            body: msg,
+                        }).catchError(err -> {
+                            trace(err);
+                            cast retry(err);
+                        });
+                    },
+                    {
+                        retries: 3,
+                    }
+                )
+                    .then(msg -> {
+                        trace(msg);
+                        null;
+                    });
             case _:
                 throw "Unsupported";
         }
