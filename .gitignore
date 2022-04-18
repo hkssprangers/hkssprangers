@@ -39,5 +39,6 @@ pscale_dump_*
 /prisma/dbml
 
 *.mbtiles
+*.pmtiles
 *.osm
 *.osm.pbf

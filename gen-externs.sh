@@ -18,6 +18,7 @@ npx dts2hx \
     @splidejs/splide \
     @splidejs/react-splide \
     maplibre-gl gl-matrix potpack \
+    pmtiles \
     --noLibWrap \
     --useSystemHaxe \
     --output lib/dts2hx

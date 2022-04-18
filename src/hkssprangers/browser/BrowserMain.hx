@@ -1,5 +1,7 @@
 package hkssprangers.browser;
 
+import js.Browser;
+import js.Lib;
 import js.html.URLSearchParams;
 import mui.core.styles.*;
 import haxe.*;
@@ -128,9 +130,22 @@ class BrowserMain {
     }
 
     static function initMap() {
+        final cache = new pmtiles.ProtocolCache();
+        Lib.require("maplibre-gl").addProtocol("pmtiles", cache.protocol);
+        final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
+        final host = Browser.document.location.origin;
+        style.sources.openmaptiles = {
+            "type": "vector",
+            "tiles": ['pmtiles://${host}/ssp.pmtiles/{z}/{x}/{y}'],
+            "maxzoom": 14,
+        }
+        for (l in (style.layers:Array<Dynamic>)) {
+            if (Reflect.hasField(l.layout, "text-font"))
+                Reflect.setField(l.layout, "text-font", []);
+        }
         final map = new maplibre_gl.Map_({
             container: 'map',
-            style: "https://api.maptiler.com/maps/11d65c56-f50f-47c9-a9ba-b4993583d754/style.json?key=Umpy32MVTqGONWziZO5X",
+            style: style,
             center: [114.16025186047068, 22.33114444434112], // [lng, lat]
             zoom: 15,
         });

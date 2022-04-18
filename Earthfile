@@ -196,6 +196,9 @@ tilemaker:
     WORKDIR /tilemaker
     SAVE ARTIFACT /usr/local/bin/tilemaker
 
+pmtiles:
+    RUN pip3 install pmtiles==1.3.0
+
 china.osm.pbf:
     FROM openmaptiles/openmaptiles-tools:6.1.4
     RUN download-osm geofabrik china
@@ -235,7 +238,14 @@ ssp.mbtiles:
     COPY +ssp.osm.pbf/ssp.osm.pbf .
     RUN tilemaker --input ssp.osm.pbf --bbox 114.08885,22.2856527,114.2475128,22.4311088 --output ssp.mbtiles
     RUN ls -lah
-    SAVE ARTIFACT ssp.mbtiles AS LOCAL .
+    SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/
+
+ssp.pmtiles:
+    FROM +pmtiles
+    COPY +ssp.mbtiles/ssp.mbtiles .
+    RUN pmtiles-convert ssp.mbtiles ssp.pmtiles
+    RUN pmtiles-show ssp.pmtiles
+    SAVE ARTIFACT ssp.pmtiles AS LOCAL ./static/
 
 ssp.mbtiles-server:
     FROM debian:bullseye
