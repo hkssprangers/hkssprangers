@@ -142,6 +142,29 @@ github-src:
     RUN curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" | tar xz --strip-components=1 -C "$DIR"
     SAVE ARTIFACT "$DIR"
 
+osmosis:
+    FROM debian:bullseye
+    RUN apt-get update -qqy && \
+        apt-get install -qqy --no-install-recommends \
+            osmosis \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+    WORKDIR "$WORKDIR"
+
+osmium-tool:
+    FROM debian:bullseye
+    RUN apt-get update -qqy && \
+        apt-get install -qqy --no-install-recommends \
+            osmium-tool \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+    RUN osmium --version
+    WORKDIR "$WORKDIR"
+
 tilemaker:
     RUN apt-get update -qqy && \
         apt-get install -qqy --no-install-recommends \
@@ -179,17 +202,40 @@ china.osm.pbf:
     RUN ls -lah
     SAVE ARTIFACT china-latest.osm.pbf china.osm.pbf
 
+china.osm.pbf-check:
+    FROM +osmium-tool
+    COPY +china.osm.pbf/china.osm.pbf .
+    RUN osmium check-refs china.osm.pbf
+
 hk.osm.pbf:
     FROM openmaptiles/openmaptiles-tools:6.1.4
     RUN download-osm osmfr asia/china/hong_kong
     RUN ls -lah
     SAVE ARTIFACT hong_kong-latest.osm.pbf hk.osm.pbf
 
-hk.mbtiles:
-    FROM +tilemaker
+ssp.osm.pbf:
+    FROM +osmosis
     COPY +hk.osm.pbf/hk.osm.pbf .
-    RUN tilemaker --input hk.osm.pbf --output hk.mbtiles --bbox 22.1193278,114.0028131,22.4393278,114.3228131 --skip-integrity
-    SAVE ARTIFACT hk.mbtiles
+    RUN osmosis --read-pbf hk.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
+    RUN ls -lah
+    SAVE ARTIFACT ssp.osm.pbf
+
+ssp.osm.pbf-check:
+    FROM +osmium-tool
+    COPY +ssp.osm.pbf/ssp.osm.pbf .
+    RUN osmium check-refs ssp.osm.pbf
+
+ssp.osm.pbf-bbox:
+    FROM +osmium-tool
+    COPY +ssp.osm.pbf/ssp.osm.pbf .
+    RUN osmium fileinfo -e -g data.bbox ssp.osm.pbf
+
+ssp.mbtiles:
+    FROM +tilemaker
+    COPY +ssp.osm.pbf/ssp.osm.pbf .
+    RUN tilemaker --input ssp.osm.pbf --bbox 114.08885,22.2856527,114.2475128,22.4311088 --output ssp.mbtiles
+    RUN ls -lah
+    SAVE ARTIFACT ssp.mbtiles
 
 lix-download:
     USER $USERNAME
