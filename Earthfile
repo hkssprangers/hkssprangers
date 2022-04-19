@@ -409,7 +409,7 @@ serviceWorker-js:
     COPY haxe_libraries haxe_libraries
     COPY src src
     COPY .haxerc serviceWorker.hxml babel.config.json .
-    RUN mkdir static
+    RUN mkdir -p static
     RUN haxe serviceWorker.hxml
     RUN npx browserify serviceWorker.js --transform [ babelify --global ] -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
     SAVE ARTIFACT static/serviceWorker.bundled.js
