@@ -62,7 +62,7 @@ class MGYMenu {
                     "高湯浸菠菜 $" + markup(38),
                     "咸酸菜炒芽葉 $" + markup(58),
 
-                    "七彩孜然排骨 $" + markup(58),
+                    // "七彩孜然排骨 $" + markup(58),
                     "欖菜豆腐 $" + markup(58),
                     "蟠龍如 $" + markup(98),
 
