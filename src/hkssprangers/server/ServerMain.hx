@@ -630,6 +630,7 @@ class ServerMain {
                         "image/bmp",
                         "image/webp",
                         "image/x-icon",
+                        "application/octet-stream",
                     ]);
                 });
             }

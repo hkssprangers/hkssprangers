@@ -468,6 +468,7 @@ deploy:
     FROM +devcontainer
     USER $USERNAME
     COPY --chown=$USER_UID:$USER_GID static static
+    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/ssp.pmtiles
     COPY --chown=$USER_UID:$USER_GID +browser-js/browser.bundled.js static/browser.bundled.js
     COPY --chown=$USER_UID:$USER_GID +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
     COPY --chown=$USER_UID:$USER_GID +tailwind/tailwind.css static/css/tailwind.css
