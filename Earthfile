@@ -62,6 +62,7 @@ RUN apt-get update \
         # tilemaker deps
         liblua5.1-0 \
         liblua5.1-0-dev \
+        osmosis \
         # install docker engine for using `WITH DOCKER`
         docker-ce \
     # install node
@@ -145,17 +146,6 @@ github-src:
     RUN curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" | tar xz --strip-components=1 -C "$DIR"
     SAVE ARTIFACT "$DIR"
 
-osmosis:
-    FROM debian:bullseye
-    RUN apt-get update -qqy && \
-        apt-get install -qqy --no-install-recommends \
-            osmosis \
-        # Clean up
-        && apt-get autoremove -y \
-        && apt-get clean -y \
-        && rm -rf /var/lib/apt/lists/*
-    WORKDIR "$WORKDIR"
-
 osmium-tool:
     FROM debian:bullseye
     RUN apt-get update -qqy && \
@@ -220,7 +210,6 @@ hk.osm.pbf:
     SAVE ARTIFACT hong_kong-latest.osm.pbf hk.osm.pbf
 
 ssp.osm.pbf:
-    FROM +osmosis
     COPY +hk.osm.pbf/hk.osm.pbf .
     RUN osmosis --read-pbf hk.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
     RUN ls -lah
