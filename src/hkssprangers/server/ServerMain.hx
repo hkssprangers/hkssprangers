@@ -322,9 +322,6 @@ class ServerMain {
             if (payload != null) switch (untyped payload.filename:String) {
                 case null:
                     // pass
-                case filename if (filename.endsWith(".pmtiles")):
-                    reply.header("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800"); // max-age: 1 day, stale-while-revalidate: 7 days
-                    return Promise.resolve(payload);
                 case filename:
                     var hash:Null<String> = req.query.md5;    
                     var actual = StaticResource.hash(filename);

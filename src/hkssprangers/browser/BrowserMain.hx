@@ -1,5 +1,6 @@
 package hkssprangers.browser;
 
+import haxe.io.Path;
 import js.Browser;
 import js.Lib;
 import js.html.URLSearchParams;
@@ -134,9 +135,10 @@ class BrowserMain {
         Lib.require("maplibre-gl").addProtocol("pmtiles", cache.protocol);
         final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
         final host = Browser.document.location.origin;
+        final pmtiles = Path.join(['pmtiles://${host}', R("/ssp.pmtiles"), "{z}/{x}/{y}"]);
         style.sources.openmaptiles = {
             "type": "vector",
-            "tiles": ['pmtiles://${host}/ssp.pmtiles/{z}/{x}/{y}'],
+            "tiles": [pmtiles],
             "maxzoom": 14,
         }
         for (l in (style.layers:Array<Dynamic>)) {

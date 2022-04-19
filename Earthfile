@@ -418,6 +418,7 @@ browser-js:
     COPY src src
     COPY .haxerc browser.hxml babel.config.json holidays.json .
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
+    COPY +ssp.pmtiles/ssp.pmtiles static/ssp.pmtiles
     RUN haxe browser.hxml
     RUN npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
     SAVE ARTIFACT static/browser.bundled.js
