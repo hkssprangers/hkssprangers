@@ -59,6 +59,9 @@ RUN apt-get update \
         imagemagick \
         librsvg2-bin \
         webp \
+        # tilemaker deps
+        liblua5.1-0 \
+        liblua5.1-0-dev \
         # install docker engine for using `WITH DOCKER`
         docker-ce \
     # install node
@@ -169,8 +172,6 @@ tilemaker:
     RUN apt-get update -qqy && \
         apt-get install -qqy --no-install-recommends \
             build-essential \
-            liblua5.1-0 \
-            liblua5.1-0-dev \
             libprotobuf-dev \
             libsqlite3-dev \
             protobuf-compiler \
@@ -195,6 +196,8 @@ tilemaker:
     RUN mv tilemaker /usr/local/bin/
     WORKDIR /tilemaker
     SAVE ARTIFACT /usr/local/bin/tilemaker
+    SAVE ARTIFACT resources/config-openmaptiles.json config.json
+    SAVE ARTIFACT resources/process-openmaptiles.lua process.lua
 
 pmtiles:
     RUN pip3 install pmtiles==1.3.0
@@ -234,9 +237,14 @@ ssp.osm.pbf-bbox:
     RUN osmium fileinfo -e -g data.bbox ssp.osm.pbf
 
 ssp.mbtiles:
-    FROM +tilemaker
+    FROM +devcontainer
     COPY +ssp.osm.pbf/ssp.osm.pbf .
-    RUN tilemaker --input ssp.osm.pbf --bbox 114.08885,22.2856527,114.2475128,22.4311088 --output ssp.mbtiles
+    RUN tilemaker \
+        --config /usr/local/share/tilemaker/config.json \
+        --process /usr/local/share/tilemaker/process.lua \
+        --input ssp.osm.pbf \
+        --bbox 114.08885,22.2856527,114.2475128,22.4311088 \
+        --output ssp.mbtiles
     RUN ls -lah
     SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/
 
@@ -343,16 +351,12 @@ devcontainer:
     # AWS cli
     COPY +awscli/aws /aws
     RUN /aws/install
-    
-    # Install planetscale cli
-    ARG PSCALE_VERSION=0.89.0
-    RUN curl -fsSL https://github.com/planetscale/cli/releases/download/v${PSCALE_VERSION}/pscale_${PSCALE_VERSION}_linux_amd64.deb -o pscale.deb \
-        && apt-get -y install --no-install-recommends ./pscale.deb \
-        && rm ./pscale.deb
 
     COPY +dbmate/dbmate /usr/local/bin/
 
     COPY +tilemaker/tilemaker /usr/local/bin/
+    COPY +tilemaker/config.json /usr/local/share/tilemaker/config.json
+    COPY +tilemaker/process.lua /usr/local/share/tilemaker/process.lua
 
     USER $USERNAME
 
