@@ -226,7 +226,9 @@ ssp.osm.pbf-bbox:
     RUN osmium fileinfo -e -g data.bbox ssp.osm.pbf
 
 ssp.mbtiles:
-    FROM +devcontainer
+    COPY +tilemaker/tilemaker /usr/local/bin/
+    COPY +tilemaker/config.json /usr/local/share/tilemaker/config.json
+    COPY +tilemaker/process.lua /usr/local/share/tilemaker/process.lua
     COPY +ssp.osm.pbf/ssp.osm.pbf .
     RUN tilemaker \
         --config /usr/local/share/tilemaker/config.json \
@@ -361,6 +363,8 @@ devcontainer:
     VOLUME /workspace/node_modules
     COPY --chown=$USER_UID:$USER_GID +dts2hx-externs/dts2hx lib/dts2hx
     VOLUME /workspace/lib/dts2hx
+    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/tiles/ssp.pmtiles
+    VOLUME /workspace/static/tiles
 
     USER root
 
@@ -418,7 +422,6 @@ browser-js:
     COPY src src
     COPY .haxerc browser.hxml babel.config.json holidays.json .
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    COPY +ssp.pmtiles/ssp.pmtiles static/ssp.pmtiles
     RUN haxe browser.hxml
     RUN npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
     SAVE ARTIFACT static/browser.bundled.js
@@ -462,7 +465,6 @@ deploy:
     FROM +devcontainer
     USER $USERNAME
     COPY --chown=$USER_UID:$USER_GID static static
-    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/ssp.pmtiles
     COPY --chown=$USER_UID:$USER_GID +browser-js/browser.bundled.js static/browser.bundled.js
     COPY --chown=$USER_UID:$USER_GID +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
     COPY --chown=$USER_UID:$USER_GID +tailwind/tailwind.css static/css/tailwind.css
