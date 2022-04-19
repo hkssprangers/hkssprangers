@@ -224,19 +224,19 @@ class LaksaStoreMenu {
         var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
             case NoodleSet:
-                final price = parsePrice(LaksaStoreNoodleSet.description).price + parsePrice(orderItem.item.drink).price;
+                final noodlePrice = parsePrice(LaksaStoreNoodleSet.description).price;
                 {
                     orderDetails:
-                        fullWidthDot + orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + price + "\n" +
+                        fullWidthDot + orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + noodlePrice + "\n" +
                         fullWidthSpace + orderItem.item.drink,
-                    orderPrice: price,
+                    orderPrice: noodlePrice + parsePrice(orderItem.item.drink).price,
                 };
             case RiceSet | BakKutTeh:
                 {
                     orderDetails:
                         fullWidthDot + orderItem.item.main + "\n" +
                         fullWidthSpace + orderItem.item.drink,
-                    orderPrice: parsePrice(orderItem.item.main).price,
+                    orderPrice: parsePrice(orderItem.item.main).price + parsePrice(orderItem.item.drink).price,
                 };
             case Hotpot:
                 {
