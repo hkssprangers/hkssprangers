@@ -803,14 +803,11 @@ enum abstract Shop(String) to String {
             case [LonelyPaisley, "2022-04-18" | "2022-04-19" | "2022-04-20", Dinner]:
                 return Unavailable('晚市暫停');
 
-            case [FastTasteSSP, "2022-04-10", Dinner] if (pickupTimeSlot.start.getTimePart() > "19:00:00"):
-                return Unavailable('收早 最遲 19:00 時段交收');
-
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
-            // https://www.instagram.com/p/CcLDFuYvfbz/
-            case [KCZenzero, "2022-04-11", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=512203487264456&id=102717031546439
+            case [KCZenzero, "2022-04-20", _]:
                 return Unavailable('休息一天');
 
             case [Toolss, _, _]:
