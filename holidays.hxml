@@ -1,0 +1,7 @@
+--js holidays.js
+--main hkssprangers.info.HkHolidays
+--class-path src
+--class-path lib/dts2hx
+--library hxnodejs
+--library compiletime
+--dce full

@@ -437,6 +437,16 @@ server:
     SAVE ARTIFACT index.js
     SAVE ARTIFACT static/images
 
+holidays.json:
+    FROM +devcontainer
+    COPY haxe_libraries haxe_libraries
+    COPY src src
+    COPY .haxerc holidays.hxml package-lock.json .
+    RUN echo '{}' > holidays.json
+    RUN haxe holidays.hxml
+    RUN node holidays.js
+    SAVE ARTIFACT holidays.json AS LOCAL holidays.json
+
 importGoogleForm-js:
     FROM +devcontainer
     COPY haxe_libraries haxe_libraries

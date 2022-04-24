@@ -42,9 +42,16 @@ class HkHolidays {
 
     static public function main() {
         getHolidays().then(ical -> {
-            var holidays:DynamicAccess<String> = {};
+            final holidays:DynamicAccess<String> = {};
             for (_ => d in ical)
-                holidays[(d.start:LocalDateString).getDatePart()] = d.summary;
+            switch (d.type) {
+                case "VEVENT":
+                    holidays[(d.start:LocalDateString).getDatePart()] = d.summary;
+                case "VCALENDAR":
+                    // pass
+                case type:
+                    trace(type);
+            }
             File.saveContent("holidays.json", Json.stringify(holidays, null, "  "));
         });
     }
