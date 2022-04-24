@@ -112,7 +112,8 @@ class BiuKeeLokYuenMenu {
 
     static public final BiuKeeLokYuenLoMeinSet = {
         title: "撈麵",
-        description: "撈麵配上湯及自家秘製撈麵醬",
+        // description: "撈麵配上湯及自家秘製撈麵醬",
+        description: "撈麵配上湯及蠔油。 ⚠️自家秘製撈麵醬暫時缺貨",
         properties: {
             main1: {
                 type: "string",
