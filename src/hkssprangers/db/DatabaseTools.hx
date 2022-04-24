@@ -329,11 +329,15 @@ class DatabaseTools {
                             case Lunch: "L";
                             case Dinner: "D";
                         }
-                        db.delivery.where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotStart < end && d.deliveryCode.like(codePrefix + "%") && !d.deleted)
-                            .count()
-                            .next(count -> {
-                                codePrefix + Std.string(count + 1).lpad("0", 2);
-                            });
+                        db.delivery
+                            .where(d -> d.pickupTimeSlotStart >= start && d.pickupTimeSlotStart < end && d.deliveryCode.like(codePrefix + "%") && !d.deleted)
+                            .all()
+                            .next(deliveries -> {
+                                final codeParse = ~/^[LD]([0-9]+)$/;
+                                final codeNums = deliveries.map(d -> codeParse.match(d.deliveryCode) ? Std.parseInt(codeParse.matched(1)) : 0);
+                                codeNums.fold((n, max) -> n > max ? n : max, 0);
+                            })
+                            .next(num -> codePrefix + Std.string(num + 1).lpad("0", 2));
                     case deliveryCode:
                         Promise.resolve(deliveryCode);
                 }
