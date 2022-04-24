@@ -2,8 +2,8 @@ package hkssprangers.info;
 
 #if (!browser)
 import sys.io.File;
-import js.npm.fetch.Fetch;
 #end
+import CrossFetch.fetch;
 import js.lib.Promise;
 import haxe.*;
 using Reflect;
@@ -32,7 +32,7 @@ class HkHolidays {
         uid:String,
         summary:String,
     }>> {
-        return Fetch.fetch(icalUrl)
+        return fetch(icalUrl)
             .then(r -> if (r.ok) {
                 r.text().then(cast NodeIcal.sync.parseICS);
             } else {

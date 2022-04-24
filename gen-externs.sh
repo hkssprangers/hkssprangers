@@ -1,6 +1,7 @@
 set -ex
 
 npx dts2hx \
+    cross-fetch \
     telegraf \
     twilio \
     @types/js-cookie \

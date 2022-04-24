@@ -1,7 +1,7 @@
 package hkssprangers;
 
 import js.lib.Promise;
-import js.npm.fetch.Fetch.fetch;
+import CrossFetch.fetch;
 
 class Cloudflared {
     static public function getHostname(metricsUrl:String):Promise<String> {

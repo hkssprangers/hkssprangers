@@ -1,7 +1,6 @@
 --js processCss.js
 --main hkssprangers.ProcessCss
 --class-path src
---class-path lib/hxnodelibs
 --class-path lib/dts2hx
 --library hxnodejs
 --library react-next
