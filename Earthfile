@@ -394,7 +394,6 @@ tailwind:
 
 style-css:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
@@ -404,7 +403,6 @@ style-css:
 
 serviceWorker-js:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY lib/workbox lib/workbox
     COPY haxe_libraries haxe_libraries
     COPY src src
@@ -416,7 +414,6 @@ serviceWorker-js:
 
 browser-js:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
@@ -428,7 +425,6 @@ browser-js:
 
 server:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY +browser-js/browser.bundled.js static/browser.bundled.js
@@ -443,7 +439,6 @@ server:
 
 importGoogleForm-js:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
@@ -453,7 +448,6 @@ importGoogleForm-js:
 
 test:
     FROM +devcontainer
-    COPY lib/hxnodelibs lib/hxnodelibs
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
