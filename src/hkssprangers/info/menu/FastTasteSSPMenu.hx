@@ -327,6 +327,7 @@ class FastTasteSSPMenu {
             main: {
                 type: "string",
                 title: "超值晚市套餐",
+                "enum": [
                     "A 蟹籽煙三文魚忌廉汁意粉 $88",
                     "B 龍蝦汁海鮮意大利飯 $98",
                     "C 招牌公司漢堡配薯條 $108",
