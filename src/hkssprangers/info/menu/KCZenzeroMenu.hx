@@ -130,7 +130,7 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "臘米豬手 $68";
+    static final limitedSpecial = "香辣蟹燴飯 $55";
     static final limitedSpecialSeperateBox = true;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
