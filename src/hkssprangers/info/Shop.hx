@@ -800,9 +800,6 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [LonelyPaisley, "2022-04-18" | "2022-04-19" | "2022-04-20", Dinner]:
-                return Unavailable('晚市暫停');
-
             // https://www.facebook.com/lonelypaisley/posts/354157133440826
             case [LonelyPaisley, "2022-05-02", Dinner]:
                 return Unavailable('晚市暫停');
@@ -810,8 +807,8 @@ enum abstract Shop(String) to String {
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
-            // https://www.facebook.com/permalink.php?story_fbid=512203487264456&id=102717031546439
-            case [KCZenzero, "2022-04-20", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=515928566891948&id=102717031546439
+            case [KCZenzero, "2022-04-26", _]:
                 return Unavailable('休息一天');
 
             case [Toolss, _, _]:
