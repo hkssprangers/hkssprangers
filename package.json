@@ -32,7 +32,7 @@
     "maplibre-gl": "^2.1.9",
     "nodemon": "^2.0.15",
     "pmtiles": "^1.0.3",
-    "prisma": "^3.12.0",
+    "prisma": "^3.13.0",
     "prisma-dbml-generator": "^0.9.0",
     "react-router-dom": "^5.3.0",
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
