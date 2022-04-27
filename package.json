@@ -60,7 +60,7 @@
     "fastify-accepts": "^2.2.0",
     "fastify-cookie": "^5.6.1",
     "fastify-formbody": "^5.2.0",
-    "fastify-static": "^4.6.1",
+    "fastify-static": "^4.7.0",
     "fastify-telegraf": "1.0.1",
     "google-auth-library": "^8.0.0",
     "google-spreadsheet": "^3.2.0",
