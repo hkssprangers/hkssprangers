@@ -19,6 +19,7 @@ enum abstract KCZenzeroItem(String) to String {
         return switch (timeSlotType) {
             case Lunch:
                 [
+                    LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -28,7 +29,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    // LimitedSpecial,
+                    LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -130,17 +131,18 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "香辣蟹燴飯 $55";
+    static final limitedSpecial = "MM7雞煲";
     static final limitedSpecialSeperateBox = true;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
-        description: "⚠️ 請提早落單。售完即止。",
+        description: "⚠️ 每日12點半後供應。製作需時，請提早落單。售完即止。MM7雞煲材料包括：松露餐肉 海蝦 鴨血 泡菜 金菇 春雞 芝士 烏冬",
         properties: {
             special: {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    limitedSpecial,
+                    "MM7雞煲(蕃茄濃湯)＋蘆薈椰汁西米露 $88",
+                    "MM7雞煲(香辣湯)＋蘆薈椰汁西米露 $88",
                 ],
                 "default": limitedSpecial
             }
