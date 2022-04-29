@@ -56,7 +56,7 @@
     "aws-sdk": "^2.826.0",
     "aws-serverless-fastify": "github:andyli/aws-serverless-fastify#multiValueHeaders-1.0.28-lockless",
     "cross-fetch": "^3.1.5",
-    "fastify": "^3.28.0",
+    "fastify": "^3.29.0",
     "fastify-accepts": "^2.3.0",
     "fastify-cookie": "^5.7.0",
     "fastify-formbody": "^5.3.0",
