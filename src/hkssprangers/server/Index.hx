@@ -9,7 +9,6 @@ import haxe.io.Path;
 import hkssprangers.NodeModules;
 import hkssprangers.browser.*;
 import hkssprangers.server.ServerMain.*;
-import hkssprangers.GoogleForms.formUrls;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 using hkssprangers.server.FastifyTools;
