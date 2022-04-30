@@ -1,15 +1,18 @@
 package hkssprangers;
 
+// Keep the browser script small
+#if browser
+#error
+#end
+
 import hkssprangers.info.Delivery;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Discounts;
-#if (!browser)
 import fastify.*;
 import hkssprangers.server.*;
 using hkssprangers.server.FastifyTools;
-#end
 import tink.CoreApi;
 import Math.*;
 using Lambda;
@@ -1955,7 +1958,6 @@ class DeliveryFee {
         }
     }
 
-    #if (!browser)
     static public function get(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
         final delivery:Delivery = Json.parse(req.query.delivery);
         return decideDeliveryFee(delivery)
@@ -1974,5 +1976,4 @@ class DeliveryFee {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         app.get("/decide-delivery-fee", DeliveryFee.get);
     }
-    #end
 }
