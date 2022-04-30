@@ -310,11 +310,11 @@ class ServerMain {
         //     return tgBot.handleUpdate(req.body, reply.raw);
         // });
 
-        app.register(require('fastify-formbody'));
-        app.register(require('fastify-cookie'));
-        app.register(require('fastify-accepts'));
+        app.register(require('@fastify/formbody'));
+        app.register(require('@fastify/cookie'));
+        app.register(require('@fastify/accepts'));
 
-        app.register(require('fastify-static'), {
+        app.register(require('@fastify/static'), {
             root: sys.FileSystem.absolutePath(StaticResource.resourcesDir),
             wildcard: false,
         });
