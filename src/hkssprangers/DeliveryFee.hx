@@ -5,6 +5,12 @@ import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Discounts;
+#if (!browser)
+import fastify.*;
+import hkssprangers.server.*;
+using hkssprangers.server.FastifyTools;
+#end
+import tink.CoreApi;
 import Math.*;
 using Lambda;
 using StringTools;
@@ -1915,13 +1921,13 @@ class DeliveryFee {
         },
     ];
 
-    static public function decideDeliveryFee(delivery:Delivery):Null<Float> {
-        var matched:Array<{
+    static public function decideDeliveryFee(delivery:Delivery):Promise<Float> {
+        final matched:Array<{
             place:String,
             fee:Float,
         }> = [];
 
-        var cluster = ShopCluster.classify(delivery.orders[0].shop);
+        final cluster = ShopCluster.classify(delivery.orders[0].shop);
 
         for (h in heuristics) {
             if (h.match(delivery.pickupLocation)) {
@@ -1933,19 +1939,40 @@ class DeliveryFee {
         }
 
         if (matched.length <= 0) {
-            return null;
+            return Promise.reject(new Error(InternalError, "No matching heuristics"));
         }
 
-        var fee = matched[0].fee;
+        final fee = matched[0].fee;
         if (!matched.foreach(h -> h.fee == fee)) {
-            return null;
+            return Promise.reject(new Error(InternalError, "Not all matching heuristics agree"));
         }
 
-        var discount = Discounts.bestDiscountResult(delivery);
+        final discount = Discounts.bestDiscountResult(delivery);
         if (discount != null) {
-            fee -= discount.deliveryFeeDeduction;
+            return Promise.resolve(fee - discount.deliveryFeeDeduction);
+        } else {
+            return Promise.resolve(fee);
         }
-
-        return fee;
     }
+
+    #if (!browser)
+    static public function get(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
+        final delivery:Delivery = Json.parse(req.query.delivery);
+        return decideDeliveryFee(delivery)
+            .toJsPromise()
+            .catchError(err -> {
+                trace(err);
+                null;
+            })
+            .then(deliveryFee -> {
+                reply.send({
+                    deliveryFee: deliveryFee,
+                });
+            });
+    }
+
+    static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
+        app.get("/decide-delivery-fee", DeliveryFee.get);
+    }
+    #end
 }

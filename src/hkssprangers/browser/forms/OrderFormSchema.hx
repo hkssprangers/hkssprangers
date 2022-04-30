@@ -310,9 +310,30 @@ class OrderFormSchema {
                     delivery.customer.tel = formData.backupContactValue;
             }
 
-            delivery.deliveryFee = DeliveryFee.decideDeliveryFee(delivery);
-
             return delivery;
+        }).then(delivery -> {
+            #if browser
+                final params = new js.html.URLSearchParams({
+                    delivery: Json.stringify(delivery),
+                });
+                js.Browser.window.fetch("/decide-delivery-fee?" + params, {
+                    method: "get",
+                }).then(r -> r.ok ? r.json().then(obj -> {
+                    delivery.deliveryFee = obj.deliveryFee;
+                    delivery;
+                }) : null);
+            #else
+                DeliveryFee.decideDeliveryFee(delivery)
+                    .toJsPromise()
+                    .catchError(err -> {
+                        trace(err);
+                        null;
+                    })
+                    .then(deliveryFee -> {
+                        delivery.deliveryFee = deliveryFee;
+                        delivery;
+                    });
+            #end
         });
     }
 }
