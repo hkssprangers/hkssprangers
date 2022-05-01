@@ -1,17 +1,19 @@
 package hkssprangers.browser;
 
+import maplibre_gl.*;
 import haxe.io.Path;
 import js.Browser;
 import js.Lib;
+import js.html.*;
 import js.html.URLSearchParams;
 import mui.core.styles.*;
 import haxe.*;
-import js.html.DivElement;
 import js.Browser.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.CookiePayload;
 import hkssprangers.StaticResource.R;
+using Lambda;
 
 class BrowserMain {
     static final clusterStyle = [
@@ -113,7 +115,7 @@ class BrowserMain {
             case null:
                 //pass
             case elm:
-                initMap();
+                initMap(elm);
         }
     }
 
@@ -130,7 +132,7 @@ class BrowserMain {
         }
     }
 
-    static function initMap() {
+    static function initMap(container:Element) {
         final cache = new pmtiles.ProtocolCache();
         Lib.require("maplibre-gl").addProtocol("pmtiles", cache.protocol);
         final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
@@ -145,11 +147,22 @@ class BrowserMain {
             if (Reflect.hasField(l.layout, "text-font"))
                 Reflect.setField(l.layout, "text-font", []);
         }
+        final shopPts = [
+            for (info in Shop.all.map(s -> s.info()))
+            if (info.lng != null && info.lat != null)
+            new LngLat(info.lng, info.lat)
+        ];
+        final bounds = new LngLatBounds(shopPts[0], shopPts[0]);
+        for (pt in shopPts) {
+            bounds.extend(pt);
+        }
         final map = new maplibre_gl.Map_({
-            container: 'map',
+            container: container,
             style: style,
-            center: [114.16025186047068, 22.33114444434112], // [lng, lat]
-            zoom: 15,
+            bounds: bounds,
+            fitBoundsOptions: {
+                padding: 100,
+            },
         });
         map.scrollZoom.disable();
         map.addControl(cast new maplibre_gl.NavigationControl({
