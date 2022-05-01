@@ -19,6 +19,7 @@ enum abstract FishFranSSPItem(String) to String {
     final SoupPot;
     final SpicyThing;
     final Dessert;
+    final Drink;
 
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<FishFranSSPItem> {
         return switch (timeSlotType) {
@@ -34,6 +35,7 @@ enum abstract FishFranSSPItem(String) to String {
                     SoupPot,
                     SpicyThing,
                     Dessert,
+                    Drink,
                 ];
             case _:
                 [];
@@ -51,6 +53,7 @@ enum abstract FishFranSSPItem(String) to String {
         case SoupPot: FishFranSSPMenu.FishFranSSPSoupPot;
         case SpicyThing: FishFranSSPMenu.FishFranSSPSpicyThing;
         case Dessert: FishFranSSPMenu.FishFranSSPDessert;
+        case Drink: FishFranSSPMenu.FishFranSSPDrink;
     }
 }
 
@@ -376,6 +379,62 @@ class FishFranSSPMenu {
         ],
     };
 
+    static public final FishFranSSPDrink = {
+        title: "飲品",
+        type: "string",
+        "enum": [
+            item("珍寶青檸樹", 35),
+            item("珍寶菠蘿雪山(菠蘿+椰汁)", 35),
+            item("珍寶莎莎冰(蕃茄+青檸)", 35),
+            item("珍寶玉龍冰(火龍果)", 35),
+            item("珍寶紅豆沙冰 ", 35),
+            item("珍寶巨峰沙冰", 35),
+            item("珍寶白桃沙冰", 35),
+            item("珍寶芒果乳酸沙冰", 35),
+            item("荔枝梳打", 23),
+            item("巨峰梳打", 23),
+            item("百香果梳打", 23),
+            item("咸檸七", 21),
+            item("咸檸梳打", 21),
+            item("青檸梳打", 21),
+            item("蜜桃冰紅茶", 20),
+            item("西瓜汁(凍)", 24),
+            item("果醋飲料", 15),
+            item("王老吉", 15),
+            item("蜂蜜綠茶", 15),
+            item("梳打水(罐裝)", 15),
+            item("梳打水(杯裝)", 6),
+            item("罐裝汽水 可口可樂", 12),
+            item("罐裝汽水 無糖可樂", 12),
+            item("罐裝汽水 七喜", 12),
+            item("罐裝汽水 芬達橙汁", 12),
+            item("罐裝汽水 忌廉", 12),
+            item("熱檸茶", 16),
+            item("熱檸水", 16),
+            item("熱菜蜜", 16),
+            item("熱咖啡", 16),
+            item("熱奶茶", 16),
+            item("熱鴛鴦", 16),
+            item("熱華田", 16),
+            item("熱好立克", 16),
+            item("熱杏仁霜", 16),
+            item("熱利賓納", 16),
+            item("熱檸蜜", 18),
+            item("熱檸樂", 23),
+            item("熱可樂煲薑", 23),
+            item("熱檸樂煲薑", 23),
+            item("凍華田", 19),
+            item("凍好立克", 19),
+            item("凍杏仁霜", 19),
+            item("凍利賓納", 19),
+            item("凍檸蜜", 21),
+            item("凍檸樂", 21),
+            item("紅豆冰", 22),
+            item("什果冰", 22),
+            item("菠蘿冰", 22),
+        ],
+    };
+
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         return if (pickupTimeSlot == null || pickupTimeSlot.start == null) {
             type: "array",
@@ -444,7 +503,7 @@ class FishFranSSPMenu {
                 summarizeOrderObject(orderItem.item, def, ["style", "main"]);
             case Noodles:
                 summarizeOrderObject(orderItem.item, def, ["main", "noodles"]);
-            case Pot | Dish | ColdDish | Rice | SpicyPot | SoupPot | SpicyThing | Dessert:
+            case Pot | Dish | ColdDish | Rice | SpicyPot | SoupPot | SpicyThing | Dessert | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
