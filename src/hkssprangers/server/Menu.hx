@@ -596,7 +596,7 @@ class Menu extends View<MenuProps> {
         return jsx('
             <Fragment>
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${LonelyPaisleyLunchSet.title} (星期一至五)</div>
+                    <div className=${headerClasses}>${LonelyPaisleyLunchSet.title} (星期一至五,非假期)</div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             <div className="p-3 font-bold">${LonelyPaisleyLunchSet.properties.starter.title}</div>

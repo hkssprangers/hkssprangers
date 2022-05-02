@@ -22,8 +22,8 @@ enum abstract LonelyPaisleyItem(String) to String {
         if (timeSlot == null || timeSlot.start == null){
             return [];
         }
-        return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), TimeSlotType.classify(timeSlot.start)] {
-            case [Monday | Tuesday | Wednesday | Thursday | Friday, Lunch]:
+        return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), HkHolidays.isRedDay(timeSlot.start.toDate()), TimeSlotType.classify(timeSlot.start)] {
+            case [Monday | Tuesday | Wednesday | Thursday | Friday, false, Lunch]:
                 [
                     LunchSet,
                     // Brunch,
@@ -34,7 +34,7 @@ enum abstract LonelyPaisleyItem(String) to String {
                     Main,
                     Drink,
                 ];
-            case [_, Lunch]:
+            case [_, _, Lunch]:
                 [
                     // Brunch,
                     // Salad,
@@ -44,7 +44,7 @@ enum abstract LonelyPaisleyItem(String) to String {
                     Main,
                     Drink,
                 ];
-            case [_, Dinner]:
+            case [_, _, Dinner]:
                 [
                     // Salad,
                     Snacks,
@@ -53,7 +53,7 @@ enum abstract LonelyPaisleyItem(String) to String {
                     Main,
                     Drink,
                 ];
-            case [weekday, timeSlotType]:
+            case [weekday, isRedDay, timeSlotType]:
                 trace(weekday + " " + timeSlotType);
                 [];
         }
