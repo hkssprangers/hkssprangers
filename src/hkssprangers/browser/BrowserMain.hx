@@ -117,6 +117,13 @@ class BrowserMain {
             case elm:
                 initMap(elm);
         }
+
+        switch (document.getElementById("service-area-map")) {
+            case null:
+                //pass
+            case elm:
+                initServiceAreaMap(cast elm);
+        }
     }
 
     static function initSW() {
@@ -133,8 +140,6 @@ class BrowserMain {
     }
 
     static function initMap(container:Element) {
-        final cache = new pmtiles.ProtocolCache();
-        Lib.require("maplibre-gl").addProtocol("pmtiles", cache.protocol);
         final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
         final host = Browser.document.location.origin;
         final pmtiles = Path.join(['pmtiles://${host}', R("/tiles/ssp.pmtiles"), "{z}/{x}/{y}"]);
@@ -180,6 +185,12 @@ class BrowserMain {
         }
     }
 
+    static function initServiceAreaMap(div:DivElement) {
+        render(jsx('
+            <MapView />
+        '), div);
+    }
+
     static public final auth:Null<JsonString<CookiePayload>> = cast new URLSearchParams(window.location.search).get("auth");
     static public final deployStage:DeployStage = document.currentScript.dataset.deployStage;
 
@@ -203,6 +214,8 @@ class BrowserMain {
                 console.error(err);
             }
         }
+
+        Lib.require("maplibre-gl").addProtocol("pmtiles", new pmtiles.ProtocolCache().protocol);
 
         if (document.readyState == 'loading') {
             document.addEventListener('DOMContentLoaded', _ -> onReady());

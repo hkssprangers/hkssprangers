@@ -39,6 +39,7 @@ import hkssprangers.info.menu.FishFranSSPMenu.*;
 import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
+import hkssprangers.info.ShopCluster.clusterStyle;
 using hkssprangers.server.FastifyTools;
 using hkssprangers.info.MenuTools;
 using hkssprangers.ValueTools;
@@ -84,57 +85,6 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
     }
-
-    static final clusterStyle = [
-        DragonCentreCluster => {
-            borderClasses: ["border-red-500"],
-            headerClasses: ["bg-pt2-red-500"],
-            boxClasses: ["bg-slash-red-500"],
-            textClasses: ["text-red-500"]
-        },
-        CLPCluster => {
-            borderClasses: ["border-green-400"],
-            headerClasses: ["bg-pt2-green-400"],
-            boxClasses: [],
-            textClasses: ["text-green-500"]
-        },
-        GoldenCluster => {
-            borderClasses: ["border-pink-500"],
-            headerClasses: ["bg-pt2-pink-500"],
-            boxClasses: ["bg-slash-pink-500"],
-            textClasses: ["text-pink-500"]
-        },
-        PeiHoStreetMarketCluster => {
-            borderClasses: ["border-amber-600"],
-            headerClasses: ["bg-pt-amber-600"],
-            boxClasses: [],
-            textClasses: ["text-amber-600"]
-        },
-        SmilingPlazaCluster => {
-            borderClasses: ["border-yellow-500"],
-            headerClasses: ["bg-pt2-yellow-500"],
-            boxClasses: ["bg-slash-yellow-500"],
-            textClasses: ["text-yellow-500"]
-        },
-        ParkCluster => {
-            borderClasses: ["border-green-600"],
-            headerClasses: ["bg-pt2-green-600"],
-            boxClasses: [],
-            textClasses: ["text-green-600"]
-        },
-        PakTinCluster => {
-            borderClasses: ["border-blue-500"],
-            headerClasses: ["bg-pt2-blue-500"],
-            boxClasses: [],
-            textClasses: ["text-blue-500"]
-        },
-        TungChauStreetParkCluster => {
-            borderClasses: ["border-indigo-500"],
-            headerClasses: ["bg-pt2-indigo-500"],
-            boxClasses: [],
-            textClasses: ["text-indigo-500"]
-        }
-    ];
 
     final style:{
         borderClasses:Array<String>,

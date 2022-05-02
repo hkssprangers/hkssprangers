@@ -352,6 +352,7 @@ class ServerMain {
         PlumWineDIY.setup(app);
         FoodWasteRecycle.setup(app);
         DeliveryFee.setup(app);
+        Map.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {
             return Promise.resolve(reply.send(DateTools.format(Date.now(), "%Y-%m-%d_%H:%M:%S")));
         });
