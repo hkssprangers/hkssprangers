@@ -1209,14 +1209,14 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${FishFranSSPSpicyThing.title}</div>
                         ${renderItems(FishFranSSPSpicyThing.enums())}
-                    </div>
-                    <div className="md:w-1/2 p-3">
+
                         <div className=${headerClasses}>${FishFranSSPNoodles.title}</div>
                         <div className="font-bold p-3">${FishFranSSPNoodles.properties.main.title}</div>
                         ${renderItems(FishFranSSPNoodles.properties.main.enums())}
                         <div className="font-bold p-3">${FishFranSSPNoodles.properties.noodles.title}</div>
                         <div className="p-3">${slashes(FishFranSSPNoodles.properties.noodles.enums())}</div>
-
+                    </div>
+                    <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${FishFranSSPRice.title}</div>
                         ${renderItems(FishFranSSPRice.enums())}
 
@@ -1225,6 +1225,9 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${FishFranSSPDessert.title}</div>
                         ${renderItems(FishFranSSPDessert.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPDrink.title}</div>
+                        ${renderItems(FishFranSSPDrink.enums())}
                     </div>
                 </div>
             </Fragment>
