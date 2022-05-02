@@ -42,10 +42,11 @@ class MapView extends ReactComponentOfProps<MapViewProps> {
         for (pt in shopPts) {
             bounds.extend(pt);
         }
+        final maxBounds = new LngLatBounds(new LngLat(114.1307, 22.3111), new LngLat(114.198, 22.347));
         final initialViewState = {
             bounds: bounds,
             fitBoundsOptions: {
-                padding: 200,
+                padding: 100,
             },
         }
         final markers = [
@@ -66,6 +67,7 @@ class MapView extends ReactComponentOfProps<MapViewProps> {
                 mapLib=${MaplibreGl}
                 initialViewState=${initialViewState}
                 mapStyle=${style}
+                maxBounds=${maxBounds}
             >
                 ${markers}
             </ReactMapGl>

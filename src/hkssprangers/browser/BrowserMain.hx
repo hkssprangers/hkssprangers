@@ -161,6 +161,7 @@ class BrowserMain {
         for (pt in shopPts) {
             bounds.extend(pt);
         }
+        final maxBounds = new LngLatBounds(new LngLat(114.1307, 22.3111), new LngLat(114.198, 22.347));
         final map = new maplibre_gl.Map_({
             container: container,
             style: style,
@@ -168,6 +169,7 @@ class BrowserMain {
             fitBoundsOptions: {
                 padding: 100,
             },
+            maxBounds: maxBounds,
         });
         map.scrollZoom.disable();
         map.addControl(cast new maplibre_gl.NavigationControl({
