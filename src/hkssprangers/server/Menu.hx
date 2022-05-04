@@ -1650,6 +1650,55 @@ class Menu extends View<MenuProps> {
                         ${renderItems(WoStreetDrink.enums())}
                     </div>
                 </div>
+                <div className="p-3">
+                    <div className=${headerClasses}>手工蛋糕預訂</div>
+
+                    <div className="p-3">請於至少3日前預訂，部份款式可以自訂字款，或以 $$20 加曲奇字牌</div>
+                            
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-3">
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-roll-half.jpg", "真毛巾蛋糕半磅", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">真毛巾蛋糕半磅</div><div className="p-3 whitespace-nowrap">$$98</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-roll.jpg", "真毛巾蛋糕1磅", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">真毛巾蛋糕1磅</div><div className="p-3 whitespace-nowrap">$$196</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-word.jpg", "港式噴繪招牌楷書字體", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">港式噴繪招牌楷書字體</div><div className="p-3 whitespace-nowrap">$$100</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-cheese-1.jpg", "東京第一芝士蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">東京第一芝士蛋糕</div><div className="p-3 whitespace-nowrap">$$128起</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-cheese-2.jpg", "巴斯克焦香芝士蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">巴斯克焦香芝士蛋糕</div><div className="p-3 whitespace-nowrap">$$128起</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-newyork.jpg", "紐約芝士餅", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">紐約芝士餅</div><div className="p-3 whitespace-nowrap">$$126起</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-prince.jpg", "小王子蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">小王子蛋糕</div><div className="p-3 whitespace-nowrap">$$188</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-choco.jpg", "特濃朱古力蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">特濃朱古力蛋糕</div><div className="p-3 whitespace-nowrap">$$298</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-mango.jpg", "芒果乳酪流心戚風蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">芒果乳酪流心戚風蛋糕</div><div className="p-3 whitespace-nowrap">$$198</div></div>
+                        </div>
+                        <div className="pb-5">
+                            ${StaticResource.image("/images/shops/WoStreet/cake-purple.jpg", "星空朱古力慕斯蛋糕", "rounded")}
+                            <div className="flex flex-row"><div className="flex-grow p-3">星空朱古力慕斯蛋糕</div><div className="p-3 whitespace-nowrap">$$218起</div></div>
+                        </div>
+                        
+                    </div>
+                </div>
             </Fragment>
         ');
     }
