@@ -800,16 +800,11 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/lonelypaisley/posts/354157133440826
-            case [LonelyPaisley, "2022-05-02", Dinner]:
-                return Unavailable('晚市暫停');
+            case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
+                return Unavailable('晚市最早 19:00 時段交收');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
-
-            // https://www.facebook.com/permalink.php?story_fbid=521084426376362&id=102717031546439
-            case [KCZenzero, "2022-05-04", _]:
-                return Unavailable('休息一天');
 
             case [Toolss, _, _]:
                 return Unavailable('埗兵外賣暫停');
