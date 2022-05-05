@@ -7,17 +7,20 @@ using Lambda;
 enum abstract WoStreetItem(String) to String {
     final ClassicWaffle;
     final Cake;
+    final CustomCake;
     final Drink;
 
     static public final all:ReadOnlyArray<WoStreetItem> = [
         ClassicWaffle,
         Cake,
         Drink,
+        CustomCake,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:WoStreetItem) {
         case ClassicWaffle: WoStreetMenu.WoStreetClassicWaffle;
         case Cake: WoStreetMenu.WoStreetCake;
+        case CustomCake: WoStreetMenu.WoStreetCustomCake;
         case Drink: WoStreetMenu.WoStreetDrink;
     }
 }
@@ -46,6 +49,44 @@ class WoStreetMenu {
             "藍莓芝士餅 一件 $38",
             "檸檬芝士餅 一件 $38",
         ]
+    };
+    static public final WoStreetCustomCake = {
+        title: "手工蛋糕",
+        description: "⚠️請於至少3日前預訂",
+        properties: {
+            main: {
+                type: "string",
+                title: "手工蛋糕",
+                "enum": [
+                    "真毛巾蛋糕半磅 [祝君安好] $98",
+                    "真毛巾蛋糕半磅 [生辰快樂] $98",
+                    "真毛巾蛋糕半磅 [生日快樂] $98",
+                    "真毛巾蛋糕半磅 [Good Morning] $98",
+
+                    "真毛巾蛋糕一磅 [生辰快樂 祝君安好] $196",
+                    "真毛巾蛋糕一磅 [Good Morning 祝君安好] $196",
+
+                    "東京第一芝士蛋糕4吋 $128",
+                    "東京第一芝士蛋糕6吋 $160",
+
+                    "巴斯克焦香芝士蛋糕4吋 $128",
+                    "巴斯克焦香芝士蛋糕6吋 $168",
+
+                    "紐約芝士餅4吋 $168",
+                    "紐約芝士餅6吋 $188",
+
+                    "小王子蛋糕 $188",
+                    "特濃朱古力蛋糕 $298",
+                    "芒果乳酪流心戚風蛋糕 $198",
+
+                    "星空朱古力慕斯蛋糕6吋 $218",
+                    "星空朱古力慕斯蛋糕8吋 $288",
+                ],
+            },
+        },
+        required: [
+            "main",
+        ],
     };
     static public final WoStreetDrink = {
         title: "飲品",
@@ -129,6 +170,8 @@ class WoStreetMenu {
                             orderPrice: 0.0,
                         }
                 }
+            case CustomCake:
+                summarizeOrderObject(orderItem.item, def, ["main"]);
             case _:
                 {
                     orderDetails: "",
