@@ -7,11 +7,13 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
     final HotdogSet;
     final Hotdog;
     final Single;
+    final Drink;
 
     static public final all:ReadOnlyArray<ZeppelinHotDogSKMItem> = [
         HotdogSet,
         Hotdog,
         Single,
+        Drink,
     ];
 
     public function getDefinition(?item:Dynamic):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
@@ -22,6 +24,7 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
                 ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
         case Hotdog: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdog;
         case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle;
+        case Drink: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMDrink;
     }
 }
 
@@ -49,6 +52,25 @@ class ZeppelinHotDogSKMMenu {
         "奶茶 (回憶) +$10",
         "奶茶 (英女王) +$12",
     ];
+
+    static public final ZeppelinHotDogSKMDrink = {
+        title: "飲品",
+        type: "string",
+        "enum": [
+            "可樂 $8",
+            "可樂Zero $8",
+            "雪碧 $8",
+            "忌廉 $8",
+            "有汽檸檬茶 $8",
+            "無糖冷泡茶 $10",
+            "OOHA 荔枝乳酸味汽水 $10",
+            "OOHA 柚子海鹽味汽水 $10",
+            "OOHA 白桃烏龍茶味汽水 $10",
+            "菊9汽 銀菊露味汽水 $18",
+            "奶茶 (回憶) $20",
+            "奶茶 (英女王) $25",
+        ],
+    };
 
     static public final chokOptions = [
         // "CHOK CHOK粉 芥末紫菜",
@@ -274,7 +296,7 @@ class ZeppelinHotDogSKMMenu {
                 );
             case Hotdog:
                 summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"]);
-            case Single:
+            case Single | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
