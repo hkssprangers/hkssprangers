@@ -40,6 +40,14 @@ resource "cloudflare_record" "dev" {
   type    = "CNAME"
 }
 
+resource "cloudflare_record" "www" {
+  zone_id = cloudflare_zone.ssprangers.id
+  name    = "www"
+  value   = "ssprangers.com"
+  type    = "CNAME"
+  proxied = true
+}
+
 resource "cloudflare_record" "facebook-domain-verification" {
   zone_id = cloudflare_zone.ssprangers.id
   name    = "ssprangers.com"
