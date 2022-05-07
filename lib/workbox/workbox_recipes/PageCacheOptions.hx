@@ -1,10 +1,12 @@
-package workbox_recipes.staticresourcecache;
+package workbox_recipes;
 
-typedef StaticResourceOptions = {
+typedef PageCacheOptions = {
 	@:optional
 	var cacheName : String;
 	@:optional
 	dynamic function matchCallback(options:workbox_core.RouteMatchCallbackOptions):Dynamic;
+	@:optional
+	var networkTimeoutSeconds : Float;
 	@:optional
 	var plugins : Array<workbox_core.WorkboxPlugin>;
 	@:optional

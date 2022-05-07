@@ -1,14 +1,10 @@
-package workbox_recipes.imagecache;
+package workbox_recipes;
 
-typedef ImageCacheOptions = {
+typedef StaticResourceOptions = {
 	@:optional
 	var cacheName : String;
 	@:optional
 	dynamic function matchCallback(options:workbox_core.RouteMatchCallbackOptions):Dynamic;
-	@:optional
-	var maxAgeSeconds : Float;
-	@:optional
-	var maxEntries : Float;
 	@:optional
 	var plugins : Array<workbox_core.WorkboxPlugin>;
 	@:optional

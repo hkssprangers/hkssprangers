@@ -6,7 +6,7 @@
   "scripts": {
     "tailwind": "tailwindcss -o static/css/tailwind.css --minify",
     "dts2hx": "sh gen-externs.sh",
-    "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload --noLibWrap --output lib/workbox",
+    "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload workbox-range-requests --noLibWrap --output lib/workbox",
     "start": "nodemon -L index.js"
   },
   "devDependencies": {
@@ -48,6 +48,7 @@
     "workbox-core": "^6.5.3",
     "workbox-expiration": "^6.5.3",
     "workbox-navigation-preload": "^6.5.3",
+    "workbox-range-requests": "^6.5.3",
     "workbox-recipes": "^6.5.3",
     "workbox-routing": "^6.5.3",
     "xlsx": "^0.18.5"

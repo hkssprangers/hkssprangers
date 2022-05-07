@@ -1,4 +1,4 @@
-package workbox_strategies.strategy;
+package workbox_strategies;
 
 typedef StrategyOptions = {
 	@:optional

@@ -8,5 +8,5 @@ package workbox_core;
 	is it can be extended (as is done by the `workbox-strategies` package).
 **/
 typedef RouteHandlerObject = {
-	function handle(options:RouteHandlerCallbackOptions):js.lib.Promise<js.html.Response>;
+	dynamic function handle(options:RouteHandlerCallbackOptions):js.lib.Promise<js.html.Response>;
 };

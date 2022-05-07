@@ -1,4 +1,4 @@
-package workbox_recipes.pagecache;
+package workbox_recipes;
 
 typedef ImageCacheOptions = {
 	@:optional
@@ -6,7 +6,9 @@ typedef ImageCacheOptions = {
 	@:optional
 	dynamic function matchCallback(options:workbox_core.RouteMatchCallbackOptions):Dynamic;
 	@:optional
-	var networkTimeoutSeconds : Float;
+	var maxAgeSeconds : Float;
+	@:optional
+	var maxEntries : Float;
 	@:optional
 	var plugins : Array<workbox_core.WorkboxPlugin>;
 	@:optional

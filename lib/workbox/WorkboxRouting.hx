@@ -4,7 +4,7 @@
 		strategy to a singleton Router instance.
 		
 		This method will generate a Route for you if needed and
-		call [registerRoute()]{@link module:workbox-routing.Router#registerRoute}.
+		call {@link workbox-routing.Router#registerRoute}.
 	**/
 	static function registerRoute(capture:ts.AnyOf4<String, js.lib.RegExp, workbox_core.RouteMatchCallback, workbox_routing.Route>, ?handler:workbox_core.RouteHandler, ?method:workbox_routing.utils.constants.HTTPMethod):workbox_routing.Route;
 	/**

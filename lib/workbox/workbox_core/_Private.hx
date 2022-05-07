@@ -4,9 +4,9 @@ package workbox_core;
 	static final assert : Null<{
 		dynamic function hasMethod(object:MapLikeObject, expectedMethod:String, details:MapLikeObject):Void;
 		dynamic function isArray(value:Array<Dynamic>, details:MapLikeObject):Void;
-		dynamic function isInstance(object:{ }, expectedClass:haxe.Constraints.Function, details:MapLikeObject):Void;
+		dynamic function isInstance(object:Any, expectedClass:haxe.Constraints.Function, details:MapLikeObject):Void;
 		dynamic function isOneOf(value:Dynamic, validValues:Array<Dynamic>, details:MapLikeObject):Void;
-		dynamic function isType(object:{ }, expectedType:String, details:MapLikeObject):Void;
+		dynamic function isType(object:Any, expectedType:String, details:MapLikeObject):Void;
 		dynamic function isArrayOfClass(value:Dynamic, expectedClass:haxe.Constraints.Function, details:MapLikeObject):Void;
 	}>;
 	/**
@@ -39,17 +39,10 @@ package workbox_core;
 	**/
 	static function dontWaitFor(promise:js.lib.Promise<Dynamic>):Void;
 	/**
-		Deletes the database.
-		Note: this is exported separately from the DBWrapper module because most
-		usages of IndexedDB in workbox dont need deleting, and this way it can be
-		reused in tests to delete databases without creating DBWrapper instances.
-	**/
-	static function deleteDatabase(name:String):js.lib.Promise<Void>;
-	/**
 		Runs all of the callback functions, one at a time sequentially, in the order
 		in which they were registered.
 	**/
-	static function executeQuotaErrorCallbacks():js.lib.Promise<Void>;
+	static function executeQuotaErrorCallbacks():js.lib.Promise<ts.Undefined>;
 	static function getFriendlyURL(url:ts.AnyOf2<String, js.html.URL>):String;
 	static final logger : js.html.Console;
 	/**

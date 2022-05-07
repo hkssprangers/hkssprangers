@@ -4,5 +4,5 @@ package workbox_recipes;
 	/**
 		An implementation of a page caching recipe with a network timeout
 	**/
-	static function pageCache(?options:workbox_recipes.pagecache.ImageCacheOptions):Void;
+	static function pageCache(?options:PageCacheOptions):Void;
 }

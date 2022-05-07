@@ -1,4 +1,4 @@
-package workbox_recipes.offlinefallback;
+package workbox_recipes;
 
 typedef OfflineFallbackOptions = {
 	@:optional

@@ -14,7 +14,7 @@ package workbox_cacheable_response;
 		If both `statuses` and `headers` are specified, then both conditions must
 		be met for the `Response` to be considered cacheable.
 	**/
-	function new(?config:workbox_cacheable_response.cacheableresponse.CacheableResponseOptions);
+	function new(?config:CacheableResponseOptions);
 	@:optional
 	private final _statuses : Dynamic;
 	@:optional

@@ -1,4 +1,4 @@
-package workbox_strategies.networkonly;
+package workbox_strategies;
 
 typedef NetworkOnlyOptions = {
 	@:optional

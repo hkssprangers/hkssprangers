@@ -57,6 +57,7 @@ class Index extends View<IndexProps> {
 
     override function prefetch():Array<String> return super.prefetch().concat([
         R("/browser.bundled.js"),
+        R("/tiles/ssp.pmtiles"),
     ]);
 
     static public function sameAreaNote() return jsx('

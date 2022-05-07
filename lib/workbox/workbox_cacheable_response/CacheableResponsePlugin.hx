@@ -13,9 +13,9 @@ package workbox_cacheable_response;
 		If both `statuses` and `headers` are specified, then both conditions must
 		be met for the `Response` to be considered cacheable.
 	**/
-	function new(config:workbox_cacheable_response.cacheableresponse.CacheableResponseOptions);
+	function new(config:CacheableResponseOptions);
 	private final _cacheableResponse : Dynamic;
 	@:optional
-	dynamic function cacheWillUpdate(param:workbox_core.CacheWillUpdateCallbackParam):js.lib.Promise<Null<ts.AnyOf2<Void, js.html.Response>>>;
+	dynamic function cacheWillUpdate(param:workbox_core.CacheWillUpdateCallbackParam):js.lib.Promise<Null<ts.AnyOf2<ts.Undefined, js.html.Response>>>;
 	static var prototype : CacheableResponsePlugin;
 }

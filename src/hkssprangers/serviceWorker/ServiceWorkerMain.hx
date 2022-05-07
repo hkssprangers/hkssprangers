@@ -2,6 +2,7 @@ package hkssprangers.serviceWorker;
 
 import workbox_core.*;
 import workbox_cacheable_response.*;
+import workbox_range_requests.*;
 import workbox_strategies.*;
 import workbox_expiration.*;
 using StringTools;
@@ -9,10 +10,11 @@ using StringTools;
 class ServiceWorkerMain {
     static function main() {
         WorkboxNavigationPreload.enable();
-        WorkboxRouting.setDefaultHandler(new NetworkFirst());
+        WorkboxRouting.setDefaultHandler(cast new NetworkFirst());
+
         WorkboxRouting.registerRoute((options:RouteMatchCallbackOptions) -> {
             StaticResource.parseUrl(options.url.pathname).hash != null;
-        }, new CacheFirst({
+        }, cast new CacheFirst({
             cacheName: "static",
             plugins: ([
                 new CacheableResponsePlugin({
@@ -21,6 +23,7 @@ class ServiceWorkerMain {
                 new ExpirationPlugin({
                     maxEntries: 60,
                 }),
+                new RangeRequestsPlugin(),
             ]:Array<Dynamic>),
         }));
         WorkboxRouting.registerRoute(function(options:RouteMatchCallbackOptions) {
@@ -39,7 +42,7 @@ class ServiceWorkerMain {
                 return true;
 
             return false;
-        }, new CacheFirst({
+        }, cast new CacheFirst({
             cacheName: "external_static",
             plugins: ([
                 new CacheableResponsePlugin({

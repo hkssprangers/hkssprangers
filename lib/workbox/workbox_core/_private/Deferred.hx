@@ -12,7 +12,7 @@ package workbox_core._private;
 	**/
 	function new();
 	var promise : js.lib.Promise<T>;
-	dynamic function resolve(?value:T):Void;
+	dynamic function resolve(value:T):Void;
 	dynamic function reject(?reason:Dynamic):Void;
 	static var prototype : Deferred<Dynamic>;
 }

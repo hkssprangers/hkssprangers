@@ -1,8 +1,8 @@
-package workbox_cacheable_response.cacheableresponse;
+package workbox_cacheable_response;
 
 typedef CacheableResponseOptions = {
 	@:optional
 	var statuses : Array<Float>;
 	@:optional
-	var headers : { };
+	var headers : haxe.DynamicAccess<String>;
 };

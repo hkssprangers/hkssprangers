@@ -2,11 +2,11 @@ package workbox_routing;
 
 /**
 	NavigationRoute makes it easy to create a
-	[Route]{@link module:workbox-routing.Route} that matches for browser
+	{@link workbox-routing.Route} that matches for browser
 	[navigation requests]{@link https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests}.
 	
 	It will only match incoming Requests whose
-	[`mode`]{@link https://fetch.spec.whatwg.org/#concept-request-mode}
+	{@link https://fetch.spec.whatwg.org/#concept-request-mode|mode}
 	is set to `navigate`.
 	
 	You can optionally only apply this route to a subset of navigation requests
@@ -23,7 +23,7 @@ package workbox_routing;
 		and [`search`]{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLHyperlinkElementUtils/search}
 		portions of the requested URL.
 	**/
-	function new(handler:workbox_core.RouteHandler, ?__1:workbox_routing.navigationroute.NavigationRouteMatchOptions);
+	function new(handler:workbox_core.RouteHandler, ?__1:NavigationRouteMatchOptions);
 	private final _allowlist : Dynamic;
 	private final _denylist : Dynamic;
 	/**

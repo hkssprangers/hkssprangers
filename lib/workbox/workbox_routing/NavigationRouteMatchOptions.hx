@@ -1,4 +1,4 @@
-package workbox_routing.navigationroute;
+package workbox_routing;
 
 typedef NavigationRouteMatchOptions = {
 	@:optional

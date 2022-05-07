@@ -1,4 +1,4 @@
-package workbox_recipes.googlefontscache;
+package workbox_recipes;
 
 typedef GoogleFontCacheOptions = {
 	@:optional

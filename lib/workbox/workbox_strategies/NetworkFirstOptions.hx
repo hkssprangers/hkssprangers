@@ -1,4 +1,4 @@
-package workbox_strategies.networkfirst;
+package workbox_strategies;
 
 typedef NetworkFirstOptions = {
 	@:optional

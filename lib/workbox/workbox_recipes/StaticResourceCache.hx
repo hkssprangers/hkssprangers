@@ -4,5 +4,5 @@ package workbox_recipes;
 	/**
 		An implementation of the [CSS and JavaScript files recipe]{@link https://developers.google.com/web/tools/workbox/guides/common-recipes#cache_css_and_javascript_files}
 	**/
-	static function staticResourceCache(?options:workbox_recipes.staticresourcecache.StaticResourceOptions):Void;
+	static function staticResourceCache(?options:StaticResourceOptions):Void;
 }

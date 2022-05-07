@@ -24,13 +24,13 @@ package workbox_expiration;
 	/**
 		Expires entries for the given cache and given criteria.
 	**/
-	function expireEntries():js.lib.Promise<Void>;
+	function expireEntries():js.lib.Promise<ts.Undefined>;
 	/**
 		Update the timestamp for the given URL. This ensures the when
 		removing entries based on maximum entries, most recently used
 		is accurate or when expiring, the timestamp is up-to-date.
 	**/
-	function updateTimestamp(url:String):js.lib.Promise<Void>;
+	function updateTimestamp(url:String):js.lib.Promise<ts.Undefined>;
 	/**
 		Can be used to check if a URL has expired or not before it's used.
 		
@@ -44,6 +44,6 @@ package workbox_expiration;
 		Removes the IndexedDB object store used to keep track of cache expiration
 		metadata.
 	**/
-	function delete():js.lib.Promise<Void>;
+	function delete():js.lib.Promise<ts.Undefined>;
 	static var prototype : CacheExpiration;
 }

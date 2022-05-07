@@ -2,8 +2,8 @@ package workbox_strategies;
 
 /**
 	A class created every time a Strategy instance instance calls
-	[handle()]{@link module:workbox-strategies.Strategy~handle} or
-	[handleAll()]{@link module:workbox-strategies.Strategy~handleAll} that wraps all fetch and
+	{@link workbox-strategies.Strategy~handle} or
+	{@link workbox-strategies.Strategy~handleAll} that wraps all fetch and
 	cache actions around plugin callbacks and keeps track of when the strategy
 	is "done" (i.e. all added `event.waitUntil()` promises have resolved).
 **/
@@ -89,10 +89,10 @@ package workbox_strategies;
 		Note: since this method runs all plugins, it's not suitable for cases
 		where the return value of a callback needs to be applied prior to calling
 		the next callback. See
-		[`iterateCallbacks()`]{@link module:workbox-strategies.StrategyHandler#iterateCallbacks}
+		{@link workbox-strategies.StrategyHandler#iterateCallbacks}
 		below for how to handle that case.
 	**/
-	function runCallbacks<C>(name:C, param:{ var request : Dynamic; var event : Dynamic; }):js.lib.Promise<Void>;
+	function runCallbacks<C>(name:C, param:{ var request : Dynamic; var event : Dynamic; }):js.lib.Promise<ts.Undefined>;
 	/**
 		Accepts a callback and returns an iterable of matching plugin callbacks,
 		where each callback is wrapped with the current handler state (i.e. when
@@ -107,13 +107,13 @@ package workbox_strategies;
 		`FetchEvent`).
 		
 		Note: you can await
-		[`doneWaiting()`]{@link module:workbox-strategies.StrategyHandler~doneWaiting}
+		{@link workbox-strategies.StrategyHandler~doneWaiting}
 		to know when all added promises have settled.
 	**/
 	function waitUntil<T>(promise:js.lib.Promise<T>):js.lib.Promise<T>;
 	/**
 		Returns a promise that resolves once all promises passed to
-		[`waitUntil()`]{@link module:workbox-strategies.StrategyHandler~waitUntil}
+		{@link workbox-strategies.StrategyHandler~waitUntil}
 		have settled.
 		
 		Note: any work done after `doneWaiting()` settles should be manually
@@ -121,7 +121,7 @@ package workbox_strategies;
 		`waitUntil()` method), otherwise the service worker thread my be killed
 		prior to your work completing.
 	**/
-	function doneWaiting():js.lib.Promise<Void>;
+	function doneWaiting():js.lib.Promise<ts.Undefined>;
 	/**
 		Stops running the strategy and immediately resolves any pending
 		`waitUntil()` promises.
