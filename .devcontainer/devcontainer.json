@@ -15,6 +15,7 @@
 				]
 			},
 		},
+		"terraform-ls.terraformExecPath": "/usr/local/bin/terraform",
 		"terraform.languageServer": {
 			"pathToBinary": "/usr/local/bin/terraform-ls"
 		},
