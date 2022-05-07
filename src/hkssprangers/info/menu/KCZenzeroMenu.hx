@@ -23,7 +23,7 @@ enum abstract KCZenzeroItem(String) to String {
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
-                    // WontonSet,
+                    WontonSet,
                     LightSet,
                     Single,
                 ];
@@ -33,7 +33,7 @@ enum abstract KCZenzeroItem(String) to String {
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
-                    // WontonSet,
+                    WontonSet,
                     LightSet,
                     Single,
                 ];
@@ -225,15 +225,15 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroWontonSet = {
-        title: "一口雲吞",
+        title: "小雲呑",
         properties: {
             main: {
                 type: "string",
-                title: "一口雲吞",
+                title: "小雲呑",
                 "enum": [
-                    // "特濃茄湯一口雲吞(羊) $38",
-                    // "特濃茄湯一口雲吞(牛) $38",
+                    "韓式豬肉小雲呑 $45",
                 ],
+                "default": "韓式豬肉小雲呑 $45",
             },
             options: {
                 type: "array",
