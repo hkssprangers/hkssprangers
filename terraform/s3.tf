@@ -1,6 +1,6 @@
 module "s3_bucket_terraform" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "2.15.0"
+  version = "3.2.0"
 
   bucket = "hkssprangers-terraform"
   acl    = "private"
@@ -35,7 +35,7 @@ module "s3_bucket_terraform" {
 
 module "s3_bucket_uploads" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "2.15.0"
+  version = "3.2.0"
 
   bucket        = "hkssprangers-uploads"
   acl           = "public-read"
@@ -72,7 +72,7 @@ module "s3_bucket_uploads" {
 
 module "s3_bucket_logs" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "2.15.0"
+  version = "3.2.0"
 
   bucket = "hkssprangers-logs"
   acl    = "private"
@@ -101,7 +101,7 @@ module "s3_bucket_logs" {
 
 module "s3_bucket_dbbackup" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "2.15.0"
+  version = "3.2.0"
 
   bucket = "hkssprangers-dbbackup"
   acl    = "private"
