@@ -19,7 +19,7 @@ enum abstract KCZenzeroItem(String) to String {
         return switch (timeSlotType) {
             case Lunch:
                 [
-                    LimitedSpecial,
+                    // LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -29,7 +29,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    LimitedSpecial,
+                    // LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -122,7 +122,7 @@ class KCZenzeroMenu {
                     "九龍皇帝熱狗",
                     "妙菇皇后熱狗",
                     // "雙魚巨蟹熱狗",
-                    // "意式肉丸熱狗",
+                    "意式肉丸熱狗",
                 ]
             },
             drink: KCZenzeroSetDrink(5, false),
@@ -166,7 +166,7 @@ class KCZenzeroMenu {
                         "煙鴨胸",
                         "蟹棒",
                         "司華力腸",
-                        // "意式肉丸",
+                        "意式肉丸",
                     ],
                 },
                 uniqueItems: true,
@@ -253,7 +253,7 @@ class KCZenzeroMenu {
                     "炸雞翼",
                     "薯格",
                     // "薯條",
-                    // "意式肉丸",
+                    "意式肉丸",
                 ],
             },
             drink: KCZenzeroSetDrink(5, true),
