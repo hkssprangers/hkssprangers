@@ -9,21 +9,37 @@ enum abstract MGYItem(String) to String {
     final Rice;
     final Snack;
     final Delight;
+    final RiceDumpling;
 
-    static public final all:ReadOnlyArray<MGYItem> = [
-        SideDish,
-        StirFriedNoodlesOrRice,
-        Rice,
-        Snack,
-        Delight,
-    ];
+    static public function all(pickupTimeSlot:Null<TimeSlot>):ReadOnlyArray<MGYItem> {
+        final now:LocalDateString = Date.now();
+        final today = now.getDatePart();
+        final riceDumplingAvailable = pickupTimeSlot != null && pickupTimeSlot.start != null && switch (pickupTimeSlot.start.getDatePart()) {
+            case "2022-05-21" | "2022-05-22" | "2022-05-23" | "2022-05-24":
+                today <= "2022-05-17";
+            case "2022-05-28" | "2022-05-29" | "2022-05-30" | "2022-05-31":
+                today <= "2022-05-24";
+            case _:
+                false;
+        }
+        return
+            (riceDumplingAvailable ? [RiceDumpling] : [])
+            .concat([
+                SideDish,
+                StirFriedNoodlesOrRice,
+                Rice,
+                Snack,
+                Delight,
+            ]);
+    }
 
-    public function getDefinition():Dynamic return switch (cast this:MGYItem) {
+    public function getDefinition(pickupTimeSlot:Null<TimeSlot>):Dynamic return switch (cast this:MGYItem) {
         case SideDish: MGYMenu.MGYSideDish;
         case StirFriedNoodlesOrRice: MGYMenu.MGYStirFriedNoodlesOrRice;
         case Rice: MGYMenu.MGYRice;
         case Snack: MGYMenu.MGYSnack;
         case Delight: MGYMenu.MGYDelight;
+        case RiceDumpling: MGYMenu.MGYRiceDumpling;
     }
 }
 
@@ -31,6 +47,27 @@ class MGYMenu {
     static function markup(price:Float):Float {
         return Math.round(price / 0.85);
     }
+
+    static function item(name:String, price:Float):String {
+        return name + " $" + markup(price);
+    }
+
+    static public final MGYRiceDumpling = {
+        title: "本地圍村素糉",
+        properties: {
+            main: {
+                title: "本地圍村素糉",
+                type: "string",
+                "enum": [
+                    item("花生栗子糉", 17),
+                    item("紅豆栗子糉", 17),
+                    item("綠豆栗子糉", 17),
+                    item("鹼水豆沙糉", 17),
+                ],
+            },
+        },
+        required: ["main"],
+    };
 
     static public final MGYSideDish = {
         title: "小菜",
@@ -152,15 +189,15 @@ class MGYMenu {
         ]
     };
     
-    static public function itemsSchema(order:FormOrderData):Dynamic {
+    static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
         function itemSchema():Dynamic return {
             type: "object",
             properties: {
                 type: {
                     title: "食物種類",
                     type: "string",
-                    oneOf: MGYItem.all.map(item -> {
-                        title: item.getDefinition().title,
+                    oneOf: MGYItem.all(pickupTimeSlot).map(item -> {
+                        title: item.getDefinition(pickupTimeSlot).title,
                         const: item,
                     }),
                 },
@@ -178,7 +215,7 @@ class MGYMenu {
                         //pass
                     case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: itemType.getDefinition(),
+                            item: itemType.getDefinition(pickupTimeSlot),
                         });
                         itemSchema.required.push("item");
                 }
@@ -189,15 +226,20 @@ class MGYMenu {
         };
     }
 
-    static function summarizeItem(orderItem:{
-        ?type:MGYItem,
-        ?item:Dynamic,
-    }):{
+    static function summarizeItem(
+        pickupTimeSlot:Null<TimeSlot>,
+        orderItem:{
+            ?type:MGYItem,
+            ?item:Dynamic,
+        }
+    ):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition();
+        var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
+            case RiceDumpling:
+                summarizeOrderObject(orderItem.item, def, ["main"], []);
             case SideDish:
                 summarizeOrderObject(orderItem.item, def, ["dish"], []);
             case StirFriedNoodlesOrRice:
@@ -225,8 +267,11 @@ class MGYMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
+    static public function summarize(
+        pickupTimeSlot:Null<TimeSlot>,
+        formData:FormOrderData
+    ):OrderSummary {
+        var s = concatSummaries(formData.items.map(item -> summarizeItem(pickupTimeSlot, cast item)));
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,
