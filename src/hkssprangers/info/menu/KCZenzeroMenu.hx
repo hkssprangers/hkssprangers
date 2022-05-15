@@ -29,7 +29,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    // LimitedSpecial,
+                    LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -122,7 +122,6 @@ class KCZenzeroMenu {
                     "九龍皇帝熱狗",
                     "妙菇皇后熱狗",
                     // "雙魚巨蟹熱狗",
-                    "意式肉丸熱狗",
                 ]
             },
             drink: KCZenzeroSetDrink(5, false),
@@ -131,20 +130,20 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "MM7雞煲";
-    static final limitedSpecialSeperateBox = true;
+    static final limitedSpecial = "香辣螺意粉/螺絲粉";
+    static final limitedSpecialSeperateBox = false;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
-        description: "⚠️ 每日12點半後供應。製作需時，請提早落單。售完即止。MM7雞煲材料包括：松露餐肉 海蝦 鴨血 泡菜 金菇 春雞 芝士 烏冬",
+        description: "⚠️ 請提早落單。售完即止。",
         properties: {
             special: {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    "MM7雞煲(蕃茄濃湯)＋蘆薈椰汁西米露 $88",
-                    "MM7雞煲(香辣湯)＋蘆薈椰汁西米露 $88",
+                    "香辣螺意粉 $55",
+                    "香辣螺螺絲粉 $55",
                 ],
-                "default": limitedSpecial
+                // "default": limitedSpecial
             }
         },
         required: ["special"],
@@ -166,7 +165,6 @@ class KCZenzeroMenu {
                         "煙鴨胸",
                         "蟹棒",
                         "司華力腸",
-                        "意式肉丸",
                     ],
                 },
                 uniqueItems: true,
@@ -194,7 +192,7 @@ class KCZenzeroMenu {
                 type: "string",
                 title: "主食",
                 "enum": [
-                    "芝士流心漢堡",
+                    // "芝士流心漢堡",
                     // "炸芝士海鮮條",
                     // "蝦條",
                     "香草雞扒",
@@ -253,7 +251,6 @@ class KCZenzeroMenu {
                     "炸雞翼",
                     "薯格",
                     // "薯條",
-                    "意式肉丸",
                 ],
             },
             drink: KCZenzeroSetDrink(5, true),
