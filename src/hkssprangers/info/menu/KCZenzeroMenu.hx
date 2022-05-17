@@ -10,9 +10,11 @@ enum abstract KCZenzeroItem(String) to String {
     final HotdogSet;
     final NoodleSet;
     final PastaSet;
+    final R6Set;
     final WontonSet;
     final LightSet;
     final HotpotSet;
+    final GoldenLeg;
     final Single;
 
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<KCZenzeroItem> {
@@ -23,8 +25,10 @@ enum abstract KCZenzeroItem(String) to String {
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
+                    R6Set,
                     WontonSet,
                     LightSet,
+                    GoldenLeg,
                     Single,
                 ];
             case Dinner:
@@ -33,8 +37,10 @@ enum abstract KCZenzeroItem(String) to String {
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
+                    R6Set,
                     WontonSet,
                     LightSet,
+                    GoldenLeg,
                     Single,
                 ];
         }
@@ -45,8 +51,10 @@ enum abstract KCZenzeroItem(String) to String {
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(timeSlotType);
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(timeSlotType);
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(timeSlotType);
+        case R6Set: KCZenzeroMenu.KCZenzeroR6Set;
         case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
+        case GoldenLeg: KCZenzeroMenu.KCZenzeroGoldenLeg;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
         case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
@@ -70,6 +78,20 @@ class KCZenzeroMenu {
             "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
             "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
         ]),
+    };
+    static public final KCZenzeroFreePaperBoxDrink = {
+        title: "飲品",
+        type: "string",
+        "enum": [
+            "檸檬茶紙包飲品 +$0",
+            "菊花茶紙包飲品 +$0",
+            "自家沖洛神花冷泡茶 +$5",
+            "自家沖玫瑰烏龍冷泡茶 +$5",
+            "自家沖桂花烏龍冷泡茶 +$5",
+            "自家沖玄米冷泡茶 +$5",
+            "自家沖玄米綠茶 +$5",
+            "自家沖水蜜桃烏龍茶 +$5",
+        ],
     };
 
     static public final KCZenzeroSetOptions = {
@@ -126,6 +148,60 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroSetDrink(5, false),
             // extraOptions: KCZenzeroSetOptions,
+        },
+        required: ["main"],
+    }
+
+    static public final KCZenzeroGoldenLeg = {
+        title: "金沙美腿",
+        properties: {
+            main: {
+                title: "金沙美腿",
+                type: "string",
+                "enum": [
+                    "金沙美腿 $35",
+                ],
+                "default": "金沙美腿 $35",
+            },
+            options: {
+                type: "array",
+                title: "選項",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "葱油冷麵 +$8",
+                    ],
+                },
+                uniqueItems: true,
+            },
+            drink: KCZenzeroFreePaperBoxDrink,
+        },
+        required: ["main"],
+    }
+
+    static public final KCZenzeroR6Set = {
+        title: "R6(歐陸)套餐",
+        properties: {
+            main: {
+                title: "主食",
+                type: "string",
+                "enum": [
+                    "雞扒 $38",
+                    "松露餐肉 $38",
+                ],
+            },
+            options: {
+                type: "array",
+                title: "選項",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "迷你蕃茄湯粉 +$8",
+                    ],
+                },
+                uniqueItems: true,
+            },
+            drink: KCZenzeroFreePaperBoxDrink,
         },
         required: ["main"],
     }
@@ -400,6 +476,10 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink", "extraOptions"]);
             case LightSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink", "extraOptions"], null, priceInDescription("main", def));
+            case GoldenLeg:
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], null, null, "");
+            case R6Set:
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
             case Single:
