@@ -11,6 +11,18 @@ typedef IndexSplideState = {}
 class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
     static final items = [
         {
+            title: "誠徵佛系(兼職)外賣員",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSfb9cyDbHckv1Obs9_8Wju8cLDAfYDXO6IcAT0EPLq8cpK8wQ/viewform",
+            img: StaticResource.image("/images/banner-recruit.jpg", "埗兵招人", "w-100 my-3 rounded-md"),
+            button: "了解更多"
+        },
+        {
+            title: "梅貴緣本地手作素糭",
+            url: "/order-food",
+            img: StaticResource.image("/images/banner-mgy-dumpling-2022.jpg", "梅貴緣本地手作素糭", "w-100 my-3 rounded-md"),
+            button: "立即落單"
+        },
+        {
             title: "慳多D 美酒速遞",
             url: "https://docs.google.com/forms/d/e/1FAIpQLSeGTMjsQNdySCu7RpYIJ3zjHSNE1p3u01dfBIEYa2i7u5AHrg/viewform",
             img: StaticResource.image("/images/wine2022-cny.jpg", "慳多D 美酒速遞", "w-100 my-3 rounded-md"),
