@@ -31,7 +31,7 @@
     "js-cookie": "^3.0.1",
     "maplibre-gl": "^2.1.9",
     "nodemon": "^2.0.16",
-    "pmtiles": "^1.0.3",
+    "pmtiles": "^1.0.4",
     "prisma": "^3.14.0",
     "prisma-dbml-generator": "^0.9.0",
     "react-map-gl": "^7.0.12",
