@@ -67,8 +67,8 @@ class KCZenzeroMenu {
         type: "string",
         "enum": (
             freeCans ? [
-                "可口可樂" + (price > 0 ? ' +$$0' : ""),
-                "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
+                // "可口可樂" + (price > 0 ? ' +$$0' : ""),
+                // "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
             ] : []
         ).concat([ 
             "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
