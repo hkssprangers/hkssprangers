@@ -8,15 +8,28 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
     final Hotdog;
     final Single;
     final Drink;
+    final Special;
 
-    static public final all:ReadOnlyArray<ZeppelinHotDogSKMItem> = [
-        HotdogSet,
-        Hotdog,
-        Single,
-        Drink,
-    ];
+    static public function all(pickupTimeSlot:Null<TimeSlot>):ReadOnlyArray<ZeppelinHotDogSKMItem> {
+        final items = [
+            HotdogSet,
+            Hotdog,
+            Single,
+            Drink,
+        ];
 
-    public function getDefinition(?item:Dynamic):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
+        // https://www.facebook.com/zeppelinhotdog/posts/2143580862472113
+        if (pickupTimeSlot != null && pickupTimeSlot.start != null) switch (pickupTimeSlot.start.getDatePart()) {
+            case "2022-05-23" | "2022-05-24" | "2022-05-25" | "2022-05-26" | "2022-05-27":
+                items.unshift(Special);
+            case _:
+                // pass
+        }
+
+        return items;
+    }
+
+    public function getDefinition(pickupTimeSlot:Null<TimeSlot>, ?item:Dynamic):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
         case HotdogSet:
             if (ZeppelinHotDogSKMMenu.hasFreeChok(item))
                 ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSetChok;
@@ -25,6 +38,7 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
         case Hotdog: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdog;
         case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle;
         case Drink: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMDrink;
+        case Special: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSpecial(pickupTimeSlot);
     }
 }
 
@@ -111,6 +125,29 @@ class ZeppelinHotDogSKMMenu {
             "額外醬汁-mix醬 (茄汁加千島) $3",
         ]),
     };
+    
+    static public function ZeppelinHotDogSKMSpecial(pickupTimeSlot:TimeSlot) {
+        final item = (pickupTimeSlot != null && pickupTimeSlot.start != null) ? switch (pickupTimeSlot.start.getDatePart()) {
+            case "2022-05-23":
+                "香脆雞塊10件 $10";
+            case "2022-05-24":
+                "洋蔥圈8件 $10";
+            case "2022-05-25":
+                "辣雞扒 (1件) $10";
+            case "2022-05-26":
+                "LZ124士林原味熱狗🌶️+菊9汽 $40";
+            case "2022-05-27":
+                "脆香單骨雞翼4隻 $15";
+            case _:
+                null;
+        } : null;
+        return {
+            title: "七周年優惠: " + item,
+            type: "string",
+            "enum": item == null ? [] : [item],
+            "default": item,
+        };
+    }
 
     static public final hotdogs:ReadOnlyArray<String> = [
         "LZ120 火灸芝士辣肉醬熱狗🌶️🌶️ $42",
@@ -245,8 +282,8 @@ class ZeppelinHotDogSKMMenu {
                 type: {
                     title: "食物種類",
                     type: "string",
-                    oneOf: ZeppelinHotDogSKMItem.all.map(item -> {
-                        title: item.getDefinition().title,
+                    oneOf: ZeppelinHotDogSKMItem.all(pickupTimeSlot).map(item -> {
+                        title: item.getDefinition(pickupTimeSlot).title,
                         const: item,
                     }),
                 },
@@ -264,7 +301,7 @@ class ZeppelinHotDogSKMMenu {
                         //pass
                     case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: itemType.getDefinition(item.item),
+                            item: itemType.getDefinition(pickupTimeSlot, item.item),
                         });
                         itemSchema.required.push("item");
                 }
@@ -282,7 +319,7 @@ class ZeppelinHotDogSKMMenu {
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition(orderItem.item);
+        final def = orderItem.type.getDefinition(orderItem.item);
         return switch (orderItem.type) {
             case HotdogSet:
                 summarizeOrderObject(
@@ -296,7 +333,7 @@ class ZeppelinHotDogSKMMenu {
                 );
             case Hotdog:
                 summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"]);
-            case Single | Drink:
+            case Single | Drink | Special:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
