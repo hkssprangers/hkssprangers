@@ -1681,6 +1681,7 @@ class Menu extends View<MenuProps> {
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Main.getTitle()}</div>
+                        <div className="p-3 font-bold">晚市加 $$9</div>
                         ${renderOptionalItems(menu[BlackWindowItem.Main] == null ? null : menu[BlackWindowItem.Main].properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
@@ -1803,8 +1804,8 @@ class Menu extends View<MenuProps> {
                         });
                 });
             });
-            app.get('/menu/${shop}_:date(^\\d{4}-\\d{2}-\\d{2}).json', function get(req:Request, reply:Reply):Promise<Dynamic> {
-                final date:LocalDateString = req.params.date + " 00:00:00";
+            app.get('/menu/${shop}_:date(^\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}).json', function get(req:Request, reply:Reply):Promise<Dynamic> {
+                final date:LocalDateString = StringTools.replace(req.params.date, "_", " ");
                 final definitions = switch shop {
                     case BlackWindow:
                         BlackWindowMenu.getDefinitions(date);

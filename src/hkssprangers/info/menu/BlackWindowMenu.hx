@@ -239,9 +239,15 @@ class BlackWindowMenu {
             .then(r -> r != null ? cast r.items : null);
     }
 
-    static function toDef(items:Null<BlackWindowItems>):Dynamic {
+    static function toDef(timeSlotType:TimeSlotType, items:Null<BlackWindowItems>):Dynamic {
         if (items == null)
             return null;
+
+        final dinnerMainMarkup = switch (timeSlotType) {
+            case Dinner: 9;
+            case _: 0;
+        }
+        // trace(timeSlotType + " " + dinnerMainMarkup);
 
         final defs:DynamicAccess<Dynamic> = {};
         for (type in [Set, Soup, Snack, Main, Dessert, Drink, Coffee, Beer, Cocktail]) {
@@ -255,7 +261,7 @@ class BlackWindowMenu {
                                 main: {
                                     title: Set.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + mainToSetCharge)),
+                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + mainToSetCharge + dinnerMainMarkup)),
                                 },
                                 soup: {
                                     title: Soup.getTitle(),
@@ -292,7 +298,7 @@ class BlackWindowMenu {
                                 main: {
                                     title: Main.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(printNamePrice),
+                                    "enum": items.Main.items.map(v -> { name: v.name, price: v.price + dinnerMainMarkup }).map(printNamePrice),
                                 },
                                 drink: {
                                     title: "跟飲品",
@@ -324,6 +330,7 @@ class BlackWindowMenu {
 
     static final definitions:Map<LocalDateString, {lastUpdate:Date, def:Dynamic}> = [];
     static public function getDefinitions(date:LocalDateString):Promise<DynamicAccess<Dynamic>> {
+        // trace(date);
         final cachedDef = switch (definitions[date]) {
             case null:
                 null;
@@ -337,7 +344,7 @@ class BlackWindowMenu {
         }
         #if (!browser)
         return getItems(date)
-            .then(toDef)
+            .then(items -> toDef(TimeSlotType.classify(date), items))
             .then(def -> {
                 definitions[date] = {
                     lastUpdate: Date.now(),
@@ -346,7 +353,7 @@ class BlackWindowMenu {
                 def;
             });
         #else
-        return js.Browser.window.fetch('/menu/${BlackWindow}_${date.getDatePart()}.json')
+        return js.Browser.window.fetch('/menu/${BlackWindow}_${date.replace(" ", "_")}.json')
             .then(r -> if (r.ok) r.json() else throw r.status)
             .then(r -> {
                 definitions[date] = {
