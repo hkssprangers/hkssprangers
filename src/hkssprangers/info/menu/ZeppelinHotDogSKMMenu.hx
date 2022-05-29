@@ -86,6 +86,7 @@ class ZeppelinHotDogSKMMenu {
         title: "小食",
         type: "string",
         "enum": [
+            "[快閃限定]脆香單骨雞翼4隻 $15",
             "洋蔥圈(6件) $18",
             "洋蔥圈(9件) $22",
             "魚手指(4件) $20",
