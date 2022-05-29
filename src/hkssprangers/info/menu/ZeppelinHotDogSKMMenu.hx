@@ -30,11 +30,7 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
     }
 
     public function getDefinition(pickupTimeSlot:Null<TimeSlot>, ?item:Dynamic):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
-        case HotdogSet:
-            if (ZeppelinHotDogSKMMenu.hasFreeChok(item))
-                ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSetChok;
-            else
-                ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
+        case HotdogSet: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
         case Hotdog: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdog;
         case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle;
         case Drink: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMDrink;
@@ -86,17 +82,10 @@ class ZeppelinHotDogSKMMenu {
         ],
     };
 
-    static public final chokOptions = [
-        // "CHOK CHOK粉 芥末紫菜",
-        // "CHOK CHOK粉 地道椒鹽",
-        "CHOK CHOK粉 惹味麻辣",
-        "CHOK CHOK粉 香甜蕃茄",
-    ];
-
     static public final ZeppelinHotDogSKMSingle = {
         title: "小食",
         type: "string",
-        "enum": chokOptions.map(item -> item + " +$3").concat([
+        "enum": [
             "洋蔥圈(6件) $18",
             "洋蔥圈(9件) $22",
             "魚手指(4件) $20",
@@ -123,7 +112,7 @@ class ZeppelinHotDogSKMMenu {
             "額外醬汁-bbq醬 $3",
             "額外醬汁-黃芥末 $3",
             "額外醬汁-mix醬 (茄汁加千島) $3",
-        ]),
+        ],
     };
     
     static public function ZeppelinHotDogSKMSpecial(pickupTimeSlot:TimeSlot) {
@@ -160,15 +149,14 @@ class ZeppelinHotDogSKMMenu {
         "LZ133 德國酸菜熱狗 $40",
         "LZ135 墨西哥勁辣雞堡🌶️🌶️🌶️ $40",
         "LZ136 香脆雞塊 (9件, 燒烤汁) $20",
-        "LZ137 燒賣熱狗🌶️ $40",
     ];
 
     static final setDescription = "套餐 +$15";
 
-    static function createSet(withFreeChok:Bool) {
+    static function createSet() {
         var def =  {
             title: "套餐",
-            description: setDescription + "。要大薯條 送 CHOK CHOK 粉。",
+            description: setDescription,
             properties: {
                 main: {
                     title: "主食",
@@ -207,46 +195,10 @@ class ZeppelinHotDogSKMMenu {
             ]
         };
 
-        if (withFreeChok) {
-            def.properties.setField("chok", {
-                title: "送",
-                type: "string",
-                "enum": chokOptions,
-            });
-            def.required.push("chok");
-        }
-
-        def.properties.setField("seasoningOptions", {
-            title: "加配",
-            type: "array",
-            items: {
-                type: "string",
-                "enum": chokOptions.map(item -> item + " +$3"),
-            },
-            uniqueItems: true,
-        });
-
         return def;
     }
 
-    static public function hasFreeChok(
-        ?item:{
-            setOption1:Null<String>,
-            setOption2:Null<String>,
-        }
-    ):Bool {
-        return switch (item) {
-            case null:
-                false;
-            case {setOption1: BigFF, setOption2: _} | {setOption1: _, setOption2: BigFF} | {setOption1: SmallFF, setOption2: SmallFF}:
-                true;
-            case _:
-                false;
-        }
-    }
-
-    static public final ZeppelinHotDogSKMHotdogSet = createSet(false);
-    static public final ZeppelinHotDogSKMHotdogSetChok = createSet(true);
+    static public final ZeppelinHotDogSKMHotdogSet = createSet();
 
     static public final ZeppelinHotDogSKMHotdog = {
         title: "單叫",
@@ -325,10 +277,7 @@ class ZeppelinHotDogSKMMenu {
                 summarizeOrderObject(
                     orderItem.item,
                     def,
-                    hasFreeChok(orderItem.item) ?
-                        ["main", "extraOptions", "setOption1", "setOption2", "chok", "seasoningOptions"] :
-                        ["main", "extraOptions", "setOption1", "setOption2", "seasoningOptions"]
-                    ,
+                    ["main", "extraOptions", "setOption1", "setOption2"],
                     [setDescription]
                 );
             case Hotdog:
