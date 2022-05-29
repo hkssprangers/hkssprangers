@@ -1013,7 +1013,6 @@ class Menu extends View<MenuProps> {
         var meat = FastTasteSSPMeat(Dinner);
         var salad = FastTasteSSPSalad();
         var italian = FastTasteSSPItalian(Lunch);
-        var veg = FastTasteSSPVeg();
         var misc = FastTasteSSPMisc();
         return jsx('
             <Fragment>

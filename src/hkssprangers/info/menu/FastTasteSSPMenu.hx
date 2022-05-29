@@ -14,7 +14,6 @@ enum abstract FastTasteSSPItem(String) to String {
     final Italian;
     final Seafood;
     final Meat;
-    final Veg;
     final Salad;
     final Misc;
     final VSet;
@@ -60,7 +59,6 @@ enum abstract FastTasteSSPItem(String) to String {
         case Seafood: FastTasteSSPMenu.FastTasteSSPSeafood(timeSlotType);
         case Meat: FastTasteSSPMenu.FastTasteSSPMeat(timeSlotType);
         case Italian: FastTasteSSPMenu.FastTasteSSPItalian(timeSlotType);
-        case Veg: FastTasteSSPMenu.FastTasteSSPVeg();
         case Salad: FastTasteSSPMenu.FastTasteSSPSalad();
         case Misc: FastTasteSSPMenu.FastTasteSSPMisc();
     }
@@ -90,30 +88,6 @@ class FastTasteSSPMenu {
             '凍檸檬紅茶 +$$${9 + basePrice}',
             '凍青檸梳打 +$$${13 + basePrice}',
             '凍雜果賓治 +$$${13 + basePrice}',
-        ],
-    };
-    static public function FastTasteSSPVegSetDrink() return {
-        title: "跟餐飲品",
-        type: "string",
-        "enum": [
-            '熱檸檬⽔ +$0',
-            '熱朱古⼒ +$0',
-            '熱柑橘檸檬 +$0',
-            '凍柑橘檸檬 +$0',
-            '凍香芒橙汁 +$0',
-            '凍蘋果汁 +$0',
-            '可樂 +$0',
-            '無糖可樂 +$0',
-            '忌廉 +$0',
-            '雪碧 +$0',
-            '凍朱古⼒ +$9',
-            '熱即磨咖啡 +$10',
-            '凍即磨咖啡 +$13',
-            '凍檸檬⽔ +$9',
-            '凍鮮檸利賓納 +$9',
-            '凍檸檬紅茶 +$9',
-            '凍青檸梳打 +$13',
-            '凍雜果賓治 +$13',
         ],
     };
     static public function FastTasteSSPDrink(priceScale:Float) return {
@@ -146,7 +120,7 @@ class FastTasteSSPMenu {
         "極上和牛堡 $85",
         "焦糖鵝肝牛肉漢堡 $99",
         "橫行脆蟹堡 $78",
-        "芝士雙菇漢堡 $52",
+        // "芝士雙菇漢堡 $52",
         "菠蘿炸雞堡 $55",
         "深海鱈魚堡 $57",
     ];
@@ -456,54 +430,6 @@ class FastTasteSSPMenu {
             ]
         };
     }
-    static public function FastTasteSSPVeg() {
-        return {
-            title: "素食精選",
-            properties: {
-                veg: {
-                    type: "string",
-                    title: "素食精選",
-                    "enum": [
-                        "素牛扒漢堡配薯條 (漢堡配芥末蜜糖汁) $55",
-                        "素牛扒漢堡配薯條 (漢堡配黑醋汁) $55",
-                        "素雞扒菠蘿漢堡配薯條 (漢堡配芥末蜜糖汁) $55",
-                        "素雞扒菠蘿漢堡配薯條 (漢堡配黑醋汁) $55",
-                        "巨菇芝士漢堡配薯條 $55",
-                        "素卡邦尼意粉 $56",
-                        "黑松露什菜意粉 $56",
-                        "素肉醬意粉 $56",
-                        "素蝦南瓜蓉意大利飯 $65",
-                        "黑松露什菜意大利飯 $65",
-                        "Veggie ALL DAY 全日餐 (素牛扒) $75",
-                        "Veggie ALL DAY 全日餐 (素雞扒) $75",
-                    ],
-                },
-                options: {
-                    type: "array",
-                    title: "加配",
-                    items: {
-                        type: "string",
-                        "enum": [
-                            "沙律 +$10",
-                            "餐湯 +$10",
-                            "薯條 +$10",
-                            "薯格 +$10",
-                            // "蕃薯條 +$10",
-                            "洋蔥圈 +$10",
-                            "芝⼠條(2條) +$10",
-                        ],
-                    },
-                    maxItems: 1,
-                    uniqueItems: true,
-                },
-                drink: FastTasteSSPVegSetDrink(),
-            },
-            required: [
-                "veg",
-                "drink",
-            ]
-        };
-    }
     static public function FastTasteSSPSalad() {
         return {
             title: "沙律",
@@ -636,8 +562,6 @@ class FastTasteSSPMenu {
                 summarizeOrderObject(orderItem.item, def, ["seafood", "drink"], [box]);
             case Meat:
                 summarizeOrderObject(orderItem.item, def, ["meat", "drink"], [box]);
-            case Veg:
-                summarizeOrderObject(orderItem.item, def, ["veg", "options", "drink"], if (orderItem.item != null && orderItem.item.options != null) [for (_ in 0...orderItem.item.options.length + 1) box] else [box]);
             case Salad:
                 summarizeOrderObject(orderItem.item, def, ["salad", "options"], [box]);
             case Misc:
