@@ -58,7 +58,7 @@
     "@fastify/cookie": "^6.0.0",
     "@fastify/formbody": "^6.0.0",
     "@fastify/static": "^5.0.2",
-    "@splidejs/react-splide": "^0.7.6",
+    "@splidejs/react-splide": "^0.7.7",
     "aws-sdk": "^2.826.0",
     "aws-serverless-fastify": "github:andyli/aws-serverless-fastify#multiValueHeaders-1.0.28-lockless",
     "cross-fetch": "^3.1.5",
