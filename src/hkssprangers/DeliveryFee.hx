@@ -140,7 +140,7 @@ class DeliveryFee {
         },
         {
             place: "富昌邨",
-            match: address -> address.contains("富昌邨") || address.contains("富昌村"),
+            match: address -> address.contains("富昌邨") || address.contains("富昌村") || address.toLowerCase().contains("fu cheong estate"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
@@ -1912,6 +1912,20 @@ class DeliveryFee {
         {
             place: "楓樹街球場",
             match: address -> address.contains("楓樹街球場"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "長沙大樓", //長沙灣道120號（石硤尾街19號）
+            match: address -> address.contains("長沙大樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
