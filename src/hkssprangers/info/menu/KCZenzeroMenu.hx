@@ -33,7 +33,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    // LimitedSpecial,
+                    LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -203,7 +203,7 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "香辣螺意粉/螺絲粉";
+    static final limitedSpecial = "香辣蟹燴飯 $55";
     static final limitedSpecialSeperateBox = false;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
@@ -213,10 +213,9 @@ class KCZenzeroMenu {
                 title: "限定",
                 type: "string",
                 "enum": [
-                    "香辣螺意粉 $55",
-                    "香辣螺螺絲粉 $55",
+                    limitedSpecial,
                 ],
-                // "default": limitedSpecial
+                "default": limitedSpecial
             }
         },
         required: ["special"],
