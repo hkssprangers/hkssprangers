@@ -62,22 +62,18 @@ enum abstract KCZenzeroItem(String) to String {
 
 class KCZenzeroMenu {
     static public final box = "外賣盒 $2";
-    static public function KCZenzeroSetDrink(price:Float, freeCans:Bool) return {
+    static public function KCZenzeroSetDrink(price:Float) return {
         title: "飲品",
         type: "string",
-        "enum": (
-            freeCans ? [
-                // "可口可樂" + (price > 0 ? ' +$$0' : ""),
-                // "可口可樂 Zero" + (price > 0 ? ' +$$0' : ""),
-            ] : []
-        ).concat([ 
+        "enum": [
+            "可口可樂" + (price > 0 ? ' +$$0' : ""),
             "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
+            // "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
-        ]),
+        ],
     };
     static public final KCZenzeroFreePaperBoxDrink = {
         title: "飲品",
@@ -89,7 +85,7 @@ class KCZenzeroMenu {
             "自家沖洛神花冷泡茶 +$5",
             // "自家沖玫瑰烏龍冷泡茶 +$5",
             // "自家沖桂花烏龍冷泡茶 +$5",
-            "自家沖玄米冷泡茶 +$5",
+            // "自家沖玄米冷泡茶 +$5",
             // "自家沖玄米綠茶 +$5",
             // "自家沖水蜜桃烏龍茶 +$5",
         ],
@@ -147,7 +143,7 @@ class KCZenzeroMenu {
                     // "雙魚巨蟹熱狗",
                 ]
             },
-            drink: KCZenzeroSetDrink(5, false),
+            drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main"],
@@ -255,7 +251,7 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(5, false),
+            drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["options", "noodle"],
@@ -269,7 +265,7 @@ class KCZenzeroMenu {
                 type: "string",
                 title: "主食",
                 "enum": [
-                    // "芝士流心漢堡",
+                    "芝士流心漢堡",
                     // "炸芝士海鮮條",
                     // "蝦條",
                     "香草雞扒",
@@ -293,7 +289,7 @@ class KCZenzeroMenu {
                     "螺絲粉",
                 ],
             },
-            drink: KCZenzeroSetDrink(5, false),
+            drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sauce", "noodle"],
@@ -330,7 +326,7 @@ class KCZenzeroMenu {
                     // "薯條",
                 ],
             },
-            drink: KCZenzeroSetDrink(5, true),
+            drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sub"],
@@ -356,7 +352,7 @@ class KCZenzeroMenu {
                     "煙三文魚沙律",
                 ],
             },
-            drink: KCZenzeroSetDrink(0, true),
+            drink: KCZenzeroSetDrink(0),
             // extraOptions: KCZenzeroSetOptions,
         },
         required: [
