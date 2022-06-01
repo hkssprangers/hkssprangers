@@ -59,8 +59,8 @@ class MinimalMenu {
         { name: "Espresso Tonic(凍)", price: 44 },
         { name: "Dirty(凍)", price: 44 },
 
-        // { name: "火龍果乳酪", price: 46 },
-        // { name: "芒果乳酪", price: 48 },
+        { name: "火龍果乳酪", price: 46 },
+        { name: "芒果乳酪", price: 48 },
 
         { name: "茶包-英式早餐茶", price: 36 },
         { name: "茶包-野莓柑桔", price: 36 },
@@ -112,8 +112,10 @@ class MinimalMenu {
     };
 
     static final salads = [
-        { name: "藜麥煙三文魚沙律", price: 72 },
+        // { name: "藜麥煙三文魚沙律", price: 72 },
         // { name: "流心水牛芝士蕃茄沙律(v.)", price: 92 },
+        { name: "醃鯷魚什菌羅馬生菜沙律", price: 75 },
+        { name: "西瓜配巴馬火腿沙律", price: 75 },
         { name: "雞胸肉蕃茄沙律", price: 92 },
     ];
 
@@ -137,10 +139,11 @@ class MinimalMenu {
     };
 
     static final pastas = [
-        // { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 95 },
+        { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 95 },
         { name: "辣茄汁煙豬面肉貓耳朵粉(h.)", price: 95 },
         { name: "牛肝菌貓耳朵粉(v.)", price: 95 },
         { name: "香煎帶子黑魚籽龍蝦汁意粉", price: 138 },
+        { name: "蒜蓉牛油海露筍蜆意粉", price: 115 },
     ];
 
     static public final MinimalPasta = {
@@ -164,14 +167,15 @@ class MinimalMenu {
 
     static final sousVides = [
         { name: "慢煮西班牙黑毛豬", price: 138 },
-        { name: "慢煮黑安格斯牛肉7oz", price: 158 },
+        // { name: "慢煮黑安格斯牛肉7oz", price: 158 },
+        { name: "安格斯牛腰扒配阿根廷青醬", price: 158 },
     ];
 
     static public final MinimalSousVide = {
-        title: "慢煮",
+        title: "慢煮/肉類",
         properties: {
             main: {
-                title: "慢煮",
+                title: "慢煮/肉類",
                 type: "string",
                 "enum": sousVides.map(printNamePrice),
             },
@@ -295,7 +299,7 @@ class MinimalMenu {
                 "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
             },
             sousVides: {
-                title: "慢煮",
+                title: "慢煮/肉類",
                 type: "string",
                 "enum": [sousVides[0].name + " + " + sousVides[1].name],
                 "default": sousVides[0].name + " + " + sousVides[1].name,
