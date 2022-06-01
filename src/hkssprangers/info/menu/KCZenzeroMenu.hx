@@ -301,9 +301,9 @@ class KCZenzeroMenu {
                 type: "string",
                 title: "小雲呑",
                 "enum": [
-                    "韓式豬肉小雲呑 $45",
+                    "台灣小雲呑 $45",
                 ],
-                "default": "韓式豬肉小雲呑 $45",
+                "default": "台灣小雲呑 $45",
             },
             options: {
                 type: "array",
