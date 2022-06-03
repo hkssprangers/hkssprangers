@@ -804,8 +804,9 @@ enum abstract Shop(String) to String {
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
-            case [LaksaStore, "2022-06-03", _]:
-                return Unavailable('休息一天');
+            // https://www.facebook.com/LaksaStore/posts/pfbid02GuZcCZNVmPwv4URUdKpTEWHB4bxeCs2jpxBE7ZfS92LZu5uSJfvgmFMGarmTXxjRl
+            case [LaksaStore, "2022-06-04" | "2022-06-05", _]:
+                return Unavailable('休息療傷');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
