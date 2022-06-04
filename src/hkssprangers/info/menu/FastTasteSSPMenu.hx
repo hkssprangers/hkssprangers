@@ -16,7 +16,6 @@ enum abstract FastTasteSSPItem(String) to String {
     final Meat;
     final Salad;
     final Misc;
-    final VSet;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<FastTasteSSPItem> {
         final types = switch TimeSlotType.classify(timeSlot.start) {
@@ -44,15 +43,11 @@ enum abstract FastTasteSSPItem(String) to String {
         if (types == null || timeSlot.start == null){
             return [];
         }
-        final date = timeSlot.start.getDatePart();
-        if (date >= "2022-02-13" && date <= "2022-02-15") {
-            types.push(VSet);
-        }
+
         return types;
     }
 
     public function getDefinition(timeSlotType:TimeSlotType, isRedDay:Bool):Dynamic return switch (cast this:FastTasteSSPItem) {
-        case VSet: FastTasteSSPMenu.FastTasteSSPVSet;
         case DinnerSet: FastTasteSSPMenu.FastTasteSSPDinnerSet;
         case BurgerSet: FastTasteSSPMenu.FastTasteSSPBurgerSet(timeSlotType, isRedDay);
         case Burger: FastTasteSSPMenu.FastTasteSSPBurger(timeSlotType);
@@ -202,99 +197,6 @@ class FastTasteSSPMenu {
         };
     }
 
-    static public final FastTasteSSPVSet = {
-        title: "情人節套餐",
-        description: "2月13日至2月15日限定。請提早一日預訂。$298",
-        properties: {
-            appetizerOrSoup1: {
-                type: "string",
-                title: "前菜或湯（一）",
-                "enum": [
-                    "凱撒沙律",
-                    "黑松露忌廉蘑菇湯",
-                ],
-            },
-            appetizerOrSoup2: {
-                type: "string",
-                title: "前菜或湯（二）",
-                "enum": [
-                    "凱撒沙律",
-                    "黑松露忌廉蘑菇湯",
-                ],
-            },
-            main1: {
-                type: "string",
-                title: "主菜（一）",
-                "enum": [
-                    "白酒煮青口拼大蜆",
-                    "脆炸芝士條拼洋蔥圈",
-                ],
-            },
-            main2: {
-                type: "string",
-                title: "主菜（二）",
-                "enum": [
-                    "鮮茄海鮮意粉",
-                    "卡邦尼意粉",
-                ],
-            },
-            main3: {
-                type: "string",
-                title: "主菜（三）",
-                "enum": [
-                    "德國鹹豬手",
-                    "香草燒春雞",
-                    "香草燒羊架拼豬扒",
-                    "公司漢堡",
-                ],
-            },
-            desserts: {
-                type: "string",
-                title: "甜品",
-                "enum": [
-                    "法式焦糖燉蛋(2份)",
-                ],
-                "default": "法式焦糖燉蛋(2份)",
-            },
-            drink1: {
-                title: "飲品（一）",
-                type: "string",
-                "enum": [
-                    '蘋果汁',
-                    '香芒橙汁',
-                    '凍柑橘檸檬',
-                    '可樂',
-                    '無糖可樂',
-                    '忌廉',
-                    '雪碧',
-                ]
-            },
-            drink2: {
-                title: "飲品（二）",
-                type: "string",
-                "enum": [
-                    '蘋果汁',
-                    '香芒橙汁',
-                    '凍柑橘檸檬',
-                    '可樂',
-                    '無糖可樂',
-                    '忌廉',
-                    '雪碧',
-                ]
-            },
-        },
-        required: [
-            "appetizerOrSoup1",
-            "appetizerOrSoup2",
-            "main1",
-            "main2",
-            "main3",
-            "desserts",
-            "drink1",
-            "drink2",
-        ]
-    };
-
     static public final FastTasteSSPDinnerSet = {
         title: "超值晚市套餐",
         properties: {
@@ -369,9 +271,9 @@ class FastTasteSSPMenu {
                     type: "string",
                     "enum": [
                         "炸魚薯條 $70",
-                        "酥炸魷魚鬚 $45",
+                        // "酥炸魷魚鬚 $45",
                         "脆炸軟殼蟹 $48",
-                        "炸海鮮拼盤(軟殼蟹，魷魚鬚，大蝦，鱈魚柳) $98",
+                        // "炸海鮮拼盤(軟殼蟹，魷魚鬚，大蝦，鱈魚柳) $98",
                         "香辣茄蓉煮青口 $50",
                         "白酒忌廉汁煮大蜆 $50",
                     ],
@@ -543,8 +445,6 @@ class FastTasteSSPMenu {
     } {
         var def = orderItem.type.getDefinition(timeSlotType, isRedDay);
         return switch (orderItem.type) {
-            case VSet:
-                summarizeOrderObject(orderItem.item, def, FastTasteSSPVSet.required, ["$298"]);
             case DinnerSet:
                 final numBoxes = if (orderItem.item != null && orderItem.item.options != null) {
                     orderItem.item.options.length + 2;
