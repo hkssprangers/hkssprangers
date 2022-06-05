@@ -370,7 +370,7 @@ class Menu extends View<MenuProps> {
 
     function renderItems(items:ReadOnlyArray<String>, isAddons = false) {
         return items.map(item -> {
-            var parsed = MenuTools.parsePrice(item);
+            final parsed = MenuTools.parsePrice(item);
             renderItemRow(parsed.item, if (parsed.price != null) {
                 isAddons ? "+$" + parsed.price : "$" + parsed.price;
             } else {
@@ -1487,7 +1487,7 @@ class Menu extends View<MenuProps> {
                         <div className="font-bold p-3">${KeiHingUsualSet.properties.noodle.title}</div>
                         <div className="p-3">${slashes(KeiHingUsualSet.properties.noodle.enums())}</div>
 
-                        <div className=${headerClasses}>${KeiHingSiuMeiSet.title}</div>
+                        ${renderItemRow(KeiHingSiuMeiSet.title, "$" + KeiHingMenu.siuMeiPrice, ["text-xl", "font-bold"].concat(style.headerClasses))}
                         <div className="p-3 text-gray-500">
                             <p>${KeiHingSiuMeiSet.description} ${KeiHingSiuMeiSet.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingSiuMeiSet.properties.drink.description}</p>
