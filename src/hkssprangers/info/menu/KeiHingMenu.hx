@@ -86,6 +86,7 @@ enum abstract KeiHingItem(String) to String {
 }
 
 class KeiHingMenu {
+    static final noNeed = "唔要";
     static public final KeiHingEightDollarDrink = {
         title: "跟餐飲品",
         description: "+$8 可配冷熱飲品",
@@ -149,6 +150,7 @@ class KeiHingMenu {
         description: "奉送熱飲, 凍飲 +$2, 檸樂 檸蜜 檸啡 鮮奶 +$4, 特飲 +$9",
         type: "string",
         "enum": [
+            noNeed,
             "熱奶茶 +$0",
             "熱咖啡 +$0",
             "熱檸茶 +$0",
@@ -180,6 +182,7 @@ class KeiHingMenu {
         description: "奉送熱飲, 凍飲 +$4",
         type: "string",
         "enum": [
+            noNeed,
             "熱奶茶 +$0",
             "熱咖啡 +$0",
             "熱檸茶 +$0",
