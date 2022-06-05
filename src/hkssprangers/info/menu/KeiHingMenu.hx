@@ -200,6 +200,19 @@ class KeiHingMenu {
             "凍阿華田 +$4",
         ],
     };
+
+    static public function KeiHingFreeSoupOptions(num:Int = 1) {
+        final opts = switch (num) {
+            case 1: ["唔要", "老火靚湯"];
+            case n: ["唔要", "老火靚湯×" + n];
+        }
+        return {
+            type: "string",
+            title: "湯",
+            "enum": opts,
+            "default": opts[1],
+        }
+    }
     
     static final dishes = [
         /* 鑊氣小炒 */
@@ -534,8 +547,8 @@ class KeiHingMenu {
                 title: "雞髀套餐",
                 type: "string",
                 "enum": [
-                    "生炸巨型雞髀飯 送湯 $50",
-                    "生炸巨型雞髀意粉 送湯 $50",
+                    "生炸巨型雞髀飯 $50",
+                    "生炸巨型雞髀意粉 $50",
                 ],
             },
             sauce: {
@@ -548,8 +561,9 @@ class KeiHingMenu {
                 ],
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main", "sauce"],
+        required: ["main", "sauce", "freeSoup"],
     };
 
     static public function KeiHingDailySpecialLunch(weekday:Weekday) {
@@ -635,7 +649,6 @@ class KeiHingMenu {
         final title = "精選午餐（星期" + weekday.info().name + "）";
         return {
             title: title,
-            description: "送：老火靚湯",
             properties: {
                 main: {
                     title: title,
@@ -643,14 +656,14 @@ class KeiHingMenu {
                     "enum": items,
                 },
                 drink: KeiHingFreeHotDrink,
+                freeSoup: KeiHingFreeSoupOptions(),
             },
-            required: ["main", "drink"],
+            required: ["main", "drink", "freeSoup"],
         };
     }
 
     static public final KeiHingNoodleAndRice = {
         title: "粉麵飯",
-        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "粉麵飯",
@@ -737,12 +750,12 @@ class KeiHingMenu {
                 ],
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main"],
+        required: ["main", "freeSoup"],
     };
     static public final KeiHingBakedRice = {
         title: "輕型西式焗飯/意粉",
-        description: "奉送老火靚湯",
         properties: {
             main: {
                 title: "輕型西式焗飯/意粉",
@@ -767,12 +780,12 @@ class KeiHingMenu {
                 ],
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main"],
+        required: ["main", "freeSoup"],
     };
     static public final KeiHingRisotto = {
         title: "西廚燴飯/意粉",
-        description: "奉送老火靚湯",
         properties: {
             main: {
                 title: "西廚燴飯/意粉",
@@ -815,12 +828,12 @@ class KeiHingMenu {
                 ],
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main", "sub", "sauce", "carbo"],
+        required: ["main", "sub", "sauce", "carbo", "freeSoup"],
     };
     static public final KeiHingFriedInstantNoodle = {
         title: "乾炒公仔麵",
-        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "乾炒公仔麵",
@@ -853,12 +866,12 @@ class KeiHingMenu {
                 uniqueItems: true,
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main"],
+        required: ["main", "freeSoup"],
     };
     static public final KeiHingCurrySet = {
         title: "馬來咖哩",
-        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "馬來咖哩",
@@ -889,8 +902,9 @@ class KeiHingMenu {
                 ],
             },
             drink: KeiHingAddDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main"],
+        required: ["main", "freeSoup"],
     };
     static public final KeiHingUsualSet = {
         title: "常餐",
@@ -937,7 +951,7 @@ class KeiHingMenu {
     static public final siuMeiPrice = 47;
     static public final KeiHingSiuMeiSet = {
         title: "燒味雙併飯餐",
-        description: "送：白飯＋老火靚湯",
+        description: "送：白飯",
         properties: {
             siuMei1: {
                 type: "string",
@@ -950,8 +964,9 @@ class KeiHingMenu {
                 "enum": siuMeis,
             },
             drink: KeiHingFreeHotDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["siuMei1", "siuMei2", "drink"],
+        required: ["siuMei1", "siuMei2", "drink", "freeSoup"],
     };
     static public final KeiHingSnack = {
         title: "⼩食",
@@ -1016,7 +1031,7 @@ class KeiHingMenu {
     
     static public final KeiHingPot = {
         title: "煲仔菜",
-        description: "送：白飯＋老火靚湯",
+        description: "送：白飯",
         properties: {
             main: {
                 title: "煲仔菜",
@@ -1024,13 +1039,14 @@ class KeiHingMenu {
                 "enum": pots.map(v -> v + " $70"),
             },
             drink: KeiHingFreeHotFourDollarColdDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main", "drink"],
+        required: ["main", "drink", "freeSoup"],
     };
 
     static public final KeiHingChickenSet = {
         title: "雞鴨小菜套餐",
-        description: "送：老火靚湯兩碗 + 白飯兩碗",
+        description: "送：白飯×2",
         properties: {
             main: {
                 title: "雞鴨",
@@ -1061,8 +1077,9 @@ class KeiHingMenu {
             },
             drink1: KeiHingFreeHotDrink,
             drink2: KeiHingFreeHotDrink,
+            freeSoup: KeiHingFreeSoupOptions(2),
         },
-        required: ["main", "dish", "veg", "drink1", "drink2"],
+        required: ["main", "dish", "veg", "drink1", "drink2", "freeSoup"],
     };
 
     static public final KeiHingPotRice = {
@@ -1107,7 +1124,7 @@ class KeiHingMenu {
 
     static public final KeiHingDishSet = {
         title: "小菜套餐",
-        description: "送：白飯＋老火靚湯",
+        description: "送：白飯",
         properties: {
             main: {
                 title: "小菜套餐",
@@ -1118,8 +1135,9 @@ class KeiHingMenu {
                 ,
             },
             drink: KeiHingFreeHotFourDollarColdDrink,
+            freeSoup: KeiHingFreeSoupOptions(),
         },
-        required: ["main", "drink"],
+        required: ["main", "drink", "freeSoup"],
     };
 
     static public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, order:FormOrderData):Dynamic {
@@ -1218,33 +1236,33 @@ class KeiHingMenu {
                         };
                 });
             case NoodleAndRice:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingNoodleAndRice.description], null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], [], null, "");
             case CurrySet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingCurrySet.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], []);
             case ChickenLegSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "drink"], []);
+                summarizeOrderObject(orderItem.item, def, ["main", "sauce", "drink", "freeSoup"], []);
             case FriedInstantNoodle:
-                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], [KeiHingFriedInstantNoodle.description], null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink", "freeSoup"], [], null, "");
             case UsualSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "noodle", "drink"], [KeiHingUsualSet.description]);
             case SiuMeiSet:
-                summarizeOrderObject(orderItem.item, def, ["siuMei1", "siuMei2", "drink"], [KeiHingSiuMeiSet.description]);
+                summarizeOrderObject(orderItem.item, def, ["siuMei1", "siuMei2", "drink", "freeSoup"], [KeiHingSiuMeiSet.description]);
             case Chicken:
                 summarizeOrderObject(orderItem.item, def, ["main"], []);
             case ChickenSet:
-                summarizeOrderObject(orderItem.item, def, KeiHingChickenSet.required, [KeiHingChickenSet.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "dish", "veg", "drink1", "drink2", "freeSoup"], [KeiHingChickenSet.description]);
             case Pot:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingPot.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], [KeiHingPot.description]);
             case PotRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "veg", "drink"], [KeiHingPotRice.description], null, "煲仔飯");
             case DishSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingDishSet.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], [KeiHingDishSet.description]);
             case BakedRice:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingBakedRice.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], []);
             case Risotto:
-                summarizeOrderObject(orderItem.item, def, ["main", "sub", "sauce", "carbo", "drink"], [KeiHingRisotto.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "sub", "sauce", "carbo", "drink", "freeSoup"], []);
             case DailySpecialLunch:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [def.description]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "freeSoup"], []);
             case _:
                 {
                     orderDetails: "",

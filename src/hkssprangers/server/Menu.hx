@@ -1323,7 +1323,7 @@ class Menu extends View<MenuProps> {
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>${def.title}</div>
                     <div className="p-3 text-gray-500">
-                        <p>${def.description}</p>
+                        <p>送：${def.properties.freeSoup.enums()[1]}</p>
                         <p>${def.properties.drink.description}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
@@ -1395,11 +1395,12 @@ class Menu extends View<MenuProps> {
                     items.slice(cutoff),
                 ];
             }
+            final def = KeiHingNoodleAndRice;
             jsx('
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${KeiHingNoodleAndRice.title}</div>
+                    <div className=${headerClasses}>${def.title}</div>
                     <div className="p-3 text-gray-500">
-                        <p>${KeiHingNoodleAndRice.description}</p>
+                        <p>送：${def.properties.freeSoup.enums()[1]}</p>
                         <p>${KeiHingNoodleAndRice.properties.drink.description}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
@@ -1415,8 +1416,9 @@ class Menu extends View<MenuProps> {
         }
 
         final dishSet = {
+            final def = KeiHingDishSet;
             final items = {
-                final items = KeiHingDishSet.properties.main.enums();
+                final items = def.properties.main.enums();
                 final cutoff = Math.ceil(items.length * 0.5);
                 [
                     items.slice(0, cutoff),
@@ -1425,10 +1427,10 @@ class Menu extends View<MenuProps> {
             }
             jsx('
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${KeiHingDishSet.title}</div>
+                    <div className=${headerClasses}>${def.title}</div>
                     <div className="p-3 text-gray-500">
-                        <p>${KeiHingDishSet.description}</p>
-                        <p>${KeiHingDishSet.properties.drink.description}</p>
+                        <p>${def.description} ${def.properties.freeSoup.enums()[1]}</p>
+                        <p>${def.properties.drink.description}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
@@ -1453,6 +1455,7 @@ class Menu extends View<MenuProps> {
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${KeiHingChickenLegSet.title}</div>
                         <div className="p-3 text-gray-500">
+                            <p>送：${KeiHingChickenLegSet.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingChickenLegSet.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingChickenLegSet.properties.main.enums())}
@@ -1461,7 +1464,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingFriedInstantNoodle.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingFriedInstantNoodle.description}</p>
+                            <p>送：${KeiHingFriedInstantNoodle.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingFriedInstantNoodle.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingFriedInstantNoodle.properties.main.enums())}
@@ -1470,7 +1473,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingCurrySet.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingCurrySet.description}</p>
+                            <p>送：${KeiHingCurrySet.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingCurrySet.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingCurrySet.properties.main.enums())}
@@ -1486,21 +1489,21 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingSiuMeiSet.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingSiuMeiSet.description}</p>
+                            <p>${KeiHingSiuMeiSet.description} ${KeiHingSiuMeiSet.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingSiuMeiSet.properties.drink.description}</p>
                         </div>
                         <div className="p-3">${slashes(KeiHingMenu.siuMeis)}</div>
 
                         <div className=${headerClasses}>${KeiHingBakedRice.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingBakedRice.description}</p>
+                            <p>送：${KeiHingBakedRice.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingBakedRice.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingBakedRice.properties.main.enums())}
 
                         <div className=${headerClasses}>${KeiHingRisotto.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingRisotto.description}</p>
+                            <p>送：${KeiHingRisotto.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingRisotto.properties.drink.description}</p>
                         </div>
                         <div className="p-3">${slashes(KeiHingRisotto.properties.main.enums())}</div>
@@ -1516,7 +1519,7 @@ class Menu extends View<MenuProps> {
                         
                         <div className=${headerClasses}>${KeiHingChickenSet.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingChickenSet.description}</p>
+                            <p>${KeiHingChickenSet.description} ${KeiHingChickenSet.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingChickenSet.properties.drink1.description} (兩杯)</p>
                         </div>
                         <div className="font-bold p-3">${KeiHingChickenSet.properties.main.title}</div>
@@ -1528,7 +1531,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingPot.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>${KeiHingPot.description}</p>
+                            <p>${KeiHingPot.description} ${KeiHingPot.properties.freeSoup.enums()[1]}</p>
                             <p>${KeiHingPot.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingPot.properties.main.enums())}
