@@ -1370,6 +1370,7 @@ class Menu extends View<MenuProps> {
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${headerClasses}>${KeiHingNoodleAndRice.title}</div>
                     <div className="p-3 text-gray-500">
+                        <p>${KeiHingNoodleAndRice.description}</p>
                         <p>${KeiHingNoodleAndRice.properties.drink.description}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
@@ -1430,6 +1431,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingFriedInstantNoodle.title}</div>
                         <div className="p-3 text-gray-500">
+                            <p>${KeiHingFriedInstantNoodle.description}</p>
                             <p>${KeiHingFriedInstantNoodle.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingFriedInstantNoodle.properties.main.enums())}
@@ -1438,6 +1440,7 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingCurrySet.title}</div>
                         <div className="p-3 text-gray-500">
+                            <p>${KeiHingCurrySet.description}</p>
                             <p>${KeiHingCurrySet.properties.drink.description}</p>
                         </div>
                         ${renderItems(KeiHingCurrySet.properties.main.enums())}

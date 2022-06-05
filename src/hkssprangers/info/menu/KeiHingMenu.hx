@@ -551,14 +551,15 @@ class KeiHingMenu {
 
     static public final KeiHingNoodleAndRice = {
         title: "粉麵飯",
+        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "粉麵飯",
                 type: "string",
                 "enum": [
                     // 推介
-                    "梅菜扣肉飯 送湯 $50",
-                    "無骨海南雞 配:雞油香飯 送:油菜,湯 $57",
+                    "梅菜扣肉飯 $50",
+                    "無骨海南雞 配:雞油香飯 送:油菜 $57",
 
                     // 炒粉麵
                     "乾炒牛河 $50",
@@ -720,6 +721,7 @@ class KeiHingMenu {
     };
     static public final KeiHingFriedInstantNoodle = {
         title: "乾炒公仔麵",
+        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "乾炒公仔麵",
@@ -757,6 +759,7 @@ class KeiHingMenu {
     };
     static public final KeiHingCurrySet = {
         title: "馬來咖哩",
+        description: "送：老火靚湯",
         properties: {
             main: {
                 title: "馬來咖哩",
@@ -1108,13 +1111,13 @@ class KeiHingMenu {
                         };
                 });
             case NoodleAndRice:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [], null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingNoodleAndRice.description], null, "");
             case CurrySet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"], []);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingCurrySet.description]);
             case ChickenLegSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "drink"], []);
             case FriedInstantNoodle:
-                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], [], null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], [KeiHingFriedInstantNoodle.description], null, "");
             case UsualSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "noodle", "drink"], [KeiHingUsualSet.description]);
             case SiuMeiSet:
