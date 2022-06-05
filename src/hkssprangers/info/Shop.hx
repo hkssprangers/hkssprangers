@@ -361,7 +361,7 @@ enum abstract Shop(String) to String {
                     Sunday,
                 ],
                 earliestPickupTime: "12:30:00",
-                latestPickupTime: "20:00:00",
+                latestPickupTime: "18:30:00",
                 isInService: true,
                 facebook: "https://www.facebook.com/MGYVEG",
                 instagram: "https://www.instagram.com/mgyvegan/",
