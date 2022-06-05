@@ -1457,6 +1457,24 @@ class Menu extends View<MenuProps> {
                             <p>${KeiHingSiuMeiSet.properties.drink.description}</p>
                         </div>
                         <div className="p-3">${slashes(KeiHingMenu.siuMeis)}</div>
+
+                        <div className=${headerClasses}>${KeiHingBakedRice.title}</div>
+                        <div className="p-3 text-gray-500">
+                            <p>${KeiHingBakedRice.description}</p>
+                            <p>${KeiHingBakedRice.properties.drink.description}</p>
+                        </div>
+                        ${renderItems(KeiHingBakedRice.properties.main.enums())}
+
+                        <div className=${headerClasses}>${KeiHingRisotto.title}</div>
+                        <div className="p-3 text-gray-500">
+                            <p>${KeiHingRisotto.description}</p>
+                            <p>${KeiHingRisotto.properties.drink.description}</p>
+                        </div>
+                        <div className="p-3">${slashes(KeiHingRisotto.properties.main.enums())}</div>
+                        <div className="font-bold p-3">${KeiHingRisotto.properties.sub.title}</div>
+                        <div className="p-3">${slashes(KeiHingRisotto.properties.sub.enums())}</div>
+                        <div className="font-bold p-3">${KeiHingRisotto.properties.sauce.title}</div>
+                        <div className="p-3">${slashes(KeiHingRisotto.properties.sauce.enums())}</div>
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${KeiHingChicken.title}</div>

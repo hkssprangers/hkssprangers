@@ -23,6 +23,8 @@ enum abstract KeiHingItem(String) to String {
     final Pot;
     final PotRice;
     final DishSet;
+    final BakedRice;
+    final Risotto;
 
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<KeiHingItem> return switch timeSlotType {
         case Lunch:
@@ -40,6 +42,8 @@ enum abstract KeiHingItem(String) to String {
                 ChickenSet,
                 Pot,
                 DishSet,
+                BakedRice,
+                Risotto,
             ];
         case Dinner:
             [
@@ -56,6 +60,8 @@ enum abstract KeiHingItem(String) to String {
                 ChickenSet,
                 Pot,
                 DishSet,
+                BakedRice,
+                Risotto,
             ];
     };
 
@@ -74,6 +80,8 @@ enum abstract KeiHingItem(String) to String {
         case Pot: KeiHingMenu.KeiHingPot;
         case PotRice: KeiHingMenu.KeiHingPotRice;
         case DishSet: KeiHingMenu.KeiHingDishSet;
+        case BakedRice: KeiHingMenu.KeiHingBakedRice;
+        case Risotto: KeiHingMenu.KeiHingRisotto;
     }
 }
 
@@ -629,6 +637,84 @@ class KeiHingMenu {
         },
         required: ["main"],
     };
+    static public final KeiHingBakedRice = {
+        title: "輕型西式焗飯/意粉",
+        description: "奉送老火靚湯",
+        properties: {
+            main: {
+                title: "輕型西式焗飯/意粉",
+                type: "string",
+                "enum": [
+                    "香草芝士火腿焗飯 $50",
+                    "香草芝士火腿焗意粉 $50",
+                    "夏威夷菠蘿焗豬扒飯 $50",
+                    "夏威夷菠蘿焗豬扒意粉 $50",
+                    "匈牙利汁焗雞扒飯 $50",
+                    "匈牙利汁焗雞扒意粉 $50",
+                    "芝士白汁焗雞皇飯 $50",
+                    "芝士白汁焗雞皇意粉 $50",
+                    "意式肉醬焗飯 $50",
+                    "意式肉醬焗意粉 $50",
+                    "芝士焗牛扒飯 $50",
+                    "芝士焗牛扒意粉 $50",
+                    "龍脷柳忌廉蘑菇芝士焗飯 $50",
+                    "龍脷柳忌廉蘑菇芝士焗意粉 $50",
+                    "卡邦尼白汁海鮮焗飯 $50",
+                    "卡邦尼白汁海鮮焗意粉 $50",
+                ],
+            },
+            drink: KeiHingAddDrink,
+        },
+        required: ["main"],
+    };
+    static public final KeiHingRisotto = {
+        title: "西廚燴飯/意粉",
+        description: "奉送老火靚湯",
+        properties: {
+            main: {
+                title: "西廚燴飯/意粉",
+                type: "string",
+                "enum": [
+                    "香煎猪扒 $50",
+                    "香煎雞扒 $50",
+                    "吉列魚柳 $50",
+                    "西冷薄牛扒 $50",
+                    "脆香雞中翼 $50",
+                ],
+            },
+            sub: {
+                title: "拼",
+                type: "string",
+                "enum": [
+                    "煎蛋",
+                    "腸仔",
+                    "火腿",
+                    "餐肉",
+                ],
+            },
+            sauce: {
+                title: "配汁",
+                type: "string",
+                "enum": [
+                    "茄汁",
+                    "白汁",
+                    "黑椒汁",
+                    "蒜蓉汁",
+                    "葡汁",
+                ],
+            },
+            carbo: {
+                title: "飯/意粉",
+                type: "string",
+                "enum": [
+                    "飯",
+                    "意粉",
+                ],
+            },
+            drink: KeiHingAddDrink,
+        },
+        required: ["main", "sub", "sauce", "carbo"],
+    };
     static public final KeiHingFriedInstantNoodle = {
         title: "乾炒公仔麵",
         properties: {
@@ -1040,6 +1126,10 @@ class KeiHingMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "veg", "drink"], [KeiHingPotRice.description], null, "煲仔飯");
             case DishSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingDishSet.description]);
+            case BakedRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingBakedRice.description]);
+            case Risotto:
+                summarizeOrderObject(orderItem.item, def, ["main", "sub", "sauce", "carbo", "drink"], [KeiHingRisotto.description]);
             case _:
                 {
                     orderDetails: "",
