@@ -1453,7 +1453,6 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${KeiHingSiuMeiSet.title}</div>
                         <div className="p-3 text-gray-500">
-                            <p>單併$$${KeiHingMenu.siuMeiSinglePrice} 雙併+$$${KeiHingMenu.siuMeiDoubleAddCharge}</p>
                             <p>${KeiHingSiuMeiSet.description}</p>
                             <p>${KeiHingSiuMeiSet.properties.drink.description}</p>
                         </div>
