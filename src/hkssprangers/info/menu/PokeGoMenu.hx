@@ -282,7 +282,7 @@ class PokeGoMenu {
         type: "string",
         "enum": [
             "冷凍豆腐 $" + markup(38),
-            "炸蓮藕片 $" + markup(48),
+            // "炸蓮藕片 $" + markup(48),
             "梅凍蕃茄 $" + markup(38),
             "火山炸雞 $" + markup(68),
             "麻醬秋葵 $" + markup(38),
