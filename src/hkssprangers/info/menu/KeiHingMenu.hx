@@ -9,6 +9,7 @@ using Reflect;
 using Lambda;
 
 enum abstract KeiHingItem(String) to String {
+    final DailySpecialLunch;
     final CartNoodles;
     final NoodleAndRice;
     final ChickenLegSet;
@@ -29,6 +30,7 @@ enum abstract KeiHingItem(String) to String {
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<KeiHingItem> return switch timeSlotType {
         case Lunch:
             [
+                DailySpecialLunch,
                 CartNoodles,
                 NoodleAndRice,
                 ChickenLegSet,
@@ -65,7 +67,8 @@ enum abstract KeiHingItem(String) to String {
             ];
     };
 
-    public function getDefinition():Dynamic return switch (cast this:KeiHingItem) {
+    public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KeiHingItem) {
+        case DailySpecialLunch: KeiHingMenu.KeiHingDailySpecialLunch(Weekday.fromDay(timeSlot.start.toDate().getDay()));
         case CartNoodles: KeiHingMenu.KeiHingCartNoodles;
         case NoodleAndRice: KeiHingMenu.KeiHingNoodleAndRice;
         case ChickenLegSet: KeiHingMenu.KeiHingChickenLegSet;
@@ -549,6 +552,102 @@ class KeiHingMenu {
         required: ["main", "sauce"],
     };
 
+    static public function KeiHingDailySpecialLunch(weekday:Weekday) {
+        final items = switch (weekday) {
+            case Monday:
+                [
+                    "茄汁雞翼腸仔飯 $47",
+                    "黑椒茄子雞扒飯 $47",
+                    "滑蛋牛肉飯 $47",
+                    "涼瓜排骨飯 $47",
+                    "鹹蛋豉油雞飯 $47",
+                    "欖菜肉碎炒飯 $47",
+                    "乾炒叉燒烏冬 $47",
+                    "梅菜扣肉飯 $47",
+                ];
+            case Tuesday:
+                [
+                    "洋蔥豬扒火腿飯 $47",
+                    "柱侯牛腩飯 $47",
+                    "叉燒炒蛋飯 $47",
+                    "豆腐火腩飯 $47",
+                    "蝦醬通菜牛肉飯 $47",
+                    "揚州炒飯 $47",
+                    "星洲炒米 $47",
+                    "鹹蛋蒸肉餅 $47",
+                ];
+            case Wednesday:
+                [
+                    "茄汁斑腩飯 $47",
+                    "豉椒排骨飯 $47",
+                    "芙蓉蛋飯 $47",
+                    "羅漢齋飯 $47",
+                    "鹹蛋燒鴨飯 $47",
+                    "鹹魚雞粒炒飯 $47",
+                    "乾炒肉片河 $47",
+                    "豉汁蒸排骨 $47",
+                ];
+            case Thursday:
+                [
+                    "黑汁薄牛扒飯 $47",
+                    "咕嚕雞飯 $47",
+                    "蔥花餐肉炒蛋飯 $47",
+                    "紅燒豆腐飯 $47",
+                    "粟米肉粒飯 $47",
+                    "XO叉燒粒炒飯 $47",
+                    "乾炒三絲瀨 $47",
+                    "香菇蝦米蒸肉餅 $47",
+                ];
+            case Friday:
+                [
+                    "咖哩汁豬扒腸仔飯 $47",
+                    "柱侯牛腩飯 $47",
+                    "鮮茄炒蛋飯 $47",
+                    "魚香茄子飯 $47",
+                    "鹹蛋燒肉飯 $47",
+                    "西式炒飯 $47",
+                    "回鍋腩肉炆烏冬 $47",
+                    "梅菜扣肉飯 $47",
+                ];
+            case Saturday:
+                [
+                    "粟米斑腩飯 $47",
+                    "麻婆豆腐飯 $47",
+                    "涼瓜煎蛋飯 $47",
+                    "京都豬扒飯 $47",
+                    "蔥油叉燒飯 $47",
+                    "蝦醬雞絲炒飯 $47",
+                    "銀芽肉絲炒河 $47",
+                    "榨菜蒸肉餅 $47",
+                ];
+            case Sunday:
+                [
+                    "煎蛋黑椒雞扒飯 $47",
+                    "柱侯牛腩飯 $47",
+                    "菜脯煎蛋飯 $47",
+                    "老乾媽西芹雞柳飯 $47",
+                    "鹹蛋貴妃雞飯 $47",
+                    "家鄉炒飯 $47",
+                    "乾炒叉燒意粉 $47",
+                    "咸魚蒸肉餅 $47",
+                ];
+        }
+        final title = "精選午餐（星期" + weekday.info().name + "）";
+        return {
+            title: title,
+            description: "送：老火靚湯",
+            properties: {
+                main: {
+                    title: title,
+                    type: "string",
+                    "enum": items,
+                },
+                drink: KeiHingFreeHotDrink,
+            },
+            required: ["main", "drink"],
+        };
+    }
+
     static public final KeiHingNoodleAndRice = {
         title: "粉麵飯",
         description: "送：老火靚湯",
@@ -1028,7 +1127,7 @@ class KeiHingMenu {
             var timeSlotType = TimeSlotType.classify(pickupTimeSlot.start);
             var itemDefs = [
                 for (item in KeiHingItem.all(timeSlotType))
-                item => item.getDefinition()
+                item => item.getDefinition(pickupTimeSlot)
             ];
             function itemSchema():Dynamic return {
                 type: "object",
@@ -1070,14 +1169,17 @@ class KeiHingMenu {
         };
     }
 
-    static function summarizeItem(orderItem:{
-        ?type:KeiHingItem,
-        ?item:Dynamic,
-    }):{
+    static function summarizeItem(
+        pickupTimeSlot:Null<TimeSlot>,
+        orderItem:{
+            ?type:KeiHingItem,
+            ?item:Dynamic,
+        }
+    ):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def = orderItem.type.getDefinition();
+        var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
             case Sandwich | Snack:
                 switch (orderItem.item:Null<String>) {
@@ -1136,6 +1238,8 @@ class KeiHingMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingBakedRice.description]);
             case Risotto:
                 summarizeOrderObject(orderItem.item, def, ["main", "sub", "sauce", "carbo", "drink"], [KeiHingRisotto.description]);
+            case DailySpecialLunch:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [def.description]);
             case _:
                 {
                     orderDetails: "",
@@ -1144,8 +1248,11 @@ class KeiHingMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData):OrderSummary {
-        var summaries = formData.items.map(item -> summarizeItem(cast item));
+    static public function summarize(
+        formData:FormOrderData,
+        pickupTimeSlot:Null<TimeSlot>
+    ):OrderSummary {
+        var summaries = formData.items.map(item -> summarizeItem(pickupTimeSlot, cast item));
         var boxTotalPrice = formData.items.length * 2;
         summaries.push({
             orderDetails: "外賣 $2 × " + formData.items.length,

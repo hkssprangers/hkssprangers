@@ -961,7 +961,7 @@ enum abstract Shop(String) to String {
             case Toolss:
                 Promise.resolve(ToolssMenu.summarize(o));
             case KeiHing:
-                Promise.resolve(KeiHingMenu.summarize(o));
+                Promise.resolve(KeiHingMenu.summarize(o, pickupTimeSlot));
             case PokeGo:
                 Promise.resolve(PokeGoMenu.summarize(o));
             case WoStreet:

@@ -1308,10 +1308,39 @@ class Menu extends View<MenuProps> {
 
     function renderKeiHing() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final today = Date.now();
+        final daily = {
+            final def = KeiHingDailySpecialLunch(Weekday.fromDay(today.getDay()));
+            final items = {
+                final items = def.properties.main.enums();
+                final cutoff = Math.ceil(items.length * 0.5);
+                [
+                    items.slice(0, cutoff),
+                    items.slice(cutoff),
+                ];
+            }
+            jsx('
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${def.title}</div>
+                    <div className="p-3 text-gray-500">
+                        <p>${def.description}</p>
+                        <p>${def.properties.drink.description}</p>
+                    </div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items[1])}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
         final cartNoodle = {
             jsx('
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${KeiHingCartNoodles.title} (午市供應)</div>
+                    <div className=${headerClasses}>${KeiHingCartNoodles.title}（午市供應）</div>
                     <div className="p-3 text-gray-500">
                         <p>${KeiHingCartNoodles.description}</p>
                         <p>${KeiHingCartNoodles.properties.drink.description}</p>
@@ -1415,6 +1444,7 @@ class Menu extends View<MenuProps> {
 
         return jsx('
             <Fragment>
+                ${daily}
                 ${cartNoodle}
                 ${potRice}
                 ${noodleAndRice}
