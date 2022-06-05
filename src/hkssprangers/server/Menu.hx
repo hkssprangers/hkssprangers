@@ -1462,6 +1462,19 @@ class Menu extends View<MenuProps> {
                         <div className=${headerClasses}>${KeiHingChicken.title}</div>
                         ${renderItems(KeiHingChicken.properties.main.enums())}
 
+                        
+                        <div className=${headerClasses}>${KeiHingChickenSet.title}</div>
+                        <div className="p-3 text-gray-500">
+                            <p>${KeiHingChickenSet.description}</p>
+                            <p>${KeiHingChickenSet.properties.drink1.description} (兩杯)</p>
+                        </div>
+                        <div className="font-bold p-3">${KeiHingChickenSet.properties.main.title}</div>
+                        <div className="p-3">${slashes(KeiHingChickenSet.properties.main.enums())}</div>
+                        <div className="font-bold p-3">${KeiHingChickenSet.properties.dish.title}</div>
+                        <div className="p-3">任何巧手小菜一款</div>
+                        <div className="font-bold p-3">${KeiHingChickenSet.properties.veg.title}</div>
+                        <div className="p-3">${slashes(KeiHingChickenSet.properties.veg.enums())}</div>
+
                         <div className=${headerClasses}>${KeiHingPot.title}</div>
                         <div className="p-3 text-gray-500">
                             <p>${KeiHingPot.description}</p>

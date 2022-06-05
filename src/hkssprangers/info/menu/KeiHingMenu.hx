@@ -19,6 +19,7 @@ enum abstract KeiHingItem(String) to String {
     final Sandwich;
     final Snack;
     final Chicken;
+    final ChickenSet;
     final Pot;
     final PotRice;
     final DishSet;
@@ -36,6 +37,7 @@ enum abstract KeiHingItem(String) to String {
                 Sandwich,
                 Snack,
                 Chicken,
+                ChickenSet,
                 Pot,
                 DishSet,
             ];
@@ -51,6 +53,7 @@ enum abstract KeiHingItem(String) to String {
                 Sandwich,
                 Snack,
                 Chicken,
+                ChickenSet,
                 Pot,
                 DishSet,
             ];
@@ -67,6 +70,7 @@ enum abstract KeiHingItem(String) to String {
         case Sandwich: KeiHingMenu.KeiHingSandwich;
         case Snack: KeiHingMenu.KeiHingSnack;
         case Chicken: KeiHingMenu.KeiHingChicken;
+        case ChickenSet: KeiHingMenu.KeiHingChickenSet;
         case Pot: KeiHingMenu.KeiHingPot;
         case PotRice: KeiHingMenu.KeiHingPotRice;
         case DishSet: KeiHingMenu.KeiHingDishSet;
@@ -105,7 +109,7 @@ class KeiHingMenu {
     };
     static public final KeiHingAddDrink = {
         title: "跟餐飲品",
-        description: "熱飲+$4, 凍飲+$8, 特飲 +$9",
+        description: "熱飲+$4, 凍飲+$8, 特飲+$9",
         type: "string",
         "enum": [
             "熱奶茶 +$4",
@@ -182,6 +186,153 @@ class KeiHingMenu {
             "凍阿華田 +$4",
         ],
     };
+    
+    static final dishes = [
+        /* 鑊氣小炒 */
+
+        "京都豬扒",
+        "沙拉豬扒",
+        "椒鹽豬扒",
+        "泰式豬扒",
+        "洋蔥豬扒",
+        "柚子豬扒",
+        "黃金焗豬扒",
+        "涼瓜炆肉片",
+        "時菜炒肉片",
+        "菠蘿生炒骨",
+        "冬瓜炆排骨",
+        "回鍋肉片",
+        "士多啤梨骨",
+        "咕嚕雞球",
+        "泰式雞扒",
+        "西檸煎軟雞", 
+        "蒜香雞中翼",
+        "西蘭花雞柳",
+        "豆豉爆雞",
+        "豆豉炆雞",
+        "七味雞中翼",
+        "涼瓜炆鴨",
+        "魚香茄子",
+        "粟米炸魚柳",
+        "酥炸鯪魚球",
+        "節瓜蝦米粉絲",
+        "葡汁焗四蔬",
+
+        "鮮茄牛肉煮蛋",
+        "菠蘿牛肉",
+        "蔥爆牛肉",
+        "泡椒牛肉",
+        "水煮牛肉",
+        "通菜牛肉 (腐乳)",
+        "通菜牛肉 (蝦醬)",
+        "時菜炒牛肉",
+        "蝦仁炒蛋",
+        "蒜蓉炒時菜",
+        "清炒時蔬",
+        "羅漢上素",
+        "香煎芙蓉蛋",
+        "越式炒雜菜",
+        "時菜炒魚鬆",
+        "金銀蛋時菜",
+        "銀芽炒三絲",
+        "麻婆豆腐",
+        "椒鹽豆腐",
+        "紅燒豆腐",
+        "菜脯肉鬆煎蛋",
+        "北菇扒時蔬",
+        "福建扒豆腐",
+        "西芹腰果肉丁",
+        "蝦醬通菜豬頸肉",
+        "涼瓜肉碎煎蛋角",
+        "北菇鮑片扒豆腐",
+        "豆豉鯪魚油麥菜",
+        "芝士白汁焗西蘭花",
+
+        /* 蒸餸 */
+
+        "鹹蛋蒸肉餅",
+        "鹹魚蒸肉餅",
+        "梅菜蒸肉餅",
+        "土魷蒸肉餅",
+        "豉汁蒸排骨",
+        "北菇蒸滑雞",
+        "南乳蒸雞翼",
+        "咸魚蒸腩片",
+        "蝦醬蒸腩片",
+        "麵醬蒸腩片",
+        "南乳蒸腩片",
+        "XO醬蒸腩片",
+        "三色蒸水蛋",
+        "瑤柱蝦仁豆腐蒸水蛋",
+        "金銀蒜粉絲蒸茄子",
+        "蒜蓉粉絲蒸鮮魷",
+
+        /* 美味湯羹 */
+
+        "西湖牛肉羹",
+        "粟米雞蓉羹",
+        "韭黃雞絲瑤柱羹",
+        "豆腐蛋花蕃茄肉碎羹",
+    ];
+
+    static final specialDishes = [
+        /* 廚師精選 */
+        "一品小炒王",
+        "柚子蜜味雞",
+        "辣子雞丁",
+        "熗炒萵筍絲",
+        "台式三杯雞",
+        "大豆芽菜炒豬腸",
+        "韭菜豬紅",
+        "薑蔥炒豬雜",
+        "尖椒豚肉",
+        "味菜炒雜燴",
+        "黑椒牛仔骨",
+        "XO窩筍炒肥牛",
+        "味菜牛柳絲",
+        "沙嗲金菇肥牛",
+        "中式牛柳",
+        "蝦醬通菜鮮魷",
+        "椒鹽鮮魷",
+        "韭菜花炒鮮魷",
+        "豉椒鮮魷",
+        "醉鮑魚",
+        "京蔥牛肉",
+        "京蔥雞柳",
+        "京蔥豬頸肉",
+        "蜜椒薯仔牛柳粒",
+        "燒汁薯仔牛柳粒",
+        "椒鹽蝦",
+        "茄汁蝦",
+        "白灼蝦",
+        "豆干菜脯炒肉丁(辣)",
+        "豆干菜脯炒肉丁(走辣)",
+    ];
+    static final pots = [
+        "豆腐火腩煲",
+        "支竹火腩煲",
+        "啫啫滑雞煲",
+        "雲吞雞煲",
+        "三杯雞煲",
+        "魚香茄子煲",
+        "啫啫排骨煲",
+        "涼瓜鯇魚煲",
+        "薑蔥鯇魚煲",
+        "咖哩牛腩煲",
+        "涼瓜魚柳煲",
+        "薑蔥魚柳煲",
+        "大馬站煲",
+        "八珍豆腐煲",
+        "海鮮雜菜煲",
+        "羅漢齋煲",
+        "麻婆豆腐煲",
+        "南乳粗齋煲",
+        "咸魚雞粒豆腐煲",
+        "薑蔥支竹牛肉煲",
+        "沙嗲牛肉粉絲煲",
+        "沙爹金菇肥牛煲",
+    ];
+
     static public final KeiHingOptions = {
         type: "array",
         title: "選項",
@@ -666,6 +817,7 @@ class KeiHingMenu {
         },
         required: ["main"],
     };
+    
     static public final KeiHingPot = {
         title: "煲仔菜",
         description: "送：白飯＋老火靚湯",
@@ -673,34 +825,48 @@ class KeiHingMenu {
             main: {
                 title: "煲仔菜",
                 type: "string",
-                "enum": [
-                    "豆腐火腩煲 $70",
-                    "支竹火腩煲 $70",
-                    "啫啫滑雞煲 $70",
-                    "雲吞雞煲 $70",
-                    "三杯雞煲 $70",
-                    "魚香茄子煲 $70",
-                    "啫啫排骨煲 $70",
-                    "涼瓜鯇魚煲 $70",
-                    "薑蔥鯇魚煲 $70",
-                    "咖哩牛腩煲 $70",
-                    "涼瓜魚柳煲 $70",
-                    "薑蔥魚柳煲 $70",
-                    "大馬站煲 $70",
-                    "八珍豆腐煲 $70",
-                    "海鮮雜菜煲 $70",
-                    "羅漢齋煲 $70",
-                    "麻婆豆腐煲 $70",
-                    "南乳粗齋煲 $70",
-                    "咸魚雞粒豆腐煲 $70",
-                    "薑蔥支竹牛肉煲 $70",
-                    "沙嗲牛肉粉絲煲 $70",
-                    "沙爹金菇肥牛煲 $70",
-                ],
+                "enum": pots.map(v -> v + " $70"),
             },
             drink: KeiHingFreeHotFourDollarColdDrink,
         },
         required: ["main", "drink"],
+    };
+
+    static public final KeiHingChickenSet = {
+        title: "雞鴨小菜套餐",
+        description: "送：老火靚湯兩碗 + 白飯兩碗",
+        properties: {
+            main: {
+                title: "雞鴨",
+                type: "string",
+                "enum": [
+                    "沙薑雞 $168",
+                    "薑蔥霸王雞 $168",
+                    "上海菜膽雞 $168",
+                    "鹵水鴨 $168",
+                ],
+            },
+            dish: {
+                title: "小菜",
+                type: "string",
+                "enum": []
+                    .concat(dishes)
+                    .concat(specialDishes)
+                    .concat(pots)
+            },
+            veg: {
+                title: "送",
+                type: "string",
+                "enum": [
+                    "蒜蓉炒時菜",
+                    "腐乳生菜",
+                    "腐乳通菜",
+                ],
+            },
+            drink1: KeiHingFreeHotDrink,
+            drink2: KeiHingFreeHotDrink,
+        },
+        required: ["main", "dish", "veg", "drink1", "drink2"],
     };
 
     static public final KeiHingPotRice = {
@@ -742,127 +908,6 @@ class KeiHingMenu {
         },
         required: ["main"],
     };
-    
-    static final dishes = [
-        /* 鑊氣小炒 */
-
-        "京都豬扒",
-        "沙拉豬扒",
-        "椒鹽豬扒",
-        "泰式豬扒",
-        "洋蔥豬扒",
-        "黃金焗豬扒",
-        "涼瓜炆肉",
-        "時菜炒肉",
-        "菠蘿生炒骨",
-        "冬瓜炆排骨",
-        "回鍋肉片",
-        "士多啤梨骨",
-        "涼瓜肉碎煎蛋角",
-        "咕嚕雞球",
-        "泰式雞扒",
-        "西檸煎軟雞", 
-        "蒜香雞中翼",
-        "西蘭花雞柳",
-        "豆豉爆雞",
-        "豆豉炆雞",
-        "七味雞中翼",
-        "涼瓜炆鴨",
-        "魚香茄子",
-        "粟米炸魚柳",
-        // "酥炸鯪魚球",
-        "豆豉鯪魚油麥菜",
-        "蝦仁炒蛋",
-        "鮮茄牛肉煮蛋",
-        "菠蘿牛肉",
-        "蔥爆牛肉",
-        "味菜牛柳絲",
-        "水煮牛肉",
-        "時菜炒牛肉",
-        "蜜椒薯仔牛柳粒",
-        "通菜牛肉 (腐乳)",
-        "通菜牛肉 (蝦醬)",
-        "清炒時蔬",
-        "羅漢上素",
-        "香煎芙蓉蛋",
-        "越式炒雜菜",
-        // "時菜炒魚鬆",
-        "蒜蓉炒時菜",
-        "金銀蛋時菜",
-        "銀芽炒三絲",
-        "麻婆豆腐",
-        "椒鹽豆腐",
-        "紅燒豆腐",
-        "菜脯肉鬆煎蛋",
-        "北菇扒時蔬",
-        "褔建炒豆腐",
-        "西芹腰果肉丁",
-        "蝦醬通菜鮮魷",
-        "葡汁焗四蔬",
-        "北菇鮑片扒豆腐",
-        "節瓜蝦米粉絲",
-        "芝士白汁焗西蘭花",
-
-        /* 蒸餸 */
-
-        "鹹蛋蒸肉餅",
-        "鹹魚蒸肉餅",
-        "梅菜蒸肉餅",
-        "土魷蒸肉餅",
-        "豉汁蒸排骨",
-        "北菇蒸滑雞",
-        "南乳蒸雞翼",
-        "咸魚蒸腩片",
-        "蝦醬蒸腩片",
-        "麵醬蒸腩片",
-        "南乳蒸腩片",
-        "XO醬蒸腩片",
-        "三色蒸水蛋",
-        "瑤柱蝦仁豆腐蒸水蛋",
-        "金銀蒜粉絲蒸茄子",
-        "蒜蓉粉絲蒸鮮魷",
-
-        /* 美味湯羹 */
-
-        "西湖牛肉羹",
-        "粟米雞蓉羹",
-        "韭黃雞絲瑤柱羹",
-        "豆腐蛋花蕃茄肉碎羹",
-    ];
-
-    static final specialDishes = [
-        /* 廚師精選 */
-        "一品小炒王",
-        "柚子蜜味雞",
-        "辣子雞丁",
-        "熗炒萵筍絲",
-        "台式三杯雞",
-        "大豆芽菜炒豬腸",
-        "韭菜豬紅",
-        "薑蔥炒豬雜",
-        "尖椒豚肉",
-        "味菜炒雜燴",
-        "黑椒牛仔骨",
-        "XO窩筍炒肥牛",
-        "味菜牛柳絲",
-        "沙嗲金菇肥牛",
-        "中式牛柳",
-        "蝦醬通菜鮮魷",
-        "椒鹽鮮魷",
-        "韭菜花炒鮮魷",
-        "豉椒鮮魷",
-        "醉鮑魚",
-        "京蔥牛肉",
-        "京蔥雞柳",
-        "京蔥豬頸肉",
-        "蜜椒薯仔牛柳粒",
-        "燒汁薯仔牛柳粒",
-        "椒鹽蝦",
-        "茄汁蝦",
-        "白灼蝦",
-        "豆干菜脯炒肉丁(辣)",
-        "豆干菜脯炒肉丁(走辣)",
-    ];
 
     static public final KeiHingDishSet = {
         title: "小菜套餐",
@@ -987,6 +1032,8 @@ class KeiHingMenu {
                 summarizeOrderObject(orderItem.item, def, ["siuMei1", "siuMei2", "drink"], [KeiHingSiuMeiSet.description]);
             case Chicken:
                 summarizeOrderObject(orderItem.item, def, ["main"], []);
+            case ChickenSet:
+                summarizeOrderObject(orderItem.item, def, KeiHingChickenSet.required, [KeiHingChickenSet.description]);
             case Pot:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], [KeiHingPot.description]);
             case PotRice:
