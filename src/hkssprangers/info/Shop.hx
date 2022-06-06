@@ -805,7 +805,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('晚市最早 19:00 時段交收');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid02GuZcCZNVmPwv4URUdKpTEWHB4bxeCs2jpxBE7ZfS92LZu5uSJfvgmFMGarmTXxjRl
-            case [LaksaStore, "2022-06-04" | "2022-06-05", _]:
+            case [LaksaStore, _, _]:
                 return Unavailable('休息療傷');
 
             case [CafeGolden, _, Dinner]:
