@@ -32,7 +32,7 @@
     "maplibre-gl": "^2.1.9",
     "nodemon": "^2.0.16",
     "pmtiles": "^1.0.4",
-    "prisma": "^3.14.0",
+    "prisma": "^3.15.0",
     "prisma-dbml-generator": "^0.9.1",
     "react-map-gl": "^7.0.15",
     "react-router-dom": "^5.3.0",
