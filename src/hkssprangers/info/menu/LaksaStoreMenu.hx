@@ -43,10 +43,10 @@ class LaksaStoreMenu {
     static public function LaksaStoreHotpot(pickupTimeSlot:Null<TimeSlot>) {
         final now:LocalDateString = Date.now();
         final earlyOrder = pickupTimeSlot != null && now.getDatePart() < pickupTimeSlot.start.getDatePart();
-        final hotpot = if (earlyOrder) {
-            "喇沙二人火鍋套餐 (提前一天預訂) $268";
+        final hotpots = if (earlyOrder) {
+            ["喇沙二人火鍋套餐 (提前一天預訂) $268"];
         } else {
-            "喇沙二人火鍋套餐 (即日) $288";
+            [];
         }
         final meatOptions = [
             "薄切牛肩肉150g",
@@ -55,16 +55,14 @@ class LaksaStoreMenu {
             "腩片200g",
         ];
         return {
-            title: "喇沙二人火鍋套餐",
-            description: "提前一天預訂 $268，即日落單 $288。\n包括：喇沙湯底 牛/豚四選二 雞件 蜆 越南虎蝦四隻 銀芽 鮮什菌 娃娃菜 咸蛋流心丸 豆腐卜 甜不辣 米粉 油麵",
+            title: "喇沙二人火鍋套餐 (提前一天預訂)",
+            description: "需提前一天預訂 $268\n包括：喇沙湯底 牛/豚四選二 雞件 蜆 越南虎蝦四隻 銀芽 鮮什菌 娃娃菜 咸蛋流心丸 豆腐卜 甜不辣 米粉 油麵",
             properties: {
                 main: {
                     title: "喇沙二人火鍋套餐",
                     type: "string",
-                    "enum": [
-                        hotpot,
-                    ],
-                    "default": hotpot,
+                    "enum": hotpots,
+                    "default": hotpots[0],
                 },
                 meat1: {
                     title: "肉（一）",
