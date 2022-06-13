@@ -12,7 +12,7 @@ enum abstract BiuKeeLokYuenItem(String) to String {
     final Pot;
 
     static public final all:ReadOnlyArray<BiuKeeLokYuenItem> = [
-        // Pot,
+        Pot,
         NoodleSet,
         LoMeinSet,
         SingleDish,
@@ -207,13 +207,13 @@ class BiuKeeLokYuenMenu {
     };
 
     static public final BiuKeeLokYuenPot = {
-        title: "秋冬牛羊煲",
+        title: "牛腩牛雜煲",
         description: "附送唐生菜一份",
         type: "string",
         "enum": [
-            "秘製古法羊腩煲 例 $342",
-            "秘製古法羊腩煲 大 $400",
-            "秘製古法羊腩煲 特大 $506",
+            // "秘製古法羊腩煲 例 $342",
+            // "秘製古法羊腩煲 大 $400",
+            // "秘製古法羊腩煲 特大 $506",
 
             "標記招牌牛腩煲 例 $310",
             "標記招牌牛腩煲 大 $400",
