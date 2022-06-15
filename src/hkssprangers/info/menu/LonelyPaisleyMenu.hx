@@ -357,11 +357,11 @@ class LonelyPaisleyMenu {
             description: null,
             price: 48,
         },
-        {
-            name: "台式芝士肉鬆雞蛋餅配台式醬油",
-            description: null,
-            price: 58,
-        },
+        // {
+        //     name: "台式芝士肉鬆雞蛋餅配台式醬油",
+        //     description: null,
+        //     price: 58,
+        // },
         {
             name: "炸粗薯條配自家制黑蒜醬",
             description: null,
@@ -411,11 +411,11 @@ class LonelyPaisleyMenu {
             description: null,
             price: 148,
         },
-        {
-            name: "馬來西亞藍花飯 配素菜、素森巴醬",
-            description: null,
-            price: 128,
-        },
+        // {
+        //     name: "馬來西亞藍花飯 配素菜、素森巴醬",
+        //     description: null,
+        //     price: 128,
+        // },
         {
             name: "泰式青咖喱素菜配印度薄餅",
             description: null,
@@ -472,10 +472,10 @@ class LonelyPaisleyMenu {
                     "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬 $88",
                     "泰式青咖喱素菜配印度薄餅 $88",
                     "番茄雞肉意粉 $88",
-                    "雞翼、香腸、煎太陽蛋配藍花飯、秘制醬油 $88",
+                    // "雞翼、香腸、煎太陽蛋配藍花飯、秘制醬油 $88",
                     // "意大利傳統卡邦尼意粉 $108",
                     "異國香腸拼盤配雜菌翠玉瓜 $108",
-                    "馬來西亞藍花飯配素菜、本地素森巴醬 $128",
+                    // "馬來西亞藍花飯配素菜、本地素森巴醬 $128",
                     "本地手工煙燻啤酒煮牛肋條燴飯 $148",
                     "阿根廷香辣青醬虎蝦海鮮扁意粉 $148",
                     "格魯吉亞蒜香牛油雞扒 $148",
