@@ -18,6 +18,16 @@ enum abstract FastTasteSSPItem(String) to String {
     final Misc;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<FastTasteSSPItem> {
+        if (timeSlot == null || timeSlot.start == null)
+            return [];
+
+        if (timeSlot.start.getDatePart() >= "2022-06-17") {
+            return switch TimeSlotType.classify(timeSlot.start) {
+                case Lunch: [];
+                case Dinner: [DinnerSet];
+            }
+        }
+
         final types = switch TimeSlotType.classify(timeSlot.start) {
             case Lunch:
                 [
@@ -229,9 +239,9 @@ class FastTasteSSPMenu {
                     type: "string",
                     "enum": [
                         "薯條 +$10",
-                        "薯格 +$10",
+                        // "薯格 +$10",
                         // "洋蔥圈 +$10",
-                        "芝士條(2條) +$10",
+                        // "芝士條(2條) +$10",
                         "原味雞翼(2隻) +$10",
                     ],
                 },
