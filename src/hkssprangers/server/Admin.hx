@@ -87,6 +87,10 @@ class Admin extends View<AdminProps> {
         </Fragment>
     ');
 
+    override function fullstory() {
+        return null;
+    }
+
     override public function render() {
         return super.render();
     }
