@@ -800,8 +800,6 @@ enum abstract Shop(String) to String {
                 return Unavailable('已結業 😥');
             case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() > "2022-06-18"):
                 return Unavailable('已結業 😥');
-            case [FastTasteSSP, _, Lunch] if (pickupTimeSlot.start.getDatePart() >= "2022-06-17"):
-                return Unavailable('只供應晚市');
             case [Neighbor, _, _] if (pickupTimeSlot.start.getDatePart() > "2022-06-30"):
                 return Unavailable('已結業 😥');
             case [ThaiYummy, _, _]:
@@ -810,7 +808,8 @@ enum abstract Shop(String) to String {
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
-            case [EightyNine, "2022-06-07", _]:
+            // https://www.facebook.com/LaksaStore/posts/3229264690665353
+            case [LaksaStore, "2022-06-21" | "2022-06-22", _]:
                 return Unavailable('休息一天');
 
             case [CafeGolden, _, Dinner]:
