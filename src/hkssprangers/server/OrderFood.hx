@@ -11,15 +11,20 @@ import haxe.io.Path;
 import haxe.Json;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.info.TimeSlot;
+import hkssprangers.info.LoggedinUser;
 import typegram.User as TgUser;
+import comments.CommentString.comment;
+import comments.CommentString.format;
+import comments.CommentString.unindent;
 using hkssprangers.db.DatabaseTools;
 using hkssprangers.server.FastifyTools;
 using StringTools;
 using hkssprangers.ObjectTools;
+using hkssprangers.info.LoggedinUserTools;
 
 typedef OrderFoodProps = {
     final tgBotName:String;
-    final user:String;
+    final user:LoggedinUser;
     final prefill:OrderFormPrefill;
     final currentTime:LocalDateString;
 }
@@ -28,7 +33,7 @@ class OrderFood extends View<OrderFoodProps> {
     public var tgBotName(get, never):String;
     function get_tgBotName() return props.tgBotName;
 
-    public var user(get, never):String;
+    public var user(get, never):LoggedinUser;
     function get_user() return props.user;
 
     public var prefill(get, never):OrderFormPrefill;
@@ -42,6 +47,27 @@ class OrderFood extends View<OrderFoodProps> {
     override public function render() {
         return super.render();
     }
+
+    function fsIdentify() {
+        final userId = Json.stringify(LoggedinUserTools.print(user));
+        final content = {
+            __html: comment(unindent, format)/**
+                FS.identify($userId);
+            **/
+        };
+        return jsx('
+            <Fragment>
+                <script dangerouslySetInnerHTML=${content}></script>
+            </Fragment>
+        ');
+    }
+
+    override function fullstory() return jsx('
+        <Fragment>
+            ${super.fullstory()}
+            ${fsIdentify()}
+        </Fragment>
+    ');
 
     override function ogMeta() return jsx('
         <Fragment>
