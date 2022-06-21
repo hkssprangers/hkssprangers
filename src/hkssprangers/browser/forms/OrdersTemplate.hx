@@ -11,6 +11,7 @@ import mui.core.styles.Styles;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
 using Lambda;
+using StringTools;
 
 typedef OrdersTemplateProps = {
     final idSchema:Dynamic;
@@ -29,7 +30,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
     });
 
     static function DefaultArrayItem(props, order:{?shop:Shop}, currentTime:LocalDateString, pickupTimeSlot:TimeSlot, removable:Bool) {
-        var removeBtn = jsx('
+        final removeBtn = jsx('
             <RemoveButton
                 size="small"
                 disabled=${props.disabled || props.readonly}
@@ -38,15 +39,15 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                 <i className="fas fa-trash text-sm"></i>
             </RemoveButton>
         ');
-        var selectedShop = if (order != null && order.shop != null) {
-            var shop:Shop = order.shop;
-            var info = shop.info();
-            var availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
+        final selectedShop = if (order != null && order.shop != null) {
+            final shop:Shop = order.shop;
+            final info = shop.info();
+            final availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
                 Available;
             } else {
                 shop.checkAvailability(currentTime.toDate(), pickupTimeSlot);
             }
-            var disabledMessage = switch (availability) {
+            final disabledMessage = switch (availability) {
                 case Available:
                     null;
                 case Unavailable(reason):
@@ -75,11 +76,20 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
     }
 
     override function render():ReactFragment {
-        var pickupTimeSlot = switch (props.formContext.pickupTimeSlot) {
+        final pickupTimeSlot = switch (props.formContext.pickupTimeSlot) {
             case null: null;
             case str: str.parse(); 
         };
-        var items = if (props.items != null) {
+        final pickupTimeSlotSelected = (
+            pickupTimeSlot != null
+            &&
+            !(
+                (pickupTimeSlot.start:String).endsWith(" 00:00:00")
+                &&
+                (pickupTimeSlot.start == pickupTimeSlot.end)
+            )
+        );
+        final items = if (props.items != null) {
             [
                 for (i => p in props.items)
                 DefaultArrayItem(p, props.formData[i], props.formContext.currentTime, pickupTimeSlot, props.items.length > 1 || props.formData[i].shop != null)
@@ -87,18 +97,22 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         } else {
             null;
         }
-        var cluster = if (props.formData != null && props.formData.length > 0 && props.formData[0].shop != null) {
+        final cluster = if (props.formData != null && props.formData.length > 0 && props.formData[0].shop != null) {
             ShopCluster.classify(props.formData[0].shop);
         } else {
             null;
         }
-        var clusterOptions = if (cluster != null) {
+        final clusterOptions = if (cluster != null) {
             Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
         } else {
             Shop.all;
         }
-        var addButton = switch (props.formData) {
+        final addButton = switch (props.formData) {
             case null | []:
+                final disabled = !pickupTimeSlotSelected;
+                final warnMsg = pickupTimeSlotSelected ? null : jsx('
+                    <div className="my-2 text-red-500">⚠ 請先選擇交收日期和時間</div>
+                ');
                 jsx('
                     <div className="my-5">
                         <Button
@@ -106,11 +120,12 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                             className="array-item-add"
                             color=${Primary}
                             onClick=${props.onAddClick}
-                            disabled=${props.disabled || props.readonly}
+                            disabled=${props.disabled || props.readonly || disabled}
                         >
                             <i className="fas fa-store mr-1"></i>
                             揀店舖
                         </Button>
+                        ${warnMsg}
                     </div>
                 ');
             case orders if (orders.length >= clusterOptions.length || orders.exists(o -> o.shop == null)):

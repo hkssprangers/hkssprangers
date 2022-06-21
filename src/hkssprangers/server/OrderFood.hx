@@ -106,10 +106,11 @@ class OrderFood extends View<OrderFoodProps> {
                     CockroachDb.db.getPrefill(reply.getUser())
                         .toJsPromise()
                         .then(prefill -> {
-                            final now = Date.now();
+                            final now:LocalDateString = Date.now();
+                            final today = now.getDatePart();
                             final pickupTimeSlot:JsonString<TimeSlot> = {
-                                start: (now:LocalDateString),
-                                end: (now:LocalDateString),
+                                start: today + " 00:00:00",
+                                end: today + " 00:00:00",
                             }
                             reply.sendView(OrderFood, {
                                 tgBotName: tgMe.username,
@@ -117,7 +118,7 @@ class OrderFood extends View<OrderFoodProps> {
                                 prefill: prefill.merge({
                                     pickupTimeSlot: pickupTimeSlot,
                                 }),
-                                currentTime: (Date.now():LocalDateString),
+                                currentTime: now,
                             });
                         });
                 });
