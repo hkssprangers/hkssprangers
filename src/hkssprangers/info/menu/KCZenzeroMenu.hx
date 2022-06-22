@@ -33,7 +33,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    LimitedSpecial,
+                    // LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
