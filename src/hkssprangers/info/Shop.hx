@@ -114,7 +114,7 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/DragonJapaneseCuisine/",
                 instagram: "https://www.instagram.com/ramen_department/",
-                availablity: null,
+                availablity: "已結業",
                 restDay: null,
                 recommendation: null
             }
@@ -226,7 +226,7 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/502547383451978",
                 instagram: null,
-                availablity: null,
+                availablity: "已結業",
                 restDay: "逢星期日休息",
                 recommendation: null
             }
@@ -390,10 +390,10 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
-                isInService: true,
+                isInService: false,
                 facebook: "https://www.facebook.com/fasttastehk",
                 instagram: "https://www.instagram.com/fasttaste/",
-                availablity: "提供午餐及晚餐",
+                availablity: "已結業",
                 restDay: null,
                 recommendation: "經典牛魔堡 / 德國鹹豬手"
             }
@@ -418,10 +418,10 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
-                isInService: true,
+                isInService: false,
                 facebook: "https://www.facebook.com/blablablatea/",
                 instagram: "https://www.instagram.com/blablabla_tea",
-                availablity: null,
+                availablity: "已結業",
                 restDay: null,
                 recommendation: null
             }
@@ -478,7 +478,7 @@ enum abstract Shop(String) to String {
                 isInService: false,
                 facebook: "https://www.facebook.com/myroomroom",
                 instagram: "https://www.instagram.com/myroomroom/",
-                availablity: null,
+                availablity: "已結業",
                 restDay: "逢星期二休息",
                 recommendation: null
             }
@@ -536,7 +536,7 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/toolsshk",
                 instagram: "https://www.instagram.com/toolsshk/",
-                availablity: "提供午餐及晚餐",
+                availablity: "埗兵外賣暫停",
                 restDay: "逢星期一休息",
                 recommendation: "日式咖喱牛肋肉飯"
             }
@@ -622,7 +622,7 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
-                availablity: null,
+                availablity: "提供午餐及晚餐",
                 restDay: null,
                 recommendation: null,
             }
@@ -725,7 +725,7 @@ enum abstract Shop(String) to String {
                 facebook: "https://www.facebook.com/openblackwindow",
                 instagram: "https://www.instagram.com/blackwindow___/",
                 availablity: "提供午餐及晚餐",
-                restDay: "逢星期三休息",
+                restDay: "逢星期二不提供埗兵外賣, 逢星期三休息",
                 recommendation: null
             }
         case LonelyPaisley:

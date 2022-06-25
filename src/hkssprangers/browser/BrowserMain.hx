@@ -152,9 +152,9 @@ class BrowserMain {
             if (Reflect.hasField(l.layout, "text-font"))
                 Reflect.setField(l.layout, "text-font", []);
         }
+        final shops = Shop.all.filter(s -> s.info().isInService && s.info().lng != null && s.info().lat != null);
         final shopPts = [
-            for (info in Shop.all.map(s -> s.info()))
-            if (info.lng != null && info.lat != null)
+            for (info in shops.map(s -> s.info()))
             new LngLat(info.lng, info.lat)
         ];
         final bounds = new LngLatBounds(shopPts[0], shopPts[0]);
@@ -176,7 +176,7 @@ class BrowserMain {
             showZoom: true,
         }));
 
-        for (shop in Shop.all) {
+        for (shop in shops) {
             final info = shop.info();
             final cluster = ShopCluster.classify(shop);
             final popup = new maplibre_gl.Popup({ offset: 25 }).setText(info.name);

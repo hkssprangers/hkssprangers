@@ -377,21 +377,6 @@ class Index extends View<IndexProps> {
                     </div>
 
                     <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", FastTasteSSP])} className=${linkClasses2}>
-                            <div className="md:flex"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/FastTasteSSP/fasttaste.jpg", FastTasteSSP.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-pink-500 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${FastTasteSSP.info().name}</h1>
-                                    ${restDay(FastTasteSSP)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", BlackWindow])} className=${linkClasses2}>
                             <div className="md:flex"> 
                                 <div className=${thumbnailDivClasses2}>
