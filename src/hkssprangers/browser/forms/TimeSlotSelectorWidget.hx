@@ -58,8 +58,8 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
     }
 
     override function render():ReactFragment {
-        final now = Date.now();
-        final today = (now:LocalDateString).getDatePart();
+        final now = props.formContext.currentTime;
+        final today = now.getDatePart();
         final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start);
         final menuItems = timeSlots.map(timeSlot -> {
             final timeSlotStr = TimeSlotTools.printTime(timeSlot);
@@ -90,7 +90,7 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
                         label="交收日期"
                         value=${props.value == null ? "" : props.value.parse().start.getDatePart()}
                         minDate=${today}
-                        maxDate=${(Date.fromTime(now.getTime() + DateTools.days(14)):LocalDateString).getDatePart()}
+                        maxDate=${(Date.fromTime(now.toDate().getTime() + DateTools.days(14)):LocalDateString).getDatePart()}
                         format="M 月 D 日"
                         required=${props.required}
                         disabled=${props.disabled || props.readonly}
