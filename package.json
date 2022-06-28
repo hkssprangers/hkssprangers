@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@fastify/accepts": "^3.0.0",
-    "@fastify/cookie": "^6.0.0",
+    "@fastify/cookie": "^7.0.0",
     "@fastify/formbody": "^6.0.0",
     "@fastify/static": "^5.0.2",
     "@splidejs/react-splide": "^0.7.8",
