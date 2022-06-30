@@ -311,6 +311,12 @@ class Menu extends View<MenuProps> {
             ');
     }
 
+    function renderMsg(msg:String) {
+        return jsx('
+            <div className="p-5 text-center">${msg}</div>
+        ');
+    }
+
     function renderContent() {
         return switch shop {
             case EightyNine:
@@ -346,9 +352,11 @@ class Menu extends View<MenuProps> {
             case ThaiYummy:
                 renderThaiYummy();
             case Toolss:
-                renderToolss();
+                // renderToolss();
+                renderMsg("埗兵外賣暫停");
             case KeiHing:
-                renderKeiHing();
+                // renderKeiHing();
+                renderMsg("埗兵外賣暫停");
             case PokeGo:
                 renderPokeGo();
             case WoStreet:

@@ -565,7 +565,7 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/%E7%90%A6%E8%88%88%E9%A4%90%E5%BB%B3-277683322927183",
                 instagram: null,
-                availablity: "提供午餐及晚餐",
+                availablity: "埗兵外賣暫停",
                 restDay: null,
                 recommendation: "薑蔥霸王雞 / 琦興雞煲 / 鍋塌豆腐"
             }
@@ -819,6 +819,9 @@ enum abstract Shop(String) to String {
                 return Unavailable('晚市暫停');
 
             case [Toolss, _, _]:
+                return Unavailable('埗兵外賣暫停');
+
+            case [KeiHing, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
             case _:
