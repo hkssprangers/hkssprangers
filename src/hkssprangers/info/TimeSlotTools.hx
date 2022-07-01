@@ -1,5 +1,6 @@
 package hkssprangers.info;
 
+import hkssprangers.Availability;
 import hkssprangers.info.TimeSlotType;
 using Lambda;
 
@@ -29,14 +30,20 @@ class TimeSlotTools {
         { cutoff: "19:00:00", start: "19:45:00", end: "20:30:00" },
     ];
 
-    static public function getTimeSlots(date:LocalDateString):Array<TimeSlot & { enabled: Bool }> {
+    static public function getTimeSlots(date:LocalDateString):Array<TimeSlot & { availability: Availability }> {
         final dateStr = date.getDatePart();
         final timeNow = Date.now().getTime();
         return regularTimeSlots
             .map(slot -> {
-                enabled: switch [dateStr, slot.start] {
-                    case ["2022-04-17", "18:00:00" | "18:30:00"]: false;
-                    case _: (dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow;
+                availability: switch [dateStr, slot.start] {
+                    // case ["2022-07-01", _]:
+                    //     Unavailable("將改掛八號風球, 外賣服務暫停");
+                    case _:
+                        if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
+                            Available;
+                        } else {
+                            Unavailable("已截單");
+                        }
                 },
                 start: (dateStr + " " + slot.start:LocalDateString),
                 end: (dateStr + " " + slot.end:LocalDateString),

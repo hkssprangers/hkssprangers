@@ -233,7 +233,7 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         try {
             final timeSlots = TimeSlotTools.getTimeSlots(formData.pickupTimeSlot.parse().start);
             switch (timeSlots.find(ts -> haxe.Json.stringify(ts) == formData.pickupTimeSlot)) {
-                case null | { enabled: false }:
+                case null | { availability: Unavailable(_) }:
                     errors.pickupTimeSlot.addError("交收時段不正確");
                 case _:
                     // pass
