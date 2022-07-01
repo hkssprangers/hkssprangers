@@ -17,10 +17,16 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             button: "了解更多"
         },
         {
-            title: "梅貴緣本地手作素糭",
-            url: "/order-food",
-            img: StaticResource.image("/images/banner-mgy-dumpling-2022.jpg", "梅貴緣本地手作素糭", "w-100 my-3 rounded-md"),
-            button: "立即落單"
+            title: "埗兵週末本地菜群組",
+            url: "https://t.me/+uHQZCJagi5E3NTk1",
+            img: StaticResource.image("/images/banner-vege.jpg", "埗兵週末本地菜群組 x 歐羅農場", "w-100 my-3 rounded-md"),
+            button: "立即加入"
+        },
+        {
+            title: "埗兵咖啡渣之旅",
+            url: "/food-waste-recycle",
+            img: StaticResource.image("/images/food-waste-recycle/banner-coffee.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
+            button: "了解更多"
         },
         {
             title: "慳多D 美酒速遞",
@@ -33,20 +39,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             url: "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform",
             img: StaticResource.image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3 rounded-md"),
             button: "立即落單"
-        },
-        {
-            title: "埗兵週末本地菜群組",
-            url: "https://t.me/+uHQZCJagi5E3NTk1",
-            img: StaticResource.image("/images/banner-vege.jpg", "埗兵週末本地菜群組 x 歐羅農場", "w-100 my-3 rounded-md"),
-            button: "立即加入"
-        },
-        {
-            title: "埗兵咖啡渣之旅",
-            url: "/food-waste-recycle",
-            img: StaticResource.image("/images/food-waste-recycle/banner-coffee.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
-            button: "了解更多"
         }
-        
     ];
 
     static final options:splidejs.splide.Options = {
