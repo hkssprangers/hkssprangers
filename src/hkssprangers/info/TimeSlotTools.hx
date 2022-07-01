@@ -36,7 +36,7 @@ class TimeSlotTools {
         return regularTimeSlots
             .map(slot -> {
                 availability: switch (dateStr) {
-                    case "2022-07-01" if (slot.start >= "19:00:00"):
+                    case "2022-07-01" if (slot.start >= "18:00:00"):
                         Unavailable("將改掛八號風球, 外賣服務暫停");
                     case _:
                         if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
