@@ -815,8 +815,8 @@ enum abstract Shop(String) to String {
             case [MGY, "2022-06-24" | "2022-06-25" | "2022-06-26" | "2022-06-27" | "2022-06-28" | "2022-06-29", _]:
                 return Unavailable('員工放大假');
 
-            case [EightyNine | PokeGo | Minimal | YearsHK | TheParkByYears, "2022-07-01", Dinner]:
-                return Unavailable('將改掛八號風球 晚市暫停');
+            case [BlackWindow, "2022-07-02", _]:
+                return Unavailable('颱風關係 休息一天');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
