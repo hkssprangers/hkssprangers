@@ -33,7 +33,7 @@ enum abstract KCZenzeroItem(String) to String {
                 ];
             case Dinner:
                 [
-                    // LimitedSpecial,
+                    LimitedSpecial,
                     HotdogSet,
                     NoodleSet,
                     PastaSet,
@@ -117,7 +117,7 @@ class KCZenzeroMenu {
             // "芝士肉醬燒大菇(唔辣) $25",
             "芝士茄父子(素) $25",
             // "芝士波隆納肉醬薯條 $25",
-            "芝士波隆納肉醬薯格 $25",
+            // "芝士波隆納肉醬薯格 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
             // "紫薯撻 $12",
@@ -136,7 +136,7 @@ class KCZenzeroMenu {
                 "enum": [
                     "波隆納肉醬熱狗",
                     "芝士蛋松露熱狗",
-                    "薯格趣趣熱狗",
+                    // "薯格趣趣熱狗",
                     "芥末沙律三文魚熱狗",
                     "九龍皇帝熱狗",
                     "妙菇皇后熱狗",
@@ -204,7 +204,7 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "鮑汁蜆燴飯 $55";
+    static final limitedSpecial = "香辣螺燴飯 $55";
     static final limitedSpecialSeperateBox = false;
     static public final KCZenzeroLimitedSpecial = {
         title: "限定：" + limitedSpecial,
@@ -322,7 +322,7 @@ class KCZenzeroMenu {
                 title: "小食",
                 "enum": [
                     "炸雞翼",
-                    "薯格",
+                    // "薯格",
                     // "薯條",
                 ],
             },
