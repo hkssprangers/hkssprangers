@@ -13,7 +13,7 @@ enum abstract LaksaStoreItem(String) to String {
         Hotpot,
         NoodleSet,
         // RiceSet,
-        BakKutTeh,
+        // BakKutTeh,
     ];
 
     public function getDefinition(pickupTimeSlot:Null<TimeSlot>):Dynamic return switch (cast this:LaksaStoreItem) {

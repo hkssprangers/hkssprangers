@@ -728,20 +728,58 @@ class Menu extends View<MenuProps> {
     }
 
     function renderLaksaStore() {
-        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        var itemPrice = LaksaStoreNoodleSet.description.parsePrice();
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final itemPrice = LaksaStoreNoodleSet.description.parsePrice();
+        final Hotpot = if (LaksaStoreMenu.LaksaStoreItem.all.has(Hotpot)) {
+            jsx('
+                <Fragment>
+                    <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
+                    <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
+                </Fragment>
+            ');
+        } else null;
+        final BakKutTeh = if (LaksaStoreMenu.LaksaStoreItem.all.has(BakKutTeh)) {
+            jsx('
+                <Fragment>
+                    <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
+                    ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
+                </Fragment>
+            ');
+        } else null;
+        final row1 = switch [Hotpot, BakKutTeh] {
+            case [null, null]:
+                null;
+            case [_, null]:
+                jsx('
+                    <div className=${["md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                        <div className="p-3">
+                            ${Hotpot}
+                        </div>
+                    </div>
+                ');
+            case [null, _]:
+                jsx('
+                    <div className=${["md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                        <div className="p-3">
+                            ${BakKutTeh}
+                        </div>
+                    </div>
+                ');
+            case [_, _]:
+                jsx('
+                    <div className=${["md:border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["p-3", "md:w-1/2"].concat(style.borderClasses).join(" ")}>
+                            ${Hotpot}
+                        </div>
+                        <div className="md:w-1/2 p-3 md:border-l-4">
+                            ${BakKutTeh}
+                        </div>
+                    </div>
+                ');
+        }
         return jsx('
             <Fragment>
-                <div className=${["md:border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${LaksaStoreHotpot(null).title}</div>
-                        <div className="p-3 whitespace-pre-wrap">${LaksaStoreHotpot(null).description}</div>
-                    </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${LaksaStoreBakKutTeh.title}</div>
-                        ${renderItems(LaksaStoreBakKutTeh.properties.main.enums())}
-                    </div>
-                </div>
+                ${row1}
                 <div className=${["p-3"].concat(style.borderClasses).join(" ")}>
                     ${renderItemRow(itemPrice.item, "$" + itemPrice.price, ["text-xl", "font-bold"].concat(style.headerClasses))}
                     <div className="md:flex flex-row md:mt-3">
