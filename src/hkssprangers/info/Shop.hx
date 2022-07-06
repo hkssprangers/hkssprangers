@@ -808,15 +808,8 @@ enum abstract Shop(String) to String {
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
-            // https://www.facebook.com/LaksaStore/posts/pfbid023FaMdWpctNTUzca4ioybGTBhNguaALooRMETYR2xDJjjb1C2hvJPeXaKrx9sqFSl
-            case [LaksaStore, "2022-06-23", _]:
-                return Unavailable('休息一天');
-
-            case [MGY, "2022-06-24" | "2022-06-25" | "2022-06-26" | "2022-06-27" | "2022-06-28" | "2022-06-29", _]:
-                return Unavailable('員工放大假');
-
-            case [BlackWindow | YearsHK | TheParkByYears | EightyNine | KCZenzero | LaksaStore | MGY | Minimal | WoStreet, "2022-07-02", _]:
-                return Unavailable('颱風關係 休息一天');
+            case [HanaSoftCream, "2022-07-06", Dinner]:
+                return Unavailable('晚市暫停一天');
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
