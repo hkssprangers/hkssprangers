@@ -465,76 +465,68 @@ class Menu extends View<MenuProps> {
     }
 
     function renderKCZenzero() {
+        final now:LocalDateString = Date.now();
         final hotdogSet = KCZenzeroHotdogSet(Lunch);
         final noodleSet = KCZenzeroNoodleSet(Lunch);
         final pastaSet = KCZenzeroPastaSet(Lunch);
 
-        final limited = if (KCZenzeroItem.all(Dinner).has(LimitedSpecial)) {
+        final limited = if (KCZenzeroMenu.limitedSpecial.date == now.getDatePart()) {
+            final def = KCZenzeroMenu.limitedSpecial.def;
+            final period = KCZenzeroMenu.limitedSpecial.date + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
+                case [Dinner]: " 晚市供應";
+                case _: null;
+            });
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">限定 (晚市供應)</div>
+                        <div className="p-3">限定 (${period})</div>
                     </div>
-                    <div className="p-3">${KCZenzeroLimitedSpecial.description}</div>
-                    ${renderItems(KCZenzeroLimitedSpecial.properties.special.enums())}
+                    <div className="p-3">${def.description}</div>
+                    ${renderItems(def.properties.special.enums())}
                 </Fragment>
             ');
-        } else {
-            null;
-        }
+        } else null;
 
-        final wontonSet = if (KCZenzeroItem.all(Lunch).has(WontonSet)) {
-            jsx('
-                <Fragment>
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroWontonSet.title}</div>
-                    </div>
-                    ${renderItems(KCZenzeroWontonSet.properties.main.enums())}
-                    <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.options.title}</div>
-                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.options.items.enums())}</div>
-                    <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.sub.title}選擇</div>
-                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.sub.enums())}</div>
-                    <div className="font-bold p-3">${KCZenzeroWontonSet.properties.drink.title}選擇</div>
-                    <div className="p-3">${slashes(KCZenzeroWontonSet.properties.drink.enums())}</div>
-                </Fragment>
-            ');
-        } else {
-            null;
-        }
+        final wontonSet = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroWontonSet.title}</div>
+                </div>
+                ${renderItems(KCZenzeroWontonSet.properties.main.enums())}
+                <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.options.title}</div>
+                <div className="p-3">${slashes(KCZenzeroWontonSet.properties.options.items.enums())}</div>
+                <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.sub.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroWontonSet.properties.sub.enums())}</div>
+                <div className="font-bold p-3">${KCZenzeroWontonSet.properties.drink.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroWontonSet.properties.drink.enums())}</div>
+            </Fragment>
+        ');
 
-        final r6Set = if (KCZenzeroItem.all(Lunch).has(R6Set)) {
-            jsx('
-                <Fragment>
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroR6Set.title}</div>
-                    </div>
-                    ${renderItems(KCZenzeroR6Set.properties.main.enums())}
-                    <div className="p-3 font-bold">${KCZenzeroR6Set.properties.options.title}</div>
-                    <div className="p-3">${slashes(KCZenzeroR6Set.properties.options.items.enums())}</div>
-                    <div className="font-bold p-3">${KCZenzeroR6Set.properties.drink.title}選擇</div>
-                    <div className="p-3">${slashes(KCZenzeroR6Set.properties.drink.enums())}</div>
-                </Fragment>
-            ');
-        } else {
-            null;
-        }
+        final r6Set = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroR6Set.title}</div>
+                </div>
+                ${renderItems(KCZenzeroR6Set.properties.main.enums())}
+                <div className="p-3 font-bold">${KCZenzeroR6Set.properties.options.title}</div>
+                <div className="p-3">${slashes(KCZenzeroR6Set.properties.options.items.enums())}</div>
+                <div className="font-bold p-3">${KCZenzeroR6Set.properties.drink.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroR6Set.properties.drink.enums())}</div>
+            </Fragment>
+        ');
 
-        final goldenLeg = if (KCZenzeroItem.all(Lunch).has(GoldenLeg)) {
-            jsx('
-                <Fragment>
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${KCZenzeroGoldenLeg.title}</div>
-                    </div>
-                    ${renderItems(KCZenzeroGoldenLeg.properties.main.enums())}
-                    <div className="p-3 font-bold">${KCZenzeroGoldenLeg.properties.options.title}</div>
-                    <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.options.items.enums())}</div>
-                    <div className="font-bold p-3">${KCZenzeroGoldenLeg.properties.drink.title}選擇</div>
-                    <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.drink.enums())}</div>
-                </Fragment>
-            ');
-        } else {
-            null;
-        }
+        final goldenLeg = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroGoldenLeg.title}</div>
+                </div>
+                ${renderItems(KCZenzeroGoldenLeg.properties.main.enums())}
+                <div className="p-3 font-bold">${KCZenzeroGoldenLeg.properties.options.title}</div>
+                <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.options.items.enums())}</div>
+                <div className="font-bold p-3">${KCZenzeroGoldenLeg.properties.drink.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.drink.enums())}</div>
+            </Fragment>
+        ');
 
         return jsx('
             <div className="md:flex flex-row">

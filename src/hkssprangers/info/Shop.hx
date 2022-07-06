@@ -954,7 +954,7 @@ enum abstract Shop(String) to String {
             case HanaSoftCream:
                 Promise.resolve(HanaSoftCreamMenu.summarize(o));
             case KCZenzero:
-                Promise.resolve(KCZenzeroMenu.summarize(o, TimeSlotType.classify(pickupTimeSlot.start)));
+                Promise.resolve(KCZenzeroMenu.summarize(o, pickupTimeSlot));
             case LaksaStore:
                 Promise.resolve(LaksaStoreMenu.summarize(pickupTimeSlot, o));
             case MGY:

@@ -2,6 +2,7 @@ package hkssprangers.info.menu;
 
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
+import hkssprangers.info.TimeSlotType;
 using hkssprangers.MathTools;
 using Lambda;
 
@@ -17,40 +18,29 @@ enum abstract KCZenzeroItem(String) to String {
     final GoldenLeg;
     final Single;
 
-    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<KCZenzeroItem> {
-        return switch (timeSlotType) {
-            case Lunch:
-                [
-                    // LimitedSpecial,
-                    HotdogSet,
-                    NoodleSet,
-                    PastaSet,
-                    R6Set,
-                    WontonSet,
-                    LightSet,
-                    GoldenLeg,
-                    Single,
-                ];
-            case Dinner:
-                [
-                    LimitedSpecial,
-                    HotdogSet,
-                    NoodleSet,
-                    PastaSet,
-                    R6Set,
-                    WontonSet,
-                    LightSet,
-                    GoldenLeg,
-                    Single,
-                ];
-        }
+    static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
+        return (switch (KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start))) {
+            case null: [];
+            case _: [LimitedSpecial];
+        }).concat(
+            [
+                HotdogSet,
+                NoodleSet,
+                PastaSet,
+                R6Set,
+                WontonSet,
+                LightSet,
+                GoldenLeg,
+                Single,
+            ]
+        );
     }
 
-    public function getDefinition(timeSlotType:TimeSlotType):Dynamic return switch (cast this:KCZenzeroItem) {
-        case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial;
-        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(timeSlotType);
-        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(timeSlotType);
-        case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(timeSlotType);
+    public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
+        case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
+        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(TimeSlotType.classify(timeSlot.start));
+        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
+        case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
         case R6Set: KCZenzeroMenu.KCZenzeroR6Set;
         case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
@@ -204,23 +194,35 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
-    static final limitedSpecial = "香辣螺燴飯 $55";
-    static final limitedSpecialSeperateBox = false;
-    static public final KCZenzeroLimitedSpecial = {
-        title: "限定：" + limitedSpecial,
-        description: "⚠️ 請提早落單。售完即止。",
-        properties: {
-            special: {
-                title: "限定",
-                type: "string",
-                "enum": [
-                    limitedSpecial,
-                ],
-                "default": limitedSpecial
+    static public final limitedSpecial = {
+        final limitedSpecial = "香辣螺燴飯 $55";
+        {
+            date: "2022-07-05",
+            timeSlotTypes: [Dinner],
+            seperateBox: false,
+            def: {
+                title: "限定：" + limitedSpecial,
+                description: "⚠️ 請提早落單。售完即止。",
+                properties: {
+                    special: {
+                        title: "限定",
+                        type: "string",
+                        "enum": [
+                            limitedSpecial,
+                        ],
+                        "default": limitedSpecial
+                    }
+                },
+                required: ["special"],
             }
-        },
-        required: ["special"],
-    }
+        };
+    };
+
+    static public function KCZenzeroLimitedSpecial(date:LocalDateString, timeSlotType:TimeSlotType)
+        return if (limitedSpecial.date == date.getDatePart() && limitedSpecial.timeSlotTypes.has(timeSlotType))
+            limitedSpecial.def;
+        else
+            null;
 
     static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
         title: "意式濃厚蕃茄湯車仔粉",
@@ -399,8 +401,8 @@ class KCZenzeroMenu {
                 type: {
                     title: "食物種類",
                     type: "string",
-                    oneOf: KCZenzeroItem.all(timeSlotType).map(item -> {
-                        title: item.getDefinition(timeSlotType).title,
+                    oneOf: KCZenzeroItem.all(pickupTimeSlot).map(item -> {
+                        title: item.getDefinition(pickupTimeSlot).title,
                         const: item,
                     }),
                 },
@@ -418,7 +420,7 @@ class KCZenzeroMenu {
                         //pass
                     case itemType:
                         Object.assign(itemSchema.properties, {
-                            item: itemType.getDefinition(timeSlotType),
+                            item: itemType.getDefinition(pickupTimeSlot),
                         });
                         itemSchema.required.push("item");
                 }
@@ -432,18 +434,18 @@ class KCZenzeroMenu {
     static function summarizeItem(orderItem:{
         ?type:KCZenzeroItem,
         ?item:Dynamic,
-    }, timeSlotType:TimeSlotType):{
+    }, timeSlot:TimeSlot):{
         orderDetails:String,
         orderPrice:Float,
     } {
-        var def:Dynamic = orderItem.type.getDefinition(timeSlotType);
+        final def:Dynamic = orderItem.type.getDefinition(timeSlot);
         return switch (orderItem.type) {
             case LimitedSpecial:
-                var orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
-                if (limitedSpecialSeperateBox) {
+                final orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
+                if (limitedSpecial.seperateBox) {
                     orderDetails.push(fullWidthSpace + box);
                 }
-                var orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
+                final orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
                 {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
@@ -500,13 +502,13 @@ class KCZenzeroMenu {
         }
     }
 
-    static public function summarize(formData:FormOrderData, timeSlotType:TimeSlotType):OrderSummary {
-        var summaries = formData.items.map(item -> summarizeItem(cast item, timeSlotType));
+    static public function summarize(formData:FormOrderData, timeSlot:TimeSlot):OrderSummary {
+        final summaries = formData.items.map(item -> summarizeItem(cast item, timeSlot));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
             case HotpotSet:
                 false;
-            case LimitedSpecial if (limitedSpecialSeperateBox):
+            case LimitedSpecial if (limitedSpecial.seperateBox):
                 false;
             case _:
                 true;
@@ -516,7 +518,7 @@ class KCZenzeroMenu {
                 orderPrice: box.parsePrice().price,
             });
         }
-        var s = concatSummaries(summaries);
+        final s = concatSummaries(summaries);
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,
