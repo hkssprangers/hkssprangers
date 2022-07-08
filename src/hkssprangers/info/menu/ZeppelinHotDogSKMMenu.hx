@@ -30,7 +30,12 @@ enum abstract ZeppelinHotDogSKMItem(String) to String {
     }
 
     public function getDefinition(pickupTimeSlot:Null<TimeSlot>, ?item:Dynamic):Dynamic return switch (cast this:ZeppelinHotDogSKMItem) {
-        case HotdogSet: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
+        case HotdogSet:
+            final freeChok = ZeppelinHotDogSKMMenu.hasFreeChok(item);
+            if (freeChok)
+                ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSetChok;
+            else
+                ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdogSet;
         case Hotdog: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMHotdog;
         case Single: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMSingle;
         case Drink: ZeppelinHotDogSKMMenu.ZeppelinHotDogSKMDrink;
@@ -61,6 +66,10 @@ class ZeppelinHotDogSKMMenu {
         "菊9汽 銀菊露味汽水 +$8",
         "奶茶 (回憶) +$10",
         "奶茶 (英女王) +$12",
+    ];
+    static public final chokOptions = [
+        "CHOK CHOK粉 紫菜風味",
+        "CHOK CHOK粉 惹味麻辣",
     ];
 
     static public final ZeppelinHotDogSKMDrink = {
@@ -113,7 +122,7 @@ class ZeppelinHotDogSKMMenu {
             "額外醬汁-bbq醬 $3",
             "額外醬汁-黃芥末 $3",
             "額外醬汁-mix醬 (茄汁加千島) $3",
-        ],
+        ].concat(chokOptions.map(item -> item + " $3")),
     };
     
     static public function ZeppelinHotDogSKMSpecial(pickupTimeSlot:TimeSlot) {
@@ -156,10 +165,10 @@ class ZeppelinHotDogSKMMenu {
 
     static final setDescription = "套餐 +$15";
 
-    static function createSet() {
-        var def =  {
+    static function createSet(withFreeChok:Bool) {
+        final def =  {
             title: "套餐",
-            description: setDescription,
+            description: setDescription + "。要大薯條 送 CHOK CHOK 粉。",
             properties: {
                 main: {
                     title: "主食",
@@ -198,10 +207,46 @@ class ZeppelinHotDogSKMMenu {
             ]
         };
 
+        if (withFreeChok) {
+            def.properties.setField("chok", {
+                title: "送",
+                type: "string",
+                "enum": chokOptions,
+            });
+            def.required.push("chok");
+        }
+
+        def.properties.setField("seasoningOptions", {
+            title: "加配",
+            type: "array",
+            items: {
+                type: "string",
+                "enum": chokOptions.map(item -> item + " +$3"),
+            },
+            uniqueItems: true,
+        });
+
         return def;
     }
 
-    static public final ZeppelinHotDogSKMHotdogSet = createSet();
+    static public function hasFreeChok(
+        ?item:{
+            setOption1:Null<String>,
+            setOption2:Null<String>,
+        }
+    ):Bool {
+        return switch (item) {
+            case null:
+                false;
+            case {setOption1: BigFF, setOption2: _} | {setOption1: _, setOption2: BigFF}:
+                true;
+            case _:
+                false;
+        }
+    }
+
+    static public final ZeppelinHotDogSKMHotdogSet = createSet(false);
+    static public final ZeppelinHotDogSKMHotdogSetChok = createSet(true);
 
     static public final ZeppelinHotDogSKMHotdog = {
         title: "單叫",
@@ -274,13 +319,17 @@ class ZeppelinHotDogSKMMenu {
         orderDetails:String,
         orderPrice:Float,
     } {
-        final def = orderItem.type.getDefinition(orderItem.item);
+        final def = orderItem.type.getDefinition(pickupTimeSlot, orderItem.item);
         return switch (orderItem.type) {
             case HotdogSet:
+                final freeChok = hasFreeChok(orderItem.item);
                 summarizeOrderObject(
                     orderItem.item,
                     def,
-                    ["main", "extraOptions", "setOption1", "setOption2"],
+                    freeChok ?
+                        ["main", "extraOptions", "setOption1", "setOption2", "chok", "seasoningOptions"] :
+                        ["main", "extraOptions", "setOption1", "setOption2", "seasoningOptions"]
+                    ,
                     [setDescription]
                 );
             case Hotdog:
