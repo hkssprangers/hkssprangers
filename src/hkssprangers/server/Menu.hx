@@ -1883,11 +1883,14 @@ class Menu extends View<MenuProps> {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         for (shop in Shop.all) {
             app.get("/menu/" + shop, function get(req:Request, reply:Reply):Promise<Dynamic> {
+                // note that we want to display the lunch prices
+                // mains are $9 higher for dinner
                 final date:LocalDateString = switch (req.query.date) {
                     case null:
-                        Date.now();
+                        final now:LocalDateString = Date.now();
+                        Date.fromString(now.getDatePart() + " 09:00:00");
                     case date if (~/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.match(date)):
-                        Date.fromString(date + " 00:00:00");
+                        Date.fromString(date + " 09:00:00");
                     case date:
                         throw "Invalid date: " + date;
                 }
