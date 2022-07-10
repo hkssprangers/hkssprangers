@@ -470,7 +470,7 @@ class Menu extends View<MenuProps> {
         final noodleSet = KCZenzeroNoodleSet(Lunch);
         final pastaSet = KCZenzeroPastaSet(Lunch);
 
-        final limited = if (KCZenzeroMenu.limitedSpecial.date == now.getDatePart()) {
+        final limited = if (KCZenzeroMenu.limitedSpecial.date == now.getDatePart() && KCZenzeroMenu.limitedSpecial.available) {
             final def = KCZenzeroMenu.limitedSpecial.def;
             final period = KCZenzeroMenu.limitedSpecial.date + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
                 case [Dinner]: " 晚市供應";

@@ -200,6 +200,7 @@ class KCZenzeroMenu {
             date: "2022-07-10",
             timeSlotTypes: [Dinner],
             seperateBox: false,
+            available: false,
             def: {
                 title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
@@ -219,7 +220,7 @@ class KCZenzeroMenu {
     };
 
     static public function KCZenzeroLimitedSpecial(date:LocalDateString, timeSlotType:TimeSlotType)
-        return if (limitedSpecial.date == date.getDatePart() && limitedSpecial.timeSlotTypes.has(timeSlotType))
+        return if (limitedSpecial.date == date.getDatePart() && limitedSpecial.timeSlotTypes.has(timeSlotType) && limitedSpecial.available)
             limitedSpecial.def;
         else
             null;
