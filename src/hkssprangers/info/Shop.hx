@@ -684,7 +684,7 @@ enum abstract Shop(String) to String {
                 ],
                 openDays: [
                     Monday,
-                    Tuesday,
+                    // Tuesday,
                     Wednesday,
                     Thursday,
                     Friday,
@@ -697,7 +697,7 @@ enum abstract Shop(String) to String {
                 facebook: "https://www.facebook.com/%E7%90%89%E9%87%91%E7%A9%97%E6%9C%88-Cafe-Golden-191971954164436",
                 instagram: "https://www.instagram.com/cafegoldenhk/",
                 availablity: "提供午餐",
-                restDay: null,
+                restDay: "逢星期二休息",
                 recommendation: "明太子魷魚蟹棒意大利麵"
             }
         case BlackWindow:
