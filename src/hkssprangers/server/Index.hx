@@ -283,12 +283,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", EightyNine])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/EightyNine/89.jpg", EightyNine.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${EightyNine.info().name}</h1>
                                     ${restDay(EightyNine)}
                                 </div>
@@ -298,12 +298,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", LaksaStore])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/LaksaStore/laksa.jpg", LaksaStore.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${LaksaStore.info().name}</h1>
                                     ${restDay(LaksaStore)}
                                 </div>
@@ -313,12 +313,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", KCZenzero])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/KCZenzero/tomato.jpg", KCZenzero.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${KCZenzero.info().name}</h1>
                                     ${restDay(KCZenzero)}
                                 </div>
@@ -328,12 +328,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", HanaSoftCream])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", HanaSoftCream.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-red-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${HanaSoftCream.info().name}</h1>
                                     ${restDay(HanaSoftCream)}
                                 </div>
@@ -343,12 +343,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", WoStreet])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", WoStreet.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${WoStreet.info().name}</h1>
                                     ${restDay(WoStreet)}
                                 </div>
@@ -363,12 +363,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", BiuKeeLokYuen])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", BiuKeeLokYuen.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-pink-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BiuKeeLokYuen.info().name}</h1>
                                     ${restDay(BiuKeeLokYuen)}
                                 </div>
@@ -378,12 +378,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", BlackWindow])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", BlackWindow.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BlackWindow.info().name}</h1>
                                     ${restDay(BlackWindow)}
                                 </div>
@@ -398,12 +398,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", FishFranSSP])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", FishFranSSP.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-amber-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-amber-600 fas fa-circle"></i> ${FishFranSSP.info().name}</h1>
                                     ${restDay(FishFranSSP)}
                                 </div>
@@ -411,25 +411,7 @@ class Index extends View<IndexProps> {
                         </a>
                     </div>
 
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-yellow-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-yellow-500"></i>&nbsp;<span>${SmilingPlazaCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", Neighbor])} className=${linkClasses2}>
-                            <div className="md:flex"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/Neighbor/neighbor.jpg", Neighbor.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-yellow-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-yellow-500 fas fa-circle"></i> ${Neighbor.info().name}</h1>
-                                    ${restDay(Neighbor)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
                         <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>${ParkCluster.info().name}</span>
@@ -438,12 +420,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", TheParkByYears])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/TheParkByYears/park.jpg", TheParkByYears.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${TheParkByYears.info().name}</h1>
                                     ${restDay(TheParkByYears)}
                                 </div>
@@ -453,12 +435,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", MGY])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/MGY/mgy.jpg", MGY.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${MGY.info().name}</h1>
                                     ${restDay(MGY)}
                                 </div>
@@ -468,12 +450,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", PokeGo])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", PokeGo.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-600 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${PokeGo.info().name}</h1>
                                     ${restDay(PokeGo)}
                                 </div>
@@ -483,12 +465,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", Minimal])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/Minimal/minimal.jpg", Minimal.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${Minimal.info().name}</h1>
                                     ${restDay(Minimal)}
                                 </div>
@@ -503,12 +485,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", YearsHK])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/YearsHK/years.jpg", YearsHK.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-400 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-green-400 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${YearsHK.info().name}</h1>
                                     ${restDay(YearsHK)}
                                 </div>
@@ -518,12 +500,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", LonelyPaisley])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", LonelyPaisley.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-400 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${LonelyPaisley.info().name}</h1>
                                     ${restDay(LonelyPaisley)}
                                 </div>
@@ -538,12 +520,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", ZeppelinHotDogSKM])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", ZeppelinHotDogSKM.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${ZeppelinHotDogSKM.info().name}</h1>
                                     ${restDay(ZeppelinHotDogSKM)}
                                 </div>
@@ -553,12 +535,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", Toolss])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/Toolss/Toolss.jpg", Toolss.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center md:border-b md:border-blue-500 text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${Toolss.info().name}</h1>
                                     ${restDay(Toolss)}
                                 </div>
@@ -568,12 +550,12 @@ class Index extends View<IndexProps> {
 
                     <div className=${blockClasses2}>
                         <a href=${Path.join(["/menu", CafeGolden])} className=${linkClasses2}>
-                            <div className="md:flex"> 
+                            <div className="md:flex items-center"> 
                                 <div className=${thumbnailDivClasses2}>
                                     ${StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", CafeGolden.info().name, "squircle")}
                                     <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
                                 </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
+                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
                                     <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${CafeGolden.info().name}</h1>
                                     ${restDay(CafeGolden)}
                                 </div>
@@ -581,25 +563,6 @@ class Index extends View<IndexProps> {
                         </a>
                     </div>
 
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-indigo-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-indigo-500"></i>&nbsp;<span>${TungChauStreetParkCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", KeiHing])} className=${linkClasses2}>
-                            <div className="md:flex"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/KeiHing/keihing.jpg", KeiHing.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-indigo-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 flex flex-col justify-center lg:flex-row lg:items-center text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-indigo-500 fas fa-circle"></i> ${KeiHing.info().name}</h1>
-                                    ${restDay(KeiHing)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </Fragment>
         ');
