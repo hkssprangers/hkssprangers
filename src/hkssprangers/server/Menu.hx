@@ -528,6 +528,17 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
 
+        final tomatoRice = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroTomatoRice.title}</div>
+                </div>
+                ${renderItems(KCZenzeroTomatoRice.properties.main.enums())}
+                <div className="font-bold p-3">${KCZenzeroTomatoRice.properties.drink.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroTomatoRice.properties.drink.enums())}</div>
+            </Fragment>
+        ');
+
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
@@ -579,6 +590,7 @@ class Menu extends View<MenuProps> {
                     <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
 
                     ${goldenLeg}
+                    ${tomatoRice}
 
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroSingle.title}</div>

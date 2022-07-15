@@ -16,6 +16,7 @@ enum abstract KCZenzeroItem(String) to String {
     final LightSet;
     final HotpotSet;
     final GoldenLeg;
+    final TomatoRice;
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
@@ -31,6 +32,7 @@ enum abstract KCZenzeroItem(String) to String {
                 WontonSet,
                 LightSet,
                 GoldenLeg,
+                TomatoRice,
                 Single,
             ]
         );
@@ -45,6 +47,7 @@ enum abstract KCZenzeroItem(String) to String {
         case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case GoldenLeg: KCZenzeroMenu.KCZenzeroGoldenLeg;
+        case TomatoRice: KCZenzeroMenu.KCZenzeroTomatoRice;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
         case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
@@ -165,6 +168,22 @@ class KCZenzeroMenu {
                     ],
                 },
                 uniqueItems: true,
+            },
+            drink: KCZenzeroFreePaperBoxDrink,
+        },
+        required: ["main"],
+    }
+
+    static public final KCZenzeroTomatoRice = {
+        title: "濃茄脆米",
+        properties: {
+            main: {
+                title: "濃茄脆米",
+                type: "string",
+                "enum": [
+                    "濃茄脆米 $40",
+                ],
+                "default": "濃茄脆米 $40",
             },
             drink: KCZenzeroFreePaperBoxDrink,
         },
@@ -484,6 +503,8 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"], null, null, "");
             case R6Set:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
+            case TomatoRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
             case Single:
