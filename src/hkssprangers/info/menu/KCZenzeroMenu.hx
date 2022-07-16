@@ -117,7 +117,7 @@ class KCZenzeroMenu {
             // "芝士波隆納肉醬薯格 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
-            // "紫薯撻 $12",
+            "紫薯撻 $12",
             // "芝士撻 $12",
             // "葡撻 $8",
         ],
@@ -218,9 +218,9 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "香辣螺燴飯 $55";
+        final limitedSpecial = "吏密蝦炒飯 $60";
         {
-            date: "2022-07-15",
+            date: "2022-07-16",
             timeSlotTypes: [Dinner],
             seperateBox: false,
             available: true,
