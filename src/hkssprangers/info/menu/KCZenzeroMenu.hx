@@ -220,10 +220,10 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "吏密蝦炒飯 $60";
         {
-            date: "2022-07-16",
+            date: "2022-07-17",
             timeSlotTypes: [Dinner],
             seperateBox: false,
-            available: false,
+            available: true,
             def: {
                 title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
