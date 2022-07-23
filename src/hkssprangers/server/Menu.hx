@@ -534,6 +534,10 @@ class Menu extends View<MenuProps> {
                     <div className="p-3">${KCZenzeroTomatoRice.title}</div>
                 </div>
                 ${renderItems(KCZenzeroTomatoRice.properties.main.enums())}
+                <div className="p-3"><b>${KCZenzeroTomatoRice.properties.options.title}選擇</b> ${KCZenzeroTomatoRice.properties.options.description}</div>
+                <div className="p-3">
+                    ${slashes(KCZenzeroTomatoRice.properties.options.items.enums())}
+                </div>
                 <div className="font-bold p-3">${KCZenzeroTomatoRice.properties.drink.title}選擇</div>
                 <div className="p-3">${slashes(KCZenzeroTomatoRice.properties.drink.enums())}</div>
             </Fragment>

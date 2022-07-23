@@ -117,7 +117,7 @@ class KCZenzeroMenu {
             // "芝士波隆納肉醬薯格 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
-            "紫薯撻 $14",
+            // "紫薯撻 $14",
             // "芝士撻 $12",
             // "葡撻 $8",
         ],
@@ -185,9 +185,27 @@ class KCZenzeroMenu {
                 ],
                 "default": "濃茄脆米 $40",
             },
+            options: {
+                type: "array",
+                title: "主食",
+                description: "任選兩款",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "牛舌片",
+                        "雞扒",
+                        "煙鴨胸",
+                        "蟹棒",
+                        "司華力腸",
+                    ],
+                },
+                uniqueItems: true,
+                minItems: 2,
+                maxItems: 2,
+            },
             drink: KCZenzeroFreePaperBoxDrink,
         },
-        required: ["main"],
+        required: ["main", "options"],
     }
 
     static public final KCZenzeroR6Set = {
@@ -504,7 +522,7 @@ class KCZenzeroMenu {
             case R6Set:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case TomatoRice:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
             case Single:
