@@ -218,12 +218,12 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "香辣蟹燴飯 $60";
+        final limitedSpecial = "鮑你蝦蝦笑炒飯 $60";
         {
-            date: "2022-07-19",
+            date: "2022-07-23",
             timeSlotTypes: [Dinner],
             seperateBox: false,
-            available: false,
+            available: true,
             def: {
                 title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
