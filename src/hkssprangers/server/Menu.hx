@@ -474,7 +474,7 @@ class Menu extends View<MenuProps> {
             final def = KCZenzeroMenu.limitedSpecial.def;
             final period = KCZenzeroMenu.limitedSpecial.date + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
                 case [Dinner]: " 晚市供應";
-                case _: null;
+                case _: "";
             });
             jsx('
                 <Fragment>
