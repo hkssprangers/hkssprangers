@@ -236,7 +236,7 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "鮑你蝦蝦笑炒飯/咖喱豬皮魚蛋";
+        final limitedSpecial = "咖喱豬皮魚蛋";
         {
             date: "2022-07-29",
             timeSlotTypes: [Dinner],
@@ -250,10 +250,9 @@ class KCZenzeroMenu {
                         title: "限定",
                         type: "string",
                         "enum": [
-                            "鮑你蝦蝦笑炒飯 $60",
-                            "咖喱豬皮魚蛋+蘿蔔 $25",
+                            limitedSpecial,
                         ],
-                        // "default": limitedSpecial
+                        "default": limitedSpecial
                     }
                 },
                 required: ["special"],
