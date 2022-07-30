@@ -238,7 +238,7 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "後生仔海南雞×蕃廚沙薑炒飯 $55";
         {
-            date: "2022-07-30",
+            date: "2022-07-31",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
