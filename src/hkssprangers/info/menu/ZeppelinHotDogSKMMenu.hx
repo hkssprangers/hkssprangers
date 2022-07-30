@@ -49,6 +49,8 @@ class ZeppelinHotDogSKMMenu {
     static public final setSnacks = [
         SmallFF,
         BigFF,
+        "薯蓉波波",
+        "薯仔寶寶",
         "牛油粟米杯",
         "薯餅",
         "冰菠蘿",
@@ -110,6 +112,8 @@ class ZeppelinHotDogSKMMenu {
             "芝士大薯條 $27",
             "芝士煙肉薯條 $30",
             "芝士辣肉醬薯條 $30",
+            "薯蓉波波 $12",
+            "薯仔寶寶 $12",
             "辣雞扒 (1件) $15",
             "辣雞扒 (2件) $24",
             "薯餅 $8",
