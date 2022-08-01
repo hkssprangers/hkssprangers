@@ -309,7 +309,8 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             }
             return jsx('
                 <div key=${key}>
-                    <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"} ${shopContact}</Typography>
+                    <Typography>🔸 ${o.shop != null ? o.shop.info().name : "null"} <a href="/menu/${o.shop}" target="_blank" class="inline-flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 hover:no-underline ml-1 select-none text-xs px-2 py-1 text-gray-800"><i class="fa-solid fa-utensils text-bold mr-1"></i> menu</a>
+                    ${shopContact}</Typography>
                     ${orderDetails}
                     ${customerNote}
                     ${tableware}
