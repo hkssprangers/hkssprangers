@@ -672,8 +672,8 @@ class Menu extends View<MenuProps> {
                 </div>
                 <div className="md:flex flex-row">
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${LonelyPaisleySnacks.title}</div>
-                        ${renderItems(LonelyPaisleySnacks.enums())}
+                        <div className=${headerClasses}>${LonelyPaisleySaladSnacks.title}</div>
+                        ${renderItems(LonelyPaisleySaladSnacks.enums())}
                         <div className=${headerClasses}>${LonelyPaisleyDessert.title}</div>
                         ${renderItems(LonelyPaisleyDessert.enums())}
                     </div>

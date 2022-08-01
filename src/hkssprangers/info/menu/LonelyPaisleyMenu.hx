@@ -10,9 +10,7 @@ using Lambda;
 
 enum abstract LonelyPaisleyItem(String) to String {
     final LunchSet;
-    // final Brunch;
-    // final Salad;
-    final Snacks;
+    final SaladSnacks;
     final Dessert;
     final PastaRice;
     final Main;
@@ -26,9 +24,7 @@ enum abstract LonelyPaisleyItem(String) to String {
             case [Monday | Tuesday | Wednesday | Thursday | Friday, false, Lunch]:
                 [
                     LunchSet,
-                    // Brunch,
-                    // Salad,
-                    Snacks,
+                    SaladSnacks,
                     Dessert,
                     PastaRice,
                     Main,
@@ -36,9 +32,7 @@ enum abstract LonelyPaisleyItem(String) to String {
                 ];
             case [_, _, Lunch]:
                 [
-                    // Brunch,
-                    // Salad,
-                    Snacks,
+                    SaladSnacks,
                     Dessert,
                     PastaRice,
                     Main,
@@ -46,8 +40,7 @@ enum abstract LonelyPaisleyItem(String) to String {
                 ];
             case [_, _, Dinner]:
                 [
-                    // Salad,
-                    Snacks,
+                    SaladSnacks,
                     Dessert,
                     PastaRice,
                     Main,
@@ -61,9 +54,7 @@ enum abstract LonelyPaisleyItem(String) to String {
 
     public function getDefinition():Dynamic return switch (cast this:LonelyPaisleyItem) {
         case LunchSet: LonelyPaisleyMenu.LonelyPaisleyLunchSet;
-        // case Brunch: LonelyPaisleyMenu.LonelyPaisleyBrunch;
-        // case Salad: LonelyPaisleyMenu.LonelyPaisleySalad;
-        case Snacks: LonelyPaisleyMenu.LonelyPaisleySnacks;
+        case SaladSnacks: LonelyPaisleyMenu.LonelyPaisleySaladSnacks;
         case Dessert: LonelyPaisleyMenu.LonelyPaisleyDessert;
         case PastaRice: LonelyPaisleyMenu.LonelyPaisleyPastaRice;
         case Main: LonelyPaisleyMenu.LonelyPaisleyMain;
@@ -73,76 +64,38 @@ enum abstract LonelyPaisleyItem(String) to String {
 
 class LonelyPaisleyMenu {
     static final coffees = [
-        // {
-        //     name: "ESPRESSO (HOT)",
-        //     description: null,
-        //     price: 33,
-        // },
-        // {
-        //     name: "LONG BLACK (HOT)",
-        //     description: null,
-        //     price: 33,
-        // },
         {
             name: "AMERICANO (HOT)",
-            description: null,
             price: 33,
         },
         {
             name: "AMERICANO (COLD)",
-            description: null,
             price: 39,
         },
         {
             name: "WHITE (HOT)",
-            description: null,
             price: 40,
         },
         {
             name: "WHITE (COLD)",
-            description: null,
             price: 46,
         },
-        // {
-        //     name: "PICCOLO (HOT)",
-        //     description: null,
-        //     price: 38,
-        // },
-        // {
-        //     name: "DIRTY (COLD)",
-        //     description: null,
-        //     price: 44,
-        // },
         {
             name: "MOCHA (HOT)",
-            description: null,
             price: 44,
         },
         {
             name: "MOCHA (COLD)",
-            description: null,
             price: 50,
         },
         {
-            name: "BLACK SUGAR ROSE LATTE (HOT)",
-            description: null,
+            name: "ROSE LATTE (HOT)",
             price: 44,
         },
         {
             name: "TONIC COFFEE (COLD)",
-            description: null,
             price: 58,
         },
-        {
-            name: "GINGER ALE COFFEE (COLD)",
-            description: null,
-            price: 58,
-        },
-        // {
-        //     name: "TRADITIONAL VIETNAMESE FILITERED COFFEE SET",
-        //     description: "served with condensed milk, ice and tea",
-        //     price: 68,
-        // },
     ];
     static final milks = [
         {
@@ -156,69 +109,27 @@ class LonelyPaisleyMenu {
             price: 50,
         },
         {
-            name: "MATCHA (HOT)",
-            description: null,
-            price: 46,
-        },
-        {
-            name: "MATCHA (COLD)",
-            description: null,
-            price: 52,
-        },
-        {
             name: "HONG KONG REAL GINGER CACAO",
             description: "local organic ginger mixed with raw cacao by Very Ginger HK",
             price: 48,
         },
     ];
-    static final teas = [
-        // {
-        //     name: "SPANISH DESSERT TEA (CAFFEINE-FREE)",
-        //     description: "rooibos / chocolate / raspberry / rose petals / cornflower flower",
-        //     price: 68,
-        // },
-        // {
-        //     name: "ALHAMBRA’S LOVE",
-        //     description: "green tea / black tea / hibiscus / mallow / roses",
-        //     price: 68,
-        // },
-        // {
-        //     name: "NIGHT, ISTANBUL",
-        //     description: "tropical fruit mix / cinnamon / pink rose bud / ginger / hibiscus / camomile / calendula",
-        //     price: 88,
-        // },
-    ];
     static final mocktails = [
-        // {
-        //     name: "BLUE LAGOON",
-        //     description: "blue curacao / lemonade / grapefruit juice / icing rim",
-        //     price: 58,
-        // },
-        // {
-        //     name: "REMEMBER ME",
-        //     description: "pineapple / lime / lemon / honey / jalapeno",
-        //     price: 68,
-        // },
-        {
-            name: "SALEP (HOT)",
-            description: "(TURKISH TRADITIONAL DRINK) salep / milk / cinnamon / pistachio",
-            price: 68,
-        },
         {
             name: "TOKHM-E SHARBATI",
             description: "(IRANIAN TRADITIONAL DRINK) basil seed / lime / rose water / mint",
             price: 58,
         },
-        // {
-        //     name: "DOOGH",
-        //     description: "(AFGHANISTAN TRADITIONAL DRINK) yogurt / mint / cucumber / nutmeg / salt / honey",
-        //     price: 58,
-        // },
+        {
+            name: "SALEP (HOT)",
+            description: "(TURKISH TRADITIONAL DRINK) salep / milk / cinnamon / pistachio",
+            price: 68,
+        },
     ];
     static final otherDrinks = [
         {
             name: "LITHUANIAN KVAS",
-            description: "rye ale",
+            description: "wheat ale",
             price: 48,
         },
         {
@@ -227,221 +138,88 @@ class LonelyPaisleyMenu {
             price: 28,
         },
     ];
-    static final craftBeers = [
-        // {
-        //     name: "啤酒 - TWILIGHT (H.K.LOVECRAFT)",
-        //     description: "style: Salted Caramel Lager / abv: 5% / ibu: 18 | salty, sweetness, caramel",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - CHUN FA LOK 春花落 (H.K.LOVECRAFT)",
-        //     description: "style: IPL / abv: 5.5% / ibu: 35 | light, clean, lychee, pineapple",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - SPACE ROCK (H.K. LOVECRAFT)",
-        //     description: "style: Rauchbier / abv: 5.5% / ibu: 23 | smoky, caramel, rich maltiness",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - MOTHER GOAT (H.K.LOVECRAFT)",
-        //     description: "style: Doppelbock / abv: 8% / ibu: 25 | rich, honey, peppery",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - OLD BLOOD (H.K.LOVECRAFT)",
-        //     description: "style: Dunkel(Dark lager) / abv: 5% / ibu: 25 | roasty, toffee, malty bitterness",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - IT’S MANUKA (TAI WAI BEER 大圍啤)",
-        //     description: "style: Tea Ale / abv: 5% ibu: 20 | strawberry, honey, tea, light",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - JASMINE & PASSION FRUIT (TAI WAI BEER 大圍啤)",
-        //     description: "style: Tea Ale / abv: 3.9% ibu: 21.8 | jasmine, passion fruit, tea, light",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - CHAMOMILE (TAI WAI BEER 大圍啤)",
-        //     description: "style: Tea Ale / abv: 5.1% ibu: 22.9 | chamomile, tea, light",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - MIRROR MIRROR (DEADMAN)",
-        //     description: "style: APA / abv: 5.4% / ibu: 30 | refreshing, citrus, floral, tropical fruit",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - DUCHESS NIGHT OUT (DEADMAN)",
-        //     description: "style: Flanders - Inspired Sour Red Ale / abv: 6% / ibu: 9 | oaky, cherry, berries, dark fruit",
-        //     price: 68,
-        // },
-        // {
-        //     name: "啤酒 - RAINBOW SHERBET SOUR (GWEI-LO)",
-        //     description: "style: Sour / abv: 6% ibu: 10 | raspberry puree, lemon zest, satisfying body",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - CONGA LINES - PASSION FRUIT PINEAPPLE IMPERIAL ICE CREAM SOUR ALE (MOON DOG)",
-        //     description: "style: Pastry sour / abv: 7.5% ibu: 0 | pastry, sour, pineapple",
-        //     price: 78,
-        // },
-        // {
-        //     name: "啤酒 - CHOC COCONUT SHAKE CHOCOLATE MILKSHAKE NEBIPA (3 RAVENS)",
-        //     description: "style: IPA - Milkshake / abv: 6% / ibu: 0 | chocolate, coconut, creamy",
-        //     price: 88,
-        // },
-        // {
-        //     name: "啤酒 - MANGO TANGO FRUITED SOUR (DEEP CREEK)",
-        //     description: "style: Fruited Sour / abv: 5% ibu: o | mango, sour, refreshing",
-        //     price: 88,
-        // },
+    static final saladSnacks = [
         {
-            name: "啤酒 - DRAFT (EFES - TURKEY)",
-            description: "style: Lager / abv: 5% / ibu: n/a | woody, maltiness, light",
-            price: 48,
-        },
-    ];
-    static final brunches = [
-        // {
-        //     name: "土耳其早餐．附土耳其茶",
-        //     description: "3 types of cheese / jam / acuka / cream / honey / simit / egg with sausage / tomato / cucumber / Turkish tea",
-        //     price: 148,
-        // },
-        // {
-        //     name: "土耳其早餐．附土耳其茶 + extra Simit",
-        //     description: "3 types of cheese / jam / acuka / cream / honey / simit / egg with sausage / tomato / cucumber / Turkish tea",
-        //     price: 148 + 38,
-        // },
-        // {
-        //     name: "挪威煙三文魚班尼迪蛋",
-        //     description: "2 poached Japanese eggs / smoked-salmon / bread / garden green / avocado sauce",
-        //     price: 88,
-        // },
-        // {
-        //     name: "美式早餐",
-        //     description: "avocado / sausage / scramble Japanese egg / portobello mushroom / muffin / garden green",
-        //     price: 108,
-        // },
-        // {
-        //     name: "美式早餐 + Smoked salmon",
-        //     description: "avocado / sausage / scramble Japanese egg / portobello mushroom / muffin / garden green / smoked salmon",
-        //     price: 108 + 20,
-        // },
-    ];
-    static final snacks = [
-        {
-            name: "玫瑰蜜糖雞翼",
-            description: null,
-            price: 68,
-        },
-        // {
-        //     name: "印度脆球配虎蝦冬陰公",
-        //     description: null,
-        //     price: 88,
-        // },
-        {
-            name: "墨西哥三重芝士雞肉餡餅配自家制四川麻辣醬",
-            description: null,
+            name: "地中海清新沙律",
             price: 88,
         },
         {
-            name: "土耳其烤雞肉卷",
-            description: null,
-            price: 78,
+            name: "玫瑰蜜糖雞翼(6ps)",
+            price: 68
         },
         {
-            name: "墨西哥玉米片配自家制牛油果醬",
-            description: null,
-            price: 48,
+            name: "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬",
+            price: 88
         },
-        // {
-        //     name: "台式芝士肉鬆雞蛋餅配台式醬油",
-        //     description: null,
-        //     price: 58,
-        // },
+        {
+            name: "土耳其烤雞肉卷",
+            price: 78
+        },
+        {
+            name: "牛油果素菜卷",
+            price: 78
+        },
         {
             name: "炸粗薯條配自家制黑蒜醬",
-            description: null,
-            price: 58,
+            price: 58
         },
         {
-            name: "印度薄餅",
-            description: null,
-            price: 20,
+            name: "印度薄餅(2ps)",
+            price: 20
         },
         {
-            name: "印度薄餅+黑蒜醬",
-            description: null,
-            price: 20 + 10,
+            name: "印度薄餅(2ps)+黑蒜醬",
+            price: 30
         },
     ];
     static final desserts = [
         {
-            name: "土耳其開心果千層酥 (2ps)",
-            description: null,
+            name: "土耳其開心果千層酥(2ps)",
             price: 58,
         },
         {
             name: "熱情果芒果芝士蛋糕",
-            description: null,
             price: 48,
         },
         {
             name: "日本柚子芝士蛋糕",
-            description: null,
             price: 48,
         },
     ];
     static final pastasRices = [
-        // {
-        //     name: "意大利傳統卡邦尼意粉",
-        //     description: null,
-        //     price: 108,
-        // },
         {
-            name: "阿根廷香辣青醬虎蝦海鮮扁意粉",
-            description: null,
+            name: "自家製阿根廷香辣青醬虎蝦海鮮扁意粉",
             price: 148,
         },
         {
-            name: "本地手工煙燻啤酒煮牛肋條燴飯",
-            description: null,
+            name: "印度Masala慢煮牛肋條燴飯",
             price: 148,
         },
-        // {
-        //     name: "馬來西亞藍花飯 配素菜、素森巴醬",
-        //     description: null,
-        //     price: 128,
-        // },
         {
-            name: "泰式青咖喱素菜配印度薄餅",
-            description: null,
-            price: 88,
+            name: "斯里蘭卡香辣菠蘿大蝦配長米飯",
+            price: 128,
+        },
+        {
+            name: "土耳其芝麻包素漢堡配薯條",
+            price: 98,
         },
     ];
     static final mains = [
-        // {
-        //     name: "伊朗香草燉羊",
-        //     description: null,
-        //     price: 168,
-        // },
         {
-            name: "格魯吉亞蒜香牛油雞扒",
-            description: null,
+            name: "伊朗香草燉羊",
+            price: 178,
+        },
+        {
+            name: "格魯吉亞蒜香牛油雞䓻",
             price: 148,
         },
         {
-            name: "地中海白酒藍青口",
-            description: null,
-            price: 148,
+            name: "泰式椰香藍青口",
+            price: 138,
         },
         {
-            name: "異國香腸拼盤配雜菌翠玉瓜",
-            description: null,
-            price: 108,
+            name: "蜜糖芥末豬串骨配薯菜",
+            price: 148,
         },
     ];
 
@@ -468,18 +246,17 @@ class LonelyPaisleyMenu {
                 type: "string",
                 title: "主菜",
                 "enum": [
-                    "土耳其雞肉卷 $78",
+                    "土耳其烤雞肉卷 $78",
                     "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬 $88",
-                    "泰式青咖喱素菜配印度薄餅 $88",
-                    "番茄雞肉意粉 $88",
-                    // "雞翼、香腸、煎太陽蛋配藍花飯、秘制醬油 $88",
-                    // "意大利傳統卡邦尼意粉 $108",
-                    "異國香腸拼盤配雜菌翠玉瓜 $108",
-                    // "馬來西亞藍花飯配素菜、本地素森巴醬 $128",
-                    "本地手工煙燻啤酒煮牛肋條燴飯 $148",
-                    "阿根廷香辣青醬虎蝦海鮮扁意粉 $148",
+                    "番茄烤雞肉意粉 $88",
+                    "斯里蘭卡香辣菠蘿大蝦配長米飯 $128",
+                    "泰式椰香藍青口 $138",
+                    "印度Masala慢煮牛肋條燴飯 $148",
                     "格魯吉亞蒜香牛油雞扒 $148",
-                    "地中海白酒藍青口 $148",
+                    "自家製阿根廷香辣青醬虎蝦海鮮扁意粉 $148",
+                    "<素>牛油果素菜卷 $78",
+                    "<素>墨西哥三重芝士餡餅配秘制四川麻辣醬 $88",
+                    "<素>土耳其芝麻包素漢堡配薯條 $98",
                 ],
             },
             drink: {
@@ -489,14 +266,12 @@ class LonelyPaisleyMenu {
                     "土耳其茶 +$0",
                     "蘋果茶(熱) +$0",
                     "蘋果茶(凍) +$0",
-                    '梳打水 +$0',
+                    "神石榴汽水 +$0",
+                    "檸檬蘇打水 +$0",
                 ]
                     // 咖啡/奶類飲品半價
                     .concat(coffees.map(printHalfPrice))
                     .concat(milks.map(printHalfPrice))
-                    // .concat(teas.map(printHalfPrice))
-                    // .concat(mocktails.map(printHalfPrice))
-                    // .concat(otherDrinks.map(printHalfPrice))
                 ,
             },
             dessert: {
@@ -504,7 +279,7 @@ class LonelyPaisleyMenu {
                 title: "甜品",
                 "enum": [
                     "土耳其開心果千層酥（一件） +$25",
-                    // "是日芝士蛋糕 +$30",
+                    "是日芝士蛋糕 +$30",
                 ],
             },
         },
@@ -515,16 +290,10 @@ class LonelyPaisleyMenu {
         ],
     }
 
-    static public final LonelyPaisleyBrunch = {
-        title: "Brunch",
+    static public final LonelyPaisleySaladSnacks = {
+        title: "Salad/Snacks",
         type: "string",
-        "enum": brunches.map(printNamePrice),
-    };
-
-    static public final LonelyPaisleySnacks = {
-        title: "Snacks",
-        type: "string",
-        "enum": snacks.map(printNamePrice),
+        "enum": saladSnacks.map(printNamePrice),
     };
 
     static public final LonelyPaisleyDessert = {
@@ -551,10 +320,8 @@ class LonelyPaisleyMenu {
         "enum": []
             .concat(coffees.map(printNamePrice))
             .concat(milks.map(printNamePrice))
-            .concat(teas.map(printNamePrice))
             .concat(mocktails.map(printNamePrice))
             .concat(otherDrinks.map(printNamePrice))
-            .concat(craftBeers.map(printNamePrice))
         ,
     };
 
@@ -624,7 +391,7 @@ class LonelyPaisleyMenu {
         return switch (orderItem.type) {
             case LunchSet:
                 summarizeOrderObject(orderItem.item, def, ["starter","main","drink","dessert"]);
-            case Snacks | Dessert | PastaRice | Main | Drink:
+            case SaladSnacks | Dessert | PastaRice | Main | Drink:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
