@@ -1800,7 +1800,7 @@ class Menu extends View<MenuProps> {
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${BlackWindowItem.Main.getTitle()}</div>
-                        <div className="p-3 font-bold">晚市加 $$9</div>
+                        <div className="p-3 font-bold">晚市加 $$${BlackWindowMenu.dinnerMainMarkup}</div>
                         ${renderOptionalItems(menu[BlackWindowItem.Main] == null ? null : menu[BlackWindowItem.Main].properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">

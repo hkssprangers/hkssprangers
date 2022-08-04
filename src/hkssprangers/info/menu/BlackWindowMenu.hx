@@ -102,7 +102,8 @@ enum abstract BlackWindowItem(String) to String {
 }
 
 class BlackWindowMenu {
-    static public final mainToSetCharge = 42;
+    static public final mainToSetCharge = 44;
+    static public final dinnerMainMarkup = 14;
 
     #if (!browser)
     static function parseSetItem(itemLine:String) {
@@ -243,11 +244,11 @@ class BlackWindowMenu {
         if (items == null)
             return null;
 
-        final dinnerMainMarkup = switch (timeSlotType) {
-            case Dinner: 9;
+        final mainMarkup = switch (timeSlotType) {
+            case Dinner: dinnerMainMarkup;
             case _: 0;
         }
-        // trace(timeSlotType + " " + dinnerMainMarkup);
+        // trace(timeSlotType + " " + mainMarkup);
 
         final defs:DynamicAccess<Dynamic> = {};
         for (type in [Set, Soup, Snack, Main, Dessert, Drink, Coffee, Beer, Cocktail]) {
@@ -261,7 +262,7 @@ class BlackWindowMenu {
                                 main: {
                                     title: Set.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + mainToSetCharge + dinnerMainMarkup)),
+                                    "enum": items.Main.items.map(v ->  v.name + " $" + (v.price + mainToSetCharge + mainMarkup)),
                                 },
                                 soup: {
                                     title: Soup.getTitle(),
@@ -298,7 +299,7 @@ class BlackWindowMenu {
                                 main: {
                                     title: Main.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(v -> { name: v.name, price: v.price + dinnerMainMarkup }).map(printNamePrice),
+                                    "enum": items.Main.items.map(v -> { name: v.name, price: v.price + mainMarkup }).map(printNamePrice),
                                 },
                                 drink: {
                                     title: "跟飲品",
