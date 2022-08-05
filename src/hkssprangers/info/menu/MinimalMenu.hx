@@ -91,6 +91,7 @@ class MinimalMenu {
         { name: "BBQ牛油果素肉醬夾餅(v.)", price: 95 },
         { name: "牛油果雞胸肉配芒果醬夾餅", price: 95 },
         { name: "洋蔥壽喜燒牛肉夾餅", price: 98 },
+        { name: "松露炸魚柳夾餅配薯角", price: 100 },
     ];
     static public final MinimalTacos = {
         title: "夾餅",
@@ -144,6 +145,7 @@ class MinimalMenu {
         { name: "牛肝菌貓耳朵粉(v.)", price: 95 },
         { name: "香煎帶子黑魚籽龍蝦汁意粉", price: 138 },
         { name: "蒜蓉牛油海露筍蜆意粉", price: 115 },
+        { name: "松露南瓜汁配香腸肉碎貓耳朵", price: 108 },
     ];
 
     static public final MinimalPasta = {
@@ -166,7 +168,7 @@ class MinimalMenu {
     };
 
     static final sousVides = [
-        { name: "慢煮西班牙黑毛豬", price: 138 },
+        { name: "松露西班牙豬柳配燉菜粒", price: 128 },
         // { name: "慢煮黑安格斯牛肉7oz", price: 158 },
         { name: "安格斯牛腰扒配阿根廷青醬", price: 158 },
     ];
