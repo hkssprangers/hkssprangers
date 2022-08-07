@@ -237,10 +237,10 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "蕃廚鹿茶菇濃湯飯×後生仔無骨海南雞 $68";
+        final limitedSpecial = "蕃廚×後生仔 醉豬手冷烏冬 $58";
         {
-            date: "2022-08-06",
-            timeSlotTypes: [Lunch, Dinner],
+            date: "2022-08-07",
+            timeSlotTypes: [Dinner],
             seperateBox: false,
             available: true,
             def: {
