@@ -799,6 +799,20 @@ class DeliveryFee {
             }
         },
         {
+            place: "The Campton",
+            match: address -> address.toLowerCase().contains("the campton"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "保安道寶華閣", // 有另一個寶華閣喺元州街
             match: address -> address.contains("寶華閣") && address.contains("保安道"),
             deliveryFee: cluster -> switch cluster {
