@@ -237,12 +237,12 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "蕃廚×後生仔 醉豬手冷烏冬 $58";
+        final limitedSpecial = "邪惡史萊姆農夫球配夏日冰涼粉 $88";
         {
-            date: "2022-08-07",
-            timeSlotTypes: [Dinner],
+            date: "2022-08-11",
+            timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
-            available: false,
+            available: true,
             def: {
                 title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
