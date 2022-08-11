@@ -29,7 +29,7 @@
     "dts2hx": "^0.19.0",
     "envify": "^4.1.0",
     "js-cookie": "^3.0.1",
-    "maplibre-gl": "^2.1.9",
+    "maplibre-gl": "^2.2.1",
     "nodemon": "^2.0.19",
     "pmtiles": "^1.1.0",
     "prisma": "^3.15.2",
