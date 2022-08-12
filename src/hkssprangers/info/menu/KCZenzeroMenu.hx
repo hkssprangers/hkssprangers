@@ -239,7 +239,7 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "邪惡史萊姆農夫球配夏日冰涼粉 $88";
         {
-            date: "2022-08-11",
+            date: "2022-08-12",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
