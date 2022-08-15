@@ -239,7 +239,7 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "關東煮 $78";
         {
-            date: "2022-08-14",
+            date: "2022-08-15",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
