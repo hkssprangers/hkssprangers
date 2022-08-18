@@ -351,6 +351,8 @@ class ServerMain {
         Admin.setup(app);
         PlumWineDIY.setup(app);
         FoodWasteRecycle.setup(app);
+        Recipe.setup(app);
+        AulawVege.setup(app);
         DeliveryFee.setup(app);
         Map.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {

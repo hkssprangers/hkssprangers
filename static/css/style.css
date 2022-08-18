@@ -401,3 +401,7 @@ a.myDelivery {
 .text-shadow {
   text-shadow: 0 0 2px black;
 }
+
+.bg-vege {
+  background-image: url(../images/bg-vege.jpg);
+}
