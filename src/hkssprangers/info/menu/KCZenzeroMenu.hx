@@ -239,8 +239,8 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "今翅撈起鳥 $80";
         {
-            date: "2022-08-19",
-            timeSlotTypes: [Dinner],
+            date: "2022-08-20",
+            timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
             def: {
