@@ -242,7 +242,7 @@ class KCZenzeroMenu {
             date: "2022-08-20",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
-            available: true,
+            available: false,
             def: {
                 title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
