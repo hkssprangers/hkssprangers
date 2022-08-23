@@ -63,7 +63,7 @@ class AulawVege extends View<AulawVegeProps> {
                             </div>
                         </div>
 
-                        <div className="px-6 md:px-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                        <div className="px-6 md:px-12 grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-2">
                             <div>${StaticResource.image("/images/vege/basil.jpg", "Basil", "rounded-md")}</div>
                             <div>${StaticResource.image("/images/vege/celery.jpg", "celery", "rounded-md")}</div>
                             <div>${StaticResource.image("/images/vege/chard.jpg", "chard", "rounded-md")}</div>
