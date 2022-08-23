@@ -28,6 +28,7 @@ import js.Node.*;
 import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 import hkssprangers.info.Shop;
+import hkssprangers.server.Recipes;
 import hkssprangers.info.menu.*;
 import comments.CommentString.*;
 using StringTools;
@@ -351,7 +352,8 @@ class ServerMain {
         Admin.setup(app);
         PlumWineDIY.setup(app);
         FoodWasteRecycle.setup(app);
-        Recipe.setup(app);
+        Recipes.setup(app);
+        RecipeDetail.setup(app);
         AulawVege.setup(app);
         DeliveryFee.setup(app);
         Map.setup(app);
