@@ -352,6 +352,10 @@ a.myDelivery {
   background: linear-gradient(0deg, transparent 0%, transparent 40%, black 40%, black 50%, transparent 50%);
 }
 
+.bg-border-gray {
+  background: linear-gradient(0deg, transparent 0%, transparent 40%, #9ca3af 40%, #9ca3af 50%, transparent 50%);
+}
+
 .cup {
   animation: cupAnimation 1000ms ease forwards;
 }
@@ -408,4 +412,96 @@ a.myDelivery {
 
 .bg-bowl-yellow {
   background-image: url(../images/bowl-yellow.jpg);
+}
+
+.navicon {
+  width: 2rem;
+  height: 1.5rem;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
+.navicon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: rgba(30,30,30,0.9);
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+  transition: .2s ease-in-out;
+}
+
+.navicon span:nth-child(1) {
+  top: 0px;
+}
+
+.navicon span:nth-child(2) {
+  top: 8px;
+}
+
+.navicon span:nth-child(3) {
+  top: 16px;
+  left: 1rem;
+  width: 50%;
+}
+
+.navicon.open span:nth-child(1) {
+  top: 8px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.navicon.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.navicon.open span:nth-child(3) {
+  top: 8px;
+  left: 0;
+  width: 100%;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+
+#mmenu.open {
+  display: block;
+  transform-origin: top;
+  animation-name: scaleY;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-duration: 150ms;
+}
+
+@keyframes scaleY {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }

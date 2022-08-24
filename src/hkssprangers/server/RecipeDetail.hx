@@ -45,6 +45,7 @@ class RecipeDetail extends View<RecipeDetailProps> {
         return jsx('
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+                <script src=${R("/js/menu/menu.js")}></script>
                 ${super.depScript()}
             </Fragment>
         ');
@@ -61,25 +62,13 @@ class RecipeDetail extends View<RecipeDetailProps> {
     override function bodyContent() {
         return jsx('
             <main>
-                <div>
-                    <div className="p-3 md:py-6 mx-auto container">
-                        <div className="flex items-center">
-                            <a href="/">
-                                ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
-                            </a>
-                            <div className="flex-1 pl-3">
-                                <b className="text-lg lg:text-xl">埗兵</b>
-                                <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ${View.header()}
                 <div className="lg:max-w-screen-2xl mx-auto">
                     <div className="py-12 md:py-16 mx-auto container md:flex">
                         <div className="flex-1 px-6 md:px-12">
                             ${renderImage()}
                         </div>
-                        <div className="flex-1 px-6 md:px-12">
+                        <div className="flex-1 px-6 md:pl-0 md:pr-12">
                             <div className="pt-6 md:pt-0 flex">
                             <div>
                                 <a href="/recipe">埗兵鬼煮意</a>

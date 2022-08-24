@@ -26,6 +26,15 @@ class Recipes extends View<RecipeProps> {
         </Fragment>
     ');
 
+    override function depScript():ReactElement {
+        return jsx('
+            <Fragment>
+                <script src=${R("/js/menu/menu.js")}></script>
+                ${super.depScript()}
+            </Fragment>
+        ');
+    }
+
     override public function render() {
         return super.render();
     }
@@ -34,7 +43,7 @@ class Recipes extends View<RecipeProps> {
         return jsx('
             <main>
                 ${View.header()}
-                <div className="lg:max-w-screen-2xl mx-auto bg-bowl-yellow bg-no-repeat bg-contain bg-right-top">
+                <div className="lg:max-w-screen-2xl mx-auto">
 
                     <div className="py-12 md:py-16 mx-auto container">
                         

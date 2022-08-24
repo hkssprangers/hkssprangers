@@ -3,19 +3,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     entries.forEach(entry => {
       const id = entry.target.getAttribute('id');
-      console.log(id);
+      //console.log(id);
 
       if (entry.intersectionRatio > 0) {
         document.querySelector(`.index-sticky-nav a[href="#${id}"]`).classList.add('active');
-        console.log("on screen");
-        console.log(entry.intersectionRatio);
-        console.log(entry.boundingClientRect);
+        // console.log("on screen");
+        // console.log(entry.intersectionRatio);
+        // console.log(entry.boundingClientRect);
       }
       else {
         document.querySelector(`.index-sticky-nav a[href="#${id}"]`).classList.remove('active');
-        console.log("off screen");
-        console.log(entry.intersectionRatio);
-        console.log(entry.boundingClientRect);
+        // console.log("off screen");
+        // console.log(entry.intersectionRatio);
+        // console.log(entry.boundingClientRect);
       }
 
     });
@@ -58,3 +58,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 })
+
+  

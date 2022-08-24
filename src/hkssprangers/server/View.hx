@@ -223,14 +223,46 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function bodyContent() return null;
 
     static public function header() return jsx('
-        <div className="p-3 md:py-6 mx-auto container">
-            <div className="flex items-center">
-                <a href="/">
-                    ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}
-                </a>
-                <div className="flex-1 pl-3">
+        <div className="mx-auto container md:flex items-center">
+            <div className="md:w-1/3 flex items-center py-3 px-6 md:p-0">
+                <a href="/">${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}</a>
+                <div className="flex-1 px-3">
                     <b className="text-lg lg:text-xl">埗兵</b>
-                    <p>為深水埗黃店服務為主<span className="whitespace-nowrap">嘅外賣平台</span></p>
+                    <p className="text-sm">為深水埗黃店服務為主嘅外賣平台</p>
+                </div>
+                <button id="menuBtn" className="md:hidden text-gray-500 w-8 h-8 relative focus:outline-none bg-white">
+                    <div className="navicon position-absolute">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+            <div className="md:w-2/3 hidden md:block p-0 md:py-6 bg-gray-100 md:bg-transparent" id="mmenu">
+                <div className="md:flex">
+                    <div className="flex-1 py-3 px-6 md:p-0">
+                        <div className="md:pr-6">
+                            <div className="flex items-center my-3 md:mt-0 text-gray-400">
+                                <span className="text-sm">主業</span>
+                                <div className="flex-1 ml-3 bg-border-gray">&nbsp;</div>
+                            </div>
+                            <ul className="md:flex text-sm">
+                                <li><a className="block p-3 md:p-0 md:pr-3" href="/">點叫外賣</a></li>
+                                <li><a className="block p-3 md:p-0" href="/">合作餐廳</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="flex-1 py-3 px-6 md:p-0">
+                        <div className="flex items-center my-3 md:mt-0 text-gray-400">
+                            <span className="text-sm">副業</span>
+                            <div className="flex-1 ml-3 bg-border-gray">&nbsp;</div>
+                        </div>
+                        <ul className="md:flex text-sm">
+                            <li><a className="block p-3 md:p-0 md:pr-3" href="/food-waste-recycle">咖啡渣回收</a></li>
+                            <li><a className="block p-3 md:p-0 md:pr-3" href="/aulaw-vege">本地菜團購</a></li>
+                            <li><a className="block p-3 md:p-0" href="/recipe">埗兵鬼煮意</a></li>
+                        </ul>   
+                    </div>
                 </div>
             </div>
         </div>

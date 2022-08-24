@@ -38,6 +38,7 @@ class Index extends View<IndexProps> {
             <Fragment>
                 <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
                 <script src=${R("/js/map/map.js")}></script>
+                <script src=${R("/js/menu/menu.js")}></script>
                 ${super.depScript()}
             </Fragment>
         ');

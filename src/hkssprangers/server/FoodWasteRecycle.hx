@@ -24,6 +24,16 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
             <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/food-waste-recycle/banner-coffee2.jpg")])} />
         </Fragment>
     ');
+
+    override function depScript():ReactElement {
+        return jsx('
+            <Fragment>
+                <script src=${R("/js/menu/menu.js")}></script>
+                ${super.depScript()}
+            </Fragment>
+        ');
+    }
+    
     override public function render() {
         return super.render();
     }
