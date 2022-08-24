@@ -355,6 +355,7 @@ class ServerMain {
         Recipes.setup(app);
         RecipeDetail.setup(app);
         AulawVege.setup(app);
+        HowToOrder.setup(app);
         DeliveryFee.setup(app);
         Map.setup(app);
         app.get("/server-time", function(req:Request, reply:Reply):Promise<Dynamic> {

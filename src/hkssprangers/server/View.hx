@@ -247,7 +247,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                                 <div className="flex-1 ml-3 bg-border-gray">&nbsp;</div>
                             </div>
                             <ul className="md:flex text-sm">
-                                <li><a className="block p-3 md:p-0 md:pr-3" href="/">點叫外賣</a></li>
+                                <li><a className="block p-3 md:p-0 md:pr-3" href="/how-to-order">點叫外賣</a></li>
                                 <li><a className="block p-3 md:p-0" href="/">合作餐廳</a></li>
                             </ul>
                         </div>
