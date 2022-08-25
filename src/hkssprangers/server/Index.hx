@@ -133,9 +133,7 @@ class Index extends View<IndexProps> {
             <section className="h-12 md:h-16">&nbsp;</section>
             <section id="sectionHow" className="">
 
-                <div className="py-12 md:py-16 mx-auto container">
-
-                    <div className="mx-3 mt-6 lg:mx-0 lg:mt-0">
+                <div className="py-12 md:py-16 px-6 md:px-12 mx-auto container">
                     
                         <div className="md:flex border-b-4 border-black items-end">
                             <div className="md:w-1/2">
@@ -248,8 +246,6 @@ class Index extends View<IndexProps> {
                             
                             </div>
                         </div>
-
-                    </div>
                 </div>
 
             </section>

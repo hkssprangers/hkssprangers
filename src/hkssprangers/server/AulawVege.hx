@@ -42,7 +42,7 @@ class AulawVege extends View<AulawVegeProps> {
             <main>
                 ${View.header()}
                 
-                <div className="lg:max-w-screen-2xl mx-auto bg-vege bg-no-repeat bg-contain bg-right-top">
+                <div className="lg:max-w-screen-2xl mx-auto">
 
                     <div className="py-12 md:py-16 mx-auto container">
                         
