@@ -574,34 +574,22 @@ class Index extends View<IndexProps> {
                     ${View.header()}
                     ${banner()}
 
-                    <div className="index-sticky-nav border-b-4 border-t-4 bg-white border-black sticky top-0 z-40 text-md md:text-lg">
-                        <div className="flex text-center h-12 md:h-16 mx-auto container lg:border-x-4">
-                            <a className="w-1/2 flex items-center justify-center border-r-4 border-black" href="#sectionMap">
-                            <span>合作餐廳&nbsp;<i className="fas fa-utensils"></i></span>
-                            </a>
-                            <a className="w-1/2 flex items-center justify-center" href="#sectionHow">
-                            <span>點叫外賣&nbsp;<i className="fas fa-clipboard-list"></i></span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <section id="sectionMap" className="bg-slash-black-20">
-                        <div className="py-12 md:py-16 mx-auto container">
-                            <div className="mx-3 md:flex border-4 border-black text-center md:text-left">
-                                <div className="container-rest md:w-1/3 md:overflow-y-scroll bg-white">
-                                    <div className="container-rest-caption border-b-4 bg-white border-black px-6 py-3">
-                                    可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
-                                    </div>
-                                    ${renderShops()}
-                                </div>
-                                <div className="md:w-2/3 border-l-4 border-black">
-                                    <div id="map"></div>
-                                </div>
+                    <section className="pt-8 sm:pt-16 md:pt-32">
+                        <div className="p-6 md:p-12 mx-auto container">
+                            <h1 className="text-xl md:text-2xl font-bold pb-3 tracking-wider">關於埗兵</h1>
+                            <div className="lg:flex md:w-2/3 lg:w-1/2">
+                            <div className="flex-1 py-3 lg:py-6 lg:pr-3">
+                                <p>埗兵係由2020年8月5日開始，喺深水埗嘅黃店同一眾街坊幫助之下，開始形成一個外賣團隊。</p>
+                                <p>點解想成立埗兵? 官方回答係想喺自己嘅社區內，建立一個同路人嘅外賣平台選擇，唔使每次外賣都叫動物台。而非官方回答就係，有人<s>唔想食老婆煮嘅飯而</s>想叫多啲外賣，所以決定整一個外賣平台，街坊有得用，自己又有得用。</p>
+                            </div>
+                            <div className="flex-1 py-3 lg:py-6 lg:pl-3">
+                            
+                                <p>當外賣平台開始服務之後，熱愛地球嘅小編間想透過平台做多啲同環保相關嘅事，慢慢展開咗埗兵嘅副業，由收咖啡渣開始，到團購本地菜同研究食譜，仲試過搞同街坊收集毛巾嘅活動。</p>
+                                <p>埗兵唔係一個賺大錢嘅平台，路途上最大收穫，就係一班有共同理念嘅伙伴，<b>最美的是成就彼此</b>。</p>
+                            </div>
                             </div>
                         </div>
                     </section>
-
-                    ${howToOrderSection()}
 
                 </main>
             </Fragment>
