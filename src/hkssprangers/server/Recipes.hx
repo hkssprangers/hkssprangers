@@ -22,7 +22,7 @@ class Recipes extends View<RecipeProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/banner-vege-album.jpg")])} />
+            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/banner-recipe.jpg")])} />
         </Fragment>
     ');
 

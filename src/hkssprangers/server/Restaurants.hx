@@ -15,14 +15,14 @@ typedef RestaurantsProps = {}
 
 class Restaurants extends View<RestaurantsProps> {
     override public function title() return '合作餐廳';
-    override public function description() return '歡迎大家一齊挑戰埗兵本地菜食譜';
+    override public function description() return '埗兵合作餐廳';
     override function canonical() return Path.join(["https://" + canonicalHost, "recipe"]);
     override function ogMeta() return jsx('
         <Fragment>
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/banner-vege-album.jpg")])} />
+            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/ssprangers4-y.png")])} />
         </Fragment>
     ');
 
