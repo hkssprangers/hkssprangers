@@ -24,6 +24,8 @@ class Index extends View<IndexProps> {
         return super.render();
     }
 
+    override function bodyClasses() return super.bodyClasses().concat(["view-index"]);
+
     override function ogMeta() return jsx('
         <Fragment>
             <meta name="twitter:card" content="summary_large_image" />
@@ -144,10 +146,10 @@ class Index extends View<IndexProps> {
                             </div>
                             <div className="p-0 lg:p-16 lg:pt-16 lg:pr-0">
                                 <div className="px-6 py-3 md:py-12 lg:p-16 lg:h-48 how-desp" data-num="0">
-                                    <p>經Telegram / Whatsapp 搵<span className="whitespace-nowrap">埗兵機械人登入系統</span></p>
+                                    <p>經 Telegram / WhatsApp 搵<span className="whitespace-nowrap">埗兵機械人登入系統</span></p>
                                     <ul className="list-disc">
-                                        <li>Whatsapp: 輸入"登入落單"，<span className="whitespace-nowrap">㩒連結登入</span></li>
-                                        <li>Telegram: 輸入"/start"，<span  className="whitespace-nowrap">㩒"登入落單"掣登入</span></li>
+                                        <li>WhatsApp: 輸入"登入落單"，<span className="whitespace-nowrap">㩒連結登入</span></li>
+                                        <li>Telegram: 輸入"/start"，<span  className="whitespace-nowrap">㩒 "登入落單" 掣登入</span></li>
                                     </ul>
                                 </div>
                                 <div className="px-6 py-3 md:py-12 lg:p-16 lg:h-48 how-desp hidden" data-num="1">
@@ -265,10 +267,10 @@ class Index extends View<IndexProps> {
     }
 
     static public function renderShops() {
-        var blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
-        var linkClasses2 = "cursor-pointer menu";
-        var thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
-        var shopNameClasses = "text-xs lg:text-lg lg:flex-1";
+        final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
+        final linkClasses2 = "cursor-pointer menu";
+        final thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
+        final shopNameClasses = "text-xs lg:text-lg lg:flex-1";
         
         return jsx('
             <Fragment>
@@ -583,8 +585,7 @@ class Index extends View<IndexProps> {
                                 <p>點解想成立埗兵? 官方回答係想喺自己嘅社區內，建立一個同路人嘅外賣平台選擇，唔使每次外賣都叫動物台。而非官方回答就係，有人<s>唔想食老婆煮嘅飯而</s>想叫多啲外賣，所以決定整一個外賣平台，街坊有得用，自己又有得用。</p>
                             </div>
                             <div className="flex-1 py-3 lg:py-6 lg:pl-3">
-                            
-                                <p>當外賣平台開始服務之後，熱愛地球嘅小編間想透過平台做多啲同環保相關嘅事，慢慢展開咗埗兵嘅副業，由收咖啡渣開始，到團購本地菜同研究食譜，仲試過搞同街坊收集毛巾嘅活動。</p>
+                                <p>當外賣平台開始服務之後，熱愛地球嘅小編想透過平台做多啲同環保相關嘅事，慢慢展開咗埗兵嘅副業，由<a href="/food-waste-recycle">收咖啡渣</a>開始，到<a href="/aulaw-vege">團購本地菜</a>同<a href="/recipe">研究食譜</a>，仲試過搞同街坊<a href="https://t.me/hkssprangers/216">收集毛巾</a>嘅活動。</p>
                                 <p>埗兵唔係一個賺大錢嘅平台，路途上最大收穫，就係一班有共同理念嘅伙伴，<b>最美的是成就彼此</b>。</p>
                             </div>
                             </div>

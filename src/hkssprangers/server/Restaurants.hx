@@ -6,7 +6,6 @@ import react.*;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import haxe.io.Path;
-import hkssprangers.info.Recipe;
 using hkssprangers.server.FastifyTools;
 using Reflect;
 using Lambda;
@@ -16,7 +15,7 @@ typedef RestaurantsProps = {}
 class Restaurants extends View<RestaurantsProps> {
     override public function title() return '合作餐廳';
     override public function description() return '埗兵合作餐廳';
-    override function canonical() return Path.join(["https://" + canonicalHost, "recipe"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "restaurants"]);
     override function ogMeta() return jsx('
         <Fragment>
             <meta name="twitter:card" content="summary_large_image" />

@@ -16,7 +16,7 @@ typedef HowToOrderProps = {}
 class HowToOrder extends View<HowToOrderProps> {
     override public function title() return '點叫外賣';
     override public function description() return '歡迎大家一齊挑戰埗兵本地菜食譜';
-    override function canonical() return Path.join(["https://" + canonicalHost, "recipe"]);
+    override function canonical() return Path.join(["https://" + canonicalHost, "how-to-order"]);
     override function ogMeta() return jsx('
         <Fragment>
             <meta name="twitter:card" content="summary_large_image" />
@@ -51,7 +51,7 @@ class HowToOrder extends View<HowToOrderProps> {
                         <div className="md:w-2/3 lg:w-1/2 px-6 md:px-12">
                             <h1 className="text-xl md:text-2xl font-bold text-opacity-75 tracking-wider mb-3">點叫外賣</h1>
                             <div className="text-opacity-75 text-gray-700">
-                                <p className="mb-3">快啲㩒"外賣落單"搵埗兵幫你手，可以用 Whatsapp 或 Telegram 登入。</p>
+                                <p className="mb-3">快啲㩒 "<a href="/order-food">外賣落單</a>" 搵埗兵幫你手，可以用 WhatsApp 或 Telegram 登入。</p>
                             </div>
                         </div>
                     </div>
@@ -66,10 +66,10 @@ class HowToOrder extends View<HowToOrderProps> {
                                 </div>
                                 <div className="p-0 lg:p-16 lg:pt-16 lg:pr-0">
                                     <div className="px-6 py-3 md:py-12 lg:p-16 lg:h-48 how-desp" data-num="0">
-                                        <p>經Telegram / Whatsapp 搵<span className="whitespace-nowrap">埗兵機械人登入系統</span></p>
+                                        <p>經 Telegram / WhatsApp 搵<span className="whitespace-nowrap">埗兵機械人登入系統</span></p>
                                         <ul className="list-disc">
-                                            <li>Whatsapp: 輸入"登入落單"，<span className="whitespace-nowrap">㩒連結登入</span></li>
-                                            <li>Telegram: 輸入"/start"，<span  className="whitespace-nowrap">㩒"登入落單"掣登入</span></li>
+                                            <li>WhatsApp: 輸入"登入落單"，<span className="whitespace-nowrap">㩒連結登入</span></li>
+                                            <li>Telegram: 輸入"/start"，<span  className="whitespace-nowrap">㩒 "登入落單" 掣登入</span></li>
                                         </ul>
                                     </div>
                                     <div className="px-6 py-3 md:py-12 lg:p-16 lg:h-48 how-desp hidden" data-num="1">
