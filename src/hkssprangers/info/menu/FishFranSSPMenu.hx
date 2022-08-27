@@ -100,6 +100,17 @@ class FishFranSSPMenu {
                     item("田雞 大鍋", 306),
                 ],
             },
+            options: {
+                type: "array",
+                title: "額外加配",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "粉條 $42",
+                    ],
+                },
+                uniqueItems: true,
+            },
         },
         required: [
             "style",
@@ -502,7 +513,7 @@ class FishFranSSPMenu {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case FishPot:
-                summarizeOrderObject(orderItem.item, def, ["style", "main"]);
+                summarizeOrderObject(orderItem.item, def, ["style", "main", "options"]);
             case Noodles:
                 summarizeOrderObject(orderItem.item, def, ["main", "noodles"]);
             case Pot | Dish | ColdDish | Rice | SpicyPot | SoupPot | SpicyThing | Dessert | Drink:
