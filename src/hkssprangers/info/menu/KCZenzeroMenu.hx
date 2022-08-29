@@ -239,7 +239,7 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "金華花膠騎呢雞 $78";
         {
-            date: "2022-08-28",
+            date: "2022-08-29",
             timeSlotTypes: [Dinner],
             seperateBox: false,
             available: true,
