@@ -809,6 +809,10 @@ enum abstract Shop(String) to String {
             case [PokeGo, "2022-08-29", _]:
                 return Unavailable('晚市暫停一天');
 
+            // https://www.facebook.com/openblackwindow/posts/pfbid02N8LqoxZCoGhQcHz4qrAoddrTU7rJKGqtBwC8r1NYRkNaRNbGcu4YVw1R8ccgJi1jl
+            case [BlackWindow, "2022-08-30" | "2022-08-31" | "2022-09-01" | "2022-09-02", _]:
+                return Unavailable('疫情休假');
+
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
