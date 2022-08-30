@@ -170,6 +170,8 @@ class BrowserMain {
                 padding: 100,
             },
             maxBounds: maxBounds,
+            attributionControl: true,
+            customAttribution: "Map data from OpenStreetMap",
         });
         map.scrollZoom.disable();
         map.addControl(cast new maplibre_gl.NavigationControl({
