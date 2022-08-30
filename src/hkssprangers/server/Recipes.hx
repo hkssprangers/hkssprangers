@@ -44,9 +44,7 @@ class Recipes extends View<RecipeProps> {
             <main>
                 ${View.header()}
                 <div className="lg:max-w-screen-2xl mx-auto">
-
                     <div className="py-12 md:py-16 mx-auto container">
-                        
                         <div className="md:w-2/3 lg:w-1/2 px-6 md:px-12">
                             <h1 className="text-xl md:text-2xl font-bold text-opacity-75 tracking-wider mb-3">埗兵鬼煮意</h1>
                             <div className="text-opacity-75 text-gray-700">
@@ -54,9 +52,7 @@ class Recipes extends View<RecipeProps> {
                             </div>
                         </div>
                     </div>
-
                     <div className="py-12 md:py-16 mx-auto container">
-
                         <div className="px-6 md:px-12 grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-2">
                             ${renderRecipeLinks()}
                         </div>
@@ -97,7 +93,7 @@ class Recipes extends View<RecipeProps> {
             case MisoEggplant:
                 ${StaticResource.image("/images/recipe/miso-eggplant.jpg", recipe.info().name, "rounded-md")}
             case NinePie:
-                ${StaticResource.image("/images/recipe/nine-pie.jpg", recipe.info().name, "rounded-md")}        
+                ${StaticResource.image("/images/recipe/nine-pie.jpg", recipe.info().name, "rounded-md")}
             case PotatoCheese:
                 ${StaticResource.image("/images/recipe/potato-cheese.jpg", recipe.info().name, "rounded-md")}
             case SandMiso:
@@ -110,7 +106,7 @@ class Recipes extends View<RecipeProps> {
                 ${StaticResource.image("/images/recipe/spanich-pasta.jpg", recipe.info().name, "rounded-md")}
             case SweetBitterMelon:
                 ${StaticResource.image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, "rounded-md")}
-        }           
+        }
     }
 
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
