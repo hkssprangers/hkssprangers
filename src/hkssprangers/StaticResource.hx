@@ -47,7 +47,7 @@ class StaticResource {
         }
     };
 
-    macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>, ?useBackgroudColor:Bool = null) {
+    macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>, ?itemProp:String, ?useBackgroudColor:Bool = null) {
         if (!path.startsWith("/")) {
             Context.error('$path should relative to root (starts with /)', Context.currentPos());
         }
@@ -74,7 +74,7 @@ class StaticResource {
                     p.close();
                     haxe.Json.parse(out);
             }
-            var useBackgroudColor = if (useBackgroudColor != null) {
+            final useBackgroudColor = if (useBackgroudColor != null) {
                 useBackgroudColor;
             } else {
                 var p = new sys.io.Process("identify", ["-format", "%[opaque]", staticPath]);
@@ -85,7 +85,7 @@ class StaticResource {
                 p.close();
                 haxe.Json.parse(out);
             }
-            var bg = if (useBackgroudColor) {
+            final bg = if (useBackgroudColor) {
                 var p = new sys.io.Process("convert", [staticPath, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
                 if (p.exitCode() != 0) {
                     Context.error(p.stderr.readAll().toString(), Context.currentPos());
@@ -121,34 +121,37 @@ class StaticResource {
                     null;
                 }
             }
-            var webp = createWebp();
+            final webp = createWebp();
+            final itemPropAttr = itemProp != null ? macro { itemProp: $v{itemProp} } : macro {};
             return if (bg != null) macro {
-                var className = ${className};
-                var alt = ${alt};
-                var header = $v{header};
-                var webp = $v{webp};
-                var webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
-                var fpPath = $v{fpPath};
-                var bg = $v{bg};
+                final className = ${className};
+                final alt = ${alt};
+                final header = $v{header};
+                final webp = $v{webp};
+                final webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
+                final fpPath = $v{fpPath};
+                final bg = $v{bg};
+                final itemPropAttr = ${itemPropAttr};
                 jsx('
                     <picture>
                         ${webpSource}
                         <source srcSet=${fpPath} />
-                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} style=${{backgroundColor: bg}} />
+                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} style=${{backgroundColor: bg}} {...itemPropAttr} />
                     </picture>
                 ');
             } else macro {
-                var className = ${className};
-                var alt = ${alt};
-                var header = $v{header};
-                var webp = $v{webp};
-                var webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
-                var fpPath = $v{fpPath};
+                final className = ${className};
+                final alt = ${alt};
+                final header = $v{header};
+                final webp = $v{webp};
+                final webpSource = webp != null ? jsx('<source srcSet=${webp} type="image/webp" />') : null;
+                final fpPath = $v{fpPath};
+                final itemPropAttr = ${itemPropAttr};
                 jsx('
                     <picture>
                         ${webpSource}
                         <source srcSet=${fpPath} />
-                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} />
+                        <img alt=${alt} className=${className} width=${header.width} height=${header.height} src=${fpPath} {...itemPropAttr} />
                     </picture>
                 ');
             }
