@@ -56,7 +56,7 @@ class LogInView extends ReactComponentOfProps<LogInViewProps> {
                             <p className="whitespace-nowrap">@${props.tgBotName}</p>
                         </a>
                         <a
-                            href="http://wa.me/85264507612?text=%E7%99%BB%E5%85%A5%E8%90%BD%E5%96%AE"
+                            href="https://wa.me/85264507612?text=%E7%99%BB%E5%85%A5%E8%90%BD%E5%96%AE"
                             className="flex-1 m-2 py-2 px-5 text-center rounded-lg text-white no-underline"
                             style=${{"backgroundColor": "#25D366"}}
                         >
