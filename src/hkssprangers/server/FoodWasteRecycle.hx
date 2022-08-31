@@ -117,16 +117,15 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                         </div>
                         <div className="flex-1 p-6 md:p-12 text-opacity-75 text-gray-700">
                             <h1 className="text-2xl md:text-4xl font-bold pb-3 text-opacity-75 text-yellow-800 tracking-wider">深水埗區本地菜共購</h1>
-                            <p className="mb-3">每個星期日我哋都會趁運咖啡渣去農墟，買埋歐羅菜返屋企。獨樂樂不同眾樂樂，索性整個telegram共購群組，叫埋街坊一齊食靚菜。</p>
+                            <p className="mb-3">每個星期日我哋都會趁運咖啡渣去農墟，買埋本地菜返屋企。獨樂樂不同眾樂樂，索性整個 Telegram 共購群組，叫埋街坊一齊食靚菜。</p>
                             <p className="mb-3">歐羅有機農場有提供<a className="underline" href="https://www.aulaw.org/">月購計劃</a>俾大家訂菜，而深水埗街坊想同埗兵買菜，歡迎加入埗兵本地菜群組。</p>
-                                
                             <ul className="list-disc mb-3">
                                 <li>每星期六 14:00 群組內開放預訂，星期日交收</li>
                                 <li>可以揀標記交收 / 埗兵外賣搭送菜</li>
                                 <li>外賣送到深水埗、長沙灣、太子、石硤尾、大角咀、茘枝角等等</li>
                                 <li>我哋會用<a className="underline" href="https://www.facebook.com/HayaKu.ecostudent">環保見習生</a>提供嘅回收雪袋分裝大家嘅菜</li>
                             </ul>
-                            <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="https://t.me/+uHQZCJagi5E3NTk1">加入telegram群組</a>
+                            <a className="py-3 px-6 flex items-center justify-center rounded-md border border-black focus:ring-2" href="https://t.me/+uHQZCJagi5E3NTk1">加入 Telegram 群組</a>
                         </div>
                     </div>
 
