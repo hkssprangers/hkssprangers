@@ -141,7 +141,7 @@ class Menu extends View<MenuProps> {
                     ${View.header()}
                     <div className="p-3 py-3 md:py-16 mx-auto container">
                         <div className="lg:flex">
-                            <div className="lg:w-1/3 lg:pr-12" itemScope itemType="https://schema.org/Restaurant">
+                            <div className="lg:w-1/3 lg:pr-12" itemScope itemType="https://schema.org/${info.type}">
                                 <div className="flex items-center mb-3">
                                     <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
                                     <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
@@ -212,57 +212,57 @@ class Menu extends View<MenuProps> {
         final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover";
         final image = switch shop {
             case EightyNine:
-                StaticResource.image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, "image", true);
             case DragonJapaneseCuisine:
-                StaticResource.image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, "image", true);
             case YearsHK:
-                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, styles, "image", true);
             case TheParkByYears:
-                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, "image", true);
             case LaksaStore:
-                StaticResource.image("/images/shops/LaksaStore/LaksaStore-cover.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/LaksaStore/LaksaStore-cover.jpeg", shop.info().name, styles, "image", true);
             case DongDong:
-                StaticResource.image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, "image", true);
             case BiuKeeLokYuen:
-                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, styles, "image", true);
             case KCZenzero:
-                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, styles, "image", true);
             case HanaSoftCream:
-                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, "image", true);
             case Neighbor:
-                StaticResource.image("/images/shops/Neighbor/neighbor-menu-profile.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Neighbor/neighbor-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case MGY:
-                StaticResource.image("/images/shops/MGY/mgy-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/MGY/mgy-menu-profile.jpg", shop.info().name, styles, "image", true);
             case FastTasteSSP:
-                StaticResource.image("/images/shops/FastTasteSSP/fasttaste-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/FastTasteSSP/fasttaste-menu-profile.jpg", shop.info().name, styles, "image", true);
             case BlaBlaBla:
-                StaticResource.image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, "image", true);
             case ZeppelinHotDogSKM:
-                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu-profile.jpg", shop.info().name, styles, "image", true);
             case MyRoomRoom:
-                StaticResource.image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, "image", true);
             case ThaiYummy:
-                StaticResource.image("/images/shops/ThaiYummy/ThaiYummy.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/ThaiYummy/ThaiYummy.jpg", shop.info().name, styles, "image", true);
             case Toolss:
-                StaticResource.image("/images/shops/Toolss/Toolss.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Toolss/Toolss.jpg", shop.info().name, styles, "image", true);
             case KeiHing:
-                StaticResource.image("/images/shops/KeiHing/keihing.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/KeiHing/keihing.jpg", shop.info().name, styles, "image", true);
             case PokeGo:
-                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, "image", true);
             case WoStreet:
-                StaticResource.image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case AuLawFarm:
                 null;
             case Minimal:
-                StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, "image", true);
             case CafeGolden:
-                StaticResource.image("/images/shops/CafeGolden/CafeGolden-menu-profile.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/CafeGolden/CafeGolden-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case BlackWindow:
-                StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, "image", true);
             case LonelyPaisley:
-                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
             case FishFranSSP:
-                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, true);
+                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
         }
 
         return jsx('

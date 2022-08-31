@@ -4,6 +4,7 @@ import haxe.ds.ReadOnlyArray;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.Weekday;
 import hkssprangers.info.menu.*;
+import hkssprangers.info.ShopType;
 import js.lib.Promise;
 using Lambda;
 using DateTools;
@@ -66,6 +67,7 @@ enum abstract Shop(String) to String {
             {
                 id: EightyNine,
                 name: "89美食",
+                type: Restaurant,
                 address: "西九龍中心8樓美食廣場9號舖",
                 lat: 22.33133,
                 lng: 114.16014,
@@ -94,6 +96,7 @@ enum abstract Shop(String) to String {
             {
                 id: DragonJapaneseCuisine,
                 name: "營業部",
+                type: Restaurant,
                 address: "西九龍中心8樓美食廣場8F35舖",
                 lat: null,
                 lng: null,
@@ -122,6 +125,7 @@ enum abstract Shop(String) to String {
             {
                 id: YearsHK,
                 name: "Years",
+                type: Restaurant,
                 address: "深水埗福華街191-199號福隆大廈1號地舖",
                 lat: 22.3326012,
                 lng: 114.1607882,
@@ -150,6 +154,7 @@ enum abstract Shop(String) to String {
             {
                 id: TheParkByYears,
                 name: "The Park by Years",
+                type: Restaurant,
                 address: "深水埗汝州街132號地舖",
                 lat: 22.3280548,
                 lng: 114.1640775,
@@ -178,6 +183,7 @@ enum abstract Shop(String) to String {
             {
                 id: LaksaStore,
                 name: "喇沙專門店",
+                type: Restaurant,
                 address: "西九龍中心8樓美食廣場",
                 lat: 22.33132,
                 lng: 114.16017,
@@ -206,6 +212,7 @@ enum abstract Shop(String) to String {
             {
                 id: DongDong,
                 name: "噹噹茶餐廳",
+                type: Restaurant,
                 address: "深水埗福華街208號B地下",
                 lat: null,
                 lng: null,
@@ -234,6 +241,7 @@ enum abstract Shop(String) to String {
             {
                 id: BiuKeeLokYuen,
                 name: "標記樂園潮州粉麵菜館",
+                type: Restaurant,
                 address: "深水埗福華街149號地舖",
                 lat: 22.3313171,
                 lng: 114.1624664,
@@ -262,6 +270,7 @@ enum abstract Shop(String) to String {
             {
                 id: KCZenzero,
                 name: "蕃廚",
+                type: Restaurant,
                 address: "深水埗欽州街37號西九龍中心8樓57號舖",
                 lat: 22.33122,
                 lng: 114.15968,
@@ -290,6 +299,7 @@ enum abstract Shop(String) to String {
             {
                 id: HanaSoftCream,
                 name: "HANA Soft Cream",
+                type: IceCreamShop,
                 address: "深水埗欽州街37K西九龍中心6樓628A",
                 lat: 22.3309339,
                 lng: 114.1597422,
@@ -316,6 +326,7 @@ enum abstract Shop(String) to String {
             {
                 id: Neighbor,
                 name: "Neighbor",
+                type: Restaurant,
                 address: "長沙灣元州街162-188號天悅廣場地下A8號舖",
                 lat: 22.3351073,
                 lng: 114.1598897,
@@ -344,6 +355,7 @@ enum abstract Shop(String) to String {
             {
                 id: MGY,
                 name: "梅貴緣",
+                type: Restaurant,
                 address: "深水埗基隆街188號C舖",
                 lat: 22.3281200,
                 lng: 114.1630828,
@@ -373,6 +385,7 @@ enum abstract Shop(String) to String {
             {
                 id: FastTasteSSP,
                 name: "Fast Taste",
+                type: Restaurant,
                 address: "深水埗福華街110號地下",
                 lat: 22.3312402,
                 lng: 114.1628927,
@@ -401,6 +414,7 @@ enum abstract Shop(String) to String {
             {
                 id: BlaBlaBla,
                 name: "壺說",
+                type: Restaurant,
                 address: "深水埗福華街110號地下",
                 lat: null,
                 lng: null,
@@ -429,6 +443,7 @@ enum abstract Shop(String) to String {
             {
                 id: ZeppelinHotDogSKM,
                 name: "齊柏林熱狗 (石硤尾)",
+                type: FastFoodRestaurant,
                 address: "白田購物中心地下82號鋪",
                 lat: 22.3347417,
                 lng: 114.1673818,
@@ -458,6 +473,7 @@ enum abstract Shop(String) to String {
             {
                 id: MyRoomRoom,
                 name: "浮島",
+                type: Restaurant,
                 address: "深水埗褔榮街57號",
                 lat: null,
                 lng: null,
@@ -486,6 +502,7 @@ enum abstract Shop(String) to String {
             {
                 id: ThaiYummy,
                 name: "泰和味",
+                type: Restaurant,
                 address: "長沙灣營盤街159-161號金德花園地下1號舖",
                 lat: 22.3356232,
                 lng: 114.1612154,
@@ -516,6 +533,7 @@ enum abstract Shop(String) to String {
             {
                 id: Toolss,
                 name: "Toolss",
+                type: Restaurant,
                 address: "石硤尾偉智街38號福田大廈地下2-3及37號舖",
                 lat: 22.3348939,
                 lng: 114.1666646,
@@ -544,6 +562,7 @@ enum abstract Shop(String) to String {
             {
                 id: KeiHing,
                 name: "琦興餐廳",
+                type: Restaurant,
                 address: "深水埗通州街294號地舖",
                 lat: 22.3282303,
                 lng: 114.1581067,
@@ -573,6 +592,7 @@ enum abstract Shop(String) to String {
             {
                 id: PokeGo,
                 name: "Poke Go",
+                type: Restaurant,
                 address: "深水埗大南街211號",
                 lat: 22.3275716,
                 lng: 114.1626558,
@@ -601,6 +621,7 @@ enum abstract Shop(String) to String {
             {
                 id: WoStreet,
                 name: "窩Street",
+                type: Restaurant,
                 address: "西九龍中心6樓蘋果商場6067號舖",
                 lat: 22.3310294,
                 lng: 114.1595612,
@@ -630,6 +651,7 @@ enum abstract Shop(String) to String {
             {
                 id: AuLawFarm,
                 name: "歐羅有機農場",
+                type: LocalBusiness,
                 address: "新界錦田元朗大江埔村",
                 lat: null,
                 lng: null,
@@ -648,6 +670,7 @@ enum abstract Shop(String) to String {
             {
                 id: Minimal,
                 name: "Minimal",
+                type: Restaurant,
                 address: "深水埗鴨寮街121-123號",
                 lat: 22.3288335,
                 lng: 114.1636431,
@@ -676,6 +699,7 @@ enum abstract Shop(String) to String {
             {
                 id: CafeGolden,
                 name: "琉金穗月",
+                type: Restaurant,
                 address: "石硤尾賽馬會創意藝術中心L1-05",
                 lat: 22.3348672,
                 lng: 114.1658299,
@@ -704,6 +728,7 @@ enum abstract Shop(String) to String {
             {
                 id: BlackWindow,
                 name: "黑窗里",
+                type: Restaurant,
                 address: "深水埗大埔道83號",
                 lat: 22.3323587,
                 lng: 114.1640008,
@@ -732,6 +757,7 @@ enum abstract Shop(String) to String {
             {
                 id: LonelyPaisley,
                 name: "Lonely Paisley",
+                type: Restaurant,
                 address: "深水埗福華街182-186號怡華閣地下A號舖",
                 lat: 22.3326258,
                 lng: 114.1611061,
@@ -760,6 +786,7 @@ enum abstract Shop(String) to String {
             {
                 id: FishFranSSP,
                 name: "魚鈁 (深水埗店)",
+                type: Restaurant,
                 address: "深水埗欽洲街58號米蘭軒1樓",
                 lat: 22.3306967, 
                 lng: 114.1603114,
