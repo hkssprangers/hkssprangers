@@ -44,7 +44,9 @@ class HanaSoftCreamMenu {
             // "日本蕨餅70克（綠茶） $38",
 
             // https://www.facebook.com/hanasoftcream/posts/pfbid09zG9zEHLdmiJjkS13BioQaJ55YF4yVrpSFT68Xd8jkSL8svuGmmxCG5HS6Mj9EpRl
-            "手工雪糕月餅一盒 (北海道8.0牛乳×2 意大利黑朱古力×2) $278",
+            // "手工雪糕月餅一盒 (北海道8.0牛乳×2 意大利黑朱古力×2) $278",
+            "手工雪糕月餅一個(北海道8.0牛乳) $78",
+            "手工雪糕月餅一個(意大利黑朱古力) $78",
         ]
     };
 
