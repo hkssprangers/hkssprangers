@@ -104,7 +104,8 @@ class Menu extends View<MenuProps> {
     }
 
     override function bodyContent() {
-        final recommendation = switch (shop.info()) {
+        final info = shop.info();
+        final recommendation = switch (info) {
             case { id: BlackWindow }:
                 jsx('
                     <Fragment>
@@ -140,23 +141,26 @@ class Menu extends View<MenuProps> {
                     ${View.header()}
                     <div className="p-3 py-3 md:py-16 mx-auto container">
                         <div className="lg:flex">
-                            <div className="lg:w-1/3 lg:pr-12">
+                            <div className="lg:w-1/3 lg:pr-12" itemScope itemType="https://schema.org/Restaurant">
                                 <div className="flex items-center mb-3">
                                     <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
                                     <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
                                 </div>
                                 ${renderShopImage()}
                                 <div className="rounded-b-md bg-white p-3 mb-3 lg:mb-0">
-                                    <h1 className="mb-1 text-xl md:text-2xl">
-                                        <b className="whitespace-nowrap">${shop.info().name}</b>
+                                    <h1 className="mb-1 text-xl md:text-2xl font-bold whitespace-nowrap" itemProp="name">
+                                        ${info.name}
                                     </h1>
+                                    <div className="mb-3 text-xs" itemProp="address">
+                                        ${info.address}
+                                    </div>
                                     ${renderAvailabiltyRest()}
                                     ${recommendation}
                                     <div className="mb-1 text-xs text-gray-400">
                                         更多連結
                                     </div>
                                     <div className="mb-3 text-xs">
-                                        ${renderSocialHandle()}
+                                        ${renderLinks()}
                                     </div>
                                 </div>
                             </div>
@@ -287,19 +291,27 @@ class Menu extends View<MenuProps> {
         }
     }
 
-    function renderSocialHandle() {
-        if (shop.info().instagram != null)
-            return jsx('
+    function renderLinks() {
+        final info = shop.info();
+        final style = "inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white";
+        final fbLink = switch (info.facebook) {
+            case null:
+                null;
+            case url:
+                jsx('<a className=${style} href=${url}>Facebook</a>');
+        }
+        final igLink = switch (info.instagram) {
+            case null:
+                null;
+            case url:
+                jsx('<a className=${style} href=${url}>Instagram</a>');
+        }
+        return jsx('
             <Fragment>
-                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href=${shop.info().facebook}>Facebook</a>
-                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href="${shop.info().instagram}">Instagram</a>
+                ${fbLink}
+                ${igLink}
             </Fragment>
-        ')
-        else return jsx('
-            <Fragment>
-                <a className="inline-block rounded-full px-2 py-1 mr-2 bg-blue-600 text-white" href=${shop.info().facebook}>Facebook</a>
-            </Fragment>
-            ');
+        ');
     }
 
     function renderMsg(msg:String) {
