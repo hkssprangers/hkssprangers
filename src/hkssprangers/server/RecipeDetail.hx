@@ -25,8 +25,8 @@ class RecipeDetail extends View<RecipeDetailProps> {
     public var recipe(get, never):Recipe;
     function get_recipe() return props.recipe;
 
-    override public function title() return '${recipe.info().name}';
-    override public function description() return '${recipe.info().name}';
+    override public function title() return '${recipe.info().name} 食譜';
+    override public function description() return '${recipe.info().name} 食譜';
     override function canonical() return Path.join(["https://" + canonicalHost, "recipe", recipe]);
     override public function render() {
         return super.render();
@@ -37,7 +37,7 @@ class RecipeDetail extends View<RecipeDetailProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/banner-recipe.jpg")])} />
+            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, imageUrl()])} />
         </Fragment>
     ');
 
@@ -86,6 +86,45 @@ class RecipeDetail extends View<RecipeDetailProps> {
         ');
     };
 
+    function imageUrl() {
+        return switch recipe {
+            case ThreeCupTofu:
+                R("/images/recipe/3cup-tofu.jpg");
+            case AloeSoda:
+                R("/images/recipe/aloe-soda.jpg");
+            case BasilTomatoMeat:
+                R("/images/recipe/basil-tomato-meat.jpg");
+            case BitterMelonVegeEgg:
+                R("/images/recipe/bitter-melon-vege-egg.jpg");
+            case CatToast:
+                R("/images/recipe/cat-toast.jpg");
+            case Cauliflower:
+                R("/images/recipe/cauli.jpg");
+            case Curry:
+                R("/images/recipe/curry.jpg");
+            case KaleCrisp:
+                R("/images/recipe/kale-crisp.jpg");
+            case MelonTomatoSoup:
+                R("/images/recipe/melon-tomato-soup.jpg");
+            case MisoEggplant:
+                R("/images/recipe/miso-eggplant.jpg");
+            case NinePie:
+                R("/images/recipe/nine-pie.jpg");
+            case PotatoCheese:
+                R("/images/recipe/potato-cheese.jpg");
+            case SandMiso:
+                R("/images/recipe/sand-miso.jpg");
+            case ShisoTomato:
+                R("/images/recipe/shiso-tomato.jpg");
+            case Soup:
+                R("/images/recipe/soup.jpg");
+            case SpanichPasta:
+                R("/images/recipe/spanich-pasta.jpg");
+            case SweetBitterMelon:
+                R("/images/recipe/sweet-bitter-melon.jpg");
+        }
+    }
+
     function renderImage() {
         final style = "rounded-md";
         return switch recipe {
@@ -123,7 +162,7 @@ class RecipeDetail extends View<RecipeDetailProps> {
                 ${StaticResource.image("/images/recipe/spanich-pasta.jpg", recipe.info().name, style, "image")}
             case SweetBitterMelon:
                 ${StaticResource.image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, style, "image")}
-            }
+        }
     }
 
     function renderContent() {
