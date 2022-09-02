@@ -59,9 +59,11 @@ class KCZenzeroMenu {
         title: "飲品",
         type: "string",
         "enum": [
-            "可口可樂" + (price > 0 ? ' +$$0' : ""),
-            "維他氣泡桃橙茶" + (price > 0 ? ' +$$0' : ""),
-            "維他氣泡檸檬茶" + (price > 0 ? ' +$$0' : ""),
+            "唔要",
+            "汽水(隨機) " + (price > 0 ? ' +$$0' : ""),
+            // "可口可樂" + (price > 0 ? ' +$$0' : ""),
+            // "維他氣泡桃橙茶" + (price > 0 ? ' +$$0' : ""),
+            // "維他氣泡檸檬茶" + (price > 0 ? ' +$$0' : ""),
             // "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
             // "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
@@ -74,11 +76,13 @@ class KCZenzeroMenu {
         title: "飲品",
         type: "string",
         "enum": [
+            "唔要",
             // "檸檬茶紙包飲品 +$0",
             // "菊花茶紙包飲品 +$0",
-            "可口可樂 +$0",
-            "維他氣泡桃橙茶 +$0",
-            "維他氣泡檸檬茶 +$0",
+            "汽水(隨機) +$0",
+            // "可口可樂 +$0",
+            // "維他氣泡桃橙茶 +$0",
+            // "維他氣泡檸檬茶 +$0",
             // "自家沖洛神花冷泡茶 +$5",
             // "自家沖玫瑰烏龍冷泡茶 +$5",
             // "自家沖桂花烏龍冷泡茶 +$5",
@@ -117,7 +121,7 @@ class KCZenzeroMenu {
             "芝士波隆納肉醬薯格 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
-            "紫薯撻 $14",
+            // "紫薯撻 $14",
             // "芝士撻 $12",
             // "葡撻 $8",
             // "咖喱豬皮陳皮魚蛋鵝紅 $30",
@@ -145,7 +149,7 @@ class KCZenzeroMenu {
             drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["main"],
+        required: ["main", "drink"],
     }
 
     static public final KCZenzeroGoldenLeg = {
@@ -172,7 +176,7 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroFreePaperBoxDrink,
         },
-        required: ["main"],
+        required: ["main", "drink"],
     }
 
     static public final KCZenzeroTomatoRice = {
@@ -206,7 +210,7 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroFreePaperBoxDrink,
         },
-        required: ["main", "options"],
+        required: ["main", "options", "drink"],
     }
 
     static public final KCZenzeroR6Set = {
@@ -233,7 +237,7 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroFreePaperBoxDrink,
         },
-        required: ["main"],
+        required: ["main", "drink"],
     }
 
     static public final limitedSpecial = {
@@ -299,7 +303,7 @@ class KCZenzeroMenu {
             drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["options", "noodle"],
+        required: ["options", "noodle", "drink"],
     };
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
@@ -337,7 +341,7 @@ class KCZenzeroMenu {
             drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["main", "sauce", "noodle"],
+        required: ["main", "sauce", "noodle", "drink"],
     };
 
     static public final KCZenzeroWontonSet = {
@@ -374,7 +378,7 @@ class KCZenzeroMenu {
             drink: KCZenzeroSetDrink(5),
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["main", "sub"],
+        required: ["main", "sub", "drink"],
     };
 
     static public final KCZenzeroLightSet = {
