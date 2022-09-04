@@ -1419,7 +1419,13 @@ class DeliveryFee {
         },
         {
             place: "喜盈/喜漾/喜薈",
-            match: address -> address.contains("喜盈") || address.contains("喜漾") || address.contains("喜薈"),
+            match: address ->
+                address.contains("喜盈") || address.toLowerCase().contains("heya delight")
+                ||
+                address.contains("喜漾") || address.toLowerCase().contains("heya aqua")
+                ||
+                address.contains("喜薈") || address.toLowerCase().contains("heya crystal")
+            ,
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
                 case PeiHoStreetMarketCluster: 35;
