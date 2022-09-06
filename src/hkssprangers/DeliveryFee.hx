@@ -1022,7 +1022,7 @@ class DeliveryFee {
         },
         {
             place: "東廬大樓",
-            match: address -> address.contains("東廬大樓"),
+            match: address -> address.contains("東廬大樓") || address.contains("東廬大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
