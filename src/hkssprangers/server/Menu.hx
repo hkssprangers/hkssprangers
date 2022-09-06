@@ -473,6 +473,20 @@ class Menu extends View<MenuProps> {
         final noodleSet = KCZenzeroNoodleSet(Lunch);
         final pastaSet = KCZenzeroPastaSet(Lunch);
 
+        final hotpot = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroHotpotSet.title}</div>
+                </div>
+                <div className="text-red-600 p-3">⚠️ 需提前兩日預訂</div>
+                ${renderItems(KCZenzeroHotpotSet.properties.style.oneOf.map(v -> v.title))}
+                <div className="p-3 font-bold">${KCZenzeroHotpotSet.properties.soup.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroHotpotSet.properties.soup.enums())}</div>
+                <div className="font-bold p-3">${KCZenzeroHotpotSet.properties.size.title}選擇</div>
+                <div className="p-3">${slashes(KCZenzeroHotpotSet.properties.size.enums())}</div>
+            </Fragment>
+        ');
+
         final limited = if (KCZenzeroMenu.limitedSpecial.date == now.getDatePart() && KCZenzeroMenu.limitedSpecial.available) {
             final def = KCZenzeroMenu.limitedSpecial.def;
             final period = KCZenzeroMenu.limitedSpecial.date + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
@@ -550,7 +564,9 @@ class Menu extends View<MenuProps> {
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
-                    
+
+                    ${hotpot}
+
                     <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${hotdogSet.title}</div>
                         <div className="p-3">${hotdogSet.description}</div>

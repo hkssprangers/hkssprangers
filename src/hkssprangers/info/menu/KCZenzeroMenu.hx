@@ -20,11 +20,20 @@ enum abstract KCZenzeroItem(String) to String {
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
-        return (switch (KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start))) {
+        final now:LocalDateString = Date.now();
+        final limited = switch (KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start))) {
             case null: [];
             case _: [LimitedSpecial];
-        }).concat(
-            [
+        }
+        final hotpot = if (timeSlot != null && now.getDatePart() <= (DateTools.delta(timeSlot.start.toDate(), -DateTools.days(2)):LocalDateString).getDatePart()) {
+            [HotpotSet];
+        } else {
+            [];
+        }
+        return
+            (limited)
+            .concat(hotpot)
+            .concat([
                 HotdogSet,
                 NoodleSet,
                 PastaSet,
@@ -34,8 +43,7 @@ enum abstract KCZenzeroItem(String) to String {
                 GoldenLeg,
                 TomatoRice,
                 Single,
-            ]
-        );
+            ]);
     }
 
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
@@ -412,31 +420,42 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "一人癲雞煲",
-        description: "有半隻春雞，跟發熱包 $68。 ⚠️ 請提前一日預訂。",
+        title: "花膠海鮮雞煲",
         properties: {
+            style: {
+                type: "string",
+                title: "版本",
+                oneOf: [
+                    {
+                        const: "蕃廚爸爸版",
+                        title: "蕃廚爸爸版：春雞，鮑魚，花膠，扇貝，蜆，鵝紅",
+                    },
+                    {
+                        const: "後生仔crossover版",
+                        title: "後生仔crossover版：有骨海南雞，鮑魚，花膠，扇貝，海蝦，豬手"
+                    }
+                ],
+            },
             soup: {
                 type: "string",
                 title: "湯底",
                 "enum": [
-                    "蕃茄湯底",
-                    "癲雞辣湯底",
+                    "鮑汁",
+                    "香辣汁",
                 ],
             },
-            options: {
-                type: "array",
-                title: "配料",
-                items: {
-                    type: "string",
-                    "enum": [
-                        "響鈴、娃娃菜、烏冬 +$15",
-                    ],
-                },
-                uniqueItems: true,
+            size: {
+                type: "string",
+                title: "份量",
+                "enum": [
+                    "1-2人 $128",
+                    "3-5人 $580",
+                    "6-8人 $1680",
+                ],
             },
         },
         required: [
-            "soup",
+            "style", "soup", "size",
         ]
     };
     
@@ -529,7 +548,7 @@ class KCZenzeroMenu {
             case TomatoRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["soup", "options"], [box], priceInDescription("soup", def));
+                summarizeOrderObject(orderItem.item, def, ["style", "soup", "size",], [box]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
