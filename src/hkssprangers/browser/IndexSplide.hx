@@ -17,6 +17,12 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             button: "了解更多"
         },
         {
+            title: "HANA 手工雪糕月餅",
+            url: "/menu/HanaSoftCream",
+            img: StaticResource.image("/images/banner-mooncake-2022.jpg", "手工雪糕月餅", "w-100 my-3 rounded-md"),
+            button: "了解更多"
+        },
+        {
             title: "埗兵週末本地菜群組",
             url: "https://t.me/+uHQZCJagi5E3NTk1",
             img: StaticResource.image("/images/banner-vege.jpg", "埗兵週末本地菜群組 x 歐羅農場", "w-100 my-3 rounded-md"),
