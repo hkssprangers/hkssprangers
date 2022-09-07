@@ -23,7 +23,8 @@ node_modules
 
 /orders
 /menu
-/summary
+/summary/courier/
+/summary/shop/
 
 /dev/initdb/003_data_courier.sql
 /dev/initdb/004_data.sql

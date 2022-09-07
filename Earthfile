@@ -533,3 +533,28 @@ db-backup:
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
         && psql -d "$DATABASE_URL" -c "BACKUP INTO 's3://${S3_BUCKET}/${S3_PATH}?AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}&AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' AS OF SYSTEM TIME '-10s';"
+
+libreoffice-calc:
+    FROM ubuntu:jammy
+    RUN apt-get update \
+        && apt-get install -qqy --no-install-recommends \
+            libreoffice-calc-nogui \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+
+format-spreadsheet:
+    FROM devcontainer
+    RUN apt-get update \
+        && apt-get install -qqy --no-install-recommends \
+            python3-uno \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+    COPY summary/docker-compose.yml summary/format-spreadsheet.py summary
+    COPY summary/courier/2022-06-01_2022-06-30_andyonthewings.xlsx summary/courier/
+    WITH DOCKER --compose summary/docker-compose.yml --load libreoffice-calc:latest=+libreoffice-calc
+        RUN python3 format-spreadsheet.py
+    END

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  soffice:
+    image: libreoffice-calc:latest
+    command: soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" --norestore --nologo --nodefault --headless
+    ports:
+      - 2022
+    volumes:
+      - ./courier:/summary/courier
+      - ./shop:/summary/shop
