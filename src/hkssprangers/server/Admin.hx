@@ -71,7 +71,7 @@ class Admin extends View<AdminProps> {
     override function title():String return if (token == null)
         "平台管理";
     else
-        '${token.date} ${switch (token.time) { case Lunch: "午市"; case Dinner: "晚市"; }} ${token.shop.info().name} ${name}外賣單';
+        '${(token.date:LocalDateString).toReadable()} ${switch (token.time) { case Lunch: "午市"; case Dinner: "晚市"; }} ${token.shop.info().name} ${name}外賣單';
 
     override function canonical() return if (token == null)
         Path.join(["https://" + canonicalHost, "admin"]);
@@ -102,8 +102,14 @@ class Admin extends View<AdminProps> {
     }
 
     override function bodyContent() {
+        final header = if (token != null) {
+            jsx('
+                <h1 className="text-center text-slate-500">${title()}</h1>
+            ');
+        } else null;
         return jsx('
             <div>
+                ${header}
                 <div id="AdminView"
                     data-tg-bot-name=${tgBotName}
                     data-user=${Json.stringify(user)}

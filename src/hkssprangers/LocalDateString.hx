@@ -1,8 +1,15 @@
 package hkssprangers;
 
+import hkssprangers.info.*;
+
 abstract LocalDateString(String) to String {
     public function getDatePart():String return this.substr(0, 10);
     public function getTimePart():String return this.substr(11);
+
+    public function toReadable():String {
+        final date = toDate();
+        return '${date.getMonth() + 1}月${date.getDate()}日 (${Weekday.fromDay(date.getDay()).info().name})';
+    }
 
     @:to
     static public function toDate(dateString:String) return dateString != null ? Date.fromString(dateString) : null;

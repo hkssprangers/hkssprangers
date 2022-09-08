@@ -87,12 +87,12 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     function loadOrders(shouldSetState = true):Promise<Void> {
-        var token = getToken();
+        final token = getToken();
         if (shouldSetState)
             setState({
                 isLoading: true,
             });
-        var qs = new URLSearchParams(
+        final qs = new URLSearchParams(
             if (token == null) {
                 date: DateTools.format(getSelectedDate(), "%Y-%m-%d"),
             } else {
@@ -147,6 +147,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     function renderDelivery(key:Dynamic, d:Delivery) {
+        final token = getToken();
         function onChange(changed:Null<Delivery>):Promise<Delivery> {
             return if (changed != null) {
                 window.fetch("/admin", {
@@ -196,7 +197,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     });
             }
         }
-        var viewMode:hkssprangers.browser.DeliveryView.DeliveryViewMode = switch (props.user) {
+        final viewMode:hkssprangers.browser.DeliveryView.DeliveryViewMode = if (token != null) {
+            ShopView;
+        } else switch (props.user) {
             case null:
                 ShopView;
             case { isAdmin: true }:
@@ -286,7 +289,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     delivery=${d}
                     onChange=${onChange}
                     onAddReceipt=${onAddReceipt}
-                    canEdit=${props.user != null && props.user.isAdmin}
+                    canEdit=${viewMode == AdminView}
                     needEdit=${d.deliveryCode == null}
                     viewMode=${viewMode}
                     courierLinkClasses=${courierLinkClasses}
@@ -502,24 +505,32 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             }
         }
 
-        var header = if (token != null) {
-            var count = if (!state.isLoading) {
-                '共 ${filteredDeliveries.length} 單';
-            } else {
-                "Loading";
-            }
-            jsx('
-                <Grid item container justify=${Center} className="py-2">
-                    <Grid item>
-                        ${count}
+        final header = if (token != null) {
+            if (!state.isLoading) {
+                final countWords = '共 ${filteredDeliveries.length} 單';
+                jsx('
+                    <Grid item container justify=${Center} className="py-2">
+                        <Grid item>${countWords}</Grid>
                     </Grid>
-                </Grid>
-            ');
+                ');
+            } else {
+                jsx('
+                    <Grid item container justify=${Center} className="py-2">
+                        <Grid item>Loading</Grid>
+                    </Grid>
+                ');
+            }
         } else {
-            var loggedInAs = if (props.user != null)
-                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank" rel="noopener" className="text-blue-600">@${props.user.tg.username}</a></Typography>');
-            else
+            final loggedInAs = if (props.user != null) {
+                final admin = if (props.user.isAdmin) {
+                    " (admin)";
+                } else {
+                    null;
+                }
+                jsx('<Typography>Logged in as <a href=${"https://t.me/" + props.user.tg.username} target="_blank" rel="noopener" className="text-blue-600">@${props.user.tg.username}</a>${admin}</Typography>');
+            } else {
                 null;
+            }
             jsx('
                 <Fragment>
                     <Grid item container justify=${Center} className="py-2">
