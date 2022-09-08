@@ -25,7 +25,13 @@ enum abstract KCZenzeroItem(String) to String {
             case null: [];
             case _: [LimitedSpecial];
         }
-        final hotpot = if (timeSlot != null && now.getDatePart() <= (DateTools.delta(timeSlot.start.toDate(), -DateTools.days(2)):LocalDateString).getDatePart()) {
+        final hotpot = if (
+            timeSlot != null
+            &&
+            timeSlot.start.getDatePart() <= "2022-09-11"
+            &&
+            now.getDatePart() <= (DateTools.delta(timeSlot.start.toDate(), -DateTools.days(2)):LocalDateString).getDatePart()
+        ) {
             [HotpotSet];
         } else {
             [];
