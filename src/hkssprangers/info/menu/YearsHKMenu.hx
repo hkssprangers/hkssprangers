@@ -23,6 +23,8 @@ class YearsHKMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
+            "唔要",
+
             "熱⽞⽶茶 +$0",
             "凍伯爵茶 +$0",
 

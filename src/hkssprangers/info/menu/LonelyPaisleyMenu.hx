@@ -263,6 +263,7 @@ class LonelyPaisleyMenu {
                 type: "string",
                 title: "飲品",
                 "enum": [
+                    "唔要",
                     "土耳其茶 +$0",
                     "蘋果茶(熱) +$0",
                     "蘋果茶(凍) +$0",

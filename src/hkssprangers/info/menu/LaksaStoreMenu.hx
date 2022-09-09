@@ -29,6 +29,7 @@ class LaksaStoreMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
+            "唔要",
             "道地解茶紙包飲品",
             "道地檸檬紅茶紙包飲品",
             "道地蜂蜜綠茶紙包飲品",

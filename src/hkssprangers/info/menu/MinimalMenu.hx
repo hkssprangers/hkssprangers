@@ -259,12 +259,12 @@ class MinimalMenu {
             drink1: {
                 title: "飲品一",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
             drink2: {
                 title: "飲品二",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
         },
         required: [
@@ -309,22 +309,22 @@ class MinimalMenu {
             drink1: {
                 title: "飲品一",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
             drink2: {
                 title: "飲品二",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
             drink3: {
                 title: "飲品三",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
             drink4: {
                 title: "飲品四",
                 type: "string",
-                "enum": drinks.map(v -> v.name),
+                "enum": ["唔要"].concat(drinks.map(v -> v.name)),
             },
         },
         required: [

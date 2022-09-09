@@ -24,6 +24,8 @@ class TheParkByYearsMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
+            "唔要",
+
             "熱⽞米茶 +$0",
             "凍伯爵茶 +$0",
 
