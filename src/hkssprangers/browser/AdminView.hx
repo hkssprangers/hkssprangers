@@ -324,9 +324,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     }
 
     override function render() {
-        var token = getToken();
-        var selectedTimeSlotType = getSelectedTimeSlotType();
-        var filteredDeliveries = if (token == null) {
+        final token = getToken();
+        final selectedTimeSlotType = getSelectedTimeSlotType();
+        final filteredDeliveries = if (token == null) {
             state.deliveries.filter(d -> {
                 if (d.d.pickupTimeSlot != null && d.d.pickupTimeSlot.start != null)
                     TimeSlotType.classify(d.d.pickupTimeSlot.start) == selectedTimeSlotType;
@@ -336,14 +336,14 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         } else {
             state.deliveries;
         }
-        var content = if (state.isLoading) {
+        final content = if (state.isLoading) {
             [jsx('<div key=${0} item><CircularProgress /></div>')];
         } else {
             filteredDeliveries.map(d -> renderDelivery(d.key, d.d));
         }
 
         function addDelivery() {
-            var now = Date.now();
+            final now = Date.now();
             setState({
                 deliveries: state.deliveries.concat([{
                     d: {
@@ -384,7 +384,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         }
 
-        var addDeliveryButton = if (state.isLoading || props.user == null || !props.user.isAdmin) {
+        final addDeliveryButton = if (state.isLoading || props.user == null || !props.user.isAdmin || token != null) {
             null;
         } else {
             jsx('
@@ -398,18 +398,18 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         }
 
-        var selectedDate = getSelectedDate();
+        final selectedDate = getSelectedDate();
 
-        var timeSlotTypeRadios = [Lunch, Dinner].map(t -> {
-            var count = if (!state.isLoading)
+        final timeSlotTypeRadios = [Lunch, Dinner].map(t -> {
+            final count = if (!state.isLoading)
                 Std.string(state.deliveries.filter(d -> d.d.pickupTimeSlot == null || d.d.pickupTimeSlot.start == null || TimeSlotType.classify(d.d.pickupTimeSlot.start) == t).length);
             else
                 "?";
-            var badgeColor = switch (count) {
+            final badgeColor = switch (count) {
                 case "0", "?": "bg-gray-100";
                 case _: "bg-green-500 text-white";
             }
-            var label = jsx('
+            final label = jsx('
                 <div className="flex flex-row items-center">
                     <span>${t.info().name}</span>
                     <span className=${'${badge()} ${badgeColor} text-xs font-bold mx-1 px-1.5'}>${count}</span>
@@ -426,7 +426,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         });
 
-        var copyBtn = if (props.user != null && props.user.isAdmin) {
+        final copyBtn = if (props.user != null && props.user.isAdmin) {
             jsx('
                 <CopyButton
                     text=${() -> Promise.resolve(filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr))}
@@ -435,8 +435,8 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         } else {
             null;
         }
-        var announceBtnRef = React.createRef();
-        var announceBtn = if (props.user != null && props.user.isAdmin) {
+        final announceBtnRef = React.createRef();
+        final announceBtn = if (props.user != null && props.user.isAdmin) {
             function onClickAnnounce():Void {
                 setState({
                     openAnnounceModal: true,
@@ -457,7 +457,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         }
 
-        var linksForShop = [
+        final linksForShop = [
             for (d in filteredDeliveries)
             for (o in d.d.orders)
             o.shop => null
