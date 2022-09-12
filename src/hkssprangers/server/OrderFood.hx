@@ -145,6 +145,7 @@ class OrderFood extends View<OrderFoodProps> {
         return TimeSlotTools.getTimeSlots(date, now)
             .then(timeSlots -> reply
                 .code(200)
+                .header("Cache-Control", "public, max-age=60, stale-while-revalidate=300") // max-age: 1 minute, stale-while-revalidate: 5 minutes
                 .header('Content-Type', 'application/json; charset=utf-8')
                 .send(tink.Json.stringify(timeSlots))
             );
