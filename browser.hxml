@@ -4,6 +4,7 @@
 --library material-ui
 --library compiletime
 --library tink_core
+--library tink_json
 --library thx.core
 --library react-router-4
 --library jsonwebtoken

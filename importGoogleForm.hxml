@@ -2,6 +2,7 @@
 --library tink_core
 --library tink_core_ext
 --library tink_sql
+--library tink_json
 --library hxnodejs
 --library thx.core
 --library CommentString

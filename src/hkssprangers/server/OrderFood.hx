@@ -1,5 +1,6 @@
 package hkssprangers.server;
 
+import hkssprangers.info.TimeSlotTools;
 import tink.core.ext.Promises;
 import hkssprangers.browser.forms.*;
 import tink.core.Error.ErrorCode;
@@ -102,12 +103,12 @@ class OrderFood extends View<OrderFoodProps> {
                     reply.redirect("/login?redirectTo=" + "/order-food".urlEncode());
                     return Promise.resolve(null);
                 }
+                final now:LocalDateString = Date.now();
+                final today = now.getDatePart();
                 ServerMain.tgMe.then(tgMe -> {
                     CockroachDb.db.getPrefill(reply.getUser())
                         .toJsPromise()
                         .then(prefill -> {
-                            final now:LocalDateString = Date.now();
-                            final today = now.getDatePart();
                             final pickupTimeSlot:JsonString<TimeSlot> = {
                                 start: today + " 00:00:00",
                                 end: today + " 00:00:00",
@@ -123,6 +124,30 @@ class OrderFood extends View<OrderFoodProps> {
                         });
                 });
             });
+    }
+
+    static public function getTimeSlotChoices(req:Request, reply:Reply):Promise<Dynamic> {
+        final date:LocalDateString = switch (req.query.date) {
+            case null:
+                final now:LocalDateString = Date.now();
+                Date.fromString(now.getDatePart() + " 09:00:00");
+            case date if (~/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.match(date)):
+                Date.fromString(date + " 09:00:00");
+            case date:
+                throw "Invalid date: " + date;
+        }
+        final now:LocalDateString = switch (req.query.now) {
+            case null:
+                Date.now();
+            case date:
+                Date.fromString(date);
+        }
+        return TimeSlotTools.getTimeSlots(date, now)
+            .then(timeSlots -> reply
+                .code(200)
+                .header('Content-Type', 'application/json; charset=utf-8')
+                .send(tink.Json.stringify(timeSlots))
+            );
     }
 
     static public function post(req:Request, reply:Reply):Promise<Dynamic> {
@@ -192,5 +217,7 @@ class OrderFood extends View<OrderFoodProps> {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         app.get("/order-food", OrderFood.get);
         app.post("/order-food", OrderFood.post);
+
+        app.get('/time-slot-choices', OrderFood.getTimeSlotChoices);
     }
 }

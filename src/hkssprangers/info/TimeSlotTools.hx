@@ -1,6 +1,8 @@
 package hkssprangers.info;
 
+import js.lib.Promise;
 import hkssprangers.Availability;
+import hkssprangers.info.TimeSlot;
 import hkssprangers.info.TimeSlotType;
 using Lambda;
 
@@ -30,23 +32,36 @@ class TimeSlotTools {
         { cutoff: "19:00:00", start: "19:45:00", end: "20:30:00" },
     ];
 
-    static public function getTimeSlots(date:LocalDateString):Array<TimeSlot & { availability: Availability }> {
+    static public function getTimeSlots(date:LocalDateString, ?now:LocalDateString):Promise<Array<TimeSlotChoice>> {
         final dateStr = date.getDatePart();
-        final timeNow = Date.now().getTime();
-        return regularTimeSlots
-            .map(slot -> {
-                availability: switch (dateStr) {
-                    case "2022-09-03" if (slot.start <= "16:00:00"):
-                        Unavailable("人手不足，外賣服務暫停");
-                    case _:
-                        if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
-                            Available;
-                        } else {
-                            Unavailable("已截單");
-                        }
-                },
-                start: (dateStr + " " + slot.start:LocalDateString),
-                end: (dateStr + " " + slot.end:LocalDateString),
+        final now = now != null ? now : (Date.now():LocalDateString);
+        final timeNow = now.toDate().getTime();
+        #if (!browser)
+            return Promise.resolve(
+                regularTimeSlots
+                    .map(slot -> {
+                        availability: switch (dateStr) {
+                            case "2022-09-03" if (slot.start <= "16:00:00"):
+                                Unavailable("人手不足，外賣服務暫停");
+                            case _:
+                                if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
+                                    Available;
+                                } else {
+                                    Unavailable("已截單");
+                                }
+                        },
+                        start: (dateStr + " " + slot.start:LocalDateString),
+                        end: (dateStr + " " + slot.end:LocalDateString),
+                    })
+            );
+        #else
+            final query = new js.html.URLSearchParams({
+                date: dateStr,
+                now: now,
             });
+            return js.Browser.window.fetch('/time-slot-choices?' + query)
+                .then(r -> if (r.ok) r.text() else throw r.status)
+                .then(r -> (tink.Json.parse(r):Array<TimeSlotChoice>));
+        #end
     }
 }

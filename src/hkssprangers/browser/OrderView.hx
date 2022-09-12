@@ -8,6 +8,7 @@ import js.npm.material_ui.Pickers;
 using hkssprangers.info.LoggedinUser;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
+using hkssprangers.info.TimeSlot;
 using hkssprangers.info.TimeSlotType;
 using hkssprangers.info.TimeSlotTools;
 using hkssprangers.MathTools;

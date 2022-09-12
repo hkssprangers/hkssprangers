@@ -2,6 +2,7 @@ package hkssprangers.browser.forms;
 
 import hkssprangers.LocalDateString;
 import hkssprangers.info.*;
+import hkssprangers.info.TimeSlot;
 
 typedef OrderFormData = {
     currentTime:LocalDateString,

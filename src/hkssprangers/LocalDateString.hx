@@ -2,6 +2,8 @@ package hkssprangers;
 
 import hkssprangers.info.*;
 
+@:jsonParse(function (json) return hkssprangers.LocalDateString.fromString(json))
+@:jsonStringify(function (v:hkssprangers.LocalDateString) return (v:String))
 abstract LocalDateString(String) to String {
     public function getDatePart():String return this.substr(0, 10);
     public function getTimePart():String return this.substr(11);

@@ -230,17 +230,17 @@ class OrderForm extends ReactComponentOf<OrderFormProps, OrderFormState> {
         }
 
         // make sure the timeslot is valid
-        try {
-            final timeSlots = TimeSlotTools.getTimeSlots(formData.pickupTimeSlot.parse().start);
-            switch (timeSlots.find(ts -> haxe.Json.stringify(ts) == formData.pickupTimeSlot)) {
-                case null | { availability: Unavailable(_) }:
-                    errors.pickupTimeSlot.addError("交收時段不正確");
-                case _:
-                    // pass
-            }
-        } catch (err) {
-            trace(err);
-        }
+        // try {
+        //     final timeSlots = formData.pickupTimeSlotChoices;
+        //     switch (timeSlots.find(ts -> haxe.Json.stringify(ts) == formData.pickupTimeSlot)) {
+        //         case null | { availability: Unavailable(_) }:
+        //             errors.pickupTimeSlot.addError("交收時段不正確");
+        //         case _:
+        //             // pass
+        //     }
+        // } catch (err) {
+        //     trace(err);
+        // }
 
         return errors;
     }

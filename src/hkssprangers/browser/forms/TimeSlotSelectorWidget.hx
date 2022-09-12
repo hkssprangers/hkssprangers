@@ -20,7 +20,7 @@ typedef TimeSlotSelectorWidgetProps = {
     final id:String;
     final formContext:OrderFormData;
     final options:{
-        enumOptions:Array<{schema:Dynamic, label:String, value:JsonString<TimeSlot>}>,
+        enumOptions:Array<{schema:Dynamic, label:String, value:JsonString<TimeSlotChoice>}>,
         enumDisabled:Dynamic,
         pickupTimeSlot:Null<TimeSlot>,
     };
@@ -37,7 +37,9 @@ typedef TimeSlotSelectorWidgetProps = {
     @:optional final rawErrors:Array<Dynamic>;
 }
 
-class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProps, Dynamic> {
+typedef TimeSlotSelectorWidgetState = {}
+
+class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProps, TimeSlotSelectorWidgetState> {
     static final TextField = Styles.styled(mui.core.TextField)({});
     static final DatePicker = Styles.styled(js.npm.material_ui.Pickers.DatePicker)({});
 
@@ -60,8 +62,8 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
     override function render():ReactFragment {
         final now = props.formContext.currentTime;
         final today = now.getDatePart();
-        final timeSlots = TimeSlotTools.getTimeSlots(props.value.parse().start);
-        final menuItems = timeSlots.map(timeSlot -> {
+        final menuItems = props.options.enumOptions.map(timeSlotOpt -> {
+            final timeSlot:TimeSlotChoice = tink.Json.parse(timeSlotOpt.value);
             final timeSlotStr = TimeSlotTools.printTime(timeSlot);
             final disabledMessage = switch (timeSlot.availability) {
                 case Available:
@@ -72,7 +74,7 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
                     ');
             }
             jsx('
-                <MenuItem key=${timeSlotStr} value=${haxe.Json.stringify(timeSlot)} disabled=${timeSlot.availability.match(Unavailable(_))}>
+                <MenuItem key=${timeSlotStr} value=${timeSlotOpt.value} disabled=${timeSlot.availability.match(Unavailable(_))}>
                     ${timeSlotStr} ${disabledMessage}
                 </MenuItem>
             ');

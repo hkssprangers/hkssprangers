@@ -93,12 +93,22 @@ class OrderFormSchema {
                 }).toArray()
             );
         };
-        return itemsSchema.then(itemsSchema -> {
+        final timeSlotChoices = switch (pickupTimeSlot) {
+            case null:
+                Promise.resolve([]);
+            case pickupTimeSlot:
+                TimeSlotTools.getTimeSlots(pickupTimeSlot.start, formData.currentTime);
+        }
+        return timeSlotChoices.then(timeSlotChoices -> itemsSchema.then(itemsSchema -> {
             type: "object",
             properties: {
                 pickupTimeSlot: {
                     type: "string",
                     title: "想幾時收到?",
+                    oneOf: timeSlotChoices.map(t -> {
+                        title: t.print(),
+                        const: tink.Json.stringify(t),
+                    }),
                 },
                 pickupLocation: {
                     type: "string",
@@ -207,7 +217,7 @@ class OrderFormSchema {
                 case null: [];
                 case _: ["backupContactValue"];
             }),
-        });
+        }));
     }
 
     static public function formDataToDelivery(formData:OrderFormData, user:LoggedinUser):Promise<Delivery> {
