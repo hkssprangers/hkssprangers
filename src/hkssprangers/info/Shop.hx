@@ -832,9 +832,9 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid02eEK9eU1DyCQkiAqmKv286oQJmYLkqL9wCn4hHnBByAMHDVWHYssjK9wjS45BERQfl&id=100064143817671
-            case [KCZenzero, "2022-09-11", Dinner]:
-                return Unavailable('午市暫停');
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0S7fBKu8wU2e1LEUM71WAyuqSCAkdFsZA6LYbmNym6bmm19wkRWVmMfwSCyNWybbCl&id=100064143817671
+            case [KCZenzero, "2022-09-14", _]:
+                return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
