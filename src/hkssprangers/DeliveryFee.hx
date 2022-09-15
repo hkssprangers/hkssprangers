@@ -41,6 +41,20 @@ class DeliveryFee {
             }
         },
         {
+            place: "海峯",
+            match: address -> address.contains("海峯") || address.toLowerCase().contains("vista"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "南昌大廈",
             match: address -> address.contains("南昌大廈"),
             deliveryFee: cluster -> switch cluster {
@@ -202,6 +216,20 @@ class DeliveryFee {
                 case PeiHoStreetMarketCluster: 25;
                 case CLPCluster: 35;
                 case GoldenCluster: 35;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 25;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "福昌工廠大廈",
+            match: address -> address.contains("福昌工廠大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case PeiHoStreetMarketCluster: 35;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
                 case PakTinCluster: 40;
@@ -1064,7 +1092,11 @@ class DeliveryFee {
         },
         {
             place: "怡閣苑, 怡靖苑",
-            match: address -> address.contains("怡閣苑") || address.contains("怡靖苑"),
+            match: address ->
+                address.contains("怡閣苑") || address.toLowerCase().contains("yee kok court")
+                ||
+                address.contains("怡靖苑") || address.toLowerCase().contains("yee ching court")
+            ,
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
@@ -1405,7 +1437,21 @@ class DeliveryFee {
         },
         {
             place: "喜韻",
-            match: address -> address.contains("喜韻"),
+            match: address -> address.contains("喜韻") || address.toLowerCase().contains("heya star"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case PeiHoStreetMarketCluster: 35;
+                case CLPCluster: 25;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 40;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
+        {
+            place: "海華麗軒",
+            match: address -> address.contains("海華麗軒") || address.toLowerCase().contains("hing wah apartments"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
                 case PeiHoStreetMarketCluster: 35;
@@ -1513,6 +1559,20 @@ class DeliveryFee {
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
                 case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 35;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "中國船舶大廈",
+            match: address -> address.contains("中國船舶大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case PeiHoStreetMarketCluster: 35;
                 case CLPCluster: 35;
                 case GoldenCluster: 40;
                 case SmilingPlazaCluster: 25;
@@ -1712,8 +1772,8 @@ class DeliveryFee {
             }
         },
         {
-            place: "金安大廈",
-            match: address -> address.contains("金安大廈"),
+            place: "大埔道236號金安大廈",
+            match: address -> address.contains("大埔道236號") && address.contains("金安大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
@@ -1722,6 +1782,20 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 25;
                 case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "康美樓", //荔枝角道135號
+            match: address -> address.contains("荔枝角道135號") ||  address.contains("康美樓") || address.toLowerCase().contains("wontonmeen"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 25;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 25;
             }
         },
@@ -2052,6 +2126,20 @@ class DeliveryFee {
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
                 case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "福華街62至64號",
+            match: address -> address.contains("福華街62至64號") || address.contains("福華街62-64號"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
                 case TungChauStreetParkCluster: 25;
             }
         },
