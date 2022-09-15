@@ -15,10 +15,8 @@
 				]
 			},
 		},
-		"terraform-ls.terraformExecPath": "/usr/local/bin/terraform",
-		"terraform.languageServer": {
-			"pathToBinary": "/usr/local/bin/terraform-ls"
-		},
+		"terraform.languageServer.terraform.path": "/usr/local/bin/terraform",
+		"terraform.languageServer.pathToBinary": "/usr/local/bin/terraform-ls",
 		"remote.portsAttributes": {
 			"6000": {
 				"label": "vshaxe server",
