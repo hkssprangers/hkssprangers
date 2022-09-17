@@ -255,9 +255,9 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "避風塘煎蝦黃油飯 $69";
+        final limitedSpecial = "花膠海南雞蒜香炆伊麵 $78";
         {
-            date: "2022-09-05",
+            date: "2022-09-17",
             timeSlotTypes: [Dinner],
             seperateBox: false,
             available: true,
