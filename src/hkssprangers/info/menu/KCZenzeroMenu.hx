@@ -257,7 +257,8 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecial = "花膠海南雞蒜香炆伊麵 $78";
         {
-            date: "2022-09-18",
+            dateStart: "2022-09-18",
+            dateEnd: "2022-09-19",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
@@ -280,7 +281,15 @@ class KCZenzeroMenu {
     };
 
     static public function KCZenzeroLimitedSpecial(date:LocalDateString, timeSlotType:TimeSlotType)
-        return if (limitedSpecial.date == date.getDatePart() && limitedSpecial.timeSlotTypes.has(timeSlotType) && limitedSpecial.available)
+        return if (
+            date.getDatePart() >= limitedSpecial.dateStart
+            &&
+            date.getDatePart() <= limitedSpecial.dateEnd
+            &&
+            limitedSpecial.timeSlotTypes.has(timeSlotType)
+            &&
+            limitedSpecial.available
+        )
             limitedSpecial.def;
         else
             null;

@@ -469,13 +469,20 @@ class Menu extends View<MenuProps> {
 
     function renderKCZenzero() {
         final now:LocalDateString = Date.now();
+        final today = now.getDatePart();
         final hotdogSet = KCZenzeroHotdogSet(Lunch);
         final noodleSet = KCZenzeroNoodleSet(Lunch);
         final pastaSet = KCZenzeroPastaSet(Lunch);
 
-        final limited = if (KCZenzeroMenu.limitedSpecial.date == now.getDatePart() && KCZenzeroMenu.limitedSpecial.available) {
+        final limited = if (
+            today >= KCZenzeroMenu.limitedSpecial.dateStart
+            &&
+            today <= KCZenzeroMenu.limitedSpecial.dateEnd
+            &&
+            KCZenzeroMenu.limitedSpecial.available
+        ) {
             final def = KCZenzeroMenu.limitedSpecial.def;
-            final period = KCZenzeroMenu.limitedSpecial.date + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
+            final period = today + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
                 case [Dinner]: " 晚市供應";
                 case _: "";
             });
