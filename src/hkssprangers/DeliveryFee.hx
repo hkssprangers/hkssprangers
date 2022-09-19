@@ -279,8 +279,8 @@ class DeliveryFee {
             }
         },
         {
-            place: "奧海城/帝柏海灣",
-            match: address -> address.contains("帝柏海灣") || address.contains("奧海城"),
+            place: "奧海城/帝柏海灣/海富苑",
+            match: address -> address.contains("帝柏海灣") || address.contains("奧海城") || address.contains("海富苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
                 case PeiHoStreetMarketCluster: 40;
