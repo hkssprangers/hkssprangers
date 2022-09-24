@@ -292,6 +292,16 @@ class BlackWindowMenu {
                             required: ["main", "soup", "snack"],
                         }
                     case Main:
+                        final mainEnum = items.Main.items.map(v -> { name: v.name, price: v.price + mainMarkup }).map(printNamePrice);
+                        final drinkEnum = if (items.Drink == null) {
+                            [];
+                        } else {
+                            items.Drink.items.map(v ->  v.name + " $" + switch v {
+                                case {withMainPrice: v} if (v != null): v;
+                                case {price: v}: v;
+                            });
+                        }
+                        trace(drinkEnum);
                         {
                             title: Main.getTitle(),
                             description: items.Main.description,
@@ -299,15 +309,12 @@ class BlackWindowMenu {
                                 main: {
                                     title: Main.getTitle(),
                                     type: "string",
-                                    "enum": items.Main.items.map(v -> { name: v.name, price: v.price + mainMarkup }).map(printNamePrice),
+                                    "enum": mainEnum,
                                 },
                                 drink: {
                                     title: "跟飲品",
                                     type: "string",
-                                    "enum": items.Drink.items.map(v ->  v.name + " $" + switch v {
-                                        case {withMainPrice: v} if (v != null): v;
-                                        case {price: v}: v;
-                                    }),
+                                    "enum": drinkEnum,
                                 },
                             },
                             required: ["main"],
@@ -322,6 +329,7 @@ class BlackWindowMenu {
                 }
                 defs[type] = def;
             } catch (err) {
+                trace(err);
                 continue;
             }
         }
