@@ -109,7 +109,7 @@ class MGYMenu {
                     "咖喱雜菜 $" + markup(78),
                     "韓式泡菜年糕 $" + markup(58),
                     "冰鎮秋葵 $" + markup(38),
-                    "素大碗 $" + markup(108),
+                    // "素大碗 $" + markup(108),
                     "山珍池蓮會 $" + markup(88),
                     "日式雪裏紅 $" + markup(58)
 
