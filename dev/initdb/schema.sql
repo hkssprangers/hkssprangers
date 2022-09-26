@@ -122,3 +122,9 @@ CREATE TABLE public."menuItem" (
 	CONSTRAINT "menuItem_pkey" PRIMARY KEY ("menuItemId" ASC),
 	INDEX "menuItem_shop_time" ("shopId" ASC, "startTime" ASC, "endTime" ASC)
 );
+CREATE TABLE public."timeSlotRule" (
+	"startTime" TIMESTAMPTZ(0) NOT NULL,
+	"endTime" TIMESTAMPTZ(0) NOT NULL,
+	availability JSONB NOT NULL,
+	CONSTRAINT "timeSlotRule_pkey" PRIMARY KEY ("startTime" ASC, "endTime" ASC)
+);

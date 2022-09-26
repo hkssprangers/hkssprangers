@@ -19,6 +19,7 @@ import hkssprangers.TelegramConfig;
 import hkssprangers.info.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ContactMethod;
+import hkssprangers.info.TimeSlot;
 import hkssprangers.info.TimeSlotType;
 import hkssprangers.info.OrderTools.*;
 import hkssprangers.server.ServerMain.*;
@@ -180,7 +181,7 @@ class Admin extends View<AdminProps> {
                     return true;
                 }
                 
-                var tokenOk = switch (reply.getToken()) {
+                final tokenOk = switch (reply.getToken()) {
                     case null:
                         false;
                     case token:
@@ -201,7 +202,7 @@ class Admin extends View<AdminProps> {
                 var url = new node.url.URL(req.raw.url, "http://example.com");
                 return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode()));
             }
-            var user:Courier = reply.getCourier();
+            final user:Courier = reply.getCourier();
             if (user == null || !user.isAdmin) {
                 return Promise.resolve(reply.status(403).send('Only admins are allowed.')).then(_ -> null);
             }
@@ -337,6 +338,27 @@ class Admin extends View<AdminProps> {
                             reply.status(500).send(Std.string(err));
                         })
                         .then(_ -> null);
+                case "set-time-slot":
+                    final timeSlot:TimeSlot = req.body.timeSlot;
+                    final availability:Null<Availability> = tink.Json.parse(haxe.Json.stringify(req.body.availability));
+                    switch (availability) {
+                        case null:
+                            CockroachDb.db.timeSlotRule.delete({
+                                where: r -> r.startTime == timeSlot.start.toDate() && r.endTime == timeSlot.end.toDate()
+                            }).toJsPromise()
+                                .then(_ -> reply.send("done"))
+                                .then(_ -> null);
+                        case _:
+                            CockroachDb.db.timeSlotRule.insertOne({
+                                startTime: timeSlot.start.toDate(),
+                                endTime: timeSlot.end.toDate(),
+                                availability: req.body.availability,
+                            }, {
+                                // update: u -> [u.availability.set(req.body.availability)],
+                            }).toJsPromise()
+                                .then(_ -> reply.send("done"))
+                                .then(_ -> null);
+                    }
                 case action:
                     reply.type("text");
                     Promise.resolve(reply.status(406).send("Unknown action " + action)).then(_ -> null);
@@ -387,10 +409,10 @@ class Admin extends View<AdminProps> {
         return ensurePermission(req, reply)
             .then(ok -> {
                 if (!ok) {
-                    var url = new node.url.URL(req.raw.url, "http://example.com");
+                    final url = new node.url.URL(req.raw.url, "http://example.com");
                     return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode())).then(_ -> null);
                 }
-                var user = reply.getCourier();
+                final user = reply.getCourier();
                 switch (req.accepts().type(["text/html", "application/json"])) {
                     case "text/html":
                         ServerMain.tgMe.then(tgBotInfo -> {
@@ -402,15 +424,15 @@ class Admin extends View<AdminProps> {
                             });
                         }).then(_ -> null);
                     case "application/json":
-                        var token = reply.getToken();
+                        final token = reply.getToken();
                         switch (token) {
                             case null:
                                 // pass
                             case token:
                                 return getByToken(req, reply);
                         }
-                        var now = Date.now();
-                        var date = switch (req.query.date) {
+                        final now = Date.now();
+                        final date = switch (req.query.date) {
                             case null: now;
                             case date: Date.fromString(date);
                         }

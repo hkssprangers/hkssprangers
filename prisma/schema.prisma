@@ -134,3 +134,11 @@ model menuItem {
 
   @@index([shopId, startTime, endTime], map: "menuItem_shop_time")
 }
+
+model timeSlotRule {
+  startTime    DateTime @db.Timestamptz(0)
+  endTime      DateTime @db.Timestamptz(0)
+  availability Json
+
+  @@id([startTime, endTime])
+}

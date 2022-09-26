@@ -53,6 +53,9 @@ interface Def extends tink.sql.DatabaseDefinition {
 
     @:table("twilioMessage")
     final twilioMessage:TwilioMessage;
+
+    @:table("timeSlotRule")
+    final timeSlotRule:TimeSlotRule;
 }
 
 class CourierConverter {

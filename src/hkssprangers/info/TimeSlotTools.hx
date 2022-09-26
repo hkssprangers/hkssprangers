@@ -37,23 +37,40 @@ class TimeSlotTools {
         final now = now != null ? now : (Date.now():LocalDateString);
         final timeNow = now.toDate().getTime();
         #if (!browser)
-            return Promise.resolve(
-                regularTimeSlots
-                    .map(slot -> {
-                        availability: switch (dateStr) {
-                            case "2022-09-22" if (slot.start >= "16:00:00"):
-                                Unavailable("人手不足，暫停服務一晚");
-                            case _:
+            final dateStart:LocalDateString = dateStr + " 00:00:00";
+            final dateEnd = dateStart.deltaDays(1);
+            return hkssprangers.server.CockroachDb.db.timeSlotRule
+                .where(r -> r.startTime >= dateStart.toDate() && r.startTime < dateEnd.toDate())
+                .all()
+                .toJsPromise()
+                .then(rules -> {
+                    regularTimeSlots
+                        .map(slot -> {
+                            availability:
                                 if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
                                     Available;
                                 } else {
                                     Unavailable("已截單");
                                 }
-                        },
-                        start: (dateStr + " " + slot.start:LocalDateString),
-                        end: (dateStr + " " + slot.end:LocalDateString),
-                    })
-            );
+                            ,
+                            start: (dateStr + " " + slot.start:LocalDateString),
+                            end: (dateStr + " " + slot.end:LocalDateString),
+                        })
+                        .map(slot -> {
+                            availability: switch slot.availability {
+                                case Available:
+                                    final rule = rules.find(r -> r.startTime == slot.start);
+                                    if (rule == null)
+                                        Available;
+                                    else
+                                        (tink.Json.parse(haxe.Json.stringify(rule.availability)):Availability);
+                                case a:
+                                    a;
+                            },
+                            start: slot.start,
+                            end: slot.end,
+                        });
+                });
         #else
             final query = new js.html.URLSearchParams({
                 date: dateStr,

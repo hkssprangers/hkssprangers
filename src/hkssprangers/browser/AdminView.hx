@@ -12,6 +12,7 @@ import js.npm.material_ui.Pickers;
 import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
+import hkssprangers.info.TimeSlot;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
 using hkssprangers.info.TimeSlotType;
@@ -30,6 +31,9 @@ typedef AdminViewState = {
     final isLoading:Bool;
     final isAnnouncing:Bool;
     final openAnnounceModal:Bool;
+    final isTimeSlotsLoading:Bool;
+    final openTimeSlotsModal:Bool;
+    final timeSlots:Array<TimeSlotChoice>;
     final deliveries:Array<{
         var d:Delivery;
         var key:Float;
@@ -69,7 +73,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
     function getToken(?search:String) return new URLSearchParams(search != null ? search : props.location.search).get("token");
 
     override function componentDidUpdate(prevProps:AdminViewProps, prevState:AdminViewState) {
-        var currentSelectedDate = getSelectedDate();
+        final currentSelectedDate = getSelectedDate();
         if (getSelectedDate(prevProps.location.search).getTime() != currentSelectedDate.getTime())
             loadOrders();
     }
@@ -80,6 +84,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             isLoading: true,
             isAnnouncing: false,
             openAnnounceModal: false,
+            isTimeSlotsLoading: false,
+            openTimeSlotsModal: false,
+            timeSlots: [],
             deliveries: [],
         };
 
@@ -341,6 +348,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
         } else {
             filteredDeliveries.map(d -> renderDelivery(d.key, d.d));
         }
+        final now = Date.now();
 
         function addDelivery() {
             final now = Date.now();
@@ -426,15 +434,6 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         });
 
-        final copyBtn = if (props.user != null && props.user.isAdmin) {
-            jsx('
-                <CopyButton
-                    text=${() -> Promise.resolve(filteredDeliveries.map(d -> DeliveryTools.print(d.d)).join(hr))}
-                />
-            ');
-        } else {
-            null;
-        }
         final announceBtnRef = React.createRef();
         final announceBtn = if (props.user != null && props.user.isAdmin) {
             function onClickAnnounce():Void {
@@ -505,6 +504,63 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             }
         }
 
+        final timeSlotsBtnRef = React.createRef();
+        final timeSlotsBtn = if (props.user != null && props.user.isAdmin) {
+            function onClickTimeSlots():Void {
+                setState({
+                    isTimeSlotsLoading: true,
+                });
+                TimeSlotTools.getTimeSlots(selectedDate, now)
+                    .then(timeSlots -> {
+                        setState({
+                            timeSlots: timeSlots.filter(s ->
+                                TimeSlotType.classify(s.start) == selectedTimeSlotType
+                                &&
+                                switch (s.availability) {
+                                    case Unavailable("已截單"): false;
+                                    case _: true;
+                                }
+                            ),
+                            isTimeSlotsLoading: false,
+                            openTimeSlotsModal: true,
+                        });
+                    });
+            }
+            jsx('
+                <IconButton ref=${timeSlotsBtnRef} onClick=${onClickTimeSlots}>
+                    <i className="fa-regular fa-clock"></i>
+                </IconButton>
+            ');
+        } else {
+            null;
+        }
+
+        function handleTimeSlotsModalClose() {
+            setState({
+                openTimeSlotsModal: false,
+            });
+        }
+
+        final timeSlotControls = state.timeSlots.map(slot -> {
+            trace(slot);
+            final disabled = switch (slot.availability) {
+                case Unavailable(TimeSlotDisableButton.disableMessage): true;
+                case Unavailable(r):
+                    trace(r);
+                    true;
+                case _: false;
+            }
+            jsx('
+                <Grid key=${slot.start} item>
+                    ${slot.print()}
+                    <TimeSlotDisableButton
+                        timeSlot=${slot}
+                        initDisabled=${disabled}
+                    />
+                </Grid>
+            ');
+        });
+
         final header = if (token != null) {
             if (!state.isLoading) {
                 final countWords = '共 ${filteredDeliveries.length} 單';
@@ -567,7 +623,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     </Grid>
                     <Grid item container justify=${Center} alignItems=${Center} className="pb-2">
                         <Grid item>
-                            ${copyBtn}
+                            ${timeSlotsBtn}
                             ${announceBtn}
                         </Grid>
                     </Grid>
@@ -575,10 +631,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             ');
         }
 
-        var annouceToCouriersDisabled =
+        final annouceToCouriersDisabled =
             state.isAnnouncing || state.isLoading
             ||
-            (getSelectedDate():LocalDateString).getDatePart() != (Date.now():LocalDateString).getDatePart()
+            (selectedDate:LocalDateString).getDatePart() != (now:LocalDateString).getDatePart()
             ||
             filteredDeliveries.length == 0
             ||
@@ -621,6 +677,26 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             </IconButton>
                         </Grid>
                         ${linksForShop.array()}
+                    </Grid>
+                </Popover>
+
+                <Popover
+                    open=${state.openTimeSlotsModal}
+                    onClose=${handleTimeSlotsModalClose}
+                    anchorEl=${() -> timeSlotsBtnRef.current}
+                    anchorOrigin=${{
+                        vertical: Center,
+                        horizontal: Center,
+                    }}
+                    transformOrigin=${{
+                        vertical: Center,
+                        horizontal: Center,
+                    }}
+                >
+                    <Grid container direction=${Column} alignItems=${FlexEnd}
+                        className="px-3 py-2"
+                    >
+                        ${timeSlotControls}
                     </Grid>
                 </Popover>
             </Container>
