@@ -69,7 +69,7 @@ model deliveryOrder {
 model googleFormImport {
   importTime    DateTime @db.Timestamptz(0)
   spreadsheetId String   @db.String(100)
-  lastRow       Int
+  lastRow       Int      @db.Int4
 
   @@id([importTime, spreadsheetId])
 }

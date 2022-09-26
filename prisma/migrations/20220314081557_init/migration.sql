@@ -60,7 +60,7 @@ CREATE TABLE "deliveryOrder" (
 CREATE TABLE "googleFormImport" (
     "importTime" TIMESTAMPTZ(0) NOT NULL,
     "spreadsheetId" VARCHAR(100) NOT NULL,
-    "lastRow" INTEGER NOT NULL,
+    "lastRow" INT4 NOT NULL,
 
     CONSTRAINT "googleFormImport_pkey" PRIMARY KEY ("importTime","spreadsheetId")
 );
