@@ -13,7 +13,7 @@ datasource db {
 }
 
 model courier {
-  courierId         BigInt  @id @default(dbgenerated("unique_rowid()"))
+  courierId         BigInt  @id @default(autoincrement())
   courierTgUsername String  @unique(map: "courier_UN_tgUsername") @db.String(128)
   courierTgId       String? @unique(map: "courier_UN_tgId") @db.String(128)
   paymeAvailable    Boolean
@@ -23,7 +23,7 @@ model courier {
 }
 
 model delivery {
-  deliveryId                     BigInt   @id @default(dbgenerated("unique_rowid()"))
+  deliveryId                     BigInt   @id @default(autoincrement())
   creationTime                   DateTime @db.Timestamptz(0)
   deliveryCode                   String?  @db.String(50)
   pickupLocation                 String   @db.String(1024)
@@ -75,7 +75,7 @@ model googleFormImport {
 }
 
 model order {
-  orderId               BigInt   @id @default(dbgenerated("unique_rowid()"))
+  orderId               BigInt   @id @default(autoincrement())
   creationTime          DateTime @db.Timestamptz(0)
   orderCode             String?  @db.String(50)
   shopId                String   @db.String(50)
@@ -88,7 +88,7 @@ model order {
 }
 
 model receipt {
-  receiptId         BigInt  @id @default(dbgenerated("unique_rowid()"))
+  receiptId         BigInt  @id @default(autoincrement())
   receiptUrl        String  @db.String(1024)
   orderId           BigInt?
   uploaderCourierId BigInt?
@@ -98,7 +98,7 @@ model receipt {
 }
 
 model tgMessage {
-  tgMessageId BigInt  @id @default(dbgenerated("unique_rowid()"))
+  tgMessageId BigInt  @id @default(autoincrement())
   receiverId  String  @db.String(128)
   messageData Json?
   updateType  String? @db.String(50)
@@ -118,13 +118,13 @@ model tgPrivateChat {
 }
 
 model twilioMessage {
-  twilioMessageId BigInt   @id @default(dbgenerated("unique_rowid()"))
+  twilioMessageId BigInt   @id @default(autoincrement())
   creationTime    DateTime @db.Timestamptz(0)
   data            Json
 }
 
 model menuItem {
-  menuItemId   BigInt   @id @default(dbgenerated("unique_rowid()"))
+  menuItemId   BigInt   @id @default(autoincrement())
   creationTime DateTime @db.Timestamptz(0)
   startTime    DateTime @db.Timestamptz(0)
   endTime      DateTime @db.Timestamptz(0)
