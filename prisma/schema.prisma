@@ -5,7 +5,6 @@
 
 generator dbml {
   provider        = "prisma-dbml-generator"
-  previewFeatures = ["cockroachdb"]
 }
 
 datasource db {
@@ -15,8 +14,8 @@ datasource db {
 
 model courier {
   courierId         BigInt  @id @default(dbgenerated("unique_rowid()"))
-  courierTgUsername String  @unique(map: "courier_UN_tgUsername") @db.VarChar(128)
-  courierTgId       String? @unique(map: "courier_UN_tgId") @db.VarChar(128)
+  courierTgUsername String  @unique(map: "courier_UN_tgUsername") @db.String(128)
+  courierTgId       String? @unique(map: "courier_UN_tgId") @db.String(128)
   paymeAvailable    Boolean
   fpsAvailable      Boolean
   deleted           Boolean @default(false)
@@ -26,22 +25,22 @@ model courier {
 model delivery {
   deliveryId                     BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime                   DateTime @db.Timestamptz(0)
-  deliveryCode                   String?  @db.VarChar(50)
-  pickupLocation                 String   @db.VarChar(1024)
+  deliveryCode                   String?  @db.String(50)
+  pickupLocation                 String   @db.String(1024)
   deliveryFee                    Decimal? @db.Decimal(12, 4)
   pickupTimeSlotStart            DateTime @db.Timestamptz(0)
   pickupTimeSlotEnd              DateTime @db.Timestamptz(0)
-  pickupMethod                   String   @db.VarChar(64)
+  pickupMethod                   String   @db.String(64)
   paymeAvailable                 Boolean
   fpsAvailable                   Boolean
-  customerTgUsername             String?  @db.VarChar(128)
-  customerTgId                   String?  @db.VarChar(128)
-  customerTel                    String?  @db.VarChar(64)
-  customerWhatsApp               String?  @db.VarChar(64)
-  customerSignal                 String?  @db.VarChar(64)
-  customerPreferredContactMethod String?  @db.VarChar(64)
-  customerBackupContactMethod    String?  @db.VarChar(64)
-  customerNote                   String?  @db.VarChar(2048)
+  customerTgUsername             String?  @db.String(128)
+  customerTgId                   String?  @db.String(128)
+  customerTel                    String?  @db.String(64)
+  customerWhatsApp               String?  @db.String(64)
+  customerSignal                 String?  @db.String(64)
+  customerPreferredContactMethod String?  @db.String(64)
+  customerBackupContactMethod    String?  @db.String(64)
+  customerNote                   String?  @db.String(2048)
   deleted                        Boolean  @default(false)
 
   @@index([pickupTimeSlotStart], map: "delivery_pickupTimeSlotStart")
@@ -69,7 +68,7 @@ model deliveryOrder {
 
 model googleFormImport {
   importTime    DateTime @db.Timestamptz(0)
-  spreadsheetId String   @db.VarChar(100)
+  spreadsheetId String   @db.String(100)
   lastRow       Int
 
   @@id([importTime, spreadsheetId])
@@ -78,19 +77,19 @@ model googleFormImport {
 model order {
   orderId               BigInt   @id @default(dbgenerated("unique_rowid()"))
   creationTime          DateTime @db.Timestamptz(0)
-  orderCode             String?  @db.VarChar(50)
-  shopId                String   @db.VarChar(50)
-  orderDetails          String   @db.VarChar(2048)
+  orderCode             String?  @db.String(50)
+  shopId                String   @db.String(50)
+  orderDetails          String   @db.String(2048)
   orderPrice            Decimal  @db.Decimal(12, 4)
   platformServiceCharge Decimal  @db.Decimal(12, 4)
   wantTableware         Boolean
-  customerNote          String?  @db.VarChar(2048)
+  customerNote          String?  @db.String(2048)
   deleted               Boolean  @default(false)
 }
 
 model receipt {
   receiptId         BigInt  @id @default(dbgenerated("unique_rowid()"))
-  receiptUrl        String  @db.VarChar(1024)
+  receiptUrl        String  @db.String(1024)
   orderId           BigInt?
   uploaderCourierId BigInt?
 
@@ -100,19 +99,19 @@ model receipt {
 
 model tgMessage {
   tgMessageId BigInt  @id @default(dbgenerated("unique_rowid()"))
-  receiverId  String  @db.VarChar(128)
+  receiverId  String  @db.String(128)
   messageData Json?
-  updateType  String? @db.VarChar(50)
+  updateType  String? @db.String(50)
   updateData  Json?
 
   @@index([receiverId], map: "receiverId")
 }
 
 model tgPrivateChat {
-  botId          String  @db.VarChar(128)
-  userId         String  @db.VarChar(128)
-  userUsername   String? @db.VarChar(128)
-  chatId         String? @db.VarChar(128)
+  botId          String  @db.String(128)
+  userId         String  @db.String(128)
+  userUsername   String? @db.String(128)
+  chatId         String? @db.String(128)
   lastUpdateData Json?
 
   @@id([botId, userId])
@@ -129,7 +128,7 @@ model menuItem {
   creationTime DateTime @db.Timestamptz(0)
   startTime    DateTime @db.Timestamptz(0)
   endTime      DateTime @db.Timestamptz(0)
-  shopId       String   @db.VarChar(50)
+  shopId       String   @db.String(50)
   items        Json
   deleted      Boolean  @default(false)
 
