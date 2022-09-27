@@ -76,6 +76,7 @@ class TimeSlotDisableButton extends ReactComponentOf<TimeSlotDisableButtonProps,
                 icon=${stopIcon}
                 checkedIcon=${stopIconChecked}
                 checked=${state.disabled}
+                disabled=${state.isLoading}
                 onChange=${onChange}
             />
         ');

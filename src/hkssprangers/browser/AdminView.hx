@@ -442,7 +442,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 });
             }
             jsx('
-                <IconButton ref=${announceBtnRef} onClick=${onClickAnnounce}>
+                <IconButton ref=${announceBtnRef} onClick=${onClickAnnounce} disabled=${selectedTimeSlotType == null}>
                     <i className="fas fa-bullhorn"></i>
                 </IconButton>
             ');
@@ -527,7 +527,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                     });
             }
             jsx('
-                <IconButton ref=${timeSlotsBtnRef} onClick=${onClickTimeSlots}>
+                <IconButton ref=${timeSlotsBtnRef} onClick=${onClickTimeSlots} disabled=${selectedTimeSlotType == null}>
                     <i className="fa-regular fa-clock"></i>
                 </IconButton>
             ');
