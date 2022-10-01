@@ -32,12 +32,13 @@ enum abstract ShopCluster(String) {
             case KeiHing: TungChauStreetParkCluster;
             case PokeGo: ParkCluster;
             case WoStreet: DragonCentreCluster;
-            case AuLawFarm: null;
             case Minimal: ParkCluster;
             case CafeGolden: PakTinCluster;
             case BlackWindow: GoldenCluster;
             case LonelyPaisley: CLPCluster;
             case FishFranSSP: PeiHoStreetMarketCluster;
+            case AuLawFarm: null;
+            case MxMWorkshop: null;
         }
     }
 

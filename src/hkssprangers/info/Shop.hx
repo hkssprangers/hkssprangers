@@ -36,6 +36,7 @@ enum abstract Shop(String) to String {
     final BlackWindow:Shop;
     final LonelyPaisley:Shop;
     final FishFranSSP:Shop;
+    final MxMWorkshop:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -60,6 +61,7 @@ enum abstract Shop(String) to String {
         BlackWindow,
         LonelyPaisley,
         AuLawFarm,
+        MxMWorkshop,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -666,6 +668,25 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: null
             }
+        case MxMWorkshop:
+            {
+                id: MxMWorkshop,
+                name: "孖陳記",
+                type: LocalBusiness,
+                address: null,
+                lat: null,
+                lng: null,
+                courierContact: [],
+                openDays: [],
+                earliestPickupTime: null,
+                latestPickupTime: null,
+                isInService: false,
+                facebook: "https://www.facebook.com/olivemoonbigman",
+                instagram: null,
+                availablity: null,
+                restDay: null,
+                recommendation: null
+            }
         case Minimal:
             {
                 id: Minimal,
@@ -943,8 +964,6 @@ enum abstract Shop(String) to String {
                 Promise.resolve(PokeGoMenu.itemsSchema(o));
             case WoStreet:
                 Promise.resolve(WoStreetMenu.itemsSchema(o));
-            case AuLawFarm:
-                Promise.resolve(null);
             case Minimal:
                 Promise.resolve(MinimalMenu.itemsSchema(o));
             case CafeGolden:
@@ -955,6 +974,10 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LonelyPaisleyMenu.itemsSchema(pickupTimeSlot, o));
             case FishFranSSP:
                 Promise.resolve(FishFranSSPMenu.itemsSchema(pickupTimeSlot, o));
+            case AuLawFarm:
+                Promise.resolve(null);
+            case MxMWorkshop:
+                Promise.resolve(null);
         }
     }
 
@@ -1000,8 +1023,6 @@ enum abstract Shop(String) to String {
                 Promise.resolve(PokeGoMenu.summarize(o));
             case WoStreet:
                 Promise.resolve(WoStreetMenu.summarize(o));
-            case AuLawFarm:
-                Promise.resolve(null);
             case Minimal:
                 Promise.resolve(MinimalMenu.summarize(o));
             case CafeGolden:
@@ -1012,6 +1033,10 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LonelyPaisleyMenu.summarize(o));
             case FishFranSSP:
                 Promise.resolve(FishFranSSPMenu.summarize(o));
+            case AuLawFarm:
+                Promise.resolve(null);
+            case MxMWorkshop:
+                Promise.resolve(null);
         }
     }
 
@@ -1038,6 +1063,7 @@ enum abstract Shop(String) to String {
             case PokeGo: PokeGo;
             case WoStreet: WoStreet;
             case AuLawFarm: AuLawFarm;
+            case MxMWorkshop: MxMWorkshop;
             case Minimal: Minimal;
             case CafeGolden: CafeGolden;
             case BlackWindow: BlackWindow;

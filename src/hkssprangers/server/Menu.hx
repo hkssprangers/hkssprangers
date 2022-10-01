@@ -251,8 +251,6 @@ class Menu extends View<MenuProps> {
                 StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, "image", true);
             case WoStreet:
                 StaticResource.image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, "image", true);
-            case AuLawFarm:
-                null;
             case Minimal:
                 StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, "image", true);
             case CafeGolden:
@@ -263,6 +261,10 @@ class Menu extends View<MenuProps> {
                 StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
             case FishFranSSP:
                 StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
+            case AuLawFarm:
+                null;
+            case MxMWorkshop:
+                null;
         }
 
         return jsx('
@@ -364,8 +366,6 @@ class Menu extends View<MenuProps> {
                 renderPokeGo();
             case WoStreet:
                 renderWoStreet();
-            case AuLawFarm:
-                null;
             case Minimal:
                 renderMinimal();
             case CafeGolden:
@@ -376,6 +376,10 @@ class Menu extends View<MenuProps> {
                 renderLonelyPaisley();
             case FishFranSSP:
                 renderFishFranSSP();
+            case AuLawFarm:
+                null;
+            case MxMWorkshop:
+                null;
         }
     }
 
