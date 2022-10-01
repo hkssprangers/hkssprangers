@@ -853,8 +853,8 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid0S7fBKu8wU2e1LEUM71WAyuqSCAkdFsZA6LYbmNym6bmm19wkRWVmMfwSCyNWybbCl&id=100064143817671
-            case [KCZenzero, "2022-09-14", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0JLrE7hJbU3q7dtRGk8PKR3ZUpo4NCitcsMtdKyidzA51aRhCrvaVfLyhF9n2ZLyLl&id=100064143817671
+            case [KCZenzero, "2022-10-02", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
@@ -862,6 +862,9 @@ enum abstract Shop(String) to String {
 
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
+
+            case [WoStreet, _, _]:
+                return Unavailable('埗兵外賣暫停');
 
             case [Toolss, _, _]:
                 return Unavailable('埗兵外賣暫停');
