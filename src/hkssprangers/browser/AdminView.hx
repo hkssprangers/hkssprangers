@@ -510,7 +510,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 setState({
                     isTimeSlotsLoading: true,
                 });
-                TimeSlotTools.getTimeSlots(selectedDate, now)
+                TimeSlotTools.getTimeSlots(selectedDate)
                     .then(timeSlots -> {
                         setState({
                             timeSlots: timeSlots.filter(s ->

@@ -34,9 +34,9 @@ class TimeSlotTools {
 
     static public function getTimeSlots(date:LocalDateString, ?now:LocalDateString):Promise<Array<TimeSlotChoice>> {
         final dateStr = date.getDatePart();
-        final now = now != null ? now : (Date.now():LocalDateString);
-        final timeNow = now.toDate().getTime();
         #if (!browser)
+            final now = now != null ? now : (Date.now():LocalDateString);
+            final timeNow = now.toDate().getTime();
             final dateStart:LocalDateString = dateStr + " 00:00:00";
             final dateEnd = dateStart.deltaDays(1);
             return hkssprangers.server.CockroachDb.db.timeSlotRule
@@ -74,7 +74,6 @@ class TimeSlotTools {
         #else
             final query = new js.html.URLSearchParams({
                 date: dateStr,
-                now: now,
             });
             return js.Browser.window.fetch('/time-slot-choices?' + query)
                 .then(r -> if (r.ok) r.text() else throw r.status)
