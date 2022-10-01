@@ -541,25 +541,30 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         }
 
-        final timeSlotControls = state.timeSlots.map(slot -> {
-            trace(slot);
-            final disabled = switch (slot.availability) {
-                case Unavailable(TimeSlotDisableButton.disableMessage): true;
-                case Unavailable(r):
-                    trace(r);
-                    true;
-                case _: false;
-            }
-            jsx('
-                <Grid key=${slot.start} item>
-                    ${slot.print()}
-                    <TimeSlotDisableButton
-                        timeSlot=${slot}
-                        initDisabled=${disabled}
-                    />
-                </Grid>
-            ');
-        });
+        final timeSlotControls = switch (state.timeSlots.length) {
+            case 0:
+                jsx('<Grid item>沒有可開放時段</Grid>');
+            case _:
+                final controls = state.timeSlots.map(slot -> {
+                    final disabled = switch (slot.availability) {
+                        case Unavailable(TimeSlotDisableButton.disableMessage): true;
+                        case Unavailable(r):
+                            trace(r);
+                            true;
+                        case _: false;
+                    }
+                    jsx('
+                        <Grid key=${slot.start} item>
+                            ${slot.print()}
+                            <TimeSlotDisableButton
+                                timeSlot=${slot}
+                                initDisabled=${disabled}
+                            />
+                        </Grid>
+                    ');
+                });
+                jsx('<Fragment>${controls}</Fragment>');
+        }
 
         final header = if (token != null) {
             if (!state.isLoading) {
