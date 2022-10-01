@@ -581,7 +581,7 @@ class Index extends View<IndexProps> {
                             <h1 className="text-xl md:text-2xl font-bold pb-3 tracking-wider">關於埗兵</h1>
                             <div className="lg:flex md:w-2/3 lg:w-1/2">
                             <div className="flex-1 py-3 lg:py-6 lg:pr-3">
-                                <p>埗兵係由2020年8月5日開始，喺深水埗嘅黃店同一眾街坊幫助之下，開始形成一個外賣團隊。</p>
+                                <p>埗兵係由2020年8月5日開始，喺深水埗嘅店舖同一眾街坊幫助之下，開始形成一個外賣團隊。</p>
                                 <p>點解想成立埗兵? 官方回答係想喺自己嘅社區內，建立一個同路人嘅外賣平台選擇，唔使每次外賣都叫動物台。而非官方回答就係，有人<s>唔想食老婆煮嘅飯而</s>想叫多啲外賣，所以決定整一個外賣平台，街坊有得用，自己又有得用。</p>
                             </div>
                             <div className="flex-1 py-3 lg:py-6 lg:pl-3">

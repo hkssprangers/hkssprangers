@@ -228,7 +228,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                 <a href="/">${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}</a>
                 <div className="flex-1 px-3">
                     <b className="text-lg lg:text-xl">埗兵</b>
-                    <p className="text-sm">為深水埗黃店服務為主嘅外賣平台</p>
+                    <p className="text-sm">深水埗嘅外賣平台</p>
                 </div>
                 <button id="menuBtn" className="md:hidden text-gray-500 w-8 h-8 relative focus:outline-none bg-white">
                     <div className="navicon position-absolute">
@@ -270,7 +270,6 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
 
     function footer() return jsx('
         <footer className="p-6 text-center">
-            <p>"一日一黃店 世界更美妙" - <a href="https://charleywong.giffon.io/" target="_blank" rel="noopener" className="underline text-black">Charley</a></p>
             <p>&copy; 2020-2022 ${name}</p>
             <div className="my-3 flex justify-center">
                 <a className="mx-2" href="https://www.facebook.com/hkssprangers">
