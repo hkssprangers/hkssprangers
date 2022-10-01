@@ -7,25 +7,11 @@
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	"settings": {
-		"terminal.integrated.profiles.linux": {
-			"bash": {
-				"path": "/bin/bash",
-				"args": [
-					"-l"
-				]
-			},
-		},
-		"terraform.languageServer.terraform.path": "/usr/local/bin/terraform",
-		"terraform.languageServer.pathToBinary": "/usr/local/bin/terraform-ls",
 		"remote.portsAttributes": {
 			"6000": {
 				"label": "vshaxe server",
 				"onAutoForward": "ignore"
 			},
-			"/workspace/node_modules/ngrok/bin/ngrok": {
-				"label": "ngrok",
-				"onAutoForward": "silent"
-			}
 		},
 	},
 	"extensions": [
