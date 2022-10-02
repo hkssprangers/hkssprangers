@@ -73,16 +73,18 @@ class TimeSlotTools {
                 });
         #else
             final query = if (now == null) {
-                new js.html.URLSearchParams({
+                js.Browser.window.fetch('/time-slot-choices?' + new js.html.URLSearchParams({
                     date: dateStr,
+                }), {
+                    cache: NO_STORE,
                 });
             } else {
-                new js.html.URLSearchParams({
+                js.Browser.window.fetch('/time-slot-choices?' + new js.html.URLSearchParams({
                     date: dateStr,
                     now: now,
-                });
+                }));
             }
-            return js.Browser.window.fetch('/time-slot-choices?' + query)
+            return query
                 .then(r -> if (r.ok) r.text() else throw r.status)
                 .then(r -> (tink.Json.parse(r):Array<TimeSlotChoice>));
         #end

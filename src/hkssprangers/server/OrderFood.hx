@@ -136,19 +136,26 @@ class OrderFood extends View<OrderFoodProps> {
             case date:
                 throw "Invalid date: " + date;
         }
-        final now:LocalDateString = switch (req.query.now) {
+        return switch (req.query.now) {
             case null:
-                Date.now();
+                final now = Date.now();
+                TimeSlotTools.getTimeSlots(date, now)
+                    .then(timeSlots -> reply
+                        .code(200)
+                        .header("Cache-Control", "no-store")
+                        .header('Content-Type', 'application/json; charset=utf-8')
+                        .send(tink.Json.stringify(timeSlots))
+                    );
             case date:
-                Date.fromString(date);
+                final now = Date.fromString(date);
+                TimeSlotTools.getTimeSlots(date, now)
+                    .then(timeSlots -> reply
+                        .code(200)
+                        .header("Cache-Control", "public, max-age=30, stale-while-revalidate=60") // max-age: 0.5 minute, stale-while-revalidate: 1 minutes
+                        .header('Content-Type', 'application/json; charset=utf-8')
+                        .send(tink.Json.stringify(timeSlots))
+                    );
         }
-        return TimeSlotTools.getTimeSlots(date, now)
-            .then(timeSlots -> reply
-                .code(200)
-                .header("Cache-Control", "public, max-age=60, stale-while-revalidate=300") // max-age: 1 minute, stale-while-revalidate: 5 minutes
-                .header('Content-Type', 'application/json; charset=utf-8')
-                .send(tink.Json.stringify(timeSlots))
-            );
     }
 
     static public function post(req:Request, reply:Reply):Promise<Dynamic> {
