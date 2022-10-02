@@ -524,10 +524,16 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                             isTimeSlotsLoading: false,
                             openTimeSlotsModal: true,
                         });
+                    })
+                    .catchError(err -> {
+                        alert(err);
+                        setState({
+                            isTimeSlotsLoading: false,
+                        });
                     });
             }
             jsx('
-                <IconButton ref=${timeSlotsBtnRef} onClick=${onClickTimeSlots} disabled=${selectedTimeSlotType == null}>
+                <IconButton ref=${timeSlotsBtnRef} onClick=${onClickTimeSlots} disabled=${state.isTimeSlotsLoading || selectedTimeSlotType == null}>
                     <i className="fa-regular fa-clock"></i>
                 </IconButton>
             ');
