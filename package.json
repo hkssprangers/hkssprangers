@@ -26,7 +26,7 @@
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "copy-to-clipboard": "^3.3.2",
-    "dts2hx": "^0.19.1",
+    "dts2hx": "^0.19.2",
     "envify": "^4.1.0",
     "js-cookie": "^3.0.1",
     "maplibre-gl": "^2.1.9",
