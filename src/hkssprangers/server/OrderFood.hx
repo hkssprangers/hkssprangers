@@ -146,8 +146,7 @@ class OrderFood extends View<OrderFoodProps> {
                         .header('Content-Type', 'application/json; charset=utf-8')
                         .send(tink.Json.stringify(timeSlots))
                     );
-            case date:
-                final now = Date.fromString(date);
+            case now:
                 TimeSlotTools.getTimeSlots(date, now)
                     .then(timeSlots -> reply
                         .code(200)
