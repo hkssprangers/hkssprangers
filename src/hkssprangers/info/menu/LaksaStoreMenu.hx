@@ -2,6 +2,7 @@ package hkssprangers.info.menu;
 
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
+using hkssprangers.MathTools;
 
 enum abstract LaksaStoreItem(String) to String {
     final NoodleSet;
@@ -29,7 +30,7 @@ class LaksaStoreMenu {
         title: "跟餐飲品",
         type: "string",
         "enum": [
-            "唔要",
+            "唔要飲品",
             "道地解茶紙包飲品",
             "道地檸檬紅茶紙包飲品",
             "道地蜂蜜綠茶紙包飲品",
@@ -99,7 +100,8 @@ class LaksaStoreMenu {
                 "enum": [
                     "雞扒",
                     "豬扒",
-                    "大蝦",
+                    // "大蝦",
+                    "巨蝦 (10月5日限定) +$8",
                     "野菌肥牛",
                     "牛舌",
                     "「新」四寶",
@@ -229,7 +231,12 @@ class LaksaStoreMenu {
                     orderDetails:
                         fullWidthDot + orderItem.item.soup + " " + orderItem.item.ingredient + " " + orderItem.item.noodle + " $" + noodlePrice + "\n" +
                         fullWidthSpace + orderItem.item.drink,
-                    orderPrice: noodlePrice + parsePrice(orderItem.item.drink).price,
+                    orderPrice: noodlePrice + [
+                        orderItem.item.soup,
+                        orderItem.item.ingredient,
+                        orderItem.item.noodle,
+                        orderItem.item.drink,
+                    ].map(item -> parsePrice(item).price).sum(),
                 };
             case RiceSet | BakKutTeh:
                 {
