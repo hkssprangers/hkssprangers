@@ -26,7 +26,7 @@ enum abstract ShopCluster(String) {
             case FastTasteSSP: GoldenCluster;
             case BlaBlaBla: GoldenCluster;
             case ZeppelinHotDogSKM: PakTinCluster;
-            case MyRoomRoom: throw "MyRoomRoom doesn't belong to any cluster";
+            case MyRoomRoom: null;
             case ThaiYummy: SmilingPlazaCluster;
             case Toolss: PakTinCluster;
             case KeiHing: TungChauStreetParkCluster;
@@ -39,6 +39,7 @@ enum abstract ShopCluster(String) {
             case FishFranSSP: PeiHoStreetMarketCluster;
             case AuLawFarm: null;
             case MxMWorkshop: null;
+            case HowDrunk: PakTinCluster;
         }
     }
 

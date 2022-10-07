@@ -261,6 +261,8 @@ class Menu extends View<MenuProps> {
                 StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
             case FishFranSSP:
                 StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
+            case HowDrunk:
+                StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
             case AuLawFarm:
                 null;
             case MxMWorkshop:
@@ -376,6 +378,8 @@ class Menu extends View<MenuProps> {
                 renderLonelyPaisley();
             case FishFranSSP:
                 renderFishFranSSP();
+            case HowDrunk:
+                renderHowDrunk();
             case AuLawFarm:
                 null;
             case MxMWorkshop:
@@ -1302,6 +1306,82 @@ class Menu extends View<MenuProps> {
 
     function renderFishFranSSP() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
+        final dish = {
+            final items = {
+                final items = FishFranSSPDish.enums();
+                final cutoff = Math.ceil(items.length * 0.5);
+                [
+                    items.slice(0, cutoff),
+                    items.slice(cutoff),
+                ];
+            }
+            jsx('
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${FishFranSSPDish.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items[1])}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
+
+        return jsx('
+            <Fragment>
+                ${dish}
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${FishFranSSPFishPot.title}</div>
+                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.style.title}</div>
+                        <div className="p-3">${slashes(FishFranSSPFishPot.properties.style.enums())}</div>
+                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.main.title}</div>
+                        ${renderItems(FishFranSSPFishPot.properties.main.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPPot.title}</div>
+                        ${renderItems(FishFranSSPPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSpicyPot.title}</div>
+                        ${renderItems(FishFranSSPSpicyPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSoupPot.title}</div>
+                        ${renderItems(FishFranSSPSoupPot.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPSpicyThing.title}</div>
+                        ${renderItems(FishFranSSPSpicyThing.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPNoodles.title}</div>
+                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.main.title}</div>
+                        ${renderItems(FishFranSSPNoodles.properties.main.enums())}
+                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.noodles.title}</div>
+                        <div className="p-3">${slashes(FishFranSSPNoodles.properties.noodles.enums())}</div>
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${FishFranSSPRice.title}</div>
+                        ${renderItems(FishFranSSPRice.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPColdDish.title}</div>
+                        ${renderItems(FishFranSSPColdDish.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPDessert.title}</div>
+                        ${renderItems(FishFranSSPDessert.enums())}
+
+                        <div className=${headerClasses}>${FishFranSSPDrink.title}</div>
+                        ${renderItems(FishFranSSPDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderHowDrunk() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
+        return null;
 
         final dish = {
             final items = {
