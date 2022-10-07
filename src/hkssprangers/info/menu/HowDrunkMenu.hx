@@ -49,7 +49,7 @@ enum abstract HowDrunkItem(String) to String {
 
 class HowDrunkMenu {
     static function item(name:String, price:Float):String {
-        return name + " $" + price;
+        return name + " $" + Math.round(price/0.85);
     }
 
     static public final HowDrunkSpicy = {
