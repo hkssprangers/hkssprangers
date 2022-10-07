@@ -52,7 +52,7 @@ class AulawVege extends View<AulawVegeProps> {
                                 <p className="mb-3">每個星期日我哋都會趁<a className="underline" href="/food-waste-recycle">運咖啡渣</a>去農墟，買埋本地菜返屋企。獨樂樂不同眾樂樂，索性整個 Telegram 共購群組，叫埋街坊一齊食靚菜。</p>
                                 <p className="mb-3"><a className="underline" href="https://www.facebook.com/aulawfarm/">歐羅有機農場</a>有提供<a className="underline" href="https://www.aulaw.org/">月購計劃</a>俾大家訂菜，而深水埗街坊想同埗兵買菜，歡迎加入埗兵本地菜群組。</p>
                                 <ul className="list-disc mb-3">
-                                    <li>每星期六 14:00 群組內開放預訂，星期日交收</li>
+                                    <li>每星期五晚至星期六 12:00 群組內開放預訂，星期日交收</li>
                                     <li>可以揀標記交收 / 埗兵外賣搭送菜</li>
                                     <li>外賣送到深水埗、長沙灣、太子、石硤尾、大角咀、茘枝角等等</li>
                                     <li>我哋會用<a className="underline" href="https://www.facebook.com/HayaKu.ecostudent">環保見習生</a>提供嘅回收雪袋分裝大家嘅菜</li>
