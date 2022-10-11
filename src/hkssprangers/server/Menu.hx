@@ -795,10 +795,10 @@ class Menu extends View<MenuProps> {
             case [_, _]:
                 jsx('
                     <div className=${["md:border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                        <div className=${["p-3", "md:w-1/2"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             ${Hotpot}
                         </div>
-                        <div className="md:w-1/2 p-3 md:border-l-4">
+                        <div className="md:w-1/2 p-3">
                             ${BakKutTeh}
                         </div>
                     </div>
