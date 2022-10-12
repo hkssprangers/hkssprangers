@@ -519,6 +519,20 @@ class DeliveryFee {
             }
         },
         {
+            place: "公共衛生檢測中心",
+            match: address -> address.contains("南昌街382") || address.contains("公共衛生檢測中心") || address.contains("公共衞生檢測中心"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 40;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
             place: "南山邨",
             match: address -> address.contains("南山邨") || address.contains("南山村"),
             deliveryFee: cluster -> switch cluster {
