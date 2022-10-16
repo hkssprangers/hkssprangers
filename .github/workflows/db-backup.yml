@@ -25,7 +25,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Earthly
-        run: "sudo /bin/sh -c 'curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.12/earthly-linux-amd64 -o /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+        run: "sudo /bin/sh -c 'curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.26/earthly-linux-amd64 -o /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Create .envrc
         run: |
           cat > .envrc <<EOT
