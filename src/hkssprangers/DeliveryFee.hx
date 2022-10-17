@@ -2131,7 +2131,10 @@ class DeliveryFee {
         },
         {
             place: "尚山岩舘",
-            match: address -> address.contains("大南街234號") || address.contains("尚山岩舘"),
+            match: address ->
+                address.contains("大南街234號") || address.contains("尚山岩舘")
+                ||
+                (address.toLowerCase().contains("tai nan st") && address.contains("尚山")),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
