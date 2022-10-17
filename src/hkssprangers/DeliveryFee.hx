@@ -20,6 +20,9 @@ using StringTools;
 
 typedef DeliveryFeeHeuristric = {
     place:String,
+    osm:Array<{
+        url:String,
+    }>,
     match:(address:String) -> Bool,
     deliveryFee:(cluster:ShopCluster) -> Float,
 }
@@ -28,6 +31,11 @@ class DeliveryFee {
     static final heuristics:Array<DeliveryFeeHeuristric> = [
         {
             place: "深水埗站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/389315494",
+                },
+            ],
             match: address -> address.contains("深水埗站") || address.contains("深水埗地鐵站") || address.contains("深水埗港鐵站") || address.contains("福華街155號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -42,6 +50,11 @@ class DeliveryFee {
         },
         {
             place: "海峯",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/10692715",
+                }
+            ],
             match: address -> address.contains("海峯") || address.toLowerCase().contains("vista"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -56,6 +69,11 @@ class DeliveryFee {
         },
         {
             place: "南昌大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028434031",
+                }
+            ],
             match: address -> address.contains("南昌大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -70,6 +88,11 @@ class DeliveryFee {
         },
         {
             place: "長沙灣站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/2544686378"
+                }
+            ],
             match: address -> address.contains("長沙灣站") || address.contains("長沙灣地鐵站") || address.contains("長沙灣港鐵站"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -84,6 +107,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/816466449"
+                }
+            ],
             match: address -> address.contains("石硤尾站") || address.contains("石硤尾地鐵站") || address.contains("石硤尾港鐵站") || address.contains("銘賢書院"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -98,6 +126,11 @@ class DeliveryFee {
         },
         {
             place: "麗閣邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705875"
+                }
+            ],
             match: address -> address.contains("麗閣邨") || address.contains("麗閣村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -112,6 +145,11 @@ class DeliveryFee {
         },
         {
             place: "南昌邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26379935"
+                }
+            ],
             match: address -> address.contains("南昌邨") || address.contains("南昌村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -126,6 +164,11 @@ class DeliveryFee {
         },
         {
             place: "匯璽",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/215655179"
+                }
+            ],
             match: address -> address.contains("匯璽") || address.contains("滙璽") || address.toLowerCase().contains("cullinan west"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -140,6 +183,11 @@ class DeliveryFee {
         },
         {
             place: "V·Walk",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/628515212"
+                }
+            ],
             match: address -> ~/V.?Walk/i.match(address),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -154,6 +202,11 @@ class DeliveryFee {
         },
         {
             place: "南昌站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/6605772868"
+                }
+            ],
             match: address -> address.contains("南昌站") || address.contains("南昌地鐵站") || address.contains("南昌港鐵站"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -168,6 +221,11 @@ class DeliveryFee {
         },
         {
             place: "富昌邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26379979",
+                }
+            ],
             match: address -> address.contains("富昌邨") || address.contains("富昌村") || address.toLowerCase().contains("fu cheong estate"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -182,6 +240,11 @@ class DeliveryFee {
         },
         {
             place: "榮昌邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/183471947",
+                }
+            ],
             match: address -> address.contains("榮昌邨") || address.contains("榮昌村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -195,21 +258,12 @@ class DeliveryFee {
             }
         },
         {
-            place: "富盈邨",
-            match: address -> address.contains("富盈邨") || address.contains("富盈邨"),
-            deliveryFee: cluster -> switch cluster {
-                case DragonCentreCluster: 25;
-                case PeiHoStreetMarketCluster: 25;
-                case CLPCluster: 25;
-                case GoldenCluster: 35;
-                case SmilingPlazaCluster: 35;
-                case ParkCluster: 35;
-                case PakTinCluster: 40;
-                case TungChauStreetParkCluster: 25;
-            }
-        },
-        {
             place: "港灣豪庭",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/180933343"
+                }
+            ],
             match: address -> address.contains("港灣豪庭") || address.contains("港灣豪廷"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -224,6 +278,11 @@ class DeliveryFee {
         },
         {
             place: "福昌工廠大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450598043"
+                }
+            ],
             match: address -> address.contains("福昌工廠大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -238,6 +297,11 @@ class DeliveryFee {
         },
         {
             place: "頌賢花園",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/700342420"
+                }
+            ],
             match: address -> address.contains("頌賢花園"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -252,6 +316,11 @@ class DeliveryFee {
         },
         {
             place: "君匯港",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/143984531"
+                }
+            ],
             match: address -> address.contains("君匯港"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -266,6 +335,11 @@ class DeliveryFee {
         },
         {
             place: "凱帆軒",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/384976981",
+                }
+            ],
             match: address -> address.contains("凱帆軒") || address.toLowerCase().contains("hampton place"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -280,6 +354,11 @@ class DeliveryFee {
         },
         {
             place: "奧海城/帝柏海灣/海富苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/12937309",
+                }
+            ],
             match: address -> address.contains("帝柏海灣") || address.contains("奧海城") || address.contains("海富苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -294,6 +373,11 @@ class DeliveryFee {
         },
         {
             place: "元洲邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/215634461",
+                }
+            ],
             match: address -> address.contains("元洲邨") || address.contains("元洲村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -308,6 +392,11 @@ class DeliveryFee {
         },
         {
             place: "長沙灣邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/215630618",
+                }
+            ],
             match: address -> address.contains("長沙灣邨") || address.contains("長沙灣村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -322,6 +411,11 @@ class DeliveryFee {
         },
         {
             place: "幸福邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705858",
+                }
+            ],
             match: address -> address.contains("幸福邨") || address.contains("幸福村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -336,6 +430,11 @@ class DeliveryFee {
         },
         {
             place: "李鄭屋邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/11534244",
+                }
+            ],
             match: address -> address.contains("李鄭屋邨") || address.contains("李鄭屋村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -350,6 +449,11 @@ class DeliveryFee {
         },
         {
             place: "蘇屋邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/184158924",
+                }
+            ],
             match: address -> address.contains("蘇屋邨") || address.contains("蘇屋村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -364,6 +468,16 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (新區)",
+            osm: [
+                {
+                    // 21, 22, 23, 24, 美山, 美虹, 美彩
+                    url: "https://www.openstreetmap.org/way/839863998"
+                },
+                {
+                    // 19, 20
+                    url: "https://www.openstreetmap.org/way/839864000"
+                }
+            ],
             match: address ->
                 ((address.contains("石硤尾邨") || address.contains("石硤尾村")) && ~/(?:19|20|21|22|23|24) *座/.match(address)) ||
                 address.contains("美山樓") || address.contains("美虹樓") || address.contains("美彩樓"),
@@ -379,8 +493,13 @@ class DeliveryFee {
             }
         },
         {
-            place: "71-73 Berwick Street",
-            match: address -> ~/(71|72|73)(?:-[0-9]+)? Berwick Street/i.match(address),
+            place: "漫頭屋",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/10109206643"
+                }
+            ],
+            match: address -> ~/(71|72|73)(?:-[0-9]+)? Berwick Street/i.match(address) || address.contains("漫頭屋"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
@@ -394,6 +513,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第3期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/741901291",
+                }
+            ],
             match: address -> address.contains("美葵樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -408,6 +532,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第5期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/839864004"
+                }
+            ],
             match: address -> address.contains("美益樓") || address.contains("美賢樓") || address.contains("美笙樓") || address.contains("美盛樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -422,6 +551,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第6期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/296167636"
+                }
+            ],
             match: address -> address.contains("美禧樓") || address.contains("美柏樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -436,6 +570,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第7期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/839864006"
+                }
+            ],
             match: address -> address.contains("美菖樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -450,6 +589,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第1期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/839864003"
+                }
+            ],
             match: address -> address.contains("美如樓") || address.contains("美映樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -464,6 +608,11 @@ class DeliveryFee {
         },
         {
             place: "石硤尾邨 (第2期)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/925221234"
+                }
+            ],
             match: address -> address.contains("美亮樓") || address.contains("美薈樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -478,6 +627,11 @@ class DeliveryFee {
         },
         {
             place: "美荷樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151356145"
+                }
+            ],
             match: address -> address.contains("美荷樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -492,6 +646,11 @@ class DeliveryFee {
         },
         {
             place: "白田邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/185090452"
+                }
+            ],
             match: address -> ~/白田[上下]?[邨村]/.match(address),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -505,7 +664,12 @@ class DeliveryFee {
             }
         },
         {
-            place: "南昌街332",
+            place: "南昌街332", //賽馬會新生精神康復學院
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/189786893"
+                }
+            ],
             match: address -> address.contains("南昌街332"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -520,6 +684,11 @@ class DeliveryFee {
         },
         {
             place: "公共衛生檢測中心",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/189786657"
+                }
+            ],
             match: address -> address.contains("南昌街382") || address.contains("公共衛生檢測中心") || address.contains("公共衞生檢測中心"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -534,6 +703,11 @@ class DeliveryFee {
         },
         {
             place: "南山邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/122268230"
+                }
+            ],
             match: address -> address.contains("南山邨") || address.contains("南山村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -548,6 +722,11 @@ class DeliveryFee {
         },
         {
             place: "城市大學",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/2817891"
+                }
+            ],
             match: address -> address.contains("城市大學") || address.contains("城大") || address.toLowerCase().contains("cityu"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -562,6 +741,11 @@ class DeliveryFee {
         },
         {
             place: "仁寶大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/444076329"
+                }
+            ],
             match: address -> address.contains("仁寶大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -576,6 +760,11 @@ class DeliveryFee {
         },
         {
             place: "大坑東",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/11306722"
+                }
+            ],
             match: address -> address.contains("大坑東"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -590,6 +779,11 @@ class DeliveryFee {
         },
         {
             place: "大坑西",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/120493501"
+                }
+            ],
             match: address -> address.contains("大坑西"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -604,6 +798,11 @@ class DeliveryFee {
         },
         {
             place: "又一村",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/4446869476"
+                }
+            ],
             match: address -> address.contains("又一村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -618,6 +817,11 @@ class DeliveryFee {
         },
         {
             place: "又一居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/6394284"
+                }
+            ],
             match: address -> address.contains("又一居"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -632,6 +836,11 @@ class DeliveryFee {
         },
         {
             place: "海麗邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26405835"
+                }
+            ],
             match: address -> address.contains("海麗邨"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -646,6 +855,11 @@ class DeliveryFee {
         },
         {
             place: "聖公會聖安德烈小學",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/99713446"
+                }
+            ],
             match: address -> address.contains("聖公會聖安德烈小學"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -660,6 +874,11 @@ class DeliveryFee {
         },
         {
             place: "金碧閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/753291637"
+                }
+            ],
             match: address -> address.contains("金碧閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -674,6 +893,11 @@ class DeliveryFee {
         },
         {
             place: "景怡峯",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450195905"
+                }
+            ],
             match: address -> address.contains("景怡峯") || address.contains("景怡峰"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -688,6 +912,11 @@ class DeliveryFee {
         },
         {
             place: "景翠苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104745330"
+                }
+            ],
             match: address -> address.contains("景翠苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -702,6 +931,11 @@ class DeliveryFee {
         },
         {
             place: "楓華樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104746399"
+                }
+            ],
             match: address -> address.contains("楓華樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -716,6 +950,11 @@ class DeliveryFee {
         },
         {
             place: "置輝閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/666770059"
+                }
+            ],
             match: address -> address.contains("置輝閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -730,6 +969,11 @@ class DeliveryFee {
         },
         {
             place: "崇德大廈", //黃竹街39號
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/666770062"
+                }
+            ],
             match: address -> address.contains("崇德大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -744,6 +988,11 @@ class DeliveryFee {
         },
         {
             place: "麗翠苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/448047567"
+                }
+            ],
             match: address -> address.contains("麗翠苑") || address.contains("麗翠宛") || address.toLowerCase().contains("lai tsui court"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -758,6 +1007,11 @@ class DeliveryFee {
         },
         {
             place: "丰匯",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/6679304"
+                }
+            ],
             match: address -> address.contains("丰匯") || address.contains("丰滙") || address.toLowerCase().contains("trinity towers"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -772,6 +1026,11 @@ class DeliveryFee {
         },
         {
             place: "時尚華庭",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450190864"
+                }
+            ],
             match: address -> address.contains("時尚華庭"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -786,6 +1045,11 @@ class DeliveryFee {
         },
         {
             place: "金海大廈", //海壇街241-245號
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450190865"
+                }
+            ],
             match: address -> address.contains("金海大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -800,6 +1064,11 @@ class DeliveryFee {
         },
         {
             place: "豐盛大廈", //海壇街
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/494472460"
+                }
+            ],
             match: address -> address.contains("豐盛大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -814,6 +1083,11 @@ class DeliveryFee {
         },
         {
             place: "麗安邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705876"
+                }
+            ],
             match: address -> address.contains("麗安邨") || address.contains("麗安村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -828,6 +1102,11 @@ class DeliveryFee {
         },
         {
             place: "南昌一號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/781684615"
+                }
+            ],
             match: address -> address.contains("南昌一號") || address.toLowerCase().contains("park one"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -842,6 +1121,11 @@ class DeliveryFee {
         },
         {
             place: "為群公寓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/746329338"
+                }
+            ],
             match: address -> address.contains("為群公寓") || address.contains("南昌街14號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -856,6 +1140,11 @@ class DeliveryFee {
         },
         {
             place: "曉盈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770846606"
+                }
+            ],
             match: address -> address.contains("曉盈") || address.toLowerCase().contains("high one grand"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -870,6 +1159,11 @@ class DeliveryFee {
         },
         {
             place: "The Campton",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770848691"
+                }
+            ],
             match: address -> address.toLowerCase().contains("the campton"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -884,6 +1178,11 @@ class DeliveryFee {
         },
         {
             place: "保安道寶華閣", // 有另一個寶華閣喺元州街
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/757863399"
+                }
+            ],
             match: address -> address.contains("寶華閣") && address.contains("保安道"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -897,7 +1196,12 @@ class DeliveryFee {
             }
         },
         {
-            place: "永隆大廈",
+            place: "永隆大廈", // Wing Loong Building
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/757606061"
+                }
+            ],
             match: address -> address.contains("永隆大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -912,6 +1216,11 @@ class DeliveryFee {
         },
         {
             place: "順寧苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450182356"
+                }
+            ],
             match: address -> address.contains("順寧苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -926,6 +1235,11 @@ class DeliveryFee {
         },
         {
             place: "青山道興隆大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450181044"
+                }
+            ],
             match: address -> address.contains("興隆大廈") && address.contains("青山道"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -940,6 +1254,11 @@ class DeliveryFee {
         },
         {
             place: "麗群閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/457374950"
+                }
+            ],
             match: address -> address.contains("麗群閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -954,6 +1273,11 @@ class DeliveryFee {
         },
         {
             place: "新寶大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/705218342"
+                }
+            ],
             match: address -> address.contains("新寶大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -968,6 +1292,11 @@ class DeliveryFee {
         },
         {
             place: "樂年花園",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/6679087"
+                }
+            ],
             match: address -> address.contains("樂年花園") || address.toLowerCase().contains("cronin garden"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -982,6 +1311,11 @@ class DeliveryFee {
         },
         {
             place: "喜雅",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/6679096"
+                }
+            ],
             match: address -> address.contains("喜雅") || address.toLowerCase().contains("heya green"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -996,6 +1330,11 @@ class DeliveryFee {
         },
         {
             place: "五聯大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/827588229"
+                }
+            ],
             match: address -> address.contains("五聯大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1010,6 +1349,11 @@ class DeliveryFee {
         },
         {
             place: "AVA 61",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/827851787"
+                }
+            ],
             match: address -> ~/AVA\s*61/i.match(address),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1024,6 +1368,11 @@ class DeliveryFee {
         },
         {
             place: "曉尚",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/827588228"
+                }
+            ],
             match: address -> address.contains("曉尚") || address.contains("High Point"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1038,6 +1387,17 @@ class DeliveryFee {
         },
         {
             place: "福榮街33-120號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/103372420"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/494735017"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/103372426"
+                }
+            ],
             match: address -> {
                 var r = ~/福榮街\s*([0-9]+)/;
                 r.match(address) && switch (Std.parseInt(r.matched(1))) {
@@ -1060,6 +1420,11 @@ class DeliveryFee {
         },
         {
             place: "JCCAC",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/184922636"
+                }
+            ],
             match: address ->
                 address.contains("賽馬會創意藝術中心") ||
                 address.toLowerCase().contains("jockey club creative arts centre") ||
@@ -1078,6 +1443,11 @@ class DeliveryFee {
         },
         {
             place: "寶田大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/296167516"
+                }
+            ],
             match: address -> address.contains("寶田大廈") || ~/偉智街\s*39\s*號/.match(address),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1092,6 +1462,11 @@ class DeliveryFee {
         },
         {
             place: "福田大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/296167506"
+                }
+            ],
             match: address -> address.contains("福田大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1106,6 +1481,11 @@ class DeliveryFee {
         },
         {
             place: "東廬大樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450195200"
+                }
+            ],
             match: address -> address.contains("東廬大樓") || address.contains("東廬大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1120,6 +1500,11 @@ class DeliveryFee {
         },
         {
             place: "元州街龍寶酒家",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/10109684652"
+                }
+            ],
             match: address -> address.contains("龍寶酒樓") || address.contains("龍寶酒家"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1134,6 +1519,14 @@ class DeliveryFee {
         },
         {
             place: "怡閣苑, 怡靖苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705958"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/151705957"
+                }
+            ],
             match: address ->
                 address.contains("怡閣苑") || address.toLowerCase().contains("yee kok court")
                 ||
@@ -1152,6 +1545,11 @@ class DeliveryFee {
         },
         {
             place: "金玉大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/296167637"
+                }
+            ],
             match: address -> address.contains("金玉大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1166,6 +1564,11 @@ class DeliveryFee {
         },
         {
             place: "豐溢閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770851563"
+                }
+            ],
             match: address -> address.contains("豐溢閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1180,6 +1583,11 @@ class DeliveryFee {
         },
         {
             place: "元州邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/215634461"
+                }
+            ],
             match: address -> address.contains("元州邨") || address.contains("元州村") || address.toLowerCase().contains("un chau est"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1194,6 +1602,11 @@ class DeliveryFee {
         },
         {
             place: "寓弍捌",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450172301"
+                }
+            ],
             match: address -> address.contains("寓弍捌"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1208,6 +1621,11 @@ class DeliveryFee {
         },
         {
             place: "海旭閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/494506616"
+                }
+            ],
             match: address -> address.contains("海旭閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1222,6 +1640,11 @@ class DeliveryFee {
         },
         {
             place: "威信大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/827851791"
+                }
+            ],
             match: address -> address.contains("威信大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1236,6 +1659,11 @@ class DeliveryFee {
         },
         {
             place: "深崇閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104768707"
+                }
+            ],
             match: address -> address.contains("深崇閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1250,6 +1678,11 @@ class DeliveryFee {
         },
         {
             place: "金必多大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450215821"
+                }
+            ],
             match: address -> address.contains("金必多大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1264,6 +1697,11 @@ class DeliveryFee {
         },
         {
             place: "金濤閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/782116567"
+                }
+            ],
             match: address -> address.contains("金濤閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1278,6 +1716,11 @@ class DeliveryFee {
         },
         {
             place: "北河街永富大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/703400329"
+                }
+            ],
             match: address -> address.contains("永富大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1292,6 +1735,11 @@ class DeliveryFee {
         },
         {
             place: "翠雲大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770846621"
+                }
+            ],
             match: address -> address.contains("翠雲大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1306,6 +1754,11 @@ class DeliveryFee {
         },
         {
             place: "福昇大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104771523"
+                }
+            ],
             match: address -> address.contains("福昇大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1320,6 +1773,11 @@ class DeliveryFee {
         },
         {
             place: "順景閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770819285"
+                }
+            ],
             match: address -> address.contains("順景閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1334,6 +1792,11 @@ class DeliveryFee {
         },
         {
             place: "大興大廈", //元州街132號
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770830209"
+                }
+            ],
             match: address -> address.contains("大興大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1348,6 +1811,11 @@ class DeliveryFee {
         },
         {
             place: "薈悅",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770819290"
+                }
+            ],
             match: address -> address.contains("薈悅"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1362,6 +1830,11 @@ class DeliveryFee {
         },
         {
             place: "美居中心",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450176346"
+                }
+            ],
             match: address -> address.contains("美居中心"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1376,6 +1849,11 @@ class DeliveryFee {
         },
         {
             place: "福榮大樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028367461"
+                }
+            ],
             match: address -> address.contains("福榮街226號") || address.contains("福榮大樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1390,6 +1868,11 @@ class DeliveryFee {
         },
         {
             place: "嘉美中心",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450190050"
+                }
+            ],
             match: address -> address.contains("嘉美中心"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1404,6 +1887,11 @@ class DeliveryFee {
         },
         {
             place: "金盟大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770819287"
+                }
+            ],
             match: address -> address.contains("金盟大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1418,6 +1906,17 @@ class DeliveryFee {
         },
         {
             place: "黃金/高登",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705860"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/151705862"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/775745662"
+                }
+            ],
             match: address ->
                 address.contains("黃金電腦商場") || address.contains("黃金商場") ||
                 address.contains("高登電腦中心") ||
@@ -1436,21 +1935,11 @@ class DeliveryFee {
         },
         {
             place: "祥賢大廈",
-            match: address ->
-                address.contains("長沙灣道220號") || address.contains("祥賢大廈"),
-            deliveryFee: cluster -> switch cluster {
-                case DragonCentreCluster: 25;
-                case PeiHoStreetMarketCluster: 25;
-                case CLPCluster: 25;
-                case GoldenCluster: 25;
-                case SmilingPlazaCluster: 25;
-                case ParkCluster: 25;
-                case PakTinCluster: 25;
-                case TungChauStreetParkCluster: 25;
-            }
-        },
-        {
-            place: "祥賢大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/783317898"
+                }
+            ],
             match: address -> address.contains("祥賢大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1465,6 +1954,11 @@ class DeliveryFee {
         },
         {
             place: "友來大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1089876447"
+                }
+            ],
             match: address -> address.contains("友來大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1479,6 +1973,11 @@ class DeliveryFee {
         },
         {
             place: "喜韻",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450184819"
+                }
+            ],
             match: address -> address.contains("喜韻") || address.toLowerCase().contains("heya star"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1493,6 +1992,11 @@ class DeliveryFee {
         },
         {
             place: "海華麗軒",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450184469"
+                }
+            ],
             match: address -> address.contains("海華麗軒") || address.toLowerCase().contains("hing wah apartments"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1507,6 +2011,11 @@ class DeliveryFee {
         },
         {
             place: "順寧道順發大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450184799"
+                }
+            ],
             match: address -> address.contains("順發大廈") && (address.contains("順寧道") || address.contains("長沙灣")),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1521,6 +2030,17 @@ class DeliveryFee {
         },
         {
             place: "喜盈/喜漾/喜薈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450185041"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/448053952"
+                },
+                {
+                    url: "https://www.openstreetmap.org/way/448053951"
+                }
+            ],
             match: address ->
                 address.contains("喜盈") || address.toLowerCase().contains("heya delight")
                 ||
@@ -1541,6 +2061,11 @@ class DeliveryFee {
         },
         {
             place: "一號九龍道",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/677639737"
+                }
+            ],
             match: address -> address.contains("一號九龍道") || address.toLowerCase().contains("madison park"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1555,6 +2080,11 @@ class DeliveryFee {
         },
         {
             place: "海達邨",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/524429753"
+                }
+            ],
             match: address -> address.contains("海達邨") || address.contains("海達村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1569,6 +2099,11 @@ class DeliveryFee {
         },
         {
             place: "晉嶺",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450195336"
+                }
+            ],
             match: address -> address.contains("晉嶺") || address.toLowerCase().contains("sevilla crest"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1583,6 +2118,11 @@ class DeliveryFee {
         },
         {
             place: "東寶閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/705218347"
+                }
+            ],
             match: address -> address.contains("東寶閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1597,6 +2137,11 @@ class DeliveryFee {
         },
         {
             place: "One New York",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/457373571"
+                }
+            ],
             match: address -> address.toLowerCase().contains("one new york"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1611,6 +2156,11 @@ class DeliveryFee {
         },
         {
             place: "中國船舶大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/448053953"
+                }
+            ],
             match: address -> address.contains("中國船舶大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1625,6 +2175,11 @@ class DeliveryFee {
         },
         {
             place: "明愛醫院",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/384838107"
+                }
+            ],
             match: address -> address.contains("明愛醫院"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1639,6 +2194,11 @@ class DeliveryFee {
         },
         {
             place: "百美工廠大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/753522406"
+                }
+            ],
             match: address -> address.contains("百美工廠大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1653,6 +2213,11 @@ class DeliveryFee {
         },
         {
             place: "香港中心",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/384658846"
+                }
+            ],
             match: address -> address.contains("香港中心"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -1667,6 +2232,11 @@ class DeliveryFee {
         },
         {
             place: "永華西藥行",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/9883453496"
+                }
+            ],
             match: address -> {
                 var r = ~/青山道\s*([0-9]+)/;
                 r.match(address) && switch (Std.parseInt(r.matched(1))) {
@@ -1689,6 +2259,11 @@ class DeliveryFee {
         },
         {
             place: "仁順大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/758132178"
+                }
+            ],
             match: address -> address.contains("仁順大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1703,6 +2278,11 @@ class DeliveryFee {
         },
         {
             place: "置榮閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/770851562"
+                }
+            ],
             match: address -> address.contains("置榮閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1717,6 +2297,11 @@ class DeliveryFee {
         },
         {
             place: "傲凱",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/783542161"
+                }
+            ],
             match: address -> address.contains("傲凱") || address.toLowerCase().contains("astoria crest"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1731,6 +2316,11 @@ class DeliveryFee {
         },
         {
             place: "順康居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/705218349"
+                }
+            ],
             match: address -> address.contains("順康居"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1745,6 +2335,11 @@ class DeliveryFee {
         },
         {
             place: "昌隆工業大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/384621632"
+                }
+            ],
             match: address -> address.contains("昌隆工業大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1759,6 +2354,11 @@ class DeliveryFee {
         },
         {
             place: "荔枝角站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/387293149"
+                }
+            ],
             match: address -> address.contains("荔枝角站") || address.contains("荔枝角地鐵站") || address.contains("荔枝角港鐵站"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1773,6 +2373,11 @@ class DeliveryFee {
         },
         {
             place: "W668",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104774299"
+                }
+            ],
             match: address -> address.contains("W668"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1787,6 +2392,11 @@ class DeliveryFee {
         },
         {
             place: "南都大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/494451423"
+                }
+            ],
             match: address -> address.contains("南都大廈") || address.toLowerCase().contains("rondall building"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1801,6 +2411,11 @@ class DeliveryFee {
         },
         {
             place: "建和閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/815616904"
+                }
+            ],
             match: address -> address.contains("建和閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1815,6 +2430,11 @@ class DeliveryFee {
         },
         {
             place: "大埔道236號金安大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/827570076"
+                }
+            ],
             match: address -> address.contains("大埔道236號") && address.contains("金安大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1829,6 +2449,11 @@ class DeliveryFee {
         },
         {
             place: "康美樓", //荔枝角道135號
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/4496526267"
+                }
+            ],
             match: address -> address.contains("荔枝角道135號") ||  address.contains("康美樓") || address.toLowerCase().contains("wontonmeen"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1843,6 +2468,11 @@ class DeliveryFee {
         },
         {
             place: "置豐閣",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/783303081"
+                }
+            ],
             match: address -> address.contains("置豐閣"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1857,6 +2487,11 @@ class DeliveryFee {
         },
         {
             place: "Foodmen",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/9446135454"
+                }
+            ],
             match: address -> address.contains("長沙灣道28號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1871,6 +2506,11 @@ class DeliveryFee {
         },
         {
             place: "中電",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/173944660"
+                }
+            ],
             match: address -> address.contains("福華街215號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1885,6 +2525,11 @@ class DeliveryFee {
         },
         {
             place: "幸俊苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/151705864"
+                }
+            ],
             match: address -> address.contains("幸俊苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1899,6 +2544,11 @@ class DeliveryFee {
         },
         {
             place: "福華街1-31號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/85988274"
+                }
+            ],
             match: address -> {
                 var r = ~/福華街\s*([0-9]+)/;
                 r.match(address) && switch (Std.parseInt(r.matched(1))) {
@@ -1921,6 +2571,11 @@ class DeliveryFee {
         },
         {
             place: "泓景台",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26405816"
+                }
+            ],
             match: address -> address.contains("泓景台") || address.contains("泓景臺"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1935,6 +2590,11 @@ class DeliveryFee {
         },
         {
             place: "凱樂苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/466861748"
+                }
+            ],
             match: address -> address.contains("凱樂苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1949,6 +2609,11 @@ class DeliveryFee {
         },
         {
             place: "碧海藍天",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26405812"
+                }
+            ],
             match: address -> address.contains("碧海藍天"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1963,6 +2628,11 @@ class DeliveryFee {
         },
         {
             place: "宇晴軒",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/102240941"
+                }
+            ],
             match: address -> address.contains("宇晴軒"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -1977,6 +2647,11 @@ class DeliveryFee {
         },
         {
             place: "星匯居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/386590356"
+                }
+            ],
             match: address -> address.contains("星匯居"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -1991,6 +2666,11 @@ class DeliveryFee {
         },
         {
             place: "昇悅居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26405821"
+                }
+            ],
             match: address -> address.contains("昇悅居"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -2005,6 +2685,11 @@ class DeliveryFee {
         },
         {
             place: "順輝大廈", //長發街22號
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/757325703"
+                }
+            ],
             match: address -> address.contains("順輝大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2019,6 +2704,11 @@ class DeliveryFee {
         },
         {
             place: "耀中國際小學",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/429629508"
+                }
+            ],
             match: address -> address.contains("耀中國際小學"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -2033,6 +2723,11 @@ class DeliveryFee {
         },
         {
             place: "畢架山",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/4415212186"
+                }
+            ],
             match: address -> address.contains("畢架山"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -2047,6 +2742,11 @@ class DeliveryFee {
         },
         {
             place: "曉珀",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104776244"
+                }
+            ],
             match: address -> address.contains("曉珀"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2061,6 +2761,11 @@ class DeliveryFee {
         },
         {
             place: "Garden Heights",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/746151993"
+                }
+            ],
             match: address -> address.toLowerCase().contains("garden heights"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2075,6 +2780,11 @@ class DeliveryFee {
         },
         {
             place: "太子站",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/355109678"
+                }
+            ],
             match: address -> address.contains("太子站") || address.contains("太子地鐵站") || address.contains("太子港鐵站"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2089,6 +2799,11 @@ class DeliveryFee {
         },
         {
             place: "西洋菜北街恒安樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/746151944"
+                }
+            ],
             match: address -> address.contains("恒安樓") && address.contains("西洋菜北街"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2103,6 +2818,11 @@ class DeliveryFee {
         },
         {
             place: "宏創方",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/777658280"
+                }
+            ],
             match: address -> address.contains("宏創方") || address.toLowerCase().contains("khora"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 35;
@@ -2117,6 +2837,11 @@ class DeliveryFee {
         },
         {
             place: "大南街朝南樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104777141"
+                }
+            ],
             match: address -> address.contains("朝南樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2131,6 +2856,11 @@ class DeliveryFee {
         },
         {
             place: "尚山岩舘",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/9883215571"
+                }
+            ],
             match: address ->
                 address.contains("大南街234號") || address.contains("尚山岩舘")
                 ||
@@ -2148,6 +2878,11 @@ class DeliveryFee {
         },
         {
             place: "愛海頌",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/10088267"
+                }
+            ],
             match: address -> address.contains("愛海頌") || address.toLowerCase().contains("seaside sonata"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2162,6 +2897,11 @@ class DeliveryFee {
         },
         {
             place: "荔香大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/9882298921"
+                }
+            ],
             match: address -> address.contains("荔香大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2176,6 +2916,11 @@ class DeliveryFee {
         },
         {
             place: "亮賢居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/102368457"
+                }
+            ],
             match: address -> address.contains("亮賢居"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2190,6 +2935,11 @@ class DeliveryFee {
         },
         {
             place: "福華街62至64號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028585163"
+                }
+            ],
             match: address -> address.contains("福華街62至64號") || address.contains("福華街62-64號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2204,6 +2954,11 @@ class DeliveryFee {
         },
         {
             place: "楓樹街球場",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/173944655"
+                }
+            ],
             match: address -> address.contains("楓樹街球場") || address.contains("楓樹街2H號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2218,6 +2973,11 @@ class DeliveryFee {
         },
         {
             place: "長沙大樓", //長沙灣道120號（石硤尾街19號）
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028643855"
+                }
+            ],
             match: address -> address.contains("長沙大樓"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2232,6 +2992,11 @@ class DeliveryFee {
         },
         {
             place: "長明大廈",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1104793344"
+                }
+            ],
             match: address -> address.contains("長明大廈"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2246,6 +3011,11 @@ class DeliveryFee {
         },
         {
             place: "大南街104號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/746198168"
+                }
+            ],
             match: address -> address.contains("大南街104號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
@@ -2260,6 +3030,11 @@ class DeliveryFee {
         },
         {
             place: "美孚",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/relation/10671235"
+                }
+            ],
             match: address -> address.contains("美孚") || address.toLowerCase().contains("mei foo"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
@@ -2274,6 +3049,11 @@ class DeliveryFee {
         },
         {
             place: "南昌街170號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028585181"
+                }
+            ],
             match: address -> {
                 var r = ~/南昌街\s*([0-9]+)/;
                 r.match(address) && switch (Std.parseInt(r.matched(1))) {
