@@ -219,7 +219,7 @@ class BrowserMain {
             }
         }
 
-        Lib.require("maplibre-gl").addProtocol("pmtiles", new pmtiles.ProtocolCache().protocol);
+        Lib.require("maplibre-gl").addProtocol("pmtiles", new pmtiles.Protocol().tile);
 
         if (document.readyState == 'loading') {
             document.addEventListener('DOMContentLoaded', _ -> onReady());
