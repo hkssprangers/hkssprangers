@@ -1025,6 +1025,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "弦雅",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/782116575"
+                }
+            ],
+            match: address -> address.contains("弦雅") || address.contains("弦雅") || address.toLowerCase().contains("the concerto"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "時尚華庭",
             osm: [
                 {
