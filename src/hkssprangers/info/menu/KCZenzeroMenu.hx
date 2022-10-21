@@ -28,9 +28,7 @@ enum abstract KCZenzeroItem(String) to String {
         final hotpot = if (
             timeSlot != null
             &&
-            timeSlot.start.getDatePart() <= "2022-09-11"
-            &&
-            now.getDatePart() <= (DateTools.delta(timeSlot.start.toDate(), -DateTools.days(2)):LocalDateString).getDatePart()
+            timeSlot.start.getDatePart() >= "2022-10-22"
         ) {
             [HotpotSet];
         } else {
@@ -255,12 +253,12 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "花膠海南雞蒜香炆伊麵 $78";
+        final limitedSpecial = "臘米豬手 $78";
         {
-            dateStart: "2022-09-18",
-            dateEnd: "2022-09-19",
+            dateStart: "2022-10-22",
+            dateEnd: "2022-10-31",
             timeSlotTypes: [Lunch, Dinner],
-            seperateBox: false,
+            seperateBox: true,
             available: true,
             def: {
                 title: "限定：" + limitedSpecial,
@@ -435,42 +433,20 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "花膠海鮮雞煲",
+        title: "癲雞煲",
+        description: "⚠️ 每日下午一點後供應。請提早落單。售完即止。",
         properties: {
-            style: {
-                type: "string",
-                title: "版本",
-                oneOf: [
-                    {
-                        const: "蕃廚爸爸版",
-                        title: "蕃廚爸爸版：春雞，鮑魚，花膠，扇貝，蜆，鵝紅",
-                    },
-                    {
-                        const: "後生仔crossover版",
-                        title: "後生仔crossover版：有骨海南雞，鮑魚，花膠，扇貝，海蝦，豬手"
-                    }
-                ],
-            },
             soup: {
                 type: "string",
                 title: "湯底",
                 "enum": [
-                    "鮑汁",
-                    "香辣汁",
-                ],
-            },
-            size: {
-                type: "string",
-                title: "份量",
-                "enum": [
-                    "1-2人 $128",
-                    "3-5人 $580",
-                    "6-8人 $1680",
+                    "香辣 $78",
+                    "蕃茄 $78",
                 ],
             },
         },
         required: [
-            "style", "soup", "size",
+            "soup",
         ]
     };
     
@@ -563,7 +539,7 @@ class KCZenzeroMenu {
             case TomatoRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["style", "soup", "size",], [box]);
+                summarizeOrderObject(orderItem.item, def, ["soup"], [box]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):

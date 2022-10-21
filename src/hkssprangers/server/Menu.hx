@@ -498,13 +498,27 @@ class Menu extends View<MenuProps> {
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">限定 (${period})</div>
+                        <div className="p-3">期間限定</div>
                     </div>
                     <div className="p-3">${def.description}</div>
                     ${renderItems(def.properties.special.enums())}
                 </Fragment>
             ');
         } else null;
+
+        final hotpotSet = {
+            final def = KCZenzeroHotpotSet;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${def.title}</div>
+                    </div>
+                    <div className="p-3">${def.description}</div>
+                    <div className="p-3 font-bold">${def.properties.soup.title}</div>
+                    ${renderItems(def.properties.soup.enums())}
+                </Fragment>
+            ');
+        };
 
         final wontonSet = jsx('
             <Fragment>
@@ -566,6 +580,8 @@ class Menu extends View<MenuProps> {
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
+
+                    ${hotpotSet}
 
                     <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${hotdogSet.title}</div>
