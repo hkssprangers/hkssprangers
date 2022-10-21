@@ -2991,6 +2991,33 @@ class DeliveryFee {
             }
         },
         {
+            place: "基隆街131號",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/103239090"
+                }
+            ],
+            match: address -> {
+                var r = ~/基隆街\s*([0-9]+)/;
+                r.match(address) && switch (Std.parseInt(r.matched(1))) {
+                    case n if (n >= 123 && n <= 155):
+                        true;
+                    case n:
+                        false;
+                }
+            },
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "長沙大樓", //長沙灣道120號（石硤尾街19號）
             osm: [
                 {
