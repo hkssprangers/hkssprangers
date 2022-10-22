@@ -17,6 +17,7 @@ import tink.CoreApi;
 import Math.*;
 using Lambda;
 using StringTools;
+import comments.CommentString.*;
 
 typedef DeliveryFeeHeuristric = {
     place:String,
@@ -3192,5 +3193,20 @@ class DeliveryFee {
 
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         app.get("/decide-delivery-fee", DeliveryFee.get);
+    }
+
+    static function main():Void {
+        Osm.overpass(comment(unindent)/**
+            [out:json];
+            (
+                relation(10692715);
+                node(2544686378);
+                way(389315494);
+            );
+            out;
+        **/).then(text -> {
+            final json = Json.parse(text);
+            trace(Json.stringify(json, null, "  "));
+        });
     }
 }
