@@ -14,9 +14,11 @@ import fastify.*;
 import hkssprangers.server.*;
 using hkssprangers.server.FastifyTools;
 import tink.CoreApi;
+import sys.io.File;
 import Math.*;
 using Lambda;
 using StringTools;
+using hxLINQ.LINQ;
 import comments.CommentString.*;
 
 typedef DeliveryFeeHeuristric = {
@@ -3196,17 +3198,21 @@ class DeliveryFee {
     }
 
     static function main():Void {
-        Osm.overpass(comment(unindent)/**
+        final osmRefs = heuristics.linq()
+            .selectMany((h,i) -> h.osm.map(o -> o.url))
+            .select((url,i) -> Osm.parseUrl(url))
+            .select((ref,i) -> Osm.printRef(ref))
+            .toArray();
+        final union = "(" + osmRefs.map(r -> r + ";").join("") + ")";
+
+        Osm.overpass(comment(unindent,format)/**
             [out:json];
-            (
-                relation(10692715);
-                node(2544686378);
-                way(389315494);
-            );
-            out;
+            $union;
+            out center;
         **/).then(text -> {
             final json = Json.parse(text);
-            trace(Json.stringify(json, null, "  "));
+            final pretty = Json.stringify(json, null, "  ");
+            File.saveContent("static/deliveryLocations.json", pretty);
         });
     }
 }
