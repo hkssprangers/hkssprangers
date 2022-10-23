@@ -15,6 +15,7 @@ import hkssprangers.server.*;
 using hkssprangers.server.FastifyTools;
 import tink.CoreApi;
 import sys.io.File;
+import haxe.ds.*;
 import Math.*;
 using Lambda;
 using StringTools;
@@ -31,7 +32,7 @@ typedef DeliveryFeeHeuristric = {
 }
 
 class DeliveryFee {
-    static final heuristics:Array<DeliveryFeeHeuristric> = [
+    static public final heuristics:Array<DeliveryFeeHeuristric> = [
         {
             place: "深水埗站",
             osm: [

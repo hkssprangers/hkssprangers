@@ -35,7 +35,7 @@ typedef OsmCoordinates = {
     lon:Float,
 }
 
-typedef OsmCenter = {
+typedef OsmHasCenter = {
     center:OsmCoordinates,
 }
 
@@ -99,5 +99,13 @@ class Osm {
 
     static public function printUrl(ref:OsmRef):String {
         return 'https://www.openstreetmap.org/${ref.type}/${ref.id}';
+    }
+
+    static public function getCenter(ref:OsmRef):OsmCoordinates {
+        return switch ref.type {
+            case Node: (cast ref:OsmNode);
+            case Way: (cast ref:OsmWay & OsmHasCenter).center;
+            case Relation: (cast ref:OsmRelation & OsmHasCenter).center;
+        }
     }
 }

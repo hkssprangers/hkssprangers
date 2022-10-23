@@ -1,6 +1,8 @@
 package hkssprangers.info;
 
-enum abstract ShopCluster(String) {
+import haxe.ds.*;
+
+enum abstract ShopCluster(String) to String {
     final DragonCentreCluster;
     final PeiHoStreetMarketCluster;
     final CLPCluster;
@@ -9,6 +11,17 @@ enum abstract ShopCluster(String) {
     final ParkCluster;
     final PakTinCluster;
     final TungChauStreetParkCluster;
+
+    static public final all:ReadOnlyArray<ShopCluster> = [
+        DragonCentreCluster,
+        PeiHoStreetMarketCluster,
+        CLPCluster,
+        GoldenCluster,
+        SmilingPlazaCluster,
+        ParkCluster,
+        PakTinCluster,
+        TungChauStreetParkCluster,
+    ];
 
     static public function classify(shop:Shop):Null<ShopCluster> {
         return switch shop {
