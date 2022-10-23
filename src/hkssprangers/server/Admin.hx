@@ -412,9 +412,29 @@ class Admin extends View<AdminProps> {
                     final url = new node.url.URL(req.raw.url, "http://example.com");
                     return Promise.resolve(reply.redirect("/login?redirectTo=" + (url.pathname + url.search).urlEncode())).then(_ -> null);
                 }
+                reply.header("Vary", "Accept");
                 final user = reply.getCourier();
-                switch (req.accepts().type(["text/html", "application/json"])) {
-                    case "text/html":
+                final format = switch (req.query.format) {
+                    case null:
+                        switch (req.accepts().type(["text/html", "application/json"])) {
+                            case "text/html":
+                                "html";
+                            case "application/json":
+                                "json";
+                            case type:
+                                trace(type);
+                                reply.type("text");
+                                return Promise.resolve(reply.status(406).send("Can only return html or json")).then(_ -> null);
+                        }
+                    case "html": "html";
+                    case "json": "json";
+                    case type:
+                        trace(type);
+                        reply.type("text");
+                        return Promise.resolve(reply.status(406).send("Can only return html or json")).then(_ -> null);
+                }
+                return switch (format) {
+                    case "html":
                         ServerMain.tgMe.then(tgBotInfo -> {
                             reply.sendView(Admin, {
                                 tgBotName: tgBotInfo.username,
@@ -423,7 +443,7 @@ class Admin extends View<AdminProps> {
                                 fontSize: req.query.fontSize,
                             });
                         }).then(_ -> null);
-                    case "application/json":
+                    case "json":
                         final token = reply.getToken();
                         switch (token) {
                             case null:

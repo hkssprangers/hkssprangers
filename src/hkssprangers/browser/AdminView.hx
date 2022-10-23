@@ -101,8 +101,10 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             });
         final qs = new URLSearchParams(
             if (token == null) {
+                format: "json",
                 date: DateTools.format(getSelectedDate(), "%Y-%m-%d"),
             } else {
+                format: "json",
                 token: token,
             }
         );
