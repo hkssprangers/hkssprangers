@@ -15,11 +15,13 @@ import hkssprangers.info.ShopCluster.clusterStyle;
 import hkssprangers.StaticResource.R;
 using Lambda;
 using StringTools;
+using hxLINQ.LINQ;
 
 typedef MapViewProps = {}
 typedef MapViewState = {
     final isLoading:Bool;
-    final deliveryLocations:FeatureCollection<Dynamic,Dynamic>;
+    final deliveryLocations:Array<DeliveryLocation>;
+    final selectedCluster:ShopCluster;
 }
 
 class MapView extends ReactComponent<MapViewProps,MapViewState> {
@@ -28,6 +30,7 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
         state = {
             isLoading: true,
             deliveryLocations: null,
+            selectedCluster: null,
         };
         loadDeliveryLocations();
     }
@@ -41,17 +44,7 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
                     r.json().then(json -> {
                         final locs:Array<DeliveryLocation> = json;
                         setState({
-                            deliveryLocations: ({
-                                type: "FeatureCollection",
-                                features: locs.map(loc -> ({
-                                    type: "Feature",
-                                    geometry: {
-                                        type: "Point",
-                                        coordinates: [loc.center.lon, loc.center.lat],
-                                    },
-                                    properties: null,
-                                }:Feature<Dynamic, Dynamic>))
-                            }:FeatureCollection<Dynamic, Dynamic>)
+                            deliveryLocations: locs,
                         });
                     });
                 }
@@ -59,6 +52,34 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
             .then(_ -> setState({
                 isLoading: false,
             }));
+    }
+
+    function controls() {
+        final clusterRadios = ShopCluster.all
+            .filter(c -> Shop.all.exists(s -> s.info().isInService && ShopCluster.classify(s) == c))
+            .map(c -> {
+                final control = jsx('<Radio />');
+                jsx('
+                    <FormControlLabel value=${c} control=${control} label=${c.info().name} />
+                ');
+            });
+        return jsx('
+            <div className="absolute top-0 left-0 bg-white/75" >
+                <Grid container>
+                    <Grid item>
+                        <RadioGroup
+                            className="mb-1 relative left-3"
+                            value=${state.selectedCluster}
+                            onChange=${(evt:Event) -> setState({
+                                selectedCluster: (cast evt.target).value,
+                            })}
+                        >
+                            ${clusterRadios}
+                        </RadioGroup>
+                    </Grid>
+                </Grid>
+            </div>
+        ');
     }
 
     override function render() {
@@ -94,34 +115,70 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
             },
         }
         final markers = [
-            for (info in shopInfos) {
+            for (info in shopInfos)
+            if (state.selectedCluster == null || state.selectedCluster == ShopCluster.classify(info.id))
+            {
                 final cluster = ShopCluster.classify(info.id);
-                final classes = clusterStyle[cluster].textClasses;
+                final classes = clusterStyle[cluster].textClasses.concat(["relative"]);
                 jsx('
-                    <Marker longitude=${info.lng} latitude=${info.lat} anchor="bottom" >
-                        <span className=${classes}>
-                            <i className="fa-solid fa-location-dot fa-2xl"></i>
+                    <Marker longitude=${info.lng} latitude=${info.lat} anchor="bottom-left" >
+                        <span className=${classes.join(" ")}>
+                            <i className="fa-solid fa-location-pin fa-2xl -ml-2 absolute bottom-2 -left-2"></i>
+                            <span className="bg-white p-0.5 -ml-2 pl-3">${info.name}</span>
                         </span>
                     </Marker>
                 ');
             }
         ];
-        final locationsPaint = {
-            'circle-radius': 10,
-            'circle-color': '#007cbf'
+        final locationSource = switch (state) {
+            case { selectedCluster: null } | { deliveryLocations: null }:
+                null;
+            case { selectedCluster: cluster, deliveryLocations: locs }:
+                locs.linq().groupBy(l -> l.fee[cluster])
+                    .select((g,i) -> {
+                        final data:FeatureCollection<Dynamic, Dynamic> = {
+                            type: "FeatureCollection",
+                            features: g.linq()
+                                .select((loc,i) -> ({
+                                    type: "Feature",
+                                    geometry: {
+                                        type: "Point",
+                                        coordinates: [loc.center.lon, loc.center.lat],
+                                    },
+                                    properties: null,
+                                }:Feature<Dynamic, Dynamic>))
+                                .toArray(),
+                        };
+                        final locationsPaint = {
+                            'circle-radius': 10,
+                            'circle-color': switch (g.key) {
+                                case 25: "rgba(0, 255, 0, 0.5)";
+                                case 35: "rgba(255, 255, 0, 0.5)";
+                                case 40: "rgba(255, 0, 0, 0.5)";
+                                case _: "rgba(0, 0, 0, 1)";
+                            }
+                        };
+                        jsx('
+                            <Source key=${g.key} id=${"locations-source-" + g.key} type="geojson" data=${data}>
+                                <Layer id=${"locations-" + g.key} type="circle" paint=${locationsPaint} />
+                            </Source>
+                        ');
+                    })
+                    .toArray();
         }
         return jsx('
-            <ReactMapGl
-                mapLib=${MaplibreGl}
-                initialViewState=${initialViewState}
-                mapStyle=${style}
-                maxBounds=${maxBounds}
-            >
-                <Source id="locations-source" type="geojson" data=${state.deliveryLocations}>
-                    <Layer id="locations" type="circle" paint=${locationsPaint} />
-                </Source>
-                ${markers}
-            </ReactMapGl>
+            <Fragment>
+                <ReactMapGl
+                    mapLib=${MaplibreGl}
+                    initialViewState=${initialViewState}
+                    mapStyle=${style}
+                    maxBounds=${maxBounds}
+                >
+                    ${locationSource}
+                    ${markers}
+                </ReactMapGl>
+                ${controls()}
+            </Fragment>
         ');
     }
 }
