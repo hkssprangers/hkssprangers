@@ -11,6 +11,7 @@
 --library hxLINQ
 --library format
 --library CommentString
+--library geojson
 --class-path src
 --class-path lib/dts2hx
 --dce full

@@ -9,14 +9,58 @@ import js.npm.react_map_gl.Map as ReactMapGl;
 import js.npm.react_map_gl.Map;
 import hkssprangers.info.*;
 import js.Browser.*;
+import CrossFetch.fetch;
+import geojson.*;
 import hkssprangers.info.ShopCluster.clusterStyle;
 import hkssprangers.StaticResource.R;
 using Lambda;
 using StringTools;
 
 typedef MapViewProps = {}
+typedef MapViewState = {
+    final isLoading:Bool;
+    final deliveryLocations:FeatureCollection<Dynamic,Dynamic>;
+}
 
-class MapView extends ReactComponentOfProps<MapViewProps> {
+class MapView extends ReactComponent<MapViewProps,MapViewState> {
+    public function new(props):Void {
+        super(props);
+        state = {
+            isLoading: true,
+            deliveryLocations: null,
+        };
+        loadDeliveryLocations();
+    }
+
+    function loadDeliveryLocations() {
+        fetch("/delivery-locations")
+            .then(r -> {
+                if (!r.ok) {
+                    r.text().then(text -> window.alert(text));
+                } else {
+                    r.json().then(json -> {
+                        final locs:Array<DeliveryLocation> = json;
+                        setState({
+                            deliveryLocations: ({
+                                type: "FeatureCollection",
+                                features: locs.map(loc -> ({
+                                    type: "Feature",
+                                    geometry: {
+                                        type: "Point",
+                                        coordinates: [loc.center.lon, loc.center.lat],
+                                    },
+                                    properties: null,
+                                }:Feature<Dynamic, Dynamic>))
+                            }:FeatureCollection<Dynamic, Dynamic>)
+                        });
+                    });
+                }
+            })
+            .then(_ -> setState({
+                isLoading: false,
+            }));
+    }
+
     override function render() {
         final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
         final host = document.location.origin;
@@ -62,6 +106,10 @@ class MapView extends ReactComponentOfProps<MapViewProps> {
                 ');
             }
         ];
+        final locationsPaint = {
+            'circle-radius': 10,
+            'circle-color': '#007cbf'
+        }
         return jsx('
             <ReactMapGl
                 mapLib=${MaplibreGl}
@@ -69,6 +117,9 @@ class MapView extends ReactComponentOfProps<MapViewProps> {
                 mapStyle=${style}
                 maxBounds=${maxBounds}
             >
+                <Source id="locations-source" type="geojson" data=${state.deliveryLocations}>
+                    <Layer id="locations" type="circle" paint=${locationsPaint} />
+                </Source>
                 ${markers}
             </ReactMapGl>
         ');

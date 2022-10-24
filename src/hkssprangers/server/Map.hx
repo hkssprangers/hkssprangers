@@ -52,7 +52,7 @@ class Map extends View<MapProps> {
             for (e in osmData.elements)
             Osm.printRef(e) => e
         ];
-        final locs = DeliveryFee.heuristics.linq()
+        final locs:Array<DeliveryLocation> = DeliveryFee.heuristics.linq()
             .selectMany((h,i) -> h.osm.map(o -> {
                 name: h.place,
                 osm: o.url,
