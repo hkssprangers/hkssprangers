@@ -270,7 +270,7 @@ class ZeppelinHotDogSKMMenu {
                     type: "string",
                     "enum": [
                         "加熱溶芝士 +$10",
-                        "轉未來熱狗腸 +$15",
+                        // "轉未來熱狗腸 +$15",
                         "轉豬肉香腸 +$0",
                     ],
                 },
