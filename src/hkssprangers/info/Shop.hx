@@ -894,6 +894,9 @@ enum abstract Shop(String) to String {
             case [BlackWindow, "2022-10-10", _]:
                 return Unavailable('休息一天');
 
+            case [YearsHK | TheParkByYears, "2022-11-02", _]:
+                return Unavailable('休息一天');
+
             case [Minimal, _, _]:
                 return Unavailable('餐牌更新中');
 
