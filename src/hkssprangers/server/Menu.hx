@@ -513,9 +513,7 @@ class Menu extends View<MenuProps> {
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                     <div className="p-3">${def.title}</div>
                     </div>
-                    <div className="p-3">${def.description}</div>
-                    <div className="p-3 font-bold">${def.properties.soup.title}</div>
-                    ${renderItems(def.properties.soup.enums())}
+                    <div className="p-3">${def.description} $$98</div>
                 </Fragment>
             ');
         };

@@ -28,7 +28,7 @@ enum abstract KCZenzeroItem(String) to String {
         final hotpot = if (
             timeSlot != null
             &&
-            timeSlot.start.getDatePart() >= "2022-10-22"
+            TimeSlotType.classify(timeSlot.start) == Dinner
         ) {
             [HotpotSet];
         } else {
@@ -256,7 +256,7 @@ class KCZenzeroMenu {
         final limitedSpecial = "臘米豬手 $78";
         {
             dateStart: "2022-10-22",
-            dateEnd: "2022-10-31",
+            dateEnd: "2022-11-06",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: true,
             available: true,
@@ -433,20 +433,20 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "癲雞煲",
-        description: "⚠️ 每日下午一點後供應。請提早落單。售完即止。",
+        title: "限定：串爆田雞臘米煲",
+        description: "⚠️ 每日下午四點後供應。請提早落單。售完即止。",
         properties: {
-            soup: {
+            main: {
                 type: "string",
-                title: "湯底",
+                title: "口味",
                 "enum": [
-                    "香辣 $78",
-                    "蕃茄 $78",
+                    "辣 $98",
+                    "唔辣 $98",
                 ],
             },
         },
         required: [
-            "soup",
+            "main",
         ]
     };
     
@@ -539,7 +539,7 @@ class KCZenzeroMenu {
             case TomatoRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["soup"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main"], [box]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
