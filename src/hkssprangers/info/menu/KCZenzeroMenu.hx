@@ -29,6 +29,11 @@ enum abstract KCZenzeroItem(String) to String {
             timeSlot != null
             &&
             TimeSlotType.classify(timeSlot.start) == Dinner
+            &&
+            switch timeSlot.start.getDatePart() {
+                case "2022-11-04": false;
+                case _: true;
+            }
         ) {
             [HotpotSet];
         } else {
