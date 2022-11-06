@@ -841,8 +841,8 @@ enum abstract Shop(String) to String {
                 name: "杞醉",
                 type: Restaurant,
                 address: "石硤尾白田商場LG3樓街市MK07號舖",
-                lat: 22.3365202, 
-                lng: 114.1662602,
+                lat: 22.3363989,
+                lng: 114.1666779,
                 courierContact: [
                     { name: "店舖WhatsApp", url: "https://wa.me/85266283190" },
                     // { name: "店舖電話", url: "tel:+85292280274" },
