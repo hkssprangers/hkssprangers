@@ -101,7 +101,7 @@ class Menu extends View<MenuProps> {
     
     function new(props, context) {
         super(props, context);
-        style = clusterStyle[ShopCluster.classify(shop)];
+        style = clusterStyle[ShopCluster.classify(shop)[0]];
     }
 
     override function bodyContent() {
@@ -136,6 +136,9 @@ class Menu extends View<MenuProps> {
                     </Fragment>
                 ');
         }
+        final clusters = ShopCluster.classify(shop).map(c -> {
+            jsx('<span>${c.info().name}</span>');
+        });
         return jsx('
             <main>
                 <div className="bg-gray-50">
@@ -144,7 +147,7 @@ class Menu extends View<MenuProps> {
                         <div className="lg:flex">
                             <div className="lg:w-1/3 lg:pr-12" itemScope itemType="https://schema.org/${info.type}">
                                 <div className="flex items-center mb-3">
-                                    <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${ShopCluster.classify(shop).info().name}</span>
+                                    <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;${clusters}
                                     <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
                                 </div>
                                 ${renderShopImage()}

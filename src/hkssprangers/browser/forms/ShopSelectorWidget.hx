@@ -78,7 +78,7 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
                 return null;
             case shops:
                 final items = shops.linq()
-                    .groupBy(ShopCluster.classify)
+                    .groupBy(s -> ShopCluster.classify(s)[0])
                     .selectMany((group, i) -> {
                         final items = group.linq().select((shop, _) -> {
                             final info = shop.info();

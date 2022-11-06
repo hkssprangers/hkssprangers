@@ -56,7 +56,7 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
 
     function controls() {
         final clusterRadios = ShopCluster.all
-            .filter(c -> Shop.all.exists(s -> s.info().isInService && ShopCluster.classify(s) == c))
+            .filter(c -> Shop.all.exists(s -> s.info().isInService && ShopCluster.classify(s).has(c)))
             .map(c -> {
                 final control = jsx('<Radio />');
                 jsx('
@@ -116,9 +116,9 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
         }
         final markers = [
             for (info in shopInfos)
-            if (state.selectedCluster == null || state.selectedCluster == ShopCluster.classify(info.id))
+            if (state.selectedCluster == null || ShopCluster.classify(info.id).has(state.selectedCluster))
             {
-                final cluster = ShopCluster.classify(info.id);
+                final cluster = state.selectedCluster != null ? state.selectedCluster : ShopCluster.classify(info.id)[0];
                 final classes = clusterStyle[cluster].textClasses.concat(["relative"]);
                 jsx('
                     <Marker longitude=${info.lng} latitude=${info.lat} anchor="bottom-left" >

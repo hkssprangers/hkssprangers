@@ -180,7 +180,7 @@ class BrowserMain {
 
         for (shop in shops) {
             final info = shop.info();
-            final cluster = ShopCluster.classify(shop);
+            final cluster = ShopCluster.classify(shop)[0];
             final popup = new maplibre_gl.Popup({ offset: 25 }).setText(info.name);
             final marker = new maplibre_gl.Marker({ color: clusterStyle[cluster] })
                 .setLngLat([info.lng, info.lat])

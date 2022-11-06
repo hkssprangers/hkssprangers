@@ -23,36 +23,38 @@ enum abstract ShopCluster(String) to String {
         TungChauStreetParkCluster,
     ];
 
-    static public function classify(shop:Shop):Null<ShopCluster> {
+    static public function classify(shop:Shop):ReadOnlyArray<ShopCluster> {
         return switch shop {
-            case EightyNine: DragonCentreCluster;
-            case DragonJapaneseCuisine: DragonCentreCluster;
-            case YearsHK: CLPCluster;
-            case TheParkByYears: ParkCluster;
-            case LaksaStore: DragonCentreCluster;
-            case DongDong: CLPCluster;
-            case BiuKeeLokYuen: GoldenCluster;
-            case KCZenzero: DragonCentreCluster;
-            case HanaSoftCream: DragonCentreCluster;
-            case Neighbor: SmilingPlazaCluster;
-            case MGY: ParkCluster;
-            case FastTasteSSP: GoldenCluster;
-            case BlaBlaBla: GoldenCluster;
-            case ZeppelinHotDogSKM: PakTinCluster;
-            case MyRoomRoom: null;
-            case ThaiYummy: SmilingPlazaCluster;
-            case Toolss: PakTinCluster;
-            case KeiHing: TungChauStreetParkCluster;
-            case PokeGo: ParkCluster;
-            case WoStreet: DragonCentreCluster;
-            case Minimal: ParkCluster;
-            case CafeGolden: PakTinCluster;
-            case BlackWindow: GoldenCluster;
-            case LonelyPaisley: CLPCluster;
-            case FishFranSSP: PeiHoStreetMarketCluster;
-            case AuLawFarm: null;
-            case MxMWorkshop: null;
-            case HowDrunk: PakTinCluster;
+            case null: [];
+            case EightyNine: [DragonCentreCluster];
+            case DragonJapaneseCuisine: [DragonCentreCluster];
+            case YearsHK: [CLPCluster];
+            case TheParkByYears: [ParkCluster];
+            case LaksaStore: [DragonCentreCluster];
+            case DongDong: [CLPCluster];
+            case BiuKeeLokYuen: [GoldenCluster];
+            case KCZenzero: [DragonCentreCluster];
+            case HanaSoftCream: [DragonCentreCluster];
+            case Neighbor: [SmilingPlazaCluster];
+            case MGY: [ParkCluster];
+            case FastTasteSSP: [GoldenCluster];
+            case BlaBlaBla: [GoldenCluster];
+            case ZeppelinHotDogSKM: [PakTinCluster];
+            case MyRoomRoom: [];
+            case ThaiYummy: [SmilingPlazaCluster];
+            case Toolss: [PakTinCluster];
+            case KeiHing: [TungChauStreetParkCluster];
+            case PokeGo: [ParkCluster];
+            case WoStreet: [DragonCentreCluster];
+            case Minimal: [ParkCluster];
+            case CafeGolden: [PakTinCluster];
+            case BlackWindow: [GoldenCluster];
+            case LonelyPaisley: [CLPCluster];
+            case FishFranSSP: [PeiHoStreetMarketCluster];
+            case HowDrunk: [PakTinCluster];
+            case AuLawFarm: all;
+            case MxMWorkshop: all;
+            case _: [];
         }
     }
 

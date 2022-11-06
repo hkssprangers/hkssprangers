@@ -3146,30 +3146,32 @@ class DeliveryFee {
     ];
 
     static public function decideDeliveryFee(delivery:Delivery):Promise<Float> {
-        final matched:Array<{
-            place:String,
-            fee:Float,
-        }> = [];
-
-        final cluster = ShopCluster.classify(delivery.orders[0].shop);
-
+        final matched:Array<DeliveryFeeHeuristric> = [];
         for (h in heuristics) {
             if (h.match(delivery.pickupLocation)) {
-                matched.push({
-                    place: h.place,
-                    fee: h.deliveryFee(cluster),
-                });
+                matched.push(h);
             }
         }
-
         if (matched.length <= 0) {
             return Promise.reject(new Error(InternalError, "No matching heuristics"));
         }
 
-        final fee = matched[0].fee;
-        if (!matched.foreach(h -> h.fee == fee)) {
-            return Promise.reject(new Error(InternalError, "Not all matching heuristics agree"));
+        final clusters = {
+            final shopClusters = delivery.orders.map(o -> ShopCluster.classify(o.shop));
+            shopClusters[0].filter(c -> shopClusters.foreach(cs -> cs.has(c)));
         }
+
+        final fees = [
+            for (c in clusters)
+            {
+                final fees = matched.map(h -> h.deliveryFee(c));
+                if (fees.exists(f -> f != fees[0])) {
+                    return Promise.reject(new Error(InternalError, "Not all matching heuristics agree"));
+                }
+                fees[0];
+            }
+        ];
+        final fee = fees.linq().min();
 
         final discount = Discounts.bestDiscountResult(delivery);
         if (discount != null) {
