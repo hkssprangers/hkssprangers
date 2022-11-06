@@ -266,6 +266,68 @@ class Index extends View<IndexProps> {
         };
     }
 
+    static function renderShop(shop:Shop, cluster:ShopCluster) {
+        final image = switch shop {
+            case EightyNine:
+                StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, "squircle");
+            case YearsHK:
+                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, "squircle");
+            case TheParkByYears:
+                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, "squircle");
+            case LaksaStore:
+                StaticResource.image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, "squircle");
+            case BiuKeeLokYuen:
+                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, "squircle");
+            case KCZenzero:
+                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, "squircle");
+            case HanaSoftCream:
+                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, "squircle");
+            case MGY:
+                StaticResource.image("/images/shops/MGY/mgy.jpg", shop.info().name, "squircle");
+            case ZeppelinHotDogSKM:
+                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, "squircle");
+            case PokeGo:
+                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, "squircle");
+            case WoStreet:
+                StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, "squircle");
+            case Minimal:
+                StaticResource.image("/images/shops/Minimal/minimal.jpg", shop.info().name, "squircle");
+            case CafeGolden:
+                StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, "squircle");
+            case BlackWindow:
+                StaticResource.image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", shop.info().name, "squircle");
+            case LonelyPaisley:
+                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, "squircle");
+            case FishFranSSP:
+                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
+            case HowDrunk:
+                StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "squircle");
+            case _:
+                null;
+        }
+        final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
+        final linkClasses2 = "cursor-pointer menu";
+        final thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
+        final shopNameClasses = "text-xs lg:text-lg lg:flex-1";
+        final textStyle = ShopCluster.clusterStyle[cluster].textClasses.join(" ");
+        return jsx('
+            <div className=${blockClasses2}>
+                <a href=${Path.join(["/menu", shop])} className=${linkClasses2}>
+                    <div className="md:flex items-center"> 
+                        <div className=${thumbnailDivClasses2}>
+                            ${image}
+                            <p className="absolute align-center-hover text-xs lg:text-lg"><i className=${textStyle + " fas fa-book-open"}></i><br/>menu</p>
+                        </div>
+                        <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
+                            <h1 className=${shopNameClasses}> <i className=${textStyle + " md:hidden fas fa-circle"}></i> ${shop.info().name}</h1>
+                            ${restDay(shop)}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        ');
+    }
+
     static public function renderShops() {
         final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
         final linkClasses2 = "cursor-pointer menu";
@@ -279,289 +341,48 @@ class Index extends View<IndexProps> {
                         <i className="fas fa-map-marker-alt text-red-500"></i>&nbsp;<span>${DragonCentreCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", EightyNine])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/EightyNine/89.jpg", EightyNine.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${EightyNine.info().name}</h1>
-                                    ${restDay(EightyNine)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", LaksaStore])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/LaksaStore/laksa.jpg", LaksaStore.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${LaksaStore.info().name}</h1>
-                                    ${restDay(LaksaStore)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", KCZenzero])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/KCZenzero/tomato.jpg", KCZenzero.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${KCZenzero.info().name}</h1>
-                                    ${restDay(KCZenzero)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", HanaSoftCream])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", HanaSoftCream.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${HanaSoftCream.info().name}</h1>
-                                    ${restDay(HanaSoftCream)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", WoStreet])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", WoStreet.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-red-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-red-500 fas fa-circle"></i> ${WoStreet.info().name}</h1>
-                                    ${restDay(WoStreet)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-pink-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-pink-500"></i>&nbsp;<span>${GoldenCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", BiuKeeLokYuen])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", BiuKeeLokYuen.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BiuKeeLokYuen.info().name}</h1>
-                                    ${restDay(BiuKeeLokYuen)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", BlackWindow])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", BlackWindow.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-pink-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-pink-500 fas fa-circle"></i> ${BlackWindow.info().name}</h1>
-                                    ${restDay(BlackWindow)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    ${renderShop(EightyNine, DragonCentreCluster)}
+                    ${renderShop(LaksaStore, DragonCentreCluster)}
+                    ${renderShop(KCZenzero, DragonCentreCluster)}
+                    ${renderShop(HanaSoftCream, DragonCentreCluster)}
+                    ${renderShop(WoStreet, DragonCentreCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-amber-600 font-bold">
                         <i className="fas fa-map-marker-alt text-amber-600"></i>&nbsp;<span>${PeiHoStreetMarketCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
+                    ${renderShop(FishFranSSP, PeiHoStreetMarketCluster)}
 
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", FishFranSSP])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", FishFranSSP.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-amber-600 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-amber-600 fas fa-circle"></i> ${FishFranSSP.info().name}</h1>
-                                    ${restDay(FishFranSSP)}
-                                </div>
-                            </div>
-                        </a>
+                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-pink-500 font-bold">
+                        <i className="fas fa-map-marker-alt text-pink-500"></i>&nbsp;<span>${GoldenCluster.info().name}</span>
+                        <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-
-                    
+                    ${renderShop(BiuKeeLokYuen, GoldenCluster)}
+                    ${renderShop(BlackWindow, GoldenCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
                         <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>${ParkCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", TheParkByYears])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/TheParkByYears/park.jpg", TheParkByYears.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${TheParkByYears.info().name}</h1>
-                                    ${restDay(TheParkByYears)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", MGY])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/MGY/mgy.jpg", MGY.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${MGY.info().name}</h1>
-                                    ${restDay(MGY)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", PokeGo])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", PokeGo.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${PokeGo.info().name}</h1>
-                                    ${restDay(PokeGo)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", Minimal])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/Minimal/minimal.jpg", Minimal.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-600 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-600 fas fa-circle"></i> ${Minimal.info().name}</h1>
-                                    ${restDay(Minimal)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    ${renderShop(TheParkByYears, ParkCluster)}
+                    ${renderShop(MGY, ParkCluster)}
+                    ${renderShop(PokeGo, ParkCluster)}
+                    ${renderShop(Minimal, ParkCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-400 font-bold">
                         <i className="fas fa-map-marker-alt text-green-400"></i>&nbsp;<span>${CLPCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", YearsHK])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/YearsHK/years.jpg", YearsHK.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-400 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${YearsHK.info().name}</h1>
-                                    ${restDay(YearsHK)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", LonelyPaisley])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", LonelyPaisley.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-green-400 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-green-400 fas fa-circle"></i> ${LonelyPaisley.info().name}</h1>
-                                    ${restDay(LonelyPaisley)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    ${renderShop(YearsHK, CLPCluster)}
+                    ${renderShop(LonelyPaisley, CLPCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-blue-500 font-bold">
                         <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>${PakTinCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", ZeppelinHotDogSKM])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", ZeppelinHotDogSKM.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${ZeppelinHotDogSKM.info().name}</h1>
-                                    ${restDay(ZeppelinHotDogSKM)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", CafeGolden])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", CafeGolden.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${CafeGolden.info().name}</h1>
-                                    ${restDay(CafeGolden)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div className=${blockClasses2}>
-                        <a href=${Path.join(["/menu", HowDrunk])} className=${linkClasses2}>
-                            <div className="md:flex items-center"> 
-                                <div className=${thumbnailDivClasses2}>
-                                    ${StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", HowDrunk.info().name, "squircle")}
-                                    <p className="absolute align-center-hover text-xs lg:text-lg"><i className="text-blue-500 fas fa-book-open"></i><br/>menu</p>
-                                </div>
-                                <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                                    <h1 className=${shopNameClasses}> <i className="md:hidden text-blue-500 fas fa-circle"></i> ${HowDrunk.info().name}</h1>
-                                    ${restDay(HowDrunk)}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
+                    ${renderShop(ZeppelinHotDogSKM, PakTinCluster)}
+                    ${renderShop(CafeGolden, PakTinCluster)}
+                    ${renderShop(HowDrunk, PakTinCluster)}
                 </div>
             </Fragment>
         ');
