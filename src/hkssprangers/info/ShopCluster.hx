@@ -52,6 +52,7 @@ enum abstract ShopCluster(String) to String {
             case LonelyPaisley: [CLPCluster];
             case FishFranSSP: [PeiHoStreetMarketCluster];
             case HowDrunk: [PakTinCluster];
+            case LoudTeaSSP: [CLPCluster, GoldenCluster];
             case AuLawFarm: all;
             case MxMWorkshop: all;
             case _: [];

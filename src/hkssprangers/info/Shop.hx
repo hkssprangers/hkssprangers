@@ -38,6 +38,7 @@ enum abstract Shop(String) to String {
     final FishFranSSP:Shop;
     final MxMWorkshop:Shop;
     final HowDrunk:Shop;
+    final LoudTeaSSP:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -51,6 +52,7 @@ enum abstract Shop(String) to String {
         YearsHK,
         LonelyPaisley,
 
+        LoudTeaSSP,
         BiuKeeLokYuen,
         BlackWindow,
         
@@ -809,7 +811,7 @@ enum abstract Shop(String) to String {
         case FishFranSSP:
             {
                 id: FishFranSSP,
-                name: "魚鈁 (深水埗店)",
+                name: "魚鈁 (深水埗)",
                 type: Restaurant,
                 address: "深水埗欽洲街58號米蘭軒1樓",
                 lat: 22.3306967, 
@@ -861,6 +863,35 @@ enum abstract Shop(String) to String {
                 isInService: true,
                 facebook: "https://www.facebook.com/HowDrunk",
                 instagram: "https://www.instagram.com/howdrunk_hongkong/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: null
+            }
+        case LoudTeaSSP:
+            {
+                id: LoudTeaSSP,
+                name: "響茶 (深水埗)",
+                type: Restaurant,
+                address: "深水埗長沙灣道262號萬利大廈地下B2號舖",
+                lat: 22.3318298,
+                lng: 114.1612489,
+                courierContact: [
+                    { name: "店舖電話", url: "tel:+85254489263" },
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "20:00:00",
+                isInService: true,
+                facebook: "https://www.facebook.com/profile.php?id=100085657165887",
+                instagram: "https://www.instagram.com/loudtea_ssp/",
                 availablity: "提供午餐及晚餐",
                 restDay: null,
                 recommendation: null
@@ -1026,6 +1057,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(null);
             case MxMWorkshop:
                 Promise.resolve(null);
+            case LoudTeaSSP:
+                Promise.resolve(null);
         }
     }
 
@@ -1087,6 +1120,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(null);
             case MxMWorkshop:
                 Promise.resolve(null);
+            case LoudTeaSSP:
+                Promise.resolve(null);
         }
     }
 
@@ -1120,6 +1155,7 @@ enum abstract Shop(String) to String {
             case LonelyPaisley: LonelyPaisley;
             case FishFranSSP: FishFranSSP;
             case HowDrunk: HowDrunk;
+            case LoudTeaSSP: LoudTeaSSP;
             case _: null;
         }
     }

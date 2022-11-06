@@ -272,6 +272,8 @@ class Menu extends View<MenuProps> {
                 StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
             case HowDrunk:
                 StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
+            case LoudTeaSSP:
+                StaticResource.image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, styles, "image", true);
             case AuLawFarm:
                 null;
             case MxMWorkshop:
@@ -389,6 +391,8 @@ class Menu extends View<MenuProps> {
                 renderFishFranSSP();
             case HowDrunk:
                 renderHowDrunk();
+            case LoudTeaSSP:
+                null;
             case AuLawFarm:
                 null;
             case MxMWorkshop:

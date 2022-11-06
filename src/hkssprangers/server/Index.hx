@@ -302,6 +302,8 @@ class Index extends View<IndexProps> {
                 StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
             case HowDrunk:
                 StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "squircle");
+            case LoudTeaSSP:
+                StaticResource.image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, "squircle");
             case _:
                 null;
         }
@@ -362,6 +364,7 @@ class Index extends View<IndexProps> {
                     </div>
                     ${renderShop(BiuKeeLokYuen, GoldenCluster)}
                     ${renderShop(BlackWindow, GoldenCluster)}
+                    ${renderShop(LoudTeaSSP, GoldenCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
                         <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>${ParkCluster.info().name}</span>
@@ -378,6 +381,7 @@ class Index extends View<IndexProps> {
                     </div>
                     ${renderShop(YearsHK, CLPCluster)}
                     ${renderShop(LonelyPaisley, CLPCluster)}
+                    ${renderShop(LoudTeaSSP, CLPCluster, ["hidden", "md:inline-block"])}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-blue-500 font-bold">
                         <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>${PakTinCluster.info().name}</span>
