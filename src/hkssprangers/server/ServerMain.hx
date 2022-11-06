@@ -440,6 +440,10 @@ class ServerMain {
         if (!dateParser.match(lines[0])) {
             return Promise.resolve(ctx.reply('喺第一行 /setmenu 後面搵唔到日期 (YYYY-MM-DD)'));
         }
+        final today = (Date.now():LocalDateString).getDatePart();
+        if (dateParser.matched(0) < today) {
+            return Promise.resolve(ctx.reply('唔可以更改以前嘅 menu。今日係 $today'));
+        }
         final dateStart:LocalDateString = dateParser.matched(0) + " 00:00:00";
         final dateEnd:LocalDateString = dateParser.matched(0) + " 23:59:59";
         final menu = try {
