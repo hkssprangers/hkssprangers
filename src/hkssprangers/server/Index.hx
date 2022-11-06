@@ -266,7 +266,7 @@ class Index extends View<IndexProps> {
         };
     }
 
-    static function renderShop(shop:Shop, cluster:ShopCluster) {
+    static function renderShop(shop:Shop, cluster:ShopCluster, ?extraClasses:Array<String>) {
         final image = switch shop {
             case EightyNine:
                 StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, "squircle");
@@ -305,11 +305,14 @@ class Index extends View<IndexProps> {
             case _:
                 null;
         }
-        final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
+        final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link " + (extraClasses != null ? extraClasses : []).join(" ");
         final linkClasses2 = "cursor-pointer menu";
         final thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
         final shopNameClasses = "text-xs lg:text-lg lg:flex-1";
         final textStyle = ShopCluster.clusterStyle[cluster].textClasses.join(" ");
+        final clusterDots = ShopCluster.classify(shop).map(c -> jsx('
+            <i className=${ShopCluster.clusterStyle[c].textClasses.join(" ") + " md:hidden fas fa-circle"}></i>
+        '));
         return jsx('
             <div className=${blockClasses2}>
                 <a href=${Path.join(["/menu", shop])} className=${linkClasses2}>
@@ -319,7 +322,7 @@ class Index extends View<IndexProps> {
                             <p className="absolute align-center-hover text-xs lg:text-lg"><i className=${textStyle + " fas fa-book-open"}></i><br/>menu</p>
                         </div>
                         <div className="md:ml-3 md:pr-6 md:flex-1 text-center md:text-left">
-                            <h1 className=${shopNameClasses}> <i className=${textStyle + " md:hidden fas fa-circle"}></i> ${shop.info().name}</h1>
+                            <h1 className=${shopNameClasses}> ${clusterDots} ${shop.info().name}</h1>
                             ${restDay(shop)}
                         </div>
                     </div>

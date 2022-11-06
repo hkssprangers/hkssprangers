@@ -137,7 +137,12 @@ class Menu extends View<MenuProps> {
                 ');
         }
         final clusters = ShopCluster.classify(shop).map(c -> {
-            jsx('<span>${c.info().name}</span>');
+            final style = ShopCluster.clusterStyle[c];
+            jsx('
+                <span className="mr-3">
+                    <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;<span>${c.info().name}</span>
+                </span>'
+            );
         });
         return jsx('
             <main>
@@ -147,8 +152,8 @@ class Menu extends View<MenuProps> {
                         <div className="lg:flex">
                             <div className="lg:w-1/3 lg:pr-12" itemScope itemType="https://schema.org/${info.type}">
                                 <div className="flex items-center mb-3">
-                                    <i className=${["fas", "fa-map-marker-alt"].concat(style.textClasses).join(" ")}></i>&nbsp;${clusters}
-                                    <div className="flex-1 ml-3 bg-border-black" >&nbsp;</div>
+                                    ${clusters}
+                                    <div className="flex-1 bg-border-black" >&nbsp;</div>
                                 </div>
                                 ${renderShopImage()}
                                 <div className="rounded-b-md bg-white p-3 mb-3 lg:mb-0">
