@@ -2,6 +2,7 @@ package hkssprangers.info.menu;
 
 import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
+import hkssprangers.info.MenuTools.*;
 using Lambda;
 
 enum abstract LoudTeaSSPItem(String) to String {
@@ -20,23 +21,36 @@ enum abstract LoudTeaSSPItem(String) to String {
     }):Dynamic {
         return switch (cast this:LoudTeaSSPItem) {
             case Drink:
+                final properties:Dynamic = {};
                 final def = {
                     title: Drink.getTitle(),
                     type: "object",
-                    properties: {
-                        drink: {
-                            type: "string",
-                            title: Drink.getTitle(),
-                            "enum": LoudTeaSSPMenu.drinks.map(d -> d.name),
-                        },
-                    },
-                    required: [
-                        "drink",
-                    ]
+                    properties: properties,
+                    required: [],
                 };
-                if (value != null && value.drink != null) {
 
+                properties.drink = {
+                    type: "string",
+                    title: Drink.getTitle(),
+                    oneOf: LoudTeaSSPMenu.drinks.map(d -> {
+                        const: d.name,
+                        title: d.name + (d.canHot ? " (凍/熱)" : " (凍)") + " $" + d.price,
+                    }),
+                };
+                def.required.push("drink");
+
+                if (value != null && value.drink != null) {
+                    final drink = LoudTeaSSPMenu.drinks.find(d -> d.name == value.drink);
+                    if (drink.canHot) {
+                        def.properties.type = {
+                            type: "string",
+                            title: "類別",
+                            "enum": ["凍", "熱"],
+                        }
+                        def.required.push("type");
+                    }
                 }
+
                 def;
         }
     }
@@ -174,7 +188,12 @@ class LoudTeaSSPMenu {
         final def = orderItem.type.getDefinition(orderItem.item);
         return switch (orderItem.type) {
             case Drink:
-                summarizeOrderObject(orderItem.item, def, ["drink"]);
+                final item = orderItem.item;
+                final drink = drinks.find(d -> d.name == item.drink);
+                {
+                    orderDetails: fullWidthDot + drink.name + (drink.canHot ? ' (${item.type})' : " (凍)") + " $" + drink.price,
+                    orderPrice: drink.price,
+                }
             case _:
                 {
                     orderDetails: "",
