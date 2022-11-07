@@ -894,11 +894,11 @@ enum abstract Shop(String) to String {
             case [BlackWindow, "2022-10-10", _]:
                 return Unavailable('休息一天');
 
-            case [YearsHK | TheParkByYears, "2022-11-02", _]:
+            case [EightyNine, "2022-11-08", _]:
                 return Unavailable('休息一天');
 
             case [Minimal, _, _]:
-                return Unavailable('餐牌更新中');
+                return Unavailable('等待新餐牌中');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
