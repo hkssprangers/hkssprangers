@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Specify Earthly remote cache
         run: echo "EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:$(echo "$GITHUB_REF_NAME" | sed 's/[^A-Za-z0-9\-\.]/_/g')" >> $GITHUB_ENV
-      - uses: earthly/actions-setup@79c1a7ec26c371d868724182ec98d7434b18521f
+      - uses: earthly/actions-setup@0f27e887233593666346cf20e138c06085f9d18c
         with:
           version: "v0.6.26"
       - name: Build devcontainer
