@@ -1053,11 +1053,11 @@ enum abstract Shop(String) to String {
                 Promise.resolve(FishFranSSPMenu.itemsSchema(pickupTimeSlot, o));
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.itemsSchema(pickupTimeSlot, o));
+            case LoudTeaSSP:
+                Promise.resolve(LoudTeaSSPMenu.itemsSchema(o));
             case AuLawFarm:
                 Promise.resolve(null);
             case MxMWorkshop:
-                Promise.resolve(null);
-            case LoudTeaSSP:
                 Promise.resolve(null);
         }
     }
@@ -1116,16 +1116,16 @@ enum abstract Shop(String) to String {
                 Promise.resolve(FishFranSSPMenu.summarize(o));
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.summarize(o, pickupTimeSlot));
+            case LoudTeaSSP:
+                Promise.resolve(LoudTeaSSPMenu.summarize(o));
             case AuLawFarm:
                 Promise.resolve(null);
             case MxMWorkshop:
                 Promise.resolve(null);
-            case LoudTeaSSP:
-                Promise.resolve(null);
         }
     }
 
-    static public function fromId(shopId:String):Shop {
+    static public function fromId(shopId:String):Null<Shop> {
         return switch (shopId) {
             case EightyNine: EightyNine;
             case DragonJapaneseCuisine: DragonJapaneseCuisine;
