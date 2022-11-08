@@ -6,12 +6,14 @@ import hkssprangers.info.TimeSlot;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Shop;
 import hkssprangers.info.FormOrderData;
+import hkssprangers.info.OrderTools;
 import mui.core.*;
 import mui.core.styles.Styles;
 import js.npm.rjsf.material_ui.*;
 using Reflect;
 using Lambda;
 using StringTools;
+using hxLINQ.LINQ;
 
 typedef OrdersTemplateProps = {
     final idSchema:Dynamic;
@@ -97,17 +99,11 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
         } else {
             null;
         }
-        final cluster = if (props.formData != null && props.formData.length > 0 && props.formData[0].shop != null) {
-            ShopCluster.classify(props.formData[0].shop);
-        } else {
+        final existingShops = props.formData.map(o -> o.shop).filter(s -> s != null);
+        final shopOptions = OrderTools.getAddShopOptions(existingShops);
+        final addButton = if (shopOptions.length <= 0) {
             null;
-        }
-        final clusterOptions = if (cluster != null) {
-            Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
-        } else {
-            Shop.all;
-        }
-        final addButton = switch (props.formData) {
+        } else switch (props.formData) {
             case null | []:
                 final disabled = !pickupTimeSlotSelected;
                 final warnMsg = pickupTimeSlotSelected ? null : jsx('
@@ -128,7 +124,7 @@ class OrdersTemplate extends ReactComponentOf<OrdersTemplateProps, Dynamic> {
                         ${warnMsg}
                     </div>
                 ');
-            case orders if (orders.length >= clusterOptions.length || orders.exists(o -> o.shop == null)):
+            case orders if (orders.exists(o -> o.shop == null)):
                 null;
             case _:
                 jsx('

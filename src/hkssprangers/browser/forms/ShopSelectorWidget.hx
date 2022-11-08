@@ -77,41 +77,45 @@ class ShopSelectorWidget extends ReactComponentOf<ShopSelectorWidgetProps, Dynam
             case []:
                 return null;
             case shops:
-                final items = shops.linq()
-                    .groupBy(s -> ShopCluster.classify(s)[0])
-                    .selectMany((group, i) -> {
-                        final items = group.linq().select((shop, _) -> {
-                            final info = shop.info();
-                            final availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
-                                Available;
-                            } else {
-                                shop.checkAvailability(currentTime, pickupTimeSlot);
-                            }
-                            final disabledMessage = switch (availability) {
-                                case Available:
-                                    null;
-                                case Unavailable(reason):
-                                    jsx('
-                                        <span className="ml-2 text-sm text-red-500">⚠ ${reason}</span>
-                                    ');
-                            };
-                            jsx('
-                                <MenuItem key=${shop} value=${shop} disabled=${availability.match(Unavailable(_))}>
-                                    ${info.name}${disabledMessage}
-                                </MenuItem>
-                            ');
-                        }).toArray();
-                        [
-                            jsx('
-                                <ListSubheader>
-                                    <div className="bg-white">
-                                        <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
-                                            <i className="fas fa-map-marker mr-1"></i>${group.key.info().name}
-                                        </span>
-                                    </div>
-                                </ListSubheader>
-                            ')
-                        ].concat(items);
+                final items = ShopCluster.all.linq()
+                    .selectMany((c,i) -> {
+                        final clusterShops = shops.filter(s -> ShopCluster.classify(s).has(c));
+                        if (clusterShops.length <= 0) {
+                            [];
+                        } else {
+                            final items = clusterShops.map(shop -> {
+                                final info = shop.info();
+                                final availability:Availability = if (currentTime == null || pickupTimeSlot == null) {
+                                    Available;
+                                } else {
+                                    shop.checkAvailability(currentTime, pickupTimeSlot);
+                                }
+                                final disabledMessage = switch (availability) {
+                                    case Available:
+                                        null;
+                                    case Unavailable(reason):
+                                        jsx('
+                                            <span className="ml-2 text-sm text-red-500">⚠ ${reason}</span>
+                                        ');
+                                };
+                                jsx('
+                                    <MenuItem key=${c + "-" + shop} value=${shop} disabled=${availability.match(Unavailable(_))}>
+                                        ${info.name}${disabledMessage}
+                                    </MenuItem>
+                                ');
+                            });
+                            [
+                                jsx('
+                                    <ListSubheader key=${c}>
+                                        <div className="bg-white">
+                                            <span className=${badge() + " bg-yellow-200 px-2 leading-normal"}>
+                                                <i className="fas fa-map-marker mr-1"></i>${c.info().name}
+                                            </span>
+                                        </div>
+                                    </ListSubheader>
+                                ')
+                            ].concat(items);
+                        }
                     })
                     .toArray();
                 return jsx('

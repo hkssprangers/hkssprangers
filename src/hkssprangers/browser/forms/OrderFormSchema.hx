@@ -23,15 +23,13 @@ class OrderFormSchema {
     }
     static public function getSchema(formData:OrderFormData, user:LoggedinUser):Promise<Dynamic> {
         final pickupTimeSlot = selectedPickupTimeSlot(formData);
-        final clusterOptions = switch (formData) {
-            case null | { orders: null | [] }:
-                Shop.all;
-            case { orders: _.linq().select((o, _) -> o.shop).first(s -> s != null) => shop } if (shop != null):
-                final cluster = ShopCluster.classify(shop);
-                Shop.all.filter(s -> ShopCluster.classify(s) == cluster);
+        final existingShops = switch (formData) {
+            case null | { orders: null }:
+                [];
             case _:
-                Shop.all;
+                formData.orders.map(o -> o.shop).filter(s -> s != null);
         }
+        final shopOptions = OrderTools.getAddShopOptions(existingShops);
         function shopSchema(options:ReadOnlyArray<Shop>):Dynamic return switch (options) {
             case []:
                 {
@@ -69,10 +67,10 @@ class OrderFormSchema {
             "default": false,
         }
 
-        final itemsSchema:Promise<Dynamic> = formData.orders == null || formData.orders.length == 0 ? Promise.resolve(orderSchema(clusterOptions)) : {
+        final itemsSchema:Promise<Dynamic> = formData.orders == null || formData.orders.length == 0 ? Promise.resolve(orderSchema(shopOptions)) : {
             Promise.all(
                 formData.orders.linq().select((o, i) -> {
-                    final orderSchema = orderSchema(o.shop != null ? [o.shop] : clusterOptions.filter(s -> !formData.orders.exists(_o -> _o.shop == s)));
+                    final orderSchema = orderSchema(o.shop != null ? [o.shop] : shopOptions);
                     (switch (o.shop) {
                         case null:
                             Promise.resolve(orderSchema);
@@ -178,7 +176,7 @@ class OrderFormSchema {
                 orders: {
                     type: "array",
                     items: itemsSchema,
-                    additionalItems: orderSchema(clusterOptions),
+                    additionalItems: orderSchema(shopOptions),
                     minItems: 1,
                 },
                 paymentMethods: {

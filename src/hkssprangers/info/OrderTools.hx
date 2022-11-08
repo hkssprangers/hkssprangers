@@ -1,6 +1,8 @@
 package hkssprangers.info;
 
 import thx.Decimal;
+import haxe.ds.*;
+using Lambda;
 using StringTools;
 using hkssprangers.MathTools;
 
@@ -65,5 +67,27 @@ class OrderTools {
             case AuLawFarm: 0;
             case _: (order.orderPrice:Decimal) * 0.15;
         }
+    }
+
+    static public function getAddShopOptions(existingShops:ReadOnlyArray<Shop>):Array<Shop> {
+        final clusters = if (existingShops == null || existingShops.length <= 0) {
+            ShopCluster.all;
+        } else {
+            switch (existingShops) {
+                case []:
+                    ShopCluster.all;
+                case _:
+                    final shopClusters = existingShops.map(s -> ShopCluster.classify(s));
+                    shopClusters[0].filter(c -> shopClusters.foreach(cs -> cs.has(c)));
+            }
+        }
+        final shopOptions = Shop.all.filter(s ->
+            s.info().isInService
+            &&
+            (!existingShops.has(s))
+            &&
+            ShopCluster.classify(s).exists(c -> clusters.has(c))
+        );
+        return shopOptions;
     }
 }

@@ -15,20 +15,20 @@ class OrderObjectFieldTemplate extends ReactComponentOf<OrderObjectFieldTemplate
         if (props.formData == null)
             return false;
 
-        var shop:Shop = props.formData.shop;
+        final shop:Shop = props.formData.shop;
         return shop != null;
     }
     override function render():ReactFragment {
-        var props:OrderObjectFieldTemplateProps = cast Object.assign({}, props, {
+        final props:OrderObjectFieldTemplateProps = cast Object.assign({}, props, {
             properties: [
                 for (p in props.properties)
                 if (!(p.name == "shop" && isShopSelected()))
                 p
             ],
         });
-        var id = Reflect.field(props.idSchema, "$id");
-        var TitleField = props.TitleField;
-        var title = switch (props.title) {
+        final id = Reflect.field(props.idSchema, "$id");
+        final TitleField = props.TitleField;
+        final title = switch (props.title) {
             case null:
                 null;
             case title:
@@ -40,8 +40,8 @@ class OrderObjectFieldTemplate extends ReactComponentOf<OrderObjectFieldTemplate
                     />
                 ');
         };
-        var DescriptionField = props.DescriptionField;
-        var description = switch (props.description) {
+        final DescriptionField = props.DescriptionField;
+        final description = switch (props.description) {
             case null:
                 null;
             case description:
@@ -52,7 +52,7 @@ class OrderObjectFieldTemplate extends ReactComponentOf<OrderObjectFieldTemplate
                     />
                 ');
         };
-        var properties = props.properties.mapi((index, p) -> {
+        final properties = props.properties.mapi((index, p) -> {
             jsx('
                 <Grid
                     item
