@@ -7,6 +7,7 @@
 --library thx.core
 --library format
 --library CommentString
+--library hxLINQ
 --class-path src
 --class-path test
 --class-path lib/dts2hx

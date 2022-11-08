@@ -7,6 +7,7 @@
 --library thx.core
 --library CommentString
 --library format
+--library hxLINQ
 --class-path src
 --class-path lib/dts2hx
 --main hkssprangers.ImportGoogleForm

@@ -8,6 +8,7 @@
 --library hxnodejs
 --library CommentString
 --library format
+--library hxLINQ
 --class-path src
 --class-path test
 --class-path lib/dts2hx
