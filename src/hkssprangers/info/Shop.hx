@@ -52,9 +52,9 @@ enum abstract Shop(String) to String {
         YearsHK,
         LonelyPaisley,
 
-        LoudTeaSSP,
         BiuKeeLokYuen,
         BlackWindow,
+        LoudTeaSSP,
         
         TheParkByYears,
         MGY,

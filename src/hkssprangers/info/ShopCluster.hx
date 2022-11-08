@@ -15,11 +15,11 @@ enum abstract ShopCluster(String) to String {
     static public final all:ReadOnlyArray<ShopCluster> = [
         DragonCentreCluster,
         PeiHoStreetMarketCluster,
-        CLPCluster,
         GoldenCluster,
-        SmilingPlazaCluster,
         ParkCluster,
+        CLPCluster,
         PakTinCluster,
+        SmilingPlazaCluster,
         TungChauStreetParkCluster,
     ];
 
@@ -112,7 +112,7 @@ enum abstract ShopCluster(String) to String {
         CLPCluster => {
             borderClasses: ["border-green-400"],
             headerClasses: ["bg-pt2-green-400"],
-            boxClasses: [],
+            boxClasses: ["bg-slash-green-400"],
             textClasses: ["text-green-500"]
         },
         GoldenCluster => {

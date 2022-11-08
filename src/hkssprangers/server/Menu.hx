@@ -37,6 +37,7 @@ import hkssprangers.info.menu.BlackWindowMenu;
 import hkssprangers.info.menu.LonelyPaisleyMenu.*;
 import hkssprangers.info.menu.FishFranSSPMenu.*;
 import hkssprangers.info.menu.HowDrunkMenu.*;
+import hkssprangers.info.menu.LoudTeaSSPMenu;
 import hkssprangers.info.menu.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
@@ -392,7 +393,7 @@ class Menu extends View<MenuProps> {
             case HowDrunk:
                 renderHowDrunk();
             case LoudTeaSSP:
-                null;
+                renderLoudTeaSSP();
             case AuLawFarm:
                 null;
             case MxMWorkshop:
@@ -424,7 +425,7 @@ class Menu extends View<MenuProps> {
         ');
     }
 
-    static function slashes(items:Array<String>)
+    static function slashes(items:ReadOnlyArray<String>)
         return [
             for (i => item in items)
             if (i < items.length - 1)
@@ -1427,6 +1428,108 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${HowDrunkDrink.title}</div>
                         ${renderItems(HowDrunkDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderLoudTeaSSP() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        function printDrink(d:LoudTeaSSPDrink) {
+            return
+                d.name
+                + ' (${d.canHot ? LoudTeaSSPDrinkType.Iced + "/" + LoudTeaSSPDrinkType.Hot : LoudTeaSSPDrinkType.Iced})'
+                + " $" + d.price
+            ;
+        }
+        final milkFoamOptions = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPMilkFoamOption.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${slashes(LoudTeaSSPMilkFoamOption.all)}</div>
+                </div>
+            </div>
+        ');
+        final pearlOptions = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPPearlOption.BlackPearl}可免費轉</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${
+                        slashes(
+                            LoudTeaSSPPearlOption.all
+                                .filter(opt -> opt != BlackPearl)
+                                .map(opt -> (opt:String).substr(1))
+                        )
+                    }</div>
+                </div>
+            </div>
+        ');
+        final teaOrSoda = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPTeaOption.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${slashes(LoudTeaSSPTeaOption.teaOrSoda)}</div>
+                </div>
+            </div>
+        ');
+        final springTeaOrSoda = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPTeaOption.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${slashes(LoudTeaSSPTeaOption.springTeaOrSoda)}</div>
+                </div>
+            </div>
+        ');
+        final freshMilk = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPExtraOption.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${slashes([LoudTeaSSPExtraOption.FreshMilk])}</div>
+                </div>
+            </div>
+        ');
+        final teas = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPTeaOption.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${slashes(LoudTeaSSPTeaOption.teas)}</div>
+                </div>
+            </div>
+        ');
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.SignatureDrink}</div>
+                        ${renderItems(LoudTeaSSPMenu.drinks[SignatureDrink].map(printDrink))}
+
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.FourSeasonsOfSpringTea}</div>
+                        ${milkFoamOptions}
+                        ${renderItems(LoudTeaSSPMenu.drinks[FourSeasonsOfSpringTea].map(printDrink))}
+
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.BrownSugarFlavoredLatte}</div>
+                        ${pearlOptions}
+                        ${renderItems(LoudTeaSSPMenu.drinks[BrownSugarFlavoredLatte].map(printDrink))}
+
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.ClassicChineseTea}</div>
+                        ${renderItems(LoudTeaSSPMenu.drinks[ClassicChineseTea].map(printDrink))}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.FreshFruitTea_BubbleSoda}</div>
+                        ${teaOrSoda}
+                        ${renderItems(LoudTeaSSPMenu.drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.teaOrSoda).map(printDrink))}
+                        ${springTeaOrSoda}
+                        ${renderItems(LoudTeaSSPMenu.drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.springTeaOrSoda).map(printDrink))}
+
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.MilkTeaWithBlackPearl}</div>
+                        ${freshMilk}
+                        ${pearlOptions}
+                        ${renderItems(LoudTeaSSPMenu.drinks[MilkTeaWithBlackPearl].map(printDrink))}
+
+                        <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.MilkFoamSpecial}</div>
+                        ${teas}
+                        ${renderItems(LoudTeaSSPMenu.drinks[MilkFoamSpecial].map(printDrink))}
                     </div>
                 </div>
             </Fragment>
