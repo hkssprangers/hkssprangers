@@ -381,38 +381,38 @@ class LoudTeaSSPMenu {
                 pearlOpts: LoudTeaSSPPearlOption.all,
             },
         ],
-        // 清荼系列
+        // 清茶系列
         ClassicChineseTea => [
             {
-                name: "清荼 頂級鐵觀音",
+                name: "清茶 頂級鐵觀音",
                 price: markup(15),
                 canHot: true,
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
             {
-                name: "清荼 阿薩姆紅茶",
+                name: "清茶 阿薩姆紅茶",
                 price: markup(15),
                 canHot: true,
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
             {
-                name: "清荼 御品綠茶",
+                name: "清茶 御品綠茶",
                 price: markup(15),
                 canHot: true,
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
             {
-                name: "清荼 碳焙烏龍",
+                name: "清茶 碳焙烏龍",
                 price: markup(17),
                 canHot: true,
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
             {
-                name: "清荼 四季春茶",
+                name: "清茶 四季春茶",
                 price: markup(21),
                 canHot: true,
                 sweetOpts: LoudTeaSSPSweetOption.all,
