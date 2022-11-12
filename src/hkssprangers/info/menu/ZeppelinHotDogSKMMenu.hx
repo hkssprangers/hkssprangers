@@ -49,8 +49,8 @@ class ZeppelinHotDogSKMMenu {
     static public final setSnacks = [
         SmallFF,
         BigFF,
-        "薯蓉波波",
-        "薯仔寶寶",
+        // "薯蓉波波",
+        // "薯仔寶寶",
         "牛油粟米杯",
         "薯餅",
         "冰菠蘿",
@@ -62,7 +62,7 @@ class ZeppelinHotDogSKMMenu {
         "忌廉",
         "有汽檸檬茶",
         "無糖冷泡茶 +$2",
-        "冷泡炭焙烏龍茶(無糖) +$2",
+        // "冷泡炭焙烏龍茶(無糖) +$2",
         "OOHA 荔枝乳酸味汽水 +$2",
         "OOHA 柚子海鹽味汽水 +$2",
         "OOHA 白桃烏龍茶味汽水 +$2",
@@ -71,7 +71,7 @@ class ZeppelinHotDogSKMMenu {
         "奶茶 (英女王) +$12",
     ];
     static public final chokOptions = [
-        "CHOK CHOK粉 紫菜風味",
+        // "CHOK CHOK粉 紫菜風味",
         "CHOK CHOK粉 惹味麻辣",
     ];
 
@@ -85,7 +85,7 @@ class ZeppelinHotDogSKMMenu {
             "忌廉 $8",
             "有汽檸檬茶 $8",
             "無糖冷泡茶 $10",
-            "冷泡炭焙烏龍茶(無糖) $12",
+            // "冷泡炭焙烏龍茶(無糖) $12",
             "OOHA 荔枝乳酸味汽水 $10",
             "OOHA 柚子海鹽味汽水 $10",
             "OOHA 白桃烏龍茶味汽水 $10",
@@ -114,8 +114,8 @@ class ZeppelinHotDogSKMMenu {
             "芝士大薯條 $27",
             "芝士煙肉薯條 $30",
             "芝士辣肉醬薯條 $30",
-            "薯蓉波波 $12",
-            "薯仔寶寶 $12",
+            // "薯蓉波波 $12",
+            // "薯仔寶寶 $12",
             "辣雞扒 (1件) $15",
             "辣雞扒 (2件) $24",
             "薯餅 $8",
