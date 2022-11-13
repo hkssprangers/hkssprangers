@@ -719,7 +719,7 @@ enum abstract Shop(String) to String {
                 instagram: "https://www.instagram.com/minimal_cafehk/",
                 availablity: "提供午餐及晚餐",
                 restDay: null,
-                recommendation: "牛肝菌貓耳朵粉 / 慢煮黑安格斯牛肉 / 蘋果酥盒"
+                recommendation: null
             }
         case CafeGolden:
             {
@@ -927,9 +927,6 @@ enum abstract Shop(String) to String {
 
             case [EightyNine, "2022-11-08", _]:
                 return Unavailable('休息一天');
-
-            case [Minimal, _, _]:
-                return Unavailable('等待新餐牌中');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');

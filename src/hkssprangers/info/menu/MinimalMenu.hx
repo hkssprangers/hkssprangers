@@ -57,7 +57,6 @@ class MinimalMenu {
         { name: "Baileys latte(熱)", price: 44 },
         { name: "Baileys latte(凍)", price: 48 },
         { name: "Espresso Tonic(凍)", price: 44 },
-        { name: "Dirty(凍)", price: 44 },
 
         { name: "火龍果乳酪", price: 46 },
         { name: "芒果乳酪", price: 48 },
@@ -88,10 +87,10 @@ class MinimalMenu {
     static final drinksForFood = drinks.map(v -> { name: v.name, price: v.price - 10 });
 
     static final tacos = [
-        { name: "BBQ牛油果素肉醬夾餅(v.)", price: 95 },
-        { name: "牛油果雞胸肉配芒果醬夾餅", price: 95 },
-        { name: "洋蔥壽喜燒牛肉夾餅", price: 98 },
-        { name: "松露炸魚柳夾餅配薯角", price: 100 },
+        { name: "BBQ牛油果素肉醬夾餅(v.)", price: 100 },
+        { name: "牛油果雞胸肉配芒果醬夾餅", price: 100 },
+        { name: "洋蔥壽喜燒牛肉夾餅", price: 105 },
+        { name: "松露炸魚柳夾餅配薯角", price: 105 },
     ];
     static public final MinimalTacos = {
         title: "夾餅",
@@ -113,11 +112,8 @@ class MinimalMenu {
     };
 
     static final salads = [
-        // { name: "藜麥煙三文魚沙律", price: 72 },
-        // { name: "流心水牛芝士蕃茄沙律(v.)", price: 92 },
-        { name: "醃鯷魚什菌羅馬生菜沙律", price: 75 },
-        { name: "西瓜配巴馬火腿沙律", price: 75 },
-        { name: "雞胸肉蕃茄沙律", price: 92 },
+        { name: "無花果雞胸肉凱撒沙律", price: 85 },
+        { name: "雞胸肉蕃茄沙律", price: 85 },
     ];
 
     static public final MinimalSalad = {
@@ -140,12 +136,12 @@ class MinimalMenu {
     };
 
     static final pastas = [
-        { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 95 },
-        { name: "辣茄汁煙豬面肉貓耳朵粉(h.)", price: 95 },
-        { name: "牛肝菌貓耳朵粉(v.)", price: 95 },
+        { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 100 },
+        { name: "辣茄汁煙豬面肉貓耳朵粉(h.)", price: 100 },
+        { name: "溫泉蛋什菌牛肝菌汁貓耳朵粉(v.)", price: 100 },
         { name: "香煎帶子黑魚籽龍蝦汁意粉", price: 138 },
         { name: "蒜蓉牛油海露筍蜆意粉", price: 115 },
-        { name: "松露南瓜汁配香腸肉碎貓耳朵", price: 108 },
+        { name: "松露南瓜汁配香腸肉碎貓耳朵", price: 110 },
     ];
 
     static public final MinimalPasta = {
@@ -169,7 +165,6 @@ class MinimalMenu {
 
     static final sousVides = [
         { name: "松露西班牙豬柳配燉菜粒", price: 128 },
-        // { name: "慢煮黑安格斯牛肉7oz", price: 158 },
         { name: "安格斯牛腰扒配阿根廷青醬", price: 158 },
     ];
 
@@ -221,9 +216,8 @@ class MinimalMenu {
                 title: "甜品",
                 type: "string",
                 "enum": [
-                    // "木盒芝士蛋糕 $55", // 外賣容器未到所以要停一段時間
-                    "檸檬柚子撻 $72",
-                    "蘋果酥盒 $76",
+                    "檸檬柚子撻 $77",
+                    "蘋果酥盒 $80",
                 ],
             },
             drink: {
@@ -239,7 +233,7 @@ class MinimalMenu {
 
     static public final MinimalSetFor2 = {
         title: "二人套餐",
-        description: "二人套餐 $288",
+        description: "二人套餐 $302",
         properties: {
             salad: {
                 title: "沙律",
@@ -249,12 +243,12 @@ class MinimalMenu {
             main1: {
                 title: "主食一",
                 type: "string",
-                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 100 ? "" : " +$" + (v.price - 100))),
             },
             main2: {
                 title: "主食二",
                 type: "string",
-                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 100 ? "" : " +$" + (v.price - 100))),
             },
             drink1: {
                 title: "飲品一",
@@ -278,7 +272,7 @@ class MinimalMenu {
 
     static public final MinimalSetFor4 = {
         title: "四人套餐",
-        description: "四人套餐 $598",
+        description: "四人套餐 $628",
         properties: {
             salad1: {
                 title: "沙律一",
@@ -293,12 +287,12 @@ class MinimalMenu {
             main1: {
                 title: "主食一",
                 type: "string",
-                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 100 ? "" : " +$" + (v.price - 100))),
             },
             main2: {
                 title: "主食二",
                 type: "string",
-                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 95 ? "" : " +$" + (v.price - 95))),
+                "enum": pastas.concat(tacos).map(v -> v.name + (v.price <= 100 ? "" : " +$" + (v.price - 100))),
             },
             sousVides: {
                 title: "慢煮/肉類",
