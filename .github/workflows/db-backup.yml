@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: earthly/actions-setup@0f27e887233593666346cf20e138c06085f9d18c
         with:
-          version: "v0.6.26"
+          version: "v0.6.29"
       - name: Create .envrc
         run: |
           cat > .envrc <<EOT
