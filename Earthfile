@@ -403,24 +403,24 @@ style-css:
 
 serviceWorker-js:
     FROM +devcontainer
+    USER $USERNAME
     COPY lib/workbox lib/workbox
     COPY haxe_libraries haxe_libraries
     COPY src src
-    COPY .haxerc serviceWorker.hxml babel.config.json .
+    COPY .haxerc serviceWorker.hxml esbuild.inject.js .
     RUN mkdir -p static
     RUN haxe serviceWorker.hxml
-    RUN npx browserify serviceWorker.js --transform [ babelify --global ] -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/serviceWorker.bundled.js
     SAVE ARTIFACT static/serviceWorker.bundled.js
 
 browser-js:
     FROM +devcontainer
+    USER $USERNAME
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
-    COPY .haxerc browser.hxml babel.config.json holidays.json .
+    COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
     RUN haxe browser.hxml
-    RUN npx browserify browser.js -g [ envify --NODE_ENV production ] -g uglifyify | npx terser --compress --mangle > static/browser.bundled.js
     SAVE ARTIFACT static/browser.bundled.js
 
 server:
@@ -432,7 +432,7 @@ server:
     COPY +tailwind/tailwind.css static/css/tailwind.css
     COPY +style-css/style.css static/css/style.css
     COPY src src
-    COPY .haxerc server.hxml babel.config.json holidays.json package-lock.json .
+    COPY .haxerc server.hxml holidays.json package-lock.json .
     RUN haxe server.hxml
     SAVE ARTIFACT index.js
     SAVE ARTIFACT static/images

@@ -17,4 +17,4 @@
 --dce full
 -D no-deprecation-warnings
 -D browser
---cmd npx browserify browser.js > static/browser.bundled.js
+--cmd npx esbuild browser.js --bundle --minify --define:global=window --inject:esbuild.inject.js --target=es2016 --outfile=static/browser.bundled.js

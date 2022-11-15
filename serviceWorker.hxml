@@ -11,4 +11,4 @@
 --dce full
 -D no-deprecation-warnings
 -D browser
---cmd npx browserify --transform [ babelify --global ] serviceWorker.js > static/serviceWorker.bundled.js
+--cmd npx esbuild serviceWorker.js --bundle --minify --define:global=window --inject:esbuild.inject.js --target=es2016 --outfile=static/serviceWorker.bundled.js
