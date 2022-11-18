@@ -39,6 +39,7 @@ enum abstract Shop(String) to String {
     final MxMWorkshop:Shop;
     final HowDrunk:Shop;
     final LoudTeaSSP:Shop;
+    final NEVeg:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -67,6 +68,7 @@ enum abstract Shop(String) to String {
 
         AuLawFarm,
         MxMWorkshop,
+        NEVeg,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -692,6 +694,25 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: null
             }
+        case NEVeg:
+            {
+                id: NEVeg,
+                name: "東北菜檔",
+                type: LocalBusiness,
+                address: null,
+                lat: null,
+                lng: null,
+                courierContact: [],
+                openDays: [],
+                earliestPickupTime: null,
+                latestPickupTime: null,
+                isInService: false,
+                facebook: null,
+                instagram: null,
+                availablity: null,
+                restDay: null,
+                recommendation: null
+            }
         case Minimal:
             {
                 id: Minimal,
@@ -1053,9 +1074,7 @@ enum abstract Shop(String) to String {
                 Promise.resolve(HowDrunkMenu.itemsSchema(pickupTimeSlot, o));
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.itemsSchema(o));
-            case AuLawFarm:
-                Promise.resolve(null);
-            case MxMWorkshop:
+            case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
     }
@@ -1116,9 +1135,7 @@ enum abstract Shop(String) to String {
                 Promise.resolve(HowDrunkMenu.summarize(o, pickupTimeSlot));
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.summarize(o));
-            case AuLawFarm:
-                Promise.resolve(null);
-            case MxMWorkshop:
+            case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
     }
@@ -1147,6 +1164,7 @@ enum abstract Shop(String) to String {
             case WoStreet: WoStreet;
             case AuLawFarm: AuLawFarm;
             case MxMWorkshop: MxMWorkshop;
+            case NEVeg: NEVeg;
             case Minimal: Minimal;
             case CafeGolden: CafeGolden;
             case BlackWindow: BlackWindow;

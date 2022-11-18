@@ -279,6 +279,8 @@ class Menu extends View<MenuProps> {
                 null;
             case MxMWorkshop:
                 null;
+            case NEVeg:
+                null;
         }
 
         return jsx('
@@ -397,6 +399,8 @@ class Menu extends View<MenuProps> {
             case AuLawFarm:
                 null;
             case MxMWorkshop:
+                null;
+            case NEVeg:
                 null;
         }
     }
