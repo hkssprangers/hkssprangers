@@ -281,7 +281,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "福昌工廠大廈",
+            place: "福昌工廠大廈 (大角咀)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450598043"
@@ -319,7 +319,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "君匯港",
+            place: "君匯港 (大角咀)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/143984531"
@@ -338,7 +338,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "凱帆軒",
+            place: "凱帆軒 (大角咀)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/384976981",
@@ -357,13 +357,32 @@ class DeliveryFee {
             }
         },
         {
-            place: "奧海城/帝柏海灣/海富苑",
+            place: "奧海城",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/relation/12937309",
                 }
             ],
-            match: address -> address.contains("帝柏海灣") || address.contains("奧海城") || address.contains("海富苑"),
+            match: address -> address.contains("帝柏海灣") || address.contains("奧海城"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "海富苑",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/26379367",
+                }
+            ],
+            match: address -> address.contains("海富苑"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
                 case PeiHoStreetMarketCluster: 40;
@@ -687,7 +706,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "南昌街332", //賽馬會新生精神康復學院
+            place: "賽馬會新生精神康復學院 (白田)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/189786893"
@@ -706,7 +725,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "公共衛生檢測中心",
+            place: "公共衛生檢測中心 (白田)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/189786657"
@@ -763,7 +782,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "仁寶大廈",
+            place: "仁寶大廈 (石硤尾)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/444076329"
@@ -877,7 +896,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "聖公會聖安德烈小學",
+            place: "聖公會聖安德烈小學 (海麗邨)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/99713446"
@@ -896,7 +915,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金碧閣",
+            place: "金碧閣 (長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/753291637"
@@ -934,7 +953,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "景翠苑",
+            place: "景翠苑 (大埔道)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104745330"
@@ -953,7 +972,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "楓華樓",
+            place: "楓華樓 (楓樹街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104746399"
@@ -972,7 +991,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "置輝閣",
+            place: "置輝閣 (大埔道)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/666770059"
@@ -991,7 +1010,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "崇德大廈", //黃竹街39號
+            place: "崇德大廈 (黃竹街)", //黃竹街39號
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/666770062"
@@ -1048,7 +1067,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "弦雅",
+            place: "弦雅 (醫局街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/782116575"
@@ -1086,7 +1105,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金海大廈", //海壇街241-245號
+            place: "金海大廈 (海壇街)", //海壇街241-245號
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450190865"
@@ -1105,7 +1124,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "豐盛大廈", //海壇街
+            place: "豐盛大廈 (海壇街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/494472460"
@@ -1219,7 +1238,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "保安道寶華閣", // 有另一個寶華閣喺元州街
+            place: "寶華閣 (保安道，近李鄭屋邨)", // 有另一個寶華閣喺元州街
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/757863399"
@@ -1295,7 +1314,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "麗群閣",
+            place: "麗群閣 (長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/457374950"
@@ -1314,7 +1333,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "新寶大廈",
+            place: "新寶大廈 (近樂年花園)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/705218342"
@@ -1484,7 +1503,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "寶田大廈",
+            place: "寶田大廈 (白田)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/296167516"
@@ -1503,7 +1522,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "福田大廈",
+            place: "福田大廈 (白田)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/296167506"
@@ -1560,18 +1579,34 @@ class DeliveryFee {
             }
         },
         {
-            place: "怡閣苑, 怡靖苑",
+            place: "怡閣苑",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/151705958"
                 },
+            ],
+            match: address ->
+                address.contains("怡閣苑") || address.toLowerCase().contains("yee kok court")
+            ,
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "怡靖苑",
+            osm: [
                 {
                     url: "https://www.openstreetmap.org/way/151705957"
                 }
             ],
             match: address ->
-                address.contains("怡閣苑") || address.toLowerCase().contains("yee kok court")
-                ||
                 address.contains("怡靖苑") || address.toLowerCase().contains("yee ching court")
             ,
             deliveryFee: cluster -> switch cluster {
@@ -1586,7 +1621,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金玉大廈",
+            place: "金玉大廈 (白田)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/296167637"
@@ -1605,7 +1640,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "豐溢閣",
+            place: "豐溢閣 (近樂年花園)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770851563"
@@ -1662,7 +1697,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "海旭閣",
+            place: "海旭閣 (長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/494506616"
@@ -1681,7 +1716,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "威信大廈",
+            place: "威信大廈 (大埔道)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/827851791"
@@ -1700,7 +1735,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "深崇閣",
+            place: "深崇閣 (黃竹街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104768707"
@@ -1719,7 +1754,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金必多大廈",
+            place: "金必多大廈 (深水埗)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450215821"
@@ -1738,7 +1773,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金濤閣",
+            place: "金濤閣 (近琦興)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/782116567"
@@ -1776,7 +1811,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "翠雲大廈",
+            place: "翠雲大廈 (近步陞)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770846621"
@@ -1795,7 +1830,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "福昇大廈",
+            place: "福昇大廈 (近楓樹街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104771523"
@@ -1814,7 +1849,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "順景閣",
+            place: "順景閣 (近樂年花園)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770819285"
@@ -1833,7 +1868,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "大興大廈", //元州街132號
+            place: "大興大廈 (近寶血醫院)", //元州街132號
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770830209"
@@ -1852,7 +1887,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "薈悅",
+            place: "薈悅 (近樂年花園)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770819290"
@@ -1909,7 +1944,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "嘉美中心",
+            place: "嘉美中心 (醫局街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450190050"
@@ -1928,7 +1963,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "金盟大廈",
+            place: "金盟大廈 (近寶血醫院)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770819287"
@@ -1976,7 +2011,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "祥賢大廈",
+            place: "祥賢大廈 (深水埗)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/783317898"
@@ -1995,7 +2030,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "友來大廈",
+            place: "友來大廈 (近楓樹街遊樂場)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1089876447"
@@ -2033,7 +2068,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "海華麗軒",
+            place: "海華麗軒 (長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450184469"
@@ -2052,7 +2087,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "順寧道順發大廈",
+            place: "順寧道順發大廈 (長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450184799"
@@ -2102,7 +2137,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "一號九龍道",
+            place: "一號九龍道 (近寶血醫院)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/677639737"
@@ -2140,7 +2175,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "晉嶺",
+            place: "晉嶺 (近東廬大樓)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/450195336"
@@ -2159,7 +2194,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "東寶閣",
+            place: "東寶閣 (近樂年花園)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/705218347"
@@ -2178,7 +2213,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "One New York",
+            place: "One New York (綠在長沙灣)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/457373571"
@@ -2197,7 +2232,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "中國船舶大廈",
+            place: "中國船舶大廈 (長沙灣添褔)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/448053953"
@@ -2235,7 +2270,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "百美工廠大廈",
+            place: "百美工廠大廈 (長沙灣四喜)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/753522406"
@@ -2254,7 +2289,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "香港中心",
+            place: "香港中心 (長沙灣工業區)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/384658846"
@@ -2300,7 +2335,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "仁順大廈",
+            place: "仁順大廈 (近宇宙商場)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/758132178"
@@ -2319,7 +2354,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "置榮閣",
+            place: "置榮閣 (近寶血醫院)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/770851562"
@@ -2338,7 +2373,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "傲凱",
+            place: "傲凱 (海壇街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/783542161"
@@ -2357,7 +2392,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "順康居",
+            place: "順康居 (近香港人冰室)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/705218349"
@@ -2376,7 +2411,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "昌隆工業大廈",
+            place: "昌隆工業大廈 (荔枝角)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/384621632"
@@ -2414,7 +2449,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "W668",
+            place: "W668 (荔枝角)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104774299"
@@ -2433,7 +2468,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "南都大廈",
+            place: "南都大廈 (大埔道)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/494451423"
@@ -2452,7 +2487,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "建和閣",
+            place: "建和閣 (深水埗)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/815616904"
@@ -2490,7 +2525,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "康美樓", //荔枝角道135號
+            place: "康美樓 (Wontonmeen)", //荔枝角道135號
             osm: [
                 {
                     url: "https://www.openstreetmap.org/node/4496526267"
@@ -2509,7 +2544,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "置豐閣",
+            place: "置豐閣 (醫局街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/783303081"
@@ -2726,7 +2761,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "順輝大廈", //長發街22號
+            place: "順輝大廈 (長沙灣)", //長發街22號
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/757325703"
@@ -2745,7 +2780,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "耀中國際小學",
+            place: "耀中國際小學 (九龍塘)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/429629508"
@@ -2802,7 +2837,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "Garden Heights",
+            place: "Garden Heights (太子)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/746151993"
@@ -2897,7 +2932,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "尚山岩舘",
+            place: "尚山岩舘 (大南街)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/node/9883215571"
@@ -2938,7 +2973,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "荔香大廈",
+            place: "荔香大廈 (近 SO Coffee & Gin)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/node/9882298921"
@@ -3060,7 +3095,7 @@ class DeliveryFee {
             }
         },
         {
-            place: "長明大廈",
+            place: "長明大廈 (近楓樹街遊樂場)",
             osm: [
                 {
                     url: "https://www.openstreetmap.org/way/1104793344"
@@ -3145,13 +3180,18 @@ class DeliveryFee {
         },
     ];
 
-    static public function decideDeliveryFee(delivery:Delivery):Promise<Float> {
+    static public function getMatchedHeuristrics(address:String):Array<DeliveryFeeHeuristric> {
         final matched:Array<DeliveryFeeHeuristric> = [];
         for (h in heuristics) {
-            if (h.match(delivery.pickupLocation)) {
+            if (h.match(address)) {
                 matched.push(h);
             }
         }
+        return matched;
+    }
+
+    static public function decideDeliveryFee(delivery:Delivery):Promise<Float> {
+        final matched = getMatchedHeuristrics(delivery.pickupLocation);
         if (matched.length <= 0) {
             return Promise.reject(new Error(InternalError, "No matching heuristics"));
         }
