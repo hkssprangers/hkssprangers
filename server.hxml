@@ -17,5 +17,6 @@
 -D react_skip_extend_component_restriction
 -D no-deprecation-warnings
 -D sql_debug
+-D server
 --dce full
 --macro hkssprangers.server.Macros.build()

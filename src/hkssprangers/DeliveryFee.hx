@@ -10,9 +10,6 @@ import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.info.Discounts;
-import fastify.*;
-import hkssprangers.server.*;
-using hkssprangers.server.FastifyTools;
 import tink.CoreApi;
 import sys.io.File;
 import haxe.ds.*;
@@ -21,6 +18,12 @@ using Lambda;
 using StringTools;
 using hxLINQ.LINQ;
 import comments.CommentString.*;
+
+#if server
+import fastify.*;
+import hkssprangers.server.*;
+using hkssprangers.server.FastifyTools;
+#end
 
 typedef DeliveryFeeHeuristric = {
     place:String,
@@ -3221,6 +3224,7 @@ class DeliveryFee {
         }
     }
 
+    #if server
     static public function get(req:Request, reply:Reply):js.lib.Promise<Dynamic> {
         final delivery:Delivery = Json.parse(req.query.delivery);
         return decideDeliveryFee(delivery)
@@ -3239,6 +3243,7 @@ class DeliveryFee {
     static public function setup(app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic>) {
         app.get("/decide-delivery-fee", DeliveryFee.get);
     }
+    #end
 
     static function main():Void {
         final osmRefs = heuristics.linq()
