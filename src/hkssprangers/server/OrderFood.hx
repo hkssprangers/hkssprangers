@@ -205,7 +205,7 @@ class OrderFood extends View<OrderFoodProps> {
                                     )
                                     .then(result -> {
                                         delivery.deliveryCode = result.deliveryCode;
-                                        TelegramTools.notifyNewDeliveries(deliveries, ServerMain.deployStage);
+                                        TelegramTools.notifyNewDelivery(delivery, ServerMain.deployStage);
                                     })
                                     .then(_ -> ServerMain.notifyDeliveryRequestReceived(delivery))
                                     .then(_ -> null);

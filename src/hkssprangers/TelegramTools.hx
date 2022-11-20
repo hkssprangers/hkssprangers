@@ -6,7 +6,9 @@ import haxe.DynamicAccess;
 import js.lib.Promise;
 import hkssprangers.info.*;
 import telegraf.Telegraf;
+import comments.CommentString.*;
 using hkssprangers.info.TimeSlotTools;
+using StringTools;
 
 class TelegramTools {
     static public function verifyLoginResponse(tgBotTokenSha256:String, response:Null<DynamicAccess<Dynamic>>):Bool {
@@ -30,17 +32,20 @@ class TelegramTools {
     }
 
     #if (sys || nodejs)
-    static public function notifyNewDeliveries(deliveries:Array<Delivery>, stage:DeployStage) {
-        if (deliveries.length <= 0)
-            return Promise.resolve(null);
-
+    static public function notifyNewDelivery(delivery:Delivery, stage:DeployStage) {
         final tgBot = new Telegraf(TelegramConfig.tgBotToken);
-        final deliveryStrs = deliveries
-            .map(d ->
-                "📃 " + d.orders.map(o -> o.shop.info().name).join(", ") + "\n " + d.pickupTimeSlot.print()
-            )
-            .map(str -> StringTools.htmlEscape(str, false));
-        final msg = '啱啱收到 ${deliveries.length} 單 ✨\n\n ${deliveryStrs.join("\n\n")}';
+        final shopNames = delivery.orders.map(o -> "🔸 " + o.shop.info().name).join("\n");
+        final destinationHint = switch (DeliveryFee.getMatchedHeuristrics(delivery.pickupLocation)) {
+            case [h]: '${h.place}';
+            case _: "";
+        }
+        final deliveryStr = comment(unindent, format)/**
+            📃 ${delivery.deliveryCode}
+            ${shopNames}
+            ${delivery.pickupTimeSlot.print()}
+            ${destinationHint}
+        **/;
+        final msg = '啱啱收到 1 單 ✨\n\n${deliveryStr.htmlEscape(false)}';
 
         return PromiseRetry.call(
             function (retry, attempt) {
