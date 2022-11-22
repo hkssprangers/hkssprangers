@@ -942,9 +942,9 @@ enum abstract Shop(String) to String {
             case [KCZenzero, "2022-10-19", _]:
                 return Unavailable('休息一天');
 
-            // https://www.facebook.com/openblackwindow/posts/pfbid0NhZoiFoBx3YZ1XDwXUgKN97aTtnyCNnSrDDygJbjwuf1wfucwFJz364xP22VUcNjl
-            case [BlackWindow, "2022-10-10", _]:
-                return Unavailable('休息一天');
+            // https://www.facebook.com/openblackwindow/posts/pfbid0ZyygiHGbSKNt75geuWZ8fvNPAFXYXVCR2TrD3u6p1rpcaLxuy4ynimxwJiB3wAxCl
+            case [BlackWindow, "2022-11-26", Dinner]:
+                return Unavailable('晚市暫停營業');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid0ktjiLBon1gAiFAyNxokqXhq7sRgN3XPypWToNpGng7uAWCwHR83genMqvkEzmU8sl
             case [LaksaStore, "2022-11-15", _]:
