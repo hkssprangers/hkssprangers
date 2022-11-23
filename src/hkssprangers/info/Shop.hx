@@ -186,7 +186,7 @@ enum abstract Shop(String) to String {
                 instagram: "https://www.instagram.com/years.hk/",
                 availablity: "提供午餐及晚餐",
                 restDay: null,
-                recommendation: "白酒香辣蒜片乾蕃茄意粉"
+                recommendation: "香辣⽩酒香蒜乾番茄意大利粉"
             }
         case LaksaStore:
             {
