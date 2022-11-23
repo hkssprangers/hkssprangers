@@ -27,11 +27,11 @@ class ProcessCss {
                 if (url.startsWith("data:"))
                     return url;
                 final staticPath = Path.join([resourcesDir, "css", url]);
-                final path = staticPath.substr(resourcesDir.length + 1);
-                if (!FileSystem.exists(staticPath)) {
+                final path = staticPath.substr(resourcesDir.length);
+                if (!hkssprangers.StaticResource.exists(path)) {
                     throw '$url does not exist';
                 } else {
-                    final h = hash(staticPath);
+                    final h = hash(path);
                     return hkssprangers.StaticResource.fingerprint(Path.join(["..", path]), h);
                 }
             }))
