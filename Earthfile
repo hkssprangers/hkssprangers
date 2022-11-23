@@ -409,7 +409,7 @@ serviceWorker-js:
     COPY src src
     COPY .haxerc serviceWorker.hxml esbuild.inject.js .
     RUN mkdir -p static
-    RUN haxe serviceWorker.hxml
+    RUN haxe serviceWorker.hxml -D production
     SAVE ARTIFACT static/serviceWorker.bundled.js
 
 browser-js:
@@ -420,7 +420,7 @@ browser-js:
     COPY src src
     COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    RUN haxe browser.hxml
+    RUN haxe browser.hxml -D production
     SAVE ARTIFACT static/browser.bundled.js
 
 server:
@@ -433,7 +433,7 @@ server:
     COPY +style-css/style.css static/css/style.css
     COPY src src
     COPY .haxerc server.hxml holidays.json package-lock.json .
-    RUN haxe server.hxml
+    RUN haxe server.hxml -D production
     SAVE ARTIFACT index.js
     SAVE ARTIFACT static/images
 

@@ -29,10 +29,14 @@ class StaticResourceMacros {
                 Context.warning('$path does not exist', Context.currentPos());
             }
             return macro @:privateAccess $v{path};
-        } else {
-            final h = hash(path);
-            return macro @:privateAccess hkssprangers.StaticResource.fingerprint($v{path}, $v{h});
         }
+
+        #if (!production)
+        return macro @:privateAccess $v{path};
+        #end
+
+        final h = hash(path);
+        return macro @:privateAccess hkssprangers.StaticResource.fingerprint($v{path}, $v{h});
     };
 
     macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>, ?itemProp:String, ?useBackgroudColor:Bool = null) {
@@ -43,6 +47,22 @@ class StaticResourceMacros {
         if (!exists(path)) {
             Context.error('$path does not exist', Context.currentPos());
         }
+
+        final itemPropAttr = itemProp != null ? macro { itemProp: $v{itemProp} } : macro {};
+
+        #if (!production)
+        return macro {
+            final className = ${className};
+            final alt = ${alt};
+            final itemPropAttr = ${itemPropAttr};
+            final path = $v{path};
+            jsx('
+                <picture>
+                    <img alt=${alt} className=${className} src=${path} {...itemPropAttr} />
+                </picture>
+            ');
+        };
+        #end
 
         final staticPath = Path.join([resourcesDir, path]);
         final h = hash(path);
@@ -111,7 +131,6 @@ class StaticResourceMacros {
             }
         }
         final webp = createWebp();
-        final itemPropAttr = itemProp != null ? macro { itemProp: $v{itemProp} } : macro {};
         return if (bg != null) macro {
             final className = ${className};
             final alt = ${alt};

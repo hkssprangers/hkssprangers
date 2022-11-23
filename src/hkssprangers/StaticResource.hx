@@ -29,7 +29,7 @@ class StaticResource {
         return switch (hashes[path]) {
             case null:
                 hashes[path] = try {
-                    haxe.crypto.Md5.make(sys.io.File.getBytes(haxe.io.Path.join([hkssprangers.StaticResource.resourcesDir, path]))).toHex();
+                    haxe.crypto.Md5.make(sys.io.File.getBytes(Path.join([hkssprangers.StaticResource.resourcesDir, path]))).toHex();
                 } catch (e) {
                     null;
                 }
