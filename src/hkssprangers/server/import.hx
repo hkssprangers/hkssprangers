@@ -5,5 +5,5 @@ package hkssprangers.server;
 #error
 #end
 
-import hkssprangers.StaticResource.R;
+import hkssprangers.StaticResourceMacros.*;
 import fastify.*;

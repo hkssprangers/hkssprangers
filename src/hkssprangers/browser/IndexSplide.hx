@@ -3,7 +3,7 @@ package hkssprangers.browser;
 import mui.core.*;
 import js.Browser.*;
 import js.lib.Promise;
-import hkssprangers.StaticResource;
+import hkssprangers.StaticResourceMacros.*;
 
 typedef IndexSplideProps = {}
 typedef IndexSplideState = {}
@@ -13,25 +13,25 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
         {
             title: "埗兵週末本地菜群組",
             url: "https://t.me/+uHQZCJagi5E3NTk1",
-            img: StaticResource.image("/images/banner-vege.jpg", "埗兵週末本地菜群組 x 歐羅農場", "w-100 my-3 rounded-md"),
+            img: image("/images/banner-vege.jpg", "埗兵週末本地菜群組 x 歐羅農場", "w-100 my-3 rounded-md"),
             button: "立即加入"
         },
         {
             title: "埗兵咖啡渣之旅",
             url: "/food-waste-recycle",
-            img: StaticResource.image("/images/food-waste-recycle/banner-coffee.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
+            img: image("/images/food-waste-recycle/banner-coffee.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
             button: "了解更多"
         },
         {
             title: "誠徵佛系(兼職)外賣員",
             url: "https://docs.google.com/forms/d/e/1FAIpQLSfb9cyDbHckv1Obs9_8Wju8cLDAfYDXO6IcAT0EPLq8cpK8wQ/viewform",
-            img: StaticResource.image("/images/banner-recruit.jpg", "埗兵招人", "w-100 my-3 rounded-md"),
+            img: image("/images/banner-recruit.jpg", "埗兵招人", "w-100 my-3 rounded-md"),
             button: "了解更多"
         },
         {
             title: "Hyginova 環保消毒除臭噴霧",
             url: "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform",
-            img: StaticResource.image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3 rounded-md"),
+            img: image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3 rounded-md"),
             button: "立即落單"
         }
     ];

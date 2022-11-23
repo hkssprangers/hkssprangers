@@ -5,7 +5,6 @@ import react.ReactComponent;
 import react.Fragment;
 import react.ReactMacro.jsx;
 import hkssprangers.NodeModules;
-import hkssprangers.StaticResource.R;
 import haxe.*;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
@@ -225,7 +224,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     static public function header() return jsx('
         <div className="mx-auto container md:flex items-center">
             <div className="md:w-1/3 flex items-center py-3 px-6 md:p-0">
-                <a href="/">${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}</a>
+                <a href="/">${image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}</a>
                 <div className="flex-1 px-3">
                     <b className="text-lg lg:text-xl">埗兵</b>
                     <p className="text-sm">深水埗嘅外賣平台</p>
@@ -285,7 +284,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                     <span className="sr-only">Telegram</span>
                 </a>
                 <a className="mx-2 py-1" href="https://mewe.com/p/hkssprangers">
-                    ${StaticResource.image("/images/mewe.png", "MeWe", "w-12")}
+                    ${image("/images/mewe.png", "MeWe", "w-12")}
                 </a>
             </div>
         </footer>

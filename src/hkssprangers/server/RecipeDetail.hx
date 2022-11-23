@@ -129,39 +129,39 @@ class RecipeDetail extends View<RecipeDetailProps> {
         final style = "rounded-md";
         return switch recipe {
             case ThreeCupTofu:
-                ${StaticResource.image("/images/recipe/3cup-tofu.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/3cup-tofu.jpg", recipe.info().name, style, "image")}
             case AloeSoda:
-                ${StaticResource.image("/images/recipe/aloe-soda.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/aloe-soda.jpg", recipe.info().name, style, "image")}
             case BasilTomatoMeat:
-                ${StaticResource.image("/images/recipe/basil-tomato-meat.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/basil-tomato-meat.jpg", recipe.info().name, style, "image")}
             case BitterMelonVegeEgg:
-                ${StaticResource.image("/images/recipe/bitter-melon-vege-egg.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/bitter-melon-vege-egg.jpg", recipe.info().name, style, "image")}
             case CatToast:
-                ${StaticResource.image("/images/recipe/cat-toast.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/cat-toast.jpg", recipe.info().name, style, "image")}
             case Cauliflower:
-                ${StaticResource.image("/images/recipe/cauli.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/cauli.jpg", recipe.info().name, style, "image")}
             case Curry:
-                ${StaticResource.image("/images/recipe/curry.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/curry.jpg", recipe.info().name, style, "image")}
             case KaleCrisp:
-                ${StaticResource.image("/images/recipe/kale-crisp.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/kale-crisp.jpg", recipe.info().name, style, "image")}
             case MelonTomatoSoup:
-                ${StaticResource.image("/images/recipe/melon-tomato-soup.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/melon-tomato-soup.jpg", recipe.info().name, style, "image")}
             case MisoEggplant:
-                ${StaticResource.image("/images/recipe/miso-eggplant.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/miso-eggplant.jpg", recipe.info().name, style, "image")}
             case NinePie:
-                ${StaticResource.image("/images/recipe/nine-pie.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/nine-pie.jpg", recipe.info().name, style, "image")}
             case PotatoCheese:
-                ${StaticResource.image("/images/recipe/potato-cheese.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/potato-cheese.jpg", recipe.info().name, style, "image")}
             case SandMiso:
-                ${StaticResource.image("/images/recipe/sand-miso.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/sand-miso.jpg", recipe.info().name, style, "image")}
             case ShisoTomato:
-                ${StaticResource.image("/images/recipe/shiso-tomato.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/shiso-tomato.jpg", recipe.info().name, style, "image")}
             case Soup:
-                ${StaticResource.image("/images/recipe/soup.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/soup.jpg", recipe.info().name, style, "image")}
             case SpanichPasta:
-                ${StaticResource.image("/images/recipe/spanich-pasta.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/spanich-pasta.jpg", recipe.info().name, style, "image")}
             case SweetBitterMelon:
-                ${StaticResource.image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, style, "image")}
+                ${image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, style, "image")}
         }
     }
 

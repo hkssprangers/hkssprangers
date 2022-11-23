@@ -289,10 +289,6 @@ class ServerMain {
         if (opts == null)
             opts = {}
 
-        opts.rewriteUrl = function(req:Request):String {
-            return StaticResource.rewriteUrl(req.url);
-        }
-
         var app:FastifyInstance<Dynamic, Dynamic, Dynamic, Dynamic> = Fastify.fastify(opts);
 
         app.setErrorHandler(function(error, request, reply):Promise<Dynamic> {
@@ -319,28 +315,9 @@ class ServerMain {
             root: sys.FileSystem.absolutePath(StaticResource.resourcesDir),
             wildcard: false,
         });
-        app.addHook("onSend", function(req:Request, reply:Reply, payload):Promise<Dynamic>{
-            if (payload != null) switch (untyped payload.filename:String) {
-                case null:
-                    // pass
-                case filename:
-                    var hash:Null<String> = req.query.md5;    
-                    var actual = StaticResource.hash(filename);
-                    if (hash == actual) {
-                        reply.header("Cache-Control", "public, max-age=31536000, immutable"); // 1 year
-                        return Promise.resolve(payload);
-                    } else {
-                        reply.header("Cache-Control", "no-cache");
-                        var redirectUrl = new URL(req.url, "http://example.com");
-                        redirectUrl.searchParams.delete("md5");
-                        reply.redirect(StaticResource.fingerprint(redirectUrl.pathname, actual) + redirectUrl.search);
-                        return Promise.resolve(null);
-                    }
-            }
-            return Promise.resolve(payload);
-        });
 
         app.addHook("onRequest", noTrailingSlash);
+        app.addHook("onRequest", StaticResource.hook);
 
         app.get("/tgAuth", tgAuth);
         app.get("/jwtAuth", jwtAuth);

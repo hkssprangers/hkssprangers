@@ -13,7 +13,7 @@ class ServiceWorkerMain {
         WorkboxRouting.setDefaultHandler(cast new NetworkFirst());
 
         WorkboxRouting.registerRoute((options:RouteMatchCallbackOptions) -> {
-            StaticResource.parseUrl(options.url.pathname).hash != null;
+            StaticResource.parseUrl(options.url.pathname) != null;
         }, cast new CacheFirst({
             cacheName: "static",
             plugins: ([

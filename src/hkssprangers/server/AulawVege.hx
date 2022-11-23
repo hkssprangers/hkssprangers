@@ -72,39 +72,39 @@ class AulawVege extends View<AulawVegeProps> {
                         </div>
 
                         <div className="px-6 md:px-12 grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-2">
-                            <div>${StaticResource.image("/images/vege/basil.jpg", "九層塔", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/celery.jpg", "西芹", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/chard.jpg", "彩色君達菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/chives.jpg", "蔥", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/coriander.jpg", "芫荽", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/corn.jpg", "粟米", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/green-pepper.jpg", "青椒", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/italy-lettuce.jpg", "意大利生菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/kale.jpg", "羽衣甘藍", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/lemmon-marigold.jpg", "芳香萬壽菊", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/lettuce.jpg", "生菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/ma-si-yin.jpg", "馬屎莧", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/mei-choy.jpg", "自家梅菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/mulburry.jpg", "桑子", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/nine.jpg", "韭菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/peanuts.jpg", "花生", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/peppermint.jpg", "薄荷", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/potato.jpg", "薯仔", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/purple-cauliflower.jpg", "紫椰菜花", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/purple-sweet-potato-leaf.jpg", "紫番薯苗", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/salad.jpg", "沙律拼盤", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/sweet-potato.jpg", "番薯", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/sweet-potato-leaf.jpg", "番薯苗", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/tung-choy.jpg", "通菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/winter-melon.jpg", "冬瓜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/潺菜.jpg", "潺菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/紅莧菜.jpg", "紅莧菜", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/艾草.jpg", "艾草", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/辣椒葉.jpg", "辣椒葉", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/chamomile-tea.jpg", "小黃菊茶包", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/shiso-tea.jpg", "紫蘇桑葉乾茶包", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/dried-vege.jpg", "自家菜脯", "rounded-md")}</div>
-                            <div>${StaticResource.image("/images/vege/jam.jpg", "桑子果醬", "rounded-md")}</div>
+                            <div>${image("/images/vege/basil.jpg", "九層塔", "rounded-md")}</div>
+                            <div>${image("/images/vege/celery.jpg", "西芹", "rounded-md")}</div>
+                            <div>${image("/images/vege/chard.jpg", "彩色君達菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/chives.jpg", "蔥", "rounded-md")}</div>
+                            <div>${image("/images/vege/coriander.jpg", "芫荽", "rounded-md")}</div>
+                            <div>${image("/images/vege/corn.jpg", "粟米", "rounded-md")}</div>
+                            <div>${image("/images/vege/green-pepper.jpg", "青椒", "rounded-md")}</div>
+                            <div>${image("/images/vege/italy-lettuce.jpg", "意大利生菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/kale.jpg", "羽衣甘藍", "rounded-md")}</div>
+                            <div>${image("/images/vege/lemmon-marigold.jpg", "芳香萬壽菊", "rounded-md")}</div>
+                            <div>${image("/images/vege/lettuce.jpg", "生菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/ma-si-yin.jpg", "馬屎莧", "rounded-md")}</div>
+                            <div>${image("/images/vege/mei-choy.jpg", "自家梅菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/mulburry.jpg", "桑子", "rounded-md")}</div>
+                            <div>${image("/images/vege/nine.jpg", "韭菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/peanuts.jpg", "花生", "rounded-md")}</div>
+                            <div>${image("/images/vege/peppermint.jpg", "薄荷", "rounded-md")}</div>
+                            <div>${image("/images/vege/potato.jpg", "薯仔", "rounded-md")}</div>
+                            <div>${image("/images/vege/purple-cauliflower.jpg", "紫椰菜花", "rounded-md")}</div>
+                            <div>${image("/images/vege/purple-sweet-potato-leaf.jpg", "紫番薯苗", "rounded-md")}</div>
+                            <div>${image("/images/vege/salad.jpg", "沙律拼盤", "rounded-md")}</div>
+                            <div>${image("/images/vege/sweet-potato.jpg", "番薯", "rounded-md")}</div>
+                            <div>${image("/images/vege/sweet-potato-leaf.jpg", "番薯苗", "rounded-md")}</div>
+                            <div>${image("/images/vege/tung-choy.jpg", "通菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/winter-melon.jpg", "冬瓜", "rounded-md")}</div>
+                            <div>${image("/images/vege/潺菜.jpg", "潺菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/紅莧菜.jpg", "紅莧菜", "rounded-md")}</div>
+                            <div>${image("/images/vege/艾草.jpg", "艾草", "rounded-md")}</div>
+                            <div>${image("/images/vege/辣椒葉.jpg", "辣椒葉", "rounded-md")}</div>
+                            <div>${image("/images/vege/chamomile-tea.jpg", "小黃菊茶包", "rounded-md")}</div>
+                            <div>${image("/images/vege/shiso-tea.jpg", "紫蘇桑葉乾茶包", "rounded-md")}</div>
+                            <div>${image("/images/vege/dried-vege.jpg", "自家菜脯", "rounded-md")}</div>
+                            <div>${image("/images/vege/jam.jpg", "桑子果醬", "rounded-md")}</div>
                         </div>
                     </div>
                 </div>

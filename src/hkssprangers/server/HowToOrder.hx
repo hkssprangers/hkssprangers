@@ -90,13 +90,13 @@ class HowToOrder extends View<HowToOrderProps> {
                             </div>
                             <div className="md:w-1/2">
                                 <div className="flex justify-center text-center lg:pt-16 how-image" data-num="0">
-                                    ${StaticResource.image("/images/how23.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                    ${image("/images/how23.png", "how", "w-4/5 rounded-t-lg inline-block")}
                                 </div>
                                 <div className="flex justify-center text-center lg:pt-16 how-image hidden" data-num="1">
-                                    ${StaticResource.image("/images/how35.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                    ${image("/images/how35.png", "how", "w-4/5 rounded-t-lg inline-block")}
                                 </div>
                                 <div className="flex justify-center text-center lg:pt-16 how-image hidden" data-num="2">
-                                    ${StaticResource.image("/images/how4.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                    ${image("/images/how4.png", "how", "w-4/5 rounded-t-lg inline-block")}
                                 </div>
                             </div>
                         </div>

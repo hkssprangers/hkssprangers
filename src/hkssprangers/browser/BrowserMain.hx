@@ -12,7 +12,7 @@ import js.Browser.*;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
 import hkssprangers.CookiePayload;
-import hkssprangers.StaticResource.R;
+import hkssprangers.StaticResourceMacros.R;
 using Lambda;
 
 class BrowserMain {

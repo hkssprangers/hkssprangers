@@ -222,59 +222,59 @@ class Menu extends View<MenuProps> {
         final styles = "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover";
         final image = switch shop {
             case EightyNine:
-                StaticResource.image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, "image", true);
             case DragonJapaneseCuisine:
-                StaticResource.image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, "image", true);
             case YearsHK:
-                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/YearsHK/years.jpg", shop.info().name, styles, "image", true);
             case TheParkByYears:
-                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/TheParkByYears/park.jpg", shop.info().name, styles, "image", true);
             case LaksaStore:
-                StaticResource.image("/images/shops/LaksaStore/LaksaStore-cover.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/LaksaStore/LaksaStore-cover.jpeg", shop.info().name, styles, "image", true);
             case DongDong:
-                StaticResource.image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/DongDong/dong.jpg", shop.info().name, styles, "image", true);
             case BiuKeeLokYuen:
-                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, styles, "image", true);
             case KCZenzero:
-                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, styles, "image", true);
             case HanaSoftCream:
-                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, styles, "image", true);
             case Neighbor:
-                StaticResource.image("/images/shops/Neighbor/neighbor-menu-profile.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/Neighbor/neighbor-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case MGY:
-                StaticResource.image("/images/shops/MGY/mgy-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/MGY/mgy-menu-profile.jpg", shop.info().name, styles, "image", true);
             case FastTasteSSP:
-                StaticResource.image("/images/shops/FastTasteSSP/fasttaste-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/FastTasteSSP/fasttaste-menu-profile.jpg", shop.info().name, styles, "image", true);
             case BlaBlaBla:
-                StaticResource.image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/BlaBlaBla/bla.jpg", shop.info().name, styles, "image", true);
             case ZeppelinHotDogSKM:
-                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu-profile.jpg", shop.info().name, styles, "image", true);
             case MyRoomRoom:
-                StaticResource.image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/MyRoomRoom/MyRoomRoom.jpg", shop.info().name, styles, "image", true);
             case ThaiYummy:
-                StaticResource.image("/images/shops/ThaiYummy/ThaiYummy.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/ThaiYummy/ThaiYummy.jpg", shop.info().name, styles, "image", true);
             case Toolss:
-                StaticResource.image("/images/shops/Toolss/Toolss.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/Toolss/Toolss.jpg", shop.info().name, styles, "image", true);
             case KeiHing:
-                StaticResource.image("/images/shops/KeiHing/keihing.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/KeiHing/keihing.jpg", shop.info().name, styles, "image", true);
             case PokeGo:
-                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, styles, "image", true);
             case WoStreet:
-                StaticResource.image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/WoStreet/WoStreet-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case Minimal:
-                StaticResource.image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/Minimal/minimal-menu-profile.jpg", shop.info().name, styles, "image", true);
             case CafeGolden:
-                StaticResource.image("/images/shops/CafeGolden/CafeGolden-menu-profile.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/CafeGolden/CafeGolden-menu-profile.jpeg", shop.info().name, styles, "image", true);
             case BlackWindow:
-                StaticResource.image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/BlackWindow/BlackWindow2.jpg", shop.info().name, styles, "image", true);
             case LonelyPaisley:
-                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
             case FishFranSSP:
-                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
             case HowDrunk:
-                StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
+                image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
             case LoudTeaSSP:
-                StaticResource.image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, styles, "image", true);
+                image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, styles, "image", true);
             case AuLawFarm:
                 null;
             case MxMWorkshop:
@@ -1166,7 +1166,7 @@ class Menu extends View<MenuProps> {
     function renderZeppelinHotDogSKM() {
         return jsx('
             <div className="p-3">
-                ${StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
+                ${image("/images/shops/ZeppelinHotDogSKM/zeppelin-menu.jpg", ZeppelinHotDogSKM.info().name, "w-full h-auto")}
             </div>
         ');
     }
@@ -2030,43 +2030,43 @@ class Menu extends View<MenuProps> {
                             
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-3">
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-roll-half.jpg", "真毛巾蛋糕半磅", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-roll-half.jpg", "真毛巾蛋糕半磅", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">真毛巾蛋糕半磅</div><div className="p-3 whitespace-nowrap">$$98</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-roll.jpg", "真毛巾蛋糕1磅", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-roll.jpg", "真毛巾蛋糕1磅", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">真毛巾蛋糕1磅</div><div className="p-3 whitespace-nowrap">$$196</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-word.jpg", "港式噴繪招牌楷書字體", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-word.jpg", "港式噴繪招牌楷書字體", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">港式噴繪招牌楷書字體</div><div className="p-3 whitespace-nowrap">$$100</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-cheese-1.jpg", "東京第一芝士蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-cheese-1.jpg", "東京第一芝士蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">東京第一芝士蛋糕</div><div className="p-3 whitespace-nowrap">$$128起</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-cheese-2.jpg", "巴斯克焦香芝士蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-cheese-2.jpg", "巴斯克焦香芝士蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">巴斯克焦香芝士蛋糕</div><div className="p-3 whitespace-nowrap">$$128起</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-newyork.jpg", "紐約芝士餅", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-newyork.jpg", "紐約芝士餅", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">紐約芝士餅</div><div className="p-3 whitespace-nowrap">$$126起</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-prince.jpg", "小王子蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-prince.jpg", "小王子蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">小王子蛋糕</div><div className="p-3 whitespace-nowrap">$$188</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-choco.jpg", "特濃朱古力蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-choco.jpg", "特濃朱古力蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">特濃朱古力蛋糕</div><div className="p-3 whitespace-nowrap">$$298</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-mango.jpg", "芒果乳酪流心戚風蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-mango.jpg", "芒果乳酪流心戚風蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">芒果乳酪流心戚風蛋糕</div><div className="p-3 whitespace-nowrap">$$198</div></div>
                         </div>
                         <div className="pb-5">
-                            ${StaticResource.image("/images/shops/WoStreet/cake-purple.jpg", "星空朱古力慕斯蛋糕", "rounded")}
+                            ${image("/images/shops/WoStreet/cake-purple.jpg", "星空朱古力慕斯蛋糕", "rounded")}
                             <div className="flex flex-row"><div className="flex-grow p-3">星空朱古力慕斯蛋糕</div><div className="p-3 whitespace-nowrap">$$218起</div></div>
                         </div>
                         

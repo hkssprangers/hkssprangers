@@ -43,45 +43,45 @@ class PlumWineDIY extends View<PlumWineDIYProps> {
                 <div className="p-6 md:mb-32 md:p-0 mx-auto md:w-4/5 max-w-screen-lg">
                     <div className="my-6 text-center">
                         <a href="/">
-                            ${StaticResource.image("/images/logo-blk-png.png", "埗兵", "inline w-1/4 lg:w-1/6")}
+                            ${image("/images/logo-blk-png.png", "埗兵", "inline w-1/4 lg:w-1/6")}
                         </a>
                         <h1 className="text-xl">梅酒 DIY 教學</h1>
                     </div>
                     <div>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrnwDIdDt51Sd5ubnUCv8NvBRMJqBDM37wY8GZ5YYCV6XbRg/viewform">
-                            ${StaticResource.image("/images/plum-web-banner.jpg", "埗兵梅酒 DIY SET", "w-full")}
+                            ${image("/images/plum-web-banner.jpg", "埗兵梅酒 DIY SET", "w-full")}
                         </a>
                     </div>
                     <div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/0.jpg", "準備材料：梅子、酒、冰糖、玻璃樽", imgClasses)}
+                            ${image("/images/plum-wine-diy/0.jpg", "準備材料：梅子、酒、冰糖、玻璃樽", imgClasses)}
                             <div className=${stepDespClasses}>0. 準備材料：梅子、酒、冰糖、玻璃樽。</div>
                         </div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/1.jpg", "用濕布抺乾淨梅子同玻璃樽", imgClasses)}
+                            ${image("/images/plum-wine-diy/1.jpg", "用濕布抺乾淨梅子同玻璃樽", imgClasses)}
                             <div className=${stepDespClasses}>1. 用濕布抺乾淨梅子同玻璃樽。</div>
                         </div>
                         <div className=${stepClasses}>
                             <div className="flex gap-2">
-                                ${StaticResource.image("/images/plum-wine-diy/2-1.jpg", "用籤幫梅子去蒂", imgClasses + " flex-1")}
-                                ${StaticResource.image("/images/plum-wine-diy/2-2.jpg", "梅子去蒂前後", imgClasses + " flex-1")}
+                                ${image("/images/plum-wine-diy/2-1.jpg", "用籤幫梅子去蒂", imgClasses + " flex-1")}
+                                ${image("/images/plum-wine-diy/2-2.jpg", "梅子去蒂前後", imgClasses + " flex-1")}
                             </div>
                             <div className=${stepDespClasses}>2. 用籤幫梅子去蒂。</div>
                         </div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/3.jpg", "用叉喺梅子上拮窿", imgClasses)}
+                            ${image("/images/plum-wine-diy/3.jpg", "用叉喺梅子上拮窿", imgClasses)}
                             <div className=${stepDespClasses}>3. 用叉喺梅子上拮窿。每個梅子兩至三排窿就好。</div>
                         </div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/4.jpg", "一層梅子一層冰糖噉放入樽", imgClasses)}
+                            ${image("/images/plum-wine-diy/4.jpg", "一層梅子一層冰糖噉放入樽", imgClasses)}
                             <div className=${stepDespClasses}>4. 一層梅子一層冰糖噉放入樽。</div>
                         </div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/5.jpg", "倒酒入樽", imgClasses + " block md:w-1/2 mx-auto")}
+                            ${image("/images/plum-wine-diy/5.jpg", "倒酒入樽", imgClasses + " block md:w-1/2 mx-auto")}
                             <div className=${stepDespClasses}>5. 倒酒入樽。閂實樽蓋。</div>
                         </div>
                         <div className=${stepClasses}>
-                            ${StaticResource.image("/images/plum-wine-diy/6.jpg", "黐紙喺樽上面", imgClasses)}
+                            ${image("/images/plum-wine-diy/6.jpg", "黐紙喺樽上面", imgClasses)}
                             <div className=${stepDespClasses}>6. 寫低個入樽日期喺紙，黐喺樽上面。</div>
                         </div>
                         <div className=${stepClasses}>

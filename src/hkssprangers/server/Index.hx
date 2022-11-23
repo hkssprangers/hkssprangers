@@ -114,7 +114,7 @@ class Index extends View<IndexProps> {
                     href="/order-food"
                 >
                     <span className="text-black text-center text-sm">
-                        ${StaticResource.image("/images/writing.svg", "order", "w-1/2 inline", false)}
+                        ${image("/images/writing.svg", "order", "w-1/2 inline", false)}
                         <br />
                         外賣落單
                     </span>
@@ -170,13 +170,13 @@ class Index extends View<IndexProps> {
                             </div>
                             <div className="md:w-1/2">
                             <div className="flex justify-center text-center lg:pt-16 how-image" data-num="0">
-                                ${StaticResource.image("/images/how23.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                ${image("/images/how23.png", "how", "w-4/5 rounded-t-lg inline-block")}
                             </div>
                             <div className="flex justify-center text-center lg:pt-16 how-image hidden" data-num="1">
-                                ${StaticResource.image("/images/how35.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                ${image("/images/how35.png", "how", "w-4/5 rounded-t-lg inline-block")}
                             </div>
                             <div className="flex justify-center text-center lg:pt-16 how-image hidden" data-num="2">
-                                ${StaticResource.image("/images/how4.png", "how", "w-4/5 rounded-t-lg inline-block")}
+                                ${image("/images/how4.png", "how", "w-4/5 rounded-t-lg inline-block")}
                             </div>
                             </div>
                         </div>
@@ -269,41 +269,41 @@ class Index extends View<IndexProps> {
     static function renderShop(shop:Shop, cluster:ShopCluster, ?extraClasses:Array<String>) {
         final image = switch shop {
             case EightyNine:
-                StaticResource.image("/images/shops/EightyNine/89.jpg", shop.info().name, "squircle");
+                image("/images/shops/EightyNine/89.jpg", shop.info().name, "squircle");
             case YearsHK:
-                StaticResource.image("/images/shops/YearsHK/years.jpg", shop.info().name, "squircle");
+                image("/images/shops/YearsHK/years.jpg", shop.info().name, "squircle");
             case TheParkByYears:
-                StaticResource.image("/images/shops/TheParkByYears/park.jpg", shop.info().name, "squircle");
+                image("/images/shops/TheParkByYears/park.jpg", shop.info().name, "squircle");
             case LaksaStore:
-                StaticResource.image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, "squircle");
+                image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, "squircle");
             case BiuKeeLokYuen:
-                StaticResource.image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, "squircle");
+                image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, "squircle");
             case KCZenzero:
-                StaticResource.image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, "squircle");
+                image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, "squircle");
             case HanaSoftCream:
-                StaticResource.image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, "squircle");
+                image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, "squircle");
             case MGY:
-                StaticResource.image("/images/shops/MGY/mgy.jpg", shop.info().name, "squircle");
+                image("/images/shops/MGY/mgy.jpg", shop.info().name, "squircle");
             case ZeppelinHotDogSKM:
-                StaticResource.image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, "squircle");
+                image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, "squircle");
             case PokeGo:
-                StaticResource.image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, "squircle");
+                image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, "squircle");
             case WoStreet:
-                StaticResource.image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, "squircle");
+                image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, "squircle");
             case Minimal:
-                StaticResource.image("/images/shops/Minimal/minimal.jpg", shop.info().name, "squircle");
+                image("/images/shops/Minimal/minimal.jpg", shop.info().name, "squircle");
             case CafeGolden:
-                StaticResource.image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, "squircle");
+                image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, "squircle");
             case BlackWindow:
-                StaticResource.image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", shop.info().name, "squircle");
+                image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", shop.info().name, "squircle");
             case LonelyPaisley:
-                StaticResource.image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, "squircle");
+                image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, "squircle");
             case FishFranSSP:
-                StaticResource.image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
+                image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
             case HowDrunk:
-                StaticResource.image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "squircle");
+                image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "squircle");
             case LoudTeaSSP:
-                StaticResource.image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, "squircle");
+                image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, "squircle");
             case _:
                 null;
         }

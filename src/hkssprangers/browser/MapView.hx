@@ -12,7 +12,7 @@ import js.Browser.*;
 import CrossFetch.fetch;
 import geojson.*;
 import hkssprangers.info.ShopCluster.clusterStyle;
-import hkssprangers.StaticResource.R;
+import hkssprangers.StaticResourceMacros.R;
 using Lambda;
 using StringTools;
 using hxLINQ.LINQ;
