@@ -38,7 +38,7 @@ services:
       - ../dev/initdb:/docker-entrypoint-initdb.d
     restart: unless-stopped
   cloudflared:
-    image: cloudflare/cloudflared:1234-e9a2c85
+    image: cloudflare/cloudflared
     environment:
       - TUNNEL_METRICS=cloudflared:44871
       - TUNNEL_TRANSPORT_PROTOCOL=http2
