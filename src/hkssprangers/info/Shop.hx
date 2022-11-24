@@ -11,6 +11,7 @@ using DateTools;
 
 enum abstract Shop(String) to String {
     final EightyNine:Shop;
+    final ThaiHome:Shop;
     final DragonJapaneseCuisine:Shop;
     final YearsHK:Shop;
     final TheParkByYears:Shop;
@@ -45,6 +46,7 @@ enum abstract Shop(String) to String {
         EightyNine,
         LaksaStore,
         KCZenzero,
+        ThaiHome,
         HanaSoftCream,
         WoStreet,
 
@@ -100,6 +102,35 @@ enum abstract Shop(String) to String {
                 availablity: "提供午餐及晚餐",
                 restDay: null,
                 recommendation: "招牌口水雞"
+            }
+        case ThaiHome:
+            {
+                id: ThaiHome,
+                name: "泰家",
+                type: Restaurant,
+                address: "西九龍中心8樓59號鋪",
+                lat: 22.3311552,
+                lng: 114.1596601,
+                courierContact: [
+                    { name: "店舖電話", url: "tel:+85252482330" },
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:30:00",
+                latestPickupTime: "20:30:00",
+                isInService: true,
+                facebook: "https://www.facebook.com/ThaiHomeSSP/",
+                instagram: null,
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: null,
             }
         case DragonJapaneseCuisine:
             {
@@ -1074,6 +1105,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(HowDrunkMenu.itemsSchema(pickupTimeSlot, o));
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.itemsSchema(o));
+            case ThaiHome:
+                Promise.resolve(null);
             case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
@@ -1135,6 +1168,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(HowDrunkMenu.summarize(o, pickupTimeSlot));
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.summarize(o));
+            case ThaiHome:
+                Promise.resolve(null);
             case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
@@ -1172,6 +1207,7 @@ enum abstract Shop(String) to String {
             case FishFranSSP: FishFranSSP;
             case HowDrunk: HowDrunk;
             case LoudTeaSSP: LoudTeaSSP;
+            case ThaiHome: ThaiHome;
             case _: null;
         }
     }

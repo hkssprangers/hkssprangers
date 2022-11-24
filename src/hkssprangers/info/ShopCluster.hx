@@ -27,6 +27,7 @@ enum abstract ShopCluster(String) to String {
         return switch shop {
             case null: [];
             case EightyNine: [DragonCentreCluster];
+            case ThaiHome: [DragonCentreCluster];
             case DragonJapaneseCuisine: [DragonCentreCluster];
             case YearsHK: [CLPCluster];
             case TheParkByYears: [ParkCluster];

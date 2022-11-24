@@ -270,6 +270,8 @@ class Index extends View<IndexProps> {
         final image = switch shop {
             case EightyNine:
                 image("/images/shops/EightyNine/89.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case ThaiHome:
+                image("/images/shops/ThaiHome/ThaiHome.jpeg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
             case YearsHK:
                 image("/images/shops/YearsHK/years.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
             case TheParkByYears:
@@ -520,6 +522,7 @@ class Index extends View<IndexProps> {
                             ${renderShopp(EightyNine)}
                             ${renderShopp(LaksaStore)}
                             ${renderShopp(KCZenzero)}
+                            ${renderShopp(ThaiHome)}
                             ${renderShopp(HanaSoftCream)}
                             ${renderShopp(WoStreet)}
                             ${renderShopp(FishFranSSP)}

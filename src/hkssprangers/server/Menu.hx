@@ -223,6 +223,8 @@ class Menu extends View<MenuProps> {
         final image = switch shop {
             case EightyNine:
                 image("/images/shops/EightyNine/89-menu-profile.jpg", shop.info().name, styles, "image", true);
+            case ThaiHome:
+                image("/images/shops/ThaiHome/ThaiHome.jpeg", shop.info().name, styles, "image", true);
             case DragonJapaneseCuisine:
                 image("/images/shops/DragonJapaneseCuisine/yyp.jpg", shop.info().name, styles, "image", true);
             case YearsHK:
@@ -342,6 +344,8 @@ class Menu extends View<MenuProps> {
         return switch shop {
             case EightyNine:
                 renderEightyNine();
+            case ThaiHome:
+                null;
             case DragonJapaneseCuisine:
                 renderDragonJapaneseCuisine();
             case YearsHK:
