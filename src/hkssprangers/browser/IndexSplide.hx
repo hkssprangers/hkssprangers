@@ -48,7 +48,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
           right: '10%'
         },
         breakpoints: {
-          "640": {
+          "720": {
             perPage: 1.0,
             perMove: 1.0,
             padding: {

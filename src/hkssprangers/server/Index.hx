@@ -99,7 +99,7 @@ class Index extends View<IndexProps> {
             __html: ReactDOMServer.renderToString(jsx('<IndexSplide />'))
         };
         return jsx('
-            <div className="p-3 lg:px-0 lg:pb-6 mx-auto container">
+            <div className="py-3 lg:pb-6 mx-auto container">
                 <div id="splide" dangerouslySetInnerHTML=${indexSplide} />
             </div>
         ');
@@ -266,6 +266,110 @@ class Index extends View<IndexProps> {
         };
     }
 
+    static public function renderShopp(shop:Shop) {
+        final image = switch shop {
+            case EightyNine:
+                image("/images/shops/EightyNine/89.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case YearsHK:
+                image("/images/shops/YearsHK/years.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case TheParkByYears:
+                image("/images/shops/TheParkByYears/park.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case LaksaStore:
+                image("/images/shops/LaksaStore/laksa.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case BiuKeeLokYuen:
+                image("/images/shops/BiuKeeLokYuen/bill.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case KCZenzero:
+                image("/images/shops/KCZenzero/tomato.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case HanaSoftCream:
+                image("/images/shops/HanaSoftCream/hana.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case MGY:
+                image("/images/shops/MGY/mgy.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case ZeppelinHotDogSKM:
+                image("/images/shops/ZeppelinHotDogSKM/zeppelin.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case PokeGo:
+                image("/images/shops/PokeGo/PokeGo.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case WoStreet:
+                image("/images/shops/WoStreet/WoStreet.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case Minimal:
+                image("/images/shops/Minimal/minimal.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case CafeGolden:
+                image("/images/shops/CafeGolden/CafeGolden.jpeg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case BlackWindow:
+                image("/images/shops/BlackWindow/BlackWindow2-sq.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case LonelyPaisley:
+                image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case FishFranSSP:
+                image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case HowDrunk:
+                image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case LoudTeaSSP:
+                image("/images/shops/LoudTeaSSP/pink.jpeg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+            case _:
+                null;
+        }
+        return jsx('
+        <a className="no-underline" href=${Path.join(["/menu", shop])}>
+            <div className="rounded-md relative h-48 md:h-64 overflow-hidden hover:shadow">
+                <div className="absolute left-0 right-0 z-10 px-1 pt-3 font-bold text-xs md:text-sm bg-gradient-to-b from-stone-400/50 to-transparent">
+                    ${ShopCluster.classify(shop).map(
+                        cluster -> {
+                            shopClustorLabel(cluster);
+                        }
+                    )}
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 z-10">
+                    <div className="px-3 pt-4 pb-1 leading-3 bg-gradient-to-t from-white via-white/80 to-transparent">
+                        ${restDayy(shop)}
+                    </div>
+                    <div className="bg-white px-3 pb-3">
+                        <h3 className="text-sm md:text-lg font-bold">
+                            ${shop.info().name}
+                        </h3>
+                        <h5 className="pt-1 text-xs md:text-sm text-stone-400 hidden"><i className="fa-solid fa-thumbs-up"></i>&nbsp;</h5>
+                    </div>
+                </div>
+                ${image}
+            </div>
+        </a>
+        ');
+    }
+
+    static function restDayy(shop:Shop) {
+        return switch (shop.info().restDay) {
+            case null:
+                jsx('
+                    <span className="text-xs md:text-sm">&nbsp;</span>
+                ');
+            case restDay:
+                jsx('
+                    <span className="text-xs md:text-sm">${restDay}</span>
+                ');
+        };
+    }
+
+    static function shopClustorLabel(cluster:ShopCluster) {
+        final clusterName = switch cluster {
+            case DragonCentreCluster:
+                ${DragonCentreCluster.info().name};
+            case PeiHoStreetMarketCluster:
+                ${PeiHoStreetMarketCluster.info().name};
+            case GoldenCluster:
+                ${GoldenCluster.info().name};
+            case ParkCluster:
+                 ${ParkCluster.info().name};
+            case CLPCluster:
+                ${CLPCluster.info().name};
+            case PakTinCluster:
+                ${PakTinCluster.info().name};
+            case _:
+                null;
+        }
+        final textStyle = ShopCluster.clusterStyle[cluster].textClasses.join(" ");
+        return jsx('
+            <span className="rounded-full px-2 py-1 mr-1 bg-white/90 inline-block"><i className=${textStyle + " fas fa-map-marker-alt"}></i>&nbsp;<span className="">${clusterName}</span></span>
+        ');
+    }
+
     static function renderShop(shop:Shop, cluster:ShopCluster, ?extraClasses:Array<String>) {
         final image = switch shop {
             case EightyNine:
@@ -404,8 +508,39 @@ class Index extends View<IndexProps> {
                     ${View.header()}
                     ${banner()}
 
-                    <section className="pt-8 sm:pt-16 md:pt-32">
-                        <div className="p-6 md:p-12 mx-auto container">
+                    <section className="pb-12 md:pb-16 bg-stone-100">
+                        <div className="px-3 py-12 md:py-16 mx-auto container">
+                            <div className="md:w-2/3 lg:w-1/2">
+                                <h1 className="text-xl md:text-2xl font-bold text-opacity-75 tracking-wider mb-3">合作餐廳</h1>
+                                可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
+                            </div>
+                        </div>
+                        <div className="p-3 mx-auto container">
+                            <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            ${renderShopp(EightyNine)}
+                            ${renderShopp(LaksaStore)}
+                            ${renderShopp(KCZenzero)}
+                            ${renderShopp(HanaSoftCream)}
+                            ${renderShopp(WoStreet)}
+                            ${renderShopp(FishFranSSP)}
+                            ${renderShopp(BiuKeeLokYuen)}
+                            ${renderShopp(BlackWindow)}
+                            ${renderShopp(LoudTeaSSP)}
+                            ${renderShopp(TheParkByYears)}
+                            ${renderShopp(MGY)}
+                            ${renderShopp(PokeGo)}
+                            ${renderShopp(Minimal)}
+                            ${renderShopp(YearsHK)}
+                            ${renderShopp(LonelyPaisley)}
+                            ${renderShopp(ZeppelinHotDogSKM)}
+                            ${renderShopp(CafeGolden)}
+                            ${renderShopp(HowDrunk)}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="">
+                        <div className="px-3 py-12 md:py-16 mx-auto container">
                             <h1 className="text-xl md:text-2xl font-bold pb-3 tracking-wider">關於埗兵</h1>
                             <div className="lg:flex md:w-2/3 lg:w-1/2">
                             <div className="flex-1 py-3 lg:py-6 lg:pr-3">
@@ -413,7 +548,7 @@ class Index extends View<IndexProps> {
                                 <p>點解想成立埗兵? 官方回答係想喺自己嘅社區內，建立一個同路人嘅外賣平台選擇，唔使每次外賣都叫動物台。而非官方回答就係，有人<s>唔想食老婆煮嘅飯而</s>想叫多啲外賣，所以決定整一個外賣平台，街坊有得用，自己又有得用。</p>
                             </div>
                             <div className="flex-1 py-3 lg:py-6 lg:pl-3">
-                                <p>當外賣平台開始服務之後，熱愛地球嘅小編想透過平台做多啲同環保相關嘅事，慢慢展開咗埗兵嘅副業，由<a href="/food-waste-recycle">收咖啡渣</a>開始，到<a href="/aulaw-vege">團購本地菜</a>同<a href="/recipe">研究食譜</a>，仲試過搞同街坊<a href="https://t.me/hkssprangers/216">收集毛巾</a>嘅活動。</p>
+                                <p>當外賣平台開始服務之後，熱愛地球嘅小編想透過平台做多啲同環保相關嘅事，慢慢展開咗埗兵嘅副業，由<a className="a-link" href="/food-waste-recycle">收咖啡渣</a>開始，到<a className="a-link"  href="/aulaw-vege">團購本地菜</a>同<a className="a-link" href="/recipe">研究食譜</a>，仲試過搞同街坊<a className="a-link" href="https://t.me/hkssprangers/216">收集毛巾</a>嘅活動。</p>
                                 <p>埗兵唔係一個賺大錢嘅平台，路途上最大收穫，就係一班有共同理念嘅伙伴，<b>最美的是成就彼此</b>。</p>
                             </div>
                             </div>

@@ -222,8 +222,8 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function bodyContent() return null;
 
     static public function header() return jsx('
-        <div className="mx-auto container md:flex items-center">
-            <div className="md:w-1/3 flex items-center py-3 px-6 md:p-0">
+        <div className="mx-auto container md:flex items-center p-3 lg:py-6">
+            <div className="md:w-1/3 flex items-center">
                 <a href="/">${image("/images/logo-blk-png.png", "埗兵", "inline w-12 lg:w-16")}</a>
                 <div className="flex-1 px-3">
                     <b className="text-lg lg:text-xl">埗兵</b>
@@ -237,7 +237,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                     </div>
                 </button>
             </div>
-            <div className="md:w-2/3 hidden md:block p-0 md:py-6 bg-gray-100 md:bg-transparent" id="mmenu">
+            <div className="md:w-2/3 hidden md:block bg-gray-100 md:bg-transparent" id="mmenu">
                 <div className="md:flex">
                     <div className="flex-1 py-3 px-6 md:p-0">
                         <div className="md:pr-6">

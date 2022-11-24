@@ -56,26 +56,36 @@ class Restaurants extends View<RestaurantsProps> {
                 ${View.header()}
                 <div className="lg:max-w-screen-2xl mx-auto">
 
-                    <div className="py-12 md:py-16 mx-auto container">
-                        <div className="md:w-2/3 lg:w-1/2 px-6 md:px-12">
+                    <div className="px-3 py-12 md:py-16 mx-auto container">
+                        <div className="md:w-2/3 lg:w-1/2">
                             <h1 className="text-xl md:text-2xl font-bold text-opacity-75 tracking-wider mb-3">合作餐廳</h1>
+                            可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
                         </div>
                     </div>
 
-                    <div className="pb-12 md:pb-16 mx-auto container">
-                        <div className="mx-6 md:flex border-4 border-black text-center md:text-left">
-                            <div className="container-rest md:w-1/3 md:overflow-y-scroll bg-white">
-                                <div className="container-rest-caption border-b-4 bg-white border-black px-6 py-3">
-                                可以同一張單叫晒鄰近嘅餐廳唔限幾多個餐，<span className="whitespace-nowrap">埗兵送埋俾你</span>
-                                </div>
-                                ${Index.renderShops()}
-                            </div>
-                            <div className="md:w-2/3 border-l-4 border-black">
-                                <div id="map"></div>
+                        <div className="p-3 lg:pb-6 mx-auto container">
+                            <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            ${Index.renderShopp(EightyNine)}
+                            ${Index.renderShopp(LaksaStore)}
+                            ${Index.renderShopp(KCZenzero)}
+                            ${Index.renderShopp(HanaSoftCream)}
+                            ${Index.renderShopp(WoStreet)}
+                            ${Index.renderShopp(FishFranSSP)}
+                            ${Index.renderShopp(BiuKeeLokYuen)}
+                            ${Index.renderShopp(BlackWindow)}
+                            ${Index.renderShopp(LoudTeaSSP)}
+                            ${Index.renderShopp(TheParkByYears)}
+                            ${Index.renderShopp(MGY)}
+                            ${Index.renderShopp(PokeGo)}
+                            ${Index.renderShopp(Minimal)}
+                            ${Index.renderShopp(YearsHK)}
+                            ${Index.renderShopp(LonelyPaisley)}
+                            ${Index.renderShopp(ZeppelinHotDogSKM)}
+                            ${Index.renderShopp(CafeGolden)}
+                            ${Index.renderShopp(HowDrunk)}
                             </div>
                         </div>
-                    </div>
-
+                    
                 </div>
             </main>
         ');
