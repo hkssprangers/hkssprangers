@@ -938,8 +938,8 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid02sDZJ3G2xkRy7zQi1Sdmt5pypJww4Rb1smoKnjZUCdjjMLGjtZkzM5vdW4Jxpmkktl&id=100064143817671
-            case [KCZenzero, "2022-10-19", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0SgF7jdpLt6bPE5PdRsQNpyELZDZLW2inVmcdonvvavRwDziVaFZeNzFDGdtXADdal&id=100064143817671
+            case [KCZenzero, "2022-11-25", _]:
                 return Unavailable('休息一天');
 
             // https://www.facebook.com/openblackwindow/posts/pfbid0ZyygiHGbSKNt75geuWZ8fvNPAFXYXVCR2TrD3u6p1rpcaLxuy4ynimxwJiB3wAxCl
