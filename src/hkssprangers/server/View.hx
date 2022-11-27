@@ -229,7 +229,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                     <b className="text-lg lg:text-xl">埗兵</b>
                     <p className="text-sm">深水埗嘅外賣平台</p>
                 </div>
-                <button id="menuBtn" className="md:hidden text-gray-500 w-8 h-8 relative focus:outline-none bg-white">
+                <button id="menuBtn" className="md:hidden text-gray-500 w-8 h-8 relative focus:outline-none">
                     <div className="navicon position-absolute">
                         <span></span>
                         <span></span>
@@ -237,11 +237,11 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                     </div>
                 </button>
             </div>
-            <div className="md:w-2/3 hidden md:block bg-gray-100 md:bg-transparent" id="mmenu">
+            <div className="md:w-2/3 mt-3 md:mt-0 hidden md:block bg-stone-100 md:bg-transparent rounded" id="mmenu">
                 <div className="md:flex">
                     <div className="flex-1 py-3 px-6 md:p-0">
                         <div className="md:pr-6">
-                            <div className="flex items-center my-3 md:mt-0 text-gray-400">
+                            <div className="flex items-center my-3 md:mt-0 text-stone-400">
                                 <span className="text-sm">主業</span>
                                 <div className="flex-1 ml-3 bg-border-gray">&nbsp;</div>
                             </div>
@@ -252,7 +252,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                         </div>
                     </div>
                     <div className="flex-1 py-3 px-6 md:p-0">
-                        <div className="flex items-center my-3 md:mt-0 text-gray-400">
+                        <div className="flex items-center my-3 md:mt-0 text-stone-400">
                             <span className="text-sm">副業</span>
                             <div className="flex-1 ml-3 bg-border-gray">&nbsp;</div>
                         </div>

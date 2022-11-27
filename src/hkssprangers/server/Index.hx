@@ -132,9 +132,9 @@ class Index extends View<IndexProps> {
     static public function howToOrderSection() return jsx('
 
         <Fragment>
-            <section className="h-12 md:h-16">&nbsp;</section>
-            <section id="sectionHow" className="">
-
+            <section id="sectionHow">
+                <div className="h-12 md:h-16">&nbsp;</div>
+            
                 <div className="py-12 md:py-16 px-6 md:px-12 mx-auto container">
                     
                         <div className="md:flex border-b-4 border-black items-end">
