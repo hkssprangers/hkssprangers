@@ -9,6 +9,7 @@ import react.ReactMacro.jsx;
 import haxe.io.Path;
 import hkssprangers.server.ServerMain.*;
 import hkssprangers.info.menu.EightyNineMenu.*;
+import hkssprangers.info.menu.ThaiHomeMenu.*;
 import hkssprangers.info.menu.DragonJapaneseCuisineMenu.*;
 import hkssprangers.info.menu.KCZenzeroMenu;
 import hkssprangers.info.menu.KCZenzeroMenu.*;
@@ -345,7 +346,7 @@ class Menu extends View<MenuProps> {
             case EightyNine:
                 renderEightyNine();
             case ThaiHome:
-                null;
+                renderThaiHome();
             case DragonJapaneseCuisine:
                 renderDragonJapaneseCuisine();
             case YearsHK:
@@ -1408,6 +1409,36 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${FishFranSSPDrink.title}</div>
                         ${renderItems(FishFranSSPDrink.enums())}
+                    </div>
+                </div>
+            </Fragment>
+        ');
+    }
+
+    function renderThaiHome() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
+        return jsx('
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${ThaiHomeMainCourse.title}</div>
+                        ${renderItems(ThaiHomeMainCourse.enums())}
+
+                        <div className=${headerClasses}>${ThaiHomeSkewer.title}</div>
+                        <div className="p-3">${slashes(ThaiHomeSkewer.items.enums())}</div>
+
+                        <div className=${headerClasses}>${ThaiHomeSnack.title}</div>
+                        ${renderItems(ThaiHomeSnack.enums())}
+
+                        <div className=${headerClasses}>${ThaiHomeSalad.title}</div>
+                        ${renderItems(ThaiHomeSalad.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${ThaiHomeRiceAndNoodle.title}</div>
+                        ${renderItems(ThaiHomeRiceAndNoodle.properties.main.enums())}
+                        <div className="font-bold p-3">${ThaiHomeRiceAndNoodle.properties.drink.title}</div>
+                        ${renderItems(ThaiHomeRiceAndNoodle.properties.drink.enums())}
                     </div>
                 </div>
             </Fragment>

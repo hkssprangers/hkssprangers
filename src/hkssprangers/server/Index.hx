@@ -376,6 +376,8 @@ class Index extends View<IndexProps> {
         final image = switch shop {
             case EightyNine:
                 image("/images/shops/EightyNine/89.jpg", shop.info().name, "squircle");
+            case ThaiHome:
+                image("/images/shops/ThaiHome/ThaiHome-square.jpeg", shop.info().name, "squircle");
             case YearsHK:
                 image("/images/shops/YearsHK/years.jpg", shop.info().name, "squircle");
             case TheParkByYears:
@@ -455,6 +457,7 @@ class Index extends View<IndexProps> {
                     ${renderShop(EightyNine, DragonCentreCluster)}
                     ${renderShop(LaksaStore, DragonCentreCluster)}
                     ${renderShop(KCZenzero, DragonCentreCluster)}
+                    ${renderShop(ThaiHome, DragonCentreCluster)}
                     ${renderShop(HanaSoftCream, DragonCentreCluster)}
                     ${renderShop(WoStreet, DragonCentreCluster)}
 

@@ -112,7 +112,7 @@ enum abstract Shop(String) to String {
                 lat: 22.3311552,
                 lng: 114.1596601,
                 courierContact: [
-                    { name: "店舖電話", url: "tel:+85252482330" },
+                    { name: "店舖電話", url: "tel:+85292919515" },
                 ],
                 openDays: [
                     Monday,
@@ -1106,7 +1106,7 @@ enum abstract Shop(String) to String {
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.itemsSchema(o));
             case ThaiHome:
-                Promise.resolve(null);
+                Promise.resolve(ThaiHomeMenu.itemsSchema(pickupTimeSlot, o));
             case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
@@ -1169,7 +1169,7 @@ enum abstract Shop(String) to String {
             case LoudTeaSSP:
                 Promise.resolve(LoudTeaSSPMenu.summarize(o));
             case ThaiHome:
-                Promise.resolve(null);
+                Promise.resolve(ThaiHomeMenu.summarize(o));
             case AuLawFarm | MxMWorkshop | NEVeg:
                 Promise.resolve(null);
         }
