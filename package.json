@@ -36,7 +36,7 @@
     "react-telegram-login": "git+https://github.com/andyli/react-telegram-login.git#5bcde076f20cb2cd89ad9de3842101669cd4be71",
     "rework": "^1.0.1",
     "rework-plugin-url": "^1.1.0",
-    "serverless": "^3.25.0",
+    "serverless": "^3.25.1",
     "serverless-prune-plugin": "^2.0.1",
     "tailwindcss": "^3.2.4",
     "workbox-cacheable-response": "^6.5.4",
