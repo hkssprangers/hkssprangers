@@ -33,6 +33,12 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             url: "https://docs.google.com/forms/d/e/1FAIpQLSebHaeo7cEqGTsNKSBk7s27Jlok4WSLJJc2IRoZa39A6TrAiw/viewform",
             img: image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3 rounded-md"),
             button: "立即落單"
+        },
+        {
+            title: "寒流來了 標記羊腩煲來了",
+            url: "/menu/BiuKeeLokYuen",
+            img: image("/images/banner-sheep-pot.jpg", "標記羊腩煲", "w-100 my-3 rounded-md"),
+            button: "立即落單"
         }
     ];
 
