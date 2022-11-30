@@ -1271,7 +1271,7 @@ class DeliveryFee {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
                 case CLPCluster: 25;
-                case GoldenCluster: 35;
+                case GoldenCluster: 25;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
@@ -2085,7 +2085,7 @@ class DeliveryFee {
                 case GoldenCluster: 35;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
-                case PakTinCluster: 35;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 35;
             }
         },
@@ -2104,7 +2104,7 @@ class DeliveryFee {
                 case GoldenCluster: 35;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
-                case PakTinCluster: 35;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 35;
             }
         },
@@ -2123,7 +2123,7 @@ class DeliveryFee {
                 case GoldenCluster: 35;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
-                case PakTinCluster: 35;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 35;
             }
         },
@@ -2322,7 +2322,7 @@ class DeliveryFee {
                 case DragonCentreCluster: 35;
                 case PeiHoStreetMarketCluster: 35;
                 case CLPCluster: 35;
-                case GoldenCluster: 35;
+                case GoldenCluster: 40;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
@@ -2557,7 +2557,7 @@ class DeliveryFee {
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
-                case CLPCluster: 25;
+                case CLPCluster: 35;
                 case GoldenCluster: 35;
                 case SmilingPlazaCluster: 40;
                 case ParkCluster: 25;
@@ -2637,7 +2637,7 @@ class DeliveryFee {
                 case GoldenCluster: 35;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
-                case PakTinCluster: 35;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 35;
             }
         },
@@ -3028,7 +3028,7 @@ class DeliveryFee {
                 case GoldenCluster: 25;
                 case SmilingPlazaCluster: 35;
                 case ParkCluster: 25;
-                case PakTinCluster: 35;
+                case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 25;
             }
         },
