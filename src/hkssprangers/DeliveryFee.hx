@@ -246,6 +246,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "西九龍法院大樓",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/198993628",
+                }
+            ],
+            match: address -> address.contains("西九龍法院大樓"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 35;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 35;
+                case ParkCluster: 35;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "榮昌邨",
             osm: [
                 {

@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.59 e21c39fe",
   "osm3s": {
-    "timestamp_osm_base": "2022-10-23T11:18:24Z",
+    "timestamp_osm_base": "2022-11-30T13:20:51Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -181,6 +181,40 @@
         "name": "龍寶酒家 Dragon Palace Restaurant",
         "name:en": "Dragon Palace Restaurant",
         "name:zh": "龍寶酒家"
+      }
+    },
+    {
+      "type": "way",
+      "id": 26379367,
+      "center": {
+        "lat": 22.3159291,
+        "lon": 114.1647549
+      },
+      "nodes": [
+        288991305,
+        288991304,
+        288991327,
+        288991328,
+        288991329,
+        1958848067,
+        288991330,
+        1962192655,
+        1958848069,
+        1958848071,
+        288991331,
+        288991332,
+        1958848070,
+        288991333,
+        288991305
+      ],
+      "tags": {
+        "addr:housenumber": "2",
+        "addr:street": "海庭道 Hoi Ting Road",
+        "landuse": "residential",
+        "name": "海富苑 Hoi Fu Court",
+        "name:en": "Hoi Fu Court",
+        "name:zh": "海富苑",
+        "wikipedia": "zh:海富苑"
       }
     },
     {
@@ -1615,6 +1649,30 @@
     },
     {
       "type": "way",
+      "id": 198993628,
+      "center": {
+        "lat": 22.331084,
+        "lon": 114.1532627
+      },
+      "nodes": [
+        2090575535,
+        2090575534,
+        2090575533,
+        2090575532,
+        2090575535
+      ],
+      "tags": {
+        "amenity": "courthouse",
+        "building": "yes",
+        "construction": "cour",
+        "name": "西九龍法院大樓 West Kowloon Law Courts Building",
+        "name:en": "West Kowloon Law Courts Building",
+        "name:zh": "西九龍法院大樓",
+        "wikidata": "Q15918328"
+      }
+    },
+    {
+      "type": "way",
       "id": 215630618,
       "center": {
         "lat": 22.3345629,
@@ -2134,6 +2192,7 @@
         4355557409,
         4355557410,
         3906009492,
+        10213842838,
         3906009493,
         4355557403,
         3906009484,
@@ -3381,7 +3440,7 @@
         "addr:street": "深旺道 Sham Mong Road",
         "building": "retail",
         "building:levels": "3",
-        "layer": "1",
+        "layer": "2",
         "name": "V Walk",
         "operator": "Sung Hung Kai Properties",
         "shop": "mall",
