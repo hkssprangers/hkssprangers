@@ -447,14 +447,14 @@ holidays.json:
     RUN node holidays.js
     SAVE ARTIFACT holidays.json AS LOCAL holidays.json
 
-importGoogleForm-js:
+cronjobs.js:
     FROM +devcontainer
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
-    COPY .haxerc importGoogleForm.hxml holidays.json .
-    RUN haxe importGoogleForm.hxml
-    SAVE ARTIFACT importGoogleForm.js
+    COPY .haxerc cronjobs.hxml holidays.json .
+    RUN haxe cronjobs.hxml
+    SAVE ARTIFACT cronjobs.js
 
 commands.js:
     FROM +devcontainer
@@ -484,7 +484,7 @@ deploy:
     COPY --chown=$USER_UID:$USER_GID +style-css/style.css static/css/style.css
     COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
     COPY --chown=$USER_UID:$USER_GID +server/images static/images
-    COPY --chown=$USER_UID:$USER_GID +importGoogleForm-js/importGoogleForm.js importGoogleForm.js
+    COPY --chown=$USER_UID:$USER_GID +cronjobs.js/cronjobs.js cronjobs.js
     COPY --chown=$USER_UID:$USER_GID serverless.yml package.json package-lock.json holidays.json .
     ARG --required DEPLOY_STAGE
     ENV DEPLOY_STAGE="$DEPLOY_STAGE"

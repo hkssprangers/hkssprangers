@@ -35,8 +35,8 @@ jobs:
           EARTHLY_PUSH: ${{ env.PUSH }}
       - name: Build
         run: earthly +server
-      - name: Build importGoogleForm
-        run: earthly +importGoogleForm-js
+      - name: Build cronjobs.js
+        run: earthly +cronjobs.js
       - name: Build commands.js
         run: earthly +commands.js
       - name: Test

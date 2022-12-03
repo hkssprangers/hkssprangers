@@ -10,8 +10,8 @@
 --library hxLINQ
 --class-path src
 --class-path lib/dts2hx
---main hkssprangers.ImportGoogleForm
---js importGoogleForm.js
+--main hkssprangers.CronJobs
+--js cronjobs.js
 --dce full
 -D no-deprecation-warnings
-# --cmd node importGoogleForm.js
+# --cmd node cronjobs.js

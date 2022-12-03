@@ -63,14 +63,14 @@ functions:
           path: '{proxy+}'
           cors: true
   sendAttendancePoll:
-    handler: importGoogleForm.sendAttendancePoll
+    handler: cronjobs.sendAttendancePoll
     events:
       - schedule:
           # at HKT 11:00 and 17:00
           rate: cron(0 3,9 * * ? *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
   sendDutyPoll:
-    handler: importGoogleForm.sendDutyPoll
+    handler: cronjobs.sendDutyPoll
     events:
       - schedule:
           # at HKT 21:00, Sunday and Thursday

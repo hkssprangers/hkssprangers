@@ -20,7 +20,7 @@ using StringTools;
 using hkssprangers.db.DatabaseTools;
 using hkssprangers.info.TimeSlotTools;
 
-class ImportGoogleForm {
+class CronJobs {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
 
     static function sendDutyPoll(chatId:String) {
