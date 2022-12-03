@@ -456,6 +456,15 @@ importGoogleForm-js:
     RUN haxe importGoogleForm.hxml
     SAVE ARTIFACT importGoogleForm.js
 
+commands.js:
+    FROM +devcontainer
+    COPY haxe_libraries haxe_libraries
+    COPY static static
+    COPY src src
+    COPY .haxerc commands.hxml holidays.json .
+    RUN haxe commands.hxml
+    SAVE ARTIFACT commands.js
+
 test:
     FROM +devcontainer
     COPY haxe_libraries haxe_libraries

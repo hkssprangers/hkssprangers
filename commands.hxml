@@ -9,13 +9,9 @@
 --library CommentString
 --library hxLINQ
 --class-path src
---class-path test
 --class-path lib/dts2hx
---main hkssprangers.ImportOrderDocs
---js importOrderDocs.js
+--main hkssprangers.Commands
+--js commands.js
 --dce full
 -D no-deprecation-warnings
-# -D sql_debug
-# --cmd node importOrderDocs.js importDocs
-# --cmd node importOrderDocs.js insertIntoDb
-# --cmd node importOrderDocs.js calculate
+-D sql_debug

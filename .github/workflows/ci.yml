@@ -37,6 +37,8 @@ jobs:
         run: earthly +server
       - name: Build importGoogleForm
         run: earthly +importGoogleForm-js
+      - name: Build commands.js
+        run: earthly +commands.js
       - name: Test
         run: earthly +test
       - name: Create .envrc

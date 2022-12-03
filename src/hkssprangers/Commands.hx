@@ -24,7 +24,7 @@ using hkssprangers.info.TimeSlotTools;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.DeliveryTools;
 
-class ImportOrderDocs {
+class Commands {
     static function validateDelivery(d:Delivery) {
         function printDelivery() return Json.stringify(d, null, "  ");
 
