@@ -36,7 +36,7 @@ class Commands {
             throw "orderPrice is null: \n" + printDelivery();
         }
 
-        var icecreamOrder = d.orders.find(o -> o.shop == HanaSoftCream);
+        final icecreamOrder = d.orders.find(o -> o.shop == HanaSoftCream);
         if (icecreamOrder != null) {
             if (icecreamOrder.orderPrice <= 0) {
                 throw "unusual iceCreamPrice";
@@ -97,8 +97,8 @@ class Commands {
             }
         }
 
-        var platformServiceChargeTotal = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();
-        var deliverySubsidy = (platformServiceChargeTotal * 0.5) / d.couriers.length;
+        final platformServiceChargeTotal = d.orders.map(o -> (o.platformServiceCharge:Decimal)).sum();
+        final deliverySubsidy = (platformServiceChargeTotal * 0.5) / d.couriers.length;
         for (c in d.couriers) {
             if (c.deliverySubsidy != deliverySubsidy.toFloat()) {
                 trace("deliverySubsidy is not half of platformServiceChargeTotal: \n" + printDelivery());
@@ -111,7 +111,7 @@ class Commands {
             case 0: Reflect.compare(a.deliveryCode, b.deliveryCode);
             case v: v;
         });
-        var orderRows = [
+        final orderRows = [
             for (d in deliveries)
             for (o in d.orders)
             if (o.shop == shop)
@@ -127,7 +127,7 @@ class Commands {
                 /* F */ "埗兵收費": o.platformServiceCharge,
             }
         ];
-        var ws = Xlsx.utils.json_to_sheet(orderRows);
+        final ws = Xlsx.utils.json_to_sheet(orderRows);
 
         Xlsx.utils.sheet_add_aoa(ws, [
             for (_ in 0...3)
@@ -162,10 +162,10 @@ class Commands {
             case 0: Reflect.compare(a.deliveryCode, b.deliveryCode);
             case v: v;
         });
-        var orderRows = [
+        final orderRows = [
             for (d in deliveries.filter(d -> d.couriers.exists(c -> c.tg.username == courierTg)))
             {
-                var cd = d.couriers.find(c -> c.tg.username == courierTg);
+                final cd = d.couriers.find(c -> c.tg.username == courierTg);
                 {
                     /* A */ "日期": (d.pickupTimeSlot.start:String).substr(0, 10),
                     /* B */ "時段": switch (TimeSlotType.classify(Date.fromString(d.pickupTimeSlot.start))) {
@@ -181,7 +181,7 @@ class Commands {
                 }
             }
         ];
-        var ws = Xlsx.utils.json_to_sheet(orderRows);
+        final ws = Xlsx.utils.json_to_sheet(orderRows);
 
         Xlsx.utils.sheet_add_aoa(ws, [
             for (_ in 0...3)
@@ -211,7 +211,7 @@ class Commands {
             .next(deliveries -> {
                 deliveries.iter(validateDelivery);
 
-                var summaryDir = "summary";
+                final summaryDir = "summary";
                 FileSystem.createDirectory(summaryDir);
 
                 deliveries.sort((a,b) -> switch (Reflect.compare(a.pickupTimeSlot.start, b.pickupTimeSlot.start)) {
@@ -220,22 +220,21 @@ class Commands {
                 });
 
                 FileSystem.createDirectory(Path.join([summaryDir, "shop"]));
-                var shops = Shop.all;
-                var charges = new Map<Shop, Decimal>();
+                final shops = Shop.all;
+                final charges = new Map<Shop, Decimal>();
                 for (shop in shops) {
-                    var deliveries = deliveries.filter(d -> d.orders.exists(o -> o.shop == shop));
+                    final deliveries = deliveries.filter(d -> d.orders.exists(o -> o.shop == shop));
 
                     if (deliveries.length == 0) {
                         continue;
                     }
 
-                    var wb = Xlsx.utils.book_new();
-                    var ws = shopSummary(shop, deliveries);
-
+                    final wb = Xlsx.utils.book_new();
+                    final ws = shopSummary(shop, deliveries);
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
                     Xlsx.writeFile(wb, Path.join([summaryDir, "shop", start.getDatePart() + "_" + end.getDatePart() + "_" + shop.info().name + ".xlsx"]));
 
-                    var totalCharge = [
+                    final totalCharge = [
                         for (d in deliveries)
                         for (o in d.orders)
                         if (o.shop == shop)
@@ -244,38 +243,37 @@ class Commands {
                         .sum()
                         .roundTo(1);
                     charges[shop] = totalCharge;
-                    var shopName = shop.info().name;
-                    var chinese = ~/[\u4e00-\u9fff]/g;
-                    var shopNameWidth = chinese.replace(shopName, "XX").length;
-                    var shopNamePadding = [for (_ in 0...(20-shopNameWidth)) " "].join("");
+                    final shopName = shop.info().name;
+                    final chinese = ~/[\u4e00-\u9fff]/g;
+                    final shopNameWidth = chinese.replace(shopName, "XX").length;
+                    final shopNamePadding = [for (_ in 0...(20-shopNameWidth)) " "].join("");
                     Sys.println('${shopNamePadding}${shopName}: ${totalCharge.toString().lpad(" ", 6)} (共 ${Std.string(deliveries.length).lpad(" ", 3)} 單)');
                 };
 
                 Sys.println("-----------------------------");
 
-                var allCharge:Decimal = [for (shop => c in charges) c].sum();
+                final allCharge:Decimal = [for (shop => c in charges) c].sum();
                 Sys.println('All charges: ${allCharge.toString()} (共 ${deliveries.length} 單)');
 
                 Sys.println("-----------------------------");
 
                 FileSystem.createDirectory(Path.join([summaryDir, "courier"]));
-                var couriers = [
+                final couriers = [
                     for (d in deliveries)
                     for (c in d.couriers)
                     c.tg.username => c.tg.username
                 ].array();
                 couriers.sort((a,b) -> Reflect.compare(a.toLowerCase(), b.toLowerCase()));
-                var courierPayout = new Map<String, Decimal>();
-                var courierNameMax = Std.int(couriers.fold((item, r) -> Math.max(item.length, r), 0));
+                final courierPayout = new Map<String, Decimal>();
+                final courierNameMax = Std.int(couriers.fold((item, r) -> Math.max(item.length, r), 0));
                 for (courier in couriers) {
-                    var deliveries = deliveries.filter(d -> d.couriers.exists(c -> c.tg.username == courier));
-                    var wb = Xlsx.utils.book_new();
-                    var ws = courierSummary(courier, deliveries);
-
+                    final deliveries = deliveries.filter(d -> d.couriers.exists(c -> c.tg.username == courier));
+                    final wb = Xlsx.utils.book_new();
+                    final ws = courierSummary(courier, deliveries);
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
                     Xlsx.writeFile(wb, Path.join([summaryDir, "courier", start.getDatePart() + "_" + end.getDatePart() + "_" + courier + ".xlsx"]));
 
-                    var subsidyTotal:Decimal = [
+                    final subsidyTotal:Decimal = [
                             for (d in deliveries)
                             for (c in d.couriers)
                             if (c.tg.username == courier)
@@ -284,7 +282,7 @@ class Commands {
                         .sum()
                         .roundTo(1);
                     courierPayout[courier] = subsidyTotal;
-                    var feeTotal:Decimal = [
+                    final feeTotal:Decimal = [
                         for (d in deliveries)
                         for (c in d.couriers)
                         if (c.tg.username == courier)
@@ -295,13 +293,68 @@ class Commands {
                     Sys.println('${courier.lpad(" ", courierNameMax)}: ${subsidyTotal.toString().lpad(" ", 6)} + ${feeTotal.toString().lpad(" ", 6)} = ${(subsidyTotal + feeTotal).toString().lpad(" ", 6)} (共 ${Std.string(deliveries.length).lpad(" ", 2)} 單)');
                 }
                 Sys.println("-----------------------------");
-                var allPayout:Decimal = [for (courier => v in courierPayout) v].sum();
+                final allPayout:Decimal = [for (courier => v in courierPayout) v].sum();
                 Sys.println('All payouts: ${allPayout.toString()}');
                 Sys.println("-----------------------------");
                 Sys.println('Platform income: ${(allCharge - allPayout).toString()}');
 
+                final wb = Xlsx.utils.book_new();
+                final ws = createReport(charges, courierPayout, start.getDatePart() + " - " + end.getDatePart());
+                Xlsx.utils.book_append_sheet(wb, ws, "report");
+                Xlsx.writeFile(wb, Path.join([summaryDir, start.getDatePart() + "_" + end.getDatePart() + ".xlsx"]));
+
                 Noise;
             });
+    }
+
+    static function createReport(charges:Map<Shop, Decimal>, courierPayout:Map<String, Decimal>, details:String):WorkSheet {
+        final chargesRows:Array<Dynamic> = [
+            for (shop => charge in charges)
+            {
+                /* A */ "date": null,
+                /* B */ "type": "service charge",
+                /* C */ "description": shop.info().name,
+                /* D */ "details": details,
+                /* E */ "expense (HKD)": null,
+                /* F */ "expense (EUR)": null,
+                /* G */ "expense (USD)": null,
+                /* H */ "expense value in HKD": null,
+                /* I */ "revenue (HKD)": charge.toFloat(),
+            }
+        ];
+        final courierPayoutRows:Array<Dynamic> = [
+            for (courier => payout in courierPayout)
+            {
+                /* A */ "date": null,
+                /* B */ "type": "Salaries",
+                /* C */ "description": 'delivery subsidy ${courier}',
+                /* D */ "details": details,
+                /* E */ "expense (HKD)": payout.toFloat(),
+                /* F */ "expense (EUR)": null,
+                /* G */ "expense (USD)": null,
+                /* H */ "expense value in HKD": null,
+                /* I */ "revenue (HKD)": null,
+            }
+        ];
+        final ws = Xlsx.utils.json_to_sheet(chargesRows.concat(courierPayoutRows));
+        ws.__cols = [
+            /* A date */                 { wch: 10 },
+            /* B type */                 { wch: 15 },
+            /* C description */          { wch: 25 },
+            /* D details */              { wch: 25 },
+            /* E expense (HKD) */        { wch: 18 },
+            /* F expense (EUR) */        { wch: 18 },
+            /* G expense (USD) */        { wch: 18 },
+            /* H expense value in HKD */ { wch: 18 },
+            /* I revenue (HKD) */        { wch: 18 },
+        ];
+        ws.__rows = [
+            for (_ in 0...chargesRows.length + courierPayoutRows.length + 1)
+            {
+                hpt: 18,
+            }
+        ];
+        return ws;
     }
 
     static function zeroAuLawCharges():Promise<Noise> {
@@ -332,12 +385,12 @@ class Commands {
     }
 
     static function copyRegular(start:LocalDateString, end:LocalDateString):Promise<Noise> {
-        var now = Date.now();
+        final now = Date.now();
         return CockroachDb.db.delivery.where(f -> f.deliveryId == 1161).first()
             .next(sample -> DeliveryConverter.toDelivery(sample, CockroachDb.db))
             .next(sample -> {
                 var date = start;
-                var deliveries:Array<Delivery> = [];
+                final deliveries:Array<Delivery> = [];
                 while (date <= end) {
                     if (!HkHolidays.isRedDay(date.toDate()) && !(Weekday.fromDay(date.toDate().getDay()) == Monday)) {
                         deliveries.push({
