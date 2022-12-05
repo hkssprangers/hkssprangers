@@ -125,6 +125,22 @@ class TheParkByYearsMenu {
         ],
     };
 
+    static public final TheParkByYearsAddons = {
+        title: "加配",
+        type: "array",
+        items: {
+            type: "string",
+            "enum": [
+                "炸香芋番薯丸 (3粒) +$24",
+                "泰式炸蝦配酸辣醬 (2隻) +$30",
+                "腰果中華沙律腐皮壽司 (2件) 🌰 +$32",
+                "炸旋風薯⽚ +$36",
+                "炸番薯條 +$36",
+            ],
+        },
+        uniqueItems: true,
+    };
+
     static public final TheParkByYearsWeekdayLunchSet = {
         title: "平日午市套餐",
         description: "🧄=garlic 🌶️=spicy 🌰=nuts",
@@ -154,6 +170,7 @@ class TheParkByYearsMenu {
                 ],
             },
             drink: TheParkByYearsSetDrink,
+            extraOptions: TheParkByYearsAddons,
         },
         required: [
             "main",
@@ -191,6 +208,7 @@ class TheParkByYearsMenu {
                 ],
             },
             drink: TheParkByYearsSetDrink,
+            extraOptions: TheParkByYearsAddons,
         },
         required: [
             "main",
@@ -263,7 +281,7 @@ class TheParkByYearsMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case WeekdayLunchSet | DinnerHolidaySet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):

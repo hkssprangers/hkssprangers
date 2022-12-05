@@ -771,6 +771,25 @@ class Menu extends View<MenuProps> {
 
     function renderTheParkByYears() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final addons = {
+            final items = TheParkByYearsAddons.items.enums();
+            final cut = Math.ceil(items.length * 0.5);
+            final items1 = items.slice(0, cut);
+            final items2 = items.slice(cut);
+            jsx('
+                <div className=${["p-3", "border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>套餐${TheParkByYearsAddons.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items1, true)}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items2, true)}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
         final drinks = {
             final items = TheParkByYearsSetDrink.enums();
             final cut = Math.ceil(items.length * 0.5);
@@ -825,6 +844,7 @@ class Menu extends View<MenuProps> {
                         ${renderItems(TheParkByYearsDinnerHolidaySet.properties.main.enums())}
                     </div>
                 </div>
+                ${addons}
                 ${drinks}
                 ${singles}
             </Fragment>
