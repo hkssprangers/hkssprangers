@@ -983,6 +983,9 @@ enum abstract Shop(String) to String {
             case [LaksaStore, "2022-11-15", _]:
                 return Unavailable('休息一天');
 
+            case [EightyNine | ThaiHome, "2022-12-08", _]:
+                return Unavailable('休息一天');
+
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
