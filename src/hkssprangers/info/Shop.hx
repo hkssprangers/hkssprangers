@@ -1057,7 +1057,7 @@ enum abstract Shop(String) to String {
     public function itemsSchema(pickupTimeSlot:Null<TimeSlot>, o:FormOrderData):Promise<Dynamic> {
         return switch (cast this:Shop) {
             case EightyNine:
-                Promise.resolve(EightyNineMenu.itemsSchema());
+                Promise.resolve(EightyNineMenu.itemsSchema(pickupTimeSlot, o));
             case DragonJapaneseCuisine:
                 Promise.resolve(DragonJapaneseCuisineMenu.itemsSchema(o));
             case LaksaStore:

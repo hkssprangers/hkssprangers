@@ -459,24 +459,26 @@ class Menu extends View<MenuProps> {
         ];
 
     function renderEightyNine() {
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+
         return jsx('
-            <div className="p-3">
-                
-                <div className=${["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                    ${EightyNineSet.title}: ${EightyNineSet.description}
+            <Fragment>
+                <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${EightyNineMainCourse.title}</div>
+                        ${renderItems(EightyNineMainCourse.enums())}
+
+                        <div className=${headerClasses}>${EightyNineSnack.title}</div>
+                        ${renderItems(EightyNineSnack.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${EightyNineRiceAndNoodle.title} (${EightyNineRiceAndNoodle.properties.drink.title})</div>
+                        ${renderItems(EightyNineRiceAndNoodle.properties.main.enums())}
+                        <div className="font-bold p-3">${EightyNineRiceAndNoodle.properties.drink.title}</div>
+                        ${renderItems(EightyNineRiceAndNoodle.properties.drink.enums().slice(1))}
+                    </div>
                 </div>
-                    
-                <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            <div className="p-3"><b>${EightyNineSet.properties.main.title}</b></div>
-                            ${renderItems(EightyNineSet.properties.main.enums())}
-                        </div>
-                        <div className="md:w-1/2 md:ml-3">
-                            <div className="p-3"><b>${EightyNineSet.properties.sub.title}</b></div>
-                            ${renderItems(EightyNineSet.properties.sub.enums())}
-                        </div>
-                </div>
-            </div>
+            </Fragment>
         ');
     }
 
@@ -678,7 +680,7 @@ class Menu extends View<MenuProps> {
     function renderYearsHK() {
         var drinks = YearsHKSetDrink.enums();
         var cut = Math.ceil(drinks.length * 0.5);
-        var drinks1 = drinks.slice(0, cut);
+        var drinks1 = drinks.slice(1, cut);
         var drinks2 = drinks.slice(cut);
         var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
         return jsx('
@@ -793,7 +795,7 @@ class Menu extends View<MenuProps> {
         final drinks = {
             final items = TheParkByYearsSetDrink.enums();
             final cut = Math.ceil(items.length * 0.5);
-            final items1 = items.slice(0, cut);
+            final items1 = items.slice(1, cut);
             final items2 = items.slice(cut);
             jsx('
                 <div className="p-3">
