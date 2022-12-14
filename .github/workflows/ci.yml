@@ -29,6 +29,7 @@ jobs:
       - uses: earthly/actions-setup@0f27e887233593666346cf20e138c06085f9d18c
         with:
           version: "v0.6.29"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build devcontainer
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"
         env:
