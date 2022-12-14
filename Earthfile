@@ -373,7 +373,10 @@ devcontainer:
     ARG IMAGE_NAME="$DEVCONTAINER_IMAGE_NAME_DEFAULT"
     ARG IMAGE_TAG="$MAIN_BRANCH"
     ARG IMAGE_CACHE="$IMAGE_NAME:$IMAGE_TAG"
-    SAVE IMAGE --cache-from="$IMAGE_CACHE" --push "$IMAGE_NAME:$IMAGE_TAG"
+    SAVE IMAGE \
+        --cache-from="$DEVCONTAINER_IMAGE_NAME_DEFAULT:$MAIN_BRANCH" \
+        --cache-from="$IMAGE_CACHE" \
+        --push "$IMAGE_NAME:$IMAGE_TAG"
 
 ci-images:
     ARG --required GIT_REF_NAME
