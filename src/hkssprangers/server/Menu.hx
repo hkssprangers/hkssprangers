@@ -460,11 +460,33 @@ class Menu extends View<MenuProps> {
 
     function renderEightyNine() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final now:LocalDateString = Date.now();
+        final today = now.getDatePart();
+        final limited = if (
+            today >= EightyNineMenu.EightyNineLimitedSpecial.dateStart
+            &&
+            today <= EightyNineMenu.EightyNineLimitedSpecial.dateEnd
+            &&
+            EightyNineMenu.EightyNineLimitedSpecial.available
+        ) {
+            final def = EightyNineMenu.EightyNineLimitedSpecial.def;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">期間限定</div>
+                    </div>
+                    <div className="p-3">${def.description}</div>
+                    ${renderItems(def.properties.special.enums())}
+                </Fragment>
+            ');
+        } else null;
 
         return jsx('
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        ${limited}
+
                         <div className=${headerClasses}>${EightyNineMainCourse.title}</div>
                         ${renderItems(EightyNineMainCourse.enums())}
 

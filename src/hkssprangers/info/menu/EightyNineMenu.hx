@@ -10,22 +10,37 @@ using Reflect;
 using Lambda;
 
 enum abstract EightyNineItem(String) to String {
+    final LimitedSpecial;
     final MainCourse;
     final Snack;
     final RiceAndNoodle;
 
-    static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<EightyNineItem> {
-        return [
+    static public function all(timeSlot:TimeSlot):ReadOnlyArray<EightyNineItem> {
+        final limited = if (
+            timeSlot.start.getDatePart() >= EightyNineMenu.EightyNineLimitedSpecial.dateStart
+            &&
+            timeSlot.start.getDatePart() <= EightyNineMenu.EightyNineLimitedSpecial.dateEnd
+            &&
+            EightyNineMenu.EightyNineLimitedSpecial.timeSlotTypes.has(TimeSlotType.classify(timeSlot.start))
+            &&
+            EightyNineMenu.EightyNineLimitedSpecial.available
+        )
+            [LimitedSpecial];
+        else
+            [];
+
+        return limited.concat([
             MainCourse,
             Snack,
             RiceAndNoodle,
-        ];
+        ]);
     }
 
     public function getDefinition():Dynamic return switch (cast this:EightyNineItem) {
         case MainCourse: EightyNineMenu.EightyNineMainCourse;
         case Snack: EightyNineMenu.EightyNineSnack;
         case RiceAndNoodle: EightyNineMenu.EightyNineRiceAndNoodle;
+        case LimitedSpecial: EightyNineMenu.EightyNineLimitedSpecial.def;
     }
 }
 
@@ -33,6 +48,32 @@ class EightyNineMenu {
     static function item(name:String, price:Float):String {
         return name + " $" + Math.round(price / 0.85);
     }
+
+    static public final EightyNineLimitedSpecial = {
+        final items = [
+            item("秘製潮式韮菜豬紅", 28),
+        ];
+
+        {
+            dateStart: "2022-12-15",
+            dateEnd: "2022-12-15",
+            timeSlotTypes: [Lunch, Dinner],
+            available: true,
+            def: {
+                title: items.length == 1 ? "限定：" + items[0] : "期間限定",
+                description: "⚠️ 請提早落單。售完即止。",
+                properties: {
+                    special: {
+                        title: "限定",
+                        type: "string",
+                        "enum": items,
+                        "default": items[0],
+                    }
+                },
+                required: ["special"],
+            }
+        };
+    };
 
     static public final EightyNineMainCourse = {
         title: "主菜",
@@ -110,7 +151,7 @@ class EightyNineMenu {
             }
         } else {
             final itemDefs = [
-                for (item in EightyNineItem.all(TimeSlotType.classify(pickupTimeSlot.start)))
+                for (item in EightyNineItem.all(pickupTimeSlot))
                 item => item.getDefinition()
             ];
             function itemSchema():Dynamic return {
@@ -166,6 +207,13 @@ class EightyNineMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case LimitedSpecial:
+                final orderDetails = [fullWidthDot + "限定：" + orderItem.item.special];
+                final orderPrice = orderDetails.map(line -> parsePrice(line).price).sum();
+                {
+                    orderDetails: orderDetails.join("\n"),
+                    orderPrice: orderPrice,
+                };
             case RiceAndNoodle:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case MainCourse | Snack:
