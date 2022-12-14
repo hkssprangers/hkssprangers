@@ -37,7 +37,7 @@ RUN apt-get update \
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
-SAVE IMAGE --cache-hint
+SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -86,7 +86,7 @@ RUN npm config --global set update-notifier false
 RUN npm config set prefix /usr/local
 RUN npm install -g lix
 
-SAVE IMAGE --cache-hint
+SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
 devcontainer-library-scripts:
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/common-debian.sh
