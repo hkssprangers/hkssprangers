@@ -985,7 +985,7 @@ enum abstract Shop(String) to String {
             case [LaksaStore, "2022-12-16", _]:
                 return Unavailable('休息一天');
 
-            case [EightyNine | ThaiHome, "2022-12-08", _]:
+            case [ThaiHome, "2022-12-15", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
@@ -1027,15 +1027,6 @@ enum abstract Shop(String) to String {
 
         if (pickupTimeSlot.start.getTimePart() > info.latestPickupTime)
             return Unavailable('最遲 ${info.latestPickupTime.substr(0, 5)} 時段交收');
-
-        var hoursToPickup = (pickupTimeSlot.start.toDate().getTime() - currentTime.getTime()) / 3.6e+6;
-        switch (cast this:Shop) {
-            case ThaiYummy:
-                if (hoursToPickup < 1.0)
-                    return Unavailable('食物製作需要最少1小時');
-            case _:
-                //pass
-        }
 
         return Available;
     }
