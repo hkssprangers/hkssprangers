@@ -107,7 +107,7 @@ class BlackWindowMenu {
 
     #if (!browser)
     static function parseSetItem(itemLine:String) {
-        final parseSetItem = ~/^([^\$]+?)\s*\$([0-9]+)(?:[\s,，]*跟餐\+?\$([0-9]+))?$/;
+        final parseSetItem = ~/^([^\$]+?)\s*\$([0-9]+)(?:[\s,，]*跟餐\s*\+?\s*\$([0-9]+))?$/;
         if (!parseSetItem.match(itemLine)) {
             throw "格式有問題：" + itemLine;
         }
@@ -124,7 +124,7 @@ class BlackWindowMenu {
         };
     }
     static function parseWithMainItem(itemLine:String) {
-        final parser = ~/^([^\$]+?)\s*\$([0-9]+)(?:[\s,，]*跟主食\+?\$([0-9]+))?$/;
+        final parser = ~/^([^\$]+?)\s*\$([0-9]+)(?:[\s,，]*跟主食\s*\+?\s*\$([0-9]+))?$/;
         if (!parser.match(itemLine)) {
             throw "格式有問題：" + itemLine;
         }
