@@ -343,10 +343,10 @@ class ServerMain {
         return Promise.resolve(app);
     }
 
-    static public function notifyDeliveryRequestReceived(delivery:Delivery) {
+    static public function notifyDeliveryRequestReceived(delivery:Delivery):Promise<Dynamic> {
         trace("notifyDeliveryRequestReceived");
         final msg = delivery.printReceivedMsg();
-        switch (delivery.customerPreferredContactMethod) {
+        return switch (delivery.customerPreferredContactMethod) {
             case Telegram:
                 tgMe.then(tgMe -> {
                     CockroachDb.db.tgPrivateChat

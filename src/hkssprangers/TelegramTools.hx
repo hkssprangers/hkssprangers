@@ -32,7 +32,7 @@ class TelegramTools {
     }
 
     #if (sys || nodejs)
-    static public function notifyNewDelivery(delivery:Delivery, stage:DeployStage) {
+    static public function notifyNewDelivery(delivery:Delivery, stage:DeployStage):Promise<Dynamic> {
         final tgBot = new Telegraf(TelegramConfig.tgBotToken);
         final shopNames = delivery.orders.map(o -> "🔸 " + o.shop.info().name).join("\n");
         final destinationHint = switch (DeliveryFee.getMatchedHeuristrics(delivery.pickupLocation)) {
