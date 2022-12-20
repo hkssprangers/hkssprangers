@@ -24,7 +24,7 @@
     "copy-to-clipboard": "^3.3.3",
     "dts2hx": "^0.19.2",
     "envify": "^4.1.0",
-    "esbuild": "^0.16.7",
+    "esbuild": "^0.16.10",
     "js-cookie": "^3.0.1",
     "maplibre-gl": "^2.1.9",
     "nodemon": "^2.0.20",
