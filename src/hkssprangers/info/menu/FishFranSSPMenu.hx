@@ -7,8 +7,10 @@ import hkssprangers.info.TimeSlot;
 using hkssprangers.info.TimeSlotTools;
 using Reflect;
 using Lambda;
+using hxLINQ.LINQ;
 
 enum abstract FishFranSSPItem(String) to String {
+    final LunchSet;
     final FishPot;
     final Pot;
     final Dish;
@@ -22,27 +24,29 @@ enum abstract FishFranSSPItem(String) to String {
     final Drink;
 
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<FishFranSSPItem> {
-        return switch (timeSlotType) {
-            case Lunch | Dinner:
-                [
-                    FishPot,
-                    Pot,
-                    Dish,
-                    ColdDish,
-                    Rice,
-                    Noodles,
-                    SpicyPot,
-                    SoupPot,
-                    SpicyThing,
-                    Dessert,
-                    Drink,
-                ];
-            case _:
-                [];
-        }
+        return
+            (switch (timeSlotType) {
+                case Lunch:
+                    [LunchSet];
+                case _:
+                    [];
+            }).concat([
+                FishPot,
+                Pot,
+                Dish,
+                ColdDish,
+                Rice,
+                Noodles,
+                SpicyPot,
+                SoupPot,
+                SpicyThing,
+                Dessert,
+                Drink,
+            ]);
     }
 
     public function getDefinition():Dynamic return switch (cast this:FishFranSSPItem) {
+        case LunchSet: FishFranSSPMenu.FishFranSSPLunchSet;
         case FishPot: FishFranSSPMenu.FishFranSSPFishPot;
         case Pot: FishFranSSPMenu.FishFranSSPPot;
         case Dish: FishFranSSPMenu.FishFranSSPDish;
@@ -58,8 +62,120 @@ enum abstract FishFranSSPItem(String) to String {
 }
 
 class FishFranSSPMenu {
-    static function item(name:String, price:Float):String {
-        return name + " $" + Math.round(price * 1.11);
+    static function item(name:String, price:Float, plusSign:Bool = false):String {
+        return name + (plusSign ? " +$" : " $") + Math.round(price * 1.11);
+    }
+
+    static function lunchNoodle(main:String, price:Float):Array<String> {
+        return [
+            "上海麵",
+            "粉條",
+            "米線",
+            "飯",
+        ].map(type -> item(main + " " + type, price));
+    }
+
+    static public final FishFranSSPLunchSet = {
+        title: "午市套餐",
+        properties: {
+            main: {
+                type: "string",
+                title: "午市套餐",
+                "enum": [
+                    lunchNoodle("水煮牛肉", 58),
+                    lunchNoodle("水煮魚片", 58),
+                    lunchNoodle("酸菜魚片", 58),
+                    lunchNoodle("鮮茄香菇魚片", 58),
+                    lunchNoodle("麻辣三寶", 52),
+                    [
+                        item("重慶雞飯", 55),
+                        item("口水雞飯", 52),
+                        item("梅菜扣肉飯", 52),
+                        item("法式牛尾飯", 61),
+                        item("泰式豬頸肉飯", 61),
+                        item("乾炒牛河", 52),
+                        item("星州炒米", 52),
+                        item("楊州炒飯", 52),
+                        item("香菜豬潤麵", 52),
+                        item("地道雲吞麵", 52),
+                        item("回鍋肉飯", 55),
+                        item("生炒骨飯", 55),
+                        item("麻婆豆腐飯", 52),
+                    ]
+                ].linq().selectMany((v,i) -> v).toArray(),
+            },
+            drink: {
+                type: "string",
+                title: "飲品",
+                description: "奉送：" + [
+                    "老火湯(送完即止)",
+                    "熱咖啡或茶",
+                    item("凍飲", 3, true),
+                    item("汽水", 3, true),
+                    item("健康飲品", 5, true),
+                    item("特飲", 8, true),
+                    item("珍寶沙冰", 16, true),
+                ].join(" / "),
+                "enum": [
+                    "唔要",
+                    item("老火湯", 0, true),
+                    
+                    item("珍寶青檸樹", 16 , true),
+                    item("珍寶菠蘿雪山(菠蘿+椰汁)", 16, true),
+                    item("珍寶莎莎冰(蕃茄+青檸)", 16, true),
+                    item("珍寶玉龍冰(火龍果)", 16, true),
+                    item("珍寶紅豆沙冰 ", 16, true),
+                    item("珍寶巨峰沙冰", 16, true),
+                    // 珍寶白桃沙冰 沽清
+                    // 珍寶芒果乳酸沙冰 沽清
+                    item("荔枝梳打", 8, true),
+                    item("巨峰梳打", 8, true),
+                    // 百香果梳打 沽清
+                    item("咸檸七", 8, true),
+                    item("咸檸梳打", 8, true),
+                    item("青檸梳打", 8, true),
+                    // 蜜桃冰紅茶 沽清
+                    // 西瓜汁(凍) 沽清
+                    item("果醋飲料", 5, true),
+                    item("王老吉", 5, true),
+                    item("蜂蜜綠茶", 5, true),
+                    item("梳打水(罐裝)", 5, true),
+                    item("罐裝汽水 可口可樂", 3, true),
+                    item("罐裝汽水 無糖可樂", 3, true),
+                    item("罐裝汽水 七喜", 3, true),
+                    item("罐裝汽水 芬達橙汁", 3, true),
+                    item("罐裝汽水 忌廉", 3, true),
+                    item("熱檸茶", 0, true),
+                    item("熱檸水", 0, true),
+                    item("熱菜蜜", 0, true),
+                    item("熱咖啡", 0, true),
+                    item("熱奶茶", 0, true),
+                    item("熱鴛鴦", 0, true),
+                    item("熱華田", 0, true),
+                    item("熱好立克", 0, true),
+                    item("熱杏仁霜", 0, true),
+                    item("熱利賓納", 0, true),
+                    item("熱檸蜜", 0, true),
+                    item("熱檸樂", 8, true),
+                    item("熱可樂煲薑", 8, true),
+                    item("熱檸樂煲薑", 8, true),
+                    item("凍華田", 6, true),
+                    item("凍好立克", 3, true),
+                    item("凍杏仁霜", 3, true),
+                    item("凍利賓納", 3, true),
+                    item("凍檸蜜", 3, true),
+                    item("凍檸樂", 8, true),
+                    item("紅豆冰", 8, true),
+                    item("什果冰", 8, true),
+                    item("菠蘿冰", 8, true),
+                ],
+            },
+
+        },
+        required: [
+            "main",
+            "drink",
+        ],
     }
 
     static public final FishFranSSPFishPot = {
@@ -404,16 +520,16 @@ class FishFranSSPMenu {
             item("珍寶玉龍冰(火龍果)", 35),
             item("珍寶紅豆沙冰 ", 35),
             item("珍寶巨峰沙冰", 35),
-            item("珍寶白桃沙冰", 35),
-            item("珍寶芒果乳酸沙冰", 35),
+            // item("珍寶白桃沙冰", 35),
+            // item("珍寶芒果乳酸沙冰", 35),
             item("荔枝梳打", 23),
             item("巨峰梳打", 23),
-            item("百香果梳打", 23),
+            // item("百香果梳打", 23),
             item("咸檸七", 21),
             item("咸檸梳打", 21),
             item("青檸梳打", 21),
-            item("蜜桃冰紅茶", 20),
-            item("西瓜汁(凍)", 24),
+            // item("蜜桃冰紅茶", 20),
+            // item("西瓜汁(凍)", 24),
             item("果醋飲料", 15),
             item("王老吉", 15),
             item("蜂蜜綠茶", 15),
@@ -514,6 +630,8 @@ class FishFranSSPMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case LunchSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case FishPot:
                 summarizeOrderObject(orderItem.item, def, ["style", "main", "options"]);
             case Noodles:

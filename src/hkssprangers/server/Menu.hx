@@ -1429,6 +1429,33 @@ class Menu extends View<MenuProps> {
     function renderFishFranSSP() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
 
+        final lunchSet = {
+            final items = {
+                final items = FishFranSSPLunchSet.properties.main.enums();
+                final cutoff = Math.ceil(items.length * 0.5);
+                [
+                    items.slice(0, cutoff),
+                    items.slice(cutoff),
+                ];
+            }
+            jsx('
+                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${FishFranSSPLunchSet.title}</div>
+                    <div className="p-3 text-gray-500">
+                        <p>${FishFranSSPLunchSet.properties.drink.description}</p>
+                    </div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items[0])}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items[1])}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
+
         final dish = {
             final items = {
                 final items = FishFranSSPDish.enums();
@@ -1455,6 +1482,7 @@ class Menu extends View<MenuProps> {
 
         return jsx('
             <Fragment>
+                ${lunchSet}
                 ${dish}
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
