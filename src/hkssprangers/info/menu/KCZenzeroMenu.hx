@@ -41,7 +41,7 @@ enum abstract KCZenzeroItem(String) to String {
         }
         return
             (limited)
-            .concat(hotpot)
+            // .concat(hotpot)
             .concat([
                 HotdogSet,
                 NoodleSet,

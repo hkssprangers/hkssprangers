@@ -568,15 +568,16 @@ class Menu extends View<MenuProps> {
         } else null;
 
         final hotpotSet = {
-            final def = KCZenzeroHotpotSet;
-            jsx('
-                <Fragment>
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                    <div className="p-3">${def.title}</div>
-                    </div>
-                    <div className="p-3">${def.description} $$98</div>
-                </Fragment>
-            ');
+            // final def = KCZenzeroHotpotSet;
+            // jsx('
+            //     <Fragment>
+            //         <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+            //         <div className="p-3">${def.title}</div>
+            //         </div>
+            //         <div className="p-3">${def.description} $$98</div>
+            //     </Fragment>
+            // ');
+            null;
         };
 
         final wontonSet = jsx('
