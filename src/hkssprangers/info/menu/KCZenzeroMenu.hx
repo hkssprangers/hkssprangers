@@ -260,7 +260,7 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "花膠酸菜魚 $88";
+        // final limitedSpecial = "花膠酸菜魚 $88";
         {
             dateStart: "2022-12-14",
             dateEnd: "2022-12-31",
@@ -268,16 +268,18 @@ class KCZenzeroMenu {
             seperateBox: true,
             available: true,
             def: {
-                title: "限定：" + limitedSpecial,
+                title: "限定", // "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
                 properties: {
                     special: {
                         title: "限定",
                         type: "string",
                         "enum": [
-                            limitedSpecial,
+                            "花膠酸菜魚 $88",
+                            "煙燻臘味糯米飯配蒜蓉西蘭花 $99",
+                            "花膠酸菜海南雞 $128"
                         ],
-                        "default": limitedSpecial
+                        // "default": limitedSpecial
                     }
                 },
                 required: ["special"],
