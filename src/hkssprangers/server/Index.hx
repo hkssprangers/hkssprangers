@@ -459,7 +459,6 @@ class Index extends View<IndexProps> {
                     ${renderShop(KCZenzero, DragonCentreCluster)}
                     ${renderShop(ThaiHome, DragonCentreCluster)}
                     ${renderShop(HanaSoftCream, DragonCentreCluster)}
-                    ${renderShop(WoStreet, DragonCentreCluster)}
 
                     <div className="hidden md:flex items-center px-6 py-3 bg-pt-amber-600 font-bold">
                         <i className="fas fa-map-marker-alt text-amber-600"></i>&nbsp;<span>${PeiHoStreetMarketCluster.info().name}</span>
@@ -527,7 +526,6 @@ class Index extends View<IndexProps> {
                             ${renderShopp(KCZenzero)}
                             ${renderShopp(ThaiHome)}
                             ${renderShopp(HanaSoftCream)}
-                            ${renderShopp(WoStreet)}
                             ${renderShopp(FishFranSSP)}
                             ${renderShopp(BiuKeeLokYuen)}
                             ${renderShopp(BlackWindow)}

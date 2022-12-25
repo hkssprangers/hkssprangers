@@ -210,7 +210,6 @@ class Menu extends View<MenuProps> {
                         ${Index.renderShopp(KCZenzero)}
                         ${Index.renderShopp(ThaiHome)}
                         ${Index.renderShopp(HanaSoftCream)}
-                        ${Index.renderShopp(WoStreet)}
                         ${Index.renderShopp(FishFranSSP)}
                         ${Index.renderShopp(BiuKeeLokYuen)}
                         ${Index.renderShopp(BlackWindow)}
@@ -363,7 +362,8 @@ class Menu extends View<MenuProps> {
             case ThaiHome:
                 renderThaiHome();
             case DragonJapaneseCuisine:
-                renderDragonJapaneseCuisine();
+                // renderDragonJapaneseCuisine();
+                renderMsg("已結業");
             case YearsHK:
                 renderYearsHK();
             case TheParkByYears:
@@ -371,7 +371,8 @@ class Menu extends View<MenuProps> {
             case LaksaStore:
                 renderLaksaStore();
             case DongDong:
-                renderDongDong();
+                // renderDongDong();
+                renderMsg("已結業");
             case BiuKeeLokYuen:
                 renderBiuKeeLokYuen();
             case KCZenzero:
@@ -379,19 +380,24 @@ class Menu extends View<MenuProps> {
             case HanaSoftCream:
                 renderHanaSoftCream();
             case Neighbor:
-                renderNeighbor();
+                // renderNeighbor();
+                renderMsg("深水埗店已結業");
             case MGY:
                 renderMGY();
             case FastTasteSSP:
-                renderFastTasteSSP();
+                // renderFastTasteSSP();
+                renderMsg("已結業");
             case BlaBlaBla:
-                renderBlaBlaBla();
+                // renderBlaBlaBla();
+                renderMsg("已結業");
             case ZeppelinHotDogSKM:
                 renderZeppelinHotDogSKM();
             case MyRoomRoom:
-                renderMyRoomRoom();
+                // renderMyRoomRoom();
+                renderMsg("已結業");
             case ThaiYummy:
-                renderThaiYummy();
+                // renderThaiYummy();
+                renderMsg("埗兵外賣暫停");
             case Toolss:
                 // renderToolss();
                 renderMsg("埗兵外賣暫停");
@@ -401,7 +407,8 @@ class Menu extends View<MenuProps> {
             case PokeGo:
                 renderPokeGo();
             case WoStreet:
-                renderWoStreet();
+                // renderWoStreet();
+                renderMsg("埗兵外賣暫停");
             case Minimal:
                 renderMinimal();
             case CafeGolden:

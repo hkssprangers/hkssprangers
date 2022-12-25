@@ -680,7 +680,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00", //正式開2點, 但店員可提早返去
                 latestPickupTime: "18:00:00", //通常6點半就閂
-                isInService: true,
+                isInService: false,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
                 availablity: "提供午餐及晚餐",
