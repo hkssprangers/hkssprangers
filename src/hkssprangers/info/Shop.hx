@@ -980,6 +980,8 @@ enum abstract Shop(String) to String {
                 return Unavailable('冬至收早 晚市暫停');
             case [BlackWindow, "2022-12-29", Lunch]:
                 return Unavailable('午市暫停一天');
+            case [BlackWindow, "2022-12-25" | "2022-12-26", _]:
+                return Unavailable('店舖人手不足 聖誕暫停外賣');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid05EEzegyyyUU6LTMBtZX1oyFDH4dDM4NDs3FLhxQaXA8aBPZLXkHnkkuLcwAMZAbjl
             case [LaksaStore, "2022-12-14", _]:
