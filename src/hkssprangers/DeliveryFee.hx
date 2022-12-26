@@ -2897,6 +2897,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "花墟公園",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/204880275"
+                }
+            ],
+            match: address -> address.contains("花墟公園"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
             place: "西洋菜北街恒安樓",
             osm: [
                 {
