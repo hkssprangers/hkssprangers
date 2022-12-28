@@ -1599,10 +1599,12 @@ class Menu extends View<MenuProps> {
         function printDrink(d:LoudTeaSSPDrink) {
             return
                 d.name
-                + ' (${d.canHot ? LoudTeaSSPDrinkType.Iced + "/" + LoudTeaSSPDrinkType.Hot : LoudTeaSSPDrinkType.Iced})'
+                + ' (${d.types.join("/")})'
                 + " $" + d.price
             ;
         }
+        final now = Date.now();
+        final drinks = LoudTeaSSPMenu.getDrinks(now.getFullYear());
         final milkFoamOptions = jsx('
             <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
                 <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPMilkFoamOption.title}</div>
@@ -1662,34 +1664,34 @@ class Menu extends View<MenuProps> {
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.SignatureDrink}</div>
-                        ${renderItems(LoudTeaSSPMenu.drinks[SignatureDrink].map(printDrink))}
+                        ${renderItems(drinks[SignatureDrink].map(printDrink))}
 
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.FourSeasonsOfSpringTea}</div>
                         ${milkFoamOptions}
-                        ${renderItems(LoudTeaSSPMenu.drinks[FourSeasonsOfSpringTea].map(printDrink))}
+                        ${renderItems(drinks[FourSeasonsOfSpringTea].map(printDrink))}
 
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.BrownSugarFlavoredLatte}</div>
                         ${pearlOptions}
-                        ${renderItems(LoudTeaSSPMenu.drinks[BrownSugarFlavoredLatte].map(printDrink))}
+                        ${renderItems(drinks[BrownSugarFlavoredLatte].map(printDrink))}
 
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.ClassicChineseTea}</div>
-                        ${renderItems(LoudTeaSSPMenu.drinks[ClassicChineseTea].map(printDrink))}
+                        ${renderItems(drinks[ClassicChineseTea].map(printDrink))}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.FreshFruitTea_BubbleSoda}</div>
                         ${teaOrSoda}
-                        ${renderItems(LoudTeaSSPMenu.drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.teaOrSoda).map(printDrink))}
+                        ${renderItems(drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.teaOrSoda).map(printDrink))}
                         ${springTeaOrSoda}
-                        ${renderItems(LoudTeaSSPMenu.drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.springTeaOrSoda).map(printDrink))}
+                        ${renderItems(drinks[FreshFruitTea_BubbleSoda].filter(d -> d.teaOpts == LoudTeaSSPTeaOption.springTeaOrSoda).map(printDrink))}
 
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.MilkTeaWithBlackPearl}</div>
                         ${freshMilk}
                         ${pearlOptions}
-                        ${renderItems(LoudTeaSSPMenu.drinks[MilkTeaWithBlackPearl].map(printDrink))}
+                        ${renderItems(drinks[MilkTeaWithBlackPearl].map(printDrink))}
 
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.MilkFoamSpecial}</div>
                         ${teas}
-                        ${renderItems(LoudTeaSSPMenu.drinks[MilkFoamSpecial].map(printDrink))}
+                        ${renderItems(drinks[MilkFoamSpecial].map(printDrink))}
                     </div>
                 </div>
             </Fragment>

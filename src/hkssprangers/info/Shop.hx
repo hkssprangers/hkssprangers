@@ -1115,7 +1115,7 @@ enum abstract Shop(String) to String {
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.itemsSchema(pickupTimeSlot, o));
             case LoudTeaSSP:
-                Promise.resolve(LoudTeaSSPMenu.itemsSchema(o));
+                Promise.resolve(LoudTeaSSPMenu.itemsSchema(pickupTimeSlot, o));
             case ThaiHome:
                 Promise.resolve(ThaiHomeMenu.itemsSchema(pickupTimeSlot, o));
             case AuLawFarm | MxMWorkshop | NEVeg:
@@ -1178,7 +1178,7 @@ enum abstract Shop(String) to String {
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.summarize(o, pickupTimeSlot));
             case LoudTeaSSP:
-                Promise.resolve(LoudTeaSSPMenu.summarize(o));
+                Promise.resolve(LoudTeaSSPMenu.summarize(pickupTimeSlot, o));
             case ThaiHome:
                 Promise.resolve(ThaiHomeMenu.summarize(o));
             case AuLawFarm | MxMWorkshop | NEVeg:
