@@ -1,5 +1,5 @@
 VERSION 0.6
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-focal
+FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
 ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
 ARG MAIN_BRANCH=master
 
