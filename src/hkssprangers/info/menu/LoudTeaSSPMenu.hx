@@ -285,13 +285,13 @@ class LoudTeaSSPMenu {
                 sweetOpts: LoudTeaSSPSweetOption.fixed,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
-            {
-                name: "冬瓜鮮奶",
-                price: markup(30),
-                types: [Iced, Hot],
-                sweetOpts: LoudTeaSSPSweetOption.fixed,
-                iceOpts: LoudTeaSSPIceOption.required,
-            },
+            // {
+            //     name: "冬瓜鮮奶",
+            //     price: markup(30),
+            //     types: [Iced, Hot],
+            //     sweetOpts: LoudTeaSSPSweetOption.fixed,
+            //     iceOpts: LoudTeaSSPIceOption.required,
+            // },
             {
                 name: "鳯梨綠茶多多",
                 price: markup(32),
@@ -309,7 +309,7 @@ class LoudTeaSSPMenu {
             {
                 name: "牛油果鮮奶波波",
                 price: markup(38),
-                types: [Iced, Hot],
+                types: [Iced],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.fixed,
             },
