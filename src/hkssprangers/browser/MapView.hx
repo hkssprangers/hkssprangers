@@ -56,7 +56,7 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
 
     function controls() {
         final clusterRadios = ShopCluster.all
-            .filter(c -> Shop.all.exists(s -> s.info().isInService && ShopCluster.classify(s).has(c)))
+            // .filter(c -> Shop.all.exists(s -> s.info().isInService && ShopCluster.classify(s).has(c)))
             .map(c -> {
                 final control = jsx('<Radio />');
                 jsx('

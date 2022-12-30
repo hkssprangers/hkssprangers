@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.59 e21c39fe",
   "osm3s": {
-    "timestamp_osm_base": "2022-11-30T13:20:51Z",
+    "timestamp_osm_base": "2022-12-30T08:45:49Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -1268,7 +1268,7 @@
       "id": 180933343,
       "center": {
         "lat": 22.324519,
-        "lon": 114.1604396
+        "lon": 114.1604386
       },
       "nodes": [
         7291752162,
@@ -1278,6 +1278,7 @@
         7291752159,
         7291752160,
         7291752161,
+        10256441371,
         1913884774,
         1941840503,
         1913884786,
@@ -1669,6 +1670,41 @@
         "name:en": "West Kowloon Law Courts Building",
         "name:zh": "西九龍法院大樓",
         "wikidata": "Q15918328"
+      }
+    },
+    {
+      "type": "way",
+      "id": 204880275,
+      "center": {
+        "lat": 22.3280534,
+        "lon": 114.1741516
+      },
+      "nodes": [
+        2148617367,
+        2148617363,
+        2148617361,
+        2148617365,
+        4281944903,
+        4281944904,
+        4281944905,
+        6468764609,
+        4281944906,
+        2148617366,
+        9031837317,
+        2148617368,
+        9031837318,
+        9031837319,
+        4281944902,
+        2148617369,
+        2148617362,
+        2148617367
+      ],
+      "tags": {
+        "leisure": "park",
+        "name": "花墟公園 Fa Hui Park",
+        "name:en": "Fa Hui Park",
+        "name:zh": "花墟公園",
+        "wikidata": "Q5427544"
       }
     },
     {
@@ -2882,6 +2918,31 @@
         "name:zh": "喜盈",
         "name:zh-Hans": "喜盈",
         "name:zh-Hant": "喜盈"
+      }
+    },
+    {
+      "type": "way",
+      "id": 450188190,
+      "center": {
+        "lat": 22.3397831,
+        "lon": 114.1497249
+      },
+      "nodes": [
+        4471068308,
+        4471068309,
+        4471068310,
+        4471068311,
+        4471068308
+      ],
+      "tags": {
+        "addr:housenumber": "777-783",
+        "addr:street": "汝州西街 Yu Chau West Street",
+        "building": "industrial",
+        "name": "永康工廠大廈 Wing Hong Factory Building",
+        "name:en": "Wing Hong Factory Building",
+        "name:zh": "永康工廠大廈",
+        "name:zh-Hans": "永康工厂大厦",
+        "name:zh-Hant": "永康工廠大廈"
       }
     },
     {

@@ -1518,7 +1518,7 @@ class DeliveryFee {
                 case PeiHoStreetMarketCluster: 25;
                 case CLPCluster: 25;
                 case GoldenCluster: 25;
-                case SmilingPlazaCluster: 40;
+                case SmilingPlazaCluster: 35;
                 case ParkCluster: 35;
                 case PakTinCluster: 25;
                 case TungChauStreetParkCluster: 35;
@@ -2324,6 +2324,25 @@ class DeliveryFee {
                 case CLPCluster: 35;
                 case GoldenCluster: 40;
                 case SmilingPlazaCluster: 25;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
+            place: "永康工廠大廈 (長沙灣工業區)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450188190"
+                }
+            ],
+            match: address -> address.contains("永康工廠大廈"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 35;
                 case ParkCluster: 40;
                 case PakTinCluster: 40;
                 case TungChauStreetParkCluster: 40;
