@@ -315,7 +315,7 @@ enum abstract Shop(String) to String {
                 lat: 22.33122,
                 lng: 114.15968,
                 courierContact: [
-                    { name: "店舖WhatsApp", url: "https://wa.me/85293428231" },
+                    { name: "店舖WhatsApp", url: "https://wa.me/85268493436" },
                 ],
                 openDays: [
                     Monday,
