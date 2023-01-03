@@ -298,10 +298,18 @@ class Commands {
                 Sys.println("-----------------------------");
                 Sys.println('Platform income: ${(allCharge - allPayout).toString()}');
 
-                final wb = Xlsx.utils.book_new();
-                final ws = createReport(charges, courierPayout, start.getDatePart() + " - " + end.getDatePart());
-                Xlsx.utils.book_append_sheet(wb, ws, "report");
-                Xlsx.writeFile(wb, Path.join([summaryDir, start.getDatePart() + "_" + end.getDatePart() + ".xlsx"]));
+                {
+                    final wb = Xlsx.utils.book_new();
+                    final ws = createReport(charges, courierPayout, start.getDatePart() + " - " + end.getDatePart());
+                    Xlsx.utils.book_append_sheet(wb, ws, "report");
+                    Xlsx.writeFile(wb, Path.join([summaryDir, start.getDatePart() + "_" + end.getDatePart() + ".xlsx"]));
+                }
+                {
+                    final wb = Xlsx.utils.book_new();
+                    final ws = createTracking(charges);
+                    Xlsx.utils.book_append_sheet(wb, ws, "tracking");
+                    Xlsx.writeFile(wb, Path.join([summaryDir, "tracking " + start.getDatePart().substr(0, 7) + ".xlsx"]));
+                }
 
                 Noise;
             });
@@ -350,6 +358,32 @@ class Commands {
         ];
         ws.__rows = [
             for (_ in 0...chargesRows.length + courierPayoutRows.length + 1)
+            {
+                hpt: 18,
+            }
+        ];
+        return ws;
+    }
+
+    static function createTracking(charges:Map<Shop, Decimal>):WorkSheet {
+        final chargesRows:Array<Dynamic> = [
+            for (shop => charge in charges)
+            {
+                /* A */ "shop": shop.info().name,
+                /* B */ "amount": charge.toFloat(),
+                /* C */ "invoiced": null,
+                /* D */ "received": null,
+            }
+        ];
+        final ws = Xlsx.utils.json_to_sheet(chargesRows);
+        ws.__cols = [
+            /* A shop */                 { wch: 25 },
+            /* B amount */               { wch: 15 },
+            /* C invoiced */             { wch: 25 },
+            /* D received */             { wch: 25 },
+        ];
+        ws.__rows = [
+            for (_ in 0...chargesRows.length + 1)
             {
                 hpt: 18,
             }
