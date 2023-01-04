@@ -107,7 +107,6 @@ class ThaiHomeMenu {
                 type: "string",
                 title: "飯麵",
                 "enum": [
-                    item("泰家蟹肉炒飯 跟湯", 55),
                     item("冬陰雞 配飯", 55),
                     item("冬陰雞 配金邊粉", 55),
                     item("冬陰公 配飯", 60),
