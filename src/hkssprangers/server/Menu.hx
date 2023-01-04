@@ -1543,6 +1543,13 @@ class Menu extends View<MenuProps> {
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${ThaiHomeSetFor2.title}</div>
+                        ${renderItems(ThaiHomeSetFor2.properties.main.enums())}
+                        <div className="font-bold p-3">${ThaiHomeSetFor2.properties.rice.title}</div>
+                        <div className="p-3">${slashes(ThaiHomeSetFor2.properties.rice.enums())}</div>
+                        <div className="font-bold p-3">${ThaiHomeSetFor2.properties.soup.title}</div>
+                        <div className="p-3">${slashes(ThaiHomeSetFor2.properties.soup.enums().slice(1))}</div>
+                        
                         <div className=${headerClasses}>${ThaiHomeMainCourse.title}</div>
                         ${renderItems(ThaiHomeMainCourse.enums())}
 

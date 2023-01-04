@@ -10,6 +10,7 @@ using Reflect;
 using Lambda;
 
 enum abstract ThaiHomeItem(String) to String {
+    final SetFor2;
     final MainCourse;
     final Skewer;
     final Snack;
@@ -18,6 +19,7 @@ enum abstract ThaiHomeItem(String) to String {
 
     static public function all(timeSlotType:TimeSlotType):ReadOnlyArray<ThaiHomeItem> {
         return [
+            SetFor2,
             MainCourse,
             Skewer,
             Snack,
@@ -27,6 +29,7 @@ enum abstract ThaiHomeItem(String) to String {
     }
 
     public function getDefinition():Dynamic return switch (cast this:ThaiHomeItem) {
+        case SetFor2: ThaiHomeMenu.ThaiHomeSetFor2;
         case MainCourse: ThaiHomeMenu.ThaiHomeMainCourse;
         case Skewer: ThaiHomeMenu.ThaiHomeSkewer;
         case Snack: ThaiHomeMenu.ThaiHomeSnack;
@@ -40,17 +43,53 @@ class ThaiHomeMenu {
         return name + " $" + Math.round(price / 0.85);
     }
 
+    static public final ThaiHomeSetFor2 = {
+        title: "泰家二人餐",
+        properties: {
+            main: {
+                type: "string",
+                title: "泰家二人餐",
+                "enum": [
+                    item("去骨海南雞(半隻) + 馬拉盞炒通菜 + 沙嗲串燒3串(雞牛豬各一)", 168),
+                    item("去骨海南雞(半隻) + 馬拉盞炒芥蘭 + 沙嗲串燒3串(雞牛豬各一)", 168),
+                    item("去骨海南雞雙併去骨豬脾 + 秘製酸辣鳳爪 + 泰式炸魚餅", 188),
+                ],
+            },
+            rice: {
+                type: "string",
+                title: "配飯",
+                "enum": [
+                    "白飯2碗",
+                    "油飯2碗",
+                ],
+            },
+            soup: {
+                type: "string",
+                title: "配湯",
+                "enum": [
+                    "唔要",
+                    "湯2碗",
+                ],
+                "default": "湯2碗",
+            },
+        },
+        required: [
+            "main",
+            "rice",
+            "soup",
+        ],
+    };
+
     static public final ThaiHomeMainCourse = {
         title: "主菜",
         type: "string",
         "enum": [
             item("香茅燒豬頸肉", 48),
-            item("馬拉盞 炒通菜", 38),
-            item("蒜茸 炒通菜", 38),
-            item("馬拉盞 炒芥蘭", 38),
-            item("蒜茸 炒芥蘭", 38),
+            item("馬拉盞 炒通菜", 40),
+            item("蒜茸 炒通菜", 40),
+            item("馬拉盞 炒芥蘭", 40),
+            item("蒜茸 炒芥蘭", 40),
             item("辣椒膏炒墨魚仔拼蝦", 68),
-            item("辣椒膏炒蜆", 68),
             item("冬陰功湯", 55),
             item("泰家去骨海南雞 例", 42),
             item("泰家去骨海南雞 半隻", 75),
@@ -111,6 +150,8 @@ class ThaiHomeMenu {
                     item("冬陰雞 配金邊粉", 55),
                     item("冬陰公 配飯", 60),
                     item("冬陰公 配金邊粉", 60),
+                    item("冬陰牛腩 配飯", 58),
+                    item("冬陰牛腩 配金邊粉", 58),
                     item("香葉辣椒脆腩煎蛋飯 跟湯", 49),
                     item("蝦頭膏鮮蝦炒飯 跟湯", 52),
                     item("泰式肉碎炒粉絲 跟湯", 52),
@@ -130,10 +171,14 @@ class ThaiHomeMenu {
                     item("香葉青咖哩飯 豬扒 跟湯", 45),
                     item("香葉青咖哩飯 牛 跟湯", 48),
                     item("香葉青咖哩飯 鮮蝦 跟湯", 48),
-                    item("菠蘿鲜蝦炒飯 跟湯", 45),
+                    item("菠蘿鮮蝦炒飯 跟湯", 48),
+                    item("菠蘿豬扒炒飯 跟湯", 45),
+                    item("菠蘿豬頸肉炒飯 跟湯", 45),
                     item("香茅燒豬頸肉飯 跟湯", 46),
                     item("泰式去骨豬髀飯 跟湯", 46),
-                    item("辣椒膏鮮蝦炒飯 跟湯", 45),
+                    item("辣椒膏鮮蝦炒飯 跟湯", 48),
+                    item("辣椒膏豬扒炒飯 跟湯", 45),
+                    item("辣椒膏豬頸肉炒飯 跟湯", 45),
                     item("泰家去骨海南雞飯 跟湯", 40),
                     item("香葉辣椒肉碎煎蛋飯 跟湯", 42),
                 ],
@@ -215,6 +260,8 @@ class ThaiHomeMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
+            case SetFor2:
+                summarizeOrderObject(orderItem.item, def, ["main", "rice", "soup"], null, null, def.title + "\n");
             case RiceAndNoodle:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
             case Skewer:

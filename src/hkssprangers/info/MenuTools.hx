@@ -59,9 +59,15 @@ class MenuTools {
                     "".rpad(fullWidthSpace, def.title.length > maxTitleWidth ? 1 : def.title.length + 2);
             } else if (overrideTypeName != "") {
                 if (orderDetails.length == 0)
-                    fullWidthDot + overrideTypeName + fullWidthColon;
+                    if (overrideTypeName.endsWith("\n"))
+                        fullWidthDot + overrideTypeName.substr(0, overrideTypeName.length-1) + fullWidthColon + "\n" + fullWidthSpace;
+                    else
+                        fullWidthDot + overrideTypeName + fullWidthColon;
                 else
-                    "".rpad(fullWidthSpace, overrideTypeName.length + 2);
+                    if (overrideTypeName.endsWith("\n"))
+                        fullWidthSpace;
+                    else
+                        "".rpad(fullWidthSpace, overrideTypeName.length + 2);
             } else {
                 if (orderDetails.length == 0)
                     fullWidthDot;
@@ -69,7 +75,7 @@ class MenuTools {
                     fullWidthSpace;
             }
         for (fieldName in fields) {
-            var fieldDef = Reflect.field(def.properties, fieldName);
+            final fieldDef = Reflect.field(def.properties, fieldName);
 
             // just ignore null, which can happen if we comment out a property in the json schema
             if (fieldDef == null)
