@@ -9,7 +9,6 @@ import hkssprangers.info.Delivery;
 import hkssprangers.info.TimeSlot;
 import hkssprangers.info.Shop;
 import hkssprangers.info.ShopCluster;
-import hkssprangers.info.Discounts;
 import tink.CoreApi;
 import sys.io.File;
 import haxe.ds.*;
@@ -3272,13 +3271,7 @@ class DeliveryFee {
             }
         ];
         final fee = fees.linq().min();
-
-        final discount = Discounts.bestDiscountResult(delivery);
-        if (discount != null) {
-            return Promise.resolve(fee - discount.deliveryFeeDeduction);
-        } else {
-            return Promise.resolve(fee);
-        }
+        return Promise.resolve(fee);
     }
 
     #if server

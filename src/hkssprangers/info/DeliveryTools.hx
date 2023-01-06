@@ -182,10 +182,8 @@ class DeliveryTools {
         if (d.couriers == null || d.couriers.length <= 0)
             return;
         final platformServiceChargeTotal:Decimal = d.orders.map(o -> o.platformServiceCharge).sum();
-        final discount = Discounts.bestDiscountResult(d);
         final deliverySubsidyTotal:Decimal = (
             platformServiceChargeTotal
-            - (discount == null ? 0 : discount.deliveryFeeDeduction)
             - d.deliveryFee * (d.couriers.length - 1)
         ) * 0.5;
         final deliverySubsidyEach = Math.max(0.0, (deliverySubsidyTotal / d.couriers.length).roundTo(4).toFloat());
