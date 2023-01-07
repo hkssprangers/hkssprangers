@@ -975,13 +975,8 @@ enum abstract Shop(String) to String {
             case [KCZenzero, "2023-01-01", _]:
                 return Unavailable('休息一天');
 
-            // https://www.facebook.com/openblackwindow/posts/pfbid02m4NFS62caSAdkacufWsW5BRWLyM46EPQmxt9gsCDNq9xT93whtSgwb467BoBVARVl
-            case [BlackWindow, "2022-12-22", Dinner]:
-                return Unavailable('冬至收早 晚市暫停');
-            case [BlackWindow, "2022-12-29", Lunch]:
-                return Unavailable('午市暫停一天');
-            case [BlackWindow, "2022-12-25" | "2022-12-26", _]:
-                return Unavailable('店舖人手不足 聖誕暫停外賣');
+            case [BlackWindow, "2023-01-07", Lunch] if (pickupTimeSlot.start.getTimePart() < "13:30:00"):
+                return Unavailable('是日最早13:30時段交收');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid02dejrhcaSSt1dmrixVjCN8GRhALsYt1CHvwpurqBhvH78nMTLefEjJ3ph1ioZmvqMl
             case [LaksaStore, "2022-12-30", _]:
