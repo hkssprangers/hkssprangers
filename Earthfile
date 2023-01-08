@@ -413,6 +413,7 @@ serviceWorker-js:
     COPY .haxerc serviceWorker.hxml esbuild.inject.js .
     RUN mkdir -p static
     RUN haxe serviceWorker.hxml -D production
+    RUN node -c static/serviceWorker.bundled.js
     SAVE ARTIFACT static/serviceWorker.bundled.js
 
 browser-js:
@@ -424,6 +425,7 @@ browser-js:
     COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
     COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
     RUN haxe browser.hxml -D production
+    RUN node -c static/browser.bundled.js
     SAVE ARTIFACT static/browser.bundled.js
 
 server:
@@ -437,6 +439,7 @@ server:
     COPY src src
     COPY .haxerc server.hxml holidays.json package-lock.json .
     RUN haxe server.hxml -D production
+    RUN node -c index.js
     SAVE ARTIFACT index.js
     SAVE ARTIFACT static/images
 
@@ -457,6 +460,7 @@ cronjobs.js:
     COPY src src
     COPY .haxerc cronjobs.hxml holidays.json .
     RUN haxe cronjobs.hxml
+    RUN node -c cronjobs.js
     SAVE ARTIFACT cronjobs.js
 
 commands.js:
@@ -466,6 +470,7 @@ commands.js:
     COPY src src
     COPY .haxerc commands.hxml holidays.json .
     RUN haxe commands.hxml
+    RUN node -c commands.js
     SAVE ARTIFACT commands.js
 
 test:
