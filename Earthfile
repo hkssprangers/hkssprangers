@@ -103,7 +103,7 @@ tfenv:
 # Usage:
 # COPY +terraform-ls/terraform-ls /usr/local/bin/
 terraform-ls:
-    ARG TERRAFORM_LS_VERSION=0.25.1
+    ARG TERRAFORM_LS_VERSION=0.30.1
     RUN curl -fsSL -o terraform-ls.zip https://github.com/hashicorp/terraform-ls/releases/download/v${TERRAFORM_LS_VERSION}/terraform-ls_${TERRAFORM_LS_VERSION}_linux_${TARGETARCH}.zip \
         && unzip -qq terraform-ls.zip \
         && mv ./terraform-ls /usr/local/bin/ \
