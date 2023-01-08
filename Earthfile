@@ -237,14 +237,14 @@ ssp.mbtiles:
         --bbox 114.08885,22.2856527,114.2475128,22.4311088 \
         --output ssp.mbtiles
     RUN ls -lah
-    SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/
+    SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/tiles/
 
 ssp.pmtiles:
     FROM +pmtiles
     COPY +ssp.mbtiles/ssp.mbtiles .
     RUN pmtiles-convert ssp.mbtiles ssp.pmtiles
     RUN pmtiles-show ssp.pmtiles
-    SAVE ARTIFACT ssp.pmtiles AS LOCAL ./static/
+    SAVE ARTIFACT ssp.pmtiles AS LOCAL ./static/tiles/
 
 ssp.mbtiles-server:
     FROM debian:bullseye
