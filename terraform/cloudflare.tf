@@ -1,5 +1,6 @@
 resource "cloudflare_zone" "ssprangers" {
-  zone = "ssprangers.com"
+  account_id = "5866a1959e70399a4020fd5a7657e1ca"
+  zone       = "ssprangers.com"
 }
 
 resource "cloudflare_record" "ssprangers" {
