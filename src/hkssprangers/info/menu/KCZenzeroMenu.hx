@@ -263,7 +263,7 @@ class KCZenzeroMenu {
         // final limitedSpecial = "花膠酸菜魚 $88";
         {
             dateStart: "2022-12-14",
-            dateEnd: "2022-12-31",
+            dateEnd: "2023-01-25",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: true,
             available: true,
