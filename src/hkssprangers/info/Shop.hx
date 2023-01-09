@@ -971,6 +971,13 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
+            // 初一 2023-01-22
+            // 初二 2023-01-23
+            // 初三 2023-01-24
+ 
+            case [YearsHK, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
+                return Unavailable('初四啟市');
+
             // https://www.facebook.com/100064143817671/posts/pfbid0295FwJxc2RGT5mL1iT2JP8AJL7gLCUjRtpkecP7GoZhUAYTFVRPxuocffC435GohAl
             case [KCZenzero, "2023-01-01", _]:
                 return Unavailable('休息一天');
