@@ -14,7 +14,7 @@ resource "cloudflare_record" "ssprangers" {
 resource "cloudflare_record" "production" {
   zone_id = cloudflare_zone.ssprangers.id
   name    = "production"
-  value   = "d-h25rgwffz8.execute-api.ap-southeast-1.amazonaws.com"
+  value   = aws_api_gateway_domain_name.production-ssprangers-com.regional_domain_name
   type    = "CNAME"
   proxied = true
 }
@@ -22,7 +22,7 @@ resource "cloudflare_record" "production" {
 resource "cloudflare_record" "master" {
   zone_id = cloudflare_zone.ssprangers.id
   name    = "master"
-  value   = "d-8njywa7so9.execute-api.ap-southeast-1.amazonaws.com"
+  value   = aws_api_gateway_domain_name.master-ssprangers-com.regional_domain_name
   type    = "CNAME"
   proxied = true
 }
@@ -30,7 +30,7 @@ resource "cloudflare_record" "master" {
 resource "cloudflare_record" "dev" {
   zone_id = cloudflare_zone.ssprangers.id
   name    = "dev"
-  value   = "d-ip6lixd84a.execute-api.ap-southeast-1.amazonaws.com"
+  value   = aws_api_gateway_domain_name.dev-ssprangers-com.regional_domain_name
   type    = "CNAME"
 }
 
