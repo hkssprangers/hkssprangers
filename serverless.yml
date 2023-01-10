@@ -54,7 +54,14 @@ functions:
   web:
     handler: index.handler
     events:
-      - httpApi: '*'
+      - http:
+          method: ANY
+          path: '/'
+          cors: true
+      - http:
+          method: ANY
+          path: '{proxy+}'
+          cors: true
   sendAttendancePoll:
     handler: cronjobs.sendAttendancePoll
     events:
