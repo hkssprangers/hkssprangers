@@ -983,6 +983,11 @@ enum abstract Shop(String) to String {
             case [EightyNine, "2023-01-22" | "2023-01-23", _]:
                 return Unavailable('新年休息');
 
+            case [BiuKeeLokYuen, "2023-01-21", Dinner] if (pickupTimeSlot.start.getTimePart() > "18:30:00"):
+                return Unavailable('年三十收早 最遲18:30時段交收');
+            case [BiuKeeLokYuen, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
+                return Unavailable('初四啟市');
+
             // https://www.facebook.com/100064143817671/posts/pfbid0295FwJxc2RGT5mL1iT2JP8AJL7gLCUjRtpkecP7GoZhUAYTFVRPxuocffC435GohAl
             case [KCZenzero, "2023-01-01", _]:
                 return Unavailable('休息一天');
@@ -996,9 +1001,6 @@ enum abstract Shop(String) to String {
             // https://www.facebook.com/LaksaStore/posts/pfbid02dejrhcaSSt1dmrixVjCN8GRhALsYt1CHvwpurqBhvH78nMTLefEjJ3ph1ioZmvqMl
             case [LaksaStore, "2022-12-30", _]:
                 return Unavailable('休息一天');
-
-            case [BiuKeeLokYuen, "2022-12-22", Dinner]:
-                return Unavailable('冬至收早 晚市暫停');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
