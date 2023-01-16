@@ -8,6 +8,7 @@ using Lambda;
 
 enum abstract KCZenzeroItem(String) to String {
     final LimitedSpecial;
+    final PoonChoiLoHei;
     final HotdogSet;
     final NoodleSet;
     final PastaSet;
@@ -39,8 +40,18 @@ enum abstract KCZenzeroItem(String) to String {
         } else {
             [];
         }
+        final poonChoiLoHei = if (
+            timeSlot != null
+            &&
+            timeSlot.start.getDatePart() >= now.deltaDays(2).getDatePart()
+        ) {
+            [PoonChoiLoHei];
+        } else {
+            [];
+        }
         return
             (limited)
+            .concat(poonChoiLoHei)
             // .concat(hotpot)
             .concat([
                 HotdogSet,
@@ -57,6 +68,7 @@ enum abstract KCZenzeroItem(String) to String {
 
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
+        case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(TimeSlotType.classify(timeSlot.start));
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
@@ -145,6 +157,39 @@ class KCZenzeroMenu {
             // "咖喱豬皮陳皮魚蛋鵝紅 $30",
         ],
     };
+
+    static function markupNewYearItem(item:String, price:Float):String {
+        return item + " $" + Math.round(price / 0.85 + 2);
+    }
+
+    static public final KCZenzeroPoonChoiLoHei = {
+        title: "盤菜/撈起",
+        description: "⚠️ 需兩日前預訂",
+        properties: {
+            main: {
+                title: "盤菜",
+                desciption: "蝦，花膠，帶子，大蜆，鮑魚，雞",
+                type: "string",
+                "enum": [
+                    markupNewYearItem("海鮮盤菜 1-3人", 388),
+                    markupNewYearItem("海鮮盤菜 3-5人", 688),
+                    markupNewYearItem("海鮮盤菜 5-8人", 1680),
+                ]
+            },
+            extraOptions: {
+                type: "array",
+                title: "加配",
+                items: {
+                    type: "string",
+                    "enum": [
+                        markupNewYearItem("後生仔撈起", 268 - 10),
+                    ],
+                },
+                uniqueItems: true,
+            },
+        },
+        required: ["main"],
+    }
 
     static public function KCZenzeroHotdogSet(timeSlotType:TimeSlotType) return {
         title: "熱狗",
@@ -517,6 +562,8 @@ class KCZenzeroMenu {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
                 };
+            case PoonChoiLoHei:
+                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"], null, null, "");
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], null, priceInDescription("main", def));
             case NoodleSet:
@@ -575,6 +622,8 @@ class KCZenzeroMenu {
         final summaries = formData.items.map(item -> summarizeItem(cast item, timeSlot));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
+            case PoonChoiLoHei:
+                false;
             case HotpotSet:
                 false;
             case LimitedSpecial if (limitedSpecial.seperateBox):

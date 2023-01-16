@@ -574,6 +574,25 @@ class Menu extends View<MenuProps> {
             ');
         } else null;
 
+        final poonChoiLoHei = {
+            final def = KCZenzeroPoonChoiLoHei;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${def.title}</div>
+                    </div>
+                    <div className="p-3">${def.description}</div>
+                    ${renderItems(def.properties.main.enums())}
+                    <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                        <div className="p-3 text-xl bg-slash rounded-t-xl font-bold">${def.properties.extraOptions.title}</div>
+                        <div className="bg-white rounded-b-xl">
+                            ${renderItems(def.properties.extraOptions.items.enums(), true)}
+                        </div>
+                    </div>
+                </Fragment>
+            ');
+        }
+
         final hotpotSet = {
             // final def = KCZenzeroHotpotSet;
             // jsx('
@@ -646,6 +665,8 @@ class Menu extends View<MenuProps> {
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    ${poonChoiLoHei}
+
                     ${limited}
 
                     ${hotpotSet}
