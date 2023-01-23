@@ -1,5 +1,11 @@
+locals {
+  cloudflare = {
+    account_id = "5866a1959e70399a4020fd5a7657e1ca"
+  }
+}
+
 resource "cloudflare_zone" "ssprangers" {
-  account_id = "5866a1959e70399a4020fd5a7657e1ca"
+  account_id = local.cloudflare.account_id
   zone       = "ssprangers.com"
 }
 
