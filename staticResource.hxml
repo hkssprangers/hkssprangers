@@ -1,0 +1,17 @@
+--class-path src
+--class-path lib/dts2hx
+--library compiletime
+--library tink_core
+--library tink_core_ext
+--library tink_sql
+--library tink_json
+--library thx.core
+--library CommentString
+--library hxLINQ
+--library format
+-D react_skip_extend_component_restriction
+-D no-deprecation-warnings
+-D sql_debug
+--dce full
+--macro hkssprangers.server.Macros.build()
+--run hkssprangers.StaticResource

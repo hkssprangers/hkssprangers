@@ -10,19 +10,30 @@ import js.node.Buffer;
 import js.node.http.IncomingMessage;
 import js.html.URLSearchParams;
 #end
-#if (!browser && !macro)
+#if (js && !browser && !macro)
 import js.lib.Promise;
 import fastify.*;
 #end
 using StringTools;
 using Lambda;
 
+typedef AbsolutePath = String;
+typedef RelativePath = String;
+typedef WebRootPath = String;
+typedef Hash = String;
+typedef ResourceInfo = {
+    hash:Hash,
+    ?width:Int,
+    ?height:Int,
+    ?color:String,
+}
+
 class StaticResource {
     static public final resourcesDir = "static";
 
     #if (macro || !browser)
-    static final hashes = new Map<String,String>();
-    static public function hash(path:String):String {
+    static final hashes = new Map<WebRootPath,Hash>();
+    static public function hash(path:WebRootPath):Hash {
         if (!path.startsWith("/")) {
             throw '$path should relative to root (starts with /)';
         }
@@ -37,7 +48,7 @@ class StaticResource {
                 h;
         }
     }
-    static public function exists(path:String):Bool {
+    static public function exists(path:WebRootPath):Bool {
         if (!path.startsWith("/")) {
             throw '$path should relative to root (starts with /)';
         }
@@ -46,7 +57,7 @@ class StaticResource {
     }
     #end
 
-    #if (!browser && !macro)
+    #if (js && !browser && !macro)
     static public function hook
     <RouteGeneric, RawServer, RawRequest, RawReply, SchemaCompiler, TypeProvider, ContextConfig, Logger, RequestType, ReplyType>
     (
@@ -103,7 +114,7 @@ class StaticResource {
     }
     #end
 
-    static public function fingerprint(path:String, hash:String):String {
+    static public function fingerprint(path:WebRootPath, hash:String):String {
         final p = new Path(path);
         return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file.urlEncode() + "." + hash + "." + p.ext]);
     }
@@ -118,4 +129,94 @@ class StaticResource {
             hash: r.matched(2),
         }
     }
+
+    #if (!browser)
+    static function getImageSize(file:AbsolutePath):{
+        width:Int,
+        height:Int,
+    } {
+        switch (Path.extension(file).toLowerCase()) {
+            case "png":
+                final png = new format.png.Reader(File.read(file));
+                return format.png.Tools.getHeader(png.read());
+            case _:
+                final p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}', file]);
+                if (p.exitCode() != 0) {
+                    throw p.stderr.readAll().toString();
+                }
+                final out = p.stdout.readAll().toString();
+                p.close();
+                return haxe.Json.parse(out);
+        }
+    }
+
+    static function getImageColor(file:AbsolutePath):String {
+        final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
+        if (p.exitCode() != 0) {
+            throw p.stderr.readAll().toString();
+        }
+        final out = p.stdout.readAll().toString();
+        p.close();
+        final r = ~/^s(rgba?\(.+\))$/;
+        if (!r.match(out)) {
+            throw "Cannot parse color: " + out;
+        }
+        return r.matched(1);
+    }
+
+    static function preprocessFiles(src:WebRootPath, out:RelativePath, infos:DynamicAccess<ResourceInfo>):Void {
+        final cwd:AbsolutePath = Sys.getCwd();
+        final resourcesDir:AbsolutePath = Path.join([Sys.getCwd(), hkssprangers.StaticResource.resourcesDir]);
+        final absSrc:AbsolutePath = Path.join([resourcesDir, src]);
+
+        if (!FileSystem.isDirectory(absSrc)) {
+            final file = Path.withoutDirectory(src);
+            final info:ResourceInfo = {
+                hash: hash(src),
+            };
+            final fpFile = fingerprint(file, info.hash);
+            final outDir = Path.directory(out);
+            
+
+            if (file == ".DS_Store") {
+                return;
+            }
+
+            switch Path.extension(file).toLowerCase() {
+                case "jpg" | "jpeg" | "png":
+                    final d = getImageSize(absSrc);
+                    info.width = d.width;
+                    info.height = d.height;
+                    info.color = getImageColor(absSrc);
+                case _:
+                    //pass
+            }
+
+            File.copy(absSrc, Path.join([cwd, out]));
+            File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
+            
+            infos[src] = info;
+            return;
+        }
+
+        FileSystem.createDirectory(Path.join([cwd, out]));
+        for (item in FileSystem.readDirectory(absSrc)) {
+            preprocessFiles(Path.join([src, item]), Path.join([out, item]), infos);
+        }
+    }
+
+    static function main():Void {
+        final out = switch (Sys.args()) {
+            case []:
+                "staticOut";
+            case [out]:
+                out;
+            case _:
+                throw "expect 0-1 args";
+        }
+        final infos = new DynamicAccess();
+        preprocessFiles("/", out, infos);
+        File.saveContent(Path.join([out, "static.json"]), haxe.Json.stringify(infos, null, "  "));
+    }
+    #end
 }
