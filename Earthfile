@@ -138,6 +138,14 @@ awscli:
         && rm /tmp/awscliv2.zip
     SAVE ARTIFACT /aws
 
+rclone:
+    ARG TARGETARCH
+    ARG RCLONE_VERSION=1.61.1
+    RUN curl -fsSL "https://downloads.rclone.org/v${RCLONE_VERSION}/rclone-v${RCLONE_VERSION}-linux-${TARGETARCH}.zip" -o rclone.zip \
+        && unzip -qq rclone.zip \
+        && rm rclone.zip
+    SAVE ARTIFACT rclone-*/rclone
+
 github-src:
     ARG --required REPO
     ARG --required COMMIT
@@ -345,9 +353,10 @@ devcontainer:
 
     COPY +dbmate/dbmate /usr/local/bin/
 
+    COPY +rclone/rclone /usr/local/bin/
+
     COPY +tilemaker/tilemaker /usr/local/bin/
-    COPY +tilemaker/config.json /usr/local/share/tilemaker/config.json
-    COPY +tilemaker/process.lua /usr/local/share/tilemaker/process.lua
+    COPY +tilemaker/config.json +tilemaker/process.lua /usr/local/share/tilemaker/
 
     USER $USERNAME
 
