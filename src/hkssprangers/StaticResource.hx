@@ -246,7 +246,7 @@ class StaticResource {
         }
         final infos = new DynamicAccess();
         preprocessFiles("/", out, infos);
-        File.saveContent(Path.join([out, "static.json"]), haxe.Json.stringify(infos, null, "  "));
+        File.saveContent("static.json", haxe.Json.stringify(infos, null, "  "));
     }
     #end
 }
