@@ -23,6 +23,7 @@ typedef WebRootPath = String;
 typedef Hash = String;
 typedef ResourceInfo = {
     hash:Hash,
+    size:Int,
     ?width:Int,
     ?height:Int,
     ?color:String,
@@ -40,13 +41,16 @@ class StaticResource {
         return switch (hashes[path]) {
             case null:
                 hashes[path] = try {
-                    haxe.crypto.Md5.make(sys.io.File.getBytes(Path.join([hkssprangers.StaticResource.resourcesDir, path]))).toHex();
+                    _hash(Path.join([hkssprangers.StaticResource.resourcesDir, path]));
                 } catch (e) {
                     null;
                 }
             case h:
                 h;
         }
+    }
+    static function _hash(file:AbsolutePath):Hash {
+        return haxe.crypto.Md5.make(sys.io.File.getBytes(file)).toHex();
     }
     static public function exists(path:WebRootPath):Bool {
         if (!path.startsWith("/")) {
@@ -141,27 +145,41 @@ class StaticResource {
                 return format.png.Tools.getHeader(png.read());
             case _:
                 final p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}', file]);
-                if (p.exitCode() != 0) {
-                    throw p.stderr.readAll().toString();
-                }
                 final out = p.stdout.readAll().toString();
+                final err = p.stderr.readAll().toString();
+                final exitCode = p.exitCode();
                 p.close();
+                if (exitCode != 0) {
+                    throw err;
+                }
                 return haxe.Json.parse(out);
         }
     }
 
     static function getImageColor(file:AbsolutePath):String {
         final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
-        if (p.exitCode() != 0) {
-            throw p.stderr.readAll().toString();
-        }
         final out = p.stdout.readAll().toString();
+        final err = p.stderr.readAll().toString();
+        final exitCode = p.exitCode();
         p.close();
+        if (exitCode != 0) {
+            throw err;
+        }
         final r = ~/^s(rgba?\(.+\))$/;
         if (!r.match(out)) {
             throw "Cannot parse color: " + out;
         }
         return r.matched(1);
+    }
+
+    static function convertImage(src:AbsolutePath, out:AbsolutePath):Void {
+        final p = new sys.io.Process("convert", [src, out]);
+        final err = p.stderr.readAll().toString();
+        final exitCode = p.exitCode();
+        p.close();
+        if (exitCode != 0) {
+            throw err;
+        }
     }
 
     static function preprocessFiles(src:WebRootPath, out:RelativePath, infos:DynamicAccess<ResourceInfo>):Void {
@@ -172,7 +190,8 @@ class StaticResource {
         if (!FileSystem.isDirectory(absSrc)) {
             final file = Path.withoutDirectory(src);
             final info:ResourceInfo = {
-                hash: hash(src),
+                hash: _hash(absSrc),
+                size: FileSystem.stat(absSrc).size,
             };
             final fpFile = fingerprint(file, info.hash);
             final outDir = Path.directory(out);
@@ -182,20 +201,31 @@ class StaticResource {
                 return;
             }
 
+            File.copy(absSrc, Path.join([cwd, out]));
+            File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
+            infos[src] = info;
+
             switch Path.extension(file).toLowerCase() {
                 case "jpg" | "jpeg" | "png":
                     final d = getImageSize(absSrc);
                     info.width = d.width;
                     info.height = d.height;
                     info.color = getImageColor(absSrc);
+
+                    final webp:AbsolutePath = Path.join([cwd, outDir, Path.withoutExtension(file) + ".webp"]);
+                    convertImage(absSrc, webp);
+                    final webpInfo:ResourceInfo = {
+                        hash: _hash(webp),
+                        size: FileSystem.stat(webp).size,
+                        width: info.width,
+                        height: info.height,
+                        color: info.color,
+                    };
+                    File.copy(webp, fingerprint(webp, webpInfo.hash));
+                    infos[Path.withoutExtension(src) + ".webp"] = webpInfo;
                 case _:
                     //pass
             }
-
-            File.copy(absSrc, Path.join([cwd, out]));
-            File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
-            
-            infos[src] = info;
             return;
         }
 
