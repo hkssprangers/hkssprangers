@@ -65,17 +65,18 @@ class StaticResource {
         req:FastifyRequest<RouteGeneric, RawServer, RawRequest, SchemaCompiler, TypeProvider>,
         reply:FastifyReply<RawServer, RawRequest, RawReply, RouteGeneric, ContextConfig>
     ):Promise<Any> {
-        if (StaticResource.exists(req.url)) {
+        final path = req.url.urlDecode();
+        if (StaticResource.exists(path)) {
             #if !production
             return Promise.resolve(untyped reply
                 .header("Cache-Control", "no-store")
-                .sendFile(req.url)
+                .sendFile(path)
             );
             #else
-            trace('Requested with non-bucketed url: ${req.url}');
+            trace('Requested with non-bucketed url: ${path}');
             return Promise.resolve(reply
                 .header("Cache-Control", "no-store")
-                .redirect(StaticResource.bucketed(req.url, StaticResource.info(req.url).hash))
+                .redirect(StaticResource.bucketed(path, StaticResource.info(path).hash))
             );
             #end
         } else {
