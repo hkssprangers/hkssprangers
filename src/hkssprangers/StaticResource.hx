@@ -86,7 +86,7 @@ class StaticResource {
 
     static public function fingerprint(path:WebRootPath, hash:String):String {
         final p = new Path(path);
-        return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file.urlEncode() + "." + hash + "." + p.ext]);
+        return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file + "." + hash + "." + p.ext]);
     }
 
     static public function bucketed(path:WebRootPath, hash:String):String {
@@ -179,13 +179,18 @@ class StaticResource {
             File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
             infos[src] = info;
 
-            switch Path.extension(file).toLowerCase() {
-                case "jpg" | "jpeg" | "png":
+            final fileExt = Path.extension(file).toLowerCase();
+            switch fileExt {
+                case "jpg" | "jpeg" | "png" | "svg":
                     final d = getImageSize(absSrc);
                     info.width = d.width;
                     info.height = d.height;
                     info.color = getImageColor(absSrc);
-
+                case _:
+                    //pass
+            }
+            switch fileExt {
+                case "jpg" | "jpeg" | "png": // exclude "svg"
                     final webp:AbsolutePath = Path.join([cwd, outDir, Path.withoutExtension(file) + ".webp"]);
                     convertImage(absSrc, webp);
                     final webpInfo:ResourceInfo = {

@@ -86,7 +86,11 @@ class StaticResourceMacros {
             path.ext = "webp";
             final webpPath = path.toString();
             final webpInfo = hkssprangers.StaticResource.info(webpPath);
-            hkssprangers.StaticResource.bucketed(webpPath, webpInfo.hash);
+            if (webpInfo == null) {
+                null;
+            } else {
+                hkssprangers.StaticResource.bucketed(webpPath, webpInfo.hash);
+            }
         }
         return if (bg != null) macro {
             final className = ${className};

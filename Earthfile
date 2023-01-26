@@ -244,14 +244,14 @@ ssp.mbtiles:
         --bbox 114.08885,22.2856527,114.2475128,22.4311088 \
         --output ssp.mbtiles
     RUN ls -lah
-    SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/tiles/
+    SAVE ARTIFACT --keep-ts ssp.mbtiles AS LOCAL ./static/tiles/
 
 ssp.pmtiles:
     FROM +pmtiles
     COPY +ssp.mbtiles/ssp.mbtiles .
     RUN pmtiles-convert ssp.mbtiles ssp.pmtiles
     RUN pmtiles-show ssp.pmtiles
-    SAVE ARTIFACT ssp.pmtiles AS LOCAL ./static/tiles/
+    SAVE ARTIFACT --keep-ts ssp.pmtiles AS LOCAL ./static/tiles/
 
 ssp.mbtiles-server:
     FROM debian:bullseye
@@ -411,7 +411,7 @@ style-css:
     COPY .haxerc processCss.hxml .
     COPY +static-assets/static.json .
     RUN haxe -D production processCss.hxml
-    SAVE ARTIFACT static/css/style.css AS LOCAL static/css/style.css
+    SAVE ARTIFACT --keep-ts static/css/style.css AS LOCAL static/css/style.css
 
 serviceWorker-js:
     FROM +devcontainer
@@ -420,10 +420,9 @@ serviceWorker-js:
     COPY haxe_libraries haxe_libraries
     COPY src src
     COPY .haxerc serviceWorker.hxml esbuild.inject.js .
-    RUN mkdir -p static
     RUN haxe  -D production serviceWorker.hxml
-    RUN node -c static/serviceWorker.bundled.js
-    SAVE ARTIFACT static/serviceWorker.bundled.js
+    RUN node -c serviceWorker.bundled.js
+    SAVE ARTIFACT --keep-ts serviceWorker.bundled.js AS LOCAL serviceWorker.bundled.js
 
 browser-js:
     FROM +devcontainer
@@ -432,11 +431,10 @@ browser-js:
     COPY static static
     COPY src src
     COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
-    COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    COPY +static-assets-serviceWorker/static.json .
+    COPY +static-assets/static.json .
     RUN haxe -D production browser.hxml
     RUN node -c static/browser.bundled.js
-    SAVE ARTIFACT static/browser.bundled.js AS LOCAL static/browser.bundled.js
+    SAVE ARTIFACT --keep-ts static/browser.bundled.js AS LOCAL static/browser.bundled.js
 
 server:
     FROM +devcontainer
@@ -444,8 +442,10 @@ server:
     COPY static static
     COPY \
         +browser-js/browser.bundled.js \
-        +serviceWorker-js/serviceWorker.bundled.js \
         static
+    COPY \
+        +serviceWorker-js/serviceWorker.bundled.js \
+        .
     COPY \
         +tailwind/tailwind.css \
         +style-css/style.css \
@@ -455,8 +455,8 @@ server:
     COPY +static/static.json .
     RUN haxe -D production server.hxml
     RUN node -c index.js
-    SAVE ARTIFACT index.js AS LOCAL index.js
-    SAVE ARTIFACT static.json AS LOCAL static.json
+    SAVE ARTIFACT --keep-ts index.js AS LOCAL index.js
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 holidays.json:
     FROM +devcontainer
@@ -466,7 +466,7 @@ holidays.json:
     RUN echo '{}' > holidays.json
     RUN haxe holidays.hxml
     RUN node holidays.js
-    SAVE ARTIFACT holidays.json AS LOCAL holidays.json
+    SAVE ARTIFACT --keep-ts holidays.json AS LOCAL holidays.json
 
 static-assets:
     FROM +devcontainer
@@ -477,19 +477,10 @@ static-assets:
     COPY .haxerc staticResource.hxml .
     RUN haxe staticResource.hxml
     SAVE ARTIFACT staticOut static
-    SAVE ARTIFACT static.json AS LOCAL static.json
-
-static-assets-serviceWorker:
-    FROM +static-assets
-    COPY \
-        +serviceWorker-js/serviceWorker.bundled.js \
-        static
-    RUN haxe staticResource.hxml
-    SAVE ARTIFACT staticOut static
-    SAVE ARTIFACT static.json AS LOCAL static.json
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 static:
-    FROM +static-assets-serviceWorker
+    FROM +static-assets
     COPY \
         +browser-js/browser.bundled.js \
         static
@@ -499,7 +490,7 @@ static:
         static/css
     RUN haxe staticResource.hxml
     SAVE ARTIFACT staticOut static
-    SAVE ARTIFACT static.json AS LOCAL static.json
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 cronjobs.js:
     FROM +devcontainer
@@ -551,6 +542,7 @@ deploy:
         +deploy-static/static.json \
         +server/index.js \
         +cronjobs.js/cronjobs.js \
+        +serviceWorker-js/serviceWorker.bundled.js \
         .
     COPY --chown=$USER_UID:$USER_GID \
         serverless.yml package.json package-lock.json holidays.json \

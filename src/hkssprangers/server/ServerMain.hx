@@ -1,5 +1,7 @@
 package hkssprangers.server;
 
+import sys.FileSystem;
+import sys.io.File;
 import twilio.lib.twiml.MessagingResponse;
 import tink.sql.Expr.Functions;
 import haxe.crypto.Sha256;
@@ -105,26 +107,42 @@ class ServerMain {
             ]
         };
         final hash = haxe.crypto.Md5.encode(Json.stringify(value));
+        final fingerprinted = '/manifest.${hash}.webmanifest';
         {
             hash: hash,
             value: value,
             path: '/manifest.webmanifest',
-            fingerprinted: '/manifest.${hash}.webmanifest',
+            fingerprinted: fingerprinted,
             middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
-                return Promise.resolve(reply.send(value));
+                if (req.url != fingerprinted) {
+                    return Promise.resolve(reply.redirect(fingerprinted));
+                } else {
+                    return Promise.resolve(reply
+                        .type("application/manifest+json")
+                        .send(value)
+                    );
+                }
             }
         };
     }
 
-    static final serviceWorker = {
-        final hash = haxe.crypto.Md5.encode(Json.stringify(value));
+    static public final serviceWorker = {
+        final file = FileSystem.absolutePath("serviceWorker.bundled.js");
+        final value = File.getContent(file);
+        final hash = haxe.crypto.Md5.encode(value);
+        final fingerprinted = '/serviceWorker.bundled.${hash}.js';
         {
             hash: hash,
-            value: value,
-            path: '/manifest.webmanifest',
-            fingerprinted: '/manifest.${hash}.webmanifest',
+            path: '/serviceWorker.bundled.js',
+            fingerprinted: fingerprinted,
             middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
-                return Promise.resolve(reply.send(value));
+                if (req.url != fingerprinted) {
+                    return Promise.resolve(reply.redirect(fingerprinted));
+                } else {
+                    return Promise.resolve(reply
+                        .type("text/javascript")
+                        .send(value));
+                }
             }
         };
     }
@@ -378,6 +396,8 @@ class ServerMain {
         app.get("/login", LogIn.middleware);
         app.get(webmanifest.path, webmanifest.middleware);
         app.get(webmanifest.fingerprinted, webmanifest.middleware);
+        app.get(serviceWorker.path, serviceWorker.middleware);
+        app.get(serviceWorker.fingerprinted, serviceWorker.middleware);
         Index.setup(app);
         Menu.setup(app);
         OrderFood.setup(app);

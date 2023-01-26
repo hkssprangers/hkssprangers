@@ -98,14 +98,14 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     ');
 
     function css() {
-        final tailwind = switch (ServerMain.deployStage) {
-            case master | production:
+        final tailwind =
+            #if production
                 jsx('
                     <link rel="stylesheet" href=${R("/css/tailwind.css")} />
                 ');
-            case _:
+            #else
                 null;
-        };
+            #end
         final fontawesomeCssUrl = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@${NodeModules.lockedVersion("@fortawesome/fontawesome-free")}/css/all.min.css';
         return jsx('
             <Fragment>
@@ -121,18 +121,21 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     }
 
     function script() {
-        final tailwind = switch (ServerMain.deployStage) {
-            case master | production:
+        final tailwind =
+            #if production
                 null;
-            case _:
+            #else
                 jsx('
                     <script src="https://cdn.tailwindcss.com"></script>
                 ');
-        };
+            #end
         return jsx('
             <Fragment>
                 ${tailwind}
-                <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>
+                <script src=${R("/browser.bundled.js")}
+                    data-deploy-stage=${ServerMain.deployStage}
+                    data-service-worker=${ServerMain.serviceWorker.fingerprinted}
+                ></script>
             </Fragment>
         ');
     }
