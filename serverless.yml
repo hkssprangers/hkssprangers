@@ -49,6 +49,7 @@ package:
     - '!test/**'
     - '!terraform/**'
     - '!*.hxml'
+    - '!static/**'
 
 functions:
   web:

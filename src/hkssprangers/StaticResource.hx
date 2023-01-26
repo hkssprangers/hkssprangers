@@ -176,7 +176,6 @@ class StaticResource {
                 return;
             }
 
-            File.copy(absSrc, Path.join([cwd, out]));
             File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
             infos[src] = info;
 
@@ -201,7 +200,7 @@ class StaticResource {
                         height: info.height,
                         color: info.color,
                     };
-                    File.copy(webp, fingerprint(webp, webpInfo.hash));
+                    FileSystem.rename(webp, fingerprint(webp, webpInfo.hash));
                     infos[Path.withoutExtension(src) + ".webp"] = webpInfo;
                 case _:
                     //pass
