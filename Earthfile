@@ -138,6 +138,14 @@ awscli:
         && rm /tmp/awscliv2.zip
     SAVE ARTIFACT /aws
 
+rclone:
+    ARG TARGETARCH
+    ARG RCLONE_VERSION=1.61.1
+    RUN curl -fsSL "https://downloads.rclone.org/v${RCLONE_VERSION}/rclone-v${RCLONE_VERSION}-linux-${TARGETARCH}.zip" -o rclone.zip \
+        && unzip -qq rclone.zip \
+        && rm rclone.zip
+    SAVE ARTIFACT rclone-*/rclone
+
 github-src:
     ARG --required REPO
     ARG --required COMMIT
@@ -227,8 +235,7 @@ ssp.osm.pbf-bbox:
 
 ssp.mbtiles:
     COPY +tilemaker/tilemaker /usr/local/bin/
-    COPY +tilemaker/config.json /usr/local/share/tilemaker/config.json
-    COPY +tilemaker/process.lua /usr/local/share/tilemaker/process.lua
+    COPY +tilemaker/config.json +tilemaker/process.lua /usr/local/share/tilemaker
     COPY +ssp.osm.pbf/ssp.osm.pbf .
     RUN tilemaker \
         --config /usr/local/share/tilemaker/config.json \
@@ -237,14 +244,14 @@ ssp.mbtiles:
         --bbox 114.08885,22.2856527,114.2475128,22.4311088 \
         --output ssp.mbtiles
     RUN ls -lah
-    SAVE ARTIFACT ssp.mbtiles AS LOCAL ./static/tiles/
+    SAVE ARTIFACT --keep-ts ssp.mbtiles AS LOCAL ./static/tiles/
 
 ssp.pmtiles:
     FROM +pmtiles
     COPY +ssp.mbtiles/ssp.mbtiles .
     RUN pmtiles-convert ssp.mbtiles ssp.pmtiles
     RUN pmtiles-show ssp.pmtiles
-    SAVE ARTIFACT ssp.pmtiles AS LOCAL ./static/tiles/
+    SAVE ARTIFACT --keep-ts ssp.pmtiles AS LOCAL ./static/tiles/
 
 ssp.mbtiles-server:
     FROM debian:bullseye
@@ -345,9 +352,10 @@ devcontainer:
 
     COPY +dbmate/dbmate /usr/local/bin/
 
+    COPY +rclone/rclone /usr/local/bin/
+
     COPY +tilemaker/tilemaker /usr/local/bin/
-    COPY +tilemaker/config.json /usr/local/share/tilemaker/config.json
-    COPY +tilemaker/process.lua /usr/local/share/tilemaker/process.lua
+    COPY +tilemaker/config.json +tilemaker/process.lua /usr/local/share/tilemaker/
 
     USER $USERNAME
 
@@ -401,8 +409,9 @@ style-css:
     COPY static static
     COPY src src
     COPY .haxerc processCss.hxml .
-    RUN haxe processCss.hxml
-    SAVE ARTIFACT static/css/style.css
+    COPY +static-assets/static.json .
+    RUN haxe -D production processCss.hxml
+    SAVE ARTIFACT --keep-ts static/css/style.css AS LOCAL static/css/style.css
 
 serviceWorker-js:
     FROM +devcontainer
@@ -411,10 +420,9 @@ serviceWorker-js:
     COPY haxe_libraries haxe_libraries
     COPY src src
     COPY .haxerc serviceWorker.hxml esbuild.inject.js .
-    RUN mkdir -p static
-    RUN haxe serviceWorker.hxml -D production
-    RUN node -c static/serviceWorker.bundled.js
-    SAVE ARTIFACT static/serviceWorker.bundled.js
+    RUN haxe  -D production serviceWorker.hxml
+    RUN node -c serviceWorker.bundled.js
+    SAVE ARTIFACT --keep-ts serviceWorker.bundled.js AS LOCAL serviceWorker.bundled.js
 
 browser-js:
     FROM +devcontainer
@@ -423,25 +431,32 @@ browser-js:
     COPY static static
     COPY src src
     COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
-    COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    RUN haxe browser.hxml -D production
+    COPY +static-assets/static.json .
+    RUN haxe -D production browser.hxml
     RUN node -c static/browser.bundled.js
-    SAVE ARTIFACT static/browser.bundled.js
+    SAVE ARTIFACT --keep-ts static/browser.bundled.js AS LOCAL static/browser.bundled.js
 
 server:
     FROM +devcontainer
     COPY haxe_libraries haxe_libraries
     COPY static static
-    COPY +browser-js/browser.bundled.js static/browser.bundled.js
-    COPY +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    COPY +tailwind/tailwind.css static/css/tailwind.css
-    COPY +style-css/style.css static/css/style.css
+    COPY \
+        +browser-js/browser.bundled.js \
+        static
+    COPY \
+        +serviceWorker-js/serviceWorker.bundled.js \
+        .
+    COPY \
+        +tailwind/tailwind.css \
+        +style-css/style.css \
+        static/css
     COPY src src
     COPY .haxerc server.hxml holidays.json package-lock.json .
-    RUN haxe server.hxml -D production
+    COPY +static/static.json .
+    RUN haxe -D production server.hxml
     RUN node -c index.js
-    SAVE ARTIFACT index.js
-    SAVE ARTIFACT static/images
+    SAVE ARTIFACT --keep-ts index.js AS LOCAL index.js
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 holidays.json:
     FROM +devcontainer
@@ -451,7 +466,31 @@ holidays.json:
     RUN echo '{}' > holidays.json
     RUN haxe holidays.hxml
     RUN node holidays.js
-    SAVE ARTIFACT holidays.json AS LOCAL holidays.json
+    SAVE ARTIFACT --keep-ts holidays.json AS LOCAL holidays.json
+
+static-assets:
+    FROM +devcontainer
+    COPY static static
+    RUN rm -rf static/css
+    COPY haxe_libraries haxe_libraries
+    COPY src src
+    COPY .haxerc staticResource.hxml .
+    RUN haxe staticResource.hxml
+    SAVE ARTIFACT staticOut static
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
+
+static:
+    FROM +static-assets
+    COPY \
+        +browser-js/browser.bundled.js \
+        static
+    COPY \
+        +tailwind/tailwind.css \
+        +style-css/style.css \
+        static/css
+    RUN haxe staticResource.hxml
+    SAVE ARTIFACT staticOut static
+    SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 cronjobs.js:
     FROM +devcontainer
@@ -482,18 +521,32 @@ test:
     COPY .haxerc test.hxml holidays.json .
     RUN haxe test.hxml
 
+deploy-static:
+    FROM +devcontainer
+    COPY +static/static static
+    ENV RCLONE_CONFIG_R2_TYPE=s3
+    ENV RCLONE_CONFIG_R2_PROVIDER=Cloudflare
+    ENV RCLONE_CONFIG_R2_ENV_AUTH=true
+    ENV RCLONE_CONFIG_R2_ENDPOINT=https://5866a1959e70399a4020fd5a7657e1ca.r2.cloudflarestorage.com
+    RUN --no-cache \
+        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        . ./.envrc \
+        && rclone copy static r2:static-files-34063d018f25c6ea
+    COPY +static/static.json .
+    SAVE ARTIFACT static.json
+
 deploy:
     FROM +devcontainer
     USER $USERNAME
-    COPY --chown=$USER_UID:$USER_GID static static
-    COPY --chown=$USER_UID:$USER_GID +browser-js/browser.bundled.js static/browser.bundled.js
-    COPY --chown=$USER_UID:$USER_GID +serviceWorker-js/serviceWorker.bundled.js static/serviceWorker.bundled.js
-    COPY --chown=$USER_UID:$USER_GID +tailwind/tailwind.css static/css/tailwind.css
-    COPY --chown=$USER_UID:$USER_GID +style-css/style.css static/css/style.css
-    COPY --chown=$USER_UID:$USER_GID +server/index.js index.js
-    COPY --chown=$USER_UID:$USER_GID +server/images static/images
-    COPY --chown=$USER_UID:$USER_GID +cronjobs.js/cronjobs.js cronjobs.js
-    COPY --chown=$USER_UID:$USER_GID serverless.yml package.json package-lock.json holidays.json .
+    COPY --chown=$USER_UID:$USER_GID \
+        +deploy-static/static.json \
+        +server/index.js \
+        +cronjobs.js/cronjobs.js \
+        +serviceWorker-js/serviceWorker.bundled.js \
+        .
+    COPY --chown=$USER_UID:$USER_GID \
+        serverless.yml package.json package-lock.json holidays.json \
+        .
     ARG --required DEPLOY_STAGE
     ENV DEPLOY_STAGE="$DEPLOY_STAGE"
     ARG --required SERVER_HOST

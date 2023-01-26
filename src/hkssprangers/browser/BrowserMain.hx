@@ -129,7 +129,7 @@ class BrowserMain {
     static function initSW() {
         if (navigator.serviceWorker != null) {
             trace("Register service worker");
-            navigator.serviceWorker.register(R("/serviceWorker.bundled.js"))
+            navigator.serviceWorker.register(document.currentScript.dataset.serviceWorker)
                 .then(reg -> {
                     trace('Registration succeeded. Scope is ' + reg.scope);
                 })

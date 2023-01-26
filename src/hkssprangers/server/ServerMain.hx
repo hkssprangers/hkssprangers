@@ -1,5 +1,7 @@
 package hkssprangers.server;
 
+import sys.FileSystem;
+import sys.io.File;
 import twilio.lib.twiml.MessagingResponse;
 import tink.sql.Expr.Functions;
 import haxe.crypto.Sha256;
@@ -74,6 +76,75 @@ class ServerMain {
             tink.core.Promise.reject(new Error(ErrorCode.Unauthorized, "no token"));
         else
             jwtVerifier.verify(token);
+    }
+
+    static public final webmanifest = {
+        final value = {
+            "name": "埗兵",
+            "short_name": "埗兵",
+            "description": "深水埗區外賣團隊",
+            "lang": "zh-HK",
+            "categories": [
+                "food"
+            ],
+            "start_url": "/",
+            "scope": "/",
+            "display": "standalone",
+            "background_color": "#fce03e",
+            "theme_color": "#fce03e",
+            "icons": [
+                {
+                    "src": R("/images/ssprangers4-y.png"),
+                    "sizes": "720x720",
+                    "type": "image/png"
+                },
+                {
+                    "src": R("/images/maskable_icon_x512.png"),
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "maskable"
+                }
+            ]
+        };
+        final hash = haxe.crypto.Md5.encode(Json.stringify(value));
+        final fingerprinted = '/manifest.${hash}.webmanifest';
+        {
+            hash: hash,
+            value: value,
+            path: '/manifest.webmanifest',
+            fingerprinted: fingerprinted,
+            middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
+                if (req.url != fingerprinted) {
+                    return Promise.resolve(reply.redirect(fingerprinted));
+                } else {
+                    return Promise.resolve(reply
+                        .type("application/manifest+json")
+                        .send(value)
+                    );
+                }
+            }
+        };
+    }
+
+    static public final serviceWorker = {
+        final file = FileSystem.absolutePath("serviceWorker.bundled.js");
+        final value = File.getContent(file);
+        final hash = haxe.crypto.Md5.encode(value);
+        final fingerprinted = '/serviceWorker.bundled.${hash}.js';
+        {
+            hash: hash,
+            path: '/serviceWorker.bundled.js',
+            fingerprinted: fingerprinted,
+            middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
+                if (req.url != fingerprinted) {
+                    return Promise.resolve(reply.redirect(fingerprinted));
+                } else {
+                    return Promise.resolve(reply
+                        .type("text/javascript")
+                        .send(value));
+                }
+            }
+        };
     }
 
     static function index(req:Request, reply:Reply):Promise<Dynamic> {
@@ -323,6 +394,10 @@ class ServerMain {
         app.get("/jwtAuth", jwtAuth);
         app.post("/twilio", twilioWebhook);
         app.get("/login", LogIn.middleware);
+        app.get(webmanifest.path, webmanifest.middleware);
+        app.get(webmanifest.fingerprinted, webmanifest.middleware);
+        app.get(serviceWorker.path, serviceWorker.middleware);
+        app.get(serviceWorker.fingerprinted, serviceWorker.middleware);
         Index.setup(app);
         Menu.setup(app);
         OrderFood.setup(app);

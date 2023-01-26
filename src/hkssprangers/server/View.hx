@@ -98,14 +98,14 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     ');
 
     function css() {
-        final tailwind = switch (ServerMain.deployStage) {
-            case master | production:
+        final tailwind =
+            #if production
                 jsx('
-                    <link rel="stylesheet" href=${R("/css/tailwind.css", false)} />
+                    <link rel="stylesheet" href=${R("/css/tailwind.css")} />
                 ');
-            case _:
+            #else
                 null;
-        };
+            #end
         final fontawesomeCssUrl = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@${NodeModules.lockedVersion("@fortawesome/fontawesome-free")}/css/all.min.css';
         return jsx('
             <Fragment>
@@ -121,31 +121,34 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     }
 
     function script() {
-        final tailwind = switch (ServerMain.deployStage) {
-            case master | production:
+        final tailwind =
+            #if production
                 null;
-            case _:
+            #else
                 jsx('
                     <script src="https://cdn.tailwindcss.com"></script>
                 ');
-        };
+            #end
         return jsx('
             <Fragment>
                 ${tailwind}
-                <script src=${R("/browser.bundled.js")} data-deploy-stage=${ServerMain.deployStage}></script>
+                <script src=${R("/browser.bundled.js")}
+                    data-deploy-stage=${ServerMain.deployStage}
+                    data-service-worker=${ServerMain.serviceWorker.fingerprinted}
+                ></script>
             </Fragment>
         ');
     }
 
     function favicon() return jsx('
         <Fragment>
-            <link rel="icon" type="image/png" sizes="720x720" href=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])}/>
-            <link rel="icon" type="image/x-icon" sizes="48x48" href=${Path.join(["https://" + host, R("/favicon.ico")])}/>
-            <link rel="icon" type="image/png" sizes="32x32" href=${Path.join(["https://" + host, R("/images/favicon-32x32.png")])}/>
-            <link rel="icon" type="image/png" sizes="16x16" href=${Path.join(["https://" + host, R("/images/favicon-16x16.png")])}/>
-            <link rel="apple-touch-icon" sizes="720x720" href=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])}/>
+            <link rel="icon" type="image/png" sizes="720x720" href=${R("/images/ssprangers4-y.png")}/>
+            <link rel="icon" type="image/x-icon" sizes="48x48" href=${R("/favicon.ico")}/>
+            <link rel="icon" type="image/png" sizes="32x32" href=${R("/images/favicon-32x32.png")}/>
+            <link rel="icon" type="image/png" sizes="16x16" href=${R("/images/favicon-16x16.png")}/>
+            <link rel="apple-touch-icon" sizes="720x720" href=${R("/images/ssprangers4-y.png")}/>
             <meta name="msapplication-TileColor" content="#ffffff" />
-            <meta name="msapplication-TileImage" content=${Path.join(["https://" + host, R("/images/ssprangers4-y.png")])} />
+            <meta name="msapplication-TileImage" content=${R("/images/ssprangers4-y.png")} />
             <meta name="theme-color" content="#ffffff" />
         </Fragment>
     ');
@@ -187,7 +190,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>${title()}</title>
 
-                <link rel="manifest" href=${R("/manifest.webmanifest")} />
+                <link rel="manifest" href=${ServerMain.webmanifest.fingerprinted} />
                 <meta name="mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="application-name" content=${name} />

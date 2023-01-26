@@ -31,8 +31,8 @@ class ProcessCss {
                 if (!hkssprangers.StaticResource.exists(path)) {
                     throw '$url does not exist';
                 } else {
-                    final h = hash(path);
-                    return hkssprangers.StaticResource.fingerprint(Path.join(["..", path]), h);
+                    final h = info(path).hash;
+                    return hkssprangers.StaticResource.bucketed(path, h);
                 }
             }))
             .toString();

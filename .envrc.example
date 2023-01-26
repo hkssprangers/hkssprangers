@@ -15,3 +15,7 @@ export COCKROACH_DATABASE=rushed-werecat-1336.defaultdb
 
 # For prisma
 export DATABASE_URL="postgresql://${COCKROACH_USER}:${COCKROACH_PASSWORD}@${COCKROACH_HOST}:${COCKROACH_PORT}/${COCKROACH_DATABASE#*.}?sslmode=require&options=--cluster%3D${COCKROACH_DATABASE%.*}"
+
+# For rclone
+export RCLONE_CONFIG_R2_ACCESS_KEY_ID=FIXME
+export RCLONE_CONFIG_R2_SECRET_ACCESS_KEY=FIXME
