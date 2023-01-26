@@ -12,9 +12,11 @@ class ServiceWorkerMain {
         WorkboxNavigationPreload.enable();
         WorkboxRouting.setDefaultHandler(cast new NetworkFirst());
 
-        WorkboxRouting.registerRoute((options:RouteMatchCallbackOptions) -> {
-            StaticResource.parseUrl(options.url.pathname) != null;
-        }, cast new CacheFirst({
+        WorkboxRouting.registerRoute((options:RouteMatchCallbackOptions) ->
+            options.url.origin == "https://static.ssprangers.com"
+            &&
+            StaticResource.parseUrl(options.url.pathname) != null
+        , cast new CacheFirst({
             cacheName: "static",
             plugins: ([
                 new CacheableResponsePlugin({

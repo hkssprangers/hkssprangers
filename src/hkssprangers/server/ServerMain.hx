@@ -76,6 +76,59 @@ class ServerMain {
             jwtVerifier.verify(token);
     }
 
+    static public final webmanifest = {
+        final value = {
+            "name": "埗兵",
+            "short_name": "埗兵",
+            "description": "深水埗區外賣團隊",
+            "lang": "zh-HK",
+            "categories": [
+                "food"
+            ],
+            "start_url": "/",
+            "scope": "/",
+            "display": "standalone",
+            "background_color": "#fce03e",
+            "theme_color": "#fce03e",
+            "icons": [
+                {
+                    "src": R("/images/ssprangers4-y.png"),
+                    "sizes": "720x720",
+                    "type": "image/png"
+                },
+                {
+                    "src": R("/images/maskable_icon_x512.png"),
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "maskable"
+                }
+            ]
+        };
+        final hash = haxe.crypto.Md5.encode(Json.stringify(value));
+        {
+            hash: hash,
+            value: value,
+            path: '/manifest.webmanifest',
+            fingerprinted: '/manifest.${hash}.webmanifest',
+            middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
+                return Promise.resolve(reply.send(value));
+            }
+        };
+    }
+
+    static final serviceWorker = {
+        final hash = haxe.crypto.Md5.encode(Json.stringify(value));
+        {
+            hash: hash,
+            value: value,
+            path: '/manifest.webmanifest',
+            fingerprinted: '/manifest.${hash}.webmanifest',
+            middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
+                return Promise.resolve(reply.send(value));
+            }
+        };
+    }
+
     static function index(req:Request, reply:Reply):Promise<Dynamic> {
         reply.redirect("https://www.facebook.com/hkssprangers");
         return Promise.resolve();
@@ -323,6 +376,8 @@ class ServerMain {
         app.get("/jwtAuth", jwtAuth);
         app.post("/twilio", twilioWebhook);
         app.get("/login", LogIn.middleware);
+        app.get(webmanifest.path, webmanifest.middleware);
+        app.get(webmanifest.fingerprinted, webmanifest.middleware);
         Index.setup(app);
         Menu.setup(app);
         OrderFood.setup(app);

@@ -33,22 +33,15 @@ class StaticResource {
     static public final resourcesDir = "static";
 
     #if (macro || !browser)
-    static final hashes = new Map<WebRootPath,Hash>();
-    static public function hash(path:WebRootPath):Hash {
+    #if production
+    static final infos:DynamicAccess<ResourceInfo> = Json.parse(File.getContent("static.json"));
+    static public function info(path:WebRootPath):ResourceInfo {
         if (!path.startsWith("/")) {
             throw '$path should relative to root (starts with /)';
         }
-        return switch (hashes[path]) {
-            case null:
-                hashes[path] = try {
-                    _hash(Path.join([hkssprangers.StaticResource.resourcesDir, path]));
-                } catch (e) {
-                    null;
-                }
-            case h:
-                h;
-        }
+        return infos[path];
     }
+    #end
     static function _hash(file:AbsolutePath):Hash {
         return haxe.crypto.Md5.make(sys.io.File.getBytes(file)).toHex();
     }
@@ -56,8 +49,12 @@ class StaticResource {
         if (!path.startsWith("/")) {
             throw '$path should relative to root (starts with /)';
         }
+        #if production
+        return infos.exists(path);
+        #else
         final staticPath = Path.join([resourcesDir, path]);
-        return hashes.exists(path) || (FileSystem.exists(staticPath) && !FileSystem.isDirectory(staticPath));
+        return (FileSystem.exists(staticPath) && !FileSystem.isDirectory(staticPath));
+        #end
     }
     #end
 
@@ -68,52 +65,21 @@ class StaticResource {
         req:FastifyRequest<RouteGeneric, RawServer, RawRequest, SchemaCompiler, TypeProvider>,
         reply:FastifyReply<RawServer, RawRequest, RawReply, RouteGeneric, ContextConfig>
     ):Promise<Any> {
-        final url = new js.html.URL(req.url, "http://example.com");
-        final path = url.pathname.urlDecode();
-        // if the file exists (no fingerprint)
-        if (StaticResource.exists(path)) {
-            // trace(path + ' file requested without fingerprint');
-            final actual = StaticResource.hash(path);
-            final fpUrl = StaticResource.fingerprint(path, actual);
-            reply
-                #if production
-                .header("Cache-Control", "public, max-age=60, stale-while-revalidate=604800") // max-age: 1 min, stale-while-revalidate: 7 days
-                #else
+        if (StaticResource.exists(req.url)) {
+            #if !production
+            return Promise.resolve(untyped reply
                 .header("Cache-Control", "no-store")
-                #end
-                .redirect(fpUrl);
-            return Promise.resolve(null);
-        }
-
-        switch (StaticResource.parseUrl(path)) {
-            case null:
-                // no fingerprint in url
-                // pass to the other handlers
-                return Promise.resolve();
-            case {
-                file: file,
-                hash: hash,
-            }:
-                // trace(file);
-                final actual = StaticResource.hash(file);
-                if (hash == actual) {
-                    // trace(path + ' hash matched');
-                    return Promise.resolve(untyped reply
-                        .header("Cache-Control", "public, max-age=31536000, immutable") // 1 year
-                        .sendFile(file)
-                    );
-                } else {
-                    // trace(path + ' hash mismatch');
-                    final fpUrl = StaticResource.fingerprint(file, actual);
-                    reply
-                        #if production
-                        .header("Cache-Control", "public, max-age=60, stale-while-revalidate=604800") // max-age: 1 min, stale-while-revalidate: 7 days
-                        #else
-                        .header("Cache-Control", "no-store")
-                        #end
-                        .redirect(fpUrl);
-                    return Promise.resolve(null);
-                }
+                .sendFile(req.url)
+            );
+            #else
+            trace('Requested with non-bucketed url: ${req.url}');
+            return Promise.resolve(reply
+                .header("Cache-Control", "no-store")
+                .redirect(StaticResource.bucketed(req.url, StaticResource.info(req.url).hash))
+            );
+            #end
+        } else {
+            return Promise.resolve();
         }
     }
     #end
@@ -121,6 +87,10 @@ class StaticResource {
     static public function fingerprint(path:WebRootPath, hash:String):String {
         final p = new Path(path);
         return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file.urlEncode() + "." + hash + "." + p.ext]);
+    }
+
+    static public function bucketed(path:WebRootPath, hash:String):String {
+        return Path.join(["https://static.ssprangers.com", fingerprint(path, hash)]);
     }
 
     static public function parseUrl(url:String) {
@@ -201,6 +171,10 @@ class StaticResource {
                 return;
             }
 
+            if (infos[src] != null) {
+                return;
+            }
+
             File.copy(absSrc, Path.join([cwd, out]));
             File.copy(absSrc, Path.join([cwd, outDir, fpFile]));
             infos[src] = info;
@@ -244,9 +218,15 @@ class StaticResource {
             case _:
                 throw "expect 0-1 args";
         }
-        final infos = new DynamicAccess();
+        
+        final infoFile = "static.json";
+        final infos = if (FileSystem.exists(infoFile)) {
+            Json.parse(File.getContent(infoFile));
+        } else {
+            new DynamicAccess();
+        }
         preprocessFiles("/", out, infos);
-        File.saveContent("static.json", haxe.Json.stringify(infos, null, "  "));
+        File.saveContent(infoFile, haxe.Json.stringify(infos, null, "  "));
     }
     #end
 }

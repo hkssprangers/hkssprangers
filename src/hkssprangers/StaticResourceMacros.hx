@@ -19,24 +19,22 @@ using Lambda;
 import hkssprangers.StaticResource.*;
 
 class StaticResourceMacros {
-    macro static public function R(path:String, ?warnIfNotFound:Bool = true) {
+    macro static public function R(path:String) {
         if (!path.startsWith("/")) {
             Context.error('$path should relative to root (starts with /)', Context.currentPos());
         }
 
         if (!exists(path)) {
-            if (warnIfNotFound) {
-                Context.warning('$path does not exist', Context.currentPos());
-            }
-            return macro @:privateAccess $v{path};
+            Context.error('$path does not exist', Context.currentPos());
+            return macro $v{path};
         }
 
         #if (!production)
-        return macro @:privateAccess $v{path};
+        return macro $v{path};
+        #else
+        final h = info(path).hash;
+        return macro @:privateAccess hkssprangers.StaticResource.bucketed($v{path}, $v{h});
         #end
-
-        final h = hash(path);
-        return macro @:privateAccess hkssprangers.StaticResource.fingerprint($v{path}, $v{h});
     };
 
     macro static public function image(path:String, alt:ExprOf<String>, className:ExprOf<String>, ?itemProp:String, ?useBackgroudColor:Bool = null) {
@@ -62,75 +60,34 @@ class StaticResourceMacros {
                 </picture>
             ');
         };
-        #end
-
+        #else
         final staticPath = Path.join([resourcesDir, path]);
-        final h = hash(path);
-        final fpPath = hkssprangers.StaticResource.fingerprint(path, h);
+        final info = hkssprangers.StaticResource.info(path);
+        final fpPath = hkssprangers.StaticResource.bucketed(path, info.hash);
         final header:{
             width:Int,
             height:Int,
-        } = switch (Path.extension(staticPath).toLowerCase()) {
-            case "png":
-                final png = new format.png.Reader(File.read(staticPath));
-                format.png.Tools.getHeader(png.read());
-            case _:
-                final p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}', staticPath]);
-                if (p.exitCode() != 0) {
-                    Context.error(p.stderr.readAll().toString(), Context.currentPos());
-                }
-                final out = p.stdout.readAll().toString();
-                p.close();
-                haxe.Json.parse(out);
+        } = {
+            width: info.width,
+            height: info.height,
         }
         final useBackgroudColor = if (useBackgroudColor != null) {
             useBackgroudColor;
         } else {
-            final p = new sys.io.Process("identify", ["-format", "%[opaque]", staticPath]);
-            if (p.exitCode() != 0) {
-                Context.error(p.stderr.readAll().toString(), Context.currentPos());
-            }
-            final out = p.stdout.readAll().toString();
-            p.close();
-            haxe.Json.parse(out);
+            !info.color.startsWith("rgba");
         }
         final bg = if (useBackgroudColor) {
-            final p = new sys.io.Process("convert", [staticPath, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
-            if (p.exitCode() != 0) {
-                Context.error(p.stderr.readAll().toString(), Context.currentPos());
-            }
-            final out = p.stdout.readAll().toString();
-            p.close();
-            final r = ~/^s(rgba?\(.+\))$/;
-            if (!r.match(out)) {
-                Context.error("Cannot parse color: " + out, Context.currentPos());
-            }
-            r.matched(1);
+            info.color;
         } else {
             null;
         }
-        function createWebp() {
-            function newPath(path:String):String {
-                final path = new Path(path);
-                path.ext = "webp";
-                return path.toString();
-            }
-            final webpStaticPath = newPath(staticPath);
-            if (!FileSystem.exists(webpStaticPath)) {
-                final p = new sys.io.Process("convert", [staticPath, webpStaticPath]);
-                if (p.exitCode() != 0) {
-                    Context.error(p.stderr.readAll().toString(), Context.currentPos());
-                }
-                p.close();
-            }
-            return if (FileSystem.stat(webpStaticPath).size < FileSystem.stat(staticPath).size) {
-                final webpPath = newPath(path);
-                hkssprangers.StaticResource.fingerprint(webpPath, hash(webpPath));
-            } else {
-                null;
-            }
+        final webp = {
+            final path = new Path(path);
+            path.ext = "webp";
+            final webpPath = path.toString();
+            final webpInfo = hkssprangers.StaticResource.info(webpPath);
+            hkssprangers.StaticResource.bucketed(webpPath, webpInfo.hash);
         }
-        final webp = createWebp();
         return if (bg != null) macro {
             final className = ${className};
             final alt = ${alt};
@@ -163,5 +120,6 @@ class StaticResourceMacros {
                 </picture>
             ');
         }
+        #end
     }
 }

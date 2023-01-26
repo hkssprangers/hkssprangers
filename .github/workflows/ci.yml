@@ -88,6 +88,8 @@ jobs:
           export JWT_SECRET="$JWT_SECRET"
           export TWILIO_SID="$TWILIO_SID"
           export TWILIO_AUTH_TOKEN="$TWILIO_AUTH_TOKEN"
+          export RCLONE_CONFIG_R2_ACCESS_KEY_ID="$RCLONE_CONFIG_R2_ACCESS_KEY_ID"
+          export RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="$RCLONE_CONFIG_R2_SECRET_ACCESS_KEY"
           EOT
           if [ "${GITHUB_REF}" = "refs/heads/master" ]; then
             echo "DEPLOY_STAGE=master" >> $GITHUB_ENV
@@ -115,6 +117,8 @@ jobs:
           TWILIO_AUTH_TOKEN: "${{ secrets.TWILIO_AUTH_TOKEN }}"
           TGBOT_TOKEN_MASTER: "${{ secrets.TGBOT_TOKEN_MASTER }}"
           TGBOT_TOKEN_PRODUCTION: "${{ secrets.TGBOT_TOKEN_PRODUCTION }}"
+          RCLONE_CONFIG_R2_ACCESS_KEY_ID: "${{ secrets.RCLONE_CONFIG_R2_ACCESS_KEY_ID }}"
+          RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: "${{ secrets.RCLONE_CONFIG_R2_SECRET_ACCESS_KEY }}"
       - name: Deploy
         if: success() && env.DEPLOY == 'true'
         run: earthly +deploy --DEPLOY_STAGE="${DEPLOY_STAGE}" --SERVER_HOST="${SERVER_HOST}"
