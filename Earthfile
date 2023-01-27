@@ -138,13 +138,18 @@ awscli:
         && rm /tmp/awscliv2.zip
     SAVE ARTIFACT /aws
 
+# Usage:
+# COPY +rclone/rclone /usr/local/bin/
+# COPY +rclone/bash_completion /etc/bash_completion.d/rclone
 rclone:
     ARG TARGETARCH
-    ARG RCLONE_VERSION=1.61.1
-    RUN curl -fsSL "https://downloads.rclone.org/v${RCLONE_VERSION}/rclone-v${RCLONE_VERSION}-linux-${TARGETARCH}.zip" -o rclone.zip \
+    ARG VERSION=1.61.1
+    RUN curl -fsSL "https://downloads.rclone.org/v${VERSION}/rclone-v${VERSION}-linux-${TARGETARCH}.zip" -o rclone.zip \
         && unzip -qq rclone.zip \
         && rm rclone.zip
+    RUN rclone-*/rclone completion bash > bash_completion
     SAVE ARTIFACT rclone-*/rclone
+    SAVE ARTIFACT bash_completion
 
 github-src:
     ARG --required REPO
@@ -353,6 +358,7 @@ devcontainer:
     COPY +dbmate/dbmate /usr/local/bin/
 
     COPY +rclone/rclone /usr/local/bin/
+    COPY +rclone/bash_completion /etc/bash_completion.d/rclone
 
     COPY +tilemaker/tilemaker /usr/local/bin/
     COPY +tilemaker/config.json +tilemaker/process.lua /usr/local/share/tilemaker/
