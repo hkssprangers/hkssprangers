@@ -531,7 +531,8 @@ deploy-static:
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
-        && rclone copy static r2:static-files-34063d018f25c6ea
+        && rclone copy static r2:static-files-34063d018f25c6ea \
+            --header-upload 'Cache-Control: public, max-age=31536000, immutable'
     COPY +static/static.json .
     SAVE ARTIFACT static.json
 
