@@ -115,10 +115,13 @@ class ServerMain {
             fingerprinted: fingerprinted,
             middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
                 if (req.url != fingerprinted) {
-                    return Promise.resolve(reply.redirect(fingerprinted));
+                    return Promise.resolve(reply
+                        .header("Cache-Control", "no-store")
+                        .redirect(fingerprinted));
                 } else {
                     return Promise.resolve(reply
                         .type("application/manifest+json")
+                        .header("Cache-Control", "public, max-age=31536000, immutable") // 1 year
                         .send(value)
                     );
                 }
@@ -128,8 +131,7 @@ class ServerMain {
 
     static public final serviceWorker = {
         final file = FileSystem.absolutePath("serviceWorker.bundled.js");
-        final value = File.getContent(file);
-        final hash = haxe.crypto.Md5.encode(value);
+        final hash = haxe.crypto.Md5.encode(File.getContent(file));
         final fingerprinted = '/serviceWorker.bundled.${hash}.js';
         {
             hash: hash,
@@ -137,11 +139,14 @@ class ServerMain {
             fingerprinted: fingerprinted,
             middleware: function(req:Request, reply:Reply):Promise<Dynamic> {
                 if (req.url != fingerprinted) {
-                    return Promise.resolve(reply.redirect(fingerprinted));
+                    return Promise.resolve(reply
+                        .header("Cache-Control", "no-store")
+                        .redirect(fingerprinted));
                 } else {
                     return Promise.resolve(reply
                         .type("text/javascript")
-                        .send(value));
+                        .header("Cache-Control", "public, max-age=31536000, immutable") // 1 year
+                        .send(File.getContent(file)));
                 }
             }
         };
