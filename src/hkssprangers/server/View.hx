@@ -28,25 +28,6 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
 
     function canonical():String throw "should be overridden";
 
-    function gtag() {
-        var id = "UA-174916152-1";
-        var content = {
-            __html: comment(unindent)/**
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${id}');
-            **/.replace("${id}", id)
-        };
-        var scriptSrc = 'https://www.googletagmanager.com/gtag/js?id=${id}';
-        return jsx('
-            <Fragment>
-                <script async src=${scriptSrc}></script>
-                <script dangerouslySetInnerHTML=${content}></script>
-            </Fragment>
-        ');
-    }
-
     function fullstory() {
         final content = {
             __html: comment(unindent)/**
@@ -93,7 +74,6 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
 
     function footJs() return jsx('
         <Fragment>
-            <script src=${R("/trackExceptions.js")}></script>
         </Fragment>
     ');
 
@@ -183,9 +163,8 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
         }
         return jsx('
             <head>
-                ${gtag()}
-                ${fullstory()}
                 <meta charSet="UTF-8" />
+                ${fullstory()}
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>${title()}</title>
