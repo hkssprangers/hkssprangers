@@ -30,7 +30,7 @@ class StaticResourceMacros {
         }
 
         #if (!production)
-        return macro $v{path};
+        return macro $v{path + "?bucketed=1"};
         #else
         final h = info(path).hash;
         return macro @:privateAccess hkssprangers.StaticResource.bucketed($v{path}, $v{h});
@@ -53,7 +53,7 @@ class StaticResourceMacros {
             final className = ${className};
             final alt = ${alt};
             final itemPropAttr = ${itemPropAttr};
-            final path = $v{path};
+            final path = $v{path + "?bucketed=1"};
             jsx('
                 <picture>
                     <img alt=${alt} className=${className} src=${path} {...itemPropAttr} />

@@ -9,6 +9,7 @@ import sys.io.File;
 import js.node.Buffer;
 import js.node.http.IncomingMessage;
 import js.html.URLSearchParams;
+import js.html.URL;
 #end
 #if (js && !browser && !macro)
 import js.lib.Promise;
@@ -65,18 +66,29 @@ class StaticResource {
         req:FastifyRequest<RouteGeneric, RawServer, RawRequest, SchemaCompiler, TypeProvider>,
         reply:FastifyReply<RawServer, RawRequest, RawReply, RouteGeneric, ContextConfig>
     ):Promise<Any> {
-        final path = req.url.urlDecode();
-        if (StaticResource.exists(path)) {
+        final pathname = new URL(req.url, req.protocol + "://" + req.hostname).pathname;
+        if (StaticResource.exists(pathname)) {
             #if !production
-            return Promise.resolve(untyped reply
-                .header("Cache-Control", "no-store")
-                .sendFile(path)
-            );
+            final refererUrl = new URL(req.headers.referer);
+            if (req.query.bucketed == null && !refererUrl.pathname.endsWith(".css")) {
+                trace('Requested without `R` or `image`: ${pathname}');
+                trace(req.headers);
+                return Promise.resolve(reply
+                    .header("Cache-Control", "no-store")
+                    .status(400)
+                    .send("static resource referenced without `R` or `image`")
+                );
+            } else {
+                return Promise.resolve(untyped reply
+                    .header("Cache-Control", "no-store")
+                    .sendFile(pathname)
+                );
+            }
             #else
-            trace('Requested with non-bucketed url: ${path}');
+            trace('Requested without `R` or `image`: ${pathname}');
             return Promise.resolve(reply
                 .header("Cache-Control", "no-store")
-                .redirect(StaticResource.bucketed(path, StaticResource.info(path).hash))
+                .redirect(StaticResource.bucketed(pathname, StaticResource.info(pathname).hash))
             );
             #end
         } else {
