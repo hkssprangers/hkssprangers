@@ -137,10 +137,10 @@ class MinimalMenu {
 
     static final pastas = [
         { name: "芫茜苗香辣大蝦扁意粉(h.)", price: 100 },
+        { name: "蒜蓉牛油露筍蜆意粉(h.)", price: 115 },
         { name: "辣茄汁煙豬面肉貓耳朵粉(h.)", price: 100 },
         { name: "溫泉蛋什菌牛肝菌汁貓耳朵粉(v.)", price: 100 },
-        { name: "香煎帶子黑魚籽龍蝦汁意粉", price: 138 },
-        { name: "蒜蓉牛油海露筍蜆意粉", price: 115 },
+        { name: "香煎虎蝦海鮮牛油果米型粉(h.)", price: 138 },
         { name: "松露南瓜汁配香腸肉碎貓耳朵", price: 110 },
     ];
 
