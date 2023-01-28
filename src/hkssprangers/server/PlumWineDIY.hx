@@ -30,7 +30,7 @@ class PlumWineDIY extends View<PlumWineDIYProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + host, R("/images/plum-wine-diy/5.jpg")])} />
+            <meta property="og:image" content=${R("/images/plum-wine-diy/5.jpg")} />
         </Fragment>
     ');
 

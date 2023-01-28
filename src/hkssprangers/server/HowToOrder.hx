@@ -22,7 +22,7 @@ class HowToOrder extends View<HowToOrderProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, R("/images/ssprangers4-y.png")])} />
+            <meta property="og:image" content=${R("/images/ssprangers4-y.png")} />
         </Fragment>
     ');
 

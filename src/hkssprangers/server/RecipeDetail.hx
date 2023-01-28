@@ -37,7 +37,7 @@ class RecipeDetail extends View<RecipeDetailProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${Path.join(["https://" + hkssprangers.server.ServerMain.host, imageUrl()])} />
+            <meta property="og:image" content=${imageUrl()} />
         </Fragment>
     ');
 
