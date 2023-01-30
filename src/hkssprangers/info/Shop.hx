@@ -1038,8 +1038,8 @@ enum abstract Shop(String) to String {
                 return Unavailable('初五啟市');
 
 
-            // https://www.facebook.com/100064143817671/posts/pfbid0295FwJxc2RGT5mL1iT2JP8AJL7gLCUjRtpkecP7GoZhUAYTFVRPxuocffC435GohAl
-            case [KCZenzero, "2023-01-01", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0Vtp4RFZAaRsaRFcLLX3GG6LNKk3DmVCEAuraVMsTnuSRj7RHEuC3BBcgAFGtCUmsl&id=100064143817671
+            case [KCZenzero, "2023-01-30", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, "2023-01-14", Lunch]:
