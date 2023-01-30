@@ -1039,7 +1039,7 @@ enum abstract Shop(String) to String {
 
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid0Vtp4RFZAaRsaRFcLLX3GG6LNKk3DmVCEAuraVMsTnuSRj7RHEuC3BBcgAFGtCUmsl&id=100064143817671
-            case [KCZenzero, "2023-01-30", _]:
+            case [KCZenzero, "2023-01-31", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, "2023-01-14", Lunch]:
