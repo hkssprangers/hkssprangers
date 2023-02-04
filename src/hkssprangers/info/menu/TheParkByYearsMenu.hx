@@ -8,15 +8,10 @@ enum abstract TheParkByYearsItem(String) to String {
     final WeekdayLunchSet;
     final DinnerHolidaySet;
     final Single;
-    final LNYSet;
-    final LNYSingle;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<TheParkByYearsItem> {
         if (timeSlot == null || timeSlot.start == null){
             return [];
-        }
-        if (timeSlot.start.getDatePart() >= "2023-01-22" && timeSlot.start.getDatePart() <= "2023-01-25") {
-            return [LNYSet, LNYSingle];
         }
 
         return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), HkHolidays.isRedDay(timeSlot.start.toDate()), TimeSlotType.classify(timeSlot.start)] {
@@ -37,8 +32,6 @@ enum abstract TheParkByYearsItem(String) to String {
         case WeekdayLunchSet: TheParkByYearsMenu.TheParkByYearsWeekdayLunchSet;
         case DinnerHolidaySet: TheParkByYearsMenu.TheParkByYearsDinnerHolidaySet;
         case Single: TheParkByYearsMenu.TheParkByYearsSingle;
-        case LNYSet: TheParkByYearsMenu.TheParkByYearsLNYSet;
-        case LNYSingle: TheParkByYearsMenu.TheParkByYearsLNYSingle;
     }
 }
 
@@ -141,10 +134,9 @@ class TheParkByYearsMenu {
             type: "string",
             "enum": [
                 "炸香芋番薯丸 (3粒) +$24",
-                "泰式炸蝦配酸辣醬 (2隻) +$30",
-                "腰果中華沙律腐皮壽司 (2件) 🌰 +$32",
                 "炸旋風薯⽚ +$36",
                 "炸番薯條 +$36",
+                "不可能黃金脆雞塊配自家製甜酸醬(3件) $36",
             ],
         },
         uniqueItems: true,
@@ -152,7 +144,7 @@ class TheParkByYearsMenu {
 
     static public final TheParkByYearsWeekdayLunchSet = {
         title: "平日午市套餐",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
+        description: "🧄=allium 🌶️=spicy 🌰=nuts",
         properties: {
             main: {
                 title: "主食",
@@ -193,13 +185,13 @@ class TheParkByYearsMenu {
 
     static public final TheParkByYearsDinnerHolidaySet = {
         title: "平日晚市／假日套餐",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
+        description: "🧄=allium 🌶️=spicy 🌰=nuts",
         properties: {
             main: {
                 title: "主食",
                 type: "string",
                 "enum": [
-                    "泰式冬陰意大利粉 🌶️ $88",
+                    "泰式秘製冬陰意⼤利粉 🌶️ $88",
                     "香辣⽩酒香蒜乾番茄意大利粉 🧄🌶️ $88",
                     "香辣⽩酒香蒜乾番茄意大利粉 ⚠️走五辛 🌶️ $88",
 
@@ -207,16 +199,17 @@ class TheParkByYearsMenu {
                     "煙燻天⾙鮮菠蘿漢堡包 +炸旋風薯⽚ ⚠️走辣 $128",
                     "素年經典不可能芝士漢堡包 +炸旋風薯⽚ 🧄 $138",
                     "雙層芫荽不可能芝士漢堡包 +炸旋風薯⽚ 🧄 $138",
+                    "照燒不可能豬柳漢堡 +炸旋風薯⽚ 🧄 $138",
 
-                    "夏威夷三文⿂香芒沙律碗 $98",
-                    "夏威夷三文⿂香芒沙律碗 升級蓋飯碗 $108",
-                    "夏威夷野莓豆腐沙律碗 (⽣酮) $98",
+                    "牛油果三文魚漬香草烤南瓜香橙沙律 $98",
+                    "牛油果野莓豆腐沙律 (⽣酮) $98",
                     "泰式⻘咖喱椰香野菜⾖腐伴藜麥飯 🌶️ $98",
                     "泰式⻘咖喱椰香野菜⾖腐伴藜麥飯 追加⼿抓餅 🌶️ $118",
 
-                    "聖誕版日式照燒豆腐串燒三文⿂刺⾝定食 $148",
-                    "聖誕版日式照燒豆腐串燒三文⿂刺⾝定食 升級茶漬飯 $158",
-                    "聖誕版台式鹽酥杏鮑菇醬帶子定食 $148",
+                    "日式照燒豆腐串燒三文⿂刺⾝定食 $148",
+                    "日式照燒豆腐串燒三文⿂刺⾝定食 升級茶漬飯 $158",
+                    "台式鹽酥杏鮑菇醬帶子定食 $148",
+                    "台式鹽酥杏鮑菇醬帶子定食 升級茶漬飯 $158",
                     "酸種⾙果焦糖香蕉牛油果全日早餐 +炸旋風薯⽚ $148",
                 ],
             },
@@ -229,66 +222,22 @@ class TheParkByYearsMenu {
         ]
     }
 
-    static public final TheParkByYearsLNYSet = {
-        title: "新年套餐",
-        description: "送年年有魚黃金豆腐盆滿缽滿迷你撈起拼盤 (同單合拼出餐) 🧄=garlic 🌶️=spicy 🌰=nuts",
-        properties: {
-            main: {
-                title: "主食",
-                type: "string",
-                "enum": [
-                    "泰式秘製冬陰萬事如意大利粉 🌶️ $128",
-                    "芝士肉醬萬事如意大利粉 🧄 $138",
-                    "泰式⻘咖喱椰香野菜⾖腐伴好自然藜麥飯 🌶️ $138",
-                    "素年經典芝士招財進堡配炸旋風薯⽚ 🧄 $178",
-                    "福星高照燒日式豆腐串燒三文⿂刺⾝本地菜定食 $198",
-                    "福星高照燒日式豆腐串燒三文⿂刺⾝本地菜定食 步步高升級茶漬飯 $208",
-                    "台式鹽酥杏鮑菇醬帶子孫滿堂本地菜定食 $198",
-                    "台式鹽酥杏鮑菇醬帶子孫滿堂本地菜定食 步步高升級茶漬飯 $208",
-                ],
-            },
-            drink: TheParkByYearsSetDrink,
-        },
-        required: [
-            "main",
-            "drink",
-        ]
-    }
 
     static public final TheParkByYearsSingle = {
         title: "單叫小食／甜品",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
+        description: "🧄=allium 🌶️=spicy 🌰=nuts",
         type: "string",
         "enum": [
+            "印尼木薯片配自家製甜酸醬 $48",
             "香芋番薯波波 (6粒) $48",
-            "泰式炸蝦配酸辣醬 (4隻) $58",
+            "不可能黃金脆雞塊配自家製甜酸醬(6件) $58",
             "⽜油果酸忌廉冬陰墨⻄哥脆⽚ $58",
             "炸旋風薯⽚ $58",
             "台式甘梅炸番薯條 $58",
 
             "抹茶紅⾖麻糬奇亞籽布甸 $58",
             "海鹽焦糖朱古⼒伯爵茶撻 🌰 $58",
-            // "鴛鴦特濃咖啡雪糕 $58",
             "香蕉蛋糕配焦糖香蕉 🌰 $68",
-        ],
-    };
-
-    static public final TheParkByYearsLNYSingle = {
-        title: "單叫拼盤／小食／甜品",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
-        type: "string",
-        "enum": [
-            "年年有魚黃金豆腐盆滿缽滿撈起拼盤(2-4人份量) $288",
-
-            "印尼炸木薯片配自家製甜酸醬 $38",
-            "香芋番薯波波 (6粒) $48",
-            "黃金脆雞塊配自家製甜酸醬 (6件) $58",
-            "炸旋風薯⽚ $58",
-            "台式甘梅炸番薯條 $58",
-
-            "抹茶紅⾖麻糬奇亞籽布甸 $58",
-            "海鹽焦糖朱古⼒伯爵茶撻 🌰 $58",
-            "自家製香蕉蛋糕配焦糖香蕉 🌰 $68",
         ],
     };
 
@@ -338,9 +287,9 @@ class TheParkByYearsMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case WeekdayLunchSet | DinnerHolidaySet | LNYSet:
+            case WeekdayLunchSet | DinnerHolidaySet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"]);
-            case Single | LNYSingle:
+            case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
@@ -362,13 +311,7 @@ class TheParkByYearsMenu {
     }
 
     static public function summarize(formData:FormOrderData):OrderSummary {
-        var s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
-        if (formData.items.exists(item -> item.type == LNYSet)) {
-            s = concatSummaries([s, {
-                orderDetails: fullWidthDot + "送年年有魚黃金豆腐盆滿缽滿迷你撈起拼盤 (同單合拼出餐)",
-                orderPrice: 0.0,
-            }]);
-        }
+        final s = concatSummaries(formData.items.map(item -> summarizeItem(cast item)));
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,

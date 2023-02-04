@@ -367,12 +367,7 @@ class Menu extends View<MenuProps> {
             case YearsHK:
                 renderYearsHK();
             case TheParkByYears:
-                final today = (Date.now():LocalDateString).getDatePart();
-                if (today >= "2023-01-22" && today <= "2023-01-25") {
-                    renderTheParkByYearsLNY();
-                } else {
-                    renderTheParkByYears();
-                }
+                renderTheParkByYears();
             case LaksaStore:
                 renderLaksaStore();
             case DongDong:
@@ -905,49 +900,6 @@ class Menu extends View<MenuProps> {
                 ${addons}
                 ${drinks}
                 ${singles}
-            </Fragment>
-        ');
-    }
-
-    function renderTheParkByYearsLNY() {
-        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        final drinks = {
-            final items = TheParkByYearsSetDrink.enums();
-            final cut = Math.ceil(items.length * 0.5);
-            final items1 = items.slice(1, cut);
-            final items2 = items.slice(cut);
-            jsx('
-                <div className="p-3">
-                    <div className=${headerClasses}>${TheParkByYearsSetDrink.title}</div>
-                    <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            ${renderItems(items1, true)}
-                        </div>
-                        <div className="md:w-1/2 md:pl-3">
-                            ${renderItems(items2, true)}
-                        </div>
-                    </div>
-                </div>
-            ');
-        }
-        return jsx('
-            <Fragment>
-                <div className="p-3">
-                    初一至初四新年限定餐牌<br/>
-                    🧄=garlic 🌶️=spicy 🌰=nuts
-                </div>
-                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${TheParkByYearsLNYSet.title}${TheParkByYearsLNYSet.properties.main.title}</div>
-                        <div className="p-3 font-bold">套餐送年年有魚黃金豆腐盆滿缽滿迷你撈起拼盤 (同單合拼出餐)</div>
-                        ${renderItems(TheParkByYearsLNYSet.properties.main.enums())}
-                    </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${TheParkByYearsLNYSingle.title}</div>
-                        ${renderItems(TheParkByYearsLNYSingle.enums())}
-                    </div>
-                </div>
-                ${drinks}
             </Fragment>
         ');
     }
