@@ -69,19 +69,30 @@ class StaticResource {
         final pathname = new URL(req.url, req.protocol + "://" + req.hostname).pathname;
         if (StaticResource.exists(pathname)) {
             #if !production
-            final refererUrl = new URL(req.headers.referer);
-            if (req.query.bucketed == null && !refererUrl.pathname.endsWith(".css")) {
+            if (
+                req.query.bucketed != null
+                ||
+                pathname == "/favicon.ico"
+                ||
+                try {
+                    new URL(req.headers.referer).pathname.endsWith(".css");
+                } catch (err) {
+                    trace(err);
+                    trace(req.headers);
+                    true;
+                }
+            ) {
+                return Promise.resolve(untyped reply
+                    .header("Cache-Control", "no-store")
+                    .sendFile(pathname)
+                );
+            } else {
                 trace('Requested without `R` or `image`: ${pathname}');
                 trace(req.headers);
                 return Promise.resolve(reply
                     .header("Cache-Control", "no-store")
                     .status(400)
                     .send("static resource referenced without `R` or `image`")
-                );
-            } else {
-                return Promise.resolve(untyped reply
-                    .header("Cache-Control", "no-store")
-                    .sendFile(pathname)
                 );
             }
             #else
