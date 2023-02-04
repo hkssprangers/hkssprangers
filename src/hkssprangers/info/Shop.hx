@@ -971,72 +971,9 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            // 初一 2023-01-22
-            // 初二 2023-01-23
-            // 初三 2023-01-24
-            // 初四 2023-01-25
-            // 初五 2023-01-26
-            // 初六 2023-01-27
- 
-            case [YearsHK, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
-                return Unavailable('初四啟市');
-
-            case [EightyNine | ThaiHome, "2023-01-21", Dinner]:
-                return Unavailable('年三十收早 晚市暫停');
-            case [EightyNine | ThaiHome, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
-                return Unavailable('初四啟市');
-
-            case [BiuKeeLokYuen, "2023-01-21", Dinner] if (pickupTimeSlot.start.getTimePart() > "18:30:00"):
-                return Unavailable('年三十收早 最遲18:30時段交收');
-            case [BiuKeeLokYuen, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
-                return Unavailable('初四啟市');
-
-            case [BlackWindow, "2023-01-21", Dinner]:
-                return Unavailable('年三十收早 晚市暫停');
-            case [BlackWindow, "2023-01-22" | "2023-01-23" | "2023-01-24" | "2023-01-25" | "2023-01-26" | "2023-01-27", _]:
-                return Unavailable('初七啟市');
-
-            case [HanaSoftCream, "2023-01-22", Lunch]:
-                return Unavailable('午市暫停一天');
-            case [HanaSoftCream, "2023-01-23" | "2023-01-24", Lunch] if (pickupTimeSlot.start.getTimePart() < "13:30:00"):
-                return Unavailable('遲開舖 最早13:30時段交收');
-
-            case [Minimal, "2023-01-21", Dinner]:
-                return Unavailable('年三十收早 晚市暫停');
-            case [Minimal, "2023-01-22", _]:
-                return Unavailable('新年休息一天');
-            case [Minimal, "2023-01-23" | "2023-01-24", Dinner]:
-                return Unavailable('收早 晚市暫停');
-
-            case [LaksaStore, "2023-01-22" | "2023-01-23" | "2023-01-24" | "2023-01-25", _]:
-                return Unavailable('初五啟市');
-
-            case [LonelyPaisley, "2023-01-21", Dinner]:
-                return Unavailable('年三十收早 晚市暫停');
-            case [LonelyPaisley, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
-                return Unavailable('初四啟市');
-
-            case [PokeGo, "2023-01-22" | "2023-01-23" | "2023-01-24", _]:
-                return Unavailable('初四啟市');
-            case [PokeGo, "2023-01-25", Dinner]:
-                return Unavailable('收早 晚市暫停');
-
-            case [FishFranSSP, "2023-01-21", _]:
-                return Unavailable('年三十休息 初三啟市');
-            case [FishFranSSP, "2023-01-22" | "2023-01-23", _]:
-                return Unavailable('初三啟市');
-
-            case [MGY, "2023-01-21", _]:
-                return Unavailable('年三十休息 初八啟市');
-            case [MGY, "2023-01-22" | "2023-01-23" | "2023-01-24" | "2023-01-25" | "2023-01-26" | "2023-01-27" | "2023-01-28", _]:
-                return Unavailable('初八啟市');
-
-            case [HowDrunk, "2023-01-21" | "2023-01-22" | "2023-01-23" | "2023-01-24" | "2023-01-25", Dinner]:
-                return Unavailable('年三十至初四收早 晚市暫停');
-
-            case [CafeGolden, "2023-01-22" | "2023-01-23" | "2023-01-24" | "2023-01-25", _]:
-                return Unavailable('初五啟市');
-
+            // https://www.facebook.com/LaksaStore/posts/pfbid0MzMKT6ezAACSSiT2w1rrdEtpmfKbUQBC4ggMfumanyNV1vgW6dg96JhMsaTMF1sTl
+            case [LaksaStore, "2023-02-04", _]:
+                return Unavailable('有人老一歲 休息一天');
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid0Vtp4RFZAaRsaRFcLLX3GG6LNKk3DmVCEAuraVMsTnuSRj7RHEuC3BBcgAFGtCUmsl&id=100064143817671
             case [KCZenzero, "2023-01-31", _]:
