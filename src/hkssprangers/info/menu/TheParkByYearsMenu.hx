@@ -5,8 +5,7 @@ import haxe.ds.ReadOnlyArray;
 using Lambda;
 
 enum abstract TheParkByYearsItem(String) to String {
-    final WeekdayLunchSet;
-    final DinnerHolidaySet;
+    final Set;
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<TheParkByYearsItem> {
@@ -14,23 +13,24 @@ enum abstract TheParkByYearsItem(String) to String {
             return [];
         }
 
-        return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), HkHolidays.isRedDay(timeSlot.start.toDate()), TimeSlotType.classify(timeSlot.start)] {
-            case [Monday | Tuesday | Wednesday | Thursday | Friday, false, Lunch]:
-                [
-                    WeekdayLunchSet,
-                    Single,
-                ];
-            case _:
-                [
-                    DinnerHolidaySet,
-                    Single,
-                ];
-        }
+        return [Set, Single];
+
+        // return switch [Weekday.fromDay(timeSlot.start.toDate().getDay()), HkHolidays.isRedDay(timeSlot.start.toDate()), TimeSlotType.classify(timeSlot.start)] {
+        //     case [Monday | Tuesday | Wednesday | Thursday | Friday, false, Lunch]:
+        //         [
+        //             WeekdayLunchSet,
+        //             Single,
+        //         ];
+        //     case _:
+        //         [
+        //             DinnerHolidaySet,
+        //             Single,
+        //         ];
+        // }
     }
 
     public function getDefinition():Dynamic return switch (cast this:TheParkByYearsItem) {
-        case WeekdayLunchSet: TheParkByYearsMenu.TheParkByYearsWeekdayLunchSet;
-        case DinnerHolidaySet: TheParkByYearsMenu.TheParkByYearsDinnerHolidaySet;
+        case Set: TheParkByYearsMenu.TheParkByYearsSet;
         case Single: TheParkByYearsMenu.TheParkByYearsSingle;
     }
 }
@@ -142,49 +142,8 @@ class TheParkByYearsMenu {
         uniqueItems: true,
     };
 
-    static public final TheParkByYearsWeekdayLunchSet = {
-        title: "平日午市套餐",
-        description: "🧄=allium 🌶️=spicy 🌰=nuts",
-        properties: {
-            main: {
-                title: "主食",
-                type: "string",
-                "enum": [
-                    "泰式秘製冬陰意⼤利粉 🌶️ $88",
-                    "香辣⽩酒香蒜乾番茄意大利粉 🧄🌶️ $88",
-                    "香辣⽩酒香蒜乾番茄意大利粉 ⚠️走五辛 🌶️ $88",
-
-                    "煙燻天⾙鮮菠蘿漢堡包 +炸旋風薯⽚ 🌶️ $128",
-                    "煙燻天⾙鮮菠蘿漢堡包 +炸旋風薯⽚ ⚠️走辣 $128",
-                    "素年經典不可能芝士漢堡包 +炸旋風薯⽚ 🧄 $138",
-                    "雙層芫荽不可能芝士漢堡包 +炸旋風薯⽚ 🧄 $138",
-
-                    "夏威夷三文⿂香芒沙律碗 $98",
-                    "夏威夷三文⿂香芒沙律碗 升級蓋飯碗 $108",
-                    "夏威夷野莓豆腐沙律碗 (⽣酮) $98",
-                    "泰式⻘咖喱椰香野菜⾖腐伴藜麥飯 🌶️ $98",
-                    "泰式⻘咖喱椰香野菜⾖腐伴藜麥飯 追加⼿抓餅 🌶️ $118",
-                    "⽇式照燒豆腐串燒三⽂⿂刺身定食 $98",
-                    "⽇式照燒豆腐串燒三⽂⿂刺身定食 升級茶漬飯 $108",
-                    "台式醬帶⼦烤⿂腐豆腐定食 $108",
-
-                    "聖誕版日式照燒豆腐串燒三文⿂刺⾝定食 $148",
-                    "聖誕版日式照燒豆腐串燒三文⿂刺⾝定食 升級茶漬飯 $158",
-                    "聖誕版台式鹽酥杏鮑菇醬帶子定食 $148",
-                    "酸種⾙果焦糖香蕉牛油果全日早餐 +炸旋風薯⽚ $148",
-                ],
-            },
-            drink: TheParkByYearsSetDrink,
-            extraOptions: TheParkByYearsAddons,
-        },
-        required: [
-            "main",
-            "drink",
-        ]
-    }
-
-    static public final TheParkByYearsDinnerHolidaySet = {
-        title: "平日晚市／假日套餐",
+    static public final TheParkByYearsSet = {
+        title: "套餐",
         description: "🧄=allium 🌶️=spicy 🌰=nuts",
         properties: {
             main: {
@@ -287,7 +246,7 @@ class TheParkByYearsMenu {
     } {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
-            case WeekdayLunchSet | DinnerHolidaySet:
+            case Set:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"]);
             case Single:
                 switch (orderItem.item:Null<String>) {
