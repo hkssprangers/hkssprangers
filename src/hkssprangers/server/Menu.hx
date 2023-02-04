@@ -665,8 +665,6 @@ class Menu extends View<MenuProps> {
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    ${poonChoiLoHei}
-
                     ${limited}
 
                     ${hotpotSet}
