@@ -25,8 +25,8 @@ enum abstract PokeGoItem(String) to String {
 }
 
 class PokeGoMenu {
-    static function markup(price:Float):Float {
-        return Math.round(price * 1.2);
+    inline static function markup(price:Float):Float {
+        return price;
     }
 
     static public final PokeGoDrink = {
