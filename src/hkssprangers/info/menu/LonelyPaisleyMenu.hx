@@ -65,95 +65,117 @@ enum abstract LonelyPaisleyItem(String) to String {
 class LonelyPaisleyMenu {
     static final coffees = [
         {
-            name: "AMERICANO (HOT)",
-            price: 33,
+            name: "Espresso (HOT)",
+            price: 36,
         },
         {
-            name: "AMERICANO (COLD)",
-            price: 39,
+            name: "Americano (HOT)",
+            price: 36,
         },
         {
-            name: "WHITE (HOT)",
-            price: 40,
+            name: "Americano (COLD)",
+            price: 42,
         },
         {
-            name: "WHITE (COLD)",
-            price: 46,
-        },
-        {
-            name: "MOCHA (HOT)",
+            name: "White (HOT)",
             price: 44,
         },
         {
-            name: "MOCHA (COLD)",
+            name: "White (COLD)",
             price: 50,
         },
         {
-            name: "ROSE LATTE (HOT)",
-            price: 44,
+            name: "Piccolo (HOT)",
+            price: 42,
+        },
+        // {
+        //     name: "Dirty (COLD)",
+        //     price: 48,
+        // },
+        {
+            name: "Mocha (HOT)",
+            price: 48,
         },
         {
-            name: "TONIC COFFEE (COLD)",
-            price: 58,
+            name: "Mocha (COLD)",
+            price: 54,
+        },
+        {
+            name: "Rose Latte With Dark Brown Sugar (HOT)",
+            price: 48,
+        },
+        {
+            name: "Homemade Salty Plum Espresso Tonic (COLD)",
+            price: 62,
         },
     ];
     static final milks = [
         {
-            name: "CHOCOLATE (HOT)",
+            name: "Chocolate (HOT)",
             description: null,
             price: 44,
         },
         {
-            name: "CHOCOLATE (COLD)",
+            name: "Chocolate (COLD)",
             description: null,
             price: 50,
         },
         {
-            name: "HONG KONG REAL GINGER CACAO",
+            name: "HK Real Ginger Cacao",
             description: "local organic ginger mixed with raw cacao by Very Ginger HK",
             price: 48,
         },
     ];
     static final mocktails = [
+        // {
+        //     name: "Blue Lagoon",
+        //     description: "blue curacao | fresh lemon juice | grapefruit juice | icing rim",
+        //     price: 58,
+        // },
+        // {
+        //     name: "Tropical Romance",
+        //     description: "coconut milk | fresh orange juice | homemade pineapple syrip | cheese",
+        //     price: 58,
+        // },
+        // {
+        //     name: "Tokhm-e Sharbati",
+        //     description: "(Iranian traditional drink) Iranian natural rose water | fresh lemon juice | fresh mint | basil seed",
+        //     price: 58,
+        // },
         {
-            name: "TOKHM-E SHARBATI",
-            description: "(IRANIAN TRADITIONAL DRINK) basil seed / lime / rose water / mint",
-            price: 58,
-        },
-        {
-            name: "SALEP (HOT)",
-            description: "(TURKISH TRADITIONAL DRINK) salep / milk / cinnamon / pistachio",
+            name: "Salep (HOT)",
+            description: "(turkish traditional drink) serve with Turkish hand-painted ceramic mug. Turkish salep | milk | cinnamon | pistachio",
             price: 68,
         },
     ];
     static final otherDrinks = [
         {
-            name: "LITHUANIAN KVAS",
-            description: "wheat ale",
+            name: "Lithuanian Kvas",
+            description: null,
             price: 48,
         },
         {
-            name: "TURKISH POMEGRANATE SPARKLING",
+            name: "Turkish Pomegranate Sparkling",
             description: null,
             price: 28,
         },
     ];
     static final saladSnacks = [
         {
-            name: "地中海清新沙律",
-            price: 88,
+            name: "玫瑰蜜糖雞翼",
+            price: 68
         },
         {
-            name: "玫瑰蜜糖雞翼(6ps)",
-            price: 68
+            name: "土耳其烤雞肉卷",
+            price: 78
         },
         {
             name: "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬",
             price: 88
         },
         {
-            name: "土耳其烤雞肉卷",
-            price: 78
+            name: "自家製三款鷹嘴豆泥配芝麻包",
+            price: 88
         },
         {
             name: "牛油果素菜卷",
@@ -162,14 +184,6 @@ class LonelyPaisleyMenu {
         {
             name: "炸粗薯條配自家制黑蒜醬",
             price: 58
-        },
-        {
-            name: "印度薄餅(2ps)",
-            price: 20
-        },
-        {
-            name: "印度薄餅(2ps)+黑蒜醬",
-            price: 30
         },
     ];
     static final desserts = [
@@ -210,16 +224,16 @@ class LonelyPaisleyMenu {
             price: 178,
         },
         {
-            name: "格魯吉亞蒜香牛油雞䓻",
+            name: "格魯吉亞蒜香牛油雞扒",
             price: 148,
-        },
-        {
-            name: "泰式椰香藍青口",
-            price: 138,
         },
         {
             name: "蜜糖芥末豬串骨配薯菜",
             price: 148,
+        },
+        {
+            name: "辣酒煮蜆",
+            price: 138,
         },
     ];
 
@@ -248,15 +262,19 @@ class LonelyPaisleyMenu {
                 "enum": [
                     "土耳其烤雞肉卷 $78",
                     "墨西哥三重芝士雞肉餡餅配秘制四川麻辣醬 $88",
-                    "番茄烤雞肉意粉 $88",
+                    "番茄烤雞肉扁意粉 $88",
+                    "白酒蒜香蜆肉扁意粉 $88",
+                    "冬陰功海蝦、魷魚扁意粉 $98",
+                    // "日式雞肉多利亞 - 雞肉、薯仔、芝士、長米飯 $98",
+                    "全日早餐 - 煙肉、香腸、前蛋、煙三文魚、英式鬆餅 $108",
                     "斯里蘭卡香辣菠蘿大蝦配長米飯 $138",
-                    "泰式椰香藍青口 $138",
-                    "印度Masala慢煮牛肋條燴飯 $148",
                     "格魯吉亞蒜香牛油雞扒 $148",
+                    "印度Masala慢煮牛肋條燴飯 $148",
                     "自家製阿根廷香辣青醬虎蝦海鮮扁意粉 $148",
-                    "<素>牛油果素菜卷 $78",
-                    "<素>墨西哥三重芝士餡餅配秘制四川麻辣醬 $88",
-                    "<素>土耳其芝麻包素漢堡配薯條 $98",
+                    "<素> 牛油果素菜卷 $78",
+                    "<素> 墨西哥三重芝士餡餅配秘制四川麻辣醬 $88",
+                    "<素> 土耳其芝麻包素漢堡配薯條 $98",
+                    "<素> 全日早餐 純乳酪、牛油果、大啡菇、茄汁豆、煎蛋、英式鬆餅 $108",
                 ],
             },
             drink: {
@@ -264,10 +282,9 @@ class LonelyPaisleyMenu {
                 title: "飲品",
                 "enum": [
                     "唔要",
-                    "土耳其茶 +$0",
+                    "士耳其紅茶 +$0",
                     "蘋果茶(熱) +$0",
                     "蘋果茶(凍) +$0",
-                    "神石榴汽水 +$0",
                     "檸檬蘇打水 +$0",
                 ]
                     // 咖啡/奶類飲品半價
@@ -292,7 +309,7 @@ class LonelyPaisleyMenu {
     }
 
     static public final LonelyPaisleySaladSnacks = {
-        title: "Salad/Snacks",
+        title: "Snacks",
         type: "string",
         "enum": saladSnacks.map(printNamePrice),
     };
