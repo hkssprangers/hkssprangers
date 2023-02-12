@@ -111,13 +111,6 @@ class BrowserMain {
                 '), div);
         }
 
-        switch (document.getElementById("map")) {
-            case null:
-                //pass
-            case elm:
-                initMap(elm);
-        }
-
         switch (document.getElementById("service-area-map")) {
             case null:
                 //pass
@@ -136,56 +129,6 @@ class BrowserMain {
                 .catchError(err -> {
                     console.log('Registration failed with ' + err);
                 });
-        }
-    }
-
-    static function initMap(container:Element) {
-        final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
-        final host = Browser.document.location.origin;
-        final pmtiles = Path.join(['pmtiles://${host}', R("/tiles/ssp.pmtiles"), "{z}/{x}/{y}"]);
-        style.sources.openmaptiles = {
-            "type": "vector",
-            "tiles": [pmtiles],
-            "maxzoom": 14,
-        }
-        for (l in (style.layers:Array<Dynamic>)) {
-            if (Reflect.hasField(l.layout, "text-font"))
-                Reflect.setField(l.layout, "text-font", []);
-        }
-        final shops = Shop.all.filter(s -> s.info().isInService && s.info().lng != null && s.info().lat != null);
-        final shopPts = [
-            for (info in shops.map(s -> s.info()))
-            new LngLat(info.lng, info.lat)
-        ];
-        final bounds = new LngLatBounds(shopPts[0], shopPts[0]);
-        for (pt in shopPts) {
-            bounds.extend(pt);
-        }
-        final maxBounds = new LngLatBounds(new LngLat(114.1307, 22.3111), new LngLat(114.198, 22.347));
-        final map = new maplibre_gl.Map_({
-            container: container,
-            style: style,
-            bounds: bounds,
-            fitBoundsOptions: {
-                padding: 100,
-            },
-            maxBounds: maxBounds,
-            attributionControl: true,
-            customAttribution: "Map data from OpenStreetMap",
-        });
-        map.scrollZoom.disable();
-        map.addControl(cast new maplibre_gl.NavigationControl({
-            showZoom: true,
-        }));
-
-        for (shop in shops) {
-            final info = shop.info();
-            final cluster = ShopCluster.classify(shop)[0];
-            final popup = new maplibre_gl.Popup({ offset: 25 }).setText(info.name);
-            final marker = new maplibre_gl.Marker({ color: clusterStyle[cluster] })
-                .setLngLat([info.lng, info.lat])
-                .setPopup(popup)
-                .addTo(map);
         }
     }
 

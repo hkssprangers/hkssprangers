@@ -84,8 +84,13 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
 
     override function render() {
         final style:Dynamic = Json.parse(CompileTime.readJsonFile("static/map-style.json"));
-        final host = document.location.origin;
-        final pmtiles = Path.join(['pmtiles://${host}', R("/tiles/ssp.pmtiles"), "{z}/{x}/{y}"]);
+        final pmtiles = 'pmtiles://' + Path.join(
+            #if production
+            [R("/tiles/ssp.pmtiles"), "{z}/{x}/{y}"]
+            #else
+            [document.location.origin, R("/tiles/ssp.pmtiles"), "{z}/{x}/{y}"]
+            #end
+        );
         style.sources.openmaptiles = {
             "type": "vector",
             "tiles": [pmtiles],
