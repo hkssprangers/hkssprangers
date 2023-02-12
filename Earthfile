@@ -552,7 +552,7 @@ deploy:
         +serviceWorker-js/serviceWorker.bundled.js \
         .
     COPY --chown=$USER_UID:$USER_GID \
-        serverless.yml package.json package-lock.json holidays.json \
+        serverless.yml package.json package-lock.json holidays.json deliveryLocations.json \
         .
     ARG --required DEPLOY_STAGE
     ENV DEPLOY_STAGE="$DEPLOY_STAGE"
