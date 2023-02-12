@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.59 e21c39fe",
   "osm3s": {
-    "timestamp_osm_base": "2022-12-30T08:45:49Z",
+    "timestamp_osm_base": "2023-02-12T10:05:54Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -21,7 +21,8 @@
         "platforms": "2",
         "public_transport": "station",
         "railway": "station",
-        "railway:ref": "CSW",
+        "ref": "CSW",
+        "ref:note": "Common use in MTR app indoor navigation labels, station shop units, etc",
         "station": "subway",
         "subway": "yes",
         "wheelchair": "limited",
@@ -80,7 +81,8 @@
         "name:zh": "南昌",
         "public_transport": "station",
         "railway": "station",
-        "railway:ref": "NAC",
+        "ref": "NAC",
+        "ref:note": "Common use in MTR app indoor navigation labels, station shop units, etc",
         "station": "subway",
         "subway": "yes"
       }
@@ -308,6 +310,7 @@
         "name": "南昌邨 Nam Cheong Estate",
         "name:en": "Nam Cheong Estate",
         "name:zh": "南昌邨",
+        "residential": "apartments",
         "wikidata": "Q16922151",
         "wikipedia": "zh:南昌邨"
       }
@@ -350,6 +353,7 @@
         "name": "富昌邨 Fu Cheong Estate",
         "name:en": "Fu Cheong Estate",
         "name:zh": "富昌邨",
+        "residential": "apartments",
         "wikipedia": "zh:富昌邨"
       }
     },
@@ -384,6 +388,7 @@
         "name": "碧海藍天 Aqua Marine",
         "name:en": "Aqua Marine",
         "name:zh": "碧海藍天",
+        "residential": "apartments",
         "wikidata": "Q1307260",
         "wikipedia": "zh:碧海藍天"
       }
@@ -419,6 +424,7 @@
         "name": "泓景臺 Banyan Garden",
         "name:en": "Banyan Garden",
         "name:zh": "泓景臺",
+        "residential": "apartments",
         "wikidata": "Q8421214",
         "wikipedia": "zh:泓景臺"
       }
@@ -444,6 +450,7 @@
         "name": "昇悅居 Liberté",
         "name:en": "Liberté",
         "name:zh": "昇悅居",
+        "residential": "apartments",
         "wikidata": "Q8421188",
         "wikipedia": "zh:昇悅居"
       }
@@ -489,6 +496,7 @@
         "name": "海麗邨 Hoi Lai Estate",
         "name:en": "Hoi Lai Estate",
         "name:zh": "海麗邨",
+        "residential": "apartments",
         "wikipedia": "zh:海麗邨"
       }
     },
@@ -588,6 +596,7 @@
         "name": "宇晴軒 The Pacifica",
         "name:en": "The Pacifica",
         "name:zh": "宇晴軒",
+        "residential": "apartments",
         "wikidata": "Q8421534",
         "wikipedia": "zh:宇晴軒"
       }
@@ -871,7 +880,8 @@
         "landuse": "residential",
         "name": "君滙港 Harbour Green",
         "name:en": "Harbour Green",
-        "name:zh": "君滙港"
+        "name:zh": "君滙港",
+        "residential": "apartments"
       }
     },
     {
@@ -1362,6 +1372,7 @@
         "name": "榮昌邨 Wing Cheong Estate",
         "name:en": "Wing Cheong Estate",
         "name:zh": "榮昌邨",
+        "residential": "apartments",
         "wikidata": "Q11120495",
         "wikipedia": "zh:榮昌邨"
       }
@@ -1431,6 +1442,7 @@
         "name:zh": "蘇屋邨",
         "name:zh-Hans": "苏屋邨",
         "name:zh-Hant": "蘇屋邨",
+        "residential": "apartments",
         "wikidata": "Q7549573"
       }
     },
@@ -1555,6 +1567,7 @@
         "name": "白田邨 Pak Tin Estate",
         "name:en": "Pak Tin Estate",
         "name:zh": "白田邨",
+        "residential": "apartments",
         "wikidata": "Q7125392"
       }
     },
@@ -1827,6 +1840,7 @@
         "name": "匯璽 Cullinan West",
         "name:en": "Cullinan West",
         "name:zh": "匯璽",
+        "residential": "apartments",
         "wikidata": "Q30949232",
         "wikipedia": "zh:匯璽"
       }
@@ -2158,6 +2172,7 @@
         "name": "凱帆軒 Hampton Place",
         "name:en": "Hampton Place",
         "name:zh": "凱帆軒",
+        "residential": "apartments",
         "wikidata": "Q3248442",
         "wikipedia": "zh:凱帆軒"
       }
@@ -3273,7 +3288,8 @@
         "owner:en": "Hong Kong Housing Authority",
         "owner:wikidata": "Q5894701",
         "owner:zh": "香港房屋委員會",
-        "ownership": "public"
+        "ownership": "public",
+        "residential": "apartments"
       }
     },
     {
@@ -3421,6 +3437,7 @@
         "name:en": "Hoi Tat Estate",
         "name:zh": "海達邨",
         "operator": "Hong Kong Housing Authority",
+        "residential": "apartments",
         "wikidata": "Q28419024",
         "wikipedia": "zh:海達邨"
       }
@@ -3946,6 +3963,41 @@
         "name": "金碧閣 Golden Jade Heights",
         "name:en": "Golden Jade Heights",
         "name:zh": "金碧閣"
+      }
+    },
+    {
+      "type": "way",
+      "id": 753291646,
+      "center": {
+        "lat": 22.339881,
+        "lon": 114.1540471
+      },
+      "nodes": [
+        7038424626,
+        7038424620,
+        7038424619,
+        7038424625,
+        7038424588,
+        7038424624,
+        7038424623,
+        7038424612,
+        7038424593,
+        7038424622,
+        7038424597,
+        7038424621,
+        7038424607,
+        7038424606,
+        7038424603,
+        7038424602,
+        7038424626
+      ],
+      "tags": {
+        "addr:housenumber": "23",
+        "addr:street": "Cheung Wah Street",
+        "building": "yes",
+        "name": "富華廣場 Florence Plaza",
+        "name:en": "Florence Plaza",
+        "name:zh": "富華廣場"
       }
     },
     {
@@ -5387,6 +5439,7 @@
         "name": "又一居 Parc Oasis",
         "name:en": "Parc Oasis",
         "name:zh": "又一居",
+        "residential": "apartments",
         "type": "multipolygon",
         "wikidata": "Q7253107"
       }

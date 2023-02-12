@@ -2158,6 +2158,27 @@ class DeliveryFee {
             }
         },
         {
+            place: "富華廣場",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/753291646"
+                }
+            ],
+            match: address ->
+                address.contains("富華廣場") || address.toLowerCase().contains("florence plaza")
+            ,
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case PeiHoStreetMarketCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 40;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
+        {
             place: "一號九龍道 (近寶血醫院)",
             osm: [
                 {
