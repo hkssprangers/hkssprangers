@@ -47,7 +47,7 @@ class Map extends View<MapProps> {
     }
 
     static function getDeliveryLocations(req:Request, reply:Reply):Promise<Dynamic> {
-        final osmData:OsmResult = haxe.Json.parse(sys.io.File.getContent("static/deliveryLocations.json"));
+        final osmData:OsmResult = haxe.Json.parse(sys.io.File.getContent("deliveryLocations.json"));
         final ele = [
             for (e in osmData.elements)
             Osm.printRef(e) => e

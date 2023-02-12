@@ -3331,7 +3331,7 @@ class DeliveryFee {
         **/).then(text -> {
             final json = Json.parse(text);
             final pretty = Json.stringify(json, null, "  ");
-            File.saveContent("static/deliveryLocations.json", pretty);
+            File.saveContent("deliveryLocations.json", pretty);
         });
     }
 }
