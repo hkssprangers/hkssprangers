@@ -432,8 +432,16 @@ class KCZenzeroMenu {
                     "香草羊架卡邦尼螺絲粉 $68",
                 ],
             },
+            drink: {
+                title: "飲品",
+                type: "string",
+                "enum": [
+                    "唔要",
+                    "冷泡紅茶 +$0",
+                ],
+            },
         },
-        required: ["main"],
+        required: ["main", "drink"],
     };
 
     static public final KCZenzeroWontonSet = {
@@ -603,7 +611,7 @@ class KCZenzeroMenu {
             case PastaSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink", "extraOptions"], null, priceInDescription("main", def));
             case LambPasta:
-                summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case WontonSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink", "extraOptions"]);
             case LightSet:
