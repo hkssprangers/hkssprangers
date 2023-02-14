@@ -12,6 +12,7 @@ enum abstract KCZenzeroItem(String) to String {
     final HotdogSet;
     final NoodleSet;
     final PastaSet;
+    final LambPasta;
     final R6Set;
     final WontonSet;
     final LightSet;
@@ -56,6 +57,7 @@ enum abstract KCZenzeroItem(String) to String {
                 HotdogSet,
                 NoodleSet,
                 PastaSet,
+                LambPasta,
                 R6Set,
                 WontonSet,
                 LightSet,
@@ -71,6 +73,7 @@ enum abstract KCZenzeroItem(String) to String {
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(TimeSlotType.classify(timeSlot.start));
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
+        case LambPasta: KCZenzeroMenu.KCZenzeroLambPasta;
         case R6Set: KCZenzeroMenu.KCZenzeroR6Set;
         case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
@@ -417,6 +420,21 @@ class KCZenzeroMenu {
         },
         required: ["main", "sauce", "noodle", "drink"],
     };
+    
+    static public final KCZenzeroLambPasta = {
+        title: "香草羊架卡邦尼",
+        properties: {
+            main: {
+                type: "string",
+                title: "香草羊架卡邦尼",
+                "enum": [
+                    "香草羊架卡邦尼意粉 $68",
+                    "香草羊架卡邦尼螺絲粉 $68",
+                ],
+            },
+        },
+        required: ["main"],
+    };
 
     static public final KCZenzeroWontonSet = {
         title: "小雲呑",
@@ -584,6 +602,8 @@ class KCZenzeroMenu {
                 });
             case PastaSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink", "extraOptions"], null, priceInDescription("main", def));
+            case LambPasta:
+                summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
             case WontonSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink", "extraOptions"]);
             case LightSet:
