@@ -29,6 +29,9 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
     function canonical():String throw "should be overridden";
 
     function fullstory() {
+        #if !production
+        return null;
+        #else
         final content = {
             __html: comment(unindent)/**
                 window['_fs_debug'] = false;
@@ -60,6 +63,7 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
                 <script dangerouslySetInnerHTML=${content}></script>
             </Fragment>
         ');
+        #end
     }
 
     function depCss() return jsx('
