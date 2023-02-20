@@ -491,7 +491,7 @@ class FishFranSSPMenu {
         "enum": [
             item("擂沙湯丸", 42),
             item("香煎南瓜餅", 42),
-            item("酒釀桂花小丸子", 32),
+            // item("酒釀桂花小丸子", 32),
             item("薑汁湯丸", 38),
             item("椒鹽雞翼尖", 46),
             item("風沙蒜香雞中翼", 46),
