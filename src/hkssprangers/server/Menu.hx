@@ -752,12 +752,10 @@ class Menu extends View<MenuProps> {
                 </div>
                 <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${TheParkByYearsSet.title}${YearsHKSet.properties.main.title}</div>
+                        <div className=${headerClasses}>${YearsHKSet.properties.main.title}</div>
                         ${renderItems(YearsHKSet.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${TheParkByYearsSet.title}${YearsHKSet.properties.extraOptions.title}</div>
-                        ${renderItems(YearsHKSet.properties.extraOptions.items.enums(), true)}
                         <div className=${headerClasses}>${YearsHKSingle.title}</div>
                         ${renderItems(YearsHKSingle.enums())}
                     </div>

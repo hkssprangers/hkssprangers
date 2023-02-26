@@ -134,7 +134,7 @@ class YearsHKMenu {
                 ]
             },
             drink: YearsHKSetDrink,
-            extraOptions: YearsHKAddons,
+            // extraOptions: YearsHKAddons,
         },
         required: [
             "main",
