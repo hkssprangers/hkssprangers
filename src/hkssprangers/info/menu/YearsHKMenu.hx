@@ -36,7 +36,6 @@ class YearsHKMenu {
             "熱泡沫咖啡 +$26",
             "熱燕麥奶咖啡 +$26",
             "熱朱古力咖啡 +$26",
-            "熱桂花燕麥奶咖啡 +$26",
 
             "凍⿊咖啡 +$30",
             "凍濃縮咖啡湯⼒ +$30",
@@ -46,7 +45,6 @@ class YearsHKMenu {
             "凍泡沫咖啡 +$30",
             "凍燕麥奶咖啡 +$30",
             "凍朱古力咖啡 +$30",
-            "凍桂花燕麥奶咖啡 +$30",
 
             // 非咖啡
             "熱抹茶燕麥奶 +$26",
@@ -67,21 +65,16 @@ class YearsHKMenu {
             "熱黑糖黃薑紅南棗黃酒釀 +$36",
 
             // ⽔果特飲
-            "凍木瓜紅棗燕麥奶 +$38",
+            "凍藍莓黑提燕麥奶 +$38",
             "凍奇異果羽衣甘藍蘋果燕麥奶 +$38",
-            "凍香蕉血橙紅菜頭燕麥奶 +$38",
+            "凍香蕉火龍果燕麥奶 +$38",
             "凍黑芝麻香蕉燕麥奶 +$38",
-            "凍生薑菠蘿蘋果汁 +$38",
+            "凍血橙芒果西柚汁 +$38",
 
             // 梳打特飲
             "熱情果檸檬梳打 +$30",
             "芫茜檸檬梳打 +$30",
             "蝶豆花接骨木花⻘檸梳打 +$30",
-
-            // 發酵茶
-            "發酵茶 ⻄瓜紫蘇綠茶 +$50",
-            "發酵茶 鹹檸綠茶 +$50",
-            "發酵茶 黃薑熱情果綠茶 +$50",
 
             // COCKTAILS
             "IRISH COFFEE +$68",
@@ -89,31 +82,51 @@ class YearsHKMenu {
             "THE DAVID MARTINEZ +$68",
 
             // ⼿⼯啤酒
-            "HEROES · PILSNER (花香,檸檬,麥芽|4.8%) +$60",
-            "HEROES · 茉莉香片小麥啤 (茉莉,柑橘|6.7%) +$60",
-            "HEROES · CEREUSLY (雙倍IPA|6.2%) +$60",
-            "酉鬼啤酒 · 戀夏365日 SAISON (溫和辛香·花香|5.5%) +$60",
+            "HEROES · PILSNER (花香,檸檬,麥芽|4.8%) +$70",
+            "HEROES · 茉莉香片小麥啤 (茉莉,柑橘|5.2%) +$70",
+            "HEROES · CITRINE AND EMBARRASSADOR (柚子IPA | 6.1%) +$70",
+            "HEROES · CEREUSLY (IPA|6.2%) +$70",
         ],
+    };
+
+    static public final YearsHKAddons = {
+        title: "加配",
+        type: "array",
+        items: {
+            type: "string",
+            "enum": [
+                "香芋番薯波波(3粒) +$24",
+                "牛油果羽衣甘藍沙律 🧄 +$28",
+                "不可能黃金脆雞塊配自家製芥末蛋黃醬(3件) +$36",
+                "炸薯條 +$36",
+                "炸番薯條 +$36",
+                "自家製黑松露蛋黃醬 +$20",
+            ],
+        },
+        uniqueItems: true,
     };
 
     static public final YearsHKSet = {
         title: "套餐",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
+        description: "🧄=allium 🌶️=spicy 🌰=nuts",
         properties: {
             main: {
                 title: "主食",
                 type: "string",
                 "enum": [
+                    "生酮牛油果黃金豆腐純素沙律碗 🌰 $88",
+                    "泰式冬陰意大利飯 🧄🌶️ $88",
+                    "芫茜意大利飯 🧄 $88",
+                    "芫茜意大利飯 ⚠️走五辛 $88",
+                    "日式咖喱吉列豬扒意大利飯 🧄 $118",
                     "日式精選定食 $98",
-                    "生酮牛油果豆腐純素沙律碗 🌰 $88",
+
                     "泰式香辣意大利粉 🧄🌶️🌰 $88",
                     "泰式香辣意大利粉 ⚠️走五辛 🌶️🌰 $88",
                     "四川擔擔意大利粉 🧄🌶️🌰 $98",
                     "四川擔擔意大利粉 ⚠️走五辛 🌶️🌰 $98",
                     "不可能™️肉醬意大利粉 🧄🌰 $98",
-                    "泰式冬陰意大利飯 🧄🌶️ $88",
-                    "紅菜頭香橙意大利飯 🧄 $88",
-                    "日式咖喱吉列豬扒意大利飯 🧄 $118",
+
                     "日式照燒豆腐配秘製冬陰醬漢堡包 🧄🌶️ $108",
                     "日式照燒豆腐配秘製冬陰醬漢堡包 ⚠️走五辛 🌶️ $108",
                     "素年經典不可能™️芝士漢堡包 🧄 $138",
@@ -121,6 +134,7 @@ class YearsHKMenu {
                 ]
             },
             drink: YearsHKSetDrink,
+            extraOptions: YearsHKAddons,
         },
         required: [
             "main",
@@ -130,19 +144,18 @@ class YearsHKMenu {
 
     static public final YearsHKSingle = {
         title: "單叫小食／甜品",
-        description: "🧄=garlic 🌶️=spicy 🌰=nuts",
+        description: "🧄=allium 🌶️=spicy 🌰=nuts",
         type: "string",
         "enum": [
-            "香芋番薯波波 $58",
+            "不可能黃金脆雞塊配自家製芥末蛋黃醬(6件) $58",
             "黃薑焗福花配自家製乳酪 $58",
-            "泰式炸蝦配酸辣醬 🧄 $58",
-            "泰式炸蝦配酸辣醬 ⚠️走五辛 $58",
+            "香芋番薯波波(8粒) $58",
             "黑松露蛋黃醬薯條 $68",
             "黑松露蛋黃醬番薯條 $68",
 
-            "絹豆腐豆乳忌廉柚子蛋糕 🌰 $58",
+            "宇治金時豆腐撻 🌰 $58",
             "海鹽焦糖朱古力伯爵茶撻 🌰 $58",
-            "雪山士多啤梨撻(限量供應) 🌰 $58",
+            "檸檬熱情果撻 🌰 $58",
         ],
     };
 
@@ -193,12 +206,12 @@ class YearsHKMenu {
         var def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case Set:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
                         {
-                            orderDetails: fullWidthDot + v,
+                            orderDetails: fullWidthDot + "單叫" + fullWidthColon + v,
                             orderPrice: v.parsePrice().price,
                         }
                     case _:

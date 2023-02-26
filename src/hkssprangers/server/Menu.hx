@@ -752,10 +752,12 @@ class Menu extends View<MenuProps> {
                 </div>
                 <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${YearsHKSet.properties.main.title}</div>
+                        <div className=${headerClasses}>${TheParkByYearsSet.title}${YearsHKSet.properties.main.title}</div>
                         ${renderItems(YearsHKSet.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${TheParkByYearsSet.title}${YearsHKSet.properties.extraOptions.title}</div>
+                        ${renderItems(YearsHKSet.properties.extraOptions.items.enums(), true)}
                         <div className=${headerClasses}>${YearsHKSingle.title}</div>
                         ${renderItems(YearsHKSingle.enums())}
                     </div>
@@ -854,25 +856,6 @@ class Menu extends View<MenuProps> {
                 </div>
             ');
         }
-        final singles = {
-            final items = TheParkByYearsSingle.enums();
-            final cut = Math.ceil(items.length * 0.5);
-            final items1 = items.slice(0, cut);
-            final items2 = items.slice(cut);
-            jsx('
-                <div className=${["p-3", "border-t-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
-                    <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            ${renderItems(items1)}
-                        </div>
-                        <div className="md:w-1/2 md:pl-3">
-                            ${renderItems(items2)}
-                        </div>
-                    </div>
-                </div>
-            ');
-        }
 
         return jsx('
             <Fragment>
@@ -887,10 +870,11 @@ class Menu extends View<MenuProps> {
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${TheParkByYearsSet.title}${TheParkByYearsSet.properties.extraOptions.title}</div>
                         ${renderItems(TheParkByYearsSet.properties.extraOptions.items.enums(), true)}
+                        <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
+                        ${renderItems(TheParkByYearsSingle.enums())}
                     </div>
                 </div>
                 ${drinks}
-                ${singles}
             </Fragment>
         ');
     }
