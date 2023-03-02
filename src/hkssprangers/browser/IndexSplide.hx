@@ -34,12 +34,6 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
             img: image("/images/hyginova43.jpg", "Hyginova 環保消毒除臭噴霧", "w-100 my-3 rounded-md"),
             button: "立即落單"
         },
-        {
-            title: "寒流來了 標記羊腩煲來了",
-            url: "/menu/BiuKeeLokYuen",
-            img: image("/images/banner-sheep-pot.jpg", "標記羊腩煲", "w-100 my-3 rounded-md"),
-            button: "立即落單"
-        }
     ];
 
     static final options:splidejs.splide.Options = {
