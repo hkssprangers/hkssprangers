@@ -2,23 +2,21 @@
 # https://github.com/earthly/earthly/issues/2752
 VERSION --explicit-global 0.6
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
-ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
-ARG MAIN_BRANCH=master
+ARG --global DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
+ARG --global MAIN_BRANCH=master
 
-ARG TARGETARCH
+ARG --global USERNAME=vscode
+ARG --global USER_UID=1000
+ARG --global USER_GID=$USER_UID
 
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-ARG WORKDIR=/workspace
+ARG --global WORKDIR=/workspace
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$WORKDIR"
 WORKDIR "$WORKDIR"
 
 ENV HAXESHIM_ROOT=/haxe
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
-ARG NODE_VERSION=16
+ARG --global NODE_VERSION=16
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -124,11 +122,13 @@ terraform:
 # COPY +earthly/earthly /usr/local/bin/
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
+    ARG TARGETARCH
     RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
 dbmate:
+    ARG TARGETARCH
     RUN curl -fsSL "https://github.com/amacneil/dbmate/releases/download/v1.14.0/dbmate-linux-${TARGETARCH}" -o /usr/local/bin/dbmate \
         && chmod +x /usr/local/bin/dbmate
     SAVE ARTIFACT /usr/local/bin/dbmate
@@ -333,6 +333,8 @@ dts2hx-externs:
     SAVE IMAGE --cache-hint
 
 devcontainer:
+    ARG TARGETARCH
+
     # tfenv
     COPY +tfenv/tfenv /tfenv
     RUN ln -s /tfenv/bin/* /usr/local/bin/
