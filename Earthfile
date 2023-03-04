@@ -1,4 +1,6 @@
-VERSION 0.6
+# Do not use VERSION 0.7
+# https://github.com/earthly/earthly/issues/2752
+VERSION --explicit-global 0.6
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
 ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
 ARG MAIN_BRANCH=master
