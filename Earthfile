@@ -1,22 +1,22 @@
 # Do not use VERSION 0.7
 # https://github.com/earthly/earthly/issues/2752
-VERSION --explicit-global 0.6
+VERSION 0.6
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
-ARG --global DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
-ARG --global MAIN_BRANCH=master
+ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
+ARG MAIN_BRANCH=master
 
-ARG --global USERNAME=vscode
-ARG --global USER_UID=1000
-ARG --global USER_GID=$USER_UID
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-ARG --global WORKDIR=/workspace
+ARG WORKDIR=/workspace
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$WORKDIR"
 WORKDIR "$WORKDIR"
 
 ENV HAXESHIM_ROOT=/haxe
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
-ARG --global NODE_VERSION=16
+ARG NODE_VERSION=16
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
