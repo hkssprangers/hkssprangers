@@ -46,3 +46,5 @@ pscale_dump_*
 *.pmtiles
 *.osm
 *.osm.pbf
+
+/tmp
