@@ -137,6 +137,15 @@ module "s3_bucket_static" {
   bucket = "hkssprangers-static"
   acl    = "private"
 
+  cors_rule = [
+    {
+      allowed_methods = ["GET"]
+      allowed_origins = ["https://ssprangers.com", "https://master.ssprangers.com"]
+      allowed_headers = ["*"]
+      expose_headers  = ["ETag"]
+    }
+  ]
+
   lifecycle_rule = [
     {
       id      = "expireold"
