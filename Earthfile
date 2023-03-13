@@ -206,7 +206,10 @@ tilemaker:
     SAVE ARTIFACT resources/process-openmaptiles.lua process.lua
 
 pmtiles:
-    RUN pip3 install pmtiles==1.3.0
+    ARG VERSION=1.7.0
+    WORKDIR /tmp
+    RUN curl -fsSL "https://github.com/protomaps/go-pmtiles/releases/download/v${VERSION}/go-pmtiles_${VERSION}_Linux_x86_64.tar.gz" | tar xz
+    SAVE ARTIFACT pmtiles
 
 china.osm.pbf:
     FROM openmaptiles/openmaptiles-tools:6.1.4
@@ -256,10 +259,10 @@ ssp.mbtiles:
     SAVE ARTIFACT --keep-ts ssp.mbtiles AS LOCAL ./static/tiles/
 
 ssp.pmtiles:
-    FROM +pmtiles
+    COPY +pmtiles/pmtiles /usr/local/bin/
     COPY +ssp.mbtiles/ssp.mbtiles .
-    RUN pmtiles-convert ssp.mbtiles ssp.pmtiles
-    RUN pmtiles-show ssp.pmtiles
+    RUN pmtiles convert ssp.mbtiles ssp.pmtiles
+    RUN pmtiles show ssp.pmtiles
     SAVE ARTIFACT --keep-ts ssp.pmtiles AS LOCAL ./static/tiles/
 
 ssp.mbtiles-server:
@@ -368,6 +371,8 @@ devcontainer:
 
     COPY +tilemaker/tilemaker /usr/local/bin/
     COPY +tilemaker/config.json +tilemaker/process.lua /usr/local/share/tilemaker/
+
+    COPY +pmtiles/pmtiles /usr/local/bin/
 
     USER $USERNAME
 
