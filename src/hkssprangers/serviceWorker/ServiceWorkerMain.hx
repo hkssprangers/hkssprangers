@@ -16,6 +16,8 @@ class ServiceWorkerMain {
             options.url.origin == StaticResource.bucketOrigin
             &&
             StaticResource.parseUrl(options.url.pathname) != null
+            &&
+            !options.url.pathname.endsWith(".pmtiles")
         , cast new CacheFirst({
             cacheName: "static",
             plugins: ([
