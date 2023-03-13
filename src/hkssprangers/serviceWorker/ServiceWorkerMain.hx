@@ -25,7 +25,6 @@ class ServiceWorkerMain {
                 new ExpirationPlugin({
                     maxEntries: 60,
                 }),
-                new RangeRequestsPlugin(),
             ]:Array<Dynamic>),
         }));
         WorkboxRouting.registerRoute(function(options:RouteMatchCallbackOptions) {
