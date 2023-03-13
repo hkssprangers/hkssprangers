@@ -740,37 +740,64 @@ class Menu extends View<MenuProps> {
     }
 
     function renderYearsHK() {
-        var drinks = YearsHKSetDrink.enums();
-        var cut = Math.ceil(drinks.length * 0.5);
-        var drinks1 = drinks.slice(1, cut);
-        var drinks2 = drinks.slice(cut);
-        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
-        return jsx('
-            <Fragment>
-                <div className="p-3">
-                    ${YearsHKSet.description}
-                </div>
-                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${YearsHKSet.properties.main.title}</div>
-                        ${renderItems(YearsHKSet.properties.main.enums())}
-                    </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${YearsHKSingle.title}</div>
-                        ${renderItems(YearsHKSingle.enums())}
-                    </div>
-                </div>
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final drinks = {
+            final items = YearsHKSetDrink.enums();
+            final cut = Math.ceil(items.length * 0.5);
+            final items1 = items.slice(1, cut);
+            final items2 = items.slice(cut);
+            jsx('
                 <div className="p-3">
                     <div className=${headerClasses}>${YearsHKSetDrink.title}</div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            ${renderItems(drinks1, true)}
+                            ${renderItems(items1, true)}
                         </div>
                         <div className="md:w-1/2 md:pl-3">
-                            ${renderItems(drinks2, true)}
+                            ${renderItems(items2, true)}
                         </div>
                     </div>
                 </div>
+            ');
+        }
+
+        final singles = {
+            final items = YearsHKSingle.enums();
+            final cut = Math.ceil(items.length * 0.5);
+            final items1 = items.slice(0, cut);
+            final items2 = items.slice(cut);
+            jsx('
+                <div className="p-3">
+                    <div className=${headerClasses}>${YearsHKSingle.title}</div>
+                    <div className="md:flex flex-row md:mt-3">
+                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            ${renderItems(items1)}
+                        </div>
+                        <div className="md:w-1/2 md:pl-3">
+                            ${renderItems(items2)}
+                        </div>
+                    </div>
+                </div>
+            ');
+        }
+
+        return jsx('
+            <Fragment>
+                <div className="p-3">
+                    ${YearsHKWeekdayLunchSet.description}
+                </div>
+                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                        <div className=${headerClasses}>${YearsHKWeekdayLunchSet.title}${YearsHKWeekdayLunchSet.properties.main.title}</div>
+                        ${renderItems(YearsHKWeekdayLunchSet.properties.main.enums())}
+                    </div>
+                    <div className="md:w-1/2 p-3">
+                        <div className=${headerClasses}>${YearsHKDinnerHolidaySet.title}${YearsHKDinnerHolidaySet.properties.main.title}</div>
+                        ${renderItems(YearsHKDinnerHolidaySet.properties.main.enums())}
+                    </div>
+                </div>
+                ${drinks}
+                ${singles}
             </Fragment>
         ');
     }

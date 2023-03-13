@@ -41,7 +41,7 @@ enum abstract TheParkByYearsItem(String) to String {
 
 class TheParkByYearsMenu {
     static function setDrinkItem(drink:String, price:Int):String {
-        return drink + " $" + Math.max(price - 12, 0);
+        return drink + " +$" + Math.max(price - 12, 0);
     }
 
     static public final TheParkByYearsSetDrink = {

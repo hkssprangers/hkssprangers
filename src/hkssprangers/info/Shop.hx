@@ -1071,7 +1071,7 @@ enum abstract Shop(String) to String {
             case MGY:
                 Promise.resolve(MGYMenu.itemsSchema(pickupTimeSlot, o));
             case YearsHK:
-                Promise.resolve(YearsHKMenu.itemsSchema(o));
+                Promise.resolve(YearsHKMenu.itemsSchema(pickupTimeSlot, o));
             case TheParkByYears:
                 Promise.resolve(TheParkByYearsMenu.itemsSchema(pickupTimeSlot, o));
             case ZeppelinHotDogSKM:
