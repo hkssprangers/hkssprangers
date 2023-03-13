@@ -193,7 +193,7 @@ tilemaker:
         && apt-get autoremove -y \
         && apt-get clean -y \
         && rm -rf /var/lib/apt/lists/*
-    ARG TM_COMMIT=57942b9812e1e3c7b5ec0f46820fa853f36f3c44
+    ARG TM_COMMIT=3c4fdb8db99b210796ebe576e2b1c3665bc9f8ea
     COPY (+github-src/src --REPO=systemed/tilemaker --COMMIT="$TM_COMMIT") /tilemaker
     WORKDIR /tilemaker/build
     RUN cmake -DTILEMAKER_BUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ ..
@@ -226,10 +226,8 @@ hk.osm.pbf:
     SAVE ARTIFACT hong_kong-latest.osm.pbf hk.osm.pbf
 
 ssp.osm.pbf:
-    # We should use +hk.osm.pbf/hk.osm.pbf instead, but sadly osmfr data is problemetic.
-    # https://github.com/systemed/tilemaker/issues/469
-    COPY +china.osm.pbf/china.osm.pbf .
-    RUN osmosis --read-pbf china.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
+    COPY +hk.osm.pbf/hk.osm.pbf .
+    RUN osmosis --read-pbf hk.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
     RUN ls -lah
     SAVE ARTIFACT ssp.osm.pbf AS LOCAL ./static/tiles/
 
@@ -252,7 +250,8 @@ ssp.mbtiles:
         --process /usr/local/share/tilemaker/process.lua \
         --input ssp.osm.pbf \
         --bbox 114.08885,22.2856527,114.2475128,22.4311088 \
-        --output ssp.mbtiles
+        --output ssp.mbtiles \
+        --skip-integrity
     RUN ls -lah
     SAVE ARTIFACT --keep-ts ssp.mbtiles AS LOCAL ./static/tiles/
 
