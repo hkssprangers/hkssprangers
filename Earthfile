@@ -502,7 +502,7 @@ static:
         +style-css/style.css \
         static/css
     RUN haxe staticResource.hxml
-    SAVE ARTIFACT staticOut static
+    SAVE ARTIFACT --keep-ts staticOut static
     SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
 
 cronjobs.js:
@@ -536,8 +536,8 @@ test:
 
 deploy-static:
     FROM +devcontainer
-    COPY +static/static static
     COPY .devcontainer/rclone/rclone.conf /root/.config/rclone/rclone.conf
+    COPY --keep-ts +static/static static
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
