@@ -6,6 +6,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker-host.sock
       - ..:/workspace:cached
+      - ./rclone:/home/vscode/.config/rclone:cached
     environment:
       - TZ=Asia/Hong_Kong
       - EARTHLY_BUILDKIT_HOST=tcp://earthly:8372
@@ -17,10 +18,6 @@ services:
       - COCKROACH_USER=crdb
       - COCKROACH_PASSWORD=crdb
       - DATABASE_URL=postgresql://crdb:crdb@cockroachdb:26257/defaultdb?sslmode=disable
-      - RCLONE_CONFIG_R2_TYPE=s3
-      - RCLONE_CONFIG_R2_PROVIDER=Cloudflare
-      - RCLONE_CONFIG_R2_ENV_AUTH=true
-      - RCLONE_CONFIG_R2_ENDPOINT=https://5866a1959e70399a4020fd5a7657e1ca.r2.cloudflarestorage.com
     user: vscode
     entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity

@@ -537,10 +537,7 @@ test:
 deploy-static:
     FROM +devcontainer
     COPY +static/static static
-    ENV RCLONE_CONFIG_R2_TYPE=s3
-    ENV RCLONE_CONFIG_R2_PROVIDER=Cloudflare
-    ENV RCLONE_CONFIG_R2_ENV_AUTH=true
-    ENV RCLONE_CONFIG_R2_ENDPOINT=https://5866a1959e70399a4020fd5a7657e1ca.r2.cloudflarestorage.com
+    COPY .devcontainer/rclone/rclone.conf /root/.config/rclone/rclone.conf
     RUN --no-cache \
         --mount=type=secret,id=+secrets/.envrc,target=.envrc \
         . ./.envrc \
