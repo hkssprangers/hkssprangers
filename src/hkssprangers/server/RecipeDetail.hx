@@ -51,10 +51,6 @@ class RecipeDetail extends View<RecipeDetailProps> {
         ');
     }
 
-    override function prefetch():Array<String> return super.prefetch().concat([
-        R("/tiles/ssp.pmtiles"),
-    ]);
-
     function new(props, context) {
         super(props, context);
     }

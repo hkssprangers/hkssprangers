@@ -90,10 +90,6 @@ class Menu extends View<MenuProps> {
         ');
     }
 
-    override function prefetch():Array<String> return super.prefetch().concat([
-        R("/tiles/ssp.pmtiles"),
-    ]);
-
     final style:{
         borderClasses:Array<String>,
         headerClasses:Array<String>,

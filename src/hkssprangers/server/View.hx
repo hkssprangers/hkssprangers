@@ -137,7 +137,9 @@ class View<Props:{}> extends ReactComponentOf<Props, {}> {
         </Fragment>
     ');
 
-    function prefetch():Array<String> return [];
+    function prefetch():Array<String> return [
+        R("/browser.bundled.js"),
+    ];
     function prefetchNode(link:String) return jsx('<link key=${link} rel="prefetch" href=${link} />');
 
     function ogMeta() {
