@@ -113,8 +113,10 @@ class StaticResource {
         return Path.join([p.dir != null && p.dir != "" ? p.dir : "/", p.file + "." + hash + "." + p.ext]);
     }
 
+    inline static public final bucketOrigin = "https://d2wv1pgjke9i55.cloudfront.net";
+
     static public function bucketed(path:WebRootPath, hash:String):String {
-        return Path.join(["https://static.ssprangers.com", fingerprint(path, hash)]);
+        return Path.join([bucketOrigin, fingerprint(path, hash)]);
     }
 
     static public function parseUrl(url:String) {

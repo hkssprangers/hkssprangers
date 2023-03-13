@@ -13,7 +13,7 @@ class ServiceWorkerMain {
         WorkboxRouting.setDefaultHandler(cast new NetworkFirst());
 
         WorkboxRouting.registerRoute((options:RouteMatchCallbackOptions) ->
-            options.url.origin == "https://static.ssprangers.com"
+            options.url.origin == StaticResource.bucketOrigin
             &&
             StaticResource.parseUrl(options.url.pathname) != null
         , cast new CacheFirst({
