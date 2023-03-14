@@ -140,7 +140,7 @@ module "s3_bucket_static" {
   cors_rule = [
     {
       allowed_methods = ["GET"]
-      allowed_origins = ["https://ssprangers.com", "https://master.ssprangers.com"]
+      allowed_origins = ["*"]
       allowed_headers = ["*"]
       expose_headers  = ["ETag"]
     }
