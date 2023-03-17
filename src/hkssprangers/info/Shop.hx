@@ -387,7 +387,7 @@ enum abstract Shop(String) to String {
                 isInService: false,
                 facebook: "https://www.facebook.com/Neighbor-141971742913793",
                 instagram: "https://www.instagram.com/neighbor_csw/",
-                availablity: "提供午餐及晚餐",
+                availablity: "已結業",
                 restDay: null,
                 recommendation: "美式牛肉漢堡 / 椰漿脆雞翼"
             }
@@ -502,10 +502,10 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "20:30:00",
-                isInService: true,
+                isInService: false,
                 facebook: "https://www.facebook.com/Zeppelin-Hot-Dog-SKM-105039071392745",
                 instagram: "https://www.instagram.com/zeppelinhotdogskm",
-                availablity: "提供午餐及晚餐",
+                availablity: "已結業",
                 restDay: "逢21號罷工",
                 recommendation: "火炙芝士辣肉醬熱狗"
             }
@@ -683,7 +683,7 @@ enum abstract Shop(String) to String {
                 isInService: false,
                 facebook: "https://www.facebook.com/wostreethk/",
                 instagram: "https://www.instagram.com/wostreet.hk/",
-                availablity: "提供午餐及晚餐",
+                availablity: "埗兵外賣暫停",
                 restDay: null,
                 recommendation: null,
             }

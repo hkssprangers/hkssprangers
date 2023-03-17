@@ -490,7 +490,6 @@ class Index extends View<IndexProps> {
                         <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>${PakTinCluster.info().name}</span>
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
-                    ${renderShop(ZeppelinHotDogSKM, PakTinCluster)}
                     ${renderShop(CafeGolden, PakTinCluster)}
                     ${renderShop(HowDrunk, PakTinCluster)}
                 </div>
@@ -531,7 +530,6 @@ class Index extends View<IndexProps> {
                             ${renderShopp(Minimal)}
                             ${renderShopp(YearsHK)}
                             ${renderShopp(LonelyPaisley)}
-                            ${renderShopp(ZeppelinHotDogSKM)}
                             ${renderShopp(CafeGolden)}
                             ${renderShopp(HowDrunk)}
                             </div>

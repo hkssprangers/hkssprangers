@@ -216,7 +216,6 @@ class Menu extends View<MenuProps> {
                         ${Index.renderShopp(Minimal)}
                         ${Index.renderShopp(YearsHK)}
                         ${Index.renderShopp(LonelyPaisley)}
-                        ${Index.renderShopp(ZeppelinHotDogSKM)}
                         ${Index.renderShopp(CafeGolden)}
                         ${Index.renderShopp(HowDrunk)}
                         </div>
@@ -387,7 +386,8 @@ class Menu extends View<MenuProps> {
                 // renderBlaBlaBla();
                 renderMsg("已結業");
             case ZeppelinHotDogSKM:
-                renderZeppelinHotDogSKM();
+                // renderZeppelinHotDogSKM();
+                renderMsg("已結業");
             case MyRoomRoom:
                 // renderMyRoomRoom();
                 renderMsg("已結業");

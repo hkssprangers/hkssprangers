@@ -80,7 +80,6 @@ class Restaurants extends View<RestaurantsProps> {
                             ${Index.renderShopp(Minimal)}
                             ${Index.renderShopp(YearsHK)}
                             ${Index.renderShopp(LonelyPaisley)}
-                            ${Index.renderShopp(ZeppelinHotDogSKM)}
                             ${Index.renderShopp(CafeGolden)}
                             ${Index.renderShopp(HowDrunk)}
                             </div>
