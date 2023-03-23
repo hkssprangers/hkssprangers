@@ -979,7 +979,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('晚市暫停一天');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid0Dfn5pQzux9DfejeP5EJxiuQQ4SFQ32m9LFD5DJrZ6mUykZukhCBw8bR8KsEk7oBhl
-            case [LaksaStore:, "2023-03-23", _]:
+            case [LaksaStore, "2023-03-23", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, "2023-01-14", Lunch]:
