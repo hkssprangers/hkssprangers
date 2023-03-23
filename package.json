@@ -27,7 +27,7 @@
     "esbuild": "^0.17.12",
     "js-cookie": "^3.0.1",
     "maplibre-gl": "^2.1.9",
-    "nodemon": "^2.0.21",
+    "nodemon": "^2.0.22",
     "pmtiles": "^2.7.1",
     "prisma": "^4.7.1",
     "prisma-dbml-generator": "^0.10.0",
