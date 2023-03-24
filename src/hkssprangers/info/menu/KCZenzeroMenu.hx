@@ -307,26 +307,25 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        // final limitedSpecial = "花膠酸菜魚 $88";
+        final limitedSpecial = "帶子蟹籽滷肉飯 $68";
         {
-            dateStart: "2022-12-14",
-            dateEnd: "2023-01-25",
+            dateStart: "2023-03-24",
+            dateEnd: "2023-03-24",
             timeSlotTypes: [Lunch, Dinner],
-            seperateBox: true,
+            seperateBox: false,
             available: true,
             def: {
-                title: "限定", // "限定：" + limitedSpecial,
+                // title: "限定",
+                title: "限定：" + limitedSpecial,
                 description: "⚠️ 請提早落單。售完即止。",
                 properties: {
                     special: {
                         title: "限定",
                         type: "string",
                         "enum": [
-                            "花膠酸菜魚 $88",
-                            "煙燻臘味糯米飯配蒜蓉西蘭花 $99",
-                            "花膠酸菜海南雞 $128"
+                            limitedSpecial
                         ],
-                        // "default": limitedSpecial
+                        "default": limitedSpecial
                     }
                 },
                 required: ["special"],
