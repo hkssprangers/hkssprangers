@@ -307,10 +307,10 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "帶子蟹籽滷肉飯 $68";
+        final limitedSpecial = "珍珠白肉𧐢仔滷肉飯 $68";
         {
-            dateStart: "2023-03-24",
-            dateEnd: "2023-03-24",
+            dateStart: "2023-03-25",
+            dateEnd: "2023-03-25",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
