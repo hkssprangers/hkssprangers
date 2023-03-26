@@ -211,7 +211,7 @@ class TheParkByYearsMenu {
                 ],
             },
             drink: TheParkByYearsSetDrink,
-            extraOptions: TheParkByYearsAddons,
+            // extraOptions: TheParkByYearsAddons,
         },
         required: [
             "main",
