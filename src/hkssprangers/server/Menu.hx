@@ -1173,34 +1173,6 @@ class Menu extends View<MenuProps> {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
         final now:LocalDateString = Date.now();
         final today = now.getDatePart();
-        final riceDumpling = today > "2022-05-31" ? null : {
-            final items = {
-                final items = MGYRiceDumpling.properties.main.enums();
-                final cutoff = Math.ceil(items.length * 0.5);
-                [
-                    items.slice(0, cutoff),
-                    items.slice(cutoff),
-                ];
-            };
-            jsx('
-                <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${MGYRiceDumpling.title}</div>
-                    <div className="p-3">
-                        <p>交收日期</p>
-                        <p>5月21-24日 (5月17日截單)</p>
-                        <p>5月28-31日 (5月24日截單)</p>
-                    </div>
-                    <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            ${renderItems(items[0])}
-                        </div>
-                        <div className="md:w-1/2 md:pl-3">
-                            ${renderItems(items[1])}
-                        </div>
-                    </div>
-                </div>
-            ');
-        }
         final dish = {
             final items = {
                 final items = MGYSideDish.properties.dish.enums();
@@ -1226,18 +1198,17 @@ class Menu extends View<MenuProps> {
         }
         return jsx('
             <Fragment>
-                ${riceDumpling}
                 ${dish}
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${MGYSnack.title}</div>
                         ${renderItems(MGYSnack.enums())}
-                        <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
-                        ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${MGYDelight.title}</div>
-                        ${renderItems(MGYDelight.properties.delight.enums())}
+                        <div className=${headerClasses}>${MGYStirFriedNoodlesOrRice.title}</div>
+                        ${renderItems(MGYStirFriedNoodlesOrRice.properties.fried.enums())}
+                        <div className=${headerClasses}>${MGYRice.title}</div>
+                        ${renderItems(MGYRice.enums())}
                     </div>
                 </div>
             </Fragment>
