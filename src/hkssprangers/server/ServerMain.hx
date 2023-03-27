@@ -677,8 +677,6 @@ class ServerMain {
                             trace(err);
                             Sys.exit(1);
                         });
-                case ["holidays"]:
-                    HkHolidays.main();
                 case ["setTgWebhook"]:
                     var hook = Path.join([protocal + host, tgBotWebHook]);
                     trace(hook);

@@ -8,16 +8,38 @@ enum abstract MGYItem(String) to String {
     final StirFriedNoodlesOrRice;
     final Rice;
     final Snack;
-    final Delight;
-    final RiceDumpling;
+    final LunchSet;
 
-    static public function all(pickupTimeSlot:Null<TimeSlot>):ReadOnlyArray<MGYItem> {
-        return [
-            SideDish,
-            StirFriedNoodlesOrRice,
-            Rice,
-            Snack,
-        ];
+    static public function all(timeSlot:Null<TimeSlot>):ReadOnlyArray<MGYItem> {
+        if (timeSlot == null || timeSlot.start == null){
+            return [];
+        }
+
+        final date = timeSlot.start.toDate();
+        final lunchSet = switch [
+            Weekday.fromDay(date.getDay()),
+            HkHolidays.isRedDay(date),
+            switch (LunarCalendar.lunarDate(date).day) {
+                case 1 | 15: true;
+                case _: false;
+            },
+            TimeSlotType.classify(timeSlot.start)
+        ] {
+            case [Tuesday | Wednesday | Thursday | Friday, false, false, Lunch]:
+                [
+                    LunchSet,
+                ];
+            case _:
+                [];
+        }
+        return []
+            .concat(lunchSet)
+            .concat([
+                SideDish,
+                StirFriedNoodlesOrRice,
+                Rice,
+                Snack,
+            ]);
     }
 
     public function getDefinition(pickupTimeSlot:Null<TimeSlot>):Dynamic return switch (cast this:MGYItem) {
@@ -25,8 +47,7 @@ enum abstract MGYItem(String) to String {
         case StirFriedNoodlesOrRice: MGYMenu.MGYStirFriedNoodlesOrRice;
         case Rice: MGYMenu.MGYRice;
         case Snack: MGYMenu.MGYSnack;
-        case Delight: null;
-        case RiceDumpling: null;
+        case LunchSet: MGYMenu.MGYLunchSet;
     }
 }
 
@@ -89,6 +110,45 @@ class MGYMenu {
         },
         required: [
             "fried",
+        ]
+    };
+
+    static public final MGYLunchSetGiven = "湯、時菜、小食/糕點";
+    static public final MGYLunchSet = {
+        title: "午市套餐",
+        description: '套餐配有${MGYLunchSetGiven}。供應日子：星期二至星期五 (初一、十五及公眾假期除外)',
+        properties: {
+            main: {
+                type: "string",
+                title: "午市套餐",
+                "enum": [
+                    "1. 茄汁朱排 配白飯 $" + markup(59),
+                    "2. 羅漢齋 配白飯 $" + markup(59),
+                    "3. 咖喱素楊玉 配白飯 $" + markup(59),
+                    "4. 沙茶豆腐燜枝竹 配白飯 $" + markup(59),
+                    "5. 糖醋候頭菇 配白飯 $" + markup(59),
+                    "6. 醬爆候頭楊小排 配白飯 $" + markup(59),
+
+                    "A. 咸如玉粒炒飯 $" + markup(59),
+                    "B. 菠蘿芝丁炒飯 $" + markup(59),
+                    "C. 黄薑菇粒炒飯 $" + markup(59),
+                    "D. 什菌燴烏冬 $" + markup(59),
+                    "E. 涼瓜排橘飯 $" + markup(59),
+                ],
+            },
+            drink: {
+                type: "string",
+                title: "加配飲品",
+                "enum": [
+                    "細可樂 $" + markup(4),
+                    "大Zero $" + markup(6),
+                    "豆漿 $" + markup(6),
+                    "酸梅湯 $" + markup(6),
+                ],
+            },
+        },
+        required: [
+            "main",
         ]
     };
 
@@ -168,14 +228,12 @@ class MGYMenu {
     } {
         var def = orderItem.type.getDefinition(pickupTimeSlot);
         return switch (orderItem.type) {
-            case RiceDumpling:
-                summarizeOrderObject(orderItem.item, def, ["main"], []);
             case SideDish:
                 summarizeOrderObject(orderItem.item, def, ["dish"], []);
             case StirFriedNoodlesOrRice:
                 summarizeOrderObject(orderItem.item, def, ["fried"], []);
-            case Delight:
-                summarizeOrderObject(orderItem.item, def, ["delight"], []);
+            case LunchSet:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [MGYLunchSetGiven]);
             case Snack | Rice:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):

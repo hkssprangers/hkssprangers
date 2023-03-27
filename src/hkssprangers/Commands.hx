@@ -489,6 +489,10 @@ class Commands {
                         Sys.println(failure.message + "\n\n" + failure.exceptionStack);
                         Sys.exit(1);
                 });
+            case ["holidays"]:
+                HkHolidays.main();
+            case ["lunar"]:
+                LunarCalendar.main();
             case args:
                 throw "unknown args: " + args;
         }
