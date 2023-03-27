@@ -974,9 +974,9 @@ enum abstract Shop(String) to String {
             case [EightyNine, "2023-03-26", _]:
                 return Unavailable('休息一天');
 
-            // https://www.instagram.com/p/CorU8GaPyRu/
-            case [KCZenzero, "2023-02-15", Dinner]:
-                return Unavailable('晚市暫停一天');
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0gwoEJSHfWQK95iiC2bQ5RcyetcxSGH1741H9iFcxsY6BLbxRGD9rHFKWwHWKdNmNl&id=100064143817671
+            case [KCZenzero, "2023-03-28"| "2023-03-29"| "2023-03-30", Dinner] if (pickupTimeSlot.start.getTimePart() > "18:00:00"):
+                return Unavailable('團購關係 最遲 18:00 時段交收');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid033cVDvvzuhZy37vB43fAtwN2LfrKS2d83RYqioYVHtM8wxhzY6SryPbvBia9DsVY1l
             case [LaksaStore, "2023-03-27", _]:
