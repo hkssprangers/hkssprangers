@@ -447,7 +447,7 @@ browser-js:
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
-    COPY .haxerc browser.hxml esbuild.inject.js holidays.json .
+    COPY .haxerc browser.hxml esbuild.inject.js holidays.json lunarCalendar.json .
     COPY +static-assets/static.json .
     RUN haxe -D production browser.hxml
     RUN node -c static/browser.bundled.js
@@ -468,22 +468,12 @@ server:
         +style-css/style.css \
         static/css
     COPY src src
-    COPY .haxerc server.hxml holidays.json package-lock.json .
+    COPY .haxerc server.hxml holidays.json lunarCalendar.json package-lock.json .
     COPY +static/static.json .
     RUN haxe -D production server.hxml
     RUN node -c index.js
     SAVE ARTIFACT --keep-ts index.js AS LOCAL index.js
     SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
-
-holidays.json:
-    FROM +devcontainer
-    COPY haxe_libraries haxe_libraries
-    COPY src src
-    COPY .haxerc holidays.hxml package-lock.json .
-    RUN echo '{}' > holidays.json
-    RUN haxe holidays.hxml
-    RUN node holidays.js
-    SAVE ARTIFACT --keep-ts holidays.json AS LOCAL holidays.json
 
 static-assets:
     FROM +devcontainer
@@ -514,7 +504,7 @@ cronjobs.js:
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
-    COPY .haxerc cronjobs.hxml holidays.json .
+    COPY .haxerc cronjobs.hxml holidays.json lunarCalendar.json .
     RUN haxe cronjobs.hxml
     RUN node -c cronjobs.js
     SAVE ARTIFACT cronjobs.js
@@ -524,7 +514,7 @@ commands.js:
     COPY haxe_libraries haxe_libraries
     COPY static static
     COPY src src
-    COPY .haxerc commands.hxml holidays.json .
+    COPY .haxerc commands.hxml holidays.json lunarCalendar.json .
     RUN haxe commands.hxml
     RUN node -c commands.js
     SAVE ARTIFACT commands.js
@@ -535,7 +525,7 @@ test:
     COPY static static
     COPY src src
     COPY test test
-    COPY .haxerc test.hxml holidays.json .
+    COPY .haxerc test.hxml holidays.json lunarCalendar.json .
     RUN haxe test.hxml
 
 deploy-static:
@@ -560,7 +550,7 @@ deploy:
         +serviceWorker-js/serviceWorker.bundled.js \
         .
     COPY --chown=$USER_UID:$USER_GID \
-        serverless.yml package.json package-lock.json holidays.json deliveryLocations.json \
+        serverless.yml package.json package-lock.json holidays.json lunarCalendar.json deliveryLocations.json \
         .
     ARG --required DEPLOY_STAGE
     ENV DEPLOY_STAGE="$DEPLOY_STAGE"
