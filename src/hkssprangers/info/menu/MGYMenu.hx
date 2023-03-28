@@ -25,7 +25,7 @@ enum abstract MGYItem(String) to String {
             },
             TimeSlotType.classify(timeSlot.start)
         ] {
-            case [Tuesday | Wednesday | Thursday | Friday, false, false, Lunch]:
+            case [Tuesday | Wednesday | Thursday | Friday, false, false, Lunch] if ((date:LocalDateString).getDatePart() <= "2023-04-07"):
                 [
                     LunchSet,
                 ];
