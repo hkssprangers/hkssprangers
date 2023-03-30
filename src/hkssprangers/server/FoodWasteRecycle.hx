@@ -146,7 +146,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                                         <li>昌盛茶餐廳</li>
                                         <li>黑窗里</li>
                                     </ul>
-                                    <p>有興趣參與計劃嘅cafe都歡迎<a className="underline" href="https://www.milmill.hk/">留低聯絡</a>俾我哋!</p>
+                                    <p>有興趣參與計劃嘅cafe都歡迎<a className="underline" href="https://www.facebook.com/hkssprangers">留低聯絡</a>俾我哋!</p>
                                 </div>
 
                                 <div className="flex-1 text-opacity-75 text-gray-700 p-6 md:p-12">
@@ -233,7 +233,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                                     </div>
                                     <div className="flex-1 bg-border-gray700">&nbsp;</div>
                                 </div>
-                                <p className="mb-3">當我哋炒蛋殼炒到傻嘅時候，有一間公司主動聯絡仲冇條件咁送一部廚餘機俾我哋，處理蛋殼快咗好多又冇晒味!處理完嘅廚餘可以直接當肥料用，誠意推薦俾大家: <a href="https://uk.lomi.com/">Lomi家用廚餘機</a> </p>
+                                <p className="mb-3">當我哋炒蛋殼炒到傻嘅時候，有一間公司主動聯絡仲冇條件咁送一部廚餘機俾我哋，處理蛋殼快咗好多又冇晒味!處理完嘅廚餘可以直接當肥料用，誠意推薦俾大家: <a href="https://lomi.com/">Lomi家用廚餘機</a> </p>
 
                                 ${image("/images/food-waste-recycle/lomi.png","Lomi廚餘機","")}
                                 
