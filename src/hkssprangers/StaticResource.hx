@@ -140,7 +140,7 @@ class StaticResource {
                 final png = new format.png.Reader(File.read(file));
                 return format.png.Tools.getHeader(png.read());
             case _:
-                final p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}', file]);
+                final p = new sys.io.Process("identify", ["-format", '{"width":%w,"height":%h}\n', file]);
                 final out = p.stdout.readAll().toString();
                 final err = p.stderr.readAll().toString();
                 final exitCode = p.exitCode();
@@ -148,12 +148,18 @@ class StaticResource {
                 if (exitCode != 0) {
                     throw err;
                 }
-                return haxe.Json.parse(out);
+                return try {
+                    // for gif, there will be one output per frame
+                    // we added "\n" to the output -format, so it's one line per frame
+                    haxe.Json.parse(out.split("\n")[0]);
+                } catch (err){
+                    throw "failed to parse json: " + out;
+                }
         }
     }
 
     static function getImageColor(file:AbsolutePath):String {
-        final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[pixel:u]", "info:-"]);
+        final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[pixel:u]\n", "info:-"]);
         final out = p.stdout.readAll().toString();
         final err = p.stderr.readAll().toString();
         final exitCode = p.exitCode();
@@ -162,7 +168,9 @@ class StaticResource {
             throw err;
         }
         final r = ~/^s(rgba?\(.+\))$/;
-        if (!r.match(out)) {
+        // for gif, there will be one output per frame
+        // we added "\n" to the output -format, so it's one line per frame
+        if (!r.match(out.split("\n")[0])) {
             throw "Cannot parse color: " + out;
         }
         return r.matched(1);
@@ -206,7 +214,7 @@ class StaticResource {
 
             final fileExt = Path.extension(file).toLowerCase();
             switch fileExt {
-                case "jpg" | "jpeg" | "png" | "svg":
+                case "jpg" | "jpeg" | "png" | "svg" | "gif":
                     final d = getImageSize(absSrc);
                     info.width = d.width;
                     info.height = d.height;
