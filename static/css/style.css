@@ -519,3 +519,81 @@ a.myDelivery {
     opacity: 1;
   }
 }
+
+#section-earth {
+  background-image:url(../images/food-waste-recycle/bg-sand.png);
+  background-repeat-x: revert;
+  background-repeat-y: no-repeat;
+}
+
+#earth-circle {
+    border-radius: 50%;
+    position: absolute;
+    background-image:url(../images/food-waste-recycle/bg-earth2.png);
+    transform-origin: center center;
+    transform: translateX(-50%) translateY(-50%);
+    top:50%;
+    left: 50%;
+}
+
+.bg-border-white {
+  background-image: linear-gradient(180deg,transparent 46%, white 46%, white 54%, transparent 54%);
+}
+
+.bg-border-gray700 {
+  background-image: linear-gradient(180deg,transparent 46%, rgba(55, 65, 81, 0.75) 46%, rgba(55, 65, 81, 0.75) 54%, transparent 54%);
+}
+
+.bg-gray-radial {
+  background-image: url(../images/food-waste-recycle/bg-grain.png),radial-gradient(at top left, #9ca3af 0%, #d1d5db 30%);
+}
+
+.bg-earth {
+  background-image:url(../images/food-waste-recycle/bg-earth2.png);
+}
+
+#farmer {
+  position: block;
+  margin: -45px auto 0 auto;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+#farmer {
+    position: absolute;
+    transform-origin: center center;
+    transform: translateX(-50%);
+    bottom:0;
+    left: 50%;
+    z-index: 10;
+}
+}
+#bowl {
+  animation: bowlAnimation 15000ms;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}
+
+@keyframes bowlAnimation{
+0%{
+  opacity: 0;
+  transform: translateX(-150px);
+}
+3%{
+  opacity: 1;
+  transform: translateX(-140px);
+}
+97%{
+  opacity: 1;
+  transform: translateX(1490px);
+}
+100%{
+  opacity: 0;
+  transform: translateX(1500px);
+  }
+}
+
+.bg-vege {
+background-image: url(../images/food-waste-recycle/bg-grain.png), url(../images/food-waste-recycle/farmer-hand.jpg);
+background-position: center;
+}

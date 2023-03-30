@@ -11,6 +11,7 @@
 !/static/js/splide/banner.js
 !/static/js/map/map.js
 !/static/js/menu/menu.js
+!/static/js/foodWasteRecycle/foodWasteRecycle.js
 !esbuild.inject.js
 *.js.map
 /lib/dts2hx/
