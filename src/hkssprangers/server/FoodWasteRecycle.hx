@@ -21,7 +21,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
             <meta name="twitter:card" content="summary_large_image" />
             ${super.ogMeta()}
             <meta property="og:type" content="website" />
-            <meta property="og:image" content=${R("/images/food-waste-recycle/banner-coffee2.jpg")} />
+            <meta property="og:image" content=${R("/images/food-waste-recycle/banner-food-waste-recycle-2.jpg")} />
         </Fragment>
     ');
 

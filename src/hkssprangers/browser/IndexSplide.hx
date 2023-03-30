@@ -19,7 +19,7 @@ class IndexSplide extends ReactComponentOf<IndexSplideProps, IndexSplideState> {
         {
             title: "埗兵咖啡渣之旅",
             url: "/food-waste-recycle",
-            img: image("/images/food-waste-recycle/banner-coffee.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
+            img: image("/images/food-waste-recycle/banner-food-waste-recycle.jpg", "埗兵咖啡渣之旅", "w-100 my-3 rounded-md"),
             button: "了解更多"
         },
         {
