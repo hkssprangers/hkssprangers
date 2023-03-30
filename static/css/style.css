@@ -393,3 +393,239 @@ a.myDelivery {
   background-image: linear-gradient(45deg, #fbbd25,#ee4642,#dc700f);
   border-radius: 3px;
 }
+
+.bg-border-black {
+  background: linear-gradient(0deg, transparent 0%, transparent 40%, black 40%, black 50%, transparent 50%);
+}
+
+.bg-border-gray {
+  background: linear-gradient(0deg, transparent 0%, transparent 40%, #a8a29e 40%, #a8a29e 50%, transparent 50%);
+}
+
+.cup {
+  animation: cupAnimation 1000ms ease forwards;
+}
+
+.cup2 {
+  opacity: 0;
+  animation-delay: 3000ms;
+  animation: cupAnimation 1500ms ease forwards;
+}
+
+.cup3 {
+  opacity: 0;
+  animation-delay: 5000ms;
+  animation: cupAnimation 1800ms ease forwards;
+}
+
+@keyframes cupAnimation{
+  0%{
+    opacity:0;
+    transform: translate(0, -50px);
+  }
+  100%{
+    opacity:1;
+    transform: translate(0, 0px);
+    }
+}
+
+.bg-coffee {
+  background: #e4dccf;
+}
+
+.bg-coffee-banner {
+  background-image: url(../images/food-waste-recycle/coffee-bg4.png);
+  background-size: contain;
+}
+@media (min-width: 768px) {
+  .bg-coffee-banner {
+    background-image: url(../images/food-waste-recycle/coffee-bg4.png);
+    background-size: auto;
+  }
+}
+
+.bg-aulaw {
+  background-image: url(../images/food-waste-recycle/au-law-farm.jpg);
+}
+
+.text-shadow {
+  text-shadow: 0 0 2px black;
+}
+
+.bg-vege {
+  background-image: url(../images/bg-vege.jpg);
+}
+
+.bg-bowl-yellow {
+  background-image: url(../images/bowl-yellow.jpg);
+}
+
+.navicon {
+  width: 2rem;
+  height: 1.5rem;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
+.navicon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: rgba(30,30,30,0.9);
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+  transition: .2s ease-in-out;
+}
+
+.navicon span:nth-child(1) {
+  top: 0px;
+}
+
+.navicon span:nth-child(2) {
+  top: 8px;
+}
+
+.navicon span:nth-child(3) {
+  top: 16px;
+  left: 1rem;
+  width: 50%;
+}
+
+.navicon.open span:nth-child(1) {
+  top: 8px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.navicon.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.navicon.open span:nth-child(3) {
+  top: 8px;
+  left: 0;
+  width: 100%;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+
+#mmenu.open {
+  display: block;
+  transform-origin: top;
+  animation-name: scaleY;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-duration: 150ms;
+}
+
+@keyframes scaleY {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+#section-earth {
+  background-image:url(../images/food-waste-recycle/bg-sand.png);
+  background-repeat-x: revert;
+  background-repeat-y: no-repeat;
+}
+
+#earth-circle {
+    border-radius: 50%;
+    position: absolute;
+    background-image:url(../images/food-waste-recycle/bg-earth2.png);
+    transform-origin: center center;
+    transform: translateX(-50%) translateY(-50%);
+    top:50%;
+    left: 50%;
+}
+
+.bg-border-white {
+  background-image: linear-gradient(180deg,transparent 46%, white 46%, white 54%, transparent 54%);
+}
+
+.bg-border-gray700 {
+  background-image: linear-gradient(180deg,transparent 46%, rgba(55, 65, 81, 0.75) 46%, rgba(55, 65, 81, 0.75) 54%, transparent 54%);
+}
+
+.bg-gray-radial {
+  background-image: url(../images/food-waste-recycle/bg-grain.png),radial-gradient(at top left, #9ca3af 0%, #d1d5db 30%);
+}
+
+.bg-earth {
+  background-image:url(../images/food-waste-recycle/bg-earth2.png);
+}
+
+#farmer {
+  position: block;
+  margin: -45px auto 0 auto;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+#farmer {
+    position: absolute;
+    transform-origin: center center;
+    transform: translateX(-50%);
+    bottom:0;
+    left: 50%;
+    z-index: 10;
+}
+}
+#bowl {
+  animation: bowlAnimation 15000ms;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}
+
+@keyframes bowlAnimation{
+0%{
+  opacity: 0;
+  transform: translateX(-150px);
+}
+3%{
+  opacity: 1;
+  transform: translateX(-140px);
+}
+97%{
+  opacity: 1;
+  transform: translateX(1490px);
+}
+100%{
+  opacity: 0;
+  transform: translateX(1500px);
+  }
+}
+
+.bg-vege {
+background-image: url(../images/food-waste-recycle/bg-grain.png), url(../images/food-waste-recycle/farmer-hand.jpg);
+background-position: center;
+}
