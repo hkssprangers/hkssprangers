@@ -19,6 +19,7 @@ enum abstract KCZenzeroItem(String) to String {
     final HotpotSet;
     final GoldenLeg;
     final TomatoRice;
+    final MincedPork;
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
@@ -55,6 +56,7 @@ enum abstract KCZenzeroItem(String) to String {
             // .concat(hotpot)
             .concat([
                 HotdogSet,
+                MincedPork,
                 NoodleSet,
                 PastaSet,
                 LambPasta,
@@ -79,6 +81,7 @@ enum abstract KCZenzeroItem(String) to String {
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case GoldenLeg: KCZenzeroMenu.KCZenzeroGoldenLeg;
         case TomatoRice: KCZenzeroMenu.KCZenzeroTomatoRice;
+        case MincedPork: KCZenzeroMenu.KCZenzeroMincedPork;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
         case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
@@ -275,6 +278,44 @@ class KCZenzeroMenu {
                 maxItems: 2,
             },
             drink: KCZenzeroFreePaperBoxDrink,
+        },
+        required: ["main", "options", "drink"],
+    }
+
+    static public final KCZenzeroMincedPork = {
+        title: "滷肉系列",
+        properties: {
+            main: {
+                title: "滷肉系列",
+                type: "string",
+                "enum": [
+                    "蠔仔滷肉飯 $68",
+                    "白肉珍珠滷肉飯 $68",
+                    "雙獅子頭滷肉飯 $50",
+                    "火炙牛肉滷肉飯 $55",
+                    "麻辣雞翼滷肉飯 $50",
+                    "香草羊架滷肉飯 $58",
+                ],
+            },
+            options: {
+                type: "array",
+                title: "選項",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "轉烏冬 +$10",
+                    ],
+                },
+                uniqueItems: true,
+            },
+            drink: {
+                title: "送飲品",
+                type: "string",
+                "enum": [
+                    "唔要",
+                    "純茶一支 +$0",
+                ],
+            },
         },
         required: ["main", "options", "drink"],
     }
@@ -620,6 +661,8 @@ class KCZenzeroMenu {
             case R6Set:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case TomatoRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
+            case MincedPork:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["main"], [box]);

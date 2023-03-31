@@ -658,6 +658,21 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
 
+        final mincedPork = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroMincedPork.title}</div>
+                </div>
+                ${renderItems(KCZenzeroMincedPork.properties.main.enums())}
+                <div className="font-bold p-3">${KCZenzeroMincedPork.properties.options.title}</div>
+                <div className="p-3">
+                    ${slashes(KCZenzeroMincedPork.properties.options.items.enums())}
+                </div>
+                <div className="font-bold p-3">${KCZenzeroMincedPork.properties.drink.title}</div>
+                <div className="p-3">${slashes(KCZenzeroMincedPork.properties.drink.enums().slice(1))}</div>
+            </Fragment>
+        ');
+
         final lambPasta = {
             final def = KCZenzeroLambPasta;
             jsx('
@@ -682,6 +697,8 @@ class Menu extends View<MenuProps> {
                         <div className="p-3">${hotdogSet.description}</div>
                     </div>
                     ${renderItems(hotdogSet.properties.main.enums())}
+
+                    ${mincedPork}
 
                     ${wontonSet}
 
