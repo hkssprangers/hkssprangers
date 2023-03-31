@@ -613,7 +613,7 @@ class Menu extends View<MenuProps> {
                 <div className="p-3 font-bold">${KCZenzeroWontonSet.properties.sub.title}選擇</div>
                 <div className="p-3">${slashes(KCZenzeroWontonSet.properties.sub.enums())}</div>
                 <div className="font-bold p-3">${KCZenzeroWontonSet.properties.drink.title}選擇</div>
-                <div className="p-3">${slashes(KCZenzeroWontonSet.properties.drink.enums())}</div>
+                <div className="p-3">${slashes(KCZenzeroWontonSet.properties.drink.enums().slice(1))}</div>
             </Fragment>
         ');
 
@@ -626,7 +626,7 @@ class Menu extends View<MenuProps> {
                 <div className="p-3 font-bold">${KCZenzeroR6Set.properties.options.title}</div>
                 <div className="p-3">${slashes(KCZenzeroR6Set.properties.options.items.enums())}</div>
                 <div className="font-bold p-3">${KCZenzeroR6Set.properties.drink.title}選擇</div>
-                <div className="p-3">${slashes(KCZenzeroR6Set.properties.drink.enums())}</div>
+                <div className="p-3">${slashes(KCZenzeroR6Set.properties.drink.enums().slice(1))}</div>
             </Fragment>
         ');
 
@@ -639,7 +639,7 @@ class Menu extends View<MenuProps> {
                 <div className="p-3 font-bold">${KCZenzeroGoldenLeg.properties.options.title}</div>
                 <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.options.items.enums())}</div>
                 <div className="font-bold p-3">${KCZenzeroGoldenLeg.properties.drink.title}選擇</div>
-                <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.drink.enums())}</div>
+                <div className="p-3">${slashes(KCZenzeroGoldenLeg.properties.drink.enums().slice(1))}</div>
             </Fragment>
         ');
 
@@ -654,7 +654,7 @@ class Menu extends View<MenuProps> {
                     ${slashes(KCZenzeroTomatoRice.properties.options.items.enums())}
                 </div>
                 <div className="font-bold p-3">${KCZenzeroTomatoRice.properties.drink.title}選擇</div>
-                <div className="p-3">${slashes(KCZenzeroTomatoRice.properties.drink.enums())}</div>
+                <div className="p-3">${slashes(KCZenzeroTomatoRice.properties.drink.enums().slice(1))}</div>
             </Fragment>
         ');
 
@@ -713,7 +713,7 @@ class Menu extends View<MenuProps> {
                     <div className="p-3 font-bold">${KCZenzeroLightSet.properties.salad.title}選擇</div>
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.salad.enums())}</div>
                     <div className="font-bold p-3">${KCZenzeroLightSet.properties.drink.title}選擇</div>
-                    <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums())}</div>
+                    <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums().slice(1))}</div>
                 </div>
                 <div className="p-3 md:w-1/2">
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
