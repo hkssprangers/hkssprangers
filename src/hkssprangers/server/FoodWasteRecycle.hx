@@ -217,7 +217,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                                     </div>
 
                                     <p className="mb-3">在計劃開初，埗兵有榮幸接受到記者謝馨怡訪問，佢仲同小編行左一次收渣之路，非常感謝!</p>
-                                    <a className="rounded border inline-block" href="https://hk.finance.yahoo.com/%E5%92%96%E5%95%A1%E6%B8%A3-%E8%9B%8B%E6%AE%BC-%E8%BE%B2%E5%A4%AB-%E6%9C%AC%E5%9C%B0%E8%BE%B2%E6%A5%AD-213208958.html">
+                                    <a className="rounded border inline-block" href="https://hk.news.yahoo.com/%E5%92%96%E5%95%A1%E6%B8%A3-%E8%9B%8B%E6%AE%BC-%E8%BE%B2%E5%A4%AB-%E6%9C%AC%E5%9C%B0%E8%BE%B2%E6%A5%AD-213208958.html">
                                         ${image("/images/food-waste-recycle/yahoo-news.png", "yahoo新聞 「埗兵」外賣員義務收集咖啡渣及蛋殼供農夫作肥料：種返菜畀香港人食", "rounded-t w-full")}
                                         <div className="p-3 border-t text-opacity-75 text-gray-700">
                                             <h5 className="text-xs">yahoo新聞</h5>
