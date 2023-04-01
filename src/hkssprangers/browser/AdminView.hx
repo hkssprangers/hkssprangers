@@ -219,6 +219,9 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
                 CourierView;
         }
         function onAddReceipt(o:Order, file:File):Promise<Dynamic> {
+            setState({
+                isLoading: true,
+            });
             return window.fetch("/admin", {
                 method: "post",
                 headers: {

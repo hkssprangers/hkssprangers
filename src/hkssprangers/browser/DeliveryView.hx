@@ -46,6 +46,7 @@ typedef DeliveryViewState = {
     final isEditing:Bool;
     final isSaving:Bool;
     final isDeleting:Bool;
+    final isUploadingReceipt:Bool;
     final editingDelivery:Delivery;
     final addedNewCourier:Bool;
 }
@@ -56,6 +57,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
         state = {
             isEditing: props.canEdit && props.needEdit,
             isSaving: false,
+            isUploadingReceipt: false,
             isDeleting: false,
             editingDelivery: props.delivery.deepClone(),
             addedNewCourier: false,
@@ -260,22 +262,26 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
             } else {
                 null;
             }
-            var receipts = switch (props.viewMode) {
+            final receipts = switch (props.viewMode) {
                 case AdminView | AssignedCourierView:
-                    function onAddRecept(evt) {
+                    function onAddReceipt(evt) {
                         var file:js.html.File = evt.currentTarget.files[0];
                         props.onAddReceipt(o, file);
+                        setState({
+                            isUploadingReceipt: true,
+                        });
                     }
-                    var addReceiptBtn = if (props.viewMode == AdminView) {
+                    final addReceiptBtn = if (props.viewMode == AdminView) {
                         jsx('
                             <Button
                                 color=${Primary}
                                 component="label"
+                                disabled=${state.isUploadingReceipt}
                             >
                                 上傳收據
                                 <input
                                     type="file"
-                                    onChange=${onAddRecept}
+                                    onChange=${onAddReceipt}
                                     hidden
                                 />
                             </Button>
@@ -283,7 +289,7 @@ class DeliveryView extends ReactComponentOf<DeliveryViewProps, DeliveryViewState
                     } else {
                         null;
                     }
-                    var receiptImages = if (o.receipts != null) {
+                    final receiptImages = if (o.receipts != null) {
                         o.receipts.mapi((i,r) -> {
                             jsx('
                                 <li key=${r.receiptId}>
