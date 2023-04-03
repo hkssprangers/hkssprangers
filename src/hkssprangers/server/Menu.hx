@@ -602,6 +602,18 @@ class Menu extends View<MenuProps> {
             null;
         };
 
+        final yiMein = {
+            final def = KCZenzeroYiMein;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${def.title}</div>
+                    </div>
+                    ${renderItems(def.properties.main.enums())}
+                </Fragment>
+            ');
+        };
+
         final wontonSet = jsx('
             <Fragment>
                 <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -699,6 +711,8 @@ class Menu extends View<MenuProps> {
                     ${renderItems(hotdogSet.properties.main.enums())}
 
                     ${mincedPork}
+
+                    ${yiMein}
 
                     ${wontonSet}
 
