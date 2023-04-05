@@ -61,7 +61,7 @@ enum abstract KCZenzeroItem(String) to String {
                 YiMein,
                 NoodleSet,
                 PastaSet,
-                LambPasta,
+                // LambPasta,
                 R6Set,
                 WontonSet,
                 LightSet,
@@ -411,8 +411,8 @@ class KCZenzeroMenu {
             null;
 
     static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
-        title: "意式濃厚蕃茄湯車仔粉",
-        description: "蕃茄湯底車仔粉任選兩款主食 $48",
+        title: "意式濃厚蕃茄湯車仔飯",
+        description: "任選兩款主食 $48",
         properties: {
             options: {
                 type: "array",
@@ -433,10 +433,11 @@ class KCZenzeroMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類",
+                title: "類別",
                 "enum": [
-                    "意粉",
-                    "螺絲粉",
+                    "飯",
+                    "脆米",
+                    "烏冬 +$8",
                 ],
             },
             drink: KCZenzeroSetDrink(5),
@@ -446,7 +447,7 @@ class KCZenzeroMenu {
     };
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
-        title: "意粉",
+        title: "西式飯",
         description: "任選醬汁／主食 $55",
         properties: {
             main: {
@@ -471,10 +472,11 @@ class KCZenzeroMenu {
             },
             noodle: {
                 type: "string",
-                title: "麵類",
+                title: "類別",
                 "enum": [
-                    "意粉",
-                    "螺絲粉",
+                    "飯",
+                    "脆米",
+                    "烏冬 +$8",
                 ],
             },
             drink: KCZenzeroSetDrink(5),

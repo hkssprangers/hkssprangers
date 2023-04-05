@@ -685,18 +685,6 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
 
-        final lambPasta = {
-            final def = KCZenzeroLambPasta;
-            jsx('
-                <Fragment>
-                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="p-3">${def.title}</div>
-                    </div>
-                    ${renderItems(def.properties.main.enums())}
-                </Fragment>
-            ');
-        }
-
         return jsx('
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
@@ -753,7 +741,6 @@ class Menu extends View<MenuProps> {
                     <div className="p-3 font-bold">${pastaSet.properties.noodle.title}選擇</div>
                     <div className="p-3">${slashes(pastaSet.properties.noodle.enums())}</div>
 
-                    ${lambPasta}
                     ${goldenLeg}
                     ${tomatoRice}
 
