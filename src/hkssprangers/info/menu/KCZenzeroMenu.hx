@@ -346,7 +346,7 @@ class KCZenzeroMenu {
                     "enum": [
                         "飯 +$8",
                         "脆米 +$8",
-                        "烏冬 +$8",
+                        "烏冬 +$10",
                     ],
                 },
                 uniqueItems: true,
