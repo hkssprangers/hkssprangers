@@ -976,9 +976,8 @@ enum abstract Shop(String) to String {
             case [ThaiHome, "2023-04-03" | "2023-04-04" | "2023-04-05", _]:
                 return Unavailable('休息');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid02si9nda8M5toVHgbMxEx4T4p5ZBDgcKNeVotQcbGcvB35RaP7B2ZoxU7NiBccFiyAl&id=100064143817671
-            case [KCZenzero, "2023-03-30", _]:
-                return Unavailable('休息一天');
+            case [KCZenzero, "2023-04-06", Lunch]:
+                return Unavailable('應付團購 午市暫停一天');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid033cVDvvzuhZy37vB43fAtwN2LfrKS2d83RYqioYVHtM8wxhzY6SryPbvBia9DsVY1l
             case [LaksaStore, "2023-03-27", _]:
