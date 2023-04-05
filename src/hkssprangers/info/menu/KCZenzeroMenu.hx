@@ -340,11 +340,13 @@ class KCZenzeroMenu {
             },
             options: {
                 type: "array",
-                title: "選項",
+                title: "加配",
                 items: {
                     type: "string",
                     "enum": [
-                        "迷你蕃茄湯粉 +$8",
+                        "飯 +$8",
+                        "脆米 +$8",
+                        "烏冬 +$8",
                     ],
                 },
                 uniqueItems: true,
