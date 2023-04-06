@@ -555,10 +555,6 @@ class Menu extends View<MenuProps> {
             KCZenzeroMenu.limitedSpecial.available
         ) {
             final def = KCZenzeroMenu.limitedSpecial.def;
-            final period = today + (switch (KCZenzeroMenu.limitedSpecial.timeSlotTypes) {
-                case [Dinner]: " 晚市供應";
-                case _: "";
-            });
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>

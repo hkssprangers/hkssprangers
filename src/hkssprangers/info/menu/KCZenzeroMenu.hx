@@ -373,25 +373,25 @@ class KCZenzeroMenu {
     }
 
     static public final limitedSpecial = {
-        final limitedSpecial = "鹹魚煎肉餅滷肉飯 $50";
+        final limitedSpecials = [
+            "鹹魚煎肉餅滷肉飯 $50",
+            "雞樅菇雙丸濃茄湯飯 $50",
+        ];
         {
-            dateStart: "2023-04-06",
-            dateEnd: "2023-04-06",
+            dateStart: "2023-04-07",
+            dateEnd: "2023-04-07",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
             def: {
-                // title: "限定",
-                title: "限定：" + limitedSpecial,
+                title: limitedSpecials.length == 1 ? "限定：" + limitedSpecials[0] : "限定",
                 description: "⚠️ 請提早落單。售完即止。",
                 properties: {
                     special: {
                         title: "限定",
                         type: "string",
-                        "enum": [
-                            limitedSpecial
-                        ],
-                        "default": limitedSpecial
+                        "enum": limitedSpecials,
+                        "default": limitedSpecials.length == 1 ? limitedSpecials[0] : null,
                     }
                 },
                 required: ["special"],
