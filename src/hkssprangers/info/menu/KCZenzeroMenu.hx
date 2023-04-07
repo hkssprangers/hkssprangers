@@ -92,43 +92,22 @@ enum abstract KCZenzeroItem(String) to String {
 
 class KCZenzeroMenu {
     static public final box = "外賣盒 $2";
-    static public function KCZenzeroSetDrink(price:Float) return {
-        title: "飲品",
+    static public final KCZenzeroFreeDrink = {
+        title: "送飲品",
         type: "string",
         "enum": [
             "唔要",
-            "純茶一支 " + (price > 0 ? ' +$$0' : ""),
-            // "汽水(隨機) " + (price > 0 ? ' +$$0' : ""),
-            // "可口可樂" + (price > 0 ? ' +$$0' : ""),
-            // "維他氣泡桃橙茶" + (price > 0 ? ' +$$0' : ""),
-            // "維他氣泡檸檬茶" + (price > 0 ? ' +$$0' : ""),
-            // "自家沖洛神花冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            // "自家沖玫瑰烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            // "自家沖桂花烏龍冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            // "自家沖玄米冷泡茶" + (price > 0 ? ' +$$$price' : ""),
-            // "自家沖玄米綠茶" + (price > 0 ? ' +$$$price' : ""),
-            // "自家沖水蜜桃烏龍茶" + (price > 0 ? ' +$$$price' : ""),
+            "純茶一支",
         ],
     };
-    static public final KCZenzeroFreePaperBoxDrink = {
-        title: "飲品",
+    static public final KCZenzeroAddDrink = {
+        title: "加配飲品",
         type: "string",
         "enum": [
             "唔要",
-            // "檸檬茶紙包飲品 +$0",
-            // "菊花茶紙包飲品 +$0",
-            "純茶一支 +$0",
-            // "汽水(隨機) +$0",
-            // "可口可樂 +$0",
-            // "維他氣泡桃橙茶 +$0",
-            // "維他氣泡檸檬茶 +$0",
-            // "自家沖洛神花冷泡茶 +$5",
-            // "自家沖玫瑰烏龍冷泡茶 +$5",
-            // "自家沖桂花烏龍冷泡茶 +$5",
-            // "自家沖玄米冷泡茶 +$5",
-            // "自家沖玄米綠茶 +$5",
-            // "自家沖水蜜桃烏龍茶 +$5",
+            "純茶一支 +$8",
         ],
+        "default": "唔要",
     };
 
     static public final KCZenzeroSetOptions = {
@@ -217,10 +196,10 @@ class KCZenzeroMenu {
                     "九龍皇帝熱狗",
                     "妙菇皇后熱狗",
                     // "雙魚巨蟹熱狗",
-                    "日式咖喱牛肉熱狗",
+                    // "日式咖喱牛肉熱狗",
                 ]
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroAddDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "drink"],
@@ -248,7 +227,7 @@ class KCZenzeroMenu {
                 },
                 uniqueItems: true,
             },
-            drink: KCZenzeroFreePaperBoxDrink,
+            drink: KCZenzeroAddDrink,
         },
         required: ["main", "drink"],
     }
@@ -282,7 +261,7 @@ class KCZenzeroMenu {
                 minItems: 2,
                 maxItems: 2,
             },
-            drink: KCZenzeroFreePaperBoxDrink,
+            drink: KCZenzeroFreeDrink,
         },
         required: ["main", "options", "drink"],
     }
@@ -315,14 +294,7 @@ class KCZenzeroMenu {
                 },
                 uniqueItems: true,
             },
-            drink: {
-                title: "送飲品",
-                type: "string",
-                "enum": [
-                    "唔要",
-                    "純茶一支 +$0",
-                ],
-            },
+            drink: KCZenzeroFreeDrink,
         },
         required: ["main", "options", "drink"],
     }
@@ -351,7 +323,7 @@ class KCZenzeroMenu {
                 },
                 uniqueItems: true,
             },
-            drink: KCZenzeroFreePaperBoxDrink,
+            drink: KCZenzeroFreeDrink,
         },
         required: ["main", "drink"],
     }
@@ -443,7 +415,7 @@ class KCZenzeroMenu {
                     "烏冬 +$8",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroAddDrink
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["options", "noodle", "drink"],
@@ -482,7 +454,7 @@ class KCZenzeroMenu {
                     "烏冬 +$8",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroFreeDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sauce", "noodle", "drink"],
@@ -499,14 +471,7 @@ class KCZenzeroMenu {
                     "香草羊架卡邦尼螺絲粉 $68",
                 ],
             },
-            drink: {
-                title: "飲品",
-                type: "string",
-                "enum": [
-                    "唔要",
-                    "冷泡紅茶 +$0",
-                ],
-            },
+            drink: KCZenzeroFreeDrink,
         },
         required: ["main", "drink"],
     };
@@ -543,7 +508,7 @@ class KCZenzeroMenu {
                     // "薯條",
                 ],
             },
-            drink: KCZenzeroSetDrink(5),
+            drink: KCZenzeroFreeDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "sub", "drink"],
@@ -569,7 +534,7 @@ class KCZenzeroMenu {
                     "煙三文魚沙律",
                 ],
             },
-            drink: KCZenzeroSetDrink(0),
+            drink: KCZenzeroFreeDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
         required: [
