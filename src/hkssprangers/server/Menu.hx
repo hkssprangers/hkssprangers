@@ -610,6 +610,18 @@ class Menu extends View<MenuProps> {
             ');
         };
 
+        final tomatoSoupRice = {
+            final def = KCZenzeroTomatoSoupRice;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${def.title}</div>
+                    </div>
+                    ${renderItems(def.properties.main.enums())}
+                </Fragment>
+            ');
+        };
+
         final wontonSet = jsx('
             <Fragment>
                 <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -716,6 +728,8 @@ class Menu extends View<MenuProps> {
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums().slice(1))}</div>
                 </div>
                 <div className="p-3 md:w-1/2">
+                    ${tomatoSoupRice}
+
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${noodleSet.title}</div>
                         <div className="p-3">$$${noodleSet.description.parsePrice().price}</div>

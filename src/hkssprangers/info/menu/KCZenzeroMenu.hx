@@ -21,6 +21,7 @@ enum abstract KCZenzeroItem(String) to String {
     final TomatoRice;
     final MincedPork;
     final YiMein;
+    final TomatoSoupRice;
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
@@ -59,6 +60,7 @@ enum abstract KCZenzeroItem(String) to String {
                 HotdogSet,
                 MincedPork,
                 YiMein,
+                TomatoSoupRice,
                 NoodleSet,
                 PastaSet,
                 // LambPasta,
@@ -74,6 +76,7 @@ enum abstract KCZenzeroItem(String) to String {
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
+        case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
         case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(TimeSlotType.classify(timeSlot.start));
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
@@ -339,6 +342,22 @@ class KCZenzeroMenu {
                     "花膠蒜香炆伊麵 $45"
                 ],
                 "default": "花膠蒜香炆伊麵 $45"
+            }
+        },
+        required: ["main"],
+    }
+
+    static public final KCZenzeroTomatoSoupRice = {
+        title: "雞樅菇雙丸濃茄湯飯",
+        description: "⚠️ 請提早落單。每日數量有限，售完即止。",
+        properties: {
+            main: {
+                title: "雞樅菇雙丸濃茄湯飯",
+                type: "string",
+                "enum": [
+                    "雞樅菇雙丸濃茄湯飯 $50"
+                ],
+                "default": "雞樅菇雙丸濃茄湯飯 $50"
             }
         },
         required: ["main"],
@@ -657,6 +676,8 @@ class KCZenzeroMenu {
             case MincedPork:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case YiMein:
+                summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
+            case TomatoSoupRice:
                 summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["main"], [box]);
