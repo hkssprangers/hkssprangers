@@ -62,13 +62,13 @@ enum abstract KCZenzeroItem(String) to String {
                 YiMein,
                 TomatoSoupRice,
                 NoodleSet,
-                PastaSet,
+                // PastaSet,
                 // LambPasta,
                 R6Set,
                 WontonSet,
                 LightSet,
                 GoldenLeg,
-                TomatoRice,
+                // TomatoRice,
                 Single,
             ]);
     }
@@ -137,7 +137,7 @@ class KCZenzeroMenu {
             "椒鹽雞翼尖 $25",
             // "芝士肉醬燒大菇(辣) $25",
             // "芝士肉醬燒大菇(唔辣) $25",
-            "芝士茄父子(素) $25",
+            // "芝士茄父子(素) $25",
             // "芝士波隆納肉醬薯條 $25",
             "芝士波隆納肉醬薯格 $25",
             // "芝士波隆納肉醬ABC字母薯餅 $25",
@@ -202,7 +202,7 @@ class KCZenzeroMenu {
                     // "日式咖喱牛肉熱狗",
                 ]
             },
-            drink: KCZenzeroAddDrink,
+            drink: KCZenzeroFreeDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["main", "drink"],
@@ -230,7 +230,7 @@ class KCZenzeroMenu {
                 },
                 uniqueItems: true,
             },
-            drink: KCZenzeroAddDrink,
+            drink: KCZenzeroFreeDrink,
         },
         required: ["main", "drink"],
     }
@@ -342,9 +342,10 @@ class KCZenzeroMenu {
                     "花膠蒜香炆伊麵 $45"
                 ],
                 "default": "花膠蒜香炆伊麵 $45"
-            }
+            },
+            drink: KCZenzeroFreeDrink,
         },
-        required: ["main"],
+        required: ["main", "drink"],
     }
 
     static public final KCZenzeroTomatoSoupRice = {
@@ -358,9 +359,10 @@ class KCZenzeroMenu {
                     "雞樅菇雙丸濃茄湯飯 $50"
                 ],
                 "default": "雞樅菇雙丸濃茄湯飯 $50"
-            }
+            },
+            drink: KCZenzeroFreeDrink,
         },
-        required: ["main"],
+        required: ["main", "drink"],
     }
 
     static public final limitedSpecial = {
@@ -434,7 +436,7 @@ class KCZenzeroMenu {
                     "烏冬 +$8",
                 ],
             },
-            drink: KCZenzeroAddDrink
+            drink: KCZenzeroFreeDrink
             // extraOptions: KCZenzeroSetOptions,
         },
         required: ["options", "noodle", "drink"],
@@ -676,9 +678,9 @@ class KCZenzeroMenu {
             case MincedPork:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case YiMein:
-                summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case TomatoSoupRice:
-                summarizeOrderObject(orderItem.item, def, ["main"], null, null, "");
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case HotpotSet:
                 summarizeOrderObject(orderItem.item, def, ["main"], [box]);
             case Single:
