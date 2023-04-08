@@ -118,9 +118,9 @@ class ThaiHomeMenu {
         title: "小食",
         type: "string",
         "enum": [
-            item("月亮炸蝦餅", 45),
+            item("月亮炸蝦餅", 48),
             item("泰式生菜包", 40),
-            item("泰式炸魚餅", 35),
+            item("泰式炸魚餅", 38),
             item("油飯", 8),
             item("白飯", 8),
         ],
