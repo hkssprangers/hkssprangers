@@ -543,9 +543,6 @@ class Menu extends View<MenuProps> {
     function renderKCZenzero() {
         final now:LocalDateString = Date.now();
         final today = now.getDatePart();
-        final hotdogSet = KCZenzeroHotdogSet(Lunch);
-        final noodleSet = KCZenzeroNoodleSet(Lunch);
-        final pastaSet = KCZenzeroPastaSet(Lunch);
 
         final limited = if (
             today >= KCZenzeroMenu.limitedSpecial.dateStart
@@ -682,29 +679,9 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
 
-        return jsx('
-            <div className="md:flex flex-row">
-                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                    ${limited}
-
-                    ${hotpotSet}
-
-                    <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
-                        <div className="flex-grow p-3">${hotdogSet.title}</div>
-                        <div className="p-3">${hotdogSet.description}</div>
-                    </div>
-                    ${renderItems(hotdogSet.properties.main.enums())}
-                    <div className="font-bold p-3">${hotdogSet.properties.drink.title}</div>
-                    <div className="p-3">${slashes(hotdogSet.properties.drink.enums().slice(1))}</div>
-
-                    ${mincedPork}
-
-                    ${yiMein}
-
-                    ${wontonSet}
-
-                    ${r6Set}
-
+        final lightSet = {
+            jsx('
+                <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${KCZenzeroLightSet.title}</div>
                         <div className="p-3">$$${MenuTools.parsePrice(KCZenzeroLightSet.description).price}</div>
@@ -715,10 +692,29 @@ class Menu extends View<MenuProps> {
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.salad.enums())}</div>
                     <div className="font-bold p-3">${KCZenzeroLightSet.properties.drink.title}</div>
                     <div className="p-3">${slashes(KCZenzeroLightSet.properties.drink.enums().slice(1))}</div>
-                </div>
-                <div className="p-3 md:w-1/2">
-                    ${tomatoSoupRice}
+                </Fragment>
+            ');
+        }
 
+        final hotdogSet = {
+            final hotdogSet = KCZenzeroHotdogSet(Lunch);
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="flex-grow p-3">${hotdogSet.title}</div>
+                        <div className="p-3">${hotdogSet.description}</div>
+                    </div>
+                    ${renderItems(hotdogSet.properties.main.enums())}
+                    <div className="font-bold p-3">${hotdogSet.properties.drink.title}</div>
+                    <div className="p-3">${slashes(hotdogSet.properties.drink.enums().slice(1))}</div>
+                </Fragment>
+            ');
+        }
+
+        final noodleSet = {
+            final noodleSet = KCZenzeroNoodleSet(Lunch);
+            jsx('
+                <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${noodleSet.title}</div>
                         <div className="p-3">$$${noodleSet.description.parsePrice().price}</div>
@@ -731,13 +727,48 @@ class Menu extends View<MenuProps> {
 
                     <div className="font-bold p-3">${noodleSet.properties.drink.title}</div>
                     <div className="p-3">${slashes(noodleSet.properties.drink.enums().slice(1))}</div>
+                </Fragment>
+            ');
+        }
 
-                    ${goldenLeg}
-
+        final single = {
+            jsx('
+                <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="p-3">${KCZenzeroSingle.title}</div>
                     </div>
                     ${renderItems(KCZenzeroSingle.enums())}
+                </Fragment>
+            ');
+        }
+
+        return jsx('
+            <div className="md:flex flex-row">
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    ${limited}
+
+                    ${hotpotSet}
+
+                    ${hotdogSet}
+
+                    ${mincedPork}
+
+                    ${yiMein}
+
+                    ${wontonSet}
+
+                    ${r6Set}
+                </div>
+                <div className="p-3 md:w-1/2">
+                    ${tomatoSoupRice}
+
+                    ${noodleSet}
+
+                    ${goldenLeg}
+
+                    ${lightSet}
+
+                    ${single}
                 </div>
             </div>
         ');
