@@ -219,7 +219,8 @@ class Commands {
                     case v: v;
                 });
 
-                FileSystem.createDirectory(Path.join([summaryDir, "shop"]));
+                final shopFolder = Path.join([summaryDir, "shop", start.getDatePart().substring(0,7)]);
+                FileSystem.createDirectory(shopFolder);
                 final shops = Shop.all;
                 final charges = new Map<Shop, Decimal>();
                 for (shop in shops) {
@@ -232,7 +233,7 @@ class Commands {
                     final wb = Xlsx.utils.book_new();
                     final ws = shopSummary(shop, deliveries);
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
-                    Xlsx.writeFile(wb, Path.join([summaryDir, "shop", start.getDatePart() + "_" + end.getDatePart() + "_" + shop.info().name + ".xlsx"]));
+                    Xlsx.writeFile(wb, Path.join([shopFolder, start.getDatePart() + "_" + end.getDatePart() + "_" + shop.info().name + ".xlsx"]));
 
                     final totalCharge = [
                         for (d in deliveries)
@@ -257,7 +258,8 @@ class Commands {
 
                 Sys.println("-----------------------------");
 
-                FileSystem.createDirectory(Path.join([summaryDir, "courier"]));
+                final courierFolder = Path.join([summaryDir, "courier", start.getDatePart().substring(0,7)]);
+                FileSystem.createDirectory(courierFolder);
                 final couriers = [
                     for (d in deliveries)
                     for (c in d.couriers)
@@ -271,7 +273,7 @@ class Commands {
                     final wb = Xlsx.utils.book_new();
                     final ws = courierSummary(courier, deliveries);
                     Xlsx.utils.book_append_sheet(wb, ws, "orders");
-                    Xlsx.writeFile(wb, Path.join([summaryDir, "courier", start.getDatePart() + "_" + end.getDatePart() + "_" + courier + ".xlsx"]));
+                    Xlsx.writeFile(wb, Path.join([courierFolder, start.getDatePart() + "_" + end.getDatePart() + "_" + courier + ".xlsx"]));
 
                     final subsidyTotal:Decimal = [
                             for (d in deliveries)
@@ -308,7 +310,7 @@ class Commands {
                     final wb = Xlsx.utils.book_new();
                     final ws = createTracking(charges);
                     Xlsx.utils.book_append_sheet(wb, ws, "tracking");
-                    Xlsx.writeFile(wb, Path.join([summaryDir, "tracking " + start.getDatePart().substr(0, 7) + ".xlsx"]));
+                    Xlsx.writeFile(wb, Path.join([shopFolder, "tracking " + start.getDatePart().substr(0, 7) + ".xlsx"]));
                 }
 
                 Noise;
