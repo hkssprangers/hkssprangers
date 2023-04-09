@@ -462,6 +462,20 @@ class Commands {
 
     static function main():Void {
         switch (Sys.args()) {
+            case ["calculate", month]:
+                if (!~/[0-9][0-9][0-9][0-9]-[0-9][0-9]/.match(month)) {
+                    throw 'input should be YYYY-MM';
+                }
+                final startDate = Date.fromString(month + "-01");
+                final endDate = DateTools.delta(new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1, 0, 0, 0), DateTools.seconds(-1));
+                Sys.println('${(startDate:LocalDateString)} - ${(endDate:LocalDateString)}');
+                calculate(startDate, endDate).handle(o -> switch o {
+                    case Success(data):
+                        Sys.exit(0);
+                    case Failure(failure):
+                        Sys.println(failure.message + "\n\n" + failure.exceptionStack);
+                        Sys.exit(1);
+                });
             case ["calculate", start, end]:
                 if (start.length != 10 || end.length != 10)
                     throw "invalid date format";
