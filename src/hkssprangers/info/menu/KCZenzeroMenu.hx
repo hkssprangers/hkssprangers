@@ -359,9 +359,9 @@ class KCZenzeroMenu {
                 title: "沙薑蒜泥白肉飯",
                 type: "string",
                 "enum": [
-                    "沙薑蒜泥白肉飯 $48"
+                    "沙薑蒜泥白肉飯 $45"
                 ],
-                "default": "沙薑蒜泥白肉飯 $48"
+                "default": "沙薑蒜泥白肉飯 $45"
             },
             drink: KCZenzeroFreeDrink,
         },
