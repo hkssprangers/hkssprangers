@@ -609,6 +609,20 @@ class Menu extends View<MenuProps> {
             ');
         };
 
+        final rice = {
+            final def = KCZenzeroRice;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${def.title}</div>
+                    </div>
+                    ${renderItems(def.properties.main.enums())}
+                    <div className="font-bold p-3">${def.properties.drink.title}</div>
+                    <div className="p-3">${slashes(def.properties.drink.enums().slice(1))}</div>
+                </Fragment>
+            ');
+        };
+
         final tomatoSoupRice = {
             final def = KCZenzeroTomatoSoupRice;
             jsx('
@@ -761,6 +775,7 @@ class Menu extends View<MenuProps> {
                 </div>
                 <div className="p-3 md:w-1/2">
                     ${tomatoSoupRice}
+                    ${rice}
 
                     ${noodleSet}
 

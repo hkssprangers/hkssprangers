@@ -22,6 +22,7 @@ enum abstract KCZenzeroItem(String) to String {
     final MincedPork;
     final YiMein;
     final TomatoSoupRice;
+    final Rice;
     final Single;
 
     static public function all(timeSlot:TimeSlot):ReadOnlyArray<KCZenzeroItem> {
@@ -61,6 +62,7 @@ enum abstract KCZenzeroItem(String) to String {
                 MincedPork,
                 YiMein,
                 TomatoSoupRice,
+                Rice,
                 NoodleSet,
                 // PastaSet,
                 // LambPasta,
@@ -89,6 +91,7 @@ enum abstract KCZenzeroItem(String) to String {
         case TomatoRice: KCZenzeroMenu.KCZenzeroTomatoRice;
         case MincedPork: KCZenzeroMenu.KCZenzeroMincedPork;
         case HotpotSet: KCZenzeroMenu.KCZenzeroHotpotSet;
+        case Rice: KCZenzeroMenu.KCZenzeroRice;
         case Single: KCZenzeroMenu.KCZenzeroSingle;
     }
 }
@@ -343,6 +346,22 @@ class KCZenzeroMenu {
                     "花膠蒜香炆伊麵 $45"
                 ],
                 "default": "花膠蒜香炆伊麵 $45"
+            },
+            drink: KCZenzeroFreeDrink,
+        },
+        required: ["main", "drink"],
+    }
+
+    static public final KCZenzeroRice = {
+        title: "沙薑蒜泥白肉飯",
+        properties: {
+            main: {
+                title: "沙薑蒜泥白肉飯",
+                type: "string",
+                "enum": [
+                    "沙薑蒜泥白肉飯 $48"
+                ],
+                "default": "沙薑蒜泥白肉飯 $48"
             },
             drink: KCZenzeroFreeDrink,
         },
@@ -679,6 +698,8 @@ class KCZenzeroMenu {
             case MincedPork:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case YiMein:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
+            case Rice:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case TomatoSoupRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
