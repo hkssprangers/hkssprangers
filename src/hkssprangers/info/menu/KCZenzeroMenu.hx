@@ -283,7 +283,7 @@ class KCZenzeroMenu {
                     "火炙牛肉滷肉飯 $55",
                     "麻辣雞翼滷肉飯 $50",
                     "香草羊架滷肉飯 $58",
-                    "終極豐盛滷肉飯 $78",
+                    // "終極豐盛滷肉飯 $78",
                 ],
             },
             options: {
@@ -300,7 +300,7 @@ class KCZenzeroMenu {
             },
             drink: KCZenzeroFreeDrink,
         },
-        required: ["main", "options", "drink"],
+        required: ["main", "drink"],
     }
 
     static public final KCZenzeroR6Set = {
