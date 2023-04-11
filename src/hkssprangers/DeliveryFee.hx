@@ -1581,6 +1581,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "華麗商場",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/1028582204"
+                }
+            ],
+            match: address -> address.contains("華麗商場") || address.contains("華麗廣場"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "元州街龍寶酒家",
             osm: [
                 {
