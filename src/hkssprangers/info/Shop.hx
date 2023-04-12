@@ -971,10 +971,10 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [EightyNine, "2023-04-04" | "2023-04-05", _]:
-                return Unavailable('休息');
-            case [ThaiHome, "2023-04-03" | "2023-04-04" | "2023-04-05", _]:
-                return Unavailable('休息');
+            case [EightyNine, "2023-04-13", _]:
+                return Unavailable('休息一天');
+            case [ThaiHome, "2023-04-13", _]:
+                return Unavailable('休息一天');
 
             // https://www.facebook.com/LaksaStore/posts/pfbid033cVDvvzuhZy37vB43fAtwN2LfrKS2d83RYqioYVHtM8wxhzY6SryPbvBia9DsVY1l
             case [LaksaStore, "2023-03-27", _]:
