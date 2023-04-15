@@ -257,7 +257,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "牛舌片",
+                        // "牛舌片",
                         "雞扒",
                         "煙鴨胸",
                         "蟹棒",
@@ -388,11 +388,11 @@ class KCZenzeroMenu {
 
     static public final limitedSpecial = {
         final limitedSpecials = [
-            "鹹魚煎肉餅滷肉飯 $50",
+            "佛跳牆炆伊麵 $68",
         ];
         {
-            dateStart: "2023-04-11",
-            dateEnd: "2023-04-11",
+            dateStart: "2023-04-16",
+            dateEnd: "2023-04-16",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
@@ -437,7 +437,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "牛舌片",
+                        // "牛舌片",
                         "雞扒",
                         "煙鴨胸",
                         "蟹棒",
@@ -474,7 +474,7 @@ class KCZenzeroMenu {
                     // "炸芝士海鮮條",
                     // "蝦條",
                     "香草雞扒",
-                    "牛舌片",
+                    // "牛舌片",
                 ],
             },
             sauce: {
