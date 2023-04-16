@@ -3031,13 +3031,13 @@ class DeliveryFee {
             }
         },
         {
-            place: "Openground",
+            place: "大南街198號",
             osm: [
                 {
-                    url: "https://www.openstreetmap.org/node/9438486337"
+                    url: "https://www.openstreetmap.org/node/9438486337" // openground
                 }
             ],
-            match: address -> address.toLowerCase().contains("openground") || address.contains("大南街198號"),
+            match: address -> address.contains("大南街198號"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 25;
                 case PeiHoStreetMarketCluster: 25;
