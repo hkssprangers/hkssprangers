@@ -391,8 +391,8 @@ class KCZenzeroMenu {
             "佛跳牆炆伊麵 $68",
         ];
         {
-            dateStart: "2023-04-16",
-            dateEnd: "2023-04-16",
+            dateStart: "2023-04-18",
+            dateEnd: "2023-04-18",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
