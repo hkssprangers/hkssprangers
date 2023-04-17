@@ -392,7 +392,7 @@ class KCZenzeroMenu {
         ];
         {
             dateStart: "2023-04-18",
-            dateEnd: "2023-04-18",
+            dateEnd: "2023-04-21",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
