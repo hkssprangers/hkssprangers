@@ -19,7 +19,6 @@ typedef TimeSlotDisableButtonState = {
 }
 
 class TimeSlotDisableButton extends ReactComponentOf<TimeSlotDisableButtonProps, TimeSlotDisableButtonState> {
-    static public final disableMessage = "暫停接單";
     final stopIcon = jsx('<i className="fa-solid fa-ban opacity-75"></i>');
     final stopIconChecked = jsx('<i className="fa-solid fa-ban text-red-600"></i>');
 
@@ -37,7 +36,7 @@ class TimeSlotDisableButton extends ReactComponentOf<TimeSlotDisableButtonProps,
         });
         final checked:Bool = (untyped evt.target).checked;
         final availability:Null<Availability> = switch (checked) {
-            case true: Unavailable(disableMessage);
+            case true: Unavailable(AvailabilityTools.disableMessage);
             case false: null;
         };
         window.fetch("/admin", {

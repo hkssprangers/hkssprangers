@@ -12,6 +12,7 @@ import js.npm.material_ui.Pickers;
 import hkssprangers.info.*;
 import js.Browser.*;
 import js.lib.Promise;
+import hkssprangers.AvailabilityTools;
 import hkssprangers.info.TimeSlot;
 using hkssprangers.info.OrderTools;
 using hkssprangers.info.TgTools;
@@ -558,7 +559,7 @@ class AdminView extends ReactComponentOf<AdminViewProps, AdminViewState> {
             case _:
                 final controls = state.timeSlots.map(slot -> {
                     final disabled = switch (slot.availability) {
-                        case Unavailable(TimeSlotDisableButton.disableMessage): true;
+                        case Unavailable(AvailabilityTools.disableMessage): true;
                         case Unavailable(r):
                             trace(r);
                             true;

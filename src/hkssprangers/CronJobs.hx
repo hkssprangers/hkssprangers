@@ -1,5 +1,6 @@
 package hkssprangers;
 
+import tink.sql.expr.Functions;
 import comments.CommentString.*;
 import thx.Weekday;
 import hkssprangers.info.Weekday;
@@ -15,6 +16,8 @@ import tink.core.ext.Promises;
 import hkssprangers.info.Shop;
 import hkssprangers.info.Delivery;
 import tink.sql.expr.Functions as F;
+import hkssprangers.Availability;
+import hkssprangers.AvailabilityTools;
 using Lambda;
 using StringTools;
 using hkssprangers.db.DatabaseTools;
@@ -64,6 +67,36 @@ class CronJobs {
             .then(msg -> {
                 tgBot.telegram.pinChatMessage(chatId, msg.message_id);
             })
+            .then(_ -> null);
+    }
+
+    static function setTimeSlots(startDate:LocalDateString, endDate:LocalDateString, setAvailability:TimeSlot->Null<Availability>) {
+        final dateStart:LocalDateString = startDate.getDatePart() + " 00:00:00";
+        final dateEnd:LocalDateString = endDate.getDatePart() + " 00:00:00";
+        var date = dateStart;
+        var slots:Array<TimeSlot> = [];
+        while (date <= dateEnd) {
+            for (slot in TimeSlotTools.regularTimeSlots) {
+                slots.push({
+                    start: date + " " + slot.start,
+                    end: date + " " + slot.end,
+                });
+            }
+            date = date.deltaDays(1);
+        }
+
+        return CockroachDb.db.timeSlotRule.insertMany([
+            for (timeSlot in slots)
+            if (setAvailability(timeSlot) != null)
+            {
+                startTime: timeSlot.start.toDate(),
+                endTime: timeSlot.end.toDate(),
+                availability: setAvailability(timeSlot),
+            }
+        ], {
+            update: u -> [u.availability.set(Functions.values(u.availability))],
+        })
+            .toJsPromise()
             .then(_ -> null);
     }
 
