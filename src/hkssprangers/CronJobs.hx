@@ -167,6 +167,28 @@ class CronJobs {
                     };
                 });
         }
+        js.Node.exports.disableLunch = function(evt, context) {
+            final now:LocalDateString = Date.now();
+            // user can pre-order in the future 14 days, see TimeSlotSelectorWidget
+            final date = now.deltaDays(14);
+            return setTimeSlots(date, date, slot -> {
+                switch TimeSlotType.classify(slot.start) {
+                    case Lunch: Unavailable(AvailabilityTools.disableMessage);
+                    case Dinner: null;
+                }
+            })
+                .then(_ -> {
+                    statusCode: 200,
+                    body: "done",
+                })
+                .catchError(err -> {
+                    context.serverlessSdk.captureError(err);
+                    {
+                        statusCode: 500,
+                        body: Std.string(err),
+                    };
+                });
+        }
 
         if (isMain) {
             switch (Sys.args()) {

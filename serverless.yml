@@ -77,6 +77,13 @@ functions:
           # at HKT 21:00, Sunday and Thursday
           rate: cron(0 13 ? * SUN,THU *)
           enabled: ${self:custom.isProd.${opt:stage}, false}
+  disableLunch:
+    handler: cronjobs.disableLunch
+    events:
+      - schedule:
+          # at HKT 00:00
+          rate: cron(0 16 * * ? *)
+          enabled: ${self:custom.isProd.${opt:stage}, false}
 
 plugins:
   - serverless-prune-plugin
