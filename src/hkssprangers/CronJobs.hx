@@ -71,8 +71,8 @@ class CronJobs {
     }
 
     static function setTimeSlots(startDate:LocalDateString, endDate:LocalDateString, setAvailability:TimeSlot->Null<Availability>) {
-        final dateStart:LocalDateString = startDate.getDatePart() + " 00:00:00";
-        final dateEnd:LocalDateString = endDate.getDatePart() + " 00:00:00";
+        final dateStart = startDate.getDatePart();
+        final dateEnd = endDate.getDatePart();
         var date = dateStart;
         var slots:Array<TimeSlot> = [];
         while (date <= dateEnd) {
@@ -82,7 +82,7 @@ class CronJobs {
                     end: date + " " + slot.end,
                 });
             }
-            date = date.deltaDays(1);
+            date = (date + " 00:00:00":LocalDateString).deltaDays(1).getDatePart();
         }
 
         return CockroachDb.db.timeSlotRule.insertMany([
@@ -91,7 +91,7 @@ class CronJobs {
             {
                 startTime: timeSlot.start.toDate(),
                 endTime: timeSlot.end.toDate(),
-                availability: setAvailability(timeSlot),
+                availability: haxe.Json.parse(tink.Json.stringify(setAvailability(timeSlot))),
             }
         ], {
             update: u -> [u.availability.set(Functions.values(u.availability))],
@@ -193,6 +193,18 @@ class CronJobs {
                         });
                 case ["sendDutyPoll", "test"]:
                     sendDutyPoll(TelegramConfig.testingGroupChatId)
+                        .then(_ -> Sys.exit(0))
+                        .catchError(err -> {
+                            trace(err);
+                            Sys.exit(1);
+                        });
+                case ["disableLunch", startDate, endDate]:
+                    setTimeSlots(startDate + " 00:00:00", endDate + " 00:00:00", slot -> {
+                        switch (TimeSlotType.classify(slot.start)) {
+                            case Lunch: Unavailable(AvailabilityTools.disableMessage);
+                            case Dinner: null;
+                        }
+                    })
                         .then(_ -> Sys.exit(0))
                         .catchError(err -> {
                             trace(err);
