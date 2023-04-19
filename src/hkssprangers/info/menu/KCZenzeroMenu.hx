@@ -389,7 +389,7 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecials = [
             "佛跳牆炆伊麵 $68",
-            "沙薑煎蝦滷肉飯 $68",
+            // "沙薑煎蝦滷肉飯 $68",
         ];
         {
             dateStart: "2023-04-18",
