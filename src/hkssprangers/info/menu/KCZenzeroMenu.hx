@@ -288,6 +288,7 @@ class KCZenzeroMenu {
                     "麻辣雞翼滷肉飯 $50",
                     "香草羊架滷肉飯 $58",
                     "蒜片鮑魚滷肉飯 $68",
+                    "鹽燒青魚滷肉飯 $68",
                     // "終極豐盛滷肉飯 $78",
                 ],
             },
@@ -389,8 +390,7 @@ class KCZenzeroMenu {
 
     static public final limitedSpecial = {
         final limitedSpecials = [
-            // "佛跳牆炆伊麵 $68",
-            "沙薑煎蝦滷肉飯 $68",
+            
         ];
         {
             dateStart: "2023-04-20",
