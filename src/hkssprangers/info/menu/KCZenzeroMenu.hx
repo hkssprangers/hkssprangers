@@ -103,7 +103,7 @@ class KCZenzeroMenu {
         type: "string",
         "enum": [
             "唔要",
-            "純茶一支",
+            "隨機純茶/紙包茶",
         ],
     };
     static public final KCZenzeroAddDrink = {
@@ -111,7 +111,7 @@ class KCZenzeroMenu {
         type: "string",
         "enum": [
             "唔要",
-            "純茶一支 +$8",
+            "隨機純茶/紙包茶 +$8",
         ],
         "default": "唔要",
     };
@@ -284,6 +284,7 @@ class KCZenzeroMenu {
                     "白肉珍珠滷肉飯 $68",
                     "雙獅子頭滷肉飯 $50",
                     "火炙牛肉滷肉飯 $55",
+                    "火炙牛舌滷肉飯 $55",
                     "麻辣雞翼滷肉飯 $50",
                     "香草羊架滷肉飯 $58",
                     "蒜片鮑魚滷肉飯 $68",
@@ -389,7 +390,6 @@ class KCZenzeroMenu {
     static public final limitedSpecial = {
         final limitedSpecials = [
             // "佛跳牆炆伊麵 $68",
-            "火炙牛舌滷肉飯 送紙包飲品 $55",
             "沙薑煎蝦滷肉飯 $68",
         ];
         {
