@@ -388,12 +388,13 @@ class KCZenzeroMenu {
 
     static public final limitedSpecial = {
         final limitedSpecials = [
-            "佛跳牆炆伊麵 $68",
-            // "沙薑煎蝦滷肉飯 $68",
+            // "佛跳牆炆伊麵 $68",
+            "火炙牛舌滷肉飯 $55",
+            "沙薑煎蝦滷肉飯 $68",
         ];
         {
-            dateStart: "2023-04-18",
-            dateEnd: "2023-04-21",
+            dateStart: "2023-04-20",
+            dateEnd: "2023-04-20",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
