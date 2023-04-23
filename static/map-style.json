@@ -6573,7 +6573,7 @@
         }
     ],
     "metadata": {},
-    "glyphs": "https://dummy/{fontstack}/{range}.pbf",
+    "glyphs": "/font/{fontstack}/{range}.pbf",
     "bearing": 0,
     "pitch": 0,
     "center": [

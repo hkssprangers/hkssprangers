@@ -67,6 +67,13 @@ class StaticResource {
         reply:FastifyReply<RawServer, RawRequest, RawReply, RouteGeneric, ContextConfig>
     ):Promise<Any> {
         final pathname = new URL(req.url, req.protocol + "://" + req.hostname).pathname;
+        if (pathname.startsWith("/font/")) {
+            return Promise.resolve(untyped reply
+                .header("Cache-Control", "public, max-age=31536000, immutable") // 1 year
+                .sendFile(pathname.urlDecode())
+            );
+        }
+
         if (StaticResource.exists(pathname)) {
             #if !production
             if (
@@ -102,9 +109,9 @@ class StaticResource {
                 .redirect(StaticResource.bucketed(pathname, StaticResource.info(pathname).hash))
             );
             #end
-        } else {
-            return Promise.resolve();
         }
+
+        return Promise.resolve();
     }
     #end
 

@@ -42,6 +42,10 @@ class Map extends View<MapProps> {
         ');
     }
 
+    override function footer() {
+        return null;
+    }
+
     static function get(req:Request, reply:Reply):Promise<Dynamic> {
         return Promise.resolve(reply.sendView(Map, {}));
     }

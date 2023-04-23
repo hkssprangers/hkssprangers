@@ -147,29 +147,33 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
                             geometry: {
                                 type: "Point",
                                 coordinates: [loc.center.lon, loc.center.lat],
-                                title: loc.name,
                             },
                             properties: {
                                 title: loc.name,
-                                fee: Std.string(loc.fee[cluster]),
+                                fee: loc.fee[cluster],
                             },
                         }:Feature<Dynamic, Dynamic>))
                         .toArray(),
                 };
                 final layout = {
                     'icon-image': 'location-icon',
-                    'icon-size': 1,
+                    'icon-size': 1.5,
                     'icon-allow-overlap': true,
-                    // 'text-field': ['get', 'title'],
+                    'text-field': ['get', 'title'],
+                    'text-optional': true,
+                    'text-size': 12,
+                    'text-variable-anchor': ['bottom'],
+                    'text-offset': [0, -1],
                 };
                 final paint = {
+                    'icon-opacity': 0.8,
                     'icon-color': ([
                         'match',
                         ['get', 'fee'],
-                        "25", "#00FF00",
-                        "35", "#FFFF00",
-                        "40", "#FF0000",
-                        "rgba(0, 0, 0, 1)"
+                        25, "#488f31",
+                        35, "#e29f73",
+                        40, "#de425b",
+                        "#000000"
                     ]:Array<Dynamic>)
                 }
                 jsx('

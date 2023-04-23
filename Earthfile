@@ -390,6 +390,8 @@ devcontainer:
     VOLUME /workspace/lib/dts2hx
     COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/tiles/ssp.pmtiles
     VOLUME /workspace/static/tiles
+    COPY --chown=$USER_UID:$USER_GID +mapfonts/font static/font
+    VOLUME /workspace/static/font
 
     USER root
 
@@ -474,6 +476,12 @@ server:
     RUN node -c index.js
     SAVE ARTIFACT --keep-ts index.js AS LOCAL index.js
     SAVE ARTIFACT --keep-ts static.json AS LOCAL static.json
+
+mapfonts:
+    WORKDIR /tmp
+    ARG COMMIT=d5cb92205b731ccde6b901e6387229e1a991317e
+    RUN curl -fsSL "https://github.com/maplibre/demotiles/archive/$COMMIT.tar.gz" | tar xz --strip-components=1
+    SAVE ARTIFACT --keep-ts "font/Open Sans Regular,Arial Unicode MS Regular" "font/Open Sans Regular,Arial Unicode MS Regular"
 
 static-assets:
     FROM +devcontainer
