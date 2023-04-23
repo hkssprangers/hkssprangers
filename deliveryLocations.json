@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.59.5 b201bb38",
   "osm3s": {
-    "timestamp_osm_base": "2023-04-16T12:36:39Z",
+    "timestamp_osm_base": "2023-04-23T09:43:39Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -3635,6 +3635,35 @@
         "name:en": "Madison Park",
         "name:zh": "一號九龍道",
         "start_date": "2020-11"
+      }
+    },
+    {
+      "type": "way",
+      "id": 686299249,
+      "center": {
+        "lat": 22.3365269,
+        "lon": 114.158137
+      },
+      "nodes": [
+        4470990360,
+        7076931923,
+        6432703036,
+        8913868428,
+        8913868429,
+        6432703037,
+        4470990359,
+        8913868431,
+        8913868430,
+        4470990360
+      ],
+      "tags": {
+        "addr:housenumber": "310",
+        "addr:street": "元州街 Un Chau Street",
+        "construction": "residential",
+        "landuse": "residential",
+        "name": "悅雅 The Astro",
+        "name:en": "The Astro",
+        "name:zh": "悅雅"
       }
     },
     {

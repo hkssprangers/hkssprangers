@@ -1718,6 +1718,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "悅雅",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/686299249"
+                }
+            ],
+            match: address -> address.contains("悅雅") || address.toLowerCase().contains("the astro"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 35;
+                case PakTinCluster: 35;
+                case TungChauStreetParkCluster: 35;
+            }
+        },
+        {
             place: "寓弍捌",
             osm: [
                 {
