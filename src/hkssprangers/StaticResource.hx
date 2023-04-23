@@ -159,7 +159,7 @@ class StaticResource {
     }
 
     static function getImageColor(file:AbsolutePath):String {
-        final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[fx:round(255*u.r)],%[fx:round(255*u.g)],%[fx:round(255*u.b)]\n", "info:-"]);
+        final p = new sys.io.Process("convert", [file, "-scale", "1x1!", "-format", "%[fx:round(255*u.r)],%[fx:round(255*u.g)],%[fx:round(255*u.b)],%[opaque],%[fx:round(u.a*100)/100]\n", "info:-"]);
         final out = p.stdout.readAll().toString();
         final err = p.stderr.readAll().toString();
         final exitCode = p.exitCode();
@@ -167,13 +167,17 @@ class StaticResource {
         if (exitCode != 0) {
             throw err;
         }
-        final r = ~/^([0-9]+),([0-9]+),([0-9]+)$/;
+        final r = ~/^([0-9]+),([0-9]+),([0-9]+),(.+),([0-9\.]+)?$/;
         // for gif, there will be one output per frame
         // we added "\n" to the output -format, so it's one line per frame
         if (!r.match(out.split("\n")[0])) {
             throw "Cannot parse color: " + out;
         }
-        return 'rgb(${r.matched(1)},${r.matched(2)},${r.matched(3)})';
+        switch(r.matched(4)) {
+            case "true": return 'rgb(${r.matched(1)},${r.matched(2)},${r.matched(3)})';
+            case "false": return 'rgba(${r.matched(1)},${r.matched(2)},${r.matched(3)},${r.matched(5)})';
+            case opaque: throw "cannot parse opaque: " + opaque;
+        }
     }
 
     static function convertImage(src:AbsolutePath, out:AbsolutePath):Void {
@@ -197,9 +201,13 @@ class StaticResource {
                 hash: _hash(absSrc),
                 size: FileSystem.stat(absSrc).size,
             };
-            final fpFile = fingerprint(file, info.hash);
             final outDir = Path.directory(out);
-            
+            if (src.startsWith("/font/")) {
+                File.copy(absSrc, Path.join([cwd, outDir, file]));
+                return;
+            }
+
+            final fpFile = fingerprint(file, info.hash);
 
             if (file == ".DS_Store") {
                 return;
