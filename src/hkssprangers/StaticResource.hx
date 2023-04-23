@@ -68,10 +68,17 @@ class StaticResource {
     ):Promise<Any> {
         final pathname = new URL(req.url, req.protocol + "://" + req.hostname).pathname;
         if (pathname.startsWith("/font/")) {
+            #if !production
             return Promise.resolve(untyped reply
                 .header("Cache-Control", "public, max-age=31536000, immutable") // 1 year
                 .sendFile(pathname.urlDecode())
             );
+            #else
+            return Promise.resolve(reply
+                .header("Cache-Control", "public, max-age=0, stale-while-revalidate=31536000")
+                .redirect(StaticResource.bucketed(pathname, null))
+            );
+            #end
         }
 
         if (StaticResource.exists(pathname)) {
@@ -122,8 +129,11 @@ class StaticResource {
 
     inline static public final bucketOrigin = "https://d2wv1pgjke9i55.cloudfront.net";
 
-    static public function bucketed(path:WebRootPath, hash:String):String {
-        return Path.join([bucketOrigin, fingerprint(path, hash)]);
+    static public function bucketed(path:WebRootPath, hash:Null<String>):String {
+        return if (hash == null)
+            Path.join([bucketOrigin, path]);
+        else
+            Path.join([bucketOrigin, fingerprint(path, hash)]);
     }
 
     static public function parseUrl(url:String) {
