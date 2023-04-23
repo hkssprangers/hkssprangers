@@ -5,8 +5,8 @@ import maplibre_gl.*;
 import haxe.io.Path;
 import js.html.*;
 import mui.core.*;
-import js.npm.react_map_gl.Map as ReactMapGl;
-import js.npm.react_map_gl.Map;
+import js.npm.react_map_gl.Map as ReactMapGlMap;
+import js.npm.react_map_gl.*;
 import hkssprangers.info.*;
 import js.Browser.*;
 import CrossFetch.fetch;
@@ -139,49 +139,67 @@ class MapView extends ReactComponent<MapViewProps,MapViewState> {
             case { selectedCluster: null } | { deliveryLocations: null }:
                 null;
             case { selectedCluster: cluster, deliveryLocations: locs }:
-                locs.linq().groupBy(l -> l.fee[cluster])
-                    .select((g,i) -> {
-                        final data:FeatureCollection<Dynamic, Dynamic> = {
-                            type: "FeatureCollection",
-                            features: g.linq()
-                                .select((loc,i) -> ({
-                                    type: "Feature",
-                                    geometry: {
-                                        type: "Point",
-                                        coordinates: [loc.center.lon, loc.center.lat],
-                                    },
-                                    properties: null,
-                                }:Feature<Dynamic, Dynamic>))
-                                .toArray(),
-                        };
-                        final locationsPaint = {
-                            'circle-radius': 10,
-                            'circle-color': switch (g.key) {
-                                case 25: "rgba(0, 255, 0, 0.5)";
-                                case 35: "rgba(255, 255, 0, 0.5)";
-                                case 40: "rgba(255, 0, 0, 0.5)";
-                                case _: "rgba(0, 0, 0, 1)";
-                            }
-                        };
-                        jsx('
-                            <Source key=${g.key} id=${"locations-source-" + g.key} type="geojson" data=${data}>
-                                <Layer id=${"locations-" + g.key} type="circle" paint=${locationsPaint} />
-                            </Source>
-                        ');
-                    })
-                    .toArray();
+                final data:FeatureCollection<Dynamic, Dynamic> = {
+                    type: "FeatureCollection",
+                    features: locs.linq()
+                        .select((loc,i) -> ({
+                            type: "Feature",
+                            geometry: {
+                                type: "Point",
+                                coordinates: [loc.center.lon, loc.center.lat],
+                                title: loc.name,
+                            },
+                            properties: {
+                                title: loc.name,
+                                fee: Std.string(loc.fee[cluster]),
+                            },
+                        }:Feature<Dynamic, Dynamic>))
+                        .toArray(),
+                };
+                final layout = {
+                    'icon-image': 'location-icon',
+                    'icon-size': 1,
+                    'icon-allow-overlap': true,
+                    // 'text-field': ['get', 'title'],
+                };
+                final paint = {
+                    'icon-color': ([
+                        'match',
+                        ['get', 'fee'],
+                        "25", "#00FF00",
+                        "35", "#FFFF00",
+                        "40", "#FF0000",
+                        "rgba(0, 0, 0, 1)"
+                    ]:Array<Dynamic>)
+                }
+                jsx('
+                    <Source id="location-source" type="geojson" data=${data}>
+                        <Layer type="symbol" layout=${layout} paint=${paint} />
+                    </Source>
+                ');
+        }
+        function MapImage() {
+            final map = ReactMapGl.useMap().current;
+            if (!map.hasImage('location-icon')) {
+                map.loadImage(R("/images/circle.svg.png"), (error:Null<js.lib.Error>, image) -> {
+                    if (error != null) throw error;
+                    if (!map.hasImage('location-icon')) map.addImage('location-icon', image, { sdf: true });
+                });
+            }
+            return null;
         }
         return jsx('
             <Fragment>
-                <ReactMapGl
+                <ReactMapGlMap
                     mapLib=${MaplibreGl}
                     initialViewState=${initialViewState}
                     mapStyle=${style}
                     maxBounds=${maxBounds}
                 >
+                    <MapImage />
                     ${locationSource}
                     ${markers}
-                </ReactMapGl>
+                </ReactMapGlMap>
                 ${controls()}
             </Fragment>
         ');
