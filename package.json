@@ -25,7 +25,7 @@
     "dts2hx": "^0.20.0",
     "envify": "^4.1.0",
     "esbuild": "^0.17.17",
-    "js-cookie": "^3.0.4",
+    "js-cookie": "^3.0.5",
     "maplibre-gl": "^2.1.9",
     "nodemon": "^2.0.22",
     "pmtiles": "^2.7.2",
