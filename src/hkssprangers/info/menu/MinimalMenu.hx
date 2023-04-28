@@ -38,6 +38,8 @@ class MinimalMenu {
         return item.name + " $" + item.price;
     }
 
+    static public final legends = "(v.) = Vegetarian, (h.) = Hot & Spicy";
+
     static final drinks = [
         { name: "美式咖啡(熱)", price: 38 },
         { name: "美式咖啡(凍)", price: 42 },
@@ -95,6 +97,7 @@ class MinimalMenu {
     ];
     static public final MinimalTacos = {
         title: "夾餅",
+        // description: legends,
         properties: {
             main: {
                 title: "夾餅",
@@ -119,6 +122,7 @@ class MinimalMenu {
 
     static public final MinimalSalad = {
         title: "沙律",
+        // description: legends,
         properties: {
             main: {
                 title: "沙律",
@@ -147,6 +151,7 @@ class MinimalMenu {
 
     static public final MinimalPasta = {
         title: "意粉",
+        description: legends,
         properties: {
             main: {
                 title: "意粉",
@@ -172,6 +177,7 @@ class MinimalMenu {
 
     static public final MinimalSousVide = {
         title: "慢煮/肉類",
+        // description: legends,
         properties: {
             main: {
                 title: "慢煮/肉類",

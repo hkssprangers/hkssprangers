@@ -2107,6 +2107,13 @@ class Menu extends View<MenuProps> {
         ');
         return jsx('
             <Fragment>
+                <div className=${["md:flex", "flex-row", "border-b-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${["p-3", "pb-0"].concat(style.borderClasses).join(" ")}>
+                        <div className="p-3">
+                            <p>${MinimalMenu.legends}</p>
+                        </div>
+                    </div>
+                </div>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${MinimalTacos.title}</div>
