@@ -2080,32 +2080,34 @@ class Menu extends View<MenuProps> {
     }
 
     function renderMinimal() {
-        var headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
+        final sets = jsx('
+            <div className=${["md:flex", "flex-row", "border-b-4"].concat(style.borderClasses).join(" ")}>
+                <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                    <div className=${headerClasses}>${MinimalSetFor2.description}</div>
+                    <div className="font-bold p-3">${MinimalSetFor2.properties.salad.title} (選一)</div>
+                    <div className="p-3">${slashes(MinimalSetFor2.properties.salad.enums())}</div>
+                    <div className="font-bold p-3">主食 (選二)</div>
+                    <div className="p-3">${slashes(MinimalSetFor2.properties.main1.enums()))}</div>
+                    <div className="font-bold p-3">飲品 (選二)</div>
+                    <div className="p-3">可選任何飲品</div>
+                </div>
+                <div className="md:w-1/2 p-3">
+                    <div className=${headerClasses}>${MinimalSetFor4.description}</div>
+                    <div className="font-bold p-3">沙律 (選二)</div>
+                    <div className="p-3">${slashes(MinimalSetFor4.properties.salad1.enums())}</div>
+                    <div className="font-bold p-3">主食 (選二)</div>
+                    <div className="p-3">${slashes(MinimalSetFor4.properties.main1.enums())}</div>
+                    <div className="font-bold p-3">${MinimalSetFor4.properties.sousVides.title}</div>
+                    <div className="p-3">${slashes(MinimalSetFor4.properties.sousVides.enums())}</div>
+                    <div className="font-bold p-3">飲品 (選四)</div>
+                    <div className="p-3">可選任何飲品</div>
+                </div>
+            </div>
+        ');
         return jsx('
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${MinimalSetFor2.description}</div>
-                        <div className="font-bold p-3">${MinimalSetFor2.properties.salad.title} (選一)</div>
-                        <div className="p-3">${slashes(MinimalSetFor2.properties.salad.enums())}</div>
-                        <div className="font-bold p-3">主食 (選二)</div>
-                        <div className="p-3">${slashes(MinimalSetFor2.properties.main1.enums()))}</div>
-                        <div className="font-bold p-3">飲品 (選二)</div>
-                        <div className="p-3">可選任何飲品</div>
-                    </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${MinimalSetFor4.description}</div>
-                        <div className="font-bold p-3">沙律 (選二)</div>
-                        <div className="p-3">${slashes(MinimalSetFor4.properties.salad1.enums())}</div>
-                        <div className="font-bold p-3">主食 (選二)</div>
-                        <div className="p-3">${slashes(MinimalSetFor4.properties.main1.enums())}</div>
-                        <div className="font-bold p-3">${MinimalSetFor4.properties.sousVides.title}</div>
-                        <div className="p-3">${slashes(MinimalSetFor4.properties.sousVides.enums())}</div>
-                        <div className="font-bold p-3">飲品 (選四)</div>
-                        <div className="p-3">可選任何飲品</div>
-                    </div>
-                </div>
-                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                         <div className=${headerClasses}>${MinimalTacos.title}</div>
                         ${renderItems(MinimalTacos.properties.main.enums())}
