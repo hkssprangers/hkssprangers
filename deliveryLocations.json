@@ -1,8 +1,8 @@
 {
   "version": 0.6,
-  "generator": "Overpass API 0.7.59.5 b201bb38",
+  "generator": "Overpass API 0.7.60 f4c14d41",
   "osm3s": {
-    "timestamp_osm_base": "2023-04-23T09:43:39Z",
+    "timestamp_osm_base": "2023-04-29T08:38:23Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -2791,6 +2791,40 @@
     },
     {
       "type": "way",
+      "id": 450180914,
+      "center": {
+        "lat": 22.3350065,
+        "lon": 114.1610783
+      },
+      "nodes": [
+        4470983110,
+        7194884938,
+        4470983121,
+        4470983120,
+        7194884939,
+        4470983111,
+        4470983112,
+        4470983114,
+        4470983125,
+        4470983113,
+        4470983123,
+        7194892387,
+        7194892386,
+        4470983122,
+        4470983110
+      ],
+      "tags": {
+        "addr:housenumber": "100",
+        "addr:street": "青山道 Castle Peak Road",
+        "building": "yes",
+        "name": "菁盈雅軒 Greenrich Mansion",
+        "name:en": "Greenrich Mansion",
+        "name:zh": "菁盈雅軒",
+        "source": "Kaart Ground Survey 2017"
+      }
+    },
+    {
+      "type": "way",
       "id": 450181044,
       "center": {
         "lat": 22.3367417,
@@ -3429,14 +3463,17 @@
       "type": "way",
       "id": 524429753,
       "center": {
-        "lat": 22.3294665,
-        "lon": 114.1506747
+        "lat": 22.3294439,
+        "lon": 114.1506542
       },
       "nodes": [
         1938451872,
         1938451689,
         1938451673,
+        10837540566,
+        10837540567,
         1938451723,
+        10837540565,
         1938451818,
         1938451804,
         1938451913,

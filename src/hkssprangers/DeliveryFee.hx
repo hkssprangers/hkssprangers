@@ -1693,7 +1693,7 @@ class DeliveryFee {
                 case CLPCluster: 25;
                 case GoldenCluster: 25;
                 case SmilingPlazaCluster: 25;
-                case ParkCluster: 35;
+                case ParkCluster: 25;
                 case PakTinCluster: 25;
                 case TungChauStreetParkCluster: 25;
             }
@@ -1960,6 +1960,25 @@ class DeliveryFee {
                 case GoldenCluster: 25;
                 case SmilingPlazaCluster: 25;
                 case ParkCluster: 35;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
+            place: "菁盈雅軒 (近樂年花園)",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/450180914"
+                }
+            ],
+            match: address -> address.contains("青盈雅軒") || address.contains("菁盈雅軒") || address.toLowerCase().contains("greenrich mansion"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
                 case PakTinCluster: 25;
                 case TungChauStreetParkCluster: 25;
             }
