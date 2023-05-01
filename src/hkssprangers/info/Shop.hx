@@ -984,7 +984,7 @@ enum abstract Shop(String) to String {
             case [KCZenzero, "2023-04-17", _]:
                 return Unavailable('休息一天');
 
-            case [HanaSoftCream, "2023-04-13", Dinner]:
+            case [LonelyPaisley, "2023-05-02", Dinner]:
                 return Unavailable('晚市暫停一天');
 
             // https://www.facebook.com/yearshk/posts/pfbid037JfZ1mcypQoby3BSLPcELakcL4rUuDoZCnZC4V8romsjsSX4zjpToz8rFaNS7xmSl
