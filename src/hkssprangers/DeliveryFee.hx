@@ -3050,6 +3050,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "恒昌中心",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/777658278"
+                }
+            ],
+            match: address -> address.contains("恒昌中心") || address.contains("恆昌中心"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 35;
+                case PeiHoStreetMarketCluster: 35;
+                case CLPCluster: 35;
+                case GoldenCluster: 35;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 25;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "大南街朝南樓",
             osm: [
                 {

@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.60 f4c14d41",
   "osm3s": {
-    "timestamp_osm_base": "2023-04-29T08:38:23Z",
+    "timestamp_osm_base": "2023-05-08T07:52:23Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -4537,6 +4537,37 @@
         "name": "黃金閣 Golden Court",
         "name:en": "Golden Court",
         "name:zh": "黃金閣"
+      }
+    },
+    {
+      "type": "way",
+      "id": 777658278,
+      "center": {
+        "lat": 22.324483,
+        "lon": 114.162188
+      },
+      "nodes": [
+        7257383577,
+        7257383559,
+        7257383561,
+        7257383556,
+        7257383557,
+        7257383553,
+        7257383562,
+        7257383563,
+        7257383558,
+        7257383576,
+        7257383571,
+        7257383577
+      ],
+      "tags": {
+        "addr:city": "大角咀 Tai Kok Tsui",
+        "addr:housenumber": "136-138",
+        "addr:street": "必發道 Bedford Road",
+        "building": "industrial",
+        "name": "恒昌中心 Hang Cheong Centre",
+        "name:en": "Hang Cheong Centre",
+        "name:zh": "恒昌中心"
       }
     },
     {
