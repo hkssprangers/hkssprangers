@@ -109,8 +109,8 @@ class CronJobs {
             .toJsPromise()
             .then(curDeliveries -> {
                 final choices = [
-                    "我想送 ✋",
-                    "冇人就搵我送 🧘",
+                    "我想送 (如有難處，請留言可接單時間) ✋",
+                    "冇人就搵我送 (如有難處，請留言可接單時間) 🧘",
                     "送唔到 🙁",
                 ];
                 final opts = {
