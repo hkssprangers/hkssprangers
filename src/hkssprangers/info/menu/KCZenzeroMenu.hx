@@ -394,8 +394,8 @@ class KCZenzeroMenu {
             "史密蝦沙薑炒飯 送隨機純茶/紙包茶 $68",
         ];
         {
-            dateStart: "2023-05-09",
-            dateEnd: "2023-05-09",
+            dateStart: "2023-05-21",
+            dateEnd: "2023-05-21",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
