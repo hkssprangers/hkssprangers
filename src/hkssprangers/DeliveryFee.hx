@@ -904,7 +904,7 @@ class DeliveryFee {
                     url: "https://www.openstreetmap.org/way/26405835"
                 }
             ],
-            match: address -> address.contains("海麗邨"),
+            match: address -> address.contains("海麗邨") || address.contains("海麗村"),
             deliveryFee: cluster -> switch cluster {
                 case DragonCentreCluster: 40;
                 case PeiHoStreetMarketCluster: 40;

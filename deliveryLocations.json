@@ -1,8 +1,8 @@
 {
   "version": 0.6,
-  "generator": "Overpass API 0.7.60 f4c14d41",
+  "generator": "Overpass API 0.7.60.2 e4cf9f7a",
   "osm3s": {
-    "timestamp_osm_base": "2023-05-08T07:52:23Z",
+    "timestamp_osm_base": "2023-05-26T10:20:19Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -3114,17 +3114,25 @@
       "type": "way",
       "id": 450195200,
       "center": {
-        "lat": 22.330453,
-        "lon": 114.1663123
+        "lat": 22.3304525,
+        "lon": 114.1663034
       },
       "nodes": [
-        4471153232,
         9366605483,
-        4471153233,
-        4471153234,
-        4471153235,
-        4471153236,
-        4471153232
+        4471153232,
+        10913607013,
+        10913607007,
+        10913607008,
+        10913607087,
+        10913607044,
+        10913607043,
+        10913607086,
+        9366662146,
+        10913607014,
+        10913596063,
+        4471151617,
+        10913607012,
+        9366605483
       ],
       "tags": {
         "landuse": "residential",
@@ -3137,20 +3145,25 @@
       "type": "way",
       "id": 450195336,
       "center": {
-        "lat": 22.3301836,
-        "lon": 114.1665727
+        "lat": 22.3302153,
+        "lon": 114.1665228
       },
       "nodes": [
-        4471154200,
-        4471154201,
-        4471154202,
         4471154203,
-        4471154200
+        10913607048,
+        10913607047,
+        4471154202,
+        4471154201,
+        10913607045,
+        10913607046,
+        4471154200,
+        4471154203
       ],
       "tags": {
         "addr:housenumber": "289",
         "addr:street": "西洋菜北街 Sai Yeung Choi Street North",
-        "landuse": "residential",
+        "building": "yes",
+        "building:level": "2",
         "name": "晉嶺 Sevilla Crest",
         "name:en": "Sevilla Crest",
         "name:zh": "晉嶺",
@@ -3162,17 +3175,23 @@
       "type": "way",
       "id": 450195905,
       "center": {
-        "lat": 22.3302148,
-        "lon": 114.166899
+        "lat": 22.3302664,
+        "lon": 114.1668768
       },
       "nodes": [
-        4471159299,
-        4471159300,
+        10913607016,
+        9366662145,
+        10913607063,
+        10913607062,
+        10913607060,
+        4471151620,
         4471159301,
         4471159302,
-        4471159303,
-        4471159304,
-        4471159299
+        10913607067,
+        10913607066,
+        10913607064,
+        10913607065,
+        10913607016
       ],
       "tags": {
         "addr:housenumber": "468",
@@ -3367,8 +3386,9 @@
       ],
       "tags": {
         "addr:housenumber": "168-178",
-        "addr:street": "Tai Po Road",
+        "addr:street": "大埔道 Tai Po Road",
         "building": "apartments",
+        "building:levels": "13",
         "name": "南都大廈 Rondall Building",
         "name:en": "Rondall Building",
         "name:zh": "南都大廈",
@@ -5118,13 +5138,12 @@
       "type": "way",
       "id": 839864006,
       "center": {
-        "lat": 22.3342221,
-        "lon": 114.1644104
+        "lat": 22.3342026,
+        "lon": 114.1643822
       },
       "nodes": [
         6945707618,
         1954923626,
-        8199153775,
         6945707617,
         1954924177,
         7837166539,
@@ -5457,18 +5476,21 @@
       "type": "way",
       "id": 1104776244,
       "center": {
-        "lat": 22.3267654,
-        "lon": 114.1682627
+        "lat": 22.3267395,
+        "lon": 114.1682494
       },
       "nodes": [
-        10109800556,
-        10109800557,
-        7652618343,
         7652618344,
-        10109800556
+        10913607239,
+        7652618343,
+        10109800557,
+        10109800556,
+        7652618344
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "51",
+        "addr:street": "界限街 Boundary Street",
+        "building": "residential",
         "name": "曉珀 High Park",
         "name:en": "High Park",
         "name:zh": "曉珀"
@@ -5478,8 +5500,8 @@
       "type": "way",
       "id": 1104777141,
       "center": {
-        "lat": 22.3275985,
-        "lon": 114.1630199
+        "lat": 22.3275978,
+        "lon": 114.1630177
       },
       "nodes": [
         10109775013,
