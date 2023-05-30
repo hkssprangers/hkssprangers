@@ -61,12 +61,12 @@ enum abstract KCZenzeroItem(String) to String {
                 HotdogSet,
                 MincedPork,
                 YiMein,
-                TomatoSoupRice,
+                // TomatoSoupRice,
                 Rice,
                 NoodleSet,
                 // PastaSet,
                 // LambPasta,
-                R6Set,
+                // R6Set,
                 WontonSet,
                 LightSet,
                 GoldenLeg,
@@ -142,7 +142,8 @@ class KCZenzeroMenu {
             // "芝士肉醬燒大菇(唔辣) $25",
             // "芝士茄父子(素) $25",
             // "芝士波隆納肉醬薯條 $25",
-            "芝士波隆納肉醬薯格 $25",
+            // "芝士波隆納肉醬薯格 $25",
+            "松露薯格 $25",
             // "芝士波隆納肉醬ABC字母薯餅 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
@@ -150,7 +151,7 @@ class KCZenzeroMenu {
             // "芝士撻 $12",
             // "葡撻 $8",
             // "咖喱豬皮陳皮魚蛋鵝紅 $30",
-            "蒜蓉包 $28",
+            // "蒜蓉包 $28",
         ],
     };
 
@@ -201,7 +202,7 @@ class KCZenzeroMenu {
                     // "ABC字母薯餅熱狗",
                     "芥末沙律三文魚熱狗",
                     "九龍皇帝熱狗",
-                    "妙菇皇后熱狗",
+                    // "妙菇皇后熱狗",
                     // "雙魚巨蟹熱狗",
                     // "日式咖喱牛肉熱狗",
                 ]
@@ -229,7 +230,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "葱油冷麵 +$8",
+                        "葱油烏冬 +$8",
                     ],
                 },
                 uniqueItems: true,
@@ -566,8 +567,7 @@ class KCZenzeroMenu {
                 type: "string",
                 title: "主食",
                 "enum": [
-                    "迷你肉醬烏冬",
-                    "迷你熱狗",
+                    "滷肉烏冬",
                 ],
             },
             salad: {
