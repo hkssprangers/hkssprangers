@@ -230,7 +230,7 @@ class KCZenzeroMenu {
                 items: {
                     type: "string",
                     "enum": [
-                        "葱油烏冬 +$8",
+                        "蒜油烏冬 +$8",
                     ],
                 },
                 uniqueItems: true,
