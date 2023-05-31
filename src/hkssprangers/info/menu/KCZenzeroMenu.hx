@@ -392,11 +392,11 @@ class KCZenzeroMenu {
 
     static public final limitedSpecial = {
         final limitedSpecials = [
-            "史密蝦沙薑炒飯 送隨機純茶/紙包茶 $68",
+            "香煎蝦配黑松露炒飯 $68",
         ];
         {
-            dateStart: "2023-05-21",
-            dateEnd: "2023-05-21",
+            dateStart: "2023-05-31",
+            dateEnd: "2023-05-31",
             timeSlotTypes: [Lunch, Dinner],
             seperateBox: false,
             available: true,
