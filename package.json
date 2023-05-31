@@ -41,7 +41,7 @@
     "tailwindcss": "^3.3.2",
     "workbox-cacheable-response": "^6.6.1",
     "workbox-core": "^6.6.1",
-    "workbox-expiration": "^6.6.1",
+    "workbox-expiration": "^7.0.0",
     "workbox-navigation-preload": "^6.6.1",
     "workbox-range-requests": "^6.6.1",
     "workbox-recipes": "^6.6.1",
