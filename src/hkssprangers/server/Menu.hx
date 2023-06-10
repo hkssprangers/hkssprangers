@@ -1735,6 +1735,18 @@ class Menu extends View<MenuProps> {
                 </div>
             </div>
         ');
+        final addons = jsx('
+            <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
+                <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPAddon.title}</div>
+                <div className="bg-white rounded-b-xl">
+                    <div className="px-3 py-1">${
+                        slashes(
+                            LoudTeaSSPAddon.all
+                        )
+                    }</div>
+                </div>
+            </div>
+        ');
         return jsx('
             <Fragment>
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
@@ -1768,6 +1780,11 @@ class Menu extends View<MenuProps> {
                         <div className=${headerClasses}>${LoudTeaSSPDrinkCategory.MilkFoamSpecial}</div>
                         ${teas}
                         ${renderItems(drinks[MilkFoamSpecial].map(printDrink))}
+                    </div>
+                </div>
+                <div className=${["md:flex", "flex-row", "border-t-4"].concat(style.borderClasses).join(" ")}>
+                    <div className="p-3">
+                        ${addons}
                     </div>
                 </div>
             </Fragment>

@@ -124,6 +124,16 @@ enum abstract LoudTeaSSPItem(String) to String {
                             uniqueItems: true,
                         }
                     }
+
+                    def.properties.options = {
+                        type: "array",
+                        title: LoudTeaSSPAddon.title,
+                        items: {
+                            type: "string",
+                            "enum": LoudTeaSSPAddon.all,
+                        },
+                        uniqueItems: true,
+                    }
                 }
 
                 def;
@@ -153,6 +163,7 @@ typedef LoudTeaSSPDrinkItem = {
     ?pearl:LoudTeaSSPPearlOption,
     ?tea:LoudTeaSSPTeaOption,
     ?extraOptions:Array<LoudTeaSSPExtraOption>,
+    ?options:Array<LoudTeaSSPAddon>,
 }
 
 enum abstract LoudTeaSSPDrinkType(String) to String {
@@ -211,6 +222,44 @@ enum abstract LoudTeaSSPPearlOption(String) to String {
     final RedBean = "轉紅豆";
 
     static public final all:ReadOnlyArray<LoudTeaSSPPearlOption> = [BlackPearl, Pudding, HerbJelly, NataDeCoco, RedBean];
+}
+
+enum abstract LoudTeaSSPAddon(String) to String {
+    #if (!macro)
+    static public final title = "額外加配";
+
+    final BlackPearl = markupItem("珍珠", 3);
+    final HerbJelly = markupItem("仙草", 3);
+    final Pudding = markupItem("布丁", 3);
+    final NataDeCoco = markupItem("椰果", 3);
+    final RedBean = markupItem("紅豆", 3);
+    final Honey = markupItem("蜂蜜", 3);
+    final Tofu = markupItem("豆腐", 5);
+    final TaroPearl = markupItem("芋圓", 5);
+    final Oreo = markupItem("Oreo", 5);
+    final OriginalMilkFoam = markupItem("原味奶蓋", 9);
+    final SesameMilkFoam = markupItem("芝麻奶蓋", 10);
+    final CheeseMilkFoam = markupItem("芝士奶蓋", 12);
+
+    static public final all:ReadOnlyArray<LoudTeaSSPAddon> = [
+        BlackPearl,
+        HerbJelly,
+        Pudding,
+        NataDeCoco,
+        RedBean,
+        Honey,
+        Tofu,
+        TaroPearl,
+        Oreo,
+        OriginalMilkFoam,
+        SesameMilkFoam,
+        CheeseMilkFoam,
+    ];
+    #end
+
+    macro static public function markupItem(name:String, price:Int) {
+        return macro $v{name + " +$" + LoudTeaSSPMenu.markup(price)};
+    }
 }
 
 enum abstract LoudTeaSSPTeaOption(String) to String {
@@ -710,8 +759,13 @@ class LoudTeaSSPMenu {
                         + (item.pearl == null || item.pearl == BlackPearl ? "" : "\n" + fullWidthSpace + LoudTeaSSPPearlOption.title + fullWidthColon + item.pearl)
                         + (item.tea == null ? "" : "\n" + fullWidthSpace + LoudTeaSSPTeaOption.title + fullWidthColon + item.tea)
                         + (item.extraOptions == null ? "" : item.extraOptions.map(opt -> "\n" + fullWidthSpace + LoudTeaSSPExtraOption.title + fullWidthColon + opt).join(""))
+                        + (item.options == null ? "" : item.options.map(opt -> "\n" + fullWidthSpace + LoudTeaSSPAddon.title + fullWidthColon + opt).join(""))
                     ,
-                    orderPrice: drink.price + (item.extraOptions == null ? 0 : item.extraOptions.map(opt -> parsePrice(opt).price).sum()),
+                    orderPrice:
+                        drink.price
+                        + (item.extraOptions == null ? 0 : item.extraOptions.map(opt -> parsePrice(opt).price).sum())
+                        + (item.options == null ? 0 : item.options.map(opt -> parsePrice(opt).price).sum())
+                    ,
                 }
             case _:
                 {
