@@ -8,6 +8,7 @@ using Lambda;
 
 enum abstract KCZenzeroItem(String) to String {
     final LimitedSpecial;
+    final HotDouble;
     final PoonChoiLoHei;
     final HotdogSet;
     final NoodleSet;
@@ -58,6 +59,7 @@ enum abstract KCZenzeroItem(String) to String {
             .concat(limited)
             // .concat(hotpot)
             .concat([
+                HotDouble,
                 HotdogSet,
                 MincedPork,
                 YiMein,
@@ -67,8 +69,8 @@ enum abstract KCZenzeroItem(String) to String {
                 // PastaSet,
                 // LambPasta,
                 // R6Set,
-                WontonSet,
-                LightSet,
+                // WontonSet,
+                // LightSet,
                 GoldenLeg,
                 // TomatoRice,
                 Single,
@@ -77,6 +79,7 @@ enum abstract KCZenzeroItem(String) to String {
 
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
+        case HotDouble: KCZenzeroMenu.KCZenzeroHotDouble;
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
         case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
         case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
@@ -97,7 +100,9 @@ enum abstract KCZenzeroItem(String) to String {
 }
 
 class KCZenzeroMenu {
-    static public final box = "外賣盒 $2";
+    static public function box(price:Int = 2) {
+        return "外賣盒 $" + price;
+    }
     static public final KCZenzeroFreeDrink = {
         title: "送飲品",
         type: "string",
@@ -188,6 +193,41 @@ class KCZenzeroMenu {
         required: ["main"],
     }
 
+    static final hotDouble = "避風塘鮑魚，香辣蝦，蒜蓉炒菜芯，滷肉飯 $158";
+    static public final KCZenzeroHotDouble = {
+        title: "惹火二人套餐",
+        properties: {
+            main: {
+                title: "惹火二人套餐",
+                type: "string",
+                "enum": [
+                    hotDouble,
+                ],
+                "default": hotDouble,
+            },
+            drink: {
+                title: "送飲品",
+                type: "string",
+                "enum": [
+                    "唔要",
+                    "隨機紙包飲品2包",
+                ],
+            },
+            extraOptions: {
+                type: "array",
+                title: "加配",
+                items: {
+                    type: "string",
+                    "enum": [
+                        "羊架一件 +$18",
+                    ],
+                },
+                uniqueItems: true,
+            },
+        },
+        required: ["main", "drink"],
+    }
+
     static public function KCZenzeroHotdogSet(timeSlotType:TimeSlotType) return {
         title: "熱狗",
         description: "$38",
@@ -196,7 +236,7 @@ class KCZenzeroMenu {
                 title: "熱狗",
                 type: "string",
                 "enum": [
-                    "波隆納肉醬熱狗",
+                    // "波隆納肉醬熱狗",
                     "芝士蛋松露熱狗",
                     "薯格趣趣熱狗",
                     // "ABC字母薯餅熱狗",
@@ -708,7 +748,9 @@ class KCZenzeroMenu {
             case TomatoSoupRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case HotpotSet:
-                summarizeOrderObject(orderItem.item, def, ["main"], [box]);
+                summarizeOrderObject(orderItem.item, def, ["main"], [box()]);
+            case HotDouble:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], [box(5)]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
@@ -736,6 +778,8 @@ class KCZenzeroMenu {
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
             case PoonChoiLoHei:
                 false;
+            case HotDouble:
+                false;
             case HotpotSet:
                 false;
             case LimitedSpecial if (limitedSpecial.seperateBox):
@@ -744,8 +788,8 @@ class KCZenzeroMenu {
                 true;
         })) {
             summaries.push({
-                orderDetails: box,
-                orderPrice: box.parsePrice().price,
+                orderDetails: box(),
+                orderPrice: box().parsePrice().price,
             });
         }
         final s = concatSummaries(summaries);
