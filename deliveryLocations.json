@@ -1,8 +1,8 @@
 {
   "version": 0.6,
-  "generator": "Overpass API 0.7.60.2 e4cf9f7a",
+  "generator": "Overpass API 0.7.60.6 e2dc3e5b",
   "osm3s": {
-    "timestamp_osm_base": "2023-05-26T10:20:19Z",
+    "timestamp_osm_base": "2023-06-25T11:34:30Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -164,12 +164,12 @@
         "addr:housenumber": "277",
         "addr:street": "青山道 Castle Peak Road",
         "contact:facebook": "https://www.facebook.com/114832956822264/",
+        "disused:shop": "chemist",
         "name": "永華西藥行",
         "name:en": "Wing Wah Medicine Limited",
         "name:zh": "永華西藥行",
         "opening_hours": "Mo-Sa 09:00-22:00; Su 09:00-21:00",
-        "phone": "+852 5943 5484",
-        "shop": "chemist"
+        "phone": "+852 5943 5484"
       }
     },
     {
@@ -3317,6 +3317,31 @@
     },
     {
       "type": "way",
+      "id": 457375440,
+      "center": {
+        "lat": 22.3404467,
+        "lon": 114.1544151
+      },
+      "nodes": [
+        4535301265,
+        4535301266,
+        4535301267,
+        7029321955,
+        7029321936,
+        4535301268,
+        4535301265
+      ],
+      "tags": {
+        "addr:housenumber": "501-511",
+        "addr:street": "Shun Ning Road",
+        "building": "yes",
+        "name": "永寧大廈 Wing Ning Building",
+        "name:en": "Wing Ning Building",
+        "name:zh": "永寧大廈"
+      }
+    },
+    {
+      "type": "way",
       "id": 466861748,
       "center": {
         "lat": 22.3278112,
@@ -4798,6 +4823,37 @@
         "name": "傲凱 Astoria Crest",
         "name:en": "Astoria Crest",
         "name:zh": "傲凱"
+      }
+    },
+    {
+      "type": "way",
+      "id": 783574807,
+      "center": {
+        "lat": 22.328874,
+        "lon": 114.1593604
+      },
+      "nodes": [
+        7318585305,
+        6606213426,
+        4471094356,
+        7318585304,
+        7318585303,
+        7318585302,
+        7318585301,
+        7318585300,
+        7318585299,
+        7318585298,
+        7318585305
+      ],
+      "tags": {
+        "addr:housenumber": "198",
+        "addr:street": "醫局街 Yee Kuk Street",
+        "building": "apartments",
+        "check_date": "2021-04-22",
+        "name": "嘉裕居 City Regalia",
+        "name:en": "City Regalia",
+        "name:zh": "嘉裕居",
+        "open_date": "2002-09-25"
       }
     },
     {
