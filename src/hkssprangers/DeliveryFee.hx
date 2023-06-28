@@ -3310,6 +3310,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "城市的盼望", //南昌街156-158
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/node/11012205752"
+                }
+            ],
+            match: address -> address.contains("城市的盼望"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 25;
+                case PeiHoStreetMarketCluster: 25;
+                case CLPCluster: 25;
+                case GoldenCluster: 25;
+                case SmilingPlazaCluster: 25;
+                case ParkCluster: 25;
+                case PakTinCluster: 25;
+                case TungChauStreetParkCluster: 25;
+            }
+        },
+        {
             place: "長明大廈 (近楓樹街遊樂場)",
             osm: [
                 {

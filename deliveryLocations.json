@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.60.6 e2dc3e5b",
   "osm3s": {
-    "timestamp_osm_base": "2023-06-25T11:34:30Z",
+    "timestamp_osm_base": "2023-06-28T16:53:45Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -203,6 +203,24 @@
         "name": "龍寶酒家 Dragon Palace Restaurant",
         "name:en": "Dragon Palace Restaurant",
         "name:zh": "龍寶酒家"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11012205752,
+      "lat": 22.3298695,
+      "lon": 114.1641323,
+      "tags": {
+        "addr:housenumber": "156-158",
+        "addr:street": "南昌街 Nam Cheong Street",
+        "contact:facebook": "https://www.facebook.com/HopeoftheCityHK",
+        "contact:instagram": "https://www.instagram.com/hopeofthecity/",
+        "level": "0",
+        "name": "城市的盼望 Hope of the City",
+        "name:en": "Hope of the City",
+        "name:zh": "城市的盼望",
+        "office": "association",
+        "website": "https://www.hopeofthecity.com/"
       }
     },
     {
