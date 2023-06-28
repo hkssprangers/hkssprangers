@@ -70,7 +70,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "telegraf": "^3.38.0",
-    "twilio": "^3.84.1"
+    "twilio": "^4.13.0"
   },
   "resolutions": {
     "crc32-stream": "^4.0.2"
