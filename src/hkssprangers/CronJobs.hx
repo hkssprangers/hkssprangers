@@ -60,7 +60,10 @@ class CronJobs {
             亦都希望預早報咗當值嘅外賣員會準時出現報到接單 (15分鐘內), 唔想加罰則, 請自律 🙏
         **/;
 
-        return tgBot.telegram.sendPoll(chatId, msg, slots.concat(["以上日子全部都唔得/唔肯定"]), {
+        return tgBot.telegram.sendPoll(chatId, msg, slots.concat([
+            "以上日子全部都唔肯定",
+            "以上日子全部都唔得",
+        ]), {
             is_anonymous: false,
             allows_multiple_answers: true,
         })
