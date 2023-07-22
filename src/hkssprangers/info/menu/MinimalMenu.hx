@@ -4,6 +4,7 @@ import js.lib.Object;
 import haxe.ds.ReadOnlyArray;
 
 enum abstract MinimalItem(String) to String {
+    // 窩夫 冇得外賣
     final SetFor2;
     final SetFor4;
     final Tacos;
@@ -19,7 +20,7 @@ enum abstract MinimalItem(String) to String {
         Salad,
         Pasta,
         SousVide,
-        Dessert,
+        // Dessert,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MinimalItem) {
@@ -57,13 +58,18 @@ class MinimalMenu {
         { name: "薄荷朱古力咖啡(凍)", price: 48 },
         { name: "Baileys latte(熱)", price: 44 },
         { name: "Baileys latte(凍)", price: 48 },
-        { name: "Espresso Tonic(凍)", price: 44 },
+        { name: "Espresso Tonic(凍)", price: 48 },
+        // { name: "Dirty(凍)", price: 44 },
+        { name: "紅豆牛奶咖啡(凍)", price: 48 },
+        { name: "焦糖朱古力咖啡(熱)", price: 44 },
+        { name: "焦糖朱古力咖啡(凍)", price: 48 },
+        { name: "榛子咖啡(熱)", price: 42 },
+        { name: "榛子咖啡(凍)", price: 46 },
 
         { name: "朱古力鮮奶(熱)", price: 40 },
         { name: "朱古力鮮奶(凍)", price: 44 },
         { name: "薄荷朱古力(熱)", price: 42 },
         { name: "薄荷朱古力(凍)", price: 46 },
-        { name: "鮮奶伯爵茶(熱)", price: 40 },
         { name: "抹茶鮮奶(熱)", price: 46 },
         { name: "抹茶鮮奶(凍)", price: 50 },
         { name: "焙茶鮮奶(熱)", price: 44 },
@@ -72,13 +78,15 @@ class MinimalMenu {
         { name: "焙茶燕麥朱古力(凍)", price: 50 },
         { name: "Baileys朱古力(熱)", price: 42 },
         { name: "Baileys朱古力(凍)", price: 46 },
+        { name: "草莓朱古力(凍)", price: 48 },
 
         { name: "火龍果乳酪", price: 48 },
         { name: "芒果乳酪", price: 48 },
+        { name: "士多啤梨乳酪", price: 52 },
 
         { name: "蝶豆花柚子梳打", price: 46 },
         { name: "青梳打(青檸青蘋果梳打)", price: 46 },
-        { name: "黑醋栗檸檬梳打", price: 46 },
+        { name: "黑加倫子檸檬梳打", price: 46 },
         { name: "繽紛梳打(香橙桃梳打)", price: 46 },
         // { name: "雪糕波子汽水", price: 50 },
 
@@ -145,8 +153,9 @@ class MinimalMenu {
         { name: "藍芝士紅菜頭米型粉(v.)", price: 105},
         { name: "溫泉蛋什菌牛肝菌汁貓耳朵粉(v.)", price: 105 },
         { name: "羅馬燴牛肚貓耳朵粉(h.)", price: 120},
-        { name: "香煎虎蝦海鮮牛油果米型粉(h.)", price: 138 },
+        { name: "煎琵琶蝦海鮮牛油果米型粉(h.)", price: 138},
         { name: "意大利雲吞配軟殼蟹冬蔭功泡沫", price: 148 },
+        { name: "鮮刨松露肉醬意粉", price: 115 },
     ];
 
     static public final MinimalPasta = {
@@ -170,9 +179,9 @@ class MinimalMenu {
     };
 
     static final sousVides = [
-        { name: "西班牙朱柳配芥末子蜜汁", price: 128 },
+        { name: "鮮刨松露西班牙豬扒", price: 138 },
         { name: "保雲穌焗比目魚配日本蠔周打", price: 138 },
-        { name: "安格斯牛腰扒配阿根廷青醬", price: 158 },
+        { name: "安格斯牛肉眼(6oz)", price: 168 },
     ];
 
     static public final MinimalSousVide = {
