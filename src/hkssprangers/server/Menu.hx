@@ -2078,6 +2078,9 @@ class Menu extends View<MenuProps> {
 
                         <div className=${headerClasses}>${MinimalSousVide.title}</div>
                         ${renderItems(MinimalSousVide.properties.main.enums())}
+
+                        <div className=${headerClasses}>${MinimalDessert.title}</div>
+                        ${renderItems(MinimalDessert.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
                         <div className=${headerClasses}>${MinimalDrinks.title}</div>

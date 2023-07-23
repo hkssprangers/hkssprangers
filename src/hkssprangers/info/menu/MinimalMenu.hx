@@ -20,7 +20,7 @@ enum abstract MinimalItem(String) to String {
         Salad,
         Pasta,
         SousVide,
-        // Dessert,
+        Dessert,
     ];
 
     public function getDefinition():Dynamic return switch (cast this:MinimalItem) {
@@ -233,8 +233,8 @@ class MinimalMenu {
                 title: "甜品",
                 type: "string",
                 "enum": [
-                    "檸檬柚子撻 $77",
-                    "蘋果酥盒 $80",
+                    "薄脆拿破崙 $80",
+                    "蘋果酥盒 $84",
                 ],
             },
             drink: {
