@@ -713,8 +713,6 @@ class Menu extends View<MenuProps> {
                 <div className="p-3 md:w-1/2">
                     ${rice}
 
-                    ${noodleSet}
-
                     ${goldenLeg}
 
                     ${single}

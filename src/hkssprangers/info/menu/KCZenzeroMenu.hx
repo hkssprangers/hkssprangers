@@ -65,7 +65,7 @@ enum abstract KCZenzeroItem(String) to String {
                 YiMein,
                 // TomatoSoupRice,
                 Rice,
-                NoodleSet,
+                // NoodleSet,
                 // PastaSet,
                 // LambPasta,
                 // R6Set,
@@ -332,7 +332,8 @@ class KCZenzeroMenu {
                     "鹽燒青魚滷肉飯 $55",
                     "七味巨蟹滷肉飯 $55",
                     "芥末炸蠔滷肉飯 $50",
-                    // "終極豐盛滷肉飯 $78",
+                    "炸蠔蛋滷肉飯 $50",
+                    "哇哈哈滷肉飯 $50",
                 ],
             },
             options: {
