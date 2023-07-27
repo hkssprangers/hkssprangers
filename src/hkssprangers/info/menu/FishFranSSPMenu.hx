@@ -63,16 +63,11 @@ enum abstract FishFranSSPItem(String) to String {
 
 class FishFranSSPMenu {
     static function item(name:String, price:Float, plusSign:Bool = false):String {
-        return name + (plusSign ? " +$" : " $") + Math.round(price * 1.11);
+        return name + (plusSign ? " +$" : " $") + Math.ceil(price * 1.11);
     }
 
-    static function lunchNoodle(main:String, price:Float):Array<String> {
-        return [
-            "上海麵",
-            "粉條",
-            "米線",
-            "飯",
-        ].map(type -> item(main + " " + type, price));
+    static function lunchNoodle(main:String, options:Array<String>, price:Float):Array<String> {
+        return options.map(type -> item(main + " " + type, price));
     }
 
     static public final FishFranSSPLunchSet = {
@@ -82,11 +77,11 @@ class FishFranSSPMenu {
                 type: "string",
                 title: "午市套餐",
                 "enum": [
-                    lunchNoodle("水煮牛肉", 58),
-                    lunchNoodle("水煮魚片", 58),
-                    lunchNoodle("酸菜魚片", 58),
-                    lunchNoodle("鮮茄香菇魚片", 58),
-                    lunchNoodle("麻辣三寶", 52),
+                    lunchNoodle("水煮牛肉", ["上海麵","粉條","米線","飯"], 58),
+                    lunchNoodle("水煮魚片", ["上海麵","粉條","米線","飯"], 58),
+                    lunchNoodle("酸菜魚片", ["上海麵","粉條","米線","飯"], 58),
+                    lunchNoodle("鮮茄香菇魚片", ["上海麵","粉條","米線","飯"], 58),
+                    lunchNoodle("麻辣三寶麵", ["上海麵","粉條","米線"], 52),
                     [
                         item("重慶雞飯", 55),
                         item("口水雞飯", 52),
@@ -112,7 +107,8 @@ class FishFranSSPMenu {
                     "熱咖啡或茶",
                     item("凍飲", 3, true),
                     item("汽水", 3, true),
-                    item("健康飲品", 5, true),
+                    item("菜蜜檸蜜", 3, true),
+                    item("罐裝飲品", 5, true),
                     item("特飲", 8, true),
                     item("珍寶沙冰", 16, true),
                 ].join(" / "),
@@ -159,18 +155,26 @@ class FishFranSSPMenu {
                     item("熱檸樂", 8, true),
                     item("熱可樂煲薑", 8, true),
                     item("熱檸樂煲薑", 8, true),
-                    item("凍華田", 6, true),
+                    item("凍華田", 3, true),
                     item("凍好立克", 3, true),
                     item("凍杏仁霜", 3, true),
                     item("凍利賓納", 3, true),
-                    item("凍檸蜜", 3, true),
+                    item("凍檸蜜", 6, true),
+                    item("凍菜蜜", 6, true),
                     item("凍檸樂", 8, true),
                     item("紅豆冰", 8, true),
                     item("什果冰", 8, true),
                     item("菠蘿冰", 8, true),
                 ],
             },
-
+            veg: {
+                type: "string",
+                title: "加餐菜",
+                "enum": [
+                    item("菜芯", 13, true),
+                    item("生菜", 13, true),
+                ],
+            },
         },
         required: [
             "main",
@@ -421,9 +425,9 @@ class FishFranSSPMenu {
                     "上海麵",
                     "粉條",
                     "刀削麵",
-                    "烏冬 +$3",
-                    "出前一丁 +$3",
-                    "辛辣麵 +$3",
+                    item("烏冬", 3, true),
+                    item("出前一丁", 3, true),
+                    item("辛辣麵", 3, true),
                 ],
             },
         },
@@ -631,7 +635,7 @@ class FishFranSSPMenu {
         final def = orderItem.type.getDefinition();
         return switch (orderItem.type) {
             case LunchSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "drink"]);
+                summarizeOrderObject(orderItem.item, def, ["main", "drink", "veg"]);
             case FishPot:
                 summarizeOrderObject(orderItem.item, def, ["style", "main", "options"]);
             case Noodles:

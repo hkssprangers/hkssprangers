@@ -1469,6 +1469,7 @@ class Menu extends View<MenuProps> {
                     <div className=${headerClasses}>${FishFranSSPLunchSet.title}</div>
                     <div className="p-3 text-gray-500">
                         <p>${FishFranSSPLunchSet.properties.drink.description}</p>
+                        <p>${FishFranSSPLunchSet.properties.veg.title}：${slashes(FishFranSSPLunchSet.properties.veg.enums())}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
