@@ -973,8 +973,9 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
-            case [EightyNine, "2023-06-22", _]:
-                return Unavailable('休息一天');
+            case [EightyNine, _, _] if (pickupTimeSlot.start.getDatePart() < "2023-08-10"):
+                return Unavailable('店舖人手不足');
+
             case [ThaiHome, "2023-06-22", _]:
                 return Unavailable('休息一天');
 
