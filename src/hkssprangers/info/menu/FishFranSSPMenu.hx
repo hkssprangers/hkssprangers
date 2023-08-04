@@ -388,7 +388,7 @@ class FishFranSSPMenu {
                 type: "string",
                 title: "配料",
                 "enum": [
-                    item("酸辣湯粉條", 40),
+                    // item("酸辣湯粉條", 40),
                     item("酸菜魚片麵", 62),
                     item("酸菜魚腩麵", 72),
                     item("酸菜魚頭麵", 94),
@@ -504,6 +504,8 @@ class FishFranSSPMenu {
             item("麻辣魚蛋", 40),
             "川式冰粉 $31",
             "黑芝麻流沙包 $36",
+            "糍粑 配紅糖 $42",
+            "糍粑 配練奶 $42",
         ],
     };
 
