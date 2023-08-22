@@ -983,8 +983,8 @@ enum abstract Shop(String) to String {
             case [TheParkByYears, "2023-08-02", _]:
                 return Unavailable('包場活動 暫停營業一天');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid02MgWi3Qrs5i7LewBwYRJszAvZSvsxUvTrijEQMBCbW1GgQZHnmkPycgy1ZzGzMQ6Gl&id=100064143817671
-            case [KCZenzero, "2023-06-15", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid09TZUwKEJwQrmyGiuKSsfGRWj68PvtwtyCjCBmvtPGUw4E5mBeHkscKRAiDvq3v7El&id=100064143817671
+            case [KCZenzero, "2023-08-23", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
