@@ -958,7 +958,7 @@ enum abstract Shop(String) to String {
         if (pickupTimeSlot.start.getDatePart() == "2023-09-01") {
             switch [(cast this:Shop), TimeSlotType.classify(pickupTimeSlot.start)] {
                 case [_, Lunch]: return Unavailable("颱風關係 埗兵暫停服務");
-                case [LaksaStore | HowDrunk | KCZenzero | EightyNine | ThaiHome | PokeGo, _]: return Unavailable("颱風關係 暫停營業");
+                case [LaksaStore | HowDrunk | KCZenzero | EightyNine | ThaiHome | PokeGo | FishFranSSP, _]: return Unavailable("颱風關係 暫停營業");
                 case _: //pass
             }
         }
