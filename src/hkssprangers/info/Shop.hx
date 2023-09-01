@@ -960,7 +960,10 @@ enum abstract Shop(String) to String {
                 return Unavailable("颱風關係 埗兵暫停服務");
             case "2023-09-02":
                 switch [(cast this:Shop), TimeSlotType.classify(pickupTimeSlot.start)] {
-                    case _: //pass
+                    case [_, Lunch]:
+                        return Unavailable("颱風關係 埗兵暫停服務");
+                    case _:
+                        //pass
                 }
         }
 
