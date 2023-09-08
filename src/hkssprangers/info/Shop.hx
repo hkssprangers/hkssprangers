@@ -956,12 +956,18 @@ enum abstract Shop(String) to String {
         final day = Weekday.fromDay(date.getDay());
 
         switch (pickupTimeSlot.start.getDatePart()) {
-            case "2023-09-02":
+            case "2023-09-08":
                 switch [(cast this:Shop), TimeSlotType.classify(pickupTimeSlot.start)] {
-                    case [_, Lunch]:
-                        return Unavailable("颱風關係 埗兵暫停服務");
-                    case [KCZenzero | HowDrunk | LoudTeaSSP | Minimal | BlackWindow | BiuKeeLokYuen, Dinner]:
-                        return Unavailable("颱風關係 暫停營業");
+                    case [
+                        Minimal |
+                        BiuKeeLokYuen |
+                        KCZenzero |
+                        YearsHK |
+                        TheParkByYears |
+                        PokeGo |
+                        LonelyPaisley
+                    , Dinner]:
+                        return Unavailable("天氣關係 暫停營業");
                     case _:
                         //pass
                 }
