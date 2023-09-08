@@ -965,7 +965,9 @@ enum abstract Shop(String) to String {
                         YearsHK |
                         TheParkByYears |
                         PokeGo |
-                        LonelyPaisley
+                        LonelyPaisley |
+                        HowDrunk |
+                        LoudTeaSSP
                     , Dinner]:
                         return Unavailable("天氣關係 暫停營業");
                     case _:
