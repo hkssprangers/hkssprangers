@@ -995,15 +995,13 @@ enum abstract Shop(String) to String {
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
+            case [HowDrunk, _, _]:
+                return Unavailable('店舖暫停營業');
             case [EightyNine, _, _]:
                 return Unavailable('店舖人手不足 無限期暫停');
 
             case [ThaiHome, "2023-06-22", _]:
                 return Unavailable('休息一天');
-
-            // https://www.facebook.com/yearshk/posts/pfbid026LFyq5ZSuWSbTsK6Nuo6nzun4LV9GotJWRvJZ7YGC5N9okaENLuvKKdDMaQ16YTGl
-            case [TheParkByYears, "2023-08-02", _]:
-                return Unavailable('包場活動 暫停營業一天');
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid09TZUwKEJwQrmyGiuKSsfGRWj68PvtwtyCjCBmvtPGUw4E5mBeHkscKRAiDvq3v7El&id=100064143817671
             case [KCZenzero, "2023-08-23", _]:
