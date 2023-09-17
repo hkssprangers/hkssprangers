@@ -414,7 +414,7 @@ enum abstract Shop(String) to String {
                 ],
                 earliestPickupTime: "12:30:00",
                 latestPickupTime: "18:30:00",
-                isInService: true,
+                isInService: false,
                 facebook: "https://www.facebook.com/MGYVEG",
                 instagram: "https://www.instagram.com/mgyvegan/",
                 availablity: "提供午餐及晚餐",
@@ -997,11 +997,6 @@ enum abstract Shop(String) to String {
 
             case [HowDrunk, _, _]:
                 return Unavailable('店舖暫停營業');
-            case [EightyNine, _, _]:
-                return Unavailable('店舖人手不足 無限期暫停');
-
-            case [ThaiHome, "2023-06-22", _]:
-                return Unavailable('休息一天');
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid09TZUwKEJwQrmyGiuKSsfGRWj68PvtwtyCjCBmvtPGUw4E5mBeHkscKRAiDvq3v7El&id=100064143817671
             case [KCZenzero, "2023-08-23", _]:

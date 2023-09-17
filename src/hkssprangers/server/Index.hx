@@ -474,7 +474,6 @@ class Index extends View<IndexProps> {
                         <span className="flex-1 mx-3">&nbsp;</span>
                     </div>
                     ${renderShop(TheParkByYears, ParkCluster)}
-                    ${renderShop(MGY, ParkCluster)}
                     ${renderShop(PokeGo, ParkCluster)}
                     ${renderShop(Minimal, ParkCluster)}
 
@@ -525,7 +524,6 @@ class Index extends View<IndexProps> {
                             ${renderShopp(BlackWindow)}
                             ${renderShopp(LoudTeaSSP)}
                             ${renderShopp(TheParkByYears)}
-                            ${renderShopp(MGY)}
                             ${renderShopp(PokeGo)}
                             ${renderShopp(Minimal)}
                             ${renderShopp(YearsHK)}

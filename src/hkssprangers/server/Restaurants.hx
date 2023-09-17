@@ -75,7 +75,6 @@ class Restaurants extends View<RestaurantsProps> {
                             ${Index.renderShopp(BlackWindow)}
                             ${Index.renderShopp(LoudTeaSSP)}
                             ${Index.renderShopp(TheParkByYears)}
-                            ${Index.renderShopp(MGY)}
                             ${Index.renderShopp(PokeGo)}
                             ${Index.renderShopp(Minimal)}
                             ${Index.renderShopp(YearsHK)}

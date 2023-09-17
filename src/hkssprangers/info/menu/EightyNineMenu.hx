@@ -107,7 +107,6 @@ class EightyNineMenu {
                     item("上湯雲吞雞配飯", 55),
                     item("香茅燒豬頸肉飯", 46),
                     item("泰式去骨豬髀飯", 46),
-                    item("瑞士汁雞翼飯", 40),
                     item("泰式豬扒飯", 38),
                     item("柱侯蘿蔔牛腩飯", 38),
                     item("泰式豬軟骨飯", 45),
@@ -133,7 +132,6 @@ class EightyNineMenu {
         type: "string",
         "enum": [
             item("紅油抄手", 20),
-            item("瑞士汁雞翼", 25),
             item("涼拌青瓜拼木耳", 22),
             item("涼拌花枝拼青瓜木耳", 30),
             item("郊外油菜", 12),
