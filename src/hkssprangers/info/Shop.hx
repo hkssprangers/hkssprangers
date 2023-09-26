@@ -955,28 +955,6 @@ enum abstract Shop(String) to String {
         final date = pickupTimeSlot.start.toDate();
         final day = Weekday.fromDay(date.getDay());
 
-        switch (pickupTimeSlot.start.getDatePart()) {
-            case "2023-09-08":
-                switch [(cast this:Shop), TimeSlotType.classify(pickupTimeSlot.start)] {
-                    case [
-                        Minimal |
-                        BiuKeeLokYuen |
-                        KCZenzero |
-                        YearsHK |
-                        TheParkByYears |
-                        PokeGo |
-                        LonelyPaisley |
-                        HowDrunk |
-                        LaksaStore
-                    , Dinner]:
-                        return Unavailable("天氣關係 暫停營業");
-                    case _:
-                        //pass
-                }
-            case _:
-                // pass
-        }
-
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
             case [DongDong, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-26"):
                 return Unavailable('已結業 😥');
@@ -1000,6 +978,9 @@ enum abstract Shop(String) to String {
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid09TZUwKEJwQrmyGiuKSsfGRWj68PvtwtyCjCBmvtPGUw4E5mBeHkscKRAiDvq3v7El&id=100064143817671
             case [KCZenzero, "2023-08-23", _]:
+                return Unavailable('休息一天');
+
+            case [LaksaStore, "2023-09-26", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
