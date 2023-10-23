@@ -57,7 +57,7 @@ enum abstract KCZenzeroItem(String) to String {
         }
         return []
             .concat(limited)
-            // .concat(hotpot)
+            .concat(hotpot)
             .concat([
                 HotDouble,
                 HotdogSet,
@@ -633,16 +633,16 @@ class KCZenzeroMenu {
     };
 
     static public final KCZenzeroHotpotSet = {
-        title: "限定：串爆田雞臘米煲",
-        description: "⚠️ 每日下午四點後供應。請提早落單。售完即止。",
+        title: "雞煲",
+        description: "⚠️ 請提早落單。售完即止。",
         properties: {
             main: {
                 type: "string",
-                title: "口味",
+                title: "雞煲",
                 "enum": [
-                    "辣 $98",
-                    "唔辣 $98",
+                    "花膠胡椒豬肚雞煲配沙薑豉油 $108",
                 ],
+                "default": "花膠胡椒豬肚雞煲配沙薑豉油 $108",
             },
         },
         required: [

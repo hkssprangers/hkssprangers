@@ -562,8 +562,8 @@ class Menu extends View<MenuProps> {
             ');
         } else null;
 
-        final poonChoiLoHei = {
-            final def = KCZenzeroPoonChoiLoHei;
+        final hotpots = {
+            final def = KCZenzeroHotpotSet;
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -571,12 +571,6 @@ class Menu extends View<MenuProps> {
                     </div>
                     <div className="p-3">${def.description}</div>
                     ${renderItems(def.properties.main.enums())}
-                    <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
-                        <div className="p-3 text-xl bg-slash rounded-t-xl font-bold">${def.properties.extraOptions.title}</div>
-                        <div className="bg-white rounded-b-xl">
-                            ${renderItems(def.properties.extraOptions.items.enums(), true)}
-                        </div>
-                    </div>
                 </Fragment>
             ');
         }
@@ -700,6 +694,8 @@ class Menu extends View<MenuProps> {
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
+
+                    ${hotpots}
 
                     ${hotDouble}
 
