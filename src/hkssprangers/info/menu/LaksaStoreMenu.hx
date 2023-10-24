@@ -82,7 +82,7 @@ class LaksaStoreMenu {
     }
 
     static public final LaksaStoreNoodleSet = {
-        title: "喇沙／冬蔭公",
+        title: "喇沙",
         description: "套餐: 湯麵 + 飲品 $55",
         properties: {
             soup: {
@@ -90,8 +90,9 @@ class LaksaStoreMenu {
                 type: "string",
                 "enum": [
                     "喇沙",
-                    "冬蔭公",
-                ]
+                    // "冬蔭公",
+                ],
+                "default": "喇沙",
             },
             ingredient: {
                 type: "string",
