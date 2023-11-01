@@ -16,8 +16,6 @@ WORKDIR "$WORKDIR"
 ENV HAXESHIM_ROOT=/haxe
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
-ARG NODE_VERSION=16
-
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -38,6 +36,11 @@ ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
 SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
+
+# https://github.com/nodesource/distributions#installation-instructions
+RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+ARG NODE_MAJOR=16
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -65,9 +68,8 @@ RUN apt-get update \
         osmosis \
         # install docker engine for using `WITH DOCKER`
         docker-ce \
-    # install node
-    && curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
-    && apt-get install -qqy --no-install-recommends nodejs=${NODE_VERSION}.* \
+        # install node
+        nodejs=${NODE_MAJOR}.* \
     # Install postgresql-client
     # https://www.postgresql.org/download/linux/ubuntu/
     && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
