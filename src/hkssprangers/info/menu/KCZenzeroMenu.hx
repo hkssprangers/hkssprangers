@@ -796,6 +796,10 @@ class KCZenzeroMenu {
             });
         }
         final s = concatSummaries(summaries);
+        if (s.orderPrice >= 100) {
+            s.orderDetails += "\n滿100蚊減10蚊 -$10";
+            s.orderPrice -= 10;
+        }
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,
