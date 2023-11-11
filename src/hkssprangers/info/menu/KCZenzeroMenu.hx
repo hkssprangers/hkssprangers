@@ -212,7 +212,8 @@ class KCZenzeroMenu {
                 type: "string",
                 "enum": [
                     "唔要",
-                    "隨機紙包飲品2包",
+                    // "隨機紙包飲品2包",
+                    "湯",
                 ],
             },
             extraOptions: {
