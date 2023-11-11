@@ -3052,6 +3052,25 @@ class DeliveryFee {
             }
         },
         {
+            place: "蕙逸居",
+            osm: [
+                {
+                    url: "https://www.openstreetmap.org/way/388818453"
+                }
+            ],
+            match: address -> address.contains("蕙逸居") || address.toLowerCase().contains("sunningdale"),
+            deliveryFee: cluster -> switch cluster {
+                case DragonCentreCluster: 40;
+                case PeiHoStreetMarketCluster: 40;
+                case CLPCluster: 40;
+                case GoldenCluster: 40;
+                case SmilingPlazaCluster: 40;
+                case ParkCluster: 35;
+                case PakTinCluster: 40;
+                case TungChauStreetParkCluster: 40;
+            }
+        },
+        {
             place: "花墟公園",
             osm: [
                 {

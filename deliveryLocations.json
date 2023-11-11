@@ -1,8 +1,8 @@
 {
   "version": 0.6,
-  "generator": "Overpass API 0.7.61.4 df4c946a",
+  "generator": "Overpass API 0.7.61.5 4133829e",
   "osm3s": {
-    "timestamp_osm_base": "2023-07-24T14:11:06Z",
+    "timestamp_osm_base": "2023-11-11T11:56:16Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -102,7 +102,6 @@
         "name": "openground",
         "name:en": "openground",
         "opening_hours": "Tu-Su 12:00-19:00",
-        "opening_hours:covid19": "same",
         "phone": "+852 3974 5098",
         "website": "https://shop.openground.hk/"
       }
@@ -309,7 +308,9 @@
         "operation": "private",
         "ownership": "private",
         "residential": "apartments",
-        "wikidata": "Q8421710"
+        "wikidata": "Q8421710",
+        "wikimedia_commons": "Category:Island Harbourview",
+        "wikipedia": "en:Island Harbourview"
       }
     },
     {
@@ -350,6 +351,7 @@
         "name:zh": "南昌邨",
         "residential": "apartments",
         "wikidata": "Q16922151",
+        "wikimedia_commons": "Category:Nam Cheong Estate",
         "wikipedia": "zh:南昌邨"
       }
     },
@@ -357,36 +359,58 @@
       "type": "way",
       "id": 26379979,
       "center": {
-        "lat": 22.3284379,
-        "lon": 114.1545932
+        "lat": 22.3284432,
+        "lon": 114.1545556
       },
       "nodes": [
-        288998013,
-        288998014,
-        288998015,
-        8184422688,
+        11134112911,
+        11134112910,
         288998016,
         1938450320,
+        11134112909,
+        11134112908,
+        11134112907,
+        11134112906,
         288998017,
+        11134112912,
+        11134112913,
         288998018,
+        11134112914,
         1938450411,
         1938450530,
+        11134113176,
+        11134113175,
+        11134113177,
+        11134113174,
+        11134113185,
+        11134113183,
         1938450757,
+        11134113182,
+        11134113181,
         288998019,
+        11134113180,
         1938450922,
+        11134113179,
+        11134113178,
         288998020,
+        11134113184,
+        11134113186,
+        11134113077,
+        11134113078,
         288998021,
-        1938451868,
         1938451877,
         1938451909,
         1938451916,
         1938451921,
         1938451511,
-        288998013
+        288998013,
+        288998014,
+        8184422688,
+        11134112911
       ],
       "tags": {
         "addr:housenumber": "19",
-        "addr:street": "Sai Chuen Road",
+        "addr:street": "西邨路 Sai Chuen Road",
         "landuse": "residential",
         "name": "富昌邨 Fu Cheong Estate",
         "name:en": "Fu Cheong Estate",
@@ -432,6 +456,7 @@
         "name:zh": "碧海藍天",
         "residential": "apartments",
         "wikidata": "Q1307260",
+        "wikimedia_commons": "Category:AquaMarine",
         "wikipedia": "zh:碧海藍天"
       }
     },
@@ -468,6 +493,7 @@
         "name:zh": "泓景臺",
         "residential": "apartments",
         "wikidata": "Q8421214",
+        "wikimedia_commons": "Category:Banyan Garden",
         "wikipedia": "zh:泓景臺"
       }
     },
@@ -494,6 +520,7 @@
         "name:zh": "昇悅居",
         "residential": "apartments",
         "wikidata": "Q8421188",
+        "wikimedia_commons": "Category:Liberté (Hong Kong housing estate)",
         "wikipedia": "zh:昇悅居"
       }
     },
@@ -602,7 +629,7 @@
         "name": "聖公會聖安德烈小學 S.K.H. St. Andrew's Primary School",
         "name:en": "S.K.H. St. Andrew's Primary School",
         "name:zh": "聖公會聖安德烈小學",
-        "website": "www.skhstandrews.edu.hk"
+        "website": "https://www.skhstandrews.edu.hk/"
       }
     },
     {
@@ -640,6 +667,7 @@
         "name:zh": "宇晴軒",
         "residential": "apartments",
         "wikidata": "Q8421534",
+        "wikimedia_commons": "Category:The Pacifica",
         "wikipedia": "zh:宇晴軒"
       }
     },
@@ -670,21 +698,23 @@
         "name": "亮賢居 Shining Heights",
         "name:en": "Shining Heights",
         "name:zh": "亮賢居",
-        "wikidata": "Q8422510"
+        "wikidata": "Q8422510",
+        "wikimedia_commons": "Category:Shining Heights"
       }
     },
     {
       "type": "way",
       "id": 103239090,
       "center": {
-        "lat": 22.3267839,
-        "lon": 114.1646469
+        "lat": 22.3267869,
+        "lon": 114.1646387
       },
       "nodes": [
         991294995,
         9333541369,
+        11222686207,
         660864273,
-        9333541402,
+        11222686200,
         9333541400,
         1152824614
       ],
@@ -709,6 +739,7 @@
       "nodes": [
         1152803555,
         6414589661,
+        11153075979,
         420027779
       ],
       "tags": {
@@ -797,7 +828,9 @@
         "owner:wikidata": "Q10566380",
         "owner:zh": "香港平民屋宇有限公司",
         "residential": "apartments",
-        "wikidata": "Q8427478"
+        "wikidata": "Q8427478",
+        "wikimedia_commons": "Category:Tai Hang Sai Estate",
+        "wikipedia": "en:Tai Hang Sai Estate"
       }
     },
     {
@@ -875,7 +908,9 @@
         "owner:zh": "香港房屋委員會",
         "ownership": "public",
         "residential": "apartments",
-        "wikidata": "Q10907577"
+        "wikidata": "Q10907577",
+        "wikimedia_commons": "Category:Nam Shan Estate",
+        "wikipedia": "en:Nam Shan Estate"
       }
     },
     {
@@ -1001,6 +1036,7 @@
         "was:ref": "41",
         "website": "https://www.yha.org.hk/en/hostel/yha-mei-ho-house-youth-hostel/",
         "wikidata": "Q6809925",
+        "wikimedia_commons": "Category:Mei Ho House",
         "wikipedia": "zh:美荷樓"
       }
     },
@@ -1027,7 +1063,8 @@
         "name": "幸福邨 Fortune Estate",
         "name:en": "Fortune Estate",
         "name:zh": "幸福邨",
-        "wikidata": "Q16922366"
+        "wikidata": "Q16922366",
+        "wikimedia_commons": "Category:Fortune Estate"
       }
     },
     {
@@ -1122,6 +1159,7 @@
         "shop": "mall",
         "wheelchair": "no",
         "wikidata": "Q3531739",
+        "wikimedia_commons": "Category:Golden Computer Centre and Golden Computer Arcade",
         "wikipedia": "zh:黃金大廈"
       }
     },
@@ -1156,12 +1194,13 @@
       "type": "way",
       "id": 151705875,
       "center": {
-        "lat": 22.3327254,
-        "lon": 114.1573063
+        "lat": 22.3327097,
+        "lon": 114.1572845
       },
       "nodes": [
         1645492649,
         1645492617,
+        11125515422,
         1645492215,
         8174766682,
         1645492680,
@@ -1173,10 +1212,11 @@
         2251202571,
         2251202569,
         1645492768,
-        1645492754,
+        1645492734,
         1645492724,
         1848368634,
-        1848368637,
+        1645492710,
+        11109434735,
         1645492649
       ],
       "tags": {
@@ -1185,6 +1225,7 @@
         "name:en": "Lai Kok Estate",
         "name:zh": "麗閣邨",
         "wikidata": "Q16923339",
+        "wikimedia_commons": "Category:Lai Kok Estate",
         "wikipedia": "zh:麗閣邨"
       }
     },
@@ -1192,18 +1233,22 @@
       "type": "way",
       "id": 151705876,
       "center": {
-        "lat": 22.3312592,
-        "lon": 114.1585956
+        "lat": 22.3312214,
+        "lon": 114.1587353
       },
       "nodes": [
-        1645492617,
-        1645492215,
+        11125515424,
+        11125515423,
+        11125515426,
+        11200179066,
+        7315083756,
+        7315083755,
+        1710226762,
+        1710226758,
         2251202574,
-        2251202567,
-        2251202566,
-        2251202573,
-        1645492313,
-        1645492617
+        1645492215,
+        11125515422,
+        11125515424
       ],
       "tags": {
         "addr:housenumber": "420",
@@ -1213,6 +1258,7 @@
         "name:en": "Lai On Estate",
         "name:zh": "麗安邨",
         "wikidata": "Q16923331",
+        "wikimedia_commons": "Category:Lai On Estate",
         "wikipedia": "zh:麗安邨"
       }
     },
@@ -1220,18 +1266,23 @@
       "type": "way",
       "id": 151705957,
       "center": {
-        "lat": 22.3321615,
-        "lon": 114.1594326
+        "lat": 22.3323397,
+        "lon": 114.1593402
       },
       "nodes": [
         1645492617,
         1645492649,
-        1645492710,
+        11125515425,
         1645492556,
-        1645492313,
+        11125515426,
+        11125515423,
+        11125515424,
+        11125515422,
         1645492617
       ],
       "tags": {
+        "addr:housenumber": "311",
+        "addr:street": "長沙灣道 Cheung Sha Wan Road",
         "landuse": "residential",
         "name": "怡靖苑 Yee Ching Court",
         "name:en": "Yee Ching Court",
@@ -1243,21 +1294,21 @@
       "type": "way",
       "id": 151705958,
       "center": {
-        "lat": 22.333098,
-        "lon": 114.1583674
+        "lat": 22.3331013,
+        "lon": 114.158344
       },
       "nodes": [
-        1645492754,
+        11125515425,
         1645492734,
-        1645492733,
+        1645492724,
+        1848368634,
         1645492710,
         1645492649,
-        1848368637,
-        1848368634,
-        1645492724,
-        1645492754
+        11125515425
       ],
       "tags": {
+        "addr:housenumber": "329-343",
+        "addr:street": "長沙灣道 Cheung Sha Wan Road",
         "landuse": "residential",
         "name": "怡閣苑 Yee Kok Court",
         "name:en": "Yee Kok Court",
@@ -1269,8 +1320,8 @@
       "type": "way",
       "id": 173944655,
       "center": {
-        "lat": 22.327699,
-        "lon": 114.1652242
+        "lat": 22.3277095,
+        "lon": 114.165211
       },
       "nodes": [
         1846906456,
@@ -1289,7 +1340,7 @@
         9754345527,
         1846906464,
         9754345530,
-        9754345528,
+        7615558559,
         1846906452,
         1846906453,
         1846906457,
@@ -1302,7 +1353,8 @@
         "name:en": "Maple Street Playground",
         "name:zh": "楓樹街遊樂場",
         "not:leisure": "playground",
-        "wikidata": "Q63439696"
+        "wikidata": "Q63439696",
+        "wikimedia_commons": "Category:Maple Street Playground"
       }
     },
     {
@@ -1388,6 +1440,7 @@
         "name:en": "Metro Harbour View",
         "name:zh": "港灣豪庭",
         "wikidata": "Q8423733",
+        "wikimedia_commons": "Category:Metro Harbour View, Hong Kong",
         "wikipedia": "zh:港灣豪庭"
       }
     },
@@ -1424,13 +1477,14 @@
       ],
       "tags": {
         "addr:housenumber": "20",
-        "addr:street": "Sai Chuen Road",
+        "addr:street": "西邨路 Sai Chuen Road",
         "landuse": "residential",
         "name": "榮昌邨 Wing Cheong Estate",
         "name:en": "Wing Cheong Estate",
         "name:zh": "榮昌邨",
         "residential": "apartments",
         "wikidata": "Q11120495",
+        "wikimedia_commons": "Category:Wing Cheong Estate",
         "wikipedia": "zh:榮昌邨"
       }
     },
@@ -1500,7 +1554,9 @@
         "name:zh-Hans": "苏屋邨",
         "name:zh-Hant": "蘇屋邨",
         "residential": "apartments",
-        "wikidata": "Q7549573"
+        "wikidata": "Q7549573",
+        "wikimedia_commons": "Category:So Uk Estate",
+        "wikipedia": "en:So Uk Estate"
       }
     },
     {
@@ -1541,6 +1597,7 @@
         "name:en": "Jockey Club Creative Arts Centre (JCCAC)",
         "name:zh": "賽馬會創意藝術中心",
         "wikidata": "Q7210468",
+        "wikimedia_commons": "Category:Jockey Club Creative Arts Centre, JCCAC",
         "wikipedia": "en:Jockey Club Creative Arts Centre"
       }
     },
@@ -1625,7 +1682,9 @@
         "name:en": "Pak Tin Estate",
         "name:zh": "白田邨",
         "residential": "apartments",
-        "wikidata": "Q7125392"
+        "wikidata": "Q7125392",
+        "wikimedia_commons": "Category:Pak Tin Estate",
+        "wikipedia": "en:Pak Tin Estate"
       }
     },
     {
@@ -1729,6 +1788,8 @@
         2090575535,
         2090575534,
         2090575533,
+        11109660898,
+        11109660902,
         2090575532,
         2090575535
       ],
@@ -1773,7 +1834,9 @@
         "name": "花墟公園 Fa Hui Park",
         "name:en": "Fa Hui Park",
         "name:zh": "花墟公園",
-        "wikidata": "Q5427544"
+        "wikidata": "Q5427544",
+        "wikimedia_commons": "Category:Fa Hui Park",
+        "wikipedia": "en:Fa Hui Park"
       }
     },
     {
@@ -1804,6 +1867,7 @@
         "name:en": "Cheung Sha Wan Estate",
         "name:zh": "長沙灣邨",
         "wikidata": "Q15909246",
+        "wikimedia_commons": "Category:Cheung Sha Wan Estate",
         "wikipedia": "zh:長沙灣邨"
       }
     },
@@ -1812,9 +1876,20 @@
       "id": 215634461,
       "center": {
         "lat": 22.3364573,
-        "lon": 114.1559629
+        "lon": 114.1559567
       },
       "nodes": [
+        2251186306,
+        11126836980,
+        2251106358,
+        2251106341,
+        2251106345,
+        2251106396,
+        4864740324,
+        4864739815,
+        2251106393,
+        2251106404,
+        2251106364,
         2251106382,
         2251106386,
         2251106339,
@@ -1831,32 +1906,28 @@
         2251106328,
         2251106402,
         2251106354,
+        11126836981,
         2251106399,
         2251106406,
         2251106320,
+        11126836982,
+        11126836983,
         2251106361,
         2251106338,
         2251106356,
         2251106410,
-        2251106340,
-        2251106358,
-        2251106341,
-        2251106345,
-        2251106396,
-        4864740324,
-        4864739815,
-        2251106393,
-        2251106404,
-        2251106364,
-        2251106382
+        2251186306
       ],
       "tags": {
+        "addr:housenumber": "303",
+        "addr:street": "元州街 Un Chau Street",
         "landuse": "residential",
         "name": "元州邨 Un Chau Estate",
         "name:en": "Un Chau Estate",
         "name:zh": "元州邨",
         "source": "Kaart Ground Survey 2017",
         "wikidata": "Q8425856",
+        "wikimedia_commons": "Category:Un Chau Estate",
         "wikipedia": "zh:元州邨"
       }
     },
@@ -1898,6 +1969,7 @@
         "name:zh": "匯璽",
         "residential": "apartments",
         "wikidata": "Q30949232",
+        "wikimedia_commons": "Category:Cullinan West, Hong Kong",
         "wikipedia": "zh:匯璽"
       }
     },
@@ -2092,7 +2164,7 @@
         "platforms": "4",
         "public_transport": "station",
         "railway": "station",
-        "railway:ref": "PRE",
+        "ref": "PRE",
         "start_date": "1982-05-10",
         "station": "subway",
         "subway": "yes",
@@ -2198,6 +2270,7 @@
         "operator:wikidata": "Q5908350",
         "operator:wikipedia": "zh:醫院管理局",
         "wikidata": "Q5039724",
+        "wikimedia_commons": "Category:Caritas Medical Centre",
         "wikipedia": "zh:明愛醫院"
       }
     },
@@ -2230,6 +2303,7 @@
         "name:zh": "凱帆軒",
         "residential": "apartments",
         "wikidata": "Q3248442",
+        "wikimedia_commons": "Category:Hampton Place, Hong Kong",
         "wikipedia": "zh:凱帆軒"
       }
     },
@@ -2237,38 +2311,32 @@
       "type": "way",
       "id": 386590356,
       "center": {
-        "lat": 22.3330786,
-        "lon": 114.1522945
+        "lat": 22.3330461,
+        "lon": 114.1523481
       },
       "nodes": [
-        3899285000,
-        3899285001,
         3899285002,
+        11123363034,
         3899285003,
         5022561729,
-        5022561726,
-        5022560817,
-        5022561721,
-        5022560820,
-        5022560819,
-        5022560818,
-        5022561722,
-        5022561725,
-        5022561723,
-        5022561724,
-        5022561727,
+        11123363005,
+        11123363014,
         5022561728,
-        3899285000
+        11123363033,
+        11123363031,
+        3899285001,
+        11123363032,
+        11123363013,
+        11123363012,
+        3899285002
       ],
       "tags": {
         "addr:housenumber": "500",
         "addr:street": "通州街 Tung Chau Street",
-        "building": "residential",
-        "building:levels": "50",
+        "landuse": "residential",
         "name": "星匯居 The Sparkle",
         "name:en": "The Sparkle",
-        "name:zh": "星匯居",
-        "source": "Kaart Ground Survey 2017"
+        "name:zh": "星匯居"
       }
     },
     {
@@ -2374,6 +2442,39 @@
     },
     {
       "type": "way",
+      "id": 388818453,
+      "center": {
+        "lat": 22.3237041,
+        "lon": 114.1706636
+      },
+      "nodes": [
+        10727804652,
+        6984301412,
+        3919962687,
+        3919962682,
+        3919962696,
+        3919962699,
+        3919962721,
+        6984301411,
+        10727804652
+      ],
+      "tags": {
+        "addr:housenumber": "193",
+        "addr:street": "洗衣街 Sai Yee Street",
+        "addr:street:en": "Sai Yee Street",
+        "addr:street:zh": "洗衣街",
+        "building": "yes",
+        "building:colour": "#FFEE99",
+        "building:levels": "28",
+        "height": "75 m",
+        "layer": "1",
+        "name": "蕙逸居 Sunningdale",
+        "name:en": "Sunningdale",
+        "name:zh": "蕙逸居"
+      }
+    },
+    {
+      "type": "way",
       "id": 389315494,
       "center": {
         "lat": 22.3307258,
@@ -2466,6 +2567,7 @@
         "brand:zh": "港鐵",
         "building": "train_station",
         "building:levels": "0",
+        "building:levels:underground": "3",
         "layer": "-1",
         "location": "underground",
         "name": "深水埗 Sham Shui Po",
@@ -2566,6 +2668,7 @@
         9738077602,
         9738094865,
         9738094866,
+        11128422522,
         4451017183,
         9738094867,
         9738094868,
@@ -2582,6 +2685,7 @@
         "name:en": "Lai Tsui Court",
         "name:zh": "麗翠苑",
         "wikidata": "Q48928673",
+        "wikimedia_commons": "Category:Lai Tsui Court",
         "wikipedia": "zh:麗翠苑"
       }
     },
@@ -2744,6 +2848,7 @@
         "name:en": "Residence 228",
         "name:zh": "寓.弍捌",
         "wikidata": "Q10955093",
+        "wikimedia_commons": "Category:Residence 228",
         "wikipedia": "zh:寓·弍捌"
       }
     },
@@ -3232,6 +3337,7 @@
         "name:en": "Gardenia",
         "name:zh": "景怡峰",
         "wikidata": "Q11090049",
+        "wikimedia_commons": "Category:Gardenia, Hong Kong",
         "wikipedia": "zh:景怡峯"
       }
     },
@@ -3522,6 +3628,7 @@
       },
       "nodes": [
         420027778,
+        11153075980,
         420027779
       ],
       "tags": {
@@ -3574,9 +3681,13 @@
         "name": "海達邨 Hoi Tat Estate",
         "name:en": "Hoi Tat Estate",
         "name:zh": "海達邨",
-        "operator": "Hong Kong Housing Authority",
+        "operator": "香港房屋委員會 Hong Kong Housing Authority",
+        "operator:en": "Hong Kong Housing Authority",
+        "operator:wikidata": "Q5894701",
+        "operator:zh": "香港房屋委員會",
         "residential": "apartments",
         "wikidata": "Q28419024",
+        "wikimedia_commons": "Category:Hoi Tat Estate",
         "wikipedia": "zh:海達邨"
       }
     },
@@ -3663,6 +3774,7 @@
         "start_date": "2019-07-26",
         "website": "https://www.vwalk.com.hk",
         "wikidata": "Q48927471",
+        "wikimedia_commons": "Category:V Walk, Hong Kong",
         "wikipedia": "zh:V Walk"
       }
     },
@@ -3670,59 +3782,64 @@
       "type": "way",
       "id": 666770059,
       "center": {
-        "lat": 22.3298787,
-        "lon": 114.1659783
+        "lat": 22.3298729,
+        "lon": 114.1659845
       },
       "nodes": [
-        6242819634,
-        6242819623,
-        6242819622,
-        6242819621,
-        6242819620,
-        6242819619,
-        6242819618,
+        11212775701,
+        11212775699,
+        11212775700,
+        6242819632,
         6242819631,
         6242819617,
-        6242819616,
-        6242819632,
         6242819615,
+        6242819618,
         6242819624,
-        6242819625,
+        6242819619,
+        6242819621,
+        6242819620,
+        6242819622,
         6242819626,
+        6242819623,
         6242819627,
+        6242819625,
         6242819628,
-        6242819629,
         6242819630,
-        6242819633,
-        6242819634
+        6242819629,
+        11212775701
       ],
       "tags": {
-        "addr:housenumber": "31-35",
-        "addr:street": "大埔道 Tai Po Road",
         "building": "apartments",
         "building:levels": "13",
-        "name": "置輝閣 Chi Fai Court",
-        "name:en": "Chi Fai Court",
-        "name:zh": "置輝閣"
+        "layer": "1"
       }
     },
     {
       "type": "way",
       "id": 666770062,
       "center": {
-        "lat": 22.3295829,
-        "lon": 114.1660571
+        "lat": 22.3295904,
+        "lon": 114.1660481
       },
       "nodes": [
         6242819654,
-        6242819651,
         6242819650,
+        11212775658,
+        11212775669,
+        9366605485,
+        11212775673,
+        11212775670,
         6242819653,
+        6242819651,
         6242819654
       ],
       "tags": {
-        "building": "yes",
-        "name": "崇德大廈",
+        "addr:housenumber": "37-41",
+        "addr:street": "黃竹街 Wong Chuk Street",
+        "building": "apartments",
+        "building:levels": "11",
+        "name": "崇德大廈 Shung Tak Building",
+        "name:en": "Shung Tak Building",
         "name:zh": "崇德大廈"
       }
     },
@@ -3834,30 +3951,33 @@
       "type": "way",
       "id": 703400329,
       "center": {
-        "lat": 22.3280727,
-        "lon": 114.1607792
+        "lat": 22.3279963,
+        "lon": 114.1607935
       },
       "nodes": [
+        11222686164,
         6605650394,
         6605650395,
+        6605650400,
         6605650396,
         6605650397,
         6605650398,
         6605650399,
-        6605650400,
-        6605650401,
         6605650402,
-        6605650403,
-        6605650404,
         6605650405,
+        6605650401,
         6605650406,
+        6605650404,
         6605650407,
         6605650408,
-        6605650394
+        11222634500,
+        11222686164
       ],
       "tags": {
-        "building": "yes",
-        "height": "50",
+        "addr:housenumber": "48",
+        "addr:street": "北河街 Pei Ho Street",
+        "building": "apartments",
+        "building:levels": "15",
         "layer": "1",
         "name": "永富大廈 Ever Rich Mansion",
         "name:en": "Ever Rich Mansion",
@@ -4101,11 +4221,13 @@
         "addr:housenumber": "14",
         "addr:street": "南昌街 Nam Cheong Street",
         "building": "residential",
-        "name": "輝豪居 MIA CASA Apartment",
-        "name:en": "MIA CASA Apartment",
+        "building:levels": "6",
+        "name": "輝豪居 Mia Casa Apartment",
+        "name:en": "Mia Casa Apartment",
         "name:zh": "輝豪居",
         "old_name:zh": "為群公寓",
         "wikidata": "Q56272155",
+        "wikimedia_commons": "Category:14 Nam Cheong Street",
         "wikipedia": "zh:輝豪居"
       }
     },
@@ -5005,7 +5127,7 @@
         "owner:zh": "香港鐵路有限公司",
         "public_transport": "station",
         "railway": "station",
-        "railway:ref": "SKM",
+        "ref": "SKM",
         "start_date": "1979-10-01",
         "station": "subway",
         "steps": "yes",
@@ -5074,6 +5196,7 @@
         "name:en": "High Point",
         "name:zh": "曉尚",
         "wikidata": "Q11090511",
+        "wikimedia_commons": "Category:High Point (Hong Kong)",
         "wikipedia": "zh:曉尚"
       }
     },
@@ -5465,16 +5588,16 @@
       "type": "way",
       "id": 1089876447,
       "center": {
-        "lat": 22.3269011,
-        "lon": 114.165976
+        "lat": 22.3269442,
+        "lon": 114.1659364
       },
       "nodes": [
-        9983521759,
-        9983521758,
+        11214989341,
+        11214989339,
+        11214989340,
+        11214989342,
         9983521798,
-        9983526720,
-        9983526719,
-        9983521759
+        11214989341
       ],
       "tags": {
         "addr:housenumber": "9-19",
@@ -5493,18 +5616,26 @@
       "type": "way",
       "id": 1104745330,
       "center": {
-        "lat": 22.3288988,
-        "lon": 114.1664531
+        "lat": 22.3288152,
+        "lon": 114.166501
       },
       "nodes": [
-        10109343170,
-        10109343171,
+        11212775402,
+        11212775262,
+        11212775261,
+        11212775408,
+        11212775409,
         10109343172,
-        7652618359,
-        10109343170
+        11212775251,
+        11212775256,
+        11212775282,
+        11212775283,
+        11212775402
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "27",
+        "addr:street": "大埔道 Tai Po Road",
+        "building": "residential",
         "name": "景翠苑 Fairview Garden",
         "name:en": "Fairview Garden",
         "name:zh": "景翠苑"
@@ -5514,18 +5645,25 @@
       "type": "way",
       "id": 1104746399,
       "center": {
-        "lat": 22.3283488,
-        "lon": 114.1661472
+        "lat": 22.3283526,
+        "lon": 114.1661768
       },
       "nodes": [
+        11212775440,
+        11212775382,
+        7652619730,
+        7652619729,
         10109357168,
         10109357169,
-        7652619729,
-        7652619730,
-        10109357168
+        11212775383,
+        11212775395,
+        11212775440
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "35-39",
+        "addr:street": "福華街 Fuk Wa Street",
+        "building": "apartments",
+        "building:levels": "11",
         "name": "楓華樓 Maple Mansion",
         "name:en": "Maple Mansion",
         "name:zh": "楓華樓"
@@ -5535,18 +5673,29 @@
       "type": "way",
       "id": 1104768707,
       "center": {
-        "lat": 22.3288962,
-        "lon": 114.1654228
+        "lat": 22.3289209,
+        "lon": 114.1654165
       },
       "nodes": [
-        10109713927,
-        10109713928,
-        7652619757,
-        7652619758,
-        10109713927
+        11212775545,
+        11212775548,
+        11212775529,
+        11212775528,
+        11212775551,
+        11212775526,
+        11212775525,
+        11212775542,
+        11212775543,
+        11212775549,
+        11212775544,
+        11212775534,
+        11212775545
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "17-19",
+        "addr:street": "黃竹街 Wong Chuk Street",
+        "building": "residential",
+        "building:levels": "3",
         "name": "深崇閣 Sham Tsung Court",
         "name:en": "Sham Tsung Court",
         "name:zh": "深崇閣"
@@ -5556,18 +5705,24 @@
       "type": "way",
       "id": 1104771523,
       "center": {
-        "lat": 22.3280174,
-        "lon": 114.1666296
+        "lat": 22.3279699,
+        "lon": 114.1666455
       },
       "nodes": [
-        10109715011,
-        10109715012,
-        10109715013,
-        10109715014,
-        10109715011
+        11212775195,
+        11212775194,
+        11212775210,
+        11212775209,
+        11212775185,
+        11212775184,
+        11212775196,
+        11212775197,
+        11212775195
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "17-25",
+        "addr:street": "福華街 Fuk Wa Street",
+        "building": "residential",
         "name": "福昇大廈 Fuk Shing Building",
         "name:zh": "Fuk Shing Building"
       }
@@ -5621,18 +5776,22 @@
       "type": "way",
       "id": 1104777141,
       "center": {
-        "lat": 22.3275978,
-        "lon": 114.1630177
+        "lat": 22.3275738,
+        "lon": 114.1630095
       },
       "nodes": [
-        10109775013,
-        10109775014,
         7652619864,
         7652619863,
-        10109775013
+        10109775013,
+        11217948493,
+        10109775014,
+        7652619864
       ],
       "tags": {
-        "landuse": "residential",
+        "addr:housenumber": "206-212",
+        "addr:street": "大南街 Tai Nan Street",
+        "building": "apartments",
+        "building:levels": "10",
         "name": "朝南樓 Chiu Nan Building",
         "name:en": "Chiu Nan Building",
         "name:zh": "朝南樓"
@@ -5642,15 +5801,21 @@
       "type": "way",
       "id": 1104793344,
       "center": {
-        "lat": 22.3284554,
-        "lon": 114.1656183
+        "lat": 22.328462,
+        "lon": 114.1656373
       },
       "nodes": [
+        11212775339,
+        11212775330,
+        11212775338,
         10109921833,
         10109921834,
-        10109921835,
-        10109921836,
-        10109921833
+        11212775324,
+        11212775322,
+        11212775323,
+        11212775327,
+        11212775332,
+        11212775339
       ],
       "tags": {
         "landuse": "residential",
