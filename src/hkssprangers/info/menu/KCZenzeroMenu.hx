@@ -108,7 +108,7 @@ class KCZenzeroMenu {
         type: "string",
         "enum": [
             "唔要",
-            "隨機純茶/紙包茶",
+            "湯",
         ],
     };
     static public final KCZenzeroAddDrink = {
@@ -796,10 +796,10 @@ class KCZenzeroMenu {
             });
         }
         final s = concatSummaries(summaries);
-        if (s.orderPrice >= 100) {
-            s.orderDetails += "\n滿100蚊減10蚊 -$10";
-            s.orderPrice -= 10;
-        }
+        // if (s.orderPrice >= 100) {
+        //     s.orderDetails += "\n滿100蚊減10蚊 -$10";
+        //     s.orderPrice -= 10;
+        // }
         return {
             orderDetails: s.orderDetails,
             orderPrice: s.orderPrice,
