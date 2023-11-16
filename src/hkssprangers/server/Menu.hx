@@ -562,6 +562,20 @@ class Menu extends View<MenuProps> {
             ');
         } else null;
 
+        final curedMeatRice = {
+            final def = KCZenzeroMenu.KCZenzeroCuredMeatRice;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${def.title}</div>
+                    </div>
+                    ${renderItems(def.properties.main.enums())}
+                    <div className="font-bold p-3">${def.properties.drink.title}</div>
+                    <div className="p-3">${slashes(KCZenzeroMincedPork.properties.drink.enums().slice(1))}</div>
+                </Fragment>
+            ');
+        };
+
         final hotpots = {
             final def = KCZenzeroHotpotSet;
             jsx('
@@ -696,6 +710,8 @@ class Menu extends View<MenuProps> {
                     ${limited}
 
                     ${hotpots}
+
+                    ${curedMeatRice}
 
                     ${hotDouble}
 

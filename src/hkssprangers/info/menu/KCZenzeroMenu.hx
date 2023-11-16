@@ -15,7 +15,7 @@ enum abstract KCZenzeroItem(String) to String {
     final PastaSet;
     final LambPasta;
     final R6Set;
-    final WontonSet;
+    final CuredMeatRice;
     final LightSet;
     final HotpotSet;
     final GoldenLeg;
@@ -60,6 +60,7 @@ enum abstract KCZenzeroItem(String) to String {
             .concat(hotpot)
             .concat([
                 HotDouble,
+                CuredMeatRice,
                 HotdogSet,
                 MincedPork,
                 YiMein,
@@ -69,7 +70,6 @@ enum abstract KCZenzeroItem(String) to String {
                 // PastaSet,
                 // LambPasta,
                 // R6Set,
-                // WontonSet,
                 // LightSet,
                 GoldenLeg,
                 // TomatoRice,
@@ -88,7 +88,7 @@ enum abstract KCZenzeroItem(String) to String {
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
         case LambPasta: KCZenzeroMenu.KCZenzeroLambPasta;
         case R6Set: KCZenzeroMenu.KCZenzeroR6Set;
-        case WontonSet: KCZenzeroMenu.KCZenzeroWontonSet;
+        case CuredMeatRice: KCZenzeroMenu.KCZenzeroCuredMeatRice;
         case LightSet: KCZenzeroMenu.KCZenzeroLightSet;
         case GoldenLeg: KCZenzeroMenu.KCZenzeroGoldenLeg;
         case TomatoRice: KCZenzeroMenu.KCZenzeroTomatoRice;
@@ -566,42 +566,21 @@ class KCZenzeroMenu {
         required: ["main", "drink"],
     };
 
-    static public final KCZenzeroWontonSet = {
-        title: "小雲呑",
+    static public final KCZenzeroCuredMeatRice = {
+        title: "臘味飯",
         properties: {
             main: {
                 type: "string",
-                title: "小雲呑",
+                title: "臘味飯",
                 "enum": [
-                    "台灣小雲呑 $45",
+                    "臘味蒜香糯米飯配菜心 $78",
                 ],
-                "default": "台灣小雲呑 $45",
-            },
-            options: {
-                type: "array",
-                title: "選項",
-                items: {
-                    type: "string",
-                    "enum": [
-                        "加芝士 +$3",
-                    ],
-                },
-                uniqueItems: true,
-            },
-            sub: {
-                type: "string",
-                title: "小食",
-                "enum": [
-                    "炸雞翼",
-                    "薯格",
-                    // "ABC字母薯餅",
-                    // "薯條",
-                ],
+                "default": "臘味蒜香糯米飯配菜心 $78",
             },
             drink: KCZenzeroFreeDrink,
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["main", "sub", "drink"],
+        required: ["main", "drink"],
     };
 
     static public final KCZenzeroLightSet = {
@@ -733,8 +712,8 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink", "extraOptions"], null, priceInDescription("main", def));
             case LambPasta:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
-            case WontonSet:
-                summarizeOrderObject(orderItem.item, def, ["main", "options", "sub", "drink", "extraOptions"]);
+            case CuredMeatRice:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], [box()]);
             case LightSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "salad", "drink", "extraOptions"], null, priceInDescription("main", def));
             case GoldenLeg:
@@ -785,6 +764,8 @@ class KCZenzeroMenu {
             case HotDouble:
                 false;
             case HotpotSet:
+                false;
+            case CuredMeatRice:
                 false;
             case LimitedSpecial if (limitedSpecial.seperateBox):
                 false;
