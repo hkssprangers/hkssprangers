@@ -2083,13 +2083,16 @@ class Menu extends View<MenuProps> {
                         <div className=${headerClasses}>${MinimalSalad.title}</div>
                         ${renderItems(MinimalSalad.properties.main.enums())}
                         
-                        <div className=${headerClasses}>${MinimalPasta.title}</div>
-                        ${renderItems(MinimalPasta.properties.main.enums())}
+                        <div className=${headerClasses}>${MinimalMain.title}</div>
+                        ${renderItems(MinimalMain.properties.main.enums())}
 
                         <div className=${headerClasses}>${MinimalSousVide.title}</div>
                         ${renderItems(MinimalSousVide.properties.main.enums())}
 
                         <div className=${headerClasses}>${MinimalDessert.title}</div>
+                        <div className="p-3">
+                            <p>${MinimalDessert.description}</p>
+                        </div>
                         ${renderItems(MinimalDessert.properties.main.enums())}
                     </div>
                     <div className="md:w-1/2 p-3">
