@@ -91,7 +91,7 @@ class YearsHKMenu {
             setDrinkItem("冬日戀人(藍莓,士多啤梨,燕麥奶)(凍)", 50),
             setDrinkItem("排毒抗氧化特飲(奇異果,富士蘋果,羽衣甘藍,燕麥奶)(凍)", 50),
             setDrinkItem("免疫⼒增強特飲(香蕉,火龍果,燕麥奶)(凍)", 50),
-            setDrinkItem("爆炸維他命(香橙,芒果,奇異果)(凍)", 50),
+            setDrinkItem("爆炸維他命C果汁(香橙,芒果,奇異果)(凍)", 50),
 
             // 梳打特飲
             setDrinkItem("熱情果檸檬梳打", 42),
