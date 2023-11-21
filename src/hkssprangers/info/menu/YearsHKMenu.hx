@@ -68,6 +68,7 @@ class YearsHKMenu {
             setDrinkItem("凍泡沫咖啡", 40),
             setDrinkItem("凍燕麥奶咖啡", 40),
             setDrinkItem("凍朱古力咖啡", 46),
+            setDrinkItem("凍焦糖香蕉朱古力咖啡燕麥奶", 50),
 
             // 非咖啡
             setDrinkItem("熱抹茶燕麥奶", 40),
@@ -87,10 +88,10 @@ class YearsHKMenu {
             setDrinkItem("熱黑糖黃薑紅南棗黃酒釀", 50),
 
             // ⽔果特飲
-            setDrinkItem("凍藍莓黑提燕麥奶", 50),
-            setDrinkItem("凍奇異果羽衣甘藍蘋果燕麥奶", 50),
-            setDrinkItem("凍香蕉火龍果燕麥奶", 50),
-            setDrinkItem("凍香橙芒果奇異果汁", 50),
+            setDrinkItem("冬日戀人(藍莓,士多啤梨,燕麥奶)(凍)", 50),
+            setDrinkItem("排毒抗氧化特飲(奇異果,富士蘋果,羽衣甘藍,燕麥奶)(凍)", 50),
+            setDrinkItem("免疫⼒增強特飲(香蕉,火龍果,燕麥奶)(凍)", 50),
+            setDrinkItem("爆炸維他命(香橙,芒果,奇異果)(凍)", 50),
 
             // 梳打特飲
             setDrinkItem("熱情果檸檬梳打", 42),
