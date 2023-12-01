@@ -874,46 +874,65 @@ class Menu extends View<MenuProps> {
                 </div>
             ');
         }
-
-        final singles = {
-            final items = TheParkByYearsSingle.enums();
-            final cut = Math.ceil(items.length * 0.5);
-            final items1 = items.slice(0, cut);
-            final items2 = items.slice(cut);
-            jsx('
-                <div className="p-3">
-                    <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
-                    <div className="md:flex flex-row md:mt-3">
-                        <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                            ${renderItems(items1)}
-                        </div>
-                        <div className="md:w-1/2 md:pl-3">
-                            ${renderItems(items2)}
+        if (false) {
+            final singles = {
+                final items = TheParkByYearsSingle.enums();
+                final cut = Math.ceil(items.length * 0.5);
+                final items1 = items.slice(0, cut);
+                final items2 = items.slice(cut);
+                jsx('
+                    <div className="p-3">
+                        <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
+                        <div className="md:flex flex-row md:mt-3">
+                            <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                                ${renderItems(items1)}
+                            </div>
+                            <div className="md:w-1/2 md:pl-3">
+                                ${renderItems(items2)}
+                            </div>
                         </div>
                     </div>
-                </div>
+                ');
+            }
+            return jsx('
+                <Fragment>
+                    <div className="p-3">
+                        ${TheParkByYearsWeekdayLunchSet.description}
+                    </div>
+                    <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className=${headerClasses}>${TheParkByYearsWeekdayLunchSet.title}${TheParkByYearsWeekdayLunchSet.properties.main.title}</div>
+                            ${renderItems(TheParkByYearsWeekdayLunchSet.properties.main.enums())}
+                        </div>
+                        <div className="md:w-1/2 p-3">
+                            <div className=${headerClasses}>${TheParkByYearsDinnerHolidaySet.title}${TheParkByYearsDinnerHolidaySet.properties.main.title}</div>
+                            ${renderItems(TheParkByYearsDinnerHolidaySet.properties.main.enums())}
+                        </div>
+                    </div>
+                    ${drinks}
+                    ${singles}
+                </Fragment>
             ');
-        }
-
-        return jsx('
-            <Fragment>
-                <div className="p-3">
-                    ${TheParkByYearsWeekdayLunchSet.description}
-                </div>
-                <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
-                    <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${TheParkByYearsWeekdayLunchSet.title}${TheParkByYearsWeekdayLunchSet.properties.main.title}</div>
-                        ${renderItems(TheParkByYearsWeekdayLunchSet.properties.main.enums())}
+        } else {
+            return jsx('
+                <Fragment>
+                    <div className="p-3">
+                        ${TheParkByYearsSet.description}
                     </div>
-                    <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${TheParkByYearsDinnerHolidaySet.title}${TheParkByYearsDinnerHolidaySet.properties.main.title}</div>
-                        ${renderItems(TheParkByYearsDinnerHolidaySet.properties.main.enums())}
+                    <div className=${["border-b-4", "md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
+                        <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
+                            <div className=${headerClasses}>${TheParkByYearsSet.title}${TheParkByYearsSet.properties.main.title}</div>
+                            ${renderItems(TheParkByYearsSet.properties.main.enums())}
+                        </div>
+                        <div className="md:w-1/2 p-3">
+                            <div className=${headerClasses}>${TheParkByYearsSingle.title}</div>
+                            ${renderItems(TheParkByYearsSingle.enums())}
+                        </div>
                     </div>
-                </div>
-                ${drinks}
-                ${singles}
-            </Fragment>
-        ');
+                    ${drinks}
+                </Fragment>
+            ');
+        } 
     }
 
     function renderLaksaStore() {
