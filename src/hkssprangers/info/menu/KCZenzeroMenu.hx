@@ -83,7 +83,7 @@ enum abstract KCZenzeroItem(String) to String {
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
         case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
         case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
-        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet(TimeSlotType.classify(timeSlot.start));
+        case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet;
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
         case LambPasta: KCZenzeroMenu.KCZenzeroLambPasta;
@@ -231,7 +231,7 @@ class KCZenzeroMenu {
         required: ["main", "drink"],
     }
 
-    static public function KCZenzeroHotdogSet(timeSlotType:TimeSlotType) return {
+    static public final KCZenzeroHotdogSet = {
         title: "熱狗",
         description: "$38",
         properties: {
