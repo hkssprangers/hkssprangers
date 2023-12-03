@@ -663,7 +663,7 @@ class Menu extends View<MenuProps> {
         ');
 
         final hotdogSet = {
-            final hotdogSet = KCZenzeroHotdogSet(Lunch);
+            final hotdogSet = KCZenzeroHotdogSet;
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row"," text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
