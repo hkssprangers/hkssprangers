@@ -41,6 +41,7 @@ enum abstract Shop(String) to String {
     final HowDrunk:Shop;
     final LoudTeaSSP:Shop;
     final NEVeg:Shop;
+    final EvaFarming:Shop;
 
     static public final all:ReadOnlyArray<Shop> = [
         EightyNine,
@@ -71,6 +72,7 @@ enum abstract Shop(String) to String {
         AuLawFarm,
         MxMWorkshop,
         NEVeg,
+        EvaFarming,
     ];
 
     public function info() return switch (cast this:Shop) {
@@ -744,6 +746,25 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: null
             }
+        case EvaFarming:
+            {
+                id: EvaFarming,
+                name: "新鳳園EVA農莊",
+                type: LocalBusiness,
+                address: null,
+                lat: null,
+                lng: null,
+                courierContact: [],
+                openDays: [],
+                earliestPickupTime: null,
+                latestPickupTime: null,
+                isInService: false,
+                facebook: null,
+                instagram: null,
+                availablity: null,
+                restDay: null,
+                recommendation: null
+            }
         case Minimal:
             {
                 id: Minimal,
@@ -1103,7 +1124,7 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LoudTeaSSPMenu.itemsSchema(pickupTimeSlot, o));
             case ThaiHome:
                 Promise.resolve(ThaiHomeMenu.itemsSchema(pickupTimeSlot, o));
-            case AuLawFarm | MxMWorkshop | NEVeg:
+            case AuLawFarm | MxMWorkshop | NEVeg | EvaFarming:
                 Promise.resolve(null);
         }
     }
@@ -1166,7 +1187,7 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LoudTeaSSPMenu.summarize(pickupTimeSlot, o));
             case ThaiHome:
                 Promise.resolve(ThaiHomeMenu.summarize(o));
-            case AuLawFarm | MxMWorkshop | NEVeg:
+            case AuLawFarm | MxMWorkshop | NEVeg | EvaFarming:
                 Promise.resolve(null);
         }
     }
@@ -1196,6 +1217,7 @@ enum abstract Shop(String) to String {
             case AuLawFarm: AuLawFarm;
             case MxMWorkshop: MxMWorkshop;
             case NEVeg: NEVeg;
+            case EvaFarming: EvaFarming;
             case Minimal: Minimal;
             case CafeGolden: CafeGolden;
             case BlackWindow: BlackWindow;
