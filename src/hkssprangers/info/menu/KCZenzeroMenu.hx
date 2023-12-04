@@ -57,10 +57,10 @@ enum abstract KCZenzeroItem(String) to String {
         }
         return []
             .concat(limited)
-            .concat(hotpot)
+            // .concat(hotpot)
             .concat([
                 HotDouble,
-                CuredMeatRice,
+                // CuredMeatRice,
                 HotdogSet,
                 MincedPork,
                 YiMein,
@@ -152,7 +152,7 @@ class KCZenzeroMenu {
             // "芝士波隆納肉醬ABC字母薯餅 $25",
             // "癲雞芝麻球 $25",
             // "流心奶黄牛角包 $10",
-            // "紫薯撻 $14",
+            "紫薯撻 $14",
             // "芝士撻 $12",
             // "葡撻 $8",
             // "咖喱豬皮陳皮魚蛋鵝紅 $30",

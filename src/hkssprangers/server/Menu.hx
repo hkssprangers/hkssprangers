@@ -713,10 +713,6 @@ class Menu extends View<MenuProps> {
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
 
-                    ${hotpots}
-
-                    ${curedMeatRice}
-
                     ${hotDouble}
 
                     ${hotdogSet}
