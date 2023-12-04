@@ -978,19 +978,21 @@ enum abstract Shop(String) to String {
 
         switch [(cast this:Shop), pickupTimeSlot.start.getDatePart(), TimeSlotType.classify(pickupTimeSlot.start)] {
             case [DongDong, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-26"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [BlaBlaBla, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-08-29"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [DragonJapaneseCuisine, _, _] if (pickupTimeSlot.start.getDatePart() > "2021-12-09"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [FastTasteSSP, _, _] if (pickupTimeSlot.start.getDatePart() > "2022-06-18"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [Neighbor, _, _] if (pickupTimeSlot.start.getDatePart() > "2022-06-30"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [ZeppelinHotDogSKM, _, _] if (pickupTimeSlot.start.getDatePart() > "2022-12-31"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
             case [MGY, _, _] if (pickupTimeSlot.start.getDatePart() > "2023-05-19"):
-                return Unavailable('已結業 😥');
+                return Unavailable('已結業 🥲');
+            case [LaksaStore, _, _] if (pickupTimeSlot.start.getDatePart() > "2023-12-13"):
+                return Unavailable('已結業 🥲');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
