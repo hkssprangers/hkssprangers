@@ -607,6 +607,20 @@ class Menu extends View<MenuProps> {
             ');
         };
 
+        final squab = {
+            final def = KCZenzeroSquab;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                        <div className="p-3">${def.title}</div>
+                    </div>
+                    ${renderItems(def.properties.main.enums())}
+                    <div className="font-bold p-3">${def.properties.drink.title}</div>
+                    <div className="p-3">${slashes(def.properties.drink.enums().slice(1))}</div>
+                </Fragment>
+            ');
+        };
+
         final rice = {
             final def = KCZenzeroRice;
             jsx('
@@ -714,6 +728,8 @@ class Menu extends View<MenuProps> {
                     ${limited}
 
                     ${hotDouble}
+
+                    ${squab}
 
                     ${hotdogSet}
 

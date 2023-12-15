@@ -20,6 +20,7 @@ enum abstract KCZenzeroItem(String) to String {
     final HotpotSet;
     final GoldenLeg;
     final TomatoRice;
+    final Squab;
     final MincedPork;
     final YiMein;
     final TomatoSoupRice;
@@ -60,6 +61,7 @@ enum abstract KCZenzeroItem(String) to String {
             // .concat(hotpot)
             .concat([
                 HotDouble,
+                Squab,
                 // CuredMeatRice,
                 HotdogSet,
                 MincedPork,
@@ -80,6 +82,7 @@ enum abstract KCZenzeroItem(String) to String {
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
         case HotDouble: KCZenzeroMenu.KCZenzeroHotDouble;
+        case Squab: KCZenzeroMenu.KCZenzeroSquab;
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
         case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
         case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
@@ -315,6 +318,22 @@ class KCZenzeroMenu {
             drink: KCZenzeroFreeDrink,
         },
         required: ["main", "options", "drink"],
+    }
+
+    static public final KCZenzeroSquab = {
+        title: "乳鴿",
+        properties: {
+            main: {
+                title: "乳鴿",
+                type: "string",
+                "enum": [
+                    "糯米釀乳鴿配柚子汁 $68",
+                ],
+                "default": "糯米釀乳鴿配柚子汁 $68",
+            },
+            drink: KCZenzeroFreeDrink,
+        },
+        required: ["main", "drink"],
     }
 
     static public final KCZenzeroMincedPork = {
@@ -722,6 +741,8 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case TomatoRice:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
+            case Squab:
+                summarizeOrderObject(orderItem.item, def, ["main", "drink"], null, null, "");
             case MincedPork:
                 summarizeOrderObject(orderItem.item, def, ["main", "options", "drink"]);
             case YiMein:
