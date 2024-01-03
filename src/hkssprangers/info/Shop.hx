@@ -1002,8 +1002,8 @@ enum abstract Shop(String) to String {
             case [BiuKeeLokYuen | Minimal, "2023-09-29", Dinner]:
                 return Unavailable('中秋收早');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid09TZUwKEJwQrmyGiuKSsfGRWj68PvtwtyCjCBmvtPGUw4E5mBeHkscKRAiDvq3v7El&id=100064143817671
-            case [KCZenzero, "2023-08-23", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0287SVxhNzm9covQhg4EwX2mbgKHT4nnxH88nH9QhLiomBAp9RzxkCwB7iWHVes4cMl&id=100064143817671
+            case [KCZenzero, "2024-01-03", _]:
                 return Unavailable('休息一天');
 
             case [LaksaStore, "2023-11-20", Dinner]:
