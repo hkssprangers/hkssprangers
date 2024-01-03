@@ -163,7 +163,7 @@ class FoodWasteRecycle extends View<FoodWasteRecycleProps> {
                                     <li>香城遺菇</li>
                                     <li>農友W</li>
                                     </ul>
-                                    <p>2023年，我哋都努力搵唔同嘅團體研究堆肥，發掘更多可能性，例如點樣用蚯蚓幫手分解咖啡渣。</p>
+                                    <p>我哋會繼續努力搵唔同嘅團體研究堆肥，發掘更多可能性，例如點樣用蚯蚓幫手分解咖啡渣。</p>
                                 </div>
                                 </div>
                             </div>
