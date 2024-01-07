@@ -999,15 +999,12 @@ enum abstract Shop(String) to String {
             case [HowDrunk, _, _]:
                 return Unavailable('店舖暫停營業');
 
-            case [BiuKeeLokYuen | Minimal, "2023-09-29", Dinner]:
-                return Unavailable('中秋收早');
+            case [ThaiHome, "2024-01-08" | "2024-01-09", _]:
+                return Unavailable('店舖休息');
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid0287SVxhNzm9covQhg4EwX2mbgKHT4nnxH88nH9QhLiomBAp9RzxkCwB7iWHVes4cMl&id=100064143817671
             case [KCZenzero, "2024-01-03", _]:
                 return Unavailable('休息一天');
-
-            case [LaksaStore, "2023-11-20", Dinner]:
-                return Unavailable('早收一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
