@@ -125,7 +125,6 @@ class ThaiHomeMenu {
         title: "沙律",
         type: "string",
         "enum": [
-            item("青木瓜絲沙律", 48),
             item("醃豬頸肉沙律", 48),
             item("秘製酸辣鳳爪", 48),
         ],
@@ -163,6 +162,7 @@ class ThaiHomeMenu {
                     item("辣椒膏豬頸肉炒飯 跟湯", 45),
                     item("泰家去骨海南雞飯 跟湯", 40),
                     item("香葉辣椒肉碎煎蛋飯 跟湯", 42),
+                    item("葱油香茅豬扒飯", 45),
                 ],
             },
             drink: {
