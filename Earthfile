@@ -214,7 +214,7 @@ pmtiles:
     SAVE ARTIFACT pmtiles
 
 china.osm.pbf:
-    FROM openmaptiles/openmaptiles-tools:6.1.4
+    FROM openmaptiles/openmaptiles-tools:7.0.0
     RUN download-osm geofabrik china
     RUN ls -lah
     SAVE ARTIFACT china-latest.osm.pbf china.osm.pbf
@@ -224,15 +224,9 @@ china.osm.pbf-check:
     COPY +china.osm.pbf/china.osm.pbf .
     RUN osmium check-refs china.osm.pbf
 
-hk.osm.pbf:
-    FROM openmaptiles/openmaptiles-tools:6.1.4
-    RUN download-osm osmfr asia/china/hong_kong
-    RUN ls -lah
-    SAVE ARTIFACT hong_kong-latest.osm.pbf hk.osm.pbf
-
 ssp.osm.pbf:
-    COPY +hk.osm.pbf/hk.osm.pbf .
-    RUN osmosis --read-pbf hk.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
+    COPY +china.osm.pbf/china.osm.pbf .
+    RUN osmosis --read-pbf china.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
     RUN ls -lah
     SAVE ARTIFACT ssp.osm.pbf AS LOCAL ./static/tiles/
 
