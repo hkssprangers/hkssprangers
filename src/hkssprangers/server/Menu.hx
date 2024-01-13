@@ -593,6 +593,21 @@ class Menu extends View<MenuProps> {
             ');
         }
 
+        final hoiSinPot = {
+            final def = KCZenzeroHoiSinPot;
+            jsx('
+                <Fragment>
+                    <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${def.title}</div>
+                    </div>
+                    <div className="p-3">${def.description}</div>
+                    ${renderItems(def.properties.main.enums())}
+                    <div className="font-bold p-3">${def.properties.style.title}</div>
+                    <div className="p-3">${slashes(def.properties.style.enums())}</div>
+                </Fragment>
+            ');
+        }
+
         final yiMein = {
             final def = KCZenzeroYiMein;
             jsx('
@@ -727,6 +742,8 @@ class Menu extends View<MenuProps> {
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
 
+                    ${hoiSinPot}
+
                     ${hotDouble}
 
                     ${squab}
@@ -734,10 +751,10 @@ class Menu extends View<MenuProps> {
                     ${hotdogSet}
 
                     ${mincedPork}
-
-                    ${yiMein}
                 </div>
                 <div className="p-3 md:w-1/2">
+                    ${yiMein}
+                    
                     ${rice}
 
                     ${goldenLeg}

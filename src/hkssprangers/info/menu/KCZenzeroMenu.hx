@@ -9,7 +9,7 @@ using Lambda;
 enum abstract KCZenzeroItem(String) to String {
     final LimitedSpecial;
     final HotDouble;
-    final PoonChoiLoHei;
+    final HoiSinPot;
     final HotdogSet;
     final NoodleSet;
     final PastaSet;
@@ -47,18 +47,18 @@ enum abstract KCZenzeroItem(String) to String {
         } else {
             [];
         }
-        final poonChoiLoHei = if (
+        final hoiSinPot = if (
             timeSlot != null
             &&
-            timeSlot.start.getDatePart() >= now.deltaDays(2).getDatePart()
+            timeSlot.start.getDatePart() >= now.deltaDays(3).getDatePart()
         ) {
-            [PoonChoiLoHei];
+            [HoiSinPot];
         } else {
             [];
         }
         return []
             .concat(limited)
-            // .concat(hotpot)
+            .concat(hoiSinPot)
             .concat([
                 HotDouble,
                 Squab,
@@ -85,7 +85,7 @@ enum abstract KCZenzeroItem(String) to String {
         case Squab: KCZenzeroMenu.KCZenzeroSquab;
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
         case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
-        case PoonChoiLoHei: KCZenzeroMenu.KCZenzeroPoonChoiLoHei;
+        case HoiSinPot: KCZenzeroMenu.KCZenzeroHoiSinPot;
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet;
         case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
@@ -165,37 +165,30 @@ class KCZenzeroMenu {
         ],
     };
 
-    static function markupNewYearItem(item:String, price:Float):String {
-        return item + " $" + Math.round(price / 0.85 + 2);
-    }
-
-    static public final KCZenzeroPoonChoiLoHei = {
-        title: "盤菜/撈起",
-        description: "⚠️ 需兩日前預訂",
+    static public final KCZenzeroHoiSinPot = {
+        title: "海鮮盤",
+        description: "材料有：海蝦，鮑魚，花膠，帶子，蜆，生蠔，香煎雞件 ⚠️ 需三日前預訂",
         properties: {
             main: {
-                title: "盤菜",
-                desciption: "蝦，花膠，帶子，大蜆，鮑魚，雞",
+                title: "海鮮盤",
                 type: "string",
                 "enum": [
-                    markupNewYearItem("海鮮盤菜 1-3人", 388),
-                    markupNewYearItem("海鮮盤菜 3-5人", 688),
-                    markupNewYearItem("海鮮盤菜 5-8人", 1680),
+                    "1-2人 $" + (128 + 10),
+                    "3-5人 $" + (580 + 10),
+                    "6-8人 $" + (1080 + 10),
+                    "12人 $" + (1680 + 10),
                 ]
             },
-            extraOptions: {
-                type: "array",
-                title: "加配",
-                items: {
-                    type: "string",
-                    "enum": [
-                        markupNewYearItem("後生仔撈起", 268 - 10),
-                    ],
-                },
-                uniqueItems: true,
+            style: {
+                type: "string",
+                title: "口味",
+                "enum": [
+                    "鮑汁",
+                    "癲雞辣汁",
+                ],
             },
         },
-        required: ["main"],
+        required: ["main", "style"],
     }
 
     static final hotDouble = "避風塘鮑魚，香辣蝦，蒜蓉炒菜芯，滷肉飯 $158";
@@ -706,8 +699,8 @@ class KCZenzeroMenu {
                     orderDetails: orderDetails.join("\n"),
                     orderPrice: orderPrice,
                 };
-            case PoonChoiLoHei:
-                summarizeOrderObject(orderItem.item, def, ["main", "extraOptions"], null, null, "");
+            case HoiSinPot:
+                summarizeOrderObject(orderItem.item, def, ["main", "style"], [box()]);
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], null, priceInDescription("main", def));
             case NoodleSet:
@@ -780,7 +773,7 @@ class KCZenzeroMenu {
         final summaries = formData.items.map(item -> summarizeItem(cast item, timeSlot));
         // don't charge for boxes if there are only hotpots, which charges for their own boxes already
         if (formData.items.exists(item -> switch (cast item.type:KCZenzeroItem) {
-            case PoonChoiLoHei:
+            case HoiSinPot:
                 false;
             case HotDouble:
                 false;
