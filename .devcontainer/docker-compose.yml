@@ -9,7 +9,6 @@ services:
       - ./rclone:/home/vscode/.config/rclone:cached
     environment:
       - TZ=Asia/Hong_Kong
-      - EARTHLY_BUILDKIT_HOST=tcp://earthly:8372
       - EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:master
       - DEPLOY_STAGE=dev
       - COCKROACH_HOST=cockroachdb
@@ -46,16 +45,3 @@ services:
     command: tunnel --no-autoupdate --url http://workspace:80
     expose:
       - "44871"
-  earthly:
-    image: earthly/buildkitd:v0.6.30
-    privileged: true
-    environment:
-      - BUILDKIT_TCP_TRANSPORT_ENABLED=true
-    expose:
-      - 8372
-    volumes:
-      # https://docs.earthly.dev/docs/guides/using-the-earthly-docker-images/buildkit-standalone#earthly_tmp_dir
-      - earthly-tmp:/tmp/earthly:rw
-
-volumes:
-  earthly-tmp:

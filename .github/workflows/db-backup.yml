@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: earthly/actions-setup@v1
         with:
-          version: "0.6.30"
+          version: "0.7.23"
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create .envrc
         run: |
@@ -53,4 +53,4 @@ jobs:
       - name: Backup
         run: earthly +db-backup
         env:
-          EARTHLY_SECRET_FILES: .envrc=.envrc
+          EARTHLY_SECRET_FILES: envrc=.envrc

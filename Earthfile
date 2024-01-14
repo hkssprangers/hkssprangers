@@ -1,15 +1,13 @@
-# Do not use VERSION 0.7
-# https://github.com/earthly/earthly/issues/2752
-VERSION 0.6
+VERSION 0.7
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
-ARG DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
-ARG MAIN_BRANCH=master
+ARG --global DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
+ARG --global MAIN_BRANCH=master
 
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG --global USERNAME=vscode
+ARG --global USER_UID=1000
+ARG --global USER_GID=$USER_UID
 
-ARG WORKDIR=/workspace
+ARG --global WORKDIR=/workspace
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$WORKDIR"
 WORKDIR "$WORKDIR"
 
@@ -19,10 +17,10 @@ RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG INSTALL_ZSH="false"
-ARG UPGRADE_PACKAGES="true"
-ARG ENABLE_NONROOT_DOCKER="true"
-ARG USE_MOBY="false"
+ARG --global INSTALL_ZSH="false"
+ARG --global UPGRADE_PACKAGES="true"
+ARG --global ENABLE_NONROOT_DOCKER="true"
+ARG --global USE_MOBY="false"
 COPY .devcontainer/library-scripts/common-debian.sh .devcontainer/library-scripts/docker-debian.sh /tmp/library-scripts/
 RUN apt-get update \
     && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
@@ -39,7 +37,7 @@ SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$M
 
 # https://github.com/nodesource/distributions#installation-instructions
 RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ARG NODE_MAJOR=16
+ARG --global NODE_MAJOR=16
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
 # Configure apt and install packages
@@ -125,7 +123,7 @@ terraform:
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
     ARG TARGETARCH
-    RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
+    RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.7.23/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
@@ -537,7 +535,7 @@ deploy-static:
     COPY .devcontainer/rclone/rclone.conf /root/.config/rclone/rclone.conf
     COPY --keep-ts +static/static static
     RUN --no-cache \
-        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
         && rclone copy static s3:hkssprangers-static \
             --header-upload 'Cache-Control: public, max-age=31536000, immutable'
@@ -561,7 +559,7 @@ deploy:
     ARG --required SERVER_HOST
     ENV SERVER_HOST="$SERVER_HOST"
     RUN --no-cache \
-        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
         && npx serverless deploy --stage "${DEPLOY_STAGE}" \
         && node index.js setTgWebhook
@@ -574,7 +572,7 @@ check-terraform:
     ENV TF_IN_AUTOMATION=1
     ARG TF_LOCK_TIMEOUT=0s
     RUN --no-cache \
-        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
         && terraform init \
         && terraform plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
@@ -599,7 +597,7 @@ post-deploy-test:
 db-dump-schema:
     FROM +devcontainer
     RUN --no-cache \
-        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
         && psql -d "$DATABASE_URL" -c "SHOW CREATE ALL TABLES" -q -A -t -o schema.sql
     SAVE ARTIFACT --keep-ts schema.sql AS LOCAL dev/initdb/schema.sql
@@ -609,6 +607,6 @@ db-backup:
     ARG S3_BUCKET=hkssprangers-dbbackup
     ARG S3_PATH=dbbackup
     RUN --no-cache \
-        --mount=type=secret,id=+secrets/.envrc,target=.envrc \
+        --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
         && psql -d "$DATABASE_URL" -c "BACKUP INTO 's3://${S3_BUCKET}/${S3_PATH}?AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}&AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' AS OF SYSTEM TIME '-10s';"
