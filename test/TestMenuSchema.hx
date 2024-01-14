@@ -99,7 +99,7 @@ class TestMenuSchema extends utest.Test {
             KCZenzeroMenu.KCZenzeroHotDouble,
             KCZenzeroMenu.KCZenzeroYiMein,
             KCZenzeroMenu.KCZenzeroTomatoSoupRice,
-            KCZenzeroMenu.KCZenzeroPoonChoiLoHei,
+            KCZenzeroMenu.KCZenzeroHoiSinPot,
             KCZenzeroMenu.KCZenzeroHotdogSet,
             KCZenzeroMenu.KCZenzeroLambPasta,
             KCZenzeroMenu.KCZenzeroR6Set,
