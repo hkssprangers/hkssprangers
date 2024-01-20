@@ -1002,8 +1002,8 @@ enum abstract Shop(String) to String {
             case [ThaiHome, "2024-01-08" | "2024-01-09", _]:
                 return Unavailable('店舖休息');
 
-            // https://www.facebook.com/permalink.php?story_fbid=pfbid0287SVxhNzm9covQhg4EwX2mbgKHT4nnxH88nH9QhLiomBAp9RzxkCwB7iWHVes4cMl&id=100064143817671
-            case [KCZenzero, "2024-01-03", _]:
+            // https://www.facebook.com/permalink.php?story_fbid=pfbid0hUKt9kzSb6oV2fXVuqRd2e7NQNaM1AtWQnfLEVBurGkSUjWCr68o2QRmRaWahca6l&id=100064143817671
+            case [KCZenzero, "2024-01-21", _]:
                 return Unavailable('休息一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
