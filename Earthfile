@@ -259,6 +259,10 @@ ssp.pmtiles:
     RUN pmtiles show ssp.pmtiles
     SAVE ARTIFACT --keep-ts ssp.pmtiles AS LOCAL ./static/tiles/
 
+ssp.pmtiles-current:
+    RUN curl -fsSL https://ssprangers.com/tiles/ssp.pmtiles -o ssp.pmtiles
+    SAVE ARTIFACT --keep-ts ssp.pmtiles AS LOCAL ./static/tiles/
+
 ssp.mbtiles-server:
     FROM debian:bullseye
     RUN apt-get update -qqy && \
@@ -382,7 +386,7 @@ devcontainer:
     VOLUME /workspace/node_modules
     COPY --chown=$USER_UID:$USER_GID +dts2hx-externs/dts2hx lib/dts2hx
     VOLUME /workspace/lib/dts2hx
-    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/tiles/ssp.pmtiles
+    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles-current/ssp.pmtiles static/tiles/ssp.pmtiles
     VOLUME /workspace/static/tiles
     COPY --chown=$USER_UID:$USER_GID +mapfonts/font static/font
     VOLUME /workspace/static/font
