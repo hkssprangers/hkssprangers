@@ -1,6 +1,6 @@
 module "s3_bucket_terraform" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.8.2"
+  version = "4.1.0"
 
   bucket = "hkssprangers-terraform"
   acl    = "private"
@@ -35,7 +35,7 @@ module "s3_bucket_terraform" {
 
 module "s3_bucket_uploads" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.8.2"
+  version = "4.1.0"
 
   bucket        = "hkssprangers-uploads"
   acl           = "public-read"
@@ -68,11 +68,16 @@ module "s3_bucket_uploads" {
       max_age_seconds = 3000
     }
   ]
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 module "s3_bucket_logs" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.8.2"
+  version = "4.1.0"
 
   bucket        = "hkssprangers-logs"
   acl           = "private"
@@ -97,11 +102,16 @@ module "s3_bucket_logs" {
     ]
   }
   EOF
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 module "s3_bucket_dbbackup" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.8.2"
+  version = "4.1.0"
 
   bucket = "hkssprangers-dbbackup"
   acl    = "private"
@@ -132,7 +142,7 @@ module "s3_bucket_dbbackup" {
 
 module "s3_bucket_static" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.8.2"
+  version = "4.1.0"
 
   bucket = "hkssprangers-static"
   acl    = "private"
@@ -163,6 +173,11 @@ module "s3_bucket_static" {
       }
     }
   ]
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 data "aws_iam_policy_document" "cloudfront_access_s3_static" {
