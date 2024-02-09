@@ -28,7 +28,7 @@ jobs:
         run: echo "EARTHLY_REMOTE_CACHE=ghcr.io/hkssprangers/hkssprangers_cache:$(echo "$GITHUB_REF_NAME" | sed 's/[^A-Za-z0-9\-\.]/_/g')" >> $GITHUB_ENV
       - uses: earthly/actions-setup@v1
         with:
-          version: "0.7.23"
+          version: "0.8.3"
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build devcontainer
         run: earthly +ci-images --GIT_REF_NAME="${{ github.ref_name }}" --GIT_SHA="${{ github.sha }}"

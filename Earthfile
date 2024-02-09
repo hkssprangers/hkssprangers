@@ -1,4 +1,4 @@
-VERSION 0.7
+VERSION 0.8
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-jammy
 ARG --global DEVCONTAINER_IMAGE_NAME_DEFAULT=ghcr.io/hkssprangers/hkssprangers_devcontainer
 ARG --global MAIN_BRANCH=master
@@ -123,7 +123,8 @@ terraform:
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
     ARG TARGETARCH
-    RUN curl -fsSL https://github.com/earthly/earthly/releases/download/v0.7.23/earthly-linux-${TARGETARCH} -o /usr/local/bin/earthly \
+    ARG VERSION=0.8.3 # https://github.com/earthly/earthly/releases
+    RUN curl -fsSL "https://github.com/earthly/earthly/releases/download/v${VERSION}/earthly-linux-${TARGETARCH}" -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
 
