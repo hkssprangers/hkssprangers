@@ -28,21 +28,3 @@ provider "aws" {
 provider "cloudflare" {
   api_token = data.aws_ssm_parameter.cloudflare_api_token.value
 }
-
-provider "aws" {
-  alias = "cloudflare_r2"
-
-  access_key = data.aws_ssm_parameter.r2-access-key-id.value
-  secret_key = data.aws_ssm_parameter.r2-secret-access-key.value
-  region     = "auto"
-
-  skip_credentials_validation = true
-  skip_region_validation      = true
-  skip_requesting_account_id  = true
-  skip_metadata_api_check     = true
-  # skip_get_ec2_platforms      = true
-  endpoints {
-    # https://developers.cloudflare.com/r2/platform/s3-compatibility/api/
-    s3 = "https://${local.cloudflare.account_id}.r2.cloudflarestorage.com"
-  }
-}
