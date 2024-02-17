@@ -28,11 +28,6 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
-# Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
-# to the Docker socket. The script will also execute CMD as needed.
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-CMD [ "sleep", "infinity" ]
-
 SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
 # https://github.com/nodesource/distributions#installation-instructions
