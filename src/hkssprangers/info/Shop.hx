@@ -999,61 +999,18 @@ enum abstract Shop(String) to String {
             case [HowDrunk, _, _]:
                 return Unavailable('店舖暫停營業');
 
-            case [EightyNine | ThaiHome, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [EightyNine | ThaiHome, "2024-02-10" | "2024-02-11" | "2024-02-12" | "2024-02-13" | "2024-02-14", _]:
-                return Unavailable('初六啟市');
-            
-            case [HanaSoftCream, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            
-            case [BiuKeeLokYuen, "2024-02-09", _] if (pickupTimeSlot.start.getTimePart() >= "19:00:00"):
-                return Unavailable('除夕收早');
-            case [BiuKeeLokYuen, "2024-02-10" | "2024-02-11" | "2024-02-12", _]:
-                return Unavailable('初四啟市');
-            
-            case [BlackWindow, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [BlackWindow, "2024-02-10" | "2024-02-11" | "2024-02-12" | "2024-02-13" | "2024-02-14" | "2024-02-15", _]:
-                return Unavailable('初七啟市');
-
-            case [YearsHK, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [YearsHK, "2024-02-10" | "2024-02-11" | "2024-02-12", _]:
-                return Unavailable('初四啟市');
-
-            case [TheParkByYears, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            
-            case [LonelyPaisley, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [LonelyPaisley, "2024-02-10" | "2024-02-11" | "2024-02-12", _]:
-                return Unavailable('初四啟市');
-
-            case [FishFranSSP, "2024-02-09" | "2024-02-10" | "2024-02-11", _]:
-                return Unavailable('初三啟市');
-            
-            case [CafeGolden, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [CafeGolden, "2024-02-10" | "2024-02-11" | "2024-02-12" | "2024-02-13", _]:
-                return Unavailable('初五啟市');
-
-            case [PokeGo, "2024-02-10" | "2024-02-11" | "2024-02-12" | "2024-02-13" | "2024-02-14", _]:
-                return Unavailable('初六啟市');
-
-            case [Minimal, "2024-02-09", Dinner]:
-                return Unavailable('除夕收早');
-            case [Minimal, "2024-02-10", _]:
-                return Unavailable('初一休息');
-            case [Minimal, "2024-02-11" | "2024-02-12", Dinner]:
-                return Unavailable('收早');
-
             case [ThaiHome, "2024-01-08" | "2024-01-09", _]:
                 return Unavailable('店舖休息');
 
             // https://www.facebook.com/permalink.php?story_fbid=pfbid0hUKt9kzSb6oV2fXVuqRd2e7NQNaM1AtWQnfLEVBurGkSUjWCr68o2QRmRaWahca6l&id=100064143817671
             case [KCZenzero, "2024-01-21", _]:
                 return Unavailable('休息一天');
+
+            // https://www.facebook.com/openblackwindow/posts/pfbid02xzTXFdAC7cW1WFatBuZh4pz3EV8j9Xxo6R3xPYRCetprMRco2ST3gh52GPWPEeE6l
+            case [BlackWindow, "2024-03-01", _]:
+                return Unavailable('休息一天');
+            case [BlackWindow, "2024-03-02", Dinner]:
+                return Unavailable('晚市暫停一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
