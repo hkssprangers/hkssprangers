@@ -993,6 +993,8 @@ enum abstract Shop(String) to String {
                 return Unavailable('已結業 🥲');
             case [LaksaStore, _, _] if (pickupTimeSlot.start.getDatePart() > "2023-12-13"):
                 return Unavailable('已結業 🥲');
+            case [FishFranSSP, _, _] if (pickupTimeSlot.start.getDatePart() > "2024-02-29"):
+                return Unavailable('已結業 🥲');
             case [ThaiYummy, _, _]:
                 return Unavailable('埗兵外賣暫停');
 
