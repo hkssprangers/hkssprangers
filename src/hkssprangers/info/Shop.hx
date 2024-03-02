@@ -1008,11 +1008,9 @@ enum abstract Shop(String) to String {
             case [KCZenzero, "2024-01-21", _]:
                 return Unavailable('休息一天');
 
-            // https://www.facebook.com/openblackwindow/posts/pfbid02xzTXFdAC7cW1WFatBuZh4pz3EV8j9Xxo6R3xPYRCetprMRco2ST3gh52GPWPEeE6l
-            case [BlackWindow, "2024-03-01", _]:
-                return Unavailable('休息一天');
-            case [BlackWindow, "2024-03-02", Dinner]:
-                return Unavailable('晚市暫停一天');
+            // https://www.facebook.com/openblackwindow/posts/pfbid02j9ey8HP7M7gWQ44DzWLBfuyZVKs9w3jfiHoHgxDHkzLx3tRPBSWTB3PeWnaMWwihl
+            case [BlackWindow, "2024-03-03", Lunch]:
+                return Unavailable('午市暫停一天');
 
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
