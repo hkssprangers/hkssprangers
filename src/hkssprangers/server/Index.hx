@@ -298,7 +298,7 @@ class Index extends View<IndexProps> {
             case FishFranSSP:
                 image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
             case LittleFishFran:
-                image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
+                image("/images/new.png", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
             case HowDrunk:
                 image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 w-full h-full object-cover");
             case LoudTeaSSP:
@@ -406,7 +406,7 @@ class Index extends View<IndexProps> {
             case FishFranSSP:
                 image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
             case LittleFishFran:
-                image("/images/shops/FishFranSSP/FishFranSSP.jpg", shop.info().name, "squircle");
+                image("/images/new.png", shop.info().name, "squircle");
             case HowDrunk:
                 image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n_square.jpg", shop.info().name, "squircle");
             case LoudTeaSSP:
