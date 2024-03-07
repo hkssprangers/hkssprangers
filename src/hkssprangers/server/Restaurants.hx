@@ -69,6 +69,7 @@ class Restaurants extends View<RestaurantsProps> {
                             ${Index.renderShopp(KCZenzero)}
                             ${Index.renderShopp(ThaiHome)}
                             ${Index.renderShopp(HanaSoftCream)}
+                            ${Index.renderShopp(LittleFishFran)}
                             ${Index.renderShopp(BiuKeeLokYuen)}
                             ${Index.renderShopp(BlackWindow)}
                             ${Index.renderShopp(LoudTeaSSP)}

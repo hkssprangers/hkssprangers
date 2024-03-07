@@ -205,6 +205,7 @@ class Menu extends View<MenuProps> {
                         ${Index.renderShopp(KCZenzero)}
                         ${Index.renderShopp(ThaiHome)}
                         ${Index.renderShopp(HanaSoftCream)}
+                        ${Index.renderShopp(LittleFishFran)}
                         ${Index.renderShopp(BiuKeeLokYuen)}
                         ${Index.renderShopp(BlackWindow)}
                         ${Index.renderShopp(LoudTeaSSP)}
@@ -279,6 +280,8 @@ class Menu extends View<MenuProps> {
             case LonelyPaisley:
                 image("/images/shops/LonelyPaisley/LonelyPaisley.jpeg", shop.info().name, styles, "image", true);
             case FishFranSSP:
+                image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
+            case LittleFishFran:
                 image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
             case HowDrunk:
                 image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
@@ -416,6 +419,8 @@ class Menu extends View<MenuProps> {
             case FishFranSSP:
                 // renderFishFranSSP();
                 renderMsg("深水埗店已結業");
+            case LittleFishFran:
+                renderFishFranSSP();
             case HowDrunk:
                 renderHowDrunk();
             case LoudTeaSSP:

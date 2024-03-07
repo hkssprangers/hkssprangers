@@ -37,6 +37,7 @@ enum abstract Shop(String) to String {
     final BlackWindow:Shop;
     final LonelyPaisley:Shop;
     final FishFranSSP:Shop;
+    final LittleFishFran:Shop;
     final MxMWorkshop:Shop;
     final HowDrunk:Shop;
     final LoudTeaSSP:Shop;
@@ -52,6 +53,7 @@ enum abstract Shop(String) to String {
         WoStreet,
 
         FishFranSSP,
+        LittleFishFran,
 
         YearsHK,
         LonelyPaisley,
@@ -910,6 +912,35 @@ enum abstract Shop(String) to String {
                 restDay: null,
                 recommendation: null
             }
+        case LittleFishFran:
+            {
+                id: LittleFishFran,
+                name: "小漁坊",
+                type: Restaurant,
+                address: "欽州街58號米蘭軒1樓全層",
+                lat: 22.3306967, 
+                lng: 114.1603114,
+                courierContact: [
+                    { name: "店舖電話", url: "tel:+85246274514" },
+                ],
+                openDays: [
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday,
+                    Sunday,
+                ],
+                earliestPickupTime: "12:00:00",
+                latestPickupTime: "20:30:00",
+                isInService: true,
+                facebook: "https://www.facebook.com/littlefishfran",
+                instagram: "https://www.instagram.com/littlefishfran/",
+                availablity: "提供午餐及晚餐",
+                restDay: null,
+                recommendation: null
+            }
         case HowDrunk:
             {
                 id: HowDrunk,
@@ -1123,6 +1154,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LonelyPaisleyMenu.itemsSchema(pickupTimeSlot, o));
             case FishFranSSP:
                 Promise.resolve(FishFranSSPMenu.itemsSchema(pickupTimeSlot, o));
+            case LittleFishFran:
+                Promise.resolve(FishFranSSPMenu.itemsSchema(pickupTimeSlot, o));
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.itemsSchema(pickupTimeSlot, o));
             case LoudTeaSSP:
@@ -1186,6 +1219,8 @@ enum abstract Shop(String) to String {
                 Promise.resolve(LonelyPaisleyMenu.summarize(o));
             case FishFranSSP:
                 Promise.resolve(FishFranSSPMenu.summarize(o));
+            case LittleFishFran:
+                Promise.resolve(FishFranSSPMenu.summarize(o));
             case HowDrunk:
                 Promise.resolve(HowDrunkMenu.summarize(o, pickupTimeSlot));
             case LoudTeaSSP:
@@ -1228,6 +1263,7 @@ enum abstract Shop(String) to String {
             case BlackWindow: BlackWindow;
             case LonelyPaisley: LonelyPaisley;
             case FishFranSSP: FishFranSSP;
+            case LittleFishFran: LittleFishFran;
             case HowDrunk: HowDrunk;
             case LoudTeaSSP: LoudTeaSSP;
             case ThaiHome: ThaiHome;
