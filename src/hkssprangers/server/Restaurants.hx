@@ -66,11 +66,9 @@ class Restaurants extends View<RestaurantsProps> {
                         <div className="p-3 lg:pb-6 mx-auto container">
                             <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                             ${Index.renderShopp(EightyNine)}
-                            ${Index.renderShopp(LaksaStore)}
                             ${Index.renderShopp(KCZenzero)}
                             ${Index.renderShopp(ThaiHome)}
                             ${Index.renderShopp(HanaSoftCream)}
-                            ${Index.renderShopp(FishFranSSP)}
                             ${Index.renderShopp(BiuKeeLokYuen)}
                             ${Index.renderShopp(BlackWindow)}
                             ${Index.renderShopp(LoudTeaSSP)}

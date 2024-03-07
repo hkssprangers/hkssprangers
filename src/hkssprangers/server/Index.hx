@@ -436,66 +436,6 @@ class Index extends View<IndexProps> {
         ');
     }
 
-    static public function renderShops() {
-        final blockClasses2 = "p-3 md:py-0 md:pr-0 md:pl-6 inline-block menu-link";
-        final linkClasses2 = "cursor-pointer menu";
-        final thumbnailDivClasses2 = "relative btn-menu w-auto md:w-1/5 my-2 text-center";
-        final shopNameClasses = "text-xs lg:text-lg lg:flex-1";
-        
-        return jsx('
-            <Fragment>
-                <div className="grid grid-cols-3 md:grid-cols-1">
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-red-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-red-500"></i>&nbsp;<span>${DragonCentreCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(EightyNine, DragonCentreCluster)}
-                    ${renderShop(LaksaStore, DragonCentreCluster)}
-                    ${renderShop(KCZenzero, DragonCentreCluster)}
-                    ${renderShop(ThaiHome, DragonCentreCluster)}
-                    ${renderShop(HanaSoftCream, DragonCentreCluster)}
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-amber-600 font-bold">
-                        <i className="fas fa-map-marker-alt text-amber-600"></i>&nbsp;<span>${PeiHoStreetMarketCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(FishFranSSP, PeiHoStreetMarketCluster)}
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-pink-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-pink-500"></i>&nbsp;<span>${GoldenCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(BiuKeeLokYuen, GoldenCluster)}
-                    ${renderShop(BlackWindow, GoldenCluster)}
-                    ${renderShop(LoudTeaSSP, GoldenCluster)}
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-600 font-bold">
-                        <i className="fas fa-map-marker-alt text-green-600"></i>&nbsp;<span>${ParkCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(TheParkByYears, ParkCluster)}
-                    ${renderShop(PokeGo, ParkCluster)}
-                    ${renderShop(Minimal, ParkCluster)}
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-green-400 font-bold">
-                        <i className="fas fa-map-marker-alt text-green-400"></i>&nbsp;<span>${CLPCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(YearsHK, CLPCluster)}
-                    ${renderShop(LonelyPaisley, CLPCluster)}
-                    ${renderShop(LoudTeaSSP, CLPCluster, ["hidden", "md:inline-block"])}
-
-                    <div className="hidden md:flex items-center px-6 py-3 bg-pt-blue-500 font-bold">
-                        <i className="fas fa-map-marker-alt text-blue-500"></i>&nbsp;<span>${PakTinCluster.info().name}</span>
-                        <span className="flex-1 mx-3">&nbsp;</span>
-                    </div>
-                    ${renderShop(CafeGolden, PakTinCluster)}
-                    ${renderShop(HowDrunk, PakTinCluster)}
-                </div>
-            </Fragment>
-        ');
-    }
-
     override function bodyContent() {
         return jsx('
             <Fragment>
@@ -515,11 +455,9 @@ class Index extends View<IndexProps> {
                         <div className="p-3 mx-auto container">
                             <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                             ${renderShopp(EightyNine)}
-                            ${renderShopp(LaksaStore)}
                             ${renderShopp(KCZenzero)}
                             ${renderShopp(ThaiHome)}
                             ${renderShopp(HanaSoftCream)}
-                            ${renderShopp(FishFranSSP)}
                             ${renderShopp(BiuKeeLokYuen)}
                             ${renderShopp(BlackWindow)}
                             ${renderShopp(LoudTeaSSP)}

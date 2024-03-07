@@ -202,11 +202,9 @@ class Menu extends View<MenuProps> {
                     <div className="p-3 mx-auto container">
                         <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                         ${Index.renderShopp(EightyNine)}
-                        ${Index.renderShopp(LaksaStore)}
                         ${Index.renderShopp(KCZenzero)}
                         ${Index.renderShopp(ThaiHome)}
                         ${Index.renderShopp(HanaSoftCream)}
-                        ${Index.renderShopp(FishFranSSP)}
                         ${Index.renderShopp(BiuKeeLokYuen)}
                         ${Index.renderShopp(BlackWindow)}
                         ${Index.renderShopp(LoudTeaSSP)}
@@ -365,7 +363,8 @@ class Menu extends View<MenuProps> {
             case TheParkByYears:
                 renderTheParkByYears();
             case LaksaStore:
-                renderLaksaStore();
+                // renderLaksaStore();
+                renderMsg("已結業");
             case DongDong:
                 // renderDongDong();
                 renderMsg("已結業");
@@ -397,7 +396,7 @@ class Menu extends View<MenuProps> {
                 renderMsg("埗兵外賣暫停");
             case Toolss:
                 // renderToolss();
-                renderMsg("埗兵外賣暫停");
+                renderMsg("已結業");
             case KeiHing:
                 // renderKeiHing();
                 renderMsg("埗兵外賣暫停");
@@ -415,7 +414,8 @@ class Menu extends View<MenuProps> {
             case LonelyPaisley:
                 renderLonelyPaisley();
             case FishFranSSP:
-                renderFishFranSSP();
+                // renderFishFranSSP();
+                renderMsg("深水埗店已結業");
             case HowDrunk:
                 renderHowDrunk();
             case LoudTeaSSP:
