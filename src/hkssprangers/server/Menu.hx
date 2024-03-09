@@ -36,7 +36,7 @@ import hkssprangers.info.menu.MinimalMenu.*;
 import hkssprangers.info.menu.CafeGoldenMenu.*;
 import hkssprangers.info.menu.BlackWindowMenu;
 import hkssprangers.info.menu.LonelyPaisleyMenu.*;
-import hkssprangers.info.menu.FishFranSSPMenu.*;
+import hkssprangers.info.menu.LittleFishFranMenu.*;
 import hkssprangers.info.menu.HowDrunkMenu.*;
 import hkssprangers.info.menu.LoudTeaSSPMenu;
 import hkssprangers.info.menu.*;
@@ -417,10 +417,9 @@ class Menu extends View<MenuProps> {
             case LonelyPaisley:
                 renderLonelyPaisley();
             case FishFranSSP:
-                // renderFishFranSSP();
                 renderMsg("深水埗店已結業");
             case LittleFishFran:
-                renderFishFranSSP();
+                renderLittleFishFran();
             case HowDrunk:
                 renderHowDrunk();
             case LoudTeaSSP:
@@ -1520,12 +1519,12 @@ class Menu extends View<MenuProps> {
         ');
     }
 
-    function renderFishFranSSP() {
+    function renderLittleFishFran() {
         final headerClasses = ["p-3", "text-xl", "font-bold"].concat(style.headerClasses).join(" ");
 
         final lunchSet = {
             final items = {
-                final items = FishFranSSPLunchSet.properties.main.enums();
+                final items = LittleFishFranLunchSet.properties.main.enums();
                 final cutoff = Math.ceil(items.length * 0.5);
                 [
                     items.slice(0, cutoff),
@@ -1534,10 +1533,10 @@ class Menu extends View<MenuProps> {
             }
             jsx('
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${FishFranSSPLunchSet.title}</div>
+                    <div className=${headerClasses}>${LittleFishFranLunchSet.title}</div>
                     <div className="p-3 text-gray-500">
-                        <p>${FishFranSSPLunchSet.properties.drink.description}</p>
-                        <p>${FishFranSSPLunchSet.properties.veg.title}：${slashes(FishFranSSPLunchSet.properties.veg.enums())}</p>
+                        <p>${LittleFishFranLunchSet.properties.drink.description}</p>
+                        <p>${LittleFishFranLunchSet.properties.veg.title}：${slashes(LittleFishFranLunchSet.properties.veg.enums())}</p>
                     </div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
@@ -1553,7 +1552,7 @@ class Menu extends View<MenuProps> {
 
         final dish = {
             final items = {
-                final items = FishFranSSPDish.enums();
+                final items = LittleFishFranDish.enums();
                 final cutoff = Math.ceil(items.length * 0.5);
                 [
                     items.slice(0, cutoff),
@@ -1562,7 +1561,7 @@ class Menu extends View<MenuProps> {
             }
             jsx('
                 <div className=${["p-3", "md:border-b-4"].concat(style.borderClasses).join(" ")}>
-                    <div className=${headerClasses}>${FishFranSSPDish.title}</div>
+                    <div className=${headerClasses}>${LittleFishFranDish.title}</div>
                     <div className="md:flex flex-row md:mt-3">
                         <div className=${["md:w-1/2", "md:pr-3", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                             ${renderItems(items[0])}
@@ -1581,42 +1580,42 @@ class Menu extends View<MenuProps> {
                 ${dish}
                 <div className=${["md:flex", "flex-row"].concat(style.borderClasses).join(" ")}>
                     <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
-                        <div className=${headerClasses}>${FishFranSSPFishPot.title}</div>
-                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.style.title}</div>
-                        <div className="p-3">${slashes(FishFranSSPFishPot.properties.style.enums())}</div>
-                        <div className="font-bold p-3">${FishFranSSPFishPot.properties.main.title}</div>
-                        ${renderItems(FishFranSSPFishPot.properties.main.enums())}
+                        <div className=${headerClasses}>${LittleFishFranFishPot.title}</div>
+                        <div className="font-bold p-3">${LittleFishFranFishPot.properties.style.title}</div>
+                        <div className="p-3">${slashes(LittleFishFranFishPot.properties.style.enums())}</div>
+                        <div className="font-bold p-3">${LittleFishFranFishPot.properties.main.title}</div>
+                        ${renderItems(LittleFishFranFishPot.properties.main.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPPot.title}</div>
-                        ${renderItems(FishFranSSPPot.enums())}
+                        <div className=${headerClasses}>${LittleFishFranPot.title}</div>
+                        ${renderItems(LittleFishFranPot.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPSpicyPot.title}</div>
-                        ${renderItems(FishFranSSPSpicyPot.enums())}
+                        <div className=${headerClasses}>${LittleFishFranSpicyPot.title}</div>
+                        ${renderItems(LittleFishFranSpicyPot.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPSoupPot.title}</div>
-                        ${renderItems(FishFranSSPSoupPot.enums())}
+                        <div className=${headerClasses}>${LittleFishFranSoupPot.title}</div>
+                        ${renderItems(LittleFishFranSoupPot.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPSpicyThing.title}</div>
-                        ${renderItems(FishFranSSPSpicyThing.enums())}
+                        <div className=${headerClasses}>${LittleFishFranSpicyThing.title}</div>
+                        ${renderItems(LittleFishFranSpicyThing.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPNoodles.title}</div>
-                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.main.title}</div>
-                        ${renderItems(FishFranSSPNoodles.properties.main.enums())}
-                        <div className="font-bold p-3">${FishFranSSPNoodles.properties.noodles.title}</div>
-                        <div className="p-3">${slashes(FishFranSSPNoodles.properties.noodles.enums())}</div>
+                        <div className=${headerClasses}>${LittleFishFranNoodles.title}</div>
+                        <div className="font-bold p-3">${LittleFishFranNoodles.properties.main.title}</div>
+                        ${renderItems(LittleFishFranNoodles.properties.main.enums())}
+                        <div className="font-bold p-3">${LittleFishFranNoodles.properties.noodles.title}</div>
+                        <div className="p-3">${slashes(LittleFishFranNoodles.properties.noodles.enums())}</div>
                     </div>
                     <div className="md:w-1/2 p-3">
-                        <div className=${headerClasses}>${FishFranSSPRice.title}</div>
-                        ${renderItems(FishFranSSPRice.enums())}
+                        <div className=${headerClasses}>${LittleFishFranRice.title}</div>
+                        ${renderItems(LittleFishFranRice.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPColdDish.title}</div>
-                        ${renderItems(FishFranSSPColdDish.enums())}
+                        <div className=${headerClasses}>${LittleFishFranColdDish.title}</div>
+                        ${renderItems(LittleFishFranColdDish.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPDessert.title}</div>
-                        ${renderItems(FishFranSSPDessert.enums())}
+                        <div className=${headerClasses}>${LittleFishFranDessert.title}</div>
+                        ${renderItems(LittleFishFranDessert.enums())}
 
-                        <div className=${headerClasses}>${FishFranSSPDrink.title}</div>
-                        ${renderItems(FishFranSSPDrink.enums())}
+                        <div className=${headerClasses}>${LittleFishFranDrink.title}</div>
+                        ${renderItems(LittleFishFranDrink.enums())}
                     </div>
                 </div>
             </Fragment>
