@@ -58,7 +58,7 @@ enum abstract KCZenzeroItem(String) to String {
         }
         return []
             .concat(limited)
-            .concat(hoiSinPot)
+            // .concat(hoiSinPot)
             .concat([
                 HotDouble,
                 Squab,
@@ -68,7 +68,7 @@ enum abstract KCZenzeroItem(String) to String {
                 YiMein,
                 // TomatoSoupRice,
                 Rice,
-                // NoodleSet,
+                NoodleSet,
                 // PastaSet,
                 // LambPasta,
                 // R6Set,
@@ -87,7 +87,7 @@ enum abstract KCZenzeroItem(String) to String {
         case TomatoSoupRice: KCZenzeroMenu.KCZenzeroTomatoSoupRice;
         case HoiSinPot: KCZenzeroMenu.KCZenzeroHoiSinPot;
         case HotdogSet: KCZenzeroMenu.KCZenzeroHotdogSet;
-        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet(TimeSlotType.classify(timeSlot.start));
+        case NoodleSet: KCZenzeroMenu.KCZenzeroNoodleSet;
         case PastaSet: KCZenzeroMenu.KCZenzeroPastaSet(TimeSlotType.classify(timeSlot.start));
         case LambPasta: KCZenzeroMenu.KCZenzeroLambPasta;
         case R6Set: KCZenzeroMenu.KCZenzeroR6Set;
@@ -162,6 +162,7 @@ class KCZenzeroMenu {
             // "蒜蓉包 $28",
             "涼拌蠔仔 $30",
             "涼拌拼盤 (皮蛋 蠔仔 花膠) $48",
+            "涼拌魚皮拼大蝦 $40"
         ],
     };
 
@@ -486,40 +487,29 @@ class KCZenzeroMenu {
         else
             null;
 
-    static public function KCZenzeroNoodleSet(timeSlotType:TimeSlotType) return {
-        title: "意式濃厚蕃茄湯車仔飯",
-        description: "任選兩款主食 $48",
+    static public final KCZenzeroNoodleSet = {
+        title: "雲吞烏冬",
         properties: {
-            options: {
-                type: "array",
-                title: "主食",
-                description: "任選兩款，之後每款額外加 $8",
-                items: {
-                    type: "string",
-                    "enum": [
-                        // "牛舌片",
-                        "雞扒",
-                        "煙鴨胸",
-                        "蟹棒",
-                        "司華力腸",
-                    ],
-                },
-                uniqueItems: true,
-                minItems: 2,
+            main: {
+                title: "雲吞",
+                type: "string",
+                "enum": [
+                    "牛肉雲吞 $38",
+                    "羊肉雲吞 $38",
+                ]
             },
             noodle: {
                 type: "string",
-                title: "類別",
+                title: "麵類",
                 "enum": [
-                    "飯",
-                    "脆米",
-                    "烏冬 +$8",
+                    "烏冬",
                 ],
+                "default": "烏冬",
             },
-            drink: KCZenzeroFreeDrink
+            // drink: KCZenzeroFreeDrink
             // extraOptions: KCZenzeroSetOptions,
         },
-        required: ["options", "noodle", "drink"],
+        required: ["main", "noodle"],
     };
 
     static public function KCZenzeroPastaSet(timeSlotType:TimeSlotType) return {
@@ -703,22 +693,7 @@ class KCZenzeroMenu {
             case HotdogSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], null, priceInDescription("main", def));
             case NoodleSet:
-                summarizeOrderObject(orderItem.item, def, ["options", "noodle", "drink", "extraOptions"], null, (fieldName, value) -> switch fieldName {
-                    case "options":
-                        var price = switch (value != null ? value.length : 0) {
-                            case 0, 1, 2:
-                                (def.description:String).parsePrice().price;
-                            case n:
-                                (def.description:String).parsePrice().price + (n - 2) * (def.properties.options.description:String).parsePrice().price;
-                        };
-                        {
-                            price: price,
-                        }
-                    case _: 
-                        {
-                            price: null,
-                        };
-                });
+                summarizeOrderObject(orderItem.item, def, ["main", "noodle"]);
             case PastaSet:
                 summarizeOrderObject(orderItem.item, def, ["main", "sauce", "noodle", "drink", "extraOptions"], null, priceInDescription("main", def));
             case LambPasta:

@@ -711,21 +711,17 @@ class Menu extends View<MenuProps> {
         }
 
         final noodleSet = {
-            final noodleSet = KCZenzeroNoodleSet(Lunch);
+            final noodleSet = KCZenzeroNoodleSet;
             jsx('
                 <Fragment>
                     <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
                         <div className="flex-grow p-3">${noodleSet.title}</div>
-                        <div className="p-3">$$${noodleSet.description.parsePrice().price}</div>
                     </div>
-                    <div className="p-3"><b>${noodleSet.properties.options.title}選擇</b> ${noodleSet.properties.options.description}</div>
-                    <div className="p-3">${slashes(noodleSet.properties.options.items.enums())}</div>
+                    <div className="p-3"><b>${noodleSet.properties.main.title}選擇</b></div>
+                    <div className="p-3">${slashes(noodleSet.properties.main.enums())}</div>
 
                     <div className="font-bold p-3">${noodleSet.properties.noodle.title}選擇</div>
                     <div className="p-3">${slashes(noodleSet.properties.noodle.enums())}</div>
-
-                    <div className="font-bold p-3">${noodleSet.properties.drink.title}</div>
-                    <div className="p-3">${slashes(noodleSet.properties.drink.enums().slice(1))}</div>
                 </Fragment>
             ');
         }
@@ -746,8 +742,6 @@ class Menu extends View<MenuProps> {
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
 
-                    ${hoiSinPot}
-
                     ${hotDouble}
 
                     ${squab}
@@ -757,6 +751,8 @@ class Menu extends View<MenuProps> {
                     ${mincedPork}
                 </div>
                 <div className="p-3 md:w-1/2">
+                    ${noodleSet}
+
                     ${yiMein}
                     
                     ${rice}
