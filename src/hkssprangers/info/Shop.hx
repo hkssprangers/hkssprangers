@@ -1030,10 +1030,7 @@ enum abstract Shop(String) to String {
                 return Unavailable('埗兵外賣暫停');
 
             case [HowDrunk, _, _]:
-                return Unavailable('店舖暫停營業');
-
-            case [TheParkByYears, _, _]:
-                return Unavailable('餐牌更新中');
+                return Unavailable('白田店暫停營業');
 
             case [ThaiHome, "2024-01-08" | "2024-01-09", _]:
                 return Unavailable('店舖休息');
