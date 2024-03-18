@@ -282,7 +282,7 @@ class Menu extends View<MenuProps> {
             case FishFranSSP:
                 image("/images/shops/FishFranSSP/FishFranSSP-menu-profile.jpg", shop.info().name, styles, "image", true);
             case LittleFishFran:
-                image("/images/new.png", shop.info().name, styles, "image", true);
+                image("/images/shops/LittleFishFran/LittleFishFran-cover.jpg", shop.info().name, styles, "image", true);
             case HowDrunk:
                 image("/images/shops/HowDrunk/299782572_119575167494908_7630665123626958584_n.jpg", shop.info().name, styles, "image", true);
             case LoudTeaSSP:
