@@ -284,7 +284,6 @@ class LittleFishFranMenu {
             item("蒜茸萵笋絲", 62),
             item("清炒土豆絲", 58),
             item("辣子土豆絲", 58),
-            item("豉椒炒鵝腸", 168),
             item("豉汁蒸划水(魚尾)", 96),
             item("剁椒蒸划水(魚尾)", 96),
             item("豉汁蒸魚頭(半個)", 104),
@@ -314,8 +313,6 @@ class LittleFishFranMenu {
             item("薑蔥魚頭", 125),
             item("薑蔥白鱔煲", 186),
             item("薑蔥田雞", 116),
-            item("薑蔥雞", 95),
-            item("薑蔥雞什", 102),
             item("薑蔥生蠔", 156),
             item("鮮菌紅燒豆腐", 72),
             item("鮮果生炒骨", 82),
@@ -347,7 +344,6 @@ class LittleFishFranMenu {
             item("野山椒泡鳳爪", 62),
             item("蒜泥白肉", 58),
             item("夫妻肺片", 72),
-            item("雞絲鵝腸", 168),
         ],
     };
 
@@ -420,7 +416,6 @@ class LittleFishFranMenu {
             item("麻辣雞煲", 98),
             item("麻辣雞雜煲", 106),
             item("麻辣雞子煲", 105),
-            item("麻辣雞翼尖煲", 85),
             item("麻辣魚春拼魚卜煲", 132),
             item("麻辣魚春煲", 132),
             // item("麻辣魚卜煲", 122),
@@ -452,14 +447,12 @@ class LittleFishFranMenu {
         type: "string",
         "enum": [
             item("歌樂山辣子雞", 162),
-            item("辣子蝦", 174),
             item("辣子田雞", 168),
             item("辣子軟殼蟹", 178),
             item("辣子大腸", 128),
             item("金菇肥牛 (麻辣燙)", 108),
             item("金菇小肥羊 (麻辣燙)", 116),
             item("金菇牛柏葉 (麻辣燙)", 104),
-            item("金菇鵝腸 (麻辣燙)", 168),
         ],
     };
 
@@ -481,7 +474,6 @@ class LittleFishFranMenu {
             item("生煎菜肉包", 42),
             item("雞湯魚皮餃", 46),
             item("雞湯韮菜餃", 52),
-            item("麻辣魚蛋", 40),
             "糍粑 配紅糖 $42",
         ],
     };
