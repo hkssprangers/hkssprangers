@@ -11,82 +11,99 @@ ARG --global WORKDIR=/workspace
 RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$WORKDIR"
 WORKDIR "$WORKDIR"
 
-ENV HAXESHIM_ROOT=/haxe
-RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
+devcontainer-base:
+    ENV HAXESHIM_ROOT=/haxe
+    RUN install -d -m 0755 -o "$USER_UID" -g "$USER_UID" "$HAXESHIM_ROOT"
 
-# Avoid warnings by switching to noninteractive
-ENV DEBIAN_FRONTEND=noninteractive
+    # Maunally install docker-compose to avoid the following error:
+    # pip seemed to fail to build package: PyYAML<6,>=3.10
+    COPY +docker-compose/docker-compose /usr/local/bin/
 
-ARG --global INSTALL_ZSH="false"
-ARG --global UPGRADE_PACKAGES="true"
-ARG --global ENABLE_NONROOT_DOCKER="true"
-ARG --global USE_MOBY="false"
-COPY .devcontainer/library-scripts/common-debian.sh .devcontainer/library-scripts/docker-debian.sh /tmp/library-scripts/
-RUN apt-get update \
-    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
-    && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
-    # Clean up
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+    # Avoid warnings by switching to noninteractive
+    ENV DEBIAN_FRONTEND=noninteractive
 
-SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
+    ARG INSTALL_ZSH="false"
+    ARG UPGRADE_PACKAGES="true"
+    ARG ENABLE_NONROOT_DOCKER="true"
+    ARG USE_MOBY="false"
+    COPY .devcontainer/library-scripts/common-debian.sh .devcontainer/library-scripts/docker-debian.sh /tmp/library-scripts/
+    RUN apt-get update \
+        && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+        && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
+        # Clean up
+        && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
-# https://github.com/nodesource/distributions#installation-instructions
-RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ARG --global NODE_MAJOR=16
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+    SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
-# Configure apt and install packages
-RUN apt-get update \
-    && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
-    && apt-get install -qqy --no-install-recommends \
-        iproute2 \
-        procps \
-        sudo \
-        bash-completion \
-        build-essential \
-        curl \
-        wget \
-        python3 \
-        python3-pip \
-        software-properties-common \
-        libnss3-tools \
-        direnv \
-        tzdata \
-        imagemagick \
-        librsvg2-bin \
-        webp \
-        # tilemaker deps
-        liblua5.1-0 \
-        liblua5.1-0-dev \
-        osmosis \
-        # install docker engine for using `WITH DOCKER`
-        docker-ce \
-        # install node
-        nodejs=${NODE_MAJOR}.* \
-    # Install postgresql-client
-    # https://www.postgresql.org/download/linux/ubuntu/
-    && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
-    && apt-get update \
-    && apt-get -y install postgresql-client-13 \
-    # Clean up
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+    # https://github.com/nodesource/distributions#installation-instructions
+    RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    ARG NODE_MAJOR=16
+    RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
-# Switch back to dialog for any ad-hoc use of apt-get
-ENV DEBIAN_FRONTEND=
+    # Configure apt and install packages
+    RUN apt-get update \
+        && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
+        && apt-get install -qqy --no-install-recommends \
+            iproute2 \
+            procps \
+            sudo \
+            bash-completion \
+            build-essential \
+            curl \
+            wget \
+            python3 \
+            python3-pip \
+            software-properties-common \
+            libnss3-tools \
+            direnv \
+            tzdata \
+            imagemagick \
+            librsvg2-bin \
+            webp \
+            # tilemaker deps
+            liblua5.1-0 \
+            liblua5.1-0-dev \
+            osmosis \
+            # install docker engine for using `WITH DOCKER`
+            docker-ce \
+            # install node
+            nodejs=${NODE_MAJOR}.* \
+        # Install postgresql-client
+        # https://www.postgresql.org/download/linux/ubuntu/
+        && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+        && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
+        && apt-get update \
+        && apt-get -y install postgresql-client-13 \
+        # Install haxe
+        && add-apt-repository ppa:haxe/haxe4.2 -y \
+        && apt-get update \
+        && apt-get install -qqy --no-install-recommends \
+            haxe=1:4.2.* \
+        # Clean up
+        && apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
 
-RUN npm config --global set update-notifier false
-RUN npm config set prefix /usr/local
-RUN npm install -g lix
+    # Switch back to dialog for any ad-hoc use of apt-get
+    ENV DEBIAN_FRONTEND=
 
-SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
+    RUN npm config --global set update-notifier false
+    RUN npm config set prefix /usr/local
+    RUN npm install -g lix
+
+    SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
 devcontainer-library-scripts:
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/common-debian.sh
     RUN curl -fsSLO https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/docker-debian.sh
     SAVE ARTIFACT --keep-ts *.sh AS LOCAL .devcontainer/library-scripts/
+
+docker-compose:
+    ARG TARGETARCH
+    ARG VERSION=2.25.0 # https://github.com/docker/compose/releases/
+    RUN curl -fsSL https://github.com/docker/compose/releases/download/v${VERSION}/docker-compose-linux-$(uname -m) -o /usr/local/bin/docker-compose \
+        && chmod +x /usr/local/bin/docker-compose
+    SAVE ARTIFACT /usr/local/bin/docker-compose
 
 # Usage:
 # COPY +tfenv/tfenv /tfenv
@@ -171,6 +188,7 @@ osmium-tool:
     WORKDIR "$WORKDIR"
 
 tilemaker:
+    FROM +devcontainer-base
     RUN apt-get update -qqy && \
         apt-get install -qqy --no-install-recommends \
             build-essential \
@@ -301,14 +319,20 @@ nginx-serve:
     END
 
 lix-download:
+    FROM +devcontainer-base
     USER $USERNAME
     COPY haxe_libraries haxe_libraries
     COPY .haxerc .
+    RUN mkdir -p "$HAXESHIM_ROOT/versions/$(jq -r .version .haxerc)"
+    RUN ln -s /usr/bin/haxe "$HAXESHIM_ROOT/versions/$(jq -r .version .haxerc)/haxe"
+    RUN ln -s /usr/bin/haxelib "$HAXESHIM_ROOT/versions/$(jq -r .version .haxerc)/haxelib"
+    RUN ln -s /usr/share/haxe/std "$HAXESHIM_ROOT/versions/$(jq -r .version .haxerc)/std"
     RUN lix download
     SAVE ARTIFACT "$HAXESHIM_ROOT"
     SAVE IMAGE --cache-hint
 
 node-modules-prod:
+    FROM +devcontainer-base
     COPY .haxerc package.json package-lock.json .
     COPY +lix-download/haxe "$HAXESHIM_ROOT"
     RUN npm install --only=production
@@ -329,7 +353,7 @@ dts2hx-externs:
     SAVE IMAGE --cache-hint
 
 devcontainer:
-    ARG TARGETARCH
+    FROM +devcontainer-base
 
     # tfenv
     COPY +tfenv/tfenv /tfenv
@@ -350,9 +374,10 @@ devcontainer:
         && chmod a+x /usr/local/bin/flyway
 
     # install skeema
-    RUN curl -fsSL -o skeema_amd64.deb https://github.com/skeema/skeema/releases/download/v1.7.0/skeema_${TARGETARCH}.deb \
-        && apt-get install -y ./skeema_amd64.deb \
-        && rm ./skeema_amd64.deb
+    ARG TARGETARCH
+    RUN curl -fsSL -o skeema.deb https://github.com/skeema/skeema/releases/download/v1.7.0/skeema_${TARGETARCH}.deb \
+        && apt-get install -y ./skeema.deb \
+        && rm ./skeema.deb
 
     # AWS cli
     COPY +awscli/aws /aws
