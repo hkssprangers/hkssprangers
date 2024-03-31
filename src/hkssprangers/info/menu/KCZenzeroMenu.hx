@@ -9,6 +9,7 @@ using Lambda;
 enum abstract KCZenzeroItem(String) to String {
     final LimitedSpecial;
     final HotDouble;
+    final IceFireSet;
     final HoiSinPot;
     final HotdogSet;
     final NoodleSet;
@@ -60,6 +61,7 @@ enum abstract KCZenzeroItem(String) to String {
             .concat(limited)
             // .concat(hoiSinPot)
             .concat([
+                IceFireSet,
                 HotDouble,
                 Squab,
                 // CuredMeatRice,
@@ -81,6 +83,7 @@ enum abstract KCZenzeroItem(String) to String {
 
     public function getDefinition(timeSlot:TimeSlot):Dynamic return switch (cast this:KCZenzeroItem) {
         case LimitedSpecial: KCZenzeroMenu.KCZenzeroLimitedSpecial(timeSlot.start, TimeSlotType.classify(timeSlot.start));
+        case IceFireSet: KCZenzeroMenu.KCZenzeroIceFireSet;
         case HotDouble: KCZenzeroMenu.KCZenzeroHotDouble;
         case Squab: KCZenzeroMenu.KCZenzeroSquab;
         case YiMein: KCZenzeroMenu.KCZenzeroYiMein;
@@ -162,7 +165,9 @@ class KCZenzeroMenu {
             // "蒜蓉包 $28",
             "涼拌蠔仔 $30",
             "涼拌拼盤 (皮蛋 蠔仔 花膠) $48",
-            "涼拌魚皮拼大蝦 $40"
+            "涼拌魚皮拼大蝦 $40",
+            "涼拌萵筍 $28",
+            "涼拌串串貢 $35",
         ],
     };
 
@@ -225,6 +230,46 @@ class KCZenzeroMenu {
             },
         },
         required: ["main", "drink"],
+    }
+
+    static public final KCZenzeroIceFireSet = {
+        title: "冰火二人餐",
+        properties: {
+            main: {
+                title: "冰火二人餐",
+                type: "string",
+                "enum": [
+                    "香辣煎蝦雞煲 $148",
+                    "沙薑煎蝦雞煲 (唔辣) $148",
+                ],
+            },
+            side: {
+                title: "配菜",
+                type: "string",
+                "enum": [
+                    "涼拌串串貢 + 涼拌萵荀",
+                ],
+                "default": "涼拌串串貢 + 涼拌萵荀",
+            },
+            rice: {
+                title: "飯",
+                type: "string",
+                "enum": [
+                    "2碗白飯",
+                ],
+                "default": "2碗白飯",
+            },
+            drink: {
+                title: "飲品",
+                type: "string",
+                "enum": [
+                    "唔要",
+                    "2碗蕃茄湯",
+                ],
+                "default": "2碗蕃茄湯",
+            },
+        },
+        required: ["main", "side", "rice", "drink"],
     }
 
     static public final KCZenzeroHotdogSet = {
@@ -722,6 +767,8 @@ class KCZenzeroMenu {
                 summarizeOrderObject(orderItem.item, def, ["main"], [box()]);
             case HotDouble:
                 summarizeOrderObject(orderItem.item, def, ["main", "drink", "extraOptions"], [box(5)]);
+            case IceFireSet:
+                summarizeOrderObject(orderItem.item, def, KCZenzeroIceFireSet.required, [box(5)]);
             case Single:
                 switch (orderItem.item:Null<String>) {
                     case v if (Std.isOfType(v, String)):
@@ -750,6 +797,8 @@ class KCZenzeroMenu {
             case HoiSinPot:
                 false;
             case HotDouble:
+                false;
+            case IceFireSet:
                 false;
             case HotpotSet:
                 false;

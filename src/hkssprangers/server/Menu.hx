@@ -667,6 +667,21 @@ class Menu extends View<MenuProps> {
             </Fragment>
         ');
 
+        final iceFireSet = jsx('
+            <Fragment>
+                <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
+                    <div className="p-3">${KCZenzeroIceFireSet.title}</div>
+                </div>
+                ${renderItems(KCZenzeroIceFireSet.properties.main.enums())}
+                <div className="p-3 font-bold">${KCZenzeroIceFireSet.properties.side.title}</div>
+                <div className="p-3">${slashes(KCZenzeroIceFireSet.properties.side.enums())}</div>
+                <div className="p-3 font-bold">${KCZenzeroIceFireSet.properties.rice.title}</div>
+                <div className="p-3">${slashes(KCZenzeroIceFireSet.properties.rice.enums())}</div>
+                <div className="p-3 font-bold">${KCZenzeroIceFireSet.properties.drink.title}</div>
+                <div className="p-3">${slashes(KCZenzeroIceFireSet.properties.drink.enums().slice(1))}</div>
+            </Fragment>
+        ');
+
         final goldenLeg = jsx('
             <Fragment>
                 <div className=${["flex", "flex-row", "text-xl", "font-bold"].concat(style.headerClasses).join(" ")}>
@@ -741,6 +756,8 @@ class Menu extends View<MenuProps> {
             <div className="md:flex flex-row">
                 <div className=${["p-3", "md:w-1/2", "md:border-r-4"].concat(style.borderClasses).join(" ")}>
                     ${limited}
+
+                    ${iceFireSet}
 
                     ${hotDouble}
 
