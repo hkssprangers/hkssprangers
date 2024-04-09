@@ -1046,6 +1046,9 @@ enum abstract Shop(String) to String {
             case [BlackWindow, _, Dinner] if (pickupTimeSlot.start.getTimePart() < "19:00:00"):
                 return Unavailable('晚市最早 19:00 時段交收');
 
+            case [LonelyPaisley, _, _]:
+                return Unavailable('等待店舖提供餐牌更新');
+
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
