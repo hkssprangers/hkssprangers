@@ -1052,6 +1052,9 @@ enum abstract Shop(String) to String {
             case [Minimal, _, _]:
                 return Unavailable('餐牌更新中');
 
+            case [LoudTeaSSP, _, _]:
+                return Unavailable('餐牌更新中');
+
             case [CafeGolden, _, Dinner]:
                 return Unavailable('晚市暫停');
 
