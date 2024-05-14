@@ -1761,7 +1761,7 @@ class Menu extends View<MenuProps> {
             <div className=${["p-1", "m-3", "rounded-xl"].concat(style.boxClasses).join(" ")}>
                 <div className="px-3 py-1 rounded-t-xl font-bold">${LoudTeaSSPTeaOption.title}</div>
                 <div className="bg-white rounded-b-xl">
-                    <div className="px-3 py-1">${slashes(LoudTeaSSPTeaOption.teas)}</div>
+                    <div className="px-3 py-1">${slashes(LoudTeaSSPTeaOption.milkFoamTeas)}</div>
                 </div>
             </div>
         ');

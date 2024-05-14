@@ -62,7 +62,7 @@ enum abstract LoudTeaSSPItem(String) to String {
 
                     if ((drink.types.length == 1 && drink.types[0] == Iced) || value.type == Iced) {
                         final iceOpts = drink.iceOpts.copy();
-                        // 轉鮮奶不能走冰
+                        // 轉鮮奶不能走冰不能無糖
                         if (value.extraOptions != null && value.extraOptions.contains(FreshMilk)) {
                             iceOpts.remove(Free);
                         }
@@ -76,6 +76,11 @@ enum abstract LoudTeaSSPItem(String) to String {
                     }
 
                     {
+                        final sweetOpts = drink.sweetOpts.copy();
+                        // 轉鮮奶不能走冰不能無糖
+                        if (value.extraOptions != null && value.extraOptions.contains(FreshMilk)) {
+                            sweetOpts.remove(Free);
+                        }
                         def.properties.sweetness = {
                             type: "string",
                             title: LoudTeaSSPSweetOption.title,
@@ -206,10 +211,10 @@ enum abstract LoudTeaSSPMilkFoamOption(String) to String {
     static public final title = "奶蓋";
 
     final Original = "原味";
-    final Sesame = "芝麻";
+    final Matcha = "抹茶";
     final Cheese = "芝士";
 
-    static public final all:ReadOnlyArray<LoudTeaSSPMilkFoamOption> = [Original, Sesame, Cheese];
+    static public final all:ReadOnlyArray<LoudTeaSSPMilkFoamOption> = [Original, Matcha, Cheese];
 }
 
 enum abstract LoudTeaSSPPearlOption(String) to String {
@@ -228,17 +233,16 @@ enum abstract LoudTeaSSPAddon(String) to String {
     #if (!macro)
     static public final title = "額外加配";
 
-    final BlackPearl = markupItem("珍珠", 3);
-    final HerbJelly = markupItem("仙草", 3);
-    final Pudding = markupItem("布丁", 3);
-    final NataDeCoco = markupItem("椰果", 3);
-    final RedBean = markupItem("紅豆", 3);
-    final Honey = markupItem("蜂蜜", 3);
-    final Tofu = markupItem("豆腐", 5);
-    final TaroPearl = markupItem("芋圓", 5);
-    final Oreo = markupItem("Oreo", 5);
+    final BlackPearl = markupItem("珍珠", 4);
+    final HerbJelly = markupItem("仙草", 4);
+    final Pudding = markupItem("布丁", 4);
+    final NataDeCoco = markupItem("椰果", 4);
+    final RedBean = markupItem("紅豆", 4);
+    final Honey = markupItem("蜂蜜", 4);
+    final TaroPearl = markupItem("芋圓", 6);
+    final Oreo = markupItem("Oreo", 6);
     final OriginalMilkFoam = markupItem("原味奶蓋", 9);
-    final SesameMilkFoam = markupItem("芝麻奶蓋", 10);
+    final MatchaMilkFoam = markupItem("抹茶奶蓋", 12);
     final CheeseMilkFoam = markupItem("芝士奶蓋", 12);
 
     static public final all:ReadOnlyArray<LoudTeaSSPAddon> = [
@@ -248,11 +252,10 @@ enum abstract LoudTeaSSPAddon(String) to String {
         NataDeCoco,
         RedBean,
         Honey,
-        Tofu,
         TaroPearl,
         Oreo,
         OriginalMilkFoam,
-        SesameMilkFoam,
+        MatchaMilkFoam,
         CheeseMilkFoam,
     ];
     #end
@@ -263,18 +266,25 @@ enum abstract LoudTeaSSPAddon(String) to String {
 }
 
 enum abstract LoudTeaSSPTeaOption(String) to String {
+    #if (!macro)
     static public final title = "飲品";
 
     final BlackTea = "紅茶";
     final GreenTea = "綠茶";
     final Oolong = "烏龍";
     final Tieguanyin = "鐵觀音";
-    final SpringTea = "春茶";
     final BubbleSoda = "泡泡";
+    final SpringTea = markupItem("四季春茶", 3);
+    final SpringTeaFree = "四季春茶";
 
-    static public final teaOrSoda:ReadOnlyArray<LoudTeaSSPTeaOption> = [BlackTea, GreenTea, Oolong, BubbleSoda];
-    static public final teas:ReadOnlyArray<LoudTeaSSPTeaOption> = [BlackTea, GreenTea, Oolong, Tieguanyin];
-    static public final springTeaOrSoda:ReadOnlyArray<LoudTeaSSPTeaOption> = [SpringTea, BubbleSoda];
+    static public final teaOrSoda:ReadOnlyArray<LoudTeaSSPTeaOption> = [BlackTea, GreenTea, Oolong, BubbleSoda, SpringTea];
+    static public final milkFoamTeas:ReadOnlyArray<LoudTeaSSPTeaOption> = [BlackTea, GreenTea, Oolong, Tieguanyin];
+    static public final springTeaOrSoda:ReadOnlyArray<LoudTeaSSPTeaOption> = [SpringTeaFree, BubbleSoda];
+    #end
+
+    macro static public function markupItem(name:String, price:Int) {
+        return macro $v{name + " +$" + LoudTeaSSPMenu.markup(price)};
+    }
 }
 
 enum abstract LoudTeaSSPExtraOption(String) to String {
@@ -327,13 +337,6 @@ class LoudTeaSSPMenu {
                 sweetOpts: LoudTeaSSPSweetOption.fixed,
                 iceOpts: LoudTeaSSPIceOption.all,
             },
-            // {
-            //     name: "冬瓜鮮奶",
-            //     price: markup(30),
-            //     types: [Iced, Hot],
-            //     sweetOpts: LoudTeaSSPSweetOption.fixed,
-            //     iceOpts: LoudTeaSSPIceOption.required,
-            // },
             {
                 name: "鳯梨綠茶多多",
                 price: markup(32),
@@ -342,11 +345,25 @@ class LoudTeaSSPMenu {
                 iceOpts: LoudTeaSSPIceOption.all,
             },
             {
-                name: "薄荷Oreo鮮奶",
-                price: markup(36),
+                name: "香水檸檬綠茶多多",
+                price: markup(35),
                 types: [Iced],
-                sweetOpts: LoudTeaSSPSweetOption.fixed,
-                iceOpts: LoudTeaSSPIceOption.fixed,
+                sweetOpts: LoudTeaSSPSweetOption.required,
+                iceOpts: LoudTeaSSPIceOption.all,
+            },
+            {
+                name: "柑桔香水檸檬 茶",
+                price: markup(38),
+                types: [Iced],
+                sweetOpts: LoudTeaSSPSweetOption.all,
+                iceOpts: LoudTeaSSPIceOption.all,
+            },
+            {
+                name: "柑桔香水檸檬 梳打",
+                price: markup(38),
+                types: [Iced],
+                sweetOpts: LoudTeaSSPSweetOption.all,
+                iceOpts: LoudTeaSSPIceOption.all,
             },
             {
                 name: "牛油果鮮奶波波",
@@ -373,14 +390,6 @@ class LoudTeaSSPMenu {
         // 四季如春系列
         FourSeasonsOfSpringTea => [
             {
-                name: "四季如春 四季春茶",
-                price: markup(31),
-                types: [Iced, Hot],
-                sweetOpts: LoudTeaSSPSweetOption.all,
-                iceOpts: LoudTeaSSPIceOption.all,
-                milkFoamOpts: LoudTeaSSPMilkFoamOption.all,
-            },
-            {
                 name: "四季如春 黃金鳳梨",
                 price: markup(39),
                 types: [Iced],
@@ -390,14 +399,6 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "四季如春 番石榴",
-                price: markup(39),
-                types: [Iced],
-                sweetOpts: LoudTeaSSPSweetOption.fixed,
-                iceOpts: LoudTeaSSPIceOption.fixed,
-                milkFoamOpts: LoudTeaSSPMilkFoamOption.all,
-            },
-            {
-                name: "四季如春 橙橙",
                 price: markup(39),
                 types: [Iced],
                 sweetOpts: LoudTeaSSPSweetOption.fixed,
@@ -429,6 +430,14 @@ class LoudTeaSSPMenu {
                 milkFoamOpts: LoudTeaSSPMilkFoamOption.all,
             },
             {
+                name: "四季如春 多肉青提",
+                price: markup(44),
+                types: [Iced],
+                sweetOpts: LoudTeaSSPSweetOption.fixed,
+                iceOpts: LoudTeaSSPIceOption.fixed,
+                milkFoamOpts: LoudTeaSSPMilkFoamOption.all,
+            },
+            {
                 name: "四季如春 粉荔枝芝",
                 price: markup(44),
                 types: [Iced],
@@ -447,13 +456,6 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "黑糖薑撞鮮奶",
-                price: markup(30),
-                types: [Iced, Hot],
-                sweetOpts: LoudTeaSSPSweetOption.fixed,
-                iceOpts: LoudTeaSSPIceOption.required,
-            },
-            {
-                name: "黑糖豆腐鮮奶",
                 price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.fixed,
@@ -508,7 +510,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "清茶 四季春茶",
-                price: markup(21),
+                price: markup(22),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -517,16 +519,8 @@ class LoudTeaSSPMenu {
         // 水果茶•泡泡系列
         FreshFruitTea_BubbleSoda => [
             {
-                name: "滋潤蜂蜜青檸",
-                price: markup(25),
-                types: [Iced, Hot],
-                sweetOpts: LoudTeaSSPSweetOption.required,
-                iceOpts: LoudTeaSSPIceOption.all,
-                teaOpts: LoudTeaSSPTeaOption.teaOrSoda,
-            },
-            {
                 name: "黃金鳳梨水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -534,7 +528,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "杯杯西柚水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -542,7 +536,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "青青提子水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                     sweetOpts: LoudTeaSSPSweetOption.all,
                     iceOpts: LoudTeaSSPIceOption.all,
@@ -550,7 +544,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "清新香橙水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -558,7 +552,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "火紅荔枝水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -566,7 +560,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "粒粒百香果水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -574,7 +568,7 @@ class LoudTeaSSPMenu {
             },
             {
                 name: "36D水蜜桃水果",
-                price: markup(29),
+                price: markup(30),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -637,8 +631,8 @@ class LoudTeaSSPMenu {
                 extraOptions: LoudTeaSSPExtraOption.freshMilk,
             },
             {
-                name: "香芋珍珠奶綠",
-                price: markup(26),
+                name: "抹茶珍珠奶茶",
+                price: markup(24),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.required,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -646,8 +640,8 @@ class LoudTeaSSPMenu {
                 extraOptions: LoudTeaSSPExtraOption.freshMilk,
             },
             {
-                name: "抹茶珍珠奶茶",
-                price: markup(24),
+                name: "香芋珍珠奶綠",
+                price: markup(26),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.required,
                 iceOpts: LoudTeaSSPIceOption.all,
@@ -672,15 +666,15 @@ class LoudTeaSSPMenu {
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
-                teaOpts: LoudTeaSSPTeaOption.teas,
+                teaOpts: LoudTeaSSPTeaOption.milkFoamTeas,
             },
             {
-                name: "芝麻奶蓋",
-                price: markup(26),
+                name: "抹茶奶蓋",
+                price: markup(28),
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.required,
                 iceOpts: LoudTeaSSPIceOption.all,
-                teaOpts: LoudTeaSSPTeaOption.teas,
+                teaOpts: LoudTeaSSPTeaOption.milkFoamTeas,
             },
             {
                 name: "芝士奶蓋",
@@ -688,8 +682,17 @@ class LoudTeaSSPMenu {
                 types: [Iced, Hot],
                 sweetOpts: LoudTeaSSPSweetOption.all,
                 iceOpts: LoudTeaSSPIceOption.all,
-                teaOpts: LoudTeaSSPTeaOption.teas,
-            }
+                teaOpts: LoudTeaSSPTeaOption.milkFoamTeas,
+            },
+            // too difficult to model
+            // {
+            //     name: "四李春奶蓋",
+            //     price: markup(31),
+            //     types: [Iced, Hot],
+            //     sweetOpts: LoudTeaSSPSweetOption.all,
+            //     iceOpts: LoudTeaSSPIceOption.all,
+            //     teaOpts: LoudTeaSSPTeaOption.milkFoamTeas,
+            // }
         ],
     ];
 
