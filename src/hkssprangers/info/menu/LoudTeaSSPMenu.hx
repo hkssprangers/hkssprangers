@@ -84,8 +84,8 @@ enum abstract LoudTeaSSPItem(String) to String {
                         def.properties.sweetness = {
                             type: "string",
                             title: LoudTeaSSPSweetOption.title,
-                            "enum": drink.sweetOpts,
-                            "default": drink.sweetOpts[0],
+                            "enum": sweetOpts,
+                            "default": sweetOpts[0],
                         }
                         def.required.push("sweetness");
                     }
