@@ -586,6 +586,12 @@ class ServerMain {
         });
         tgBot.start(function(ctx:Context):Promise<Dynamic> {
             trace("/start");
+            final date = (Date.now():LocalDateString).getDatePart();
+            if (date >= "2024-06-01") {
+                return ctx.reply(comment(unindent, format)/**
+                    埗兵已結業 有緣再會 👋
+                **/);
+            }
             switch (untyped ctx.chat.type) {
                 case "private":
                         if (ctx.from.username == null) {
@@ -621,6 +627,12 @@ class ServerMain {
             }
         });
         tgBot.command("setmenu", (ctx:Context) -> {
+            final date = (Date.now():LocalDateString).getDatePart();
+            if (date >= "2024-06-01") {
+                return ctx.reply(comment(unindent, format)/**
+                    埗兵已結業 有緣再會 👋
+                **/);
+            }
             switch (Std.string(ctx.message.chat.id)) {
                 case TelegramConfig.blackWindowGroupChatId:
                     blackWindowSetMenu(ctx);
@@ -632,6 +644,12 @@ class ServerMain {
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {
+            final date = (Date.now():LocalDateString).getDatePart();
+            if (date >= "2024-06-01") {
+                return ctx.reply(comment(unindent, format)/**
+                    埗兵已結業 有緣再會 👋
+                **/);
+            }
             switch (untyped ctx.chat.type) {
                 case "private":
                     return ctx.reply(comment(unindent, format)/**
