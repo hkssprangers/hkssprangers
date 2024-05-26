@@ -194,7 +194,14 @@ class ServerMain {
             data: reqBody,
         }).toJsPromise());
 
-        if (reqBody.Body.trim() == "登入落單") {
+        final date = (Date.now():LocalDateString).getDatePart();
+        if (date >= "2024-06-01") {
+            final twiml = new MessagingResponse();
+            twiml.message(comment(unindent, format)/**
+                埗兵已結業 有緣再會 👋
+            **/);
+            reply.type("text/xml").send(twiml.toString());
+        } else if (reqBody.Body.trim() == "登入落單") {
             var validDays = 90;
             var expires = Date.fromTime(now.getTime() + DateTools.days(validDays));
             
