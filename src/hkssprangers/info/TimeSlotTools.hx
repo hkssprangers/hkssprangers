@@ -47,7 +47,9 @@ class TimeSlotTools {
                     regularTimeSlots
                         .map(slot -> {
                             availability:
-                                if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
+                                if (date.getDatePart() >= "2024-06-01") {
+                                    Unavailable('埗兵已結業 有緣再會 👋');
+                                } else if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
                                     Available;
                                 } else {
                                     Unavailable("已截單");
