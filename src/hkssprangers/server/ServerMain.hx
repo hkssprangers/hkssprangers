@@ -194,8 +194,7 @@ class ServerMain {
             data: reqBody,
         }).toJsPromise());
 
-        final date = (Date.now():LocalDateString).getDatePart();
-        if (date >= "2024-06-01") {
+        if (Date.now() >= TimeSlotTools.closingDate) {
             final twiml = new MessagingResponse();
             twiml.message(comment(unindent, format)/**
                 埗兵已結業 有緣再會 👋
@@ -593,8 +592,7 @@ class ServerMain {
         });
         tgBot.start(function(ctx:Context):Promise<Dynamic> {
             trace("/start");
-            final date = (Date.now():LocalDateString).getDatePart();
-            if (date >= "2024-06-01") {
+            if (Date.now() >= TimeSlotTools.closingDate) {
                 return ctx.reply(comment(unindent, format)/**
                     埗兵已結業 有緣再會 👋
                 **/);
@@ -634,8 +632,7 @@ class ServerMain {
             }
         });
         tgBot.command("setmenu", (ctx:Context) -> {
-            final date = (Date.now():LocalDateString).getDatePart();
-            if (date >= "2024-06-01") {
+            if (Date.now() >= TimeSlotTools.closingDate) {
                 return ctx.reply(comment(unindent, format)/**
                     埗兵已結業 有緣再會 👋
                 **/);
@@ -651,8 +648,7 @@ class ServerMain {
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {
-            final date = (Date.now():LocalDateString).getDatePart();
-            if (date >= "2024-06-01") {
+            if (Date.now() >= TimeSlotTools.closingDate) {
                 return ctx.reply(comment(unindent, format)/**
                     埗兵已結業 有緣再會 👋
                 **/);

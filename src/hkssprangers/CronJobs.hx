@@ -27,9 +27,9 @@ class CronJobs {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
 
     static function sendDutyPoll(chatId:String) {
-        var tgBot = new Telegraf(TelegramConfig.tgBotToken);
-        var now = Date.now();
-        var nextDays = switch (Weekday.fromDay(now.getDay())) {
+        final tgBot = new Telegraf(TelegramConfig.tgBotToken);
+        final now = Date.now();
+        final nextDays = (switch (Weekday.fromDay(now.getDay())) {
             case Sunday:
                 [
                     Date.fromTime(now.getTime() + DateTools.days(1)),
@@ -45,9 +45,13 @@ class CronJobs {
                 ];
             case d:
                 throw "Unknown weekday: " + d;
+        }).filter(d -> d < TimeSlotTools.closingDate);
+
+        if (nextDays.length <= 0) {
+            return js.lib.Promise.resolve(null);
         }
 
-        var slots = [
+        final slots = [
             for (d in nextDays)
             for (t in [Lunch, Dinner])
             (d.getMonth() + 1) + "月" + d.getDate() + "日 (" + Weekday.fromDay(d.getDay()).info().name + ") " + t.info().periodName
@@ -143,6 +147,12 @@ class CronJobs {
 
     static function main():Void {
         js.Node.exports.sendAttendancePoll = function(evt, context) {
+            if (Date.now() >= TimeSlotTools.closingDate) {
+                return Promise.resolve({
+                    statusCode: 200,
+                    body: "done",
+                });
+            };
             return sendAttendancePoll(TelegramConfig.internalGroupChatId)
                 .then(_ -> {
                     statusCode: 200,
@@ -157,6 +167,12 @@ class CronJobs {
                 });
         }
         js.Node.exports.sendDutyPoll = function(evt, context) {
+            if (Date.now() >= TimeSlotTools.closingDate) {
+                return Promise.resolve({
+                    statusCode: 200,
+                    body: "done",
+                });
+            };
             return sendDutyPoll(TelegramConfig.internalGroupChatId)
                 .then(_ -> {
                     statusCode: 200,

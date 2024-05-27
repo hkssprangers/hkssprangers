@@ -1007,7 +1007,7 @@ enum abstract Shop(String) to String {
         final date = pickupTimeSlot.start.toDate();
         final day = Weekday.fromDay(date.getDay());
 
-        if (pickupTimeSlot.start.getDatePart() >= "2024-06-01") {
+        if (pickupTimeSlot.start >= TimeSlotTools.closingDate) {
             return Unavailable('埗兵已結業 有緣再會 👋');
         }
 

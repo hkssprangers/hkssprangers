@@ -6,7 +6,9 @@ import hkssprangers.info.TimeSlot;
 import hkssprangers.info.TimeSlotType;
 using Lambda;
 
-class TimeSlotTools {
+class TimeSlotTools {    
+    static public final closingDate:LocalDateString = "2024-06-01 00:00:00";
+
     static public function print(slot:TimeSlot):String {
         final startDate = slot.start.toDate();
         final endDate = slot.end.toDate();
@@ -47,7 +49,7 @@ class TimeSlotTools {
                     regularTimeSlots
                         .map(slot -> {
                             availability:
-                                if (date.getDatePart() >= "2024-06-01") {
+                                if (date >= TimeSlotTools.closingDate) {
                                     Unavailable('埗兵已結業 有緣再會 👋');
                                 } else if ((dateStr + " " + slot.cutoff:LocalDateString).toDate().getTime() >= timeNow) {
                                     Available;
