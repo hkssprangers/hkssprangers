@@ -23,10 +23,15 @@ using StringTools;
 using hkssprangers.db.DatabaseTools;
 using hkssprangers.info.TimeSlotTools;
 
+typedef Response = {
+    statusCode:Int,
+    body:String,
+}
+
 class CronJobs {
     static final isMain = js.Syntax.code("require.main") == js.Node.module;
 
-    static function sendDutyPoll(chatId:String) {
+    static function sendDutyPoll(chatId:String):js.lib.Promise<Dynamic> {
         final tgBot = new Telegraf(TelegramConfig.tgBotToken);
         final now = Date.now();
         final nextDays = (switch (Weekday.fromDay(now.getDay())) {
@@ -77,7 +82,7 @@ class CronJobs {
             .then(_ -> null);
     }
 
-    static function setTimeSlots(startDate:LocalDateString, endDate:LocalDateString, setAvailability:TimeSlot->Null<Availability>) {
+    static function setTimeSlots(startDate:LocalDateString, endDate:LocalDateString, setAvailability:TimeSlot->Null<Availability>):js.lib.Promise<Dynamic> {
         final dateStart = startDate.getDatePart();
         final dateEnd = endDate.getDatePart();
         var date = dateStart;
@@ -107,7 +112,7 @@ class CronJobs {
             .then(_ -> null);
     }
 
-    static function sendAttendancePoll(chatId:String) {
+    static function sendAttendancePoll(chatId:String):js.lib.Promise<Dynamic> {
         var tgBot = new Telegraf(TelegramConfig.tgBotToken);
         var now = Date.now();
         var curType = TimeSlotType.classify(now);
@@ -146,9 +151,9 @@ class CronJobs {
     }
 
     static function main():Void {
-        js.Node.exports.sendAttendancePoll = function(evt, context) {
+        js.Node.exports.sendAttendancePoll = function(evt, context):js.lib.Promise<Response> {
             if (Date.now() >= TimeSlotTools.closingDate) {
-                return Promise.resolve({
+                return js.lib.Promise.resolve({
                     statusCode: 200,
                     body: "done",
                 });
@@ -166,9 +171,9 @@ class CronJobs {
                     };
                 });
         }
-        js.Node.exports.sendDutyPoll = function(evt, context) {
+        js.Node.exports.sendDutyPoll = function(evt, context):js.lib.Promise<Response> {
             if (Date.now() >= TimeSlotTools.closingDate) {
-                return Promise.resolve({
+                return js.lib.Promise.resolve({
                     statusCode: 200,
                     body: "done",
                 });
@@ -186,7 +191,7 @@ class CronJobs {
                     };
                 });
         }
-        js.Node.exports.disableLunch = function(evt, context) {
+        js.Node.exports.disableLunch = function(evt, context):js.lib.Promise<Response> {
             final now:LocalDateString = Date.now();
             // user can pre-order in the future 14 days, see TimeSlotSelectorWidget
             final date = now.deltaDays(14);
