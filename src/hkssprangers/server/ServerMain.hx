@@ -648,13 +648,13 @@ class ServerMain {
             }
         });
         tgBot.on("text", function(ctx:Context):Promise<Dynamic> {
-            if (Date.now() >= TimeSlotTools.closingDate) {
-                return ctx.reply(comment(unindent, format)/**
-                    埗兵已結業 有緣再會 👋
-                **/);
-            }
             switch (untyped ctx.chat.type) {
                 case "private":
+                    if (Date.now() >= TimeSlotTools.closingDate) {
+                        return ctx.reply(comment(unindent, format)/**
+                            埗兵已結業 有緣再會 👋
+                        **/);
+                    }
                     return ctx.reply(comment(unindent, format)/**
                         唔好意思。我唔係好識「/start」以外嘅嘢...
                         如果有問題，麻煩你聯絡返我哋 Facebook，會有真人回答你 🙇‍
