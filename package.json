@@ -59,7 +59,7 @@
     "cross-fetch": "^3.1.8",
     "fastify": "^3.29.5",
     "fastify-telegraf": "1.0.1",
-    "google-auth-library": "^9.12.0",
+    "google-auth-library": "^9.14.0",
     "google-spreadsheet": "^3.3.0",
     "image-data-uri": "^2.0.1",
     "image-type": "^4.1.0",
