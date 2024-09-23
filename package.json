@@ -52,7 +52,7 @@
     "@fastify/accepts": "^3.0.0",
     "@fastify/cookie": "^6.0.0",
     "@fastify/formbody": "^6.0.0",
-    "@fastify/static": "^5.0.2",
+    "@fastify/static": "^8.0.1",
     "@splidejs/react-splide": "^0.7.12",
     "aws-sdk": "^2.826.0",
     "aws-serverless-fastify": "github:andyli/aws-serverless-fastify#92adc604a4ddce9edc86e54d636c452ad4a44486",
