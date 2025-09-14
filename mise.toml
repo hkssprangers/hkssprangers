@@ -1,0 +1,6 @@
+[tools]
+node = "20"
+earthly = "0.8.16"
+
+[settings]
+idiomatic_version_file_enable_tools = ["terraform"]
