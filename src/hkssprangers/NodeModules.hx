@@ -10,7 +10,7 @@ class NodeModules {
     #end
 
     macro static public function lockedVersion(moduleName:String):ExprOf<String> {
-        final moduleInfo = Reflect.field(lock.dependencies, moduleName);
+        final moduleInfo = Reflect.field(lock.packages, "node_modules/" + moduleName);
         if (moduleInfo == null) {
             Context.error('Cannot find ${moduleName} in package-lock.json', Context.currentPos());
         }

@@ -37,7 +37,7 @@ devcontainer-base:
 
     # https://github.com/nodesource/distributions#installation-instructions
     RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-    ARG NODE_MAJOR=16
+    ARG NODE_MAJOR=20
     RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
     # Configure apt and install packages
@@ -135,7 +135,7 @@ terraform:
 # RUN earthly bootstrap --no-buildkit --with-autocomplete
 earthly:
     ARG TARGETARCH
-    ARG VERSION=0.8.4 # https://github.com/earthly/earthly/releases
+    ARG VERSION=0.8.16 # https://github.com/earthly/earthly/releases
     RUN curl -fsSL "https://github.com/earthly/earthly/releases/download/v${VERSION}/earthly-linux-${TARGETARCH}" -o /usr/local/bin/earthly \
         && chmod +x /usr/local/bin/earthly
     SAVE ARTIFACT /usr/local/bin/earthly
@@ -225,20 +225,21 @@ pmtiles:
     RUN curl -fsSL "https://github.com/protomaps/go-pmtiles/releases/download/v${VERSION}/go-pmtiles_${VERSION}_Linux_x86_64.tar.gz" | tar xz
     SAVE ARTIFACT pmtiles
 
-china.osm.pbf:
-    FROM openmaptiles/openmaptiles-tools:7.0.0
-    RUN download-osm geofabrik china
-    RUN ls -lah
-    SAVE ARTIFACT china-latest.osm.pbf china.osm.pbf
+hong-kong.osm.pbf:
+    WORKDIR /tmp
+    # https://download.geofabrik.de/asia/china.html
+    RUN curl -fsSLO https://download.geofabrik.de/asia/china/hong-kong-latest.osm.pbf
+    SAVE ARTIFACT hong-kong-latest.osm.pbf hong-kong.osm.pbf
 
-china.osm.pbf-check:
+hong-kong.osm.pbf-check:
     FROM +osmium-tool
-    COPY +china.osm.pbf/china.osm.pbf .
-    RUN osmium check-refs china.osm.pbf
+    COPY +hong-kong.osm.pbf/hong-kong.osm.pbf .
+    RUN osmium check-refs hong-kong.osm.pbf
 
 ssp.osm.pbf:
-    COPY +china.osm.pbf/china.osm.pbf .
-    RUN osmosis --read-pbf china.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
+    FROM +devcontainer-base
+    COPY +hong-kong.osm.pbf/hong-kong.osm.pbf .
+    RUN osmosis --read-pbf hong-kong.osm.pbf --bounding-box top=22.347 left=114.1307 bottom=22.3111 right=114.198 completeWays=yes --write-pbf ssp.osm.pbf
     RUN ls -lah
     SAVE ARTIFACT ssp.osm.pbf AS LOCAL ./static/tiles/
 
@@ -407,7 +408,7 @@ devcontainer:
     VOLUME /workspace/node_modules
     COPY --chown=$USER_UID:$USER_GID +dts2hx-externs/dts2hx lib/dts2hx
     VOLUME /workspace/lib/dts2hx
-    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles-current/ssp.pmtiles static/tiles/ssp.pmtiles
+    COPY --chown=$USER_UID:$USER_GID +ssp.pmtiles/ssp.pmtiles static/tiles/ssp.pmtiles
     VOLUME /workspace/static/tiles
     COPY --chown=$USER_UID:$USER_GID +mapfonts/font static/font
     VOLUME /workspace/static/font
