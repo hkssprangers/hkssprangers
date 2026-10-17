@@ -1,0 +1,17 @@
+{
+	"$schema": "https://unpkg.com/wrangler@4.147.0/config-schema.json",
+	"name": "hkssprangers",
+	// SSP Rangers account, which owns the ssprangers.com zone
+	"account_id": "5866a1959e70399a4020fd5a7657e1ca",
+	"compatibility_date": "2026-10-08",
+	// Static assets only, no Worker script: every request is free.
+	"assets": {
+		"directory": "./public",
+		// Old URLs (e.g. /recipe, /menu) get 404.html, which redirects to /.
+		"not_found_handling": "404-page"
+	},
+	"routes": [
+		{ "pattern": "ssprangers.com", "custom_domain": true },
+		{ "pattern": "www.ssprangers.com", "custom_domain": true }
+	]
+}

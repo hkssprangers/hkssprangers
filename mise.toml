@@ -6,3 +6,4 @@ node = "22"
 earthly = "0.8.16"
 opentofu = "1.13.1"
 "aqua:opentofu/tofu-ls" = "0.5.3"
+wrangler = { version = "4.147.0", allow_builds = ["esbuild", "sharp", "workerd"] }

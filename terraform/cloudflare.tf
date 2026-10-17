@@ -11,19 +11,8 @@ resource "cloudflare_zone" "ssprangers" {
   }
 }
 
-resource "cloudflare_dns_record" "ssprangers" {
-  zone_id = cloudflare_zone.ssprangers.id
-  name    = "ssprangers.com"
-  type    = "CNAME"
-  proxied = true
-  ttl     = 1
-  content = "production.ssprangers.com"
-}
-
-moved {
-  from = cloudflare_record.ssprangers
-  to   = cloudflare_dns_record.ssprangers
-}
+# ssprangers.com and www.ssprangers.com are Workers custom domains,
+# managed by wrangler in static-site/wrangler.jsonc.
 
 resource "cloudflare_dns_record" "production" {
   zone_id = cloudflare_zone.ssprangers.id
@@ -64,20 +53,6 @@ resource "cloudflare_dns_record" "dev" {
 moved {
   from = cloudflare_record.dev
   to   = cloudflare_dns_record.dev
-}
-
-resource "cloudflare_dns_record" "www" {
-  zone_id = cloudflare_zone.ssprangers.id
-  name    = "www.ssprangers.com"
-  type    = "CNAME"
-  proxied = true
-  ttl     = 1
-  content = "ssprangers.com"
-}
-
-moved {
-  from = cloudflare_record.www
-  to   = cloudflare_dns_record.www
 }
 
 resource "cloudflare_dns_record" "facebook-domain-verification" {
