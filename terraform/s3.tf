@@ -1,6 +1,6 @@
 module "s3_bucket_terraform" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "5.17.0"
 
   bucket = "hkssprangers-terraform"
   acl    = "private"
@@ -9,6 +9,8 @@ module "s3_bucket_terraform" {
     enabled = true
   }
 
+  # Keep the existing behavior; s3-bucket module 5.x defaults to all_storage_classes_128K
+  transition_default_minimum_object_size = "varies_by_storage_class"
   lifecycle_rule = [
     {
       id      = "terraform"
@@ -35,7 +37,7 @@ module "s3_bucket_terraform" {
 
 module "s3_bucket_uploads" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "5.17.0"
 
   bucket        = "hkssprangers-uploads"
   acl           = "public-read"
@@ -77,7 +79,7 @@ module "s3_bucket_uploads" {
 
 module "s3_bucket_logs" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "5.17.0"
 
   bucket        = "hkssprangers-logs"
   acl           = "private"
@@ -90,14 +92,14 @@ module "s3_bucket_logs" {
           "Action": "s3:GetBucketAcl",
           "Effect": "Allow",
           "Resource": "arn:aws:s3:::hkssprangers-logs",
-          "Principal": { "Service": "logs.${data.aws_region.current.name}.amazonaws.com" }
+          "Principal": { "Service": "logs.${data.aws_region.current.region}.amazonaws.com" }
       },
       {
           "Action": "s3:PutObject" ,
           "Effect": "Allow",
           "Resource": "arn:aws:s3:::hkssprangers-logs/*",
           "Condition": { "StringEquals": { "s3:x-amz-acl": "bucket-owner-full-control" } },
-          "Principal": { "Service": "logs.${data.aws_region.current.name}.amazonaws.com" }
+          "Principal": { "Service": "logs.${data.aws_region.current.region}.amazonaws.com" }
       }
     ]
   }
@@ -111,11 +113,13 @@ module "s3_bucket_logs" {
 
 module "s3_bucket_dbbackup" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "5.17.0"
 
   bucket = "hkssprangers-dbbackup"
   acl    = "private"
 
+  # Keep the existing behavior; s3-bucket module 5.x defaults to all_storage_classes_128K
+  transition_default_minimum_object_size = "varies_by_storage_class"
   lifecycle_rule = [
     {
       id      = "dbbackup"
@@ -142,7 +146,7 @@ module "s3_bucket_dbbackup" {
 
 module "s3_bucket_static" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "5.17.0"
 
   bucket = "hkssprangers-static"
   acl    = "private"
@@ -156,6 +160,8 @@ module "s3_bucket_static" {
     }
   ]
 
+  # Keep the existing behavior; s3-bucket module 5.x defaults to all_storage_classes_128K
+  transition_default_minimum_object_size = "varies_by_storage_class"
   lifecycle_rule = [
     {
       id      = "expireold"
