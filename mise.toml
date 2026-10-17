@@ -1,7 +1,7 @@
 [tools]
 node = "22"
+# The project uses lix to manage the Haxe compiler and libraries.
+# The lix tool itself is installed via npm.
 "npm:lix" = "latest"
 earthly = "0.8.16"
-
-[settings]
-idiomatic_version_file_enable_tools = ["terraform"]
+terraform = "1.5.6"

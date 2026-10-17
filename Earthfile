@@ -35,11 +35,6 @@ devcontainer-base:
 
     SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
-    # https://github.com/nodesource/distributions#installation-instructions
-    RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-    ARG NODE_MAJOR=22
-    RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-
     # Configure apt and install packages
     RUN apt-get update \
         && apt-get install -qqy --no-install-recommends apt-utils dialog 2>&1 \
@@ -66,8 +61,6 @@ devcontainer-base:
             osmosis \
             # install docker engine for using `WITH DOCKER`
             docker-ce \
-            # install node
-            nodejs=${NODE_MAJOR}.* \
         # Install postgresql-client
         # https://www.postgresql.org/download/linux/ubuntu/
         && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
@@ -87,9 +80,17 @@ devcontainer-base:
     # Switch back to dialog for any ad-hoc use of apt-get
     ENV DEBIAN_FRONTEND=
 
+    # Install mise and the dev tools listed in mise.toml
+    COPY +mise/mise /usr/local/bin/
+    ENV MISE_DATA_DIR=/usr/local/share/mise
+    ENV MISE_TRUSTED_CONFIG_PATHS="$WORKDIR"
+    ENV PATH="$MISE_DATA_DIR/shims:$PATH"
+    COPY mise.toml /etc/mise/config.toml
+    RUN install -d -m 0755 -o "$USER_UID" -g "$USER_GID" "$MISE_DATA_DIR"
+    USER $USERNAME
+    RUN mise install
     RUN npm config --global set update-notifier false
-    RUN npm config set prefix /usr/local
-    RUN npm install -g lix
+    USER root
 
     SAVE IMAGE --cache-hint --cache-from="ghcr.io/hkssprangers/hkssprangers_cache:$MAIN_BRANCH"
 
@@ -106,11 +107,14 @@ docker-compose:
     SAVE ARTIFACT /usr/local/bin/docker-compose
 
 # Usage:
-# COPY +tfenv/tfenv /tfenv
-# RUN ln -s /tfenv/bin/* /usr/local/bin
-tfenv:
-    RUN git clone --depth 1 https://github.com/tfutils/tfenv.git /tfenv
-    SAVE ARTIFACT /tfenv
+# COPY +mise/mise /usr/local/bin/
+mise:
+    ARG TARGETARCH
+    ARG VERSION=2026.10.12 # https://github.com/jdx/mise/releases
+    RUN case "$TARGETARCH" in amd64) MISE_ARCH=x64 ;; *) MISE_ARCH="$TARGETARCH" ;; esac \
+        && curl -fsSL "https://github.com/jdx/mise/releases/download/v${VERSION}/mise-v${VERSION}-linux-${MISE_ARCH}" -o /usr/local/bin/mise \
+        && chmod +x /usr/local/bin/mise
+    SAVE ARTIFACT /usr/local/bin/mise
 
 # Usage:
 # COPY +terraform-ls/terraform-ls /usr/local/bin/
@@ -122,23 +126,6 @@ terraform-ls:
         && mv ./terraform-ls /usr/local/bin/ \
         && rm terraform-ls.zip
     SAVE ARTIFACT /usr/local/bin/terraform-ls
-
-terraform:
-    FROM +tfenv
-    RUN ln -s /tfenv/bin/* /usr/local/bin
-    ARG --required TERRAFORM_VERSION
-    RUN tfenv install "$TERRAFORM_VERSION"
-    RUN tfenv use "$TERRAFORM_VERSION"
-
-# Usage:
-# COPY +earthly/earthly /usr/local/bin/
-# RUN earthly bootstrap --no-buildkit --with-autocomplete
-earthly:
-    ARG TARGETARCH
-    ARG VERSION=0.8.16 # https://github.com/earthly/earthly/releases
-    RUN curl -fsSL "https://github.com/earthly/earthly/releases/download/v${VERSION}/earthly-linux-${TARGETARCH}" -o /usr/local/bin/earthly \
-        && chmod +x /usr/local/bin/earthly
-    SAVE ARTIFACT /usr/local/bin/earthly
 
 dbmate:
     ARG TARGETARCH
@@ -356,16 +343,9 @@ dts2hx-externs:
 devcontainer:
     FROM +devcontainer-base
 
-    # tfenv
-    COPY +tfenv/tfenv /tfenv
-    RUN ln -s /tfenv/bin/* /usr/local/bin/
-    COPY --chown=$USER_UID:$USER_GID terraform/.terraform-version "/home/$USERNAME/"
-    RUN tfenv install "$(cat /home/$USERNAME/.terraform-version)"
-    RUN tfenv use "$(cat /home/$USERNAME/.terraform-version)"
     COPY +terraform-ls/terraform-ls /usr/local/bin/
 
-    # Install earthly
-    COPY +earthly/earthly /usr/local/bin/
+    # earthly is installed by mise in +devcontainer-base
     RUN earthly bootstrap --no-buildkit --with-autocomplete
 
     # Install flyway
