@@ -1,5 +1,6 @@
 [tools]
-node = "20"
+node = "22"
+"npm:lix" = "latest"
 earthly = "0.8.16"
 
 [settings]

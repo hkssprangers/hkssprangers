@@ -100,7 +100,7 @@ class TimeSlotSelectorWidget extends ReactComponentOf<TimeSlotSelectorWidgetProp
                         disabled=${props.disabled || props.readonly}
                         autoOk=${true}
                         disablePast=${true}
-                        onChange=${date -> props.onChange(processDateChange(date)))}
+                        onChange=${date -> props.onChange(processDateChange(date))}
                     />
                 </div>
                 <div>

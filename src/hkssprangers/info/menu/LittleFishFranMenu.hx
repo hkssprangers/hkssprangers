@@ -540,7 +540,7 @@ class LittleFishFranMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<LittleFishFranItem, Dynamic> = [
                 for (item in LittleFishFranItem.all(TimeSlotType.classify(pickupTimeSlot.start)))
                 item => item.getDefinition()
             ];

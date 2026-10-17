@@ -349,17 +349,17 @@ class Index extends View<IndexProps> {
     static function shopClustorLabel(cluster:ShopCluster) {
         final clusterName = switch cluster {
             case DragonCentreCluster:
-                ${DragonCentreCluster.info().name};
+                DragonCentreCluster.info().name;
             case PeiHoStreetMarketCluster:
-                ${PeiHoStreetMarketCluster.info().name};
+                PeiHoStreetMarketCluster.info().name;
             case GoldenCluster:
-                ${GoldenCluster.info().name};
+                GoldenCluster.info().name;
             case ParkCluster:
-                 ${ParkCluster.info().name};
+                 ParkCluster.info().name;
             case CLPCluster:
-                ${CLPCluster.info().name};
+                CLPCluster.info().name;
             case PakTinCluster:
-                ${PakTinCluster.info().name};
+                PakTinCluster.info().name;
             case _:
                 null;
         }

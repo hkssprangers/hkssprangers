@@ -571,7 +571,7 @@ class FishFranSSPMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<FishFranSSPItem, Dynamic> = [
                 for (item in FishFranSSPItem.all(TimeSlotType.classify(pickupTimeSlot.start)))
                 item => item.getDefinition()
             ];

@@ -185,7 +185,7 @@ class ThaiHomeMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<ThaiHomeItem, Dynamic> = [
                 for (item in ThaiHomeItem.all(TimeSlotType.classify(pickupTimeSlot.start)))
                 item => item.getDefinition()
             ];

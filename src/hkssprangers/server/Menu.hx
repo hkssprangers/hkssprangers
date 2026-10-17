@@ -2118,7 +2118,7 @@ class Menu extends View<MenuProps> {
                     <div className="font-bold p-3">${MinimalSetFor2.properties.salad.title} (選一)</div>
                     <div className="p-3">${slashes(MinimalSetFor2.properties.salad.enums())}</div>
                     <div className="font-bold p-3">主食 (選二)</div>
-                    <div className="p-3">${slashes(MinimalSetFor2.properties.main1.enums()))}</div>
+                    <div className="p-3">${slashes(MinimalSetFor2.properties.main1.enums())}</div>
                     <div className="font-bold p-3">飲品 (選二)</div>
                     <div className="p-3">可選任何飲品</div>
                 </div>
@@ -2206,7 +2206,7 @@ class Menu extends View<MenuProps> {
                             ${renderItems(drinks[1])}
                         </div>
                     </div>
-                    <div className="p-3 text-gray-500 text-center">${slashes(CafeGoldenDrink.properties.options.items.enums()))}</div>
+                    <div className="p-3 text-gray-500 text-center">${slashes(CafeGoldenDrink.properties.options.items.enums())}</div>
                 </div>
             </Fragment>
         ');

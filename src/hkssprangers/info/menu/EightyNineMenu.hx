@@ -147,7 +147,7 @@ class EightyNineMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<EightyNineItem, Dynamic> = [
                 for (item in EightyNineItem.all(pickupTimeSlot))
                 item => item.getDefinition()
             ];

@@ -349,7 +349,7 @@ class LonelyPaisleyMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<LonelyPaisleyItem, Dynamic> = [
                 for (item in LonelyPaisleyItem.all(pickupTimeSlot))
                 item => item.getDefinition()
             ];

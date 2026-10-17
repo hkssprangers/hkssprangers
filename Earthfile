@@ -37,7 +37,7 @@ devcontainer-base:
 
     # https://github.com/nodesource/distributions#installation-instructions
     RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-    ARG NODE_MAJOR=20
+    ARG NODE_MAJOR=22
     RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
     # Configure apt and install packages
@@ -75,10 +75,10 @@ devcontainer-base:
         && apt-get update \
         && apt-get -y install postgresql-client-13 \
         # Install haxe
-        && add-apt-repository ppa:haxe/haxe4.2 -y \
+        && add-apt-repository ppa:haxe/haxe4.3 -y \
         && apt-get update \
         && apt-get install -qqy --no-install-recommends \
-            haxe=1:4.2.* \
+            haxe=1:4.3.* \
         # Clean up
         && apt-get autoremove -y \
         && apt-get clean -y \

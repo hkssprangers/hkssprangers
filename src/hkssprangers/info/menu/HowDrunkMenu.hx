@@ -136,7 +136,7 @@ class HowDrunkMenu {
                 type: "object",
             }
         } else {
-            final itemDefs = [
+            final itemDefs:Map<HowDrunkItem, Dynamic> = [
                 for (item in HowDrunkItem.all(pickupTimeSlot))
                 item => item.getDefinition(pickupTimeSlot)
             ];

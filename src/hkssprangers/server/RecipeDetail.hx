@@ -125,39 +125,39 @@ class RecipeDetail extends View<RecipeDetailProps> {
         final style = "rounded-md";
         return switch recipe {
             case ThreeCupTofu:
-                ${image("/images/recipe/3cup-tofu.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/3cup-tofu.jpg", recipe.info().name, style, "image");
             case AloeSoda:
-                ${image("/images/recipe/aloe-soda.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/aloe-soda.jpg", recipe.info().name, style, "image");
             case BasilTomatoMeat:
-                ${image("/images/recipe/basil-tomato-meat.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/basil-tomato-meat.jpg", recipe.info().name, style, "image");
             case BitterMelonVegeEgg:
-                ${image("/images/recipe/bitter-melon-vege-egg.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/bitter-melon-vege-egg.jpg", recipe.info().name, style, "image");
             case CatToast:
-                ${image("/images/recipe/cat-toast.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/cat-toast.jpg", recipe.info().name, style, "image");
             case Cauliflower:
-                ${image("/images/recipe/cauli.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/cauli.jpg", recipe.info().name, style, "image");
             case Curry:
-                ${image("/images/recipe/curry.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/curry.jpg", recipe.info().name, style, "image");
             case KaleCrisp:
-                ${image("/images/recipe/kale-crisp.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/kale-crisp.jpg", recipe.info().name, style, "image");
             case MelonTomatoSoup:
-                ${image("/images/recipe/melon-tomato-soup.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/melon-tomato-soup.jpg", recipe.info().name, style, "image");
             case MisoEggplant:
-                ${image("/images/recipe/miso-eggplant.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/miso-eggplant.jpg", recipe.info().name, style, "image");
             case NinePie:
-                ${image("/images/recipe/nine-pie.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/nine-pie.jpg", recipe.info().name, style, "image");
             case PotatoCheese:
-                ${image("/images/recipe/potato-cheese.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/potato-cheese.jpg", recipe.info().name, style, "image");
             case SandMiso:
-                ${image("/images/recipe/sand-miso.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/sand-miso.jpg", recipe.info().name, style, "image");
             case ShisoTomato:
-                ${image("/images/recipe/shiso-tomato.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/shiso-tomato.jpg", recipe.info().name, style, "image");
             case Soup:
-                ${image("/images/recipe/soup.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/soup.jpg", recipe.info().name, style, "image");
             case SpanichPasta:
-                ${image("/images/recipe/spanich-pasta.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/spanich-pasta.jpg", recipe.info().name, style, "image");
             case SweetBitterMelon:
-                ${image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, style, "image")}
+                image("/images/recipe/sweet-bitter-melon.jpg", recipe.info().name, style, "image");
         }
     }
 
