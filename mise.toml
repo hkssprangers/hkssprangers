@@ -4,4 +4,5 @@ node = "22"
 # The lix tool itself is installed via npm.
 "npm:lix" = "latest"
 earthly = "0.8.16"
-terraform = "1.5.6"
+opentofu = "1.13.1"
+"aqua:opentofu/tofu-ls" = "0.5.3"

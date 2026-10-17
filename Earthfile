@@ -116,16 +116,6 @@ mise:
         && chmod +x /usr/local/bin/mise
     SAVE ARTIFACT /usr/local/bin/mise
 
-# Usage:
-# COPY +terraform-ls/terraform-ls /usr/local/bin/
-terraform-ls:
-    ARG TARGETARCH
-    ARG VERSION=0.30.3
-    RUN curl -fsSL -o terraform-ls.zip "https://releases.hashicorp.com/terraform-ls/${VERSION}/terraform-ls_${VERSION}_linux_${TARGETARCH}.zip" \
-        && unzip -qq terraform-ls.zip \
-        && mv ./terraform-ls /usr/local/bin/ \
-        && rm terraform-ls.zip
-    SAVE ARTIFACT /usr/local/bin/terraform-ls
 
 dbmate:
     ARG TARGETARCH
@@ -343,8 +333,6 @@ dts2hx-externs:
 devcontainer:
     FROM +devcontainer-base
 
-    COPY +terraform-ls/terraform-ls /usr/local/bin/
-
     # earthly is installed by mise in +devcontainer-base
     RUN earthly bootstrap --no-buildkit --with-autocomplete
 
@@ -381,7 +369,7 @@ devcontainer:
 
     # Config bash
     RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc \
-        && echo 'complete -C terraform terraform' >> ~/.bashrc
+        && echo 'complete -C tofu tofu' >> ~/.bashrc
 
     COPY --chown=$USER_UID:$USER_GID +lix-download/haxe "$HAXESHIM_ROOT"
     COPY --chown=$USER_UID:$USER_GID +node-modules-dev/node_modules node_modules
@@ -568,7 +556,7 @@ deploy:
         && npx serverless deploy --stage "${DEPLOY_STAGE}" \
         && node index.js setTgWebhook
 
-check-terraform:
+check-tofu:
     FROM +devcontainer
     COPY terraform terraform
     WORKDIR terraform
@@ -578,8 +566,8 @@ check-terraform:
     RUN --no-cache \
         --mount=type=secret,id=+secrets/envrc,target=.envrc \
         . ./.envrc \
-        && terraform init \
-        && terraform plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
+        && tofu init \
+        && tofu plan -detailed-exitcode -lock-timeout="$TF_LOCK_TIMEOUT"
 
 check-database-schema:
     FROM +devcontainer
@@ -589,7 +577,7 @@ check-database-schema:
 
 pre-deploy-check:
     ARG TF_LOCK_TIMEOUT=0s
-    BUILD +check-terraform --TF_LOCK_TIMEOUT="$TF_LOCK_TIMEOUT"
+    BUILD +check-tofu --TF_LOCK_TIMEOUT="$TF_LOCK_TIMEOUT"
     BUILD +check-database-schema
 
 post-deploy-test:
