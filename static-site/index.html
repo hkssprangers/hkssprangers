@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>埗兵 · 深水埗區外賣團隊</title>
+  <meta name="description" content="埗兵已經停止服務，多謝各位街坊同合作店舖一直以來嘅支持。">
+  <meta property="og:title" content="埗兵 · 深水埗區外賣團隊">
+  <meta property="og:description" content="埗兵已經停止服務，多謝各位街坊同合作店舖一直以來嘅支持。">
+  <meta property="og:image" content="https://ssprangers.com/logo.png">
+  <meta property="og:url" content="https://ssprangers.com/">
+  <meta name="theme-color" content="#fffdf5">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <style>
+    :root {
+      --bg: #fffdf5;
+      --fg: #33301a;
+      --muted: #77735c;
+      --rule: #e6e1cc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.7;
+    }
+    main {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 40px 16px 24px;
+      text-align: center;
+    }
+    .logo { width: 180px; height: 180px; }
+    h1 { font-size: 1.6rem; margin: 16px 0 8px; letter-spacing: 0.05em; }
+    p { margin: 0 0 16px; }
+    .post {
+      margin: 24px auto 8px;
+      max-width: 500px;
+      overflow: hidden;
+    }
+    .post iframe { display: block; max-width: 100%; margin: 0 auto; }
+    .fallback { font-size: 0.9rem; color: var(--muted); }
+    a { color: inherit; }
+    footer {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 16px 16px 40px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer nav { display: flex; justify-content: center; gap: 20px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="logo" src="logo.png" alt="埗兵 · 深水埗區外賣團隊 SSP Rangers" width="180" height="180">
+    <h1>埗兵已經停止服務</h1>
+    <p>多謝各位街坊同合作店舖一直以來嘅支持。</p>
+    <div class="post">
+      <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fhkssprangers%2Fposts%2Fpfbid0xMYHGgHw1rq7ErCA2uAv1YZ1SSfaFXTeVK7bPfjoq5PJoNh5bM1sWYhGmsSiJ31Rl&show_text=true&width=500" width="500" height="577" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" title="埗兵結業公告"></iframe>
+    </div>
+    <script>
+      // Facebook renders the post at the width in the URL, so match it to narrow screens.
+      (function () {
+        var frame = document.querySelector(".post iframe");
+        var w = Math.min(500, frame.parentNode.clientWidth);
+        if (w < 500) {
+          frame.src = frame.src.replace("width=500", "width=" + w);
+          frame.width = w;
+          // 4:3 photo plus roughly 260px of header, text and reactions.
+          frame.height = Math.round(w * 0.75) + 260;
+        }
+      })();
+    </script>
+  </main>
+  <footer>
+    <nav>
+      <a href="https://www.facebook.com/hkssprangers">Facebook</a>
+      <a href="https://www.instagram.com/hkssprangers/">Instagram</a>
+      <a href="https://t.me/hkssprangers">Telegram</a>
+    </nav>
+  </footer>
+</body>
+</html>
