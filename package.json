@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tailwind": "tailwindcss -o static/css/tailwind.css --minify",
-    "dts2hx": "sh gen-externs.sh",
+    "dts2hx": "bash gen-externs.sh",
     "dts2hx-workbox": "dts2hx workbox-core workbox-routing workbox-recipes workbox-cacheable-response workbox-expiration workbox-navigation-preload workbox-range-requests --noLibWrap --output lib/workbox",
     "start": "nodemon -L index.js"
   },

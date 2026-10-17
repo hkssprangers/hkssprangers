@@ -349,7 +349,7 @@ node-modules-dev:
 dts2hx-externs:
     FROM +node-modules-dev
     COPY gen-externs.sh .
-    RUN sh gen-externs.sh
+    RUN bash gen-externs.sh
     SAVE ARTIFACT lib/dts2hx
     SAVE IMAGE --cache-hint
 

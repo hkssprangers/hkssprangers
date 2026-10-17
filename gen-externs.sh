@@ -1,4 +1,16 @@
+#!/usr/bin/env bash
 set -ex
+
+# Portable in-place sed for both GNU (Linux) and BSD (macOS) sed.
+# `-i.bak` (suffix attached) is accepted by both; the backups are removed afterwards.
+sed_inplace() {
+    local expr="$1"
+    shift
+    sed -i.bak -e "$expr" "$@"
+    for f in "$@"; do
+        rm -f "$f.bak"
+    done
+}
 
 npx dts2hx \
     cross-fetch \
@@ -24,12 +36,12 @@ npx dts2hx \
     --useSystemHaxe \
     --output lib/dts2hx
 
-sed -i 's/axios.index.AxiosRequestConfig<Dynamic>/axios.AxiosRequestConfig/g' \
+sed_inplace 's/axios.index.AxiosRequestConfig<Dynamic>/axios.AxiosRequestConfig/g' \
     lib/dts2hx/NodeIcal.hx \
     lib/dts2hx/node_ical/*.hx
 
-sed -i 's/react\.ReactElement<Dynamic, ts\.AnyOf3<String, (props:Dynamic) -> Null<react\.ReactElement<Dynamic, Dynamic>>, { }>>/Dynamic/g' \
+sed_inplace 's/react\.ReactElement<Dynamic, ts\.AnyOf3<String, (props:Dynamic) -> Null<react\.ReactElement<Dynamic, Dynamic>>, { }>>/Dynamic/g' \
     lib/dts2hx/splidejs/react_splide/SplideProps.hx
 
-sed -i 's/react\.[A-Za-z0-9]*/Dynamic/g' \
+sed_inplace 's/react\.[A-Za-z0-9]*/Dynamic/g' \
     lib/dts2hx/splidejs/react_splide/SplideProps.hx
