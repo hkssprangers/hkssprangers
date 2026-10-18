@@ -77,40 +77,6 @@ module "s3_bucket_uploads" {
   restrict_public_buckets = false
 }
 
-module "s3_bucket_logs" {
-  source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "5.17.0"
-
-  bucket        = "hkssprangers-logs"
-  acl           = "private"
-  attach_policy = true
-  policy        = <<-EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-          "Action": "s3:GetBucketAcl",
-          "Effect": "Allow",
-          "Resource": "arn:aws:s3:::hkssprangers-logs",
-          "Principal": { "Service": "logs.${data.aws_region.current.region}.amazonaws.com" }
-      },
-      {
-          "Action": "s3:PutObject" ,
-          "Effect": "Allow",
-          "Resource": "arn:aws:s3:::hkssprangers-logs/*",
-          "Condition": { "StringEquals": { "s3:x-amz-acl": "bucket-owner-full-control" } },
-          "Principal": { "Service": "logs.${data.aws_region.current.region}.amazonaws.com" }
-      }
-    ]
-  }
-  EOF
-
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
 module "s3_bucket_dbbackup" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "5.17.0"
@@ -142,69 +108,4 @@ module "s3_bucket_dbbackup" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
-}
-
-module "s3_bucket_static" {
-  source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "5.17.0"
-
-  bucket = "hkssprangers-static"
-  acl    = "private"
-
-  cors_rule = [
-    {
-      allowed_methods = ["GET"]
-      allowed_origins = ["*"]
-      allowed_headers = ["*"]
-      expose_headers  = ["ETag"]
-    }
-  ]
-
-  # Keep the existing behavior; s3-bucket module 5.x defaults to all_storage_classes_128K
-  transition_default_minimum_object_size = "varies_by_storage_class"
-  lifecycle_rule = [
-    {
-      id      = "expireold"
-      enabled = true
-
-      transition = [
-        {
-          days          = 30
-          storage_class = "GLACIER"
-        },
-      ]
-
-      expiration = {
-        days = 60
-      }
-    }
-  ]
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-}
-
-data "aws_iam_policy_document" "cloudfront_access_s3_static" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${module.s3_bucket_static.s3_bucket_arn}/*"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "aws:SourceArn"
-      values   = [module.cloudfront_static.cloudfront_distribution_arn]
-    }
-  }
-}
-
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = module.s3_bucket_static.s3_bucket_id
-  policy = data.aws_iam_policy_document.cloudfront_access_s3_static.json
 }
