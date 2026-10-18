@@ -17,9 +17,10 @@ terraform {
     region    = "auto"
     endpoints = { s3 = "https://${local.cloudflare.account_id}.r2.cloudflarestorage.com" }
 
-    # Set via TF_VAR_r2_access_key_id and TF_VAR_r2_secret_access_key in the gitignored mise.local.toml.
-    access_key = var.r2_access_key_id
-    secret_key = var.r2_secret_access_key
+    # Backend-only profile that fetches the R2 keys from SSM, leaving the AWS env credentials to the aws provider.
+    # The path is relative to the working directory, so run tofu from here or with -chdir=terraform.
+    profile             = "hkssprangers-r2"
+    shared_config_files = ["r2.aws-config"]
 
     use_lockfile = true
 
@@ -31,14 +32,6 @@ terraform {
     skip_s3_checksum            = true
     use_path_style              = true
   }
-}
-
-variable "r2_access_key_id" {
-  type = string
-}
-
-variable "r2_secret_access_key" {
-  type = string
 }
 
 provider "aws" {}

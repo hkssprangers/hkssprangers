@@ -42,6 +42,32 @@ checksum = "sha256:e326da584f855010445c7cc1d190e8ac9918546a6f4317d378bfea1e76f97
 url = "https://github.com/opentofu/tofu-ls/releases/download/v0.5.3/tofu-ls_Windows_x86_64.tar.gz"
 url_api = "https://api.github.com/repos/opentofu/tofu-ls/releases/assets/470198137"
 
+[[tools.aws-cli]]
+version = "2.37.9"
+backend = "aqua:aws/aws-cli"
+specifiers = [
+    "2",
+    "latest",
+]
+
+[tools.aws-cli."platforms.linux-arm64"]
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.37.9.zip"
+
+[tools.aws-cli."platforms.linux-arm64-musl"]
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.37.9.zip"
+
+[tools.aws-cli."platforms.linux-x64"]
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.37.9.zip"
+
+[tools.aws-cli."platforms.linux-x64-musl"]
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.37.9.zip"
+
+[tools.aws-cli."platforms.macos-arm64"]
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.37.9.pkg"
+
+[tools.aws-cli."platforms.macos-x64"]
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.37.9.pkg"
+
 [[tools.cockroach]]
 version = "26.2.7"
 backend = "aqua:cockroachdb/cockroach"

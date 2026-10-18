@@ -6,6 +6,7 @@ node = "22"
 earthly = "0.8.16"
 opentofu = "1.13.1"
 "aqua:opentofu/tofu-ls" = "0.5.3"
+aws-cli = { version = "2", symlink_bins = "true" }
 wrangler = { version = "4.147.0", allow_builds = ["esbuild", "sharp", "workerd"] }
 rclone = "1"
 cockroach = "latest"
