@@ -8,6 +8,8 @@ opentofu = "1.13.1"
 "aqua:opentofu/tofu-ls" = "0.5.3"
 wrangler = { version = "4.147.0", allow_builds = ["esbuild", "sharp", "workerd"] }
 rclone = "1"
+cockroach = "latest"
+just = "1"
 
 [env]
 # Project-local rclone config

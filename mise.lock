@@ -42,6 +42,39 @@ checksum = "sha256:e326da584f855010445c7cc1d190e8ac9918546a6f4317d378bfea1e76f97
 url = "https://github.com/opentofu/tofu-ls/releases/download/v0.5.3/tofu-ls_Windows_x86_64.tar.gz"
 url_api = "https://api.github.com/repos/opentofu/tofu-ls/releases/assets/470198137"
 
+[[tools.cockroach]]
+version = "26.2.7"
+backend = "aqua:cockroachdb/cockroach"
+specifiers = ["latest"]
+
+[tools.cockroach."platforms.linux-arm64"]
+checksum = "sha256:17a86f52d7efb2402775a9ec17d68733890ae7df9fc45c17650fcfe05d6d3983"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.linux-arm64.tgz"
+
+[tools.cockroach."platforms.linux-arm64-musl"]
+checksum = "sha256:17a86f52d7efb2402775a9ec17d68733890ae7df9fc45c17650fcfe05d6d3983"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.linux-arm64.tgz"
+
+[tools.cockroach."platforms.linux-x64"]
+checksum = "sha256:f3149e5a69d8fccbb30f5c07207677fe4c402000f2d26400abbf74c63fe6466f"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.linux-amd64.tgz"
+
+[tools.cockroach."platforms.linux-x64-musl"]
+checksum = "sha256:f3149e5a69d8fccbb30f5c07207677fe4c402000f2d26400abbf74c63fe6466f"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.linux-amd64.tgz"
+
+[tools.cockroach."platforms.macos-arm64"]
+checksum = "sha256:98ced2669c15e4287ca1dc02ccec38388f2c1671fe1aeec156ed8e41fad8ffb0"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.darwin-11.0-arm64.tgz"
+
+[tools.cockroach."platforms.macos-x64"]
+checksum = "sha256:170e960b8c9696cd4635bd4ac977adc256646ff3f91d817ac04ef527f5a98cca"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.darwin-10.9-amd64.tgz"
+
+[tools.cockroach."platforms.windows-x64"]
+checksum = "sha256:b6a0b253b1f7853d6786b1423b507c56878a11411afeebb0c5c5ed2a36098aef"
+url = "https://binaries.cockroachdb.com/cockroach-v26.2.7.windows-6.2-amd64.zip"
+
 [[tools.earthly]]
 version = "0.8.16"
 backend = "aqua:earthly/earthly"
@@ -81,6 +114,49 @@ url_api = "https://api.github.com/repos/earthly/earthly/releases/assets/27346716
 checksum = "sha256:30672f3a3ce73893b30fe47e6e9b0aeed67bd596a156c10762ea7fce3db5d934"
 url = "https://github.com/earthly/earthly/releases/download/v0.8.16/earthly-windows-amd64.exe"
 url_api = "https://api.github.com/repos/earthly/earthly/releases/assets/273467226"
+
+[[tools.just]]
+version = "1.58.0"
+backend = "aqua:casey/just"
+specifiers = [
+    "1",
+    "latest",
+]
+
+[tools.just."platforms.linux-arm64"]
+checksum = "sha256:748237128c4c40cbdabc65e841d05ceba13cc23a91eaba395495894c1d9764df"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500510099"
+
+[tools.just."platforms.linux-arm64-musl"]
+checksum = "sha256:748237128c4c40cbdabc65e841d05ceba13cc23a91eaba395495894c1d9764df"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500510099"
+
+[tools.just."platforms.linux-x64"]
+checksum = "sha256:4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500509978"
+
+[tools.just."platforms.linux-x64-musl"]
+checksum = "sha256:4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500509978"
+
+[tools.just."platforms.macos-arm64"]
+checksum = "sha256:50ae3e996c974a0bf32ea7d10f495070df33f1b43e0616b2769e3d4821ed8f48"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500509965"
+
+[tools.just."platforms.macos-x64"]
+checksum = "sha256:9a09cfef66aaa79da58203970103a0684307716caaabd3e9844cacc4dc0f4023"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500510084"
+
+[tools.just."platforms.windows-x64"]
+checksum = "sha256:759f16fb7aa17c5c8b9594b6d4a8c1a6630dfd042cf2b3ff84841454d3d188dc"
+url = "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/casey/just/releases/assets/500511374"
 
 [[tools.node]]
 version = "22.22.2"
